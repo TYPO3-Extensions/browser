@@ -1,3 +1,8 @@
+4.5.6
+  13-04-10
+  Bugfix
+  * #47089: Filter can cause an unproper value in $arrConsolidate['addedTableFields']
+
 4.5.5
   13-04-09
   Bugfixes

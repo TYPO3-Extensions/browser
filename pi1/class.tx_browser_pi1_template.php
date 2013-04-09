@@ -1221,9 +1221,7 @@ class tx_browser_pi1_template
 
         $this->pObj->elements    = $elements;
         $this->pObj->rows[$row]  = $rows[$row];
-$this->pObj->dev_var_dump( $elements );
         $tmpl_row                = $this->tmplRow($elements, '###LISTBODYITEM###', $template); //:todo: Performance
-$this->pObj->dev_var_dump( $tmpl_row );
 
           // Remove last devider in case of csv export
           // #29370, 110831, dwildt+
