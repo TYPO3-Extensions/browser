@@ -1171,7 +1171,7 @@ class tx_browser_pi1_template
       $int_groupCounter  = -1;
         // Rows of a group
       $tmpl_rows         = '';
-$this->pObj->dev_var_dump( $tmpl_rows );
+$this->pObj->dev_var_dump( $rows );
         // Wrap for the groupname
       if($this->pObj->str_wrap_grouptitle)
       {
@@ -1265,7 +1265,7 @@ $this->pObj->dev_var_dump( $tmpl_rows );
         }
         $c++;
       }
-$this->pObj->dev_var_dump( $tmpl_rows );
+//$this->pObj->dev_var_dump( $tmpl_rows );
         // Rows
       unset($markerArray);
 
