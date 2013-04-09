@@ -743,7 +743,6 @@ class tx_browser_pi1_viewlist
 
       // FOREACH subparts
     $confSubpart = $this->conf_view['htmlSnippets.']['subparts.'];
-$this->pObj->dev_var_dump( array_keys ( ( array ) $confSubpart ) );    
     foreach( array_keys ( ( array ) $confSubpart ) as $subpart )
     {
         // CONTINUE current subpart has a dot
@@ -764,7 +763,7 @@ $this->pObj->dev_var_dump( array_keys ( ( array ) $confSubpart ) );
       $content     = '<!-- ' . $hashSubpart . ' begin -->' . $content . '<!-- ' . $hashSubpart . ' end -->';
       $this->content  = $this->pObj->cObj-> substituteSubpart( $this->content, $hashSubpart, $content );
         // Replace the subpart by the content
-$this->pObj->dev_var_dump( $subpart, $hashSubpart, $content, $this->content );    
+//$this->pObj->dev_var_dump( $subpart, $hashSubpart, $content, $this->content );    
     }
       // FOREACH subpart
 
