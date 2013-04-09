@@ -617,6 +617,7 @@ class tx_browser_pi1_viewlist
     }
       // Set mode selector
 
+$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     return;
   }
 
@@ -709,7 +710,6 @@ class tx_browser_pi1_viewlist
       $hashMarker = '###' . strtoupper( $marker ). '###';
       $this->content  = $this->pObj->cObj-> substituteMarker( $this->content, $hashMarker, $content );
         // Replace the marker by the content
-//$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     }
       // FOREACH marker
 
