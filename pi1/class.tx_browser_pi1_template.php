@@ -1182,7 +1182,6 @@ class tx_browser_pi1_template
       }
         // Rows
       $c = 0;
-$this->pObj->dev_var_dump( $template );
       foreach((array) $rows as $row => $elements)
       {
         if( $this->ignore_empty_rows_rule )
@@ -1266,7 +1265,6 @@ $this->pObj->dev_var_dump( $template );
         $c++;
       }
         // Rows
-$this->pObj->dev_var_dump( $template );
       unset($markerArray);
 
         // GROUP BY true
@@ -1296,6 +1294,7 @@ $this->pObj->dev_var_dump( $template );
         // GROUP BY true
 
         // GROUP BY false
+$this->pObj->dev_var_dump( $template );
       if( ! $this->bool_groupby )
       {
         if( $this->ignore_empty_rows_rule )
@@ -1310,6 +1309,7 @@ $this->pObj->dev_var_dump( $template );
           $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
         }
       }
+$this->pObj->dev_var_dump( $template );
         // GROUP BY false
 
       $this->pObj->rows = $rows;
