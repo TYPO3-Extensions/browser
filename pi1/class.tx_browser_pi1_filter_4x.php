@@ -1295,6 +1295,7 @@ $this->pObj->dev_var_dump( $this->pObj->conf_sql );
     foreach( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
       list( $table ) = explode( '.', $tableField );
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields[$table] );
       $tableUid = $table . '.uid';
 
         // CONTINUE : $arrConsolidation contains the current tableUid
