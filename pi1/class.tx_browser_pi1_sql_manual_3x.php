@@ -467,7 +467,7 @@
         // #47678, 130429, dwildt, 3+      
       $table      = $this->pObj->localTable;
       $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-var_dump( __METHOD__, __LINE__, $table, $this->pObj->int_localisation_mode );
+var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->int_localisation_mode );
       unset( $arr_result );
       
 
