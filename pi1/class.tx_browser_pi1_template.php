@@ -2603,7 +2603,7 @@ class tx_browser_pi1_template
  * @version 4.1.13
  * @since 1.0.0
  */
-  private function tmplRow($elements, $subpart, $template)
+  private function tmplRow( $elements, $subpart, $template )
   {
     static $bool_firstLoop  = true;
     
@@ -2773,7 +2773,7 @@ class tx_browser_pi1_template
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
 
         // First field is UID and we have a list view
-      if ($bool_extraUidField && $i_count_element == 0 && $this->view == 'list')
+      if( $bool_extraUidField && $i_count_element == 0 && $this->view == 'list' )
       {
         if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
         {
@@ -3100,31 +3100,36 @@ class tx_browser_pi1_template
  */
   private function tmplRowIsExtraUidField( $uidField )
   {
-      // RETURN false, if sql manual mode is off
-    if( ! $this->pObj->b_sql_manual )
-    {
-      return false; 
-    }
-      // RETURN false, if sql manual mode is off
-        
-      // RETURN false, if current uidField is empty 
-    if( empty ( $uidField ) )
-    {
-      return false;
-    }
-      // RETURN false, if current uidField is empty 
-    
-      // DRS
-    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
-    {
-      $prompt = 'SQL manual mode: If ' . $uidField . ' will be the first field in the row, it will deleted.';
-      t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
+      // #47679, 130429, dwildt, 1+
+    return false;
 
-      // RETURN true
-var_dump( __METHOD__, __LINE__, $uidField );    
-    return true;
+      // #47679, 130429, dwildt
+//      // RETURN false, if sql manual mode is off
+//    if( ! $this->pObj->b_sql_manual )
+//    {
+//      return false; 
+//    }
+//      // RETURN false, if sql manual mode is off
+//        
+//      // RETURN false, if current uidField is empty 
+//    if( empty ( $uidField ) )
+//    {
+//      return false;
+//    }
+//      // RETURN false, if current uidField is empty 
+//    
+//      // DRS
+//    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
+//    {
+//      $prompt = 'SQL manual mode: If ' . $uidField . ' will be the first field in the row, it will deleted.';
+//      t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+//    }
+//      // DRS
+//
+//      // RETURN true
+////var_dump( __METHOD__, __LINE__, $uidField );    
+//    return true;
+      // #47679, 130429, dwildt
   }
 
   
