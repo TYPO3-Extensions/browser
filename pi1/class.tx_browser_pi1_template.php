@@ -3123,6 +3123,7 @@ class tx_browser_pi1_template
       // DRS
 
       // RETURN true
+var_dump( __METHOD__, __LINE__, $uidField );    
     return true;
   }
 
