@@ -463,6 +463,13 @@
       {
         t3lib_div::devlog('[INFO/SQL] '.$arr_return['data']['query'], $this->pObj->extKey, 0);
       }
+      
+        // #47678, 130429, dwildt, 3+      
+      $table      = $this->pObj->localTable;
+      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+var_dump( __METHOD__, __LINE__, $table, $this->pObj->int_localisation_mode );
+      unset( $arr_result );
+      
 
       return $arr_return;
     }
