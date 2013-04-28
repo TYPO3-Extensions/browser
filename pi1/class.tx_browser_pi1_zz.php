@@ -2729,6 +2729,18 @@
  */
   function loadTCA( $table )
   {
+    if( ! $table )
+    {
+        // DRS
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = '$table is empty.';
+        t3lib_div::devlog( '[ERROR/DISCOVER] ' . $prompt, $this->pObj->extKey, 3 );
+      }
+        // DRS
+      return;
+    }
+
       // RETURN : TCA is loaded
     if( is_array( $GLOBALS['TCA'][$table]['columns'] ) )
     {
@@ -2743,7 +2755,7 @@
     if ($this->pObj->b_drs_tca)
     {
       $prompt = '$GLOBALS[TCA]['.$table.'] is loaded.';
-      t3lib_div::devlog('[INFO/DISCOVER] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/DISCOVER] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
 

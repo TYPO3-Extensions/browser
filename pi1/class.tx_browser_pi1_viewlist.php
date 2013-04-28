@@ -261,6 +261,7 @@ class tx_browser_pi1_viewlist
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
+var_dump( __METHOD__, __LINE__, $rows );    
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -279,6 +280,7 @@ class tx_browser_pi1_viewlist
     $this->hook_afterConsolidatetRows( );
     $rows = $this->pObj->rows;
 
+var_dump( __METHOD__, __LINE__, $rows );    
       // Order the rows
     if( ! $this->zz_orderByValueIsLocalised( ) )
     {
@@ -302,6 +304,7 @@ class tx_browser_pi1_viewlist
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
     unset($arr_return);
+var_dump( __METHOD__, __LINE__, $rows );    
     $this->pObj->rows = $rows;
 
       // DRS - display first row

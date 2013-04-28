@@ -395,7 +395,7 @@ class tx_browser_pi1_multisort
     {
       if ($this->pObj->b_drs_sql)
       {
-        t3lib_div::devlog('[INFO/SQL] ' . $conf_path . 'orderBy hasn\'t any element.' .
+        t3lib_div::devlog('[INFO/SQL] ' . $conf_path . 'orderBy hasn\'t any element. ' .
           'If you have children, they will be ordered randomly.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[HELP/SQL] See tutorial ... ', $this->pObj->extKey, 1);
       }
