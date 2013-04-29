@@ -28,7 +28,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version   3.9.9
+* @version   4.5.6
 * @since  2.0.0
 *
 * @package    TYPO3
@@ -977,13 +977,16 @@ class tx_browser_pi1_sql_functions_3x
 
 
 
-    /**
- * Get the SQL part behind the AS. If this is an alias, replace the alias with the real name.
+/**
+ * clean_up_as_and_alias( ) : Get the SQL part behind the AS. If this is an alias, replace the alias with the real name.
  *
- * @param	array		$arr_tablefields: Array with table.field values maybe with an AS
- * @return	array		$arr_tablefields with real names of table.fields
+ * @param	array         $arr_tablefields: Array with table.field values maybe with an AS
+ * @return	array         $arr_tablefields with real names of table.fields
+ *
+ * @version   4.5.6
+ * @since     2.0.0
  */
-    function clean_up_as_and_alias($arr_tablefields)
+    function clean_up_as_and_alias( $arr_tablefields )
     {
       $conf = $this->pObj->conf;
       $mode = $this->pObj->piVar_mode;
@@ -1020,7 +1023,8 @@ class tx_browser_pi1_sql_functions_3x
             }
           }
         }
-        $value                 = $this->get_sql_alias_behind( $value );
+        $value = $this->get_sql_alias_behind( $value );
+        
           // #47700, 130430, dwildt, 5+
         if( empty( $value ) )
         {
@@ -1028,6 +1032,7 @@ class tx_browser_pi1_sql_functions_3x
           continue;
         }
           // #47700, 130430, dwildt, 5+
+        
         $arr_tablefields[$key] = $value;
       }
       $arr_tablefields = $this->replace_tablealias($arr_tablefields);
@@ -1480,36 +1485,29 @@ class tx_browser_pi1_sql_functions_3x
 
 
 
-    /**
- * get_orderBy_tableFields(): Get the table.fields from the order by property
+/**
+ * get_orderBy_tableFields( ) : Get the table.fields from the order by property
  *
- * @param	string		$csv_orderBy: Get from an orderBy clause the table.fields only - without ASC or DESC
- * @return	string		$csv_orderByWoAscDesc: table.fields in CSV syntax - comma seperated without any space
+ * @param	string          $csv_orderBy          : Get from an orderBy clause the table.fields only - without ASC or DESC
+ * @return	string          $csv_orderByWoAscDesc : table.fields in CSV syntax - comma seperated without any space
+ * 
+ * @version   4.5.6
+ * @since     2.0.0
  */
   function get_orderBy_tableFields( $csvOrderBy )
   {
-      // #47700, 130430, dwildt
+      // #47700, 130430, dwildt, 3+
     $arrCsv     = explode( ',', $csvOrderBy );
     $arrCsv     = $this->clean_up_as_and_alias( $arrCsv );
     $csvOrderBy = implode( ',', $arrCsv );
-//    $csvOrderBy = trim( $csvOrderBy, ',');
 
-    ///////////////////////////////////////////////////////
-    //
-    // Clean up line feeds, carriage returns, double spaces
-
+      // Clean up line feeds, carriage returns, double spaces
     $csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvOrderBy );
-    // Clean up line feeds, carriage returns, double spaces
 
-
-    ///////////////////////////////////////////////////////
-    //
-    // Remove ASC, DESC and spaces
-
+      // Remove ASC, DESC and spaces
     $csvOrderBy = str_ireplace( ' desc',  null, $csvOrderBy );
     $csvOrderBy = str_ireplace( ' asc',   null, $csvOrderBy );
     $csvOrderBy = str_replace(  ' ',      null, $csvOrderBy );
-    // Remove ASC, DESC and spaces
 
     return $csvOrderBy;
   }
