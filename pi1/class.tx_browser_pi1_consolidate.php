@@ -768,27 +768,28 @@ class tx_browser_pi1_consolidate
     // Add table.uids to the global arr_realTables_arrFields
 
       // 121211, dwildt, 1-
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
     //$arr_TCAcolumns = false;
-    foreach ($this->pObj->arr_realTables_arrFields as $table => $arrFields)
+    foreach ( $this->pObj->arr_realTables_arrFields as $table => $arrFields )
     {
 //      $this->pObj->objZz->loadTCA($table);
       // dwildt, 100428: ADDED in context with table_mm.sorting
       // Don't store uid or pid, if table isn't in the TCA
-      if(in_array($table, array_keys($GLOBALS['TCA'])))
+      if( in_array( $table, array_keys( $GLOBALS['TCA'] ) ) )
       {
         $bool_storeId = true;
       }
-      if(!in_array($table, array_keys($GLOBALS['TCA'])))
+      if( ! in_array( $table, array_keys( $GLOBALS['TCA'] ) ) )
       {
         $bool_storeId = false;
       }
       // Don't store uid or pid, if table isn't in the TCA
-      if ((!in_array('uid', $arrFields)) && $bool_storeId)
+      if( ( ! in_array( 'uid', $arrFields ) ) && $bool_storeId )
       {
         $arr_return['data']['arrFetchedTables'][$table][] = 'uid';
         $arr_return['data']['consolidate']['addedTableFields'][] = $table.'.uid';
       }
-      if ((!in_array('pid', $arrFields)) && $bool_storeId)
+      if( ( ! in_array( 'pid', $arrFields ) ) && $bool_storeId )
       {
         $arr_return['data']['arrFetchedTables'][$table][] = 'pid';
         $arr_return['data']['consolidate']['addedTableFields'][] = $table.'.pid';
