@@ -249,7 +249,6 @@ class tx_browser_pi1_typoscript
       // Get the typoscript configuration for the SQL query
 
     $lConfSql = $this->set_confSql( );
-$this->pObj->dev_var_dump( $lConfSql );
       // Set the typoscript configuration for the SQL query
 
 
@@ -718,6 +717,7 @@ $this->pObj->dev_var_dump( $lConfSql );
       // Is there any difference?
     $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
       // Does ORDER BY contains further tables and fields?
+$this->pObj->dev_var_dump( $arr_addToSelect );
 
 
     
