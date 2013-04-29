@@ -768,7 +768,7 @@ class tx_browser_pi1_consolidate
     // Add table.uids to the global arr_realTables_arrFields
 
       // 121211, dwildt, 1-
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
+//$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
     //$arr_TCAcolumns = false;
     foreach ( $this->pObj->arr_realTables_arrFields as $table => $arrFields )
     {

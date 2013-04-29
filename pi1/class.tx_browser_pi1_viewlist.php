@@ -884,7 +884,7 @@ class tx_browser_pi1_viewlist
         t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
       }
 //$this->pObj->dev_var_dump( $rows );
-$arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
+//$arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
 //$XXX_rows             = $arr_return['data']['rows'];
 //$this->pObj->dev_var_dump( $XXX_rows );
       return $rows;
