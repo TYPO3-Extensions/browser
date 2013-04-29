@@ -825,7 +825,7 @@ class tx_browser_pi1_sql_functions
 
       // Execute the query
     $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
-$this->pObj->dev_var_dump( $query, $res );
+//$this->pObj->dev_var_dump( $query, $res );
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
       // DRS - Development Reporting System
