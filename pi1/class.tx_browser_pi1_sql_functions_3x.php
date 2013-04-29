@@ -1479,14 +1479,18 @@ class tx_browser_pi1_sql_functions_3x
  * @param	string		$csv_orderBy: Get from an orderBy clause the table.fields only - without ASC or DESC
  * @return	string		$csv_orderByWoAscDesc: table.fields in CSV syntax - comma seperated without any space
  */
-  function get_orderBy_tableFields($csvOrderBy)
+  function get_orderBy_tableFields( $csvOrderBy )
   {
+      // #47700, 130430, dwildt
+    $arrCsv     = explode( ',', $csvOrderBy );
+    $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias( $arrCsv );
+    $csvOrderBy = implode( ',', $arrCsv );
 
     ///////////////////////////////////////////////////////
     //
     // Clean up line feeds, carriage returns, double spaces
 
-    $csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($csvOrderBy);
+    $csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvOrderBy );
     // Clean up line feeds, carriage returns, double spaces
 
 
@@ -1494,9 +1498,9 @@ class tx_browser_pi1_sql_functions_3x
     //
     // Remove ASC, DESC and spaces
 
-    $csvOrderBy = str_ireplace(' desc', '', $csvOrderBy);
-    $csvOrderBy = str_ireplace(' asc',  '', $csvOrderBy);
-    $csvOrderBy = str_replace(' ',  '', $csvOrderBy);
+    $csvOrderBy = str_ireplace( ' desc',  null, $csvOrderBy );
+    $csvOrderBy = str_ireplace( ' asc',   null, $csvOrderBy );
+    $csvOrderBy = str_replace(  ' ',      null, $csvOrderBy );
     // Remove ASC, DESC and spaces
 
     return $csvOrderBy;
