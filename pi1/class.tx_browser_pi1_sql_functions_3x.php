@@ -1068,7 +1068,7 @@ class tx_browser_pi1_sql_functions_3x
       $viewWiDot = $view.'.';
       $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
-$this->pObj->dev_var_dump( $conf_view['aliases.']['tables.'] );
+//$this->pObj->dev_var_dump( $conf_view['aliases.']['tables.'] );
 
         // RETURN, if we don't have any alias array
       if ( ! is_array( $conf_view['aliases.']['tables.'] ) )
