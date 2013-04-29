@@ -1646,13 +1646,13 @@ class tx_browser_pi1_viewlist
 
     if( empty ( $idsOfRowsDefaultLanguageLimited ) )
     {
-var_dump( __METHOD__, __LINE__, $arr_return );    
       return $arr_return;
     }
 
       // Get rows for the list view
       // #38612, 120703, dwildt-/+
     $arr_return['limited'] = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguageLimited );
+//var_dump( __METHOD__, __LINE__, $arr_return );    
 
     return $arr_return;
   }
