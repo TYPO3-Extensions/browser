@@ -1652,7 +1652,7 @@ class tx_browser_pi1_viewlist
       // Get rows for the list view
       // #38612, 120703, dwildt-/+
     $arr_return['limited'] = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguageLimited );
-//var_dump( __METHOD__, __LINE__, $arr_return );    
+$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
