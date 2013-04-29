@@ -1081,7 +1081,7 @@ class tx_browser_pi1_typoscript
       }
     }
       // LOOP each query part
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
+$this->pObj->dev_var_dump( $this->arr_realTables_arrFields );
 
     return;
   }
