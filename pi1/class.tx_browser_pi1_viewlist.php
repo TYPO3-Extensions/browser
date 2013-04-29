@@ -1646,6 +1646,7 @@ class tx_browser_pi1_viewlist
 
     if( empty ( $idsOfRowsDefaultLanguageLimited ) )
     {
+var_dump( __METHOD__, __LINE__, $arr_return );    
       return $arr_return;
     }
 
@@ -1760,7 +1761,7 @@ class tx_browser_pi1_viewlist
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
-var_dump( __METHOD__, __LINE__, $query, $arr_return );    
+//var_dump( __METHOD__, __LINE__, $query, $arr_return );    
     return $arr_return;
   }
 
