@@ -1068,21 +1068,22 @@ class tx_browser_pi1_sql_functions_3x
       $viewWiDot = $view.'.';
       $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
+$this->pObj->dev_var_dump( $conf_view['aliases.']['tables.'] );
 
-      /////////////////////////////////////////////////////////////////
-      //
-      // RETURN, if we don't have any alias array
-
-      if (!is_array($conf_view['aliases.']['tables.']))
+        // RETURN, if we don't have any alias array
+      if ( ! is_array( $conf_view['aliases.']['tables.'] ) )
       {
-        if ($this->pObj->b_drs_sql && $firstLoop )
+        if( $this->pObj->b_drs_sql && $firstLoop )
         {
-          t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' hasn\'t any array aliases.tables. We don\'t process aliases.', $this->pObj->extKey, 0);
+          $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any array aliases.tables. ' 
+                  . 'We don\'t process aliases.'
+                  ;
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt , $this->pObj->extKey, 0 );
         }
         $firstLoop = false;
         return $arr_aliastableField;
       }
-
+        // RETURN, if we don't have any alias array
 
       foreach ($arr_aliastableField as $key_field => $str_tablefield)
       {
