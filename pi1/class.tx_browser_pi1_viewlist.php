@@ -231,7 +231,6 @@ class tx_browser_pi1_viewlist
 
       // Building SQL query and get the SQL result
     $arr_return = $this->rows_sql( );
-//var_dump( __METHOD__, __LINE__, $arr_return );    
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -254,6 +253,7 @@ class tx_browser_pi1_viewlist
       $res = $arr_return['limited']['data']['res'];
       $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
     }
+$this->pObj->dev_var_dump( $arr_return, $res );
       //  #38612, 120703, dwildt+
   
       // Building SQL query and get the SQL result
@@ -1049,7 +1049,6 @@ class tx_browser_pi1_viewlist
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         $arr_return = $this->rows_sqlLanguageDefault( );
-//var_dump( __METHOD__, __LINE__ );
 //        $arr_return = $arr_return['limited'];
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
@@ -1652,7 +1651,6 @@ class tx_browser_pi1_viewlist
       // Get rows for the list view
       // #38612, 120703, dwildt-/+
     $arr_return['limited'] = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguageLimited );
-$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
