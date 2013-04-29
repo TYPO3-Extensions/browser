@@ -231,6 +231,7 @@ class tx_browser_pi1_viewlist
 
       // Building SQL query and get the SQL result
     $arr_return = $this->rows_sql( );
+var_dump( __METHOD__, __LINE__, $arr_return );    
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -280,7 +281,6 @@ var_dump( __METHOD__, __LINE__, $rows );
     $this->hook_afterConsolidatetRows( );
     $rows = $this->pObj->rows;
 
-var_dump( __METHOD__, __LINE__, $rows );    
       // Order the rows
     if( ! $this->zz_orderByValueIsLocalised( ) )
     {
@@ -304,7 +304,6 @@ var_dump( __METHOD__, __LINE__, $rows );
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
     unset($arr_return);
-var_dump( __METHOD__, __LINE__, $rows );    
     $this->pObj->rows = $rows;
 
       // DRS - display first row

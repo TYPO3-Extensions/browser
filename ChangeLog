@@ -1,6 +1,9 @@
 4.5.6
   13-04-29
   Bugfix
+  * #47680: Engine 4.x query building: doesn't respect SQL manual mode
+            Effected file:
+            * pi1/class.tx_browser_pi1_viewlist.php
   * #47679: tmplRowIsExtraUidField( ) is unporper in SQL manual mode
             Effected file:
             * pi1/class.tx_browser_pi1_template.php
