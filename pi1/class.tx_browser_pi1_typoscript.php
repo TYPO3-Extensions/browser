@@ -706,6 +706,7 @@ class tx_browser_pi1_typoscript
     $csvOrderByWoAscDesc  = $this->pObj->objSqlFun_3x->get_orderBy_tableFields( $conf_sql['orderBy'] );
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
     $arrSelect            = $this->pObj->objZz->getCSVasArray( $conf_sql['select'] );
+$this->pObj->dev_var_dump( $arrSelect );
 
       // #110110, cweiske, '11870
     foreach ( $arrSelect as $key => $field )
@@ -713,6 +714,7 @@ class tx_browser_pi1_typoscript
       $arrSelect[$key] = $this->pObj->objSqlFun_3x->get_sql_alias_behind( $field );
     }
       // #110110, cweiske, '11870
+$this->pObj->dev_var_dump( $arrSelect );
 
       // Is there any difference?
     $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
