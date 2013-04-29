@@ -1001,7 +1001,7 @@ class tx_browser_pi1_sql_functions_3x
       foreach( ( array ) $arr_tablefields as $key => $value )
       {
           // #47700, 130430, dwildt
-        if( epmty( $value ) )
+        if( empty( $value ) )
         {
           continue;
         }
