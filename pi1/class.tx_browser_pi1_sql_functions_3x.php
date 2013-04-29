@@ -1000,14 +1000,7 @@ class tx_browser_pi1_sql_functions_3x
 
       foreach( ( array ) $arr_tablefields as $key => $value )
       {
-          // #47700, 130430, dwildt
-        if( empty( $value ) )
-        {
-          continue;
-        }
-        
-        //$value                 = $this->pObj->objZz->cleanCSV_from_lr_and_doubleSpace($value);
-        if (is_array($conf_view['select.']['deal_as_table.']))
+        if( is_array( $conf_view['select.']['deal_as_table.'] ) )
         {
           foreach ($conf_view['select.']['deal_as_table.'] as $arr_dealastable)
           {
@@ -1027,7 +1020,14 @@ class tx_browser_pi1_sql_functions_3x
             }
           }
         }
-        $value                 = $this->get_sql_alias_behind($value);
+        $value                 = $this->get_sql_alias_behind( $value );
+          // #47700, 130430, dwildt, 5+
+        if( empty( $value ) )
+        {
+          unset( $arr_tablefields[$key] );
+          continue;
+        }
+          // #47700, 130430, dwildt, 5+
         $arr_tablefields[$key] = $value;
       }
       $arr_tablefields = $this->replace_tablealias($arr_tablefields);
