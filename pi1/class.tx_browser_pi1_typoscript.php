@@ -1028,6 +1028,7 @@ class tx_browser_pi1_typoscript
     $arrTmp[0]  = $arrCsv;
     $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias( $arrTmp );
     $arrCsv     = $arrTmp[0];
+$this->pObj->dev_var_dump( $arrCsv );
     
       // LOOP each query part
     foreach( ( array ) $arrCsv as $tableField )
