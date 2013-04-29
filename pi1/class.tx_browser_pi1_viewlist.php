@@ -920,6 +920,11 @@ class tx_browser_pi1_viewlist
       // SWITCH case aliases
     switch( true )
     {
+        // #47680, 130430,dwildt, 3+
+      case( $this->pObj->b_sql_manual ):
+        $rows = $this->rows_getDefault( $res );
+$this->pObj->dev_var_dump( $rows );
+        break;
       case( is_array( $arr_table_realnames ) ):
         $rows = $this->rows_getCaseAliases( $res );
 $this->pObj->dev_var_dump( $rows );
