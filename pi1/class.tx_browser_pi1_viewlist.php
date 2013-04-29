@@ -243,17 +243,17 @@ class tx_browser_pi1_viewlist
       //  #38612, 120703, dwildt, 1-
     //$res = $arr_return['data']['res'];
       //  #38612, 120703, dwildt+
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
-$this->pObj->dev_var_dump( $res );
+//$this->pObj->dev_var_dump( $res );
       $idsForRecordBrowser = null;
     }
     else
     {
       $res = $arr_return['limited']['data']['res'];
-$this->pObj->dev_var_dump( $res );
+//$this->pObj->dev_var_dump( $res );
       $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
     }
       //  #38612, 120703, dwildt+
@@ -263,7 +263,6 @@ $this->pObj->dev_var_dump( $res );
       // Set rows
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
-$this->pObj->dev_var_dump( $rows );
 
 //var_dump( __METHOD__, __LINE__, $rows );    
       // DRS
@@ -923,10 +922,12 @@ $this->pObj->dev_var_dump( $rows );
     {
       case( is_array( $arr_table_realnames ) ):
         $rows = $this->rows_getCaseAliases( $res );
+$this->pObj->dev_var_dump( $rows );
         break;
       case( ! is_array( $arr_table_realnames ) ):
       default:
         $rows = $this->rows_getDefault( $res );
+$this->pObj->dev_var_dump( $rows );
         break;
     }
       // SWITCH case aliases
