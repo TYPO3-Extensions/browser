@@ -883,6 +883,10 @@ class tx_browser_pi1_viewlist
         $prompt = 'Manual SQL mode: Rows didn\'t get any consolidation for children.';
         t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
       }
+$this->pObj->dev_var_dump( $rows );
+    $arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
+    $rows             = $arr_return['data']['rows'];
+$this->pObj->dev_var_dump( $rows );
       return $rows;
     }
       // RETURN : SQL manual mode
