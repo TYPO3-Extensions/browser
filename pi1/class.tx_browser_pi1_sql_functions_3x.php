@@ -993,12 +993,19 @@ class tx_browser_pi1_sql_functions_3x
       $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
 
-      if (!is_array($arr_tablefields))
+      if( ! is_array( $arr_tablefields ) )
       {
         return $arr_tablefields;
       }
 
-      foreach((array) $arr_tablefields as $key => $value) {
+      foreach( ( array ) $arr_tablefields as $key => $value )
+      {
+          // #47700, 130430, dwildt
+        if( $value === null )
+        {
+          continue;
+        }
+        
         //$value                 = $this->pObj->objZz->cleanCSV_from_lr_and_doubleSpace($value);
         if (is_array($conf_view['select.']['deal_as_table.']))
         {
@@ -1483,9 +1490,9 @@ class tx_browser_pi1_sql_functions_3x
   {
       // #47700, 130430, dwildt
     $arrCsv     = explode( ',', $csvOrderBy );
-    $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias( $arrCsv );
+    $arrCsv     = $this->clean_up_as_and_alias( $arrCsv );
     $csvOrderBy = implode( ',', $arrCsv );
-    $csvOrderBy = trim( $csvOrderBy, ',');
+//    $csvOrderBy = trim( $csvOrderBy, ',');
 
     ///////////////////////////////////////////////////////
     //
