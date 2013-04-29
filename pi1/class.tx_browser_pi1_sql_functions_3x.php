@@ -1485,6 +1485,7 @@ class tx_browser_pi1_sql_functions_3x
     $arrCsv     = explode( ',', $csvOrderBy );
     $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias( $arrCsv );
     $csvOrderBy = implode( ',', $arrCsv );
+    $csvOrderBy = trim( $csvOrderBy, ',');
 
     ///////////////////////////////////////////////////////
     //
