@@ -261,6 +261,7 @@ $this->pObj->dev_var_dump( $arr_return, $res );
       // Set rows
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
+$this->pObj->dev_var_dump( $rows );
 
 //var_dump( __METHOD__, __LINE__, $rows );    
       // DRS
