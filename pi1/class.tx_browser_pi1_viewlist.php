@@ -231,7 +231,7 @@ class tx_browser_pi1_viewlist
 
       // Building SQL query and get the SQL result
     $arr_return = $this->rows_sql( );
-var_dump( __METHOD__, __LINE__, $arr_return );    
+//var_dump( __METHOD__, __LINE__, $arr_return );    
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -262,7 +262,7 @@ var_dump( __METHOD__, __LINE__, $arr_return );
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
-var_dump( __METHOD__, __LINE__, $rows );    
+//var_dump( __METHOD__, __LINE__, $rows );    
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -1760,6 +1760,7 @@ var_dump( __METHOD__, __LINE__, $rows );
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
+var_dump( __METHOD__, __LINE__, $query; $arr_return );    
     return $arr_return;
   }
 
