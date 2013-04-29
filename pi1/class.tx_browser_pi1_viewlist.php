@@ -243,17 +243,19 @@ class tx_browser_pi1_viewlist
       //  #38612, 120703, dwildt, 1-
     //$res = $arr_return['data']['res'];
       //  #38612, 120703, dwildt+
+$this->pObj->dev_var_dump( $arr_return );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
+$this->pObj->dev_var_dump( $res );
       $idsForRecordBrowser = null;
     }
     else
     {
       $res = $arr_return['limited']['data']['res'];
+$this->pObj->dev_var_dump( $res );
       $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
     }
-$this->pObj->dev_var_dump( $arr_return, $res );
       //  #38612, 120703, dwildt+
   
       // Building SQL query and get the SQL result
