@@ -249,6 +249,7 @@ class tx_browser_pi1_typoscript
       // Get the typoscript configuration for the SQL query
 
     $lConfSql = $this->set_confSql( );
+$this->pObj->dev_var_dump( $lConfSql );
       // Set the typoscript configuration for the SQL query
 
 
@@ -1026,11 +1027,11 @@ class tx_browser_pi1_typoscript
     $arrCsv     = explode( ',', $str_queryPart );
 $this->pObj->dev_var_dump( $key_queryPart, $str_queryPart, $arrCsv );
     $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias( $arrCsv );
-$this->pObj->dev_var_dump( $arrCsv );
+//$this->pObj->dev_var_dump( $arrCsv );
     $arrTmp[0]  = $arrCsv;
     $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias( $arrTmp );
     $arrCsv     = $arrTmp[0];
-$this->pObj->dev_var_dump( $arrCsv );
+//$this->pObj->dev_var_dump( $arrCsv );
     
       // LOOP each query part
     foreach( ( array ) $arrCsv as $tableField )
