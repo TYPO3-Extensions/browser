@@ -704,7 +704,9 @@ class tx_browser_pi1_typoscript
 
     $arr_addToSelect      = false;
     $csvOrderByWoAscDesc  = $this->pObj->objSqlFun_3x->get_orderBy_tableFields( $conf_sql['orderBy'] );
+$this->pObj->dev_var_dump( $csvOrderByWoAscDesc );
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
+$this->pObj->dev_var_dump( $arrOrderByWoAscDesc );
     $arrSelect            = $this->pObj->objZz->getCSVasArray( $conf_sql['select'] );
 $this->pObj->dev_var_dump( $arrSelect );
 
