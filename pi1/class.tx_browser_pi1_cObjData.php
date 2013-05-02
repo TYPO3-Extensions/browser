@@ -31,7 +31,7 @@
 * @subpackage  browser
 * @internal   #44858 
 *
-* @version  4.4.4
+* @version  4.5.6
 * @since    4.4.4
 */
 
@@ -141,14 +141,18 @@ class tx_browser_pi1_cObjData
  * @param    array    $keyValues  : key value pairs
  * @param    boolean  $drs        : Should key value pairs prompt to DRS?
  * @return    void
- * @version 4.4.4
+ * @version 4.5.6
  * @since   4.4.4
  */
   public function set( $keyValues, $drs = true, $debugTrailLevel = 1 )
   {
+    $debugTrailLevel++;
+
     $this->backup( );
     $this->setArray( $keyValues, $drs, $debugTrailLevel );
     $this->addTsValues( );
+
+    $debugTrailLevel--;
   }
   
   
@@ -202,14 +206,13 @@ class tx_browser_pi1_cObjData
     {
       if( $this->pObj->b_drs_cObjData )
       {
-          // #47823, 130502, dwildt, 1+
+          // #47823, 130502, dwildt, 2+
         $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
+        t3lib_div :: devlog( '[INFO/COBJDATA] Call from ' . $debugTrail['prompt'], $this->pObj->extKey, 0 );
         $prompt = 'This fields are added to cObject: ' . implode( ', ', array_keys( $keyValues ) );
         t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt , $this->pObj->extKey, 0 );
         $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key( $keyValues );
         t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt , $this->pObj->extKey, 0 );
-          // #47823, 130502, dwildt, 1+
-        t3lib_div :: devlog( '[INFO/COBJDATA] Call from ' . $debugTrail['prompt'], $this->pObj->extKey, 0 );
       }
     }
       // DRS
@@ -422,13 +425,17 @@ class tx_browser_pi1_cObjData
  *
  * @param    array
  * @return    void
- * @version 4.4.4
+ * @version 4.5.6
  * @since   4.4.4
  */
   private function setArray( $keyValues, $drs, $debugTrailLevel = 1 )
   {
+    $debugTrailLevel++;
+
     unset( $this->pObj->cObj->data );
     $this->addArray( $keyValues, $drs, $debugTrailLevel );
+
+    $debugTrailLevel--;
   }
 
   
