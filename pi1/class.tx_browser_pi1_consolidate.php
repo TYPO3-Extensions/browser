@@ -594,7 +594,9 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
     $int_count = 0;
     // Store uids. We need it for link to single view and for the the Index-Browser.
     $arr_uids = false;
-    foreach ($rows_cons as $row_cons)
+    $rows_new = array( );
+$this->pObj->dev_var_dump( $rows_cons );    
+    foreach( $rows_cons as $row_cons )
     {
       //$arr_uids[] = $row_cons[$localTable.'.uid'];
       $rows_new[$int_count][$localTable.'.uid'] = $row_cons[$localTable.'.uid'];
@@ -617,8 +619,7 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
     }
     $arr_return['data']['uids'] = $arr_uids; // :todo: 100429, dwildt: array will never be filled (see above)
     $arr_return['data']['rows'] = $rows_new;
-    $this->pObj->arrConsolidate['rows_wi_cons'] = count($rows_new);
-//if(t3lib_div::_GP('dev')) var_dump('cons 534', array_keys(current($rows_new)));
+    $this->pObj->arrConsolidate['rows_wi_cons'] = count( $rows_new );
 
 $this->pObj->dev_var_dump( $rows_new );    
     return $arr_return;
