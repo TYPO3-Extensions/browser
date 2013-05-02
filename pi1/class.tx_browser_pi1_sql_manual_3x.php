@@ -108,151 +108,36 @@ class tx_browser_pi1_sql_manual_3x
     $str_select = $this->get_queryArraySelect( $conf_view );
     $str_query  = str_replace('###SELECT###', "SELECT " . $str_select,  $str_query );
 
-      // FROM statement
+      // FROM statement I/II
     $str_from   = $this->get_queryArrayFrom( $conf_view );
-    $str_query  = str_replace('###FROM###', "FROM ".$str_from, $str_query);
+    // Handle query below joins!
 
       // WHERE clause
     $arr_where          = $this->get_queryArrayWhere( $conf_view );
     $str_where          = $arr_where['where']; 
-    $str_enable_fields  = $arr_where['enableFields'];
+    // 130502, dwildt, 1-
+    //$str_enable_fields  = $arr_where['enableFields'];
     unset( $arr_where );
     $str_query = str_replace('###WHERE###', "WHERE ".$str_where, $str_query);
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // JOINS
+      // JOINS
+    $str_joins  = $this->get_queryArrayJoins( $conf_view );
+    $str_query  = str_replace( '###JOINS###', $str_joins, $str_query );
+    $str_from   = $str_from
+                . $str_joins 
+                ;
 
-    $str_joins = '';
-    if (is_array($conf_view['joins.']))
-    {
-      // We have joins
-      $arr_joins  = $conf_view['joins.'];
-      if ($this->pObj->b_drs_sql)
-      {
-        t3lib_div::devlog('[INFO/SQL] There are '.count ($arr_joins).' joins.', $this->pObj->extKey, 0);
-      }
-      $str_joins  = '';
-      foreach ($arr_joins as $arr_join)
-      {
-        $str_enable_fields = '';
-        if (is_array($GLOBALS['TCA'][$arr_join['table']]))    // I.e.: tx_civserv_organisation_or_structure_mm
-        {
-          // Table is in the registered in the TCA array
-          $str_enable_fields  = $this->pObj->cObj->enableFields($arr_join['table']);
-          $str_enable_fields  = str_replace($arr_join['table'], $arr_join['alias'], $str_enable_fields);
-        }
-        $str_joins   .= "
-          ".$arr_join['type']." ".$arr_join['table']." AS `".$arr_join['alias']."`
-          ON (
-                ".$arr_join['on']." ".$str_enable_fields."
-              ) ";
-        // LEFT JOIN tx_civserv_organisation_or_structure_mm AS ###table_mm###
-        // ON (
-        //       ###table_1###.uid = ###table_mm###.uid_local
-        // )
-      }
-    }
+      // FROM statement II/II
+    $str_query  = str_replace('###FROM###', "FROM ".$str_from, $str_query);
 
-    // Is there a join from the filter class?
-    $str_joins_filter  = '';
-// #41754.01, 1210101, dwildt, -
-// $this->pObj->arr_andWhereFilter isn't never allocated
-//      if (is_array($this->pObj->arr_andWhereFilter))
-//      {
-//        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
-//        {
-//          list($table, $field) = explode('.', $tableField);
-//          $arr_joins_filter = $conf_view['filter.'][$table.'.'][$field.'.']['joins.'];
-////array(2) {
-////  ["0."]=>
-////  array(4) {
-////    ["type"]=>
-////    string(9) "LEFT JOIN"
-////    ["table"]=>
-////    string(41) "tx_bzdstaffdirectory_persons_locations_mm"
-////    ["alias"]=>
-////    string(17) "persons_locations"
-////    ["on"]=>
-////    string(41) "persons.uid = persons_locations.uid_local"
-////  }
-////  ["1."]=>
-////  array(4) {
-////    ["type"]=>
-////    string(9) "LEFT JOIN"
-////    ["table"]=>
-////    string(30) "tx_bzdstaffdirectory_locations"
-////    ["alias"]=>
-////    string(9) "locations"
-////    ["on"]=>
-////    string(83) "locations.uid = persons_locations.uid_foreign AND locations.pid IN (###PID_LIST###)"
-////  }
-////}
-//          if (is_array($arr_joins_filter))
-//          {
-//            if ($this->pObj->b_drs_sql)
-//            {
-//              t3lib_div::devlog('[INFO/SQL] There are '.count ($arr_joins_filter).' joins.', $this->pObj->extKey, 0);
-//            }
-//            foreach ($arr_joins_filter as $arr_join)
-//            {
-//              $str_enable_fields = '';
-//              if (is_array($GLOBALS['TCA'][$arr_join['table']]))    // I.e.: tx_civserv_organisation_or_structure_mm
-//              {
-//                // Table is in the registered in the TCA array
-//                $str_enable_fields  = $this->pObj->cObj->enableFields($arr_join['table']);
-//                $str_enable_fields  = str_replace($arr_join['table'], $arr_join['alias'], $str_enable_fields);
-//              }
-//              $str_joins_filter   .= "
-//                ".$arr_join['type']." ".$arr_join['table']." AS `".$arr_join['alias']."`
-//                ON (
-//                      ".$arr_join['on']." ".$str_enable_fields."
-//                   ) ";
-//              // LEFT JOIN tx_civserv_organisation_or_structure_mm AS ###table_mm###
-//              // ON (
-//              //       ###table_1###.uid = ###table_mm###.uid_local
-//              // )
-//            }
-//          }
-////var_dump($str_joins_filter);
-////exit;
-//        }
-//      }
-//      // Is there a andWhere statement from the filter class?
-// #41754.01, 1210101, dwildt, -
+      // GROUP BY :todo:
+    //$str_query = str_replace('###GROUP_BY###', '', $str_query);
 
 
-    $str_query = str_replace('###JOINS###', $str_joins.$str_joins_filter, $str_query);
-    $str_from .= $str_joins.$str_joins_filter;
-    // JOINS
-//var_dump($str_query);
-//var_dump($str_from);
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    // GROUP BY :todo:
-
-    #$str_query = str_replace('###GROUP_BY###', '', $str_query);
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    // ORDER BY
-
-    // Process the piVar sort
-    $str_order_by = $this->pObj->objSqlFun_3x->orderBy_by_piVar();
-    if (!$str_order_by)
-    {
-      $tablefield = $this->pObj->objSqlFun_3x->get_sql_alias_before($tablefield);
-      $str_order_by = $conf_view['order_by'];
-    }
-    if ($str_order_by)
-    {
-      $str_query = str_replace('###ORDER_BY###', "ORDER BY ".$str_order_by, $str_query);
-    }
-    // ORDER BY
+      // ORDER BY
+    $str_order_by = $this->get_queryArrayOrderBy( $conf_view );
+    $str_query    = str_replace( '###ORDER_BY###', $str_order_by, $str_query );
 
 
 
@@ -335,6 +220,145 @@ class tx_browser_pi1_sql_manual_3x
     $str_from       = $str_from_table . " AS `" . $str_from_alias . "`";
 
     return $str_from;
+  }
+
+/**
+ * get_queryArrayJoins( ) : 
+ * 
+ * @param   array               $conf_view  : Configuration of the current view
+ *
+ * @return	string		FROM statement
+ * @version  4.5.6
+ * @since    2.0.0 
+ */
+  private function get_queryArrayJoins( $conf_view )
+  {
+    $str_joins = '';
+    if( is_array( $conf_view['joins.'] ) )
+    {
+        // We have joins
+      $arr_joins  = $conf_view['joins.'];
+      if( $this->pObj->b_drs_sql )
+      {
+        t3lib_div::devlog( '[INFO/SQL] There are ' . count( $arr_joins ) . ' joins.', $this->pObj->extKey, 0 );
+      }
+      $str_joins  = '';
+      foreach( ( array ) $arr_joins as $arr_join )
+      {
+        $str_enable_fields = '';
+        if( is_array( $GLOBALS['TCA'][$arr_join['table']] ) )    // I.e.: tx_civserv_organisation_or_structure_mm
+        {
+          // Table is in the registered in the TCA array
+          $str_enable_fields  = $this->pObj->cObj->enableFields( $arr_join['table'] );
+          $str_enable_fields  = str_replace($arr_join['table'], $arr_join['alias'], $str_enable_fields );
+        }
+        $str_joins  = $str_joins . PHP_EOL
+                    . $arr_join['type'] . " " . $arr_join['table'] . " AS `" . $arr_join['alias'] . "` " . PHP_EOL
+                    . "ON (" . $arr_join['on'] . " " . $str_enable_fields . ") "
+                    ;
+                    // LEFT JOIN tx_civserv_organisation_or_structure_mm AS ###table_mm###
+                    // ON (
+                    //       ###table_1###.uid = ###table_mm###.uid_local
+                    // )
+      }
+    }
+
+    // Is there a join from the filter class?
+    $str_joins_filter  = '';
+// #41754.01, 1210101, dwildt, -
+// $this->pObj->arr_andWhereFilter isn't never allocated
+//      if (is_array($this->pObj->arr_andWhereFilter))
+//      {
+//        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
+//        {
+//          list($table, $field) = explode('.', $tableField);
+//          $arr_joins_filter = $conf_view['filter.'][$table.'.'][$field.'.']['joins.'];
+////array(2) {
+////  ["0."]=>
+////  array(4) {
+////    ["type"]=>
+////    string(9) "LEFT JOIN"
+////    ["table"]=>
+////    string(41) "tx_bzdstaffdirectory_persons_locations_mm"
+////    ["alias"]=>
+////    string(17) "persons_locations"
+////    ["on"]=>
+////    string(41) "persons.uid = persons_locations.uid_local"
+////  }
+////  ["1."]=>
+////  array(4) {
+////    ["type"]=>
+////    string(9) "LEFT JOIN"
+////    ["table"]=>
+////    string(30) "tx_bzdstaffdirectory_locations"
+////    ["alias"]=>
+////    string(9) "locations"
+////    ["on"]=>
+////    string(83) "locations.uid = persons_locations.uid_foreign AND locations.pid IN (###PID_LIST###)"
+////  }
+////}
+//          if (is_array($arr_joins_filter))
+//          {
+//            if ($this->pObj->b_drs_sql)
+//            {
+//              t3lib_div::devlog('[INFO/SQL] There are '.count ($arr_joins_filter).' joins.', $this->pObj->extKey, 0);
+//            }
+//            foreach ($arr_joins_filter as $arr_join)
+//            {
+//              $str_enable_fields = '';
+//              if (is_array($GLOBALS['TCA'][$arr_join['table']]))    // I.e.: tx_civserv_organisation_or_structure_mm
+//              {
+//                // Table is in the registered in the TCA array
+//                $str_enable_fields  = $this->pObj->cObj->enableFields($arr_join['table']);
+//                $str_enable_fields  = str_replace($arr_join['table'], $arr_join['alias'], $str_enable_fields);
+//              }
+//              $str_joins_filter   .= "
+//                ".$arr_join['type']." ".$arr_join['table']." AS `".$arr_join['alias']."`
+//                ON (
+//                      ".$arr_join['on']." ".$str_enable_fields."
+//                   ) ";
+//              // LEFT JOIN tx_civserv_organisation_or_structure_mm AS ###table_mm###
+//              // ON (
+//              //       ###table_1###.uid = ###table_mm###.uid_local
+//              // )
+//            }
+//          }
+////var_dump($str_joins_filter);
+////exit;
+//        }
+//      }
+//      // Is there a andWhere statement from the filter class?
+// #41754.01, 1210101, dwildt, -
+
+    return $str_joins . $str_joins_filter;
+  }
+
+/**
+ * get_queryArrayOrderBy( ) : 
+ * 
+ * @param   array               $conf_view  : Configuration of the current view
+ *
+ * @return	string		FROM statement
+ * @version  4.5.6
+ * @since    2.0.0 
+ */
+  private function get_queryArrayOrderBy( $conf_view )
+  {
+      // Process the piVar sort
+    $str_order_by = $this->pObj->objSqlFun_3x->orderBy_by_piVar( );
+    if ( ! $str_order_by )
+    {
+      $str_order_by = $conf_view['orderBy'];
+    }
+    
+    if( $str_order_by )
+    {
+      $str_order_by = "ORDER BY "
+                    . $str_order_by
+                    ;
+    }
+
+    return $str_order_by;
   }
 
 /**
