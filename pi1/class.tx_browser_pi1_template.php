@@ -3406,10 +3406,11 @@ class tx_browser_pi1_template
 //    }
 
       // #47823, 130502, dwildt, 1+
-    $this->data = $this->pObj->cObj->data;
+    $this->data = $GLOBALS['TSFE']->cObj->data;
     $this->pObj->objCObjData->add( $elements );
-      // #47823, 130502, dwildt, 1+
-    $this->pObj->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
+      // #47823, 130502, dwildt, 2+
+    $this->pObj->cObj->data       = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
+    $GLOBALS['TSFE']->cObj->data  = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
 //    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
 //    if( $this->pObj->boolFirstRow )
@@ -3431,8 +3432,9 @@ class tx_browser_pi1_template
   private function cObjDataReset( )
   {
     $this->pObj->objCObjData->reset( );
-      // #47823, 130502, dwildt, 2+
-    $this->pObj->cObj->data = $this->data;
+      // #47823, 130502, dwildt, 3+
+    $this->pObj->cObj->data       = $this->data;
+    $GLOBALS['TSFE']->cObj->data  = $this->data;
     unset( $this->data );
 
 //    if( $this->pObj->boolFirstRow )
