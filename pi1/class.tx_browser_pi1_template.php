@@ -3398,12 +3398,12 @@ class tx_browser_pi1_template
  */
   private function cObjDataAdd( $elements )
   {
-//    if( $this->pObj->boolFirstRow )
-//    {
-//      $this->pObj->dev_var_dump( $elements );
-//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-//    }
+    if( $this->pObj->boolFirstRow )
+    {
+      $this->pObj->dev_var_dump( $elements );
+      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+    }
 
       // #47823, 130502, dwildt, 1+
     $this->data = $GLOBALS['TSFE']->cObj->data;
@@ -3413,12 +3413,12 @@ class tx_browser_pi1_template
     $GLOBALS['TSFE']->cObj->data  = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
 //    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
-//    if( $this->pObj->boolFirstRow )
-//    {
-//      $this->pObj->dev_var_dump( $elements );
-//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-//    }
+    if( $this->pObj->boolFirstRow )
+    {
+      $this->pObj->dev_var_dump( $elements );
+      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+    }
   }
 
 /**
