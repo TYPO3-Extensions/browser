@@ -193,10 +193,15 @@ class tx_browser_pi1_cObjData
     {
       if( $this->pObj->b_drs_cObjData )
       {
+          // #47823, 130502, dwildt, 2+
+        $debugTrailLevel = 3;
+        $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
         $prompt = 'This fields are added to cObject: ' . implode( ', ', array_keys( $keyValues ) );
         t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt , $this->pObj->extKey, 0 );
         $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key( $keyValues );
         t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt , $this->pObj->extKey, 0 );
+          // #47823, 130502, dwildt, 1+
+        t3lib_div :: devlog( '[INFO/COBJDATA] ' . $debugTrail['prompt'], $this->pObj->extKey, 0 );
       }
     }
       // DRS
