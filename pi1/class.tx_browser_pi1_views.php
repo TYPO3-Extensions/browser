@@ -243,14 +243,14 @@ class tx_browser_pi1_views
     if ($this->pObj->b_sql_manual)
     {
         // Process the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
-      $arr_result = $this->pObj->objSqlMan_3x->get_query_array($this);
+      $arr_result = $this->pObj->objSqlMan_3x->get_queryArray($this);
     }
 
       // We don't have a manual configuration
     if (!$this->pObj->b_sql_manual)
     {
         // Process the query building automatically
-      $arr_result = $this->pObj->objSqlAut_3x->get_query_array();
+      $arr_result = $this->pObj->objSqlAut_3x->get_queryArray();
     }
 
     if ($arr_result['error']['status'])

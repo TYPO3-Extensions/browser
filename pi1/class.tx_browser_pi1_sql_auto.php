@@ -1989,7 +1989,6 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joins( )
   {
-$this->pObj->dev_var_dump( 1992 );    
     $arr_return = array( );
     $leftJoin   = null;
     $fullJoin   = null;
@@ -2101,7 +2100,6 @@ $this->pObj->dev_var_dump( 1992 );
  */
   private function get_joinsAddTablesMm( $mmTable )
   {
-$this->pObj->dev_var_dump( $mmTable );    
 
       // RETURN : mmTable is added before
     if ( in_array( $mmTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
@@ -2148,8 +2146,6 @@ $this->pObj->dev_var_dump( $mmTable );
  */
   private function get_joinsSetMm( )
   {
-$this->pObj->dev_var_dump( 2150 );    
-    
     $mode       = $this->pObj->piVar_mode;
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';

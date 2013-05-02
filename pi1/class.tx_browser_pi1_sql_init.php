@@ -227,7 +227,7 @@ class tx_browser_pi1_sql_init
       // RETURN : array in SQL manual mode
     if( $this->pObj->b_sql_manual )
     {
-      $arr_return = $this->pObj->objSqlMan_3x->get_query_array( $this );
+      $arr_return = $this->pObj->objSqlMan_3x->get_queryArray( $this );
       $this->statements['listView'] = $arr_return['data'];
       return $arr_return;
     }
