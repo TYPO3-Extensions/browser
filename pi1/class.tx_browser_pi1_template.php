@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.4.0
+ * @version 4.5.6
  * @since 1.0.0
  */
 
@@ -100,6 +100,8 @@ class tx_browser_pi1_template
   var $arr_orderBy;
     // [Array] Array with fields from functions.clean_up.csvTableFields from TS
   var $arr_rmFields   = null;
+    // [Array] Current cObj->data
+  private $data       = null;
     // [Array] Local or global TypoScript array with the displaySingle properties
   var $lDisplaySingle;
     // [Array] Local or global TypoScript array with the displayList properties
@@ -3391,7 +3393,7 @@ class tx_browser_pi1_template
  * @param	array		$elements: The current record
  * @return	void
  * @internal  #44858
- * @version   4.4.4
+ * @version   4.5.6
  * @since     4.4.4
  */
   private function cObjDataAdd( $elements )
@@ -3403,7 +3405,11 @@ class tx_browser_pi1_template
 //      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
 //    }
 
+      // #47823, 130502, dwildt, 1+
+    $this->data = $this->pObj->cObj->data;
     $this->pObj->objCObjData->add( $elements );
+      // #47823, 130502, dwildt, 1+
+    $this->pObj->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
 //    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
 //    if( $this->pObj->boolFirstRow )
@@ -3419,12 +3425,15 @@ class tx_browser_pi1_template
  *
  * @return	void
  * @internal  #44858
- * @version   4.4.4
+ * @version   4.5.6
  * @since     4.4.4
  */
   private function cObjDataReset( )
   {
     $this->pObj->objCObjData->reset( );
+      // #47823, 130502, dwildt, 2+
+    $this->pObj->cObj->data = $this->data;
+    unset( $this->data );
 
 //    if( $this->pObj->boolFirstRow )
 //    {
