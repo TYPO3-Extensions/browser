@@ -6,10 +6,21 @@
             pi1/class.tx_browser_pi1_template.php
   Bugfix
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
-
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_sql_manual.php
+              * class.tx_browser_pi1_sql_functions_3x.php
   * #47680: Engine 4.x query building: doesn't respect SQL manual mode
-            Effected file:
-            * pi1/class.tx_browser_pi1_viewlist.php
+            class.tx_browser_pi1_sql_manual_3x.php -> class.tx_browser_pi1_sql_manual.php
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1.php
+              * class.tx_browser_pi1_sql_init.php
+              * class.tx_browser_pi1_sql_manual.php
+              * class.tx_browser_pi1_sql_manual_3x.php
+              * class.tx_browser_pi1_views.php
+              * class.tx_browser_pi1_viewlist.php
+              * class.tx_browser_pi1_viewlist_3x.php
   * #47679: tmplRowIsExtraUidField( ) is unporper in SQL manual mode
             Effected file:
             * pi1/class.tx_browser_pi1_template.php

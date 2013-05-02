@@ -371,6 +371,9 @@ class tx_browser_pi1_sql_manual
     $str_order_by = $this->pObj->objSqlFun_3x->orderBy_by_piVar( );
     if ( empty( $str_order_by ) )
     {
+        // #47700, 130502, dwildt, 1-
+      //$str_order_by = $conf_view['order_by'];
+        // #47700, 130502, dwildt, 1+
       $str_order_by = $conf_view['orderBy'];
     }
     
