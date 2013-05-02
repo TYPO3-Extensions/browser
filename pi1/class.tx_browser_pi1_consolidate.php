@@ -423,7 +423,9 @@ class tx_browser_pi1_consolidate
 
 
     $this->pObj->objTyposcript->set_confSqlDevider();
-    $str_devider = $this->pObj->objTyposcript->str_sqlDeviderDisplay.$this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+    $str_devider  = $this->pObj->objTyposcript->str_sqlDeviderDisplay
+                  . $this->pObj->objTyposcript->str_sqlDeviderWorkflow
+                  ;
     // Children devider configuration, #9727
 
 
@@ -460,7 +462,7 @@ class tx_browser_pi1_consolidate
     //
     // Consolidate groupBy. Bugfix #9025, #8523
 
-    if(!$bool_dontConsolidate)
+    if( ! $bool_dontConsolidate )
     {
       $int_count              = 0;
       $rows_cons              = false;
@@ -472,6 +474,7 @@ class tx_browser_pi1_consolidate
         // 121211, dwildt, 1-
       //foreach ($arr_localTable_foreignTables as $localTableUid => $arrTables)
         // 121211, dwildt, 1+
+$this->pObj->dev_var_dump( $arr_localTable_foreignTables );    
       foreach( $arr_localTable_foreignTables as $arrTables )
       {
           // Loop through all tables (key is the uid of the local record)
