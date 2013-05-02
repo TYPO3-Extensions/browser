@@ -2100,6 +2100,7 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joinsAddTablesMm( $mmTable )
   {
+$this->pObj->dev_var_dump( $mmTable );    
 
       // RETURN : mmTable is added before
     if ( in_array( $mmTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
