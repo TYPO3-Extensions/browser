@@ -824,7 +824,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Set the manual SQL mode or the auto SQL mode
 
       // Process of the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
-    $arr_result = $this->objSqlMan_3x->check_typoscript_query_parts( );
+    $arr_result = $this->objSqlMan->check_typoscript_query_parts( );
 
       // RETURN error
     if( $arr_result['error']['status'] )
@@ -861,7 +861,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->timeTracking_log( $debugTrailLevel,  'after $this->objSqlMan_3x->check_typoscript_query_parts( )' );
+    $this->timeTracking_log( $debugTrailLevel,  'after $this->objSqlMan->check_typoscript_query_parts( )' );
       // Set the manual SQL mode or the auto SQL mode
 
 
@@ -1848,8 +1848,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSqlInit = new tx_browser_pi1_sql_init( $this );
 
       // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
-    require_once('class.tx_browser_pi1_sql_manual_3x.php');
-    $this->objSqlMan_3x = new tx_browser_pi1_sql_manual_3x( $this );
+    require_once('class.tx_browser_pi1_sql_manual.php');
+    $this->objSqlMan = new tx_browser_pi1_sql_manual( $this );
 
       // Class with methods for statistics requirement
     require_once('class.tx_browser_pi1_statistics.php');

@@ -23,7 +23,7 @@
   ***************************************************************/
 
  /**
-  * The class tx_browser_pi1_sql_manual_3x bundles sql methods for this case: The user has defined a SELECT
+  * The class tx_browser_pi1_sql_manual bundles sql methods for this case: The user has defined a SELECT
   * statement with a FROM and a WHERE clause and maybe with the array JOINS.
   *
   * @author    Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
@@ -39,7 +39,7 @@
  *
  *
  *
- *   52: class tx_browser_pi1_sql_manual_3x
+ *   52: class tx_browser_pi1_sql_manual
  *   69:     function __construct($parentObj)
  *
  *              SECTION: SQL
@@ -52,7 +52,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_sql_manual_3x
+class tx_browser_pi1_sql_manual
 {
 
 /**
@@ -670,8 +670,8 @@ class tx_browser_pi1_sql_manual_3x
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_manual_3x.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_manual_3x.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_manual.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_manual.php']);
 }
 
 ?>

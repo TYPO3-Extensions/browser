@@ -1328,9 +1328,9 @@ if( $this->pObj->bool_accessByIP )
       // RETURN case is SQL manual
     if( $this->pObj->b_sql_manual )
     {
-      $arr_result = $this->pObj->objSqlMan_3x->get_queryArray( $this );
+      $arr_result = $this->pObj->objSqlMan->get_queryArray( $this );
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 1,  'after $this->pObj->objSqlMan_3x->get_queryArray( )' );
+      $this->pObj->timeTracking_log( 1,  'after $this->pObj->objSqlMan->get_queryArray( )' );
       return $arr_result;
     }
       // RETURN case is SQL manual
