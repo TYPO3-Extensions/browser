@@ -137,24 +137,15 @@ class tx_browser_pi1_sql_manual_3x
 
       // ORDER BY
     $str_order_by = $this->get_queryArrayOrderBy( $conf_view );
-    $str_query    = str_replace( '###ORDER_BY###', $str_order_by, $str_query );
+    if( $str_order_by )
+    {
+      $str_query = str_replace( '###ORDER_BY###', 'ORDER BY ' . $str_order_by, $str_query );
+    }
 
+      // Clean Up: Delete unused markers
+    $str_query = $this->get_queryArrayCleanUp( $str_query );
 
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    // Clean Up: Delete unused markers
-
-    $str_query = str_replace('###JOINS###',     '', $str_query);
-    $str_query = str_replace('###WHERE###',     '', $str_query);
-    $str_query = str_replace('###GROUP_BY###',  '', $str_query);
-    $str_query = str_replace('###ORDER_BY###',  '', $str_query);
-
-    $str_query = str_replace('AND ', "\n".'                    AND ', $str_query);
-    $str_query = str_replace('OR ', "\n".'                    OR ', $str_query);
-    // For human readable
-
+      // Build return array
     $arr_return['data']['query']    = $str_query;
     $arr_return['data']['select']   = $str_select;
     $arr_return['data']['from']     = $str_from;
@@ -162,47 +153,52 @@ class tx_browser_pi1_sql_manual_3x
     $arr_return['data']['orderBy']  = $str_order_by;
     $arr_return['data']['groupBy']  = $str_group_by;
 
+      // Extend the query, if it has synonyms
+    $arr_return = $this->pObj->objSqlFun_3x->query_with_synonyms( $arr_return );
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Extend the query, if it has synonyms
+      // Replace Markers for pidlist and uid
+    $arr_return['data'] = $this->get_queryArrayMarker( $arr_return['data'] );
 
-    $arr_return = $this->pObj->objSqlFun_3x->query_with_synonyms($arr_return);
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    // Replace Markers for pidlist and uid
-
-    $str_pid_list = $this->pObj->pidList;
-    $str_pid_list = str_replace(',', ', ', $str_pid_list);
-    // For human readable
-    foreach((array) $arr_return['data'] as $str_query_part => $str_statement)
-    {
-      $str_statement                        = str_replace('###PID_LIST###', $str_pid_list,                  $str_statement);
-      $str_statement                        = str_replace('###UID###',      $this->pObj->piVars['showUid'], $str_statement);
-      $arr_return['data'][$str_query_part]  = $str_statement;
-    }
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    // Return the result
-
+      // DRS
     if ($this->pObj->b_drs_sql)
     {
-      t3lib_div::devlog('[INFO/SQL] '.$arr_return['data']['query'], $this->pObj->extKey, 0);
+      $prompt = $arr_return['data']['query'];
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
     }
+      // DRS
 
-      // #47678, 130429, dwildt, 3+      
-    $table      = $this->pObj->localTable;
-    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-//var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->int_localisation_mode );
-    unset( $arr_result );
+//      // #47678, 130429, dwildt, 3+      
+//    $table      = $this->pObj->localTable;
+//    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+////var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->int_localisation_mode );
+//    unset( $arr_result );
 
-
+      // Return the result
     return $arr_return;
   }
+
+/**
+ * get_queryArrayCleanUp( ) : 
+ * 
+ * @param   string                $query  : 
+ *
+ * @return	string            $query  :
+ * @version  4.5.6
+ * @since    2.0.0 
+ */
+  private function get_queryArrayCleanUp( $query )
+  {
+    $query = str_replace('###JOINS###',     null, $query);
+    $query = str_replace('###WHERE###',     null, $query);
+    $query = str_replace('###GROUP_BY###',  null, $query);
+    $query = str_replace( '###ORDER_BY###',  null, $query );
+
+    $query = str_replace( 'AND ',  PHP_EOL . '                    AND ', $query );
+    $query = str_replace( 'OR ',   PHP_EOL . '                    OR ',  $query );
+    
+    return $query;
+  }
+
 
 /**
  * get_queryArrayFrom( ) : 
@@ -334,11 +330,38 @@ class tx_browser_pi1_sql_manual_3x
   }
 
 /**
+ * get_queryArrayMarker( ) : 
+ * 
+ * @param   array               $queryParts
+ *
+ * @return	array		$queryParts
+ * @version  4.5.6
+ * @since    2.0.0 
+ */
+  private function get_queryArrayMarker( $queryParts )
+  {
+    $str_pid_list = $this->pObj->pidList;
+      // For human readable
+    $str_pid_list = str_replace( ',', ', ', $str_pid_list );
+  
+      // LOOP
+    foreach( ( array ) $queryParts as $queryPart => $statement )
+    {
+      $statement  = str_replace( '###PID_LIST###', $str_pid_list,                  $statement );
+      $statement  = str_replace( '###UID###',      $this->pObj->piVars['showUid'], $statement );
+      $queryParts[$queryPart] = $statement;
+    }
+    
+    return $queryParts;
+  }
+
+
+/**
  * get_queryArrayOrderBy( ) : 
  * 
  * @param   array               $conf_view  : Configuration of the current view
  *
- * @return	string		FROM statement
+ * @return	string		ORDER BY statement
  * @version  4.5.6
  * @since    2.0.0 
  */
@@ -346,21 +369,11 @@ class tx_browser_pi1_sql_manual_3x
   {
       // Process the piVar sort
     $str_order_by = $this->pObj->objSqlFun_3x->orderBy_by_piVar( );
-$this->pObj->dev_var_dump( $str_order_by );
     if ( empty( $str_order_by ) )
     {
       $str_order_by = $conf_view['orderBy'];
     }
-$this->pObj->dev_var_dump( $str_order_by );
     
-    if( $str_order_by )
-    {
-      $str_order_by = "ORDER BY "
-                    . $str_order_by
-                    ;
-    }
-$this->pObj->dev_var_dump( $str_order_by );
-
     return $str_order_by;
   }
 
