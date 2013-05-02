@@ -103,7 +103,7 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function add( $keyValues, $drs=true, $debugTrailLevel=1 )
+  public function add( $keyValues, $drs=true, $debugTrailLevel=0 )
   {
     $debugTrailLevel++;
 
@@ -428,7 +428,7 @@ class tx_browser_pi1_cObjData
  * @version 4.5.6
  * @since   4.4.4
  */
-  private function setArray( $keyValues, $drs, $debugTrailLevel = 1 )
+  private function setArray( $keyValues, $drs=true, $debugTrailLevel=0 )
   {
     $debugTrailLevel++;
 
