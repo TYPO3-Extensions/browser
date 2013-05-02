@@ -103,7 +103,7 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function add( $keyValues, $drs, $debugTrailLevel = 0 )
+  public function add( $keyValues, $drs=true, $debugTrailLevel=1 )
   {
     $debugTrailLevel++;
 
