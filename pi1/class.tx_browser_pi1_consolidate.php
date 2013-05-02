@@ -595,24 +595,21 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
     // Store uids. We need it for link to single view and for the the Index-Browser.
     $arr_uids = false;
     $rows_new = array( );
-$this->pObj->dev_var_dump( $rows_cons );    
-    foreach( $rows_cons as $row_cons )
+$this->pObj->dev_var_dump( $rows_cons, $arrMMSorting );    
+    foreach( ( array ) $rows_cons as $row_cons )
     {
       //$arr_uids[] = $row_cons[$localTable.'.uid'];
       $rows_new[$int_count][$localTable.'.uid'] = $row_cons[$localTable.'.uid'];
-      foreach ($arrSelectWoFunc as $tableField)
+      foreach( ( array ) $arrSelectWoFunc as $tableField )
       {
         $tableField = trim($tableField);
         $rows_new[$int_count][$tableField] = $row_cons[$tableField];
       }
       // dwildt, 100428: ADDED in context with table_mm.sorting
-      if(is_array($arrMMSorting))
+      foreach( ( array ) $arrMMSorting as $tableField )
       {
-        foreach ($arrMMSorting as $tableField)
-        {
-          $tableField = trim($tableField);
-          $rows_new[$int_count][$tableField] = $row_cons[$tableField];
-        }
+        $tableField = trim($tableField);
+        $rows_new[$int_count][$tableField] = $row_cons[$tableField];
       }
       // dwildt, 100428: ADDED in context with table_mm.sorting
       $int_count++;
