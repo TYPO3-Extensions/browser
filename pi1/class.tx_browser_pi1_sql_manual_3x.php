@@ -167,11 +167,11 @@ class tx_browser_pi1_sql_manual_3x
     }
       // DRS
 
-//      // #47678, 130429, dwildt, 3+      
-//    $table      = $this->pObj->localTable;
-//    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-////var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->int_localisation_mode );
-//    unset( $arr_result );
+      // #47678, 130429, dwildt, 3+      
+    $table      = $this->pObj->localTable;
+    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+//var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->int_localisation_mode );
+    unset( $arr_result );
 
       // Return the result
     return $arr_return;
