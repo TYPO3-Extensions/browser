@@ -28,7 +28,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.1.26
+ * @version     4.5.6
  * @since       1.0
  */
 
@@ -870,26 +870,28 @@ class tx_browser_pi1_viewlist
  *
  * @param    array        $rows  : consolidated rows
  * @return    void
- * @version 3.9.12
+ * @version 4.5.6
  * @since   3.9.12
  */
   private function rows_consolidateChildren( $rows )
   {
-      // RETURN : SQL manual mode
-    if( $this->pObj->b_sql_manual )
-    {
-      if( $this->pObj->b_drs_localisation )
-      {
-        $prompt = 'Manual SQL mode: Rows didn\'t get any consolidation for children.';
-        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
-      }
-$this->pObj->dev_var_dump( $rows );
-$arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
-$rows             = $arr_return['data']['rows'];
-$this->pObj->dev_var_dump( $rows );
-      return $rows;
-    }
-      // RETURN : SQL manual mode
+      // #47680, 130502, dwildt, -
+//      // RETURN : SQL manual mode
+//    if( $this->pObj->b_sql_manual )
+//    {
+//      if( $this->pObj->b_drs_localisation )
+//      {
+//        $prompt = 'Manual SQL mode: Rows didn\'t get any consolidation for children.';
+//        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+//      }
+////$this->pObj->dev_var_dump( $rows );
+////$arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
+////$rows             = $arr_return['data']['rows'];
+////$this->pObj->dev_var_dump( $rows );
+//      return $rows;
+//    }
+//      // RETURN : SQL manual mode
+      // #47680, 130502, dwildt, -
 
       // Consolidate children
     $arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
