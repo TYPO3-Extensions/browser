@@ -3404,16 +3404,18 @@ class tx_browser_pi1_template
     {
       $this->pObj->dev_var_dump( $elements );
       $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-      $this->pObj->dev_var_dump( $this->pObj->local_cObj );
+      $this->pObj->dev_var_dump( $this->pObj->local_cObj->data );
       $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
     }
 
       // #47823, 130502, dwildt, 1+
-    $this->dataTsfe = $GLOBALS['TSFE']->cObj->data;
-    $this->dataCobj = $this->pObj->cObj->data;
+    $this->dataTsfe       = $GLOBALS['TSFE']->cObj->data;
+    $this->dataCobj       = $this->pObj->cObj->data;
+    $this->dataLocalCobj  = $this->pObj->local_cObj->data;
     $this->pObj->objCObjData->add( $elements );
       // #47823, 130502, dwildt, 2+
     $this->pObj->cObj->data       = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
+    $this->pObj->local_cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     $GLOBALS['TSFE']->cObj->data  = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
 //    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
@@ -3439,6 +3441,7 @@ class tx_browser_pi1_template
       // #47823, 130502, dwildt, 3+
     $this->pObj->cObj->data       = $this->dataCobj;
     $GLOBALS['TSFE']->cObj->data  = $this->dataTsfe;
+    $this->pObj->local_cObj->data = $this->dataLocalCobj;
     unset( $this->data );
 
 //    if( $this->pObj->boolFirstRow )
