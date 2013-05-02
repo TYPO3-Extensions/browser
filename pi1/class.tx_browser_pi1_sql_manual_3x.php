@@ -346,10 +346,12 @@ class tx_browser_pi1_sql_manual_3x
   {
       // Process the piVar sort
     $str_order_by = $this->pObj->objSqlFun_3x->orderBy_by_piVar( );
-    if ( ! $str_order_by )
+$this->pObj->dev_var_dump( $str_order_by );
+    if ( empty( $str_order_by ) )
     {
       $str_order_by = $conf_view['orderBy'];
     }
+$this->pObj->dev_var_dump( $str_order_by );
     
     if( $str_order_by )
     {
@@ -357,6 +359,7 @@ class tx_browser_pi1_sql_manual_3x
                     . $str_order_by
                     ;
     }
+$this->pObj->dev_var_dump( $str_order_by );
 
     return $str_order_by;
   }
