@@ -106,6 +106,8 @@ class tx_browser_pi1_consolidate
  */
   function consolidate( $rows )
   {
+$this->pObj->dev_var_dump( $rows );    
+    
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -618,7 +620,7 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
     $this->pObj->arrConsolidate['rows_wi_cons'] = count($rows_new);
 //if(t3lib_div::_GP('dev')) var_dump('cons 534', array_keys(current($rows_new)));
 
-
+$this->pObj->dev_var_dump( $rows_new );    
     return $arr_return;
   }
 
