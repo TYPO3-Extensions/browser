@@ -885,8 +885,8 @@ class tx_browser_pi1_viewlist
       }
 $this->pObj->dev_var_dump( $rows );
 $arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
-$XXX_rows             = $arr_return['data']['rows'];
-$this->pObj->dev_var_dump( $XXX_rows );
+$rows             = $arr_return['data']['rows'];
+$this->pObj->dev_var_dump( $rows );
       return $rows;
     }
       // RETURN : SQL manual mode
