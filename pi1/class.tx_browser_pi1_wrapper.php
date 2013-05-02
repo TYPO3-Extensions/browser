@@ -1347,14 +1347,14 @@ class tx_browser_pi1_wrapper
     if( is_array($arr_tsConf ) )
     {
         // $arr_tsConf is an array. RETURN $str, wrapped with this TS configuration array.
-      $str = $this->pObj->local_cObj->stdWrap($str, $arr_tsConf);
+      $str = $this->pObj->local_cObj->stdWrap( $str, $arr_tsConf );
       return $str;
     }
 
     if( is_array( $this->pObj->conf['general_stdWrap.'] ) )
     {
         // general_stdWrap is an array. RETURN $str, wrapped with general_stdWrap.
-      $str = $this->pObj->local_cObj->stdWrap($str, $this->pObj->conf['general_stdWrap.']);
+      $str = $this->pObj->local_cObj->stdWrap( $str, $this->pObj->conf['general_stdWrap.'] );
       return $str;
     }
 

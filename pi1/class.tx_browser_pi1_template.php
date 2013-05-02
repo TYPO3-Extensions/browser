@@ -100,10 +100,13 @@ class tx_browser_pi1_template
   var $arr_orderBy;
     // [Array] Array with fields from functions.clean_up.csvTableFields from TS
   var $arr_rmFields   = null;
+    // #47823, 130502, dwildt, 2+
 //    // [Array] Current cObj->data
 //  private $dataCobj   = null;
+    // #47823, 130502, dwildt, 2+
     // [Array] Current cObj->data
   private $dataLocalCobj   = null;
+    // #47823, 130502, dwildt, 2+
 //    // [Array] Current TSFE->cObj->data
 //  private $dataTsfe   = null;
     // [Array] Local or global TypoScript array with the displaySingle properties
@@ -3410,12 +3413,12 @@ class tx_browser_pi1_template
 //      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
 //    }
 
-      // #47823, 130502, dwildt, 1+
+      // #47823, 130502, dwildt, 3+
 //    $this->dataTsfe       = $GLOBALS['TSFE']->cObj->data;
 //    $this->dataCobj       = $this->pObj->cObj->data;
     $this->dataLocalCobj  = $this->pObj->local_cObj->data;
     $this->pObj->objCObjData->add( $elements );
-      // #47823, 130502, dwildt, 2+
+      // #47823, 130502, dwildt, 3+
 //    $GLOBALS['TSFE']->cObj->data  = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
 //    $this->pObj->cObj->data       = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     $this->pObj->local_cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
@@ -3441,11 +3444,11 @@ class tx_browser_pi1_template
   private function cObjDataReset( )
   {
     $this->pObj->objCObjData->reset( );
-      // #47823, 130502, dwildt, 3+
+      // #47823, 130502, dwildt, 4+
 //    $GLOBALS['TSFE']->cObj->data  = $this->dataTsfe;
 //    $this->pObj->cObj->data       = $this->dataCobj;
     $this->pObj->local_cObj->data = $this->dataLocalCobj;
-    unset( $this->data );
+    unset( $this->dataLocalCobj );
 
 //    if( $this->pObj->boolFirstRow )
 //    {

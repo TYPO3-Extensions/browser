@@ -2,7 +2,8 @@
   13-05-02
   Feature
   * #47823: Extend cObj->data +++ second step
-
+            Effected file:
+            pi1/class.tx_browser_pi1_template.php
   Bugfix
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
 
