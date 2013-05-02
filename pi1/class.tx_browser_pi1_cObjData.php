@@ -103,12 +103,16 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function add( $keyValues, $drs = true )
+  public function add( $keyValues, $drs, $debugTrailLevel = 0 )
   {
+    $debugTrailLevel++;
+
     $this->backup( );
     $this->addArrayFieldWrapper( );
     $this->addTsValues( );
-    $this->addArray( $keyValues, $drs );
+    $this->addArray( $keyValues, $drs, $debugTrailLevel );
+
+    $debugTrailLevel--;
   }
 
 /**
@@ -140,10 +144,10 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function set( $keyValues, $drs = true )
+  public function set( $keyValues, $drs = true, $debugTrailLevel = 1 )
   {
     $this->backup( );
-    $this->setArray( $keyValues, $drs );
+    $this->setArray( $keyValues, $drs, $debugTrailLevel );
     $this->addTsValues( );
   }
   
@@ -156,15 +160,20 @@ class tx_browser_pi1_cObjData
   **********************************************/
 
 /**
- * addArray( ): Adds the elements of the given array to cObjData
+ * addArray( )  : Adds the elements of the given array to cObjData
  *
- * @param    array
+ * @param    array      $keyValues        :
+ * @param    boolean    $drs              :
+ * @param    integer    $debugTrailLevel  :
  * @return    void
- * @version 4.4.4
+ * @version 4.5.6
  * @since   4.4.4
  */
-  private function addArray( $keyValues, $drs )
+  private function addArray( $keyValues, $drs, $debugTrailLevel )
   {
+      // #47823, 130502, dwildt, 1+
+    $debugTrailLevel++;
+
       // FOREACH  : element
     foreach( ( array ) $keyValues as $key => $value )
     {
@@ -193,19 +202,20 @@ class tx_browser_pi1_cObjData
     {
       if( $this->pObj->b_drs_cObjData )
       {
-          // #47823, 130502, dwildt, 2+
-        $debugTrailLevel = 3;
+          // #47823, 130502, dwildt, 1+
         $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
         $prompt = 'This fields are added to cObject: ' . implode( ', ', array_keys( $keyValues ) );
         t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt , $this->pObj->extKey, 0 );
         $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key( $keyValues );
         t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt , $this->pObj->extKey, 0 );
           // #47823, 130502, dwildt, 1+
-        t3lib_div :: devlog( '[INFO/COBJDATA] ' . $debugTrail['prompt'], $this->pObj->extKey, 0 );
+        t3lib_div :: devlog( '[INFO/COBJDATA] Call from ' . $debugTrail['prompt'], $this->pObj->extKey, 0 );
       }
     }
       // DRS
 
+      // #47823, 130502, dwildt, 1+
+    $debugTrailLevel--;
   }
 
 /**
@@ -415,10 +425,10 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  private function setArray( $keyValues, $drs )
+  private function setArray( $keyValues, $drs, $debugTrailLevel = 1 )
   {
     unset( $this->pObj->cObj->data );
-    $this->addArray( $keyValues, $drs );
+    $this->addArray( $keyValues, $drs, $debugTrailLevel );
   }
 
   
