@@ -647,7 +647,7 @@ plugin.tx_browser_pi1 {
           form_input {
             // #47632
             //value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMapFilter" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
-            value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMap-filter-item" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
+            value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="{$plugin.tx_browser_pi1.map.html.form.input.class}" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
           }
             // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
           orderBy = SORT_STRING
@@ -754,7 +754,7 @@ plugin.tx_browser_pi1 {
                   // #47632
                 value >
                 value (
-                  <form id="oxMap-filter-module">
+                  <form id="{$plugin.tx_browser_pi1.map.html.form.id}">
                     ###INPUTS###
                   </form>
   )
@@ -802,24 +802,9 @@ plugin.tx_browser_pi1 {
   )
               }
                 // HTML div tag for the map
-              map_html = COA
+              map_html = TEXT
               map_html {
-                  // javascript is compressed (default mode)
-                10 = TEXT
-                10 {
-                  if {
-                    //isFalse = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
-                  }
-                  value = <div id="oxMap-area" class="oxMapArea"></div>
-                }
-                  // javascript is uncompressed (debugging mode)
-                //20 = TEXT
-                //20 {
-                //  if {
-                //    isTrue = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
-                //  }
-                //  value = <div id="oxMap-OSM" class="oxMapArea"></div>
-                //}
+                value = <div id="oxMap-area" class="oxMapArea"></div>
               }
                 // Javascript for the map. 20: Provider and API, 30: Custom, 40: oxRenderMap
               map_jss = COA

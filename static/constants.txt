@@ -192,7 +192,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on:
   map.popup.behaviour = hover
   # cat=Browser - Controlling/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  controlling.links = Click me!
+  map.controlling.links = Click me!
 
   # cat=BrowserMaps - Database//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
   map.field.linktoSingle = 
@@ -217,21 +217,28 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Database//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
   map.field.categoryOffsetY = 
   # cat=BrowserMaps - Database/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  database.links = Click me!
+  map.database.links = Click me!
 
   # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added to the modules, LayerSwitcher to the controllers. There will be an alert in the frontend in case of a bug.
   map.debugging.feAlert = 0
   # cat=BrowserMaps - Debugging//102;             type=boolean;   label= Use uncompressed JavaScript:The oxMap API files will included uncompressed. Default is one include compressed file.
   map.debugging.uncompressed = 0
   # cat=BrowserMaps - Debugging/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  debugging.links = Click me!
+  map.debugging.links = Click me!
 
   # cat=BrowserMaps - Default Icons//101;             type=string;    label= Path to legend icons: Path to the directory, which contains the images for the form legend (with ending slash!). Default: EXT:browser/res/js/map/icons/legend/ 
   map.pathToLegend = EXT:browser/res/js/map/icons/legend/
   # cat=BrowserMaps - Default Icons//102;             type=string;    label= Path to point icons: Path to the directory, which contains the images for points in the map (with ending slash!). Default: EXT:browser/res/js/map/icons/points/ 
   map.pathToPoints = EXT:browser/res/js/map/icons/points/
   # cat=BrowserMaps - Default Icons/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  defaultIcons.links = Click me!
+  map.defaultIcons.links = Click me!
+
+  # cat=BrowserMaps - HTML//101;             type=string;    label= Filter id: HTML id of the filter form
+  map.html.form.id          = oxMap-filter-module
+  # cat=BrowserMaps - HTML//102;             type=string;    label= Input class: HTML class of the input fields
+  map.html.form.input.class = oxMap-filter-item
+  # cat=BrowserMaps - HTML/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  map.html.links = Click me!
 
   # cat=BrowserMaps - Zoom//101;        type=boolean;   label= Zoom wheel:Enable or disable the zoom wheel.
   map.zoomWheel = 1
@@ -244,6 +251,6 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Zoom//105;        type=int+;      label= Number of zoom levels for CI: The number of zoom levels with an own CI. Value should not be greater than Maximum zoom level.
   map.zoomLevel.levels = 18
   # cat=BrowserMaps - Zoom/others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  zoom.links = Click me!
+  map.zoom.links = Click me!
 
 }
