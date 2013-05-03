@@ -348,7 +348,7 @@ plugin.tx_browser_pi1 {
       provider  = {$plugin.tx_browser_pi1.map.provider}
       template {
           // [STRING] Path to the map HTML template
-        file = EXT:browser/res/html/map/default_1.1.01.tmpl
+        file = EXT:browser/res/html/map/default_1.3.tmpl
       }
       configuration {
         categories {

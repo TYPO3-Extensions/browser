@@ -6,6 +6,11 @@
             pi1/class.tx_browser_pi1_template.php
   * #47632: oxMap for Route
             * Update 1.2 -> 1.3
+              Removed
+              * res/html/map/default_0.0.9.tmpl
+              Moved
+              * res/html/map/
+                * default_1.1.01.tmpl -> default_1.3.tmpl
               Effected files:
   Bugfix
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases

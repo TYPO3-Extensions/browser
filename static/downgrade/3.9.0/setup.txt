@@ -283,7 +283,7 @@ plugin.tx_browser_pi1 {
           inline = 0
         }
           // [STRING] Path to the map HTML template
-        file = EXT:browser/res/html/map/default_1.1.01.tmpl
+        file = EXT:browser/res/html/map/default_1.3.tmpl
       }
       marker {
         category {
