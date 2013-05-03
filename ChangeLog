@@ -4,6 +4,9 @@
   * #47823: Extend cObj->data +++ second step
             Effected file:
             pi1/class.tx_browser_pi1_template.php
+  * #47632: oxMap for Route
+            * Update 1.2 -> 1.3
+              Effected files:
   Bugfix
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
             Effected files:
