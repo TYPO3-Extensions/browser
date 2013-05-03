@@ -57,35 +57,37 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     case($llStatic == 'de'):
       // German
       // Plugin 1
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Browser');
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/', 'Browser <= 3.9.0');
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_content/', '+Browser - Out of the Box');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/',                     'Browser');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/',     'Browser <= 3.9.0');
         // Plugin 5
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Kalender');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/',                 '+Browser Kalender');
         // Plugin 4
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (kein Cache)');
-        // Plugin 1: sample tt_news
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Beispiel fuer tt_news');
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/dam/', '+Browser Beispiel fuer DAM');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/',                 '+Browser (kein Cache)');
+        // Plugin 1
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_content/',  '+Browser - Out of the Box');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/',     '+Browser Beispiel fuer tt_news');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/dam/',         '+Browser Beispiel fuer DAM');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/map/', '+Browser oxMap <= 1.2');
         // Plugin 3
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Handbuecher');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/',                 'Browser Handbuecher');
         // TypoScript: Include Static Templates
       break;
     default:
       // English
       // Plugin 1
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Browser');
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/', 'Browser <= 3.9.0');
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_content/', '+Browser - out of the box');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/',                     'Browser');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/',     'Browser <= 3.9.0');
         // Plugin 5
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Calendar');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/',                 '+Browser Calendar');
         // Plugin 4
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (no cache)');
-        // Plugin 1: sample tt_news
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Sample for tt_news');
-      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/dam/', '+Browser Sample for DAM');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/',                 '+Browser (no cache)');
+        // Plugin 1
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_content/',  '+Browser - out of the box');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/',     '+Browser Sample for tt_news');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/dam/',         '+Browser Sample for DAM');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/map/', '+Browser oxMap <= 1.2');
         // Plugin 3
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Manuals');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/',                 'Browser Manuals');
         // TypoScript: Include Static Templates
       break;
   }
