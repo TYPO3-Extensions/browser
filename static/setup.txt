@@ -646,8 +646,8 @@ plugin.tx_browser_pi1 {
           form_input = TEXT
           form_input {
             // #47632
-            //value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMapFilter" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
-            value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMap-filter-item" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
+            value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMapFilter" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
+            //value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMap-filter-item" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
           }
             // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
           orderBy = SORT_STRING
@@ -753,8 +753,8 @@ plugin.tx_browser_pi1 {
   )
               }
                   // #47632
-                value >
-                value (
+                XXvalue >
+                XXvalue (
                   <form id="oxMap-filter-item">
                     ###INPUTS###
                   </form>
