@@ -7,11 +7,16 @@
   * #47632: oxMap for Route
             * Update 1.2 -> 1.3
               Removed
-              * res/html/map/default_0.0.9.tmpl
+              * res
+                * html/map/default_0.0.9.tmpl
+                * js/map/lib/OpenLayers_2.10.0
               Moved
               * res/html/map/
                 * default_1.1.01.tmpl -> default_1.3.tmpl
               Effected files:
+              * static
+                * downgrade/3.9.0/setup.txt
+                * setup.txt
   Bugfix
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
             Effected files:
