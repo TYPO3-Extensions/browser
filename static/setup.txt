@@ -886,10 +886,7 @@ plugin.tx_browser_pi1 {
                       <script>
                       /* <![CDATA[ */
                           // Be aware of the trailing slash!
-                        //OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
                         var rawdata = '###JSONDATA###';
-                        //window.oxMap = {};
-                        //window.oxMap.Config = {
                         configuration = {
 
 )
@@ -951,6 +948,16 @@ plugin.tx_browser_pi1 {
                       <script src="typo3conf/ext/browser/res/js/map/api/1.3.03/oxMap.OSM.js"></script>
                       <script src="typo3conf/ext/browser/res/js/map/api/1.3.03/oxMap.Utils.js"></script>
                       <script src="typo3conf/ext/browser/res/js/map/api/1.3.03/oxMap.js"></script>
+)
+                  }
+                    // OpenLayers.ImgPath
+                  30 = TEXT
+                  30 {
+                    value (
+                      <script>
+                        OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
+                      </script>
+
 )
                   }
                 }
