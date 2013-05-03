@@ -920,8 +920,9 @@ plugin.tx_browser_pi1 {
                           // Be aware of the trailing slash!
                         OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
                         var rawdata = '###JSONDATA###';
-                        window.oxMap = {};
-                        window.oxMap.Config = {
+                        //window.oxMap = {};
+                        //window.oxMap.Config = {
+                        configuration = {
 
 )
                   }
