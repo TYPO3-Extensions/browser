@@ -85,6 +85,60 @@ plugin.tx_browser_pi1 {
               }
             }
           }
+          jss {
+            dynamic {
+                // Default center of the map
+              oxMapConfigCenter = TEXT
+              oxMapConfigCenter {
+                  // [STRING] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
+                value = [9.15,50.1725]
+              }
+                // Map type: ROADMAP || Mapnik
+              oxMapConfigType = COA
+              oxMapConfigType {
+                  // ROADMAP, if GoogleMaps
+                10 = TEXT
+                10 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value = ['ROADMAP']
+                }
+                  // Mapnik, if Open Street Map
+                20 = TEXT
+                20 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
+                  value = ['Mapnik']
+                }
+              }
+                // Map wms: GMap || OSM
+              oxMapConfigWms = COA
+              oxMapConfigWms {
+                  // GMS, if GoogleMaps
+                10 = TEXT
+                10 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value = 'GMap'
+                }
+                  // OSM, if Open Street Map
+                20 = TEXT
+                20 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
+                  value = 'OSM'
+                }
+              }
+            }
+          }
         }
       }
     }
