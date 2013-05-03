@@ -191,7 +191,7 @@ plugin.tx_browser_pi1 {
   map.path.categoryIcon = uploads/media/ 
   # cat=BrowserMaps - Controlling//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on:
   map.popup.behaviour = hover
-  # cat=Browser - Controlling/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  # cat=BrowserMaps - Controlling/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.controlling.links = Click me!
 
   # cat=BrowserMaps - Database//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
