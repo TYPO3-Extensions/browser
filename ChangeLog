@@ -9,7 +9,13 @@
               Removed
               * res
                 * html/map/default_0.0.9.tmpl
-                * js/map/lib/OpenLayers_2.10.0
+                * js/map
+                  * lib
+                    * api_1.1.02/*
+                    * OpenLayers_2.10.0/*
+                    * 1.2.01
+                  * oxMap.Config_1.1.01.js
+                  * oxRenderMap_1.1.02.js
               Moved
               * res/html/map/
                 * default_1.1.01.tmpl -> default_1.3.tmpl
