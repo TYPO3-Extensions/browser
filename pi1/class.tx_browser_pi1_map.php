@@ -1722,7 +1722,7 @@ if( $this->pObj->b_drs_todo )
     
       // #47632
     list( $lon, $lat ) = $objLibMap->centerCoor( );
-    $centerCoor = '{ lon : ' . $lon . ', lat : ' . $lat . '}';
+    $centerCoor = '{ lon : ' . $lon . ', lat : ' . $lat . ' }';
 
       // DRS
     if( $this->pObj->b_drs_map )
