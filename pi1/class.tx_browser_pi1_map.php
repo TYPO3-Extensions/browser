@@ -1714,10 +1714,15 @@ if( $this->pObj->b_drs_todo )
     }
       // FOR all coordinates
 
-      // Get center coordinates
-    $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
-    $centerCoor = '[' . $centerCoor . ']';
-      // Get center coordinates
+      // #47632
+//      // Get center coordinates
+//    $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
+//    $centerCoor = '[' . $centerCoor . ']';
+//      // Get center coordinates
+    
+      // #47632
+    list( $lon, $lat ) = $objLibMap->centerCoor( );
+    $centerCoor = '{ lon : ' . $lon . ', lat : ' . $lat . '}';
 
       // DRS
     if( $this->pObj->b_drs_map )
