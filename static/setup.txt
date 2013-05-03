@@ -987,7 +987,7 @@ plugin.tx_browser_pi1 {
                     value (
 
                       <script>
-                        OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
+                        //OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
                       </script>
 
 )
