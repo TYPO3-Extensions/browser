@@ -797,39 +797,7 @@ plugin.tx_browser_pi1 {
               map_html {
                 value = <div id="oxMap-area" class="oxMapArea"></div>
               }
-                // Javascript for the map
-              map_jss = TEXT
-              map_jss {
-                value (
-                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/OpenLayers.js"></script>
-                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
-                  <script>
-                  /* <![CDATA[ */
-                      // Be aware of the trailing slash!
-                    OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
-                    var rawdata = '###JSONDATA###';
-                    var oxMapConfig = {
-                      MapId:          'oxMapArea',                //    HTML map viewport id
-                      MapControls:    '###MAPCONTROLS###',        //    customized control types
-                      MapZoomWheel:   '###ZOOMWHEELENABLE###',
-                      MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
-                      MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | off | on (for drawing one point only)
-
-                      OSM:            true,                                              //    WMS type OSM
-                      OSMConfig:      {
-                        type:           'Mapnik',                  //    Mapnik
-                        name:           'OpenStreetMap (Mapnik)',  //    OpenStreetMap (Mapnik)
-                        center:         '###OSMCONFIGCENTER###',   //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-                        zoomStartLevel: '###OSMCONFIGZOOM###',     //    integer (0 - 19) set zoom level
-                      }
-                    };
-                  /* ]]> */
-                  </script>
-                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.11.js"></script>
-)
-              }
-              map_jss >
-                // 20: Provider and API, 30: Custom, 40: oxRenderMap
+                // Javascript for the map. 20: Provider and API, 30: Custom, 40: oxRenderMap
               map_jss = COA
               map_jss {
                   // 10: Error prompt, if provider isn't proper. 20: GoogleMaps API || OpenStreetMap API
@@ -967,6 +935,7 @@ plugin.tx_browser_pi1 {
                     }
                     value (
                       <script src="typo3conf/ext/browser/res/js/map/oxMap.Render_1.3.03.js"></script>
+                      <script>new oxMapRender(configuration)</script>
 )
                   }
                     // All uncompressed files (debugging mode)
