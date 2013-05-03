@@ -12,6 +12,7 @@ plugin.tx_browser_pi1 {
               }
               map_jss {
                 20 {
+                  20 >
                     // Content, if provider is an element of the list of providers
                   20 = COA
                   20 {
