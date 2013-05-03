@@ -5,6 +5,11 @@ plugin.tx_browser_pi1 {
         snippets {
           html {
             dynamic {
+                // HTML div tag for the map
+              map_html = TEXT
+              map_html {
+                value = <div id="oxMapArea" class="oxMapArea"></div>
+              }
               map_jss {
                 30 = COA
                 30 {
