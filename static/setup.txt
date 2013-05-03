@@ -754,7 +754,7 @@ plugin.tx_browser_pi1 {
                   // #47632
                 value >
                 value (
-                  <form id="oxMap-filter-item">
+                  <form id="oxMap-filter-module">
                     ###INPUTS###
                   </form>
   )
