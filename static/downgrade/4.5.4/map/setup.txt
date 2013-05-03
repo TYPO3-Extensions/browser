@@ -1,6 +1,9 @@
 plugin.tx_browser_pi1 {
   navigation {
     map {
+      enabled {
+        version = 1.2
+      }
       marker {
         snippets {
           html {

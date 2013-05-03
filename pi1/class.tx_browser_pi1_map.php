@@ -1715,14 +1715,17 @@ if( $this->pObj->b_drs_todo )
       // FOR all coordinates
 
       // #47632
-//      // Get center coordinates
-//    $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
-//    $centerCoor = '[' . $centerCoor . ']';
-//      // Get center coordinates
-    
-      // #47632
-    list( $lon, $lat ) = $objLibMap->centerCoor( );
-    $centerCoor = '{ lon : ' . $lon . ', lat : ' . $lat . ' }';
+    $version = $this->confMap['enabled.']['version'];
+    switch( $version )
+    {
+      case( '1.2' ) :
+        $centerCoor = $this->renderMapAutoCenterCoorVers12( $objLibMap );
+        break;
+      case( '1.3' ) :
+      default       :
+        $centerCoor = $this->renderMapAutoCenterCoorVers13( $objLibMap );
+        break;
+    }
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -1742,6 +1745,43 @@ if( $this->pObj->b_drs_todo )
 
       // RETURN the handled template
     return $map_template;
+  }
+
+
+
+/**
+ * renderMapAutoCenterCoorVers12( ) : Wrap center coordinates for oxMap version 1.2
+ *
+ * @param    object         $objLibMap  : ...
+ * @return    string        $centerCoor :
+ * @version 4.5.6
+ * @since   4.1.0
+ */
+  private function renderMapAutoCenterCoorVers12( $objLibMap )
+  {
+    $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
+    $centerCoor = '[' . $centerCoor . ']';
+    
+    return $centerCoor;
+  }
+
+
+
+/**
+ * renderMapAutoCenterCoorVers13( ) : Wrap center coordinates for oxMap version 1.3
+ *
+ * @param    object         $objLibMap  : ...
+ * @return    string        $centerCoor :
+ * @internal  #47632
+ * @version 4.5.6
+ * @since   4.1.0
+ */
+  private function renderMapAutoCenterCoorVers13( $objLibMap )
+  {
+    list( $lon, $lat ) = $objLibMap->centerCoor( );
+    $centerCoor = '{ lon : ' . $lon . ', lat : ' . $lat . ' }';
+
+    return $centerCoor;
   }
 
 
