@@ -899,17 +899,14 @@ plugin.tx_browser_pi1 {
                   20 {
                     value (
                             language        : '###OXMAPCONFIGLANGUAGE###'         //  default | en | de
-                          , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
-                          , wms             : '###OXMAPCONFIGWMS###'              //  OSM | GMap
+                          , wms             : '###OXMAPCONFIGWMS###'              //  OSM
                           , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
+                          , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
+                          , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
+                          , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
                           , center          : '###OXMAPCONFIGCENTER###'
                           , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
-                          , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
                           , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
-                          , filter          : '#oxMapFilter'
-                          , filterItems     : '.oxMapFilter'
-                          , mapID           : 'oxMapArea'
-                          , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
                           , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
 )
                   }
