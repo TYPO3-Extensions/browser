@@ -186,8 +186,10 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling//204;             type=string;    label= Map modules (debugging): Comma seperated list of quoted map modules wrapped by square brackets. Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.debugging   = 'Error,OSM.Base,OSM.Filter'
   # cat=BrowserMaps - Controlling//205;             type=string;    label= Control panel directory: Path to the directory with the icons of the control panel among others (with ending slash). Example: fileadmin/my_openstreetmap/icons/
-  map.openLayers.imgPath = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/img/ 
-  # cat=BrowserMaps - Controlling//206;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/
+  map.openLayers.imgPath  = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/theme/default/img/
+  # cat=BrowserMaps - Controlling//206;             type=string;    label= CSS directory: Path to the directory with the css file style,css (with ending slash). Example: fileadmin/my_openstreetmap/css/
+  map.openLayers.css      = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/theme/default/
+  # cat=BrowserMaps - Controlling//207;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/
   map.path.categoryIcon = uploads/media/ 
   # cat=BrowserMaps - Controlling//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on:
   map.popup.behaviour = hover
@@ -233,9 +235,11 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Default Icons/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.defaultIcons.links = Click me!
 
-  # cat=BrowserMaps - HTML//101;             type=string;    label= Filter id: HTML id of the filter form
+  # cat=BrowserMaps - HTML//102;             type=string;    label= Map id: HTML id of the map div-tag
+  map.html.id               = oxMap-area
+  # cat=BrowserMaps - HTML//102;             type=string;    label= Filter id: HTML id of the filter form
   map.html.form.id          = oxMap-filter-module
-  # cat=BrowserMaps - HTML//102;             type=string;    label= Input class: HTML class of the input fields
+  # cat=BrowserMaps - HTML//103;             type=string;    label= Input class: HTML class of the input fields
   map.html.form.input.class = oxMap-filter-item
   # cat=BrowserMaps - HTML/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.html.links = Click me!

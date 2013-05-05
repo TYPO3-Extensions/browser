@@ -2,6 +2,7 @@ plugin.tx_browser_pi1 {
 
   map.controls.default      = ['Navigation', 'PanZoom'] 
   map.controls.debugging    = ['Navigation', 'PanZoom', 'LayerSwitcher'] 
+  map.html.id               = oxMapArea
   map.html.form.id          = oxMapFilter
   map.html.form.input.class = oxMapFilter
   map.modules.default       = ['OSM', 'OSM.Filter'] 

@@ -799,7 +799,7 @@ plugin.tx_browser_pi1 {
                 // HTML div tag for the map
               map_html = TEXT
               map_html {
-                value = <div id="oxMap-area" class="oxMapArea"></div>
+                value = <div id="{$plugin.tx_browser_pi1.map.id}" class="oxMapArea"></div>
               }
                 // Javascript for the map. 20: Provider and API, 30: Custom, 40: oxRenderMap
               map_jss = COA
@@ -873,8 +873,14 @@ plugin.tx_browser_pi1 {
                           , wms             : '###OXMAPCONFIGWMS###'              //  OSM
                           , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
                           , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
+                          , imagePath       : '###OPENLAYERSIMGPATH###'
+                          , cssPath         : '###OPENLAYERSIMGCSS###'
+                          , mapId           : '{$plugin.tx_browser_pi1.map.id}'
                           , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
                           , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
+                          , filter          : {
+                                                wrapper : '{$plugin.tx_browser_pi1.map.html.form.id}'
+                                              }
                           , center          : '###OXMAPCONFIGCENTER###'
                           , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
                           , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
@@ -948,6 +954,12 @@ plugin.tx_browser_pi1 {
           }
           jss {
             dynamic {
+                // Path to the folder with the css
+              OpenLayersCss = TEXT
+              OpenLayersCss {
+                  // [STRING] Relative path. Be aware of the ending slash!
+                value = "{$plugin.tx_browser_pi1.map.openLayers.css}"
+              }
                 // Path to the folder with the icons of the control panel among others
               OpenLayersImgPath = TEXT
               OpenLayersImgPath {
