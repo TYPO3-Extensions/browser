@@ -799,7 +799,7 @@ plugin.tx_browser_pi1 {
                 // HTML div tag for the map
               map_html = TEXT
               map_html {
-                value = <div id="{$plugin.tx_browser_pi1.map.id}" class="oxMapArea"></div>
+                value = <div id="{$plugin.tx_browser_pi1.map.html.id}" class="oxMapArea"></div>
               }
                 // Javascript for the map. 20: Provider and API, 30: Custom, 40: oxRenderMap
               map_jss = COA
