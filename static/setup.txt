@@ -874,7 +874,7 @@ plugin.tx_browser_pi1 {
                           , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
                           , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
                           , imagePath       : '###OPENLAYERSIMGPATH###'
-                          , cssPath         : '###OPENLAYERSIMGCSS###'
+                          , cssPath         : '###OPENLAYERSCSS###'
                           , mapId           : '{$plugin.tx_browser_pi1.map.id}'
                           , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
                           , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
