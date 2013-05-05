@@ -937,17 +937,6 @@ plugin.tx_browser_pi1 {
 
 )
                   }
-                    // OpenLayers.ImgPath
-                  30 = TEXT
-                  30 {
-                    value (
-
-                      <script>
-                        OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
-                      </script>
-
-)
-                  }
                 }
               }
             }
