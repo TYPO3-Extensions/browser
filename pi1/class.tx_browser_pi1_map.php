@@ -1716,12 +1716,12 @@ if( $this->pObj->b_drs_todo )
 
       // #47632
     $version = $this->confMap['enabled.']['version'];
-    switch( $version )
+    switch( true )
     {
-      case( '1.2' ) :
+      case( $version == '1.2' ) :
         $centerCoor = $this->renderMapAutoCenterCoorVers12( $objLibMap );
         break;
-      case( '1.3' ) :
+      case( $version == '1.3' ) :
       default       :
         $centerCoor = $this->renderMapAutoCenterCoorVers13( $objLibMap );
         break;
