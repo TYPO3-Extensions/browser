@@ -875,7 +875,7 @@ plugin.tx_browser_pi1 {
                           , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
                           , imagePath       : '###OPENLAYERSIMGPATH###'
                           , cssPath         : '###OPENLAYERSCSS###'
-                          , mapId           : '{$plugin.tx_browser_pi1.map.id}'
+                          , mapId           : '{$plugin.tx_browser_pi1.map.html.id}'
                           , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
                           , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
                           , filter          : {
