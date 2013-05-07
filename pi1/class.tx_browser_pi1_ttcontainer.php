@@ -1385,10 +1385,10 @@ if( $this->str_ttc_path = 'ttContainer.40.20.20' )
     // Update all markers in the current TypoScript recursive
     foreach((array) $arr_marker_values as $key_key_marker => $arr_values)
     {
-if( $this->str_ttc_path = 'ttContainer.40.20.20' )
-{
-  var_dump( __METHOD__, __LINE__, $arr_values );
-}
+//if( $this->str_ttc_path = 'ttContainer.40.20.20' )
+//{
+//  var_dump( __METHOD__, __LINE__, $arr_values );
+//}
       $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_marker_recurs($arr_ttc_values, $arr_values);
       // Get the current TypoScript array with substituted markers
 
@@ -1408,10 +1408,10 @@ if( $this->str_ttc_path = 'ttContainer.40.20.20' )
       {
         return $arr_result;
       }
-if( $this->str_ttc_path = 'ttContainer.40.20.20' )
-{
-  var_dump( __METHOD__, __LINE__, $arr_result['data']['template'] );
-}
+//if( $this->str_ttc_path = 'ttContainer.40.20.20' )
+//{
+//  var_dump( __METHOD__, __LINE__, $arr_result['data']['template'] );
+//}
       $template .= $arr_result['data']['template'];
       unset($arr_result);
 
@@ -1420,10 +1420,10 @@ if( $this->str_ttc_path = 'ttContainer.40.20.20' )
       // Load the current realurl configuration
     }
     // Update all markers in the current TypoScript recursive
-if( $this->str_ttc_path = 'ttContainer.40.20.20' )
-{
-  var_dump( __METHOD__, __LINE__, $template );
-}
+//if( $this->str_ttc_path = 'ttContainer.40.20.20' )
+//{
+//  var_dump( __METHOD__, __LINE__, $template );
+//}
 
 
     ///////////////////////////////////////
