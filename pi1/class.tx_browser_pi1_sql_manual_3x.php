@@ -377,7 +377,10 @@
       if (!$str_order_by)
       {
         $tablefield = $this->pObj->objSqlFun_3x->get_sql_alias_before($tablefield);
-        $str_order_by = $conf_view['order_by'];
+          // #47700, 130502, dwildt, 1-
+        //$str_order_by = $conf_view['order_by'];
+          // #47700, 130502, dwildt, 1+
+        $str_order_by = $conf_view['orderBy'];
       }
       if ($str_order_by)
       {
