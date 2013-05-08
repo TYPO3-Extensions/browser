@@ -147,14 +147,31 @@ class tx_browser_pi1_map
       //
       // RETURN: map isn't enabled
 
-    if( ! $this->enabled )
+      // #47632, 130508, dwildt, 9-
+//    if( ! $this->enabled )
+//    {
+//      if( $this->pObj->b_drs_map )
+//      {
+//        $prompt = 'RETURN. Map is disabled.';
+//        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+//      }
+//      return $template;
+//    }
+      // #47632, 130508, dwildt, 15+
+    switch( true )
     {
-      if( $this->pObj->b_drs_map )
-      {
-        $prompt = 'RETURN. Map is disabled.';
-        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-      }
-      return $template;
+      case( empty( $this->enabled ) ):
+      case( $this->enabled == 'disabled'):
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'RETURN. Map is disabled.';
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        return $template;
+        break;
+      default:
+          // Follow the workflow
+        break;
     }
       // RETURN: map isn't enabled
 
@@ -219,10 +236,21 @@ class tx_browser_pi1_map
     {
       if( $this->pObj->b_drs_map )
       {
-        switch( $this->enabled )
+          // #47632, 130508, dwildt, 1-
+        //switch( $this->enabled )
+          // #47632, 130508, dwildt, 1+
+        switch( true )
         {
-          case( true ):
+            // #47632, 130508, dwildt, 1-
+          //case( true ):
+            // #47632, 130508, dwildt, 2+
+          case( $this->enabled == 1 ):
+          case( $this->enabled == 'Map'):
             $prompt = 'Map is enabled.';
+            break;
+            // #47632, 130508, dwildt, 3+
+          case( $this->enabled == 'Map +Routes'):
+            $prompt = 'Map +Routes is enabled.';
             break;
           default:
             $prompt = 'Map is disabled.';
@@ -342,8 +370,13 @@ class tx_browser_pi1_map
     {
       switch( $this->enabled )
       {
-        case( true ):
+          // #47632, 130508, dwildt
+        case( 1 ):
+        case( 'Map' ):
           $prompt = 'Map is enabled.';
+          break;
+        case( 'Map +Routes' ):
+          $prompt = 'Map +Routes is enabled.';
           break;
         default:
           $prompt = 'Map is disabled.';

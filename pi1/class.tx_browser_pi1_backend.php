@@ -679,9 +679,21 @@ class tx_browser_pi1_backend
   {
       // RETURN OK  : map isn't enabled
     $this->confMap  = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['map.'];
-    if( ! $this->confMap['enabled'] )
+      // #47632, 130508, dwildt, 4-
+//    if( ! $this->confMap['enabled'] )
+//    {
+//      return;
+//    }
+      // #47632, 130508, dwildt, 10+
+    switch( true )
     {
-      return;
+      case( empty( $this->confMap['enabled'] ) ):
+      case( $this->confMap['enabled'] == 'disabled'):
+        return;
+        break;
+      default:
+          // Follow the workflow
+        break;
     }
       // RETURN OK  : map isn't enabled
 
