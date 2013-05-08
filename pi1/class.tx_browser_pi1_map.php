@@ -78,7 +78,7 @@ class tx_browser_pi1_map
 
 
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
-  var $enabled      = null;
+  public $enabled      = null;
     // [STRING] GoogleMaps, Open Street Map
   var $provider     = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime

@@ -250,7 +250,10 @@ class tx_browser_pi1_views
     if (!$this->pObj->b_sql_manual)
     {
         // Process the query building automatically
-      $arr_result = $this->pObj->objSqlAut_3x->get_queryArray();
+        // dwildt, 130508, 1-
+//      $arr_result = $this->pObj->objSqlAut_3x->get_queryArray();
+        // dwildt, 130508, 1+
+      $arr_result = $this->pObj->objSqlAut_3x->get_query_array();
     }
 
     if ($arr_result['error']['status'])
