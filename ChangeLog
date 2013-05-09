@@ -5,35 +5,42 @@
             Effected file:
             pi1/class.tx_browser_pi1_template.php
   * #47632: oxMap for Route
-            * Update 1.2 -> 1.3
-              Removed
-              * res
-                * html/map/default_0.0.9.tmpl
-                * js/map
-                  * lib
-                    * api_1.1.02/*
-                    * OpenLayers_2.10.0/*
-                    * 1.2.01
-                  * oxMap.Config_1.1.01.js
-                  * oxRenderMap_1.1.02.js
-              Moved
-              * res/html/map/
-                * default_1.1.01.tmpl -> default_1.3.tmpl
-              Added
-              * res/js/map
-                * api/1.3.04
-                * lib/OpenLayers_2.12/ol-te3.js
-                * oxMap.Render.1.3.04.js
-              * static/downgrade/4.5.4/map
-                * constants.txt
-                * setup.txt
-              Effected files:
-              * pi1/class.tx_browser_pi1_map.php
-              * static
-                * downgrade/3.9.0/setup.txt
-                * constants.txt
-                * setup.txt
-              * ext_tables.php
+            * Properties
+              * plugin.tx_browser_pi1.map.field.* -> plugin.tx_browser_pi1.map.marker.field.*
+                Effected files:
+                * static
+                  * constants.txt
+                  * setup.txt
+            * Files
+              * Update 1.2 -> 1.3
+                Removed
+                * res
+                  * html/map/default_0.0.9.tmpl
+                  * js/map
+                    * lib
+                      * api_1.1.02/*
+                      * OpenLayers_2.10.0/*
+                      * 1.2.01
+                    * oxMap.Config_1.1.01.js
+                    * oxRenderMap_1.1.02.js
+                Moved
+                * res/html/map/
+                  * default_1.1.01.tmpl -> default_1.3.tmpl
+                Added
+                * res/js/map
+                  * api/1.3.04
+                  * lib/OpenLayers_2.12/ol-te3.js
+                  * oxMap.Render.1.3.04.js
+                * static/downgrade/4.5.4/map
+                  * constants.txt
+                  * setup.txt
+                Effected files:
+                * pi1/class.tx_browser_pi1_map.php
+                * static
+                  * downgrade/3.9.0/setup.txt
+                  * constants.txt
+                  * setup.txt
+                * ext_tables.php
   Bugfix
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
             Effected files:

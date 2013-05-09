@@ -196,30 +196,30 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.controlling.links = Click me!
 
-  # cat=BrowserMaps - Database//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
-  map.field.linktoSingle = 
-  # cat=BrowserMaps - Database//102;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
-  map.field.latitude = 
-  # cat=BrowserMaps - Database//103;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
-  map.field.longitude = 
-  # cat=BrowserMaps - Database//104;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
-  map.field.description = 
-  # cat=BrowserMaps - Database//105;             type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
-  map.field.number = 
-  # cat=BrowserMaps - Database//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
-  map.field.category = 
-  # cat=BrowserMaps - Database//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
-  map.field.categoryIcon = 
-  # cat=BrowserMaps - Database//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=BrowserMaps - Database Marker//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
+  map.marker.field.linktoSingle = 
+  # cat=BrowserMaps - Database Marker//102;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
+  map.marker.field.latitude = 
+  # cat=BrowserMaps - Database Marker//103;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
+  map.marker.field.longitude = 
+  # cat=BrowserMaps - Database Marker//104;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
+  map.marker.field.description = 
+  # cat=BrowserMaps - Database Marker//105;             type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
+  map.marker.field.number = 
+  # cat=BrowserMaps - Database Marker//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
+  map.marker.field.category = 
+  # cat=BrowserMaps - Database Marker//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
+  map.marker.field.categoryIcon = 
+  # cat=BrowserMaps - Database Marker//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconLegend = 0 
-  # cat=BrowserMaps - Database//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=BrowserMaps - Database Marker//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconMap = 0 
-  # cat=BrowserMaps - Database//110;             type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
-  map.field.categoryOffsetX = 
-  # cat=BrowserMaps - Database//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
-  map.field.categoryOffsetY = 
+  # cat=BrowserMaps - Database Marker//110;             type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
+  map.marker.field.categoryOffsetX = 
+  # cat=BrowserMaps - Database Marker//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
+  map.marker.field.categoryOffsetY = 
   # cat=BrowserMaps - Database/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  map.database.links = Click me!
+  map.marker.database.links = Click me!
 
   # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added to the modules, LayerSwitcher to the controllers. There will be an alert in the frontend in case of a bug.
   map.debugging.feAlert = 0

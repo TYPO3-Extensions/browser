@@ -638,13 +638,13 @@ plugin.tx_browser_pi1 {
           fields = 
           fields {
               // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
-            category = {$plugin.tx_browser_pi1.map.field.category}
+            category = {$plugin.tx_browser_pi1.map.marker.field.category}
               // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
-            categoryIcon = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+            categoryIcon = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
               // [STRING] table.field with the x offset of the category icons. Example: tx_org_headquarterscat.icon_offset_x
-            categoryOffsetX = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+            categoryOffsetX = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetX}
               // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
-            categoryOffsetY = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+            categoryOffsetY = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetY}
           }
             // [STRING/HTML] Draft for an input field of the category form
           form_input = TEXT
@@ -703,10 +703,10 @@ plugin.tx_browser_pi1 {
                   10 {
                     if {
                       isTrue {
-                        field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
+                        field = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
                       }
                     }
-                    field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
+                    field = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
                     wrap  = ,&tx_browser_pi1[showUid]=|
                   }
                 }
@@ -1108,7 +1108,7 @@ plugin.tx_browser_pi1 {
             category = TEXT
             category {
                 // [STRING] table.field. Example: tx_org_headquarterscat.title
-              field = {$plugin.tx_browser_pi1.map.field.category}
+              field = {$plugin.tx_browser_pi1.map.marker.field.category}
             }
               // Returns the icon as an HTML image tag
             categoryIconLegend = IMAGE
@@ -1118,7 +1118,7 @@ plugin.tx_browser_pi1 {
                 import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
                 import {
                     // [STRING] table.field. Example: tx_org_headquarterscat.icons
-                  field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                  field = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
                     // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
                   listNum = {$plugin.tx_browser_pi1.map.position.categoryIconLegend}
                 }
@@ -1137,7 +1137,7 @@ plugin.tx_browser_pi1 {
               20 = TEXT
               20 {
                   // [STRING] table.field. Example: tx_org_headquarterscat.icons
-                field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                field = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
                   // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
                 stdWrap.listNum = {$plugin.tx_browser_pi1.map.position.categoryIconMap}
               }
@@ -1146,37 +1146,37 @@ plugin.tx_browser_pi1 {
             categoryOffsetX = TEXT
             categoryOffsetX {
                 // [STRING] table.field. Example: tx_org_headquarterscat.icon_offset_x
-              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+              field = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetX}
             }
               // [INTEGER] y-offset of the current icon in pixel
             categoryOffsetY = TEXT
             categoryOffsetY {
                 // [STRING] table.field. Example: tx_org_headquarterscat.icon_offset_y
-              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+              field = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetY}
             }
               // [STRING] content in the popup
             description = TEXT
             description {
                 // [STRING] table.field. Example: tx_org_headquarters.title
-              field = {$plugin.tx_browser_pi1.map.field.description}
+              field = {$plugin.tx_browser_pi1.map.marker.field.description}
             }
               // [NUMBER] latitude
             latitude = TEXT
             latitude {
                 // [STRING] table.field. Example: tx_org_headquarters.mail_lat
-              field = {$plugin.tx_browser_pi1.map.field.latitude}
+              field = {$plugin.tx_browser_pi1.map.marker.field.latitude}
             }
               // [NUMBER] longitude
             longitude = TEXT
             longitude {
                 // [STRING] table.field. Example: tx_org_headquarters.mail_lon
-              field = {$plugin.tx_browser_pi1.map.field.longitude}
+              field = {$plugin.tx_browser_pi1.map.marker.field.longitude}
             }
               // [STRING] number of the point (has an effect ...
             number = TEXT
             number {
                 // [STRING] table.field. Example: tx_org_headquarters.title
-              field = {$plugin.tx_browser_pi1.map.field.number}
+              field = {$plugin.tx_browser_pi1.map.marker.field.number}
             }
               // [STRING] URL of the point (has an effect in hoover mode only!)
             url = TEXT
@@ -2881,14 +2881,14 @@ plugin.tx_browser_pi1 {
           10 = TEXT
           10 {
             required    = 1
-            field       = {$plugin.tx_browser_pi1.map.field.description}
+            field       = {$plugin.tx_browser_pi1.map.marker.field.description}
             noTrimWrap  = || <br />|
           }
             // Categories
           20 = TEXT
           20 {
             required    = 1
-            field       = {$plugin.tx_browser_pi1.map.field.category}
+            field       = {$plugin.tx_browser_pi1.map.marker.field.category}
             noTrimWrap  = |(|) <br />|
           }
             // Link to the single view (in 'click'-mode only)
