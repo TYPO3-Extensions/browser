@@ -244,46 +244,7 @@ class tx_browser_pi1_map
  */
   private function init(  )
   {
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN: $enabled isn't null
-
-    if( ! ( $this->enabled === null ) )
-    {
-      if( $this->pObj->b_drs_map )
-      {
-          // #47632, 130508, dwildt, 1-
-        //switch( $this->enabled )
-          // #47632, 130508, dwildt, 1+
-        switch( true )
-        {
-            // #47632, 130508, dwildt, 1-
-          //case( true ):
-            // #47632, 130508, dwildt, 2+
-          case( $this->enabled == 1 ):
-          case( $this->enabled == 'Map'):
-            $prompt = 'Map is enabled.';
-            break;
-            // #47632, 130508, dwildt, 3+
-          case( $this->enabled == 'Map +Routes'):
-            $prompt = 'Map +Routes is enabled.';
-            break;
-          default:
-            $prompt = 'Map is disabled.';
-            break;
-        }
-        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-      }
-      return;
-    }
-      // RETURN: $enabled isn't null
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
       // Get TypoScript configuration for the current view
-
     $conf             = $this->pObj->conf;
     $mode             = $this->pObj->piVar_mode;
     $view             = $this->pObj->view;
@@ -291,6 +252,12 @@ class tx_browser_pi1_map
     $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
       // Get TypoScript configuration for the current view
 
+      // Set the global $enabled
+    if( $this->initVarEnabled( ) )
+    {
+      return;
+    }
+      // Set the global $enabled
 
 
       ///////////////////////////////////////////////////////////////
@@ -324,31 +291,6 @@ class tx_browser_pi1_map
 
 
 
-      ///////////////////////////////////////////////////////////////
-      //
-      // Set the global $enabled
-
-//    $cObj_name      = $this->confMap['enabled'];
-//    $cObj_conf      = $this->confMap['enabled.'];
-//    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-    $this->enabled = $this->confMap['enabled'];
-        // #47632, 130508, dwildt, 13+
-      switch( true )
-      {
-        case( empty( $this->enabled ) ):
-        case( $this->enabled == 1 ):
-        case( $this->enabled == 'disabled'):
-        case( $this->enabled == 'Map'):
-        case( $this->enabled == 'Map +Routes'):
-            // Follow the workflow
-          break;
-        default:
-          $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                    'TypoScript property map.enabled is "' . $this->enabled . '".';
-          die( $prompt );
-      }
-        // #47632, 130508, dwildt, 13+
-      // Set the global $enabled
 
 
 
@@ -393,30 +335,6 @@ class tx_browser_pi1_map
 
       // Init the devider for the categories
     $this->initCatDevider( );
-
-      ///////////////////////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if( $this->pObj->b_drs_map )
-    {
-      switch( $this->enabled )
-      {
-          // #47632, 130508, dwildt
-        case( 1 ):
-        case( 'Map' ):
-          $prompt = 'Map is enabled.';
-          break;
-        case( 'Map +Routes' ):
-          $prompt = 'Map +Routes is enabled.';
-          break;
-        default:
-          $prompt = 'Map is disabled.';
-          break;
-      }
-      t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-    }
-      // DRS - Development Reporting System
 
     return;
   }
@@ -516,6 +434,90 @@ class tx_browser_pi1_map
     $template     = implode( '</div>', $arr_divs );
 
     return $template;
+  }
+
+/**
+ * initVarEnabled(  ) : 
+ *
+ * @return	boolean       true, if var enabled is initiated before. false, if not.
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function initVarEnabled(  )
+  {
+      // RETURN: $enabled isn't null
+    if( ! ( $this->enabled === null ) )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+          // #47632, 130508, dwildt, 1-
+        //switch( $this->enabled )
+          // #47632, 130508, dwildt, 1+
+        switch( true )
+        {
+            // #47632, 130508, dwildt, 1-
+          //case( true ):
+            // #47632, 130508, dwildt, 2+
+          case( $this->enabled == 1 ):
+          case( $this->enabled == 'Map'):
+            $prompt = 'Map is enabled.';
+            break;
+            // #47632, 130508, dwildt, 3+
+          case( $this->enabled == 'Map +Routes'):
+            $prompt = 'Map +Routes is enabled.';
+            break;
+          default:
+            $prompt = 'Map is disabled.';
+            break;
+        }
+        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return true;
+    }
+      // RETURN: $enabled isn't null
+
+    $this->enabled = $this->confMap['enabled'];
+
+      // #47632, 130508, dwildt, 13+
+    switch( true )
+    {
+      case( empty( $this->enabled ) ):
+      case( $this->enabled == 1 ):
+      case( $this->enabled == 'disabled'):
+      case( $this->enabled == 'Map'):
+      case( $this->enabled == 'Map +Routes'):
+          // Follow the workflow
+        break;
+      default:
+        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                  'TypoScript property map.enabled is "' . $this->enabled . '".';
+        die( $prompt );
+    }
+      // #47632, 130508, dwildt, 13+
+
+      // DRS - Development Reporting System
+    if( ! $this->pObj->b_drs_map )
+    {
+      return false;
+    }
+    switch( $this->enabled )
+    {
+        // #47632, 130508, dwildt
+      case( 1 ):
+      case( 'Map' ):
+        $prompt = 'Map is enabled.';
+        break;
+      case( 'Map +Routes' ):
+        $prompt = 'Map +Routes is enabled.';
+        break;
+      default:
+        $prompt = 'Map is disabled.';
+        break;
+    }
+    t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+      // DRS - Development Reporting System
+
+    return false;
   }
 
 
@@ -967,6 +969,12 @@ if( $this->pObj->b_drs_todo )
       return $mapTemplate;
     }
       // RETURN : HTML template is not proper
+
+    $arr_result = $this->renderMapRoute( );
+    if( $arr_result['error'] )
+    {
+      return $mapTemplate;
+    }
 
     $template = $this->renderMapMarker( $template, $mapTemplate );
 
