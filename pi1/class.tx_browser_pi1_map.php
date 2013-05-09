@@ -1003,11 +1003,10 @@ if( $this->pObj->b_drs_todo )
 
       // RETURN : HTML template is not proper
     $arr_result     = $this->renderMapGetTemplate( $pObj_template );
-    $map_template   = $arr_result['map_template'];
-    $pObj_template  = $arr_result['pObj_template'];
+    $map_template   = $arr_result['template'];
     if( $arr_result['error'] )
     {
-      return $pObj_template;
+      return $map_template;
     }
       // RETURN : HTML template is not proper
 
@@ -1061,7 +1060,7 @@ if( $this->pObj->b_drs_todo )
  * renderMapGetTemplate( ): Get the HTML template
  *
  * @param	string		$pObj_template  : current HTML template of the parent object
- * @return	array		$arr_return     : with elements error, pObj_template, map_template
+ * @return	array		$arr_return     : with elements error, template
  * @version 4.5.6
  * @since   3.9.6
  */
@@ -1104,8 +1103,8 @@ if( $this->pObj->b_drs_todo )
         // Replace the map marker in the template of the parent object
       $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
         // RETURN the template
-      $arr_return['error']          = true;
-      $arr_return['pObj_template']  = $pObj_template;
+      $arr_return['error']    = true;
+      $arr_return['template'] = $pObj_template;
       return $arr_return;
     }
       // RETURN : no template file
@@ -1137,15 +1136,14 @@ if( $this->pObj->b_drs_todo )
         // Replace the map marker in the template of the parent object
       $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
         // RETURN the template
-      $arr_return['error']          = true;
-      $arr_return['pObj_template']  = $pObj_template;
+      $arr_return['error']    = true;
+      $arr_return['template'] = $pObj_template;
       return $arr_return;
     }
       // RETURN: no subpart marker
 
       // RETURN : the template
-    $arr_return['pObj_template']  = $pObj_template;
-    $arr_return['map_template']   = $map_template;
+    $arr_return['template']   = $map_template;
     return $arr_return;
   }
 
