@@ -1,3 +1,12 @@
+
+  ////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1
+  // plugin.tx_browser_pi1.map.marker.field.* -> plugin.tx_browser_pi1.map.field.*
+
+
+
+  // plugin.tx_browser_pi1
 plugin.tx_browser_pi1 {
   navigation {
     map {
@@ -202,3 +211,66 @@ plugin.tx_browser_pi1 {
     }
   }
 }
+  // plugin.tx_browser_pi1
+ 
+  // plugin.tx_browser_pi1.map.marker.field.* -> plugin.tx_browser_pi1.map.field.*
+plugin.tx_browser_pi1 {
+  navigation {
+    map {
+      configuration {
+        categories {
+          fields {
+            category = {$plugin.tx_browser_pi1.map.field.category}
+            categoryIcon = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+            categoryOffsetX = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+            categoryOffsetY = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+          }
+        }
+      }
+      marker {
+        addToCData.system.mapLinkToSingle.10.30.10 {
+          if.isTrue.field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
+          field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
+        }
+        variables {
+          system {
+            category {
+              field = {$plugin.tx_browser_pi1.map.field.category}
+            }
+            categoryIconLegend {
+              file {
+                import {
+                  field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                }
+              }
+            }
+            categoryIconMap {
+              20 {
+                field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+              }
+            }
+            categoryOffsetX {
+              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+            }
+            categoryOffsetY {
+              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+            }
+            description {
+              field = {$plugin.tx_browser_pi1.map.field.description}
+            }
+            latitude {
+              field = {$plugin.tx_browser_pi1.map.field.latitude}
+            }
+            longitude {
+              field = {$plugin.tx_browser_pi1.map.field.longitude}
+            }
+            number {
+              field = {$plugin.tx_browser_pi1.map.field.number}
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1.map.marker.field.* -> plugin.tx_browser_pi1.map.field.*
