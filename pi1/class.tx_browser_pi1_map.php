@@ -1042,10 +1042,10 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN : HTML template is not proper
 
-//    $arr_result = $this->renderMapRoute( );
+    $arr_result = $this->renderMapRoute( );
     if( $arr_result['error'] )
     {
-      return $mapTemplate;
+      return $arr_result['prompt'];
     }
 
     $template = $this->renderMapMarker( $template, $mapTemplate );
@@ -1062,8 +1062,6 @@ if( $this->pObj->b_drs_todo )
   * Map center and zoom automatically
   *
   **********************************************/
-
-
 
   /**
  * renderMapAutoCenterCoor( ):
@@ -2167,6 +2165,29 @@ if( $this->pObj->b_drs_todo )
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
     return $value;
+  }
+
+
+
+  /***********************************************
+  *
+  * Map rendering Route
+  *
+  **********************************************/
+
+/**
+ * renderMapRoute( ): 
+ *
+ * @return	array
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function renderMapRoute( )
+  {
+    $arr_return           = array( );
+    $arr_return['error']  = false;
+
+    return $arr_return;
   }
 
 
