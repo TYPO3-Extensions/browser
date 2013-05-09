@@ -316,6 +316,22 @@ class tx_browser_pi1_map
 //    $cObj_conf      = $this->confMap['enabled.'];
 //    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
     $this->enabled = $this->confMap['enabled'];
+        // #47632, 130508, dwildt, 13+
+      switch( true )
+      {
+        case( empty( $this->enabled ) ):
+        case( $this->enabled == 1 ):
+        case( $this->enabled == 'disabled'):
+        case( $this->enabled == 'Map'):
+        case( $this->enabled == 'Map +Routes'):
+            // Follow the workflow
+          break;
+        default:
+          $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' . 
+                    'TypoScript property map.enabled is "' . $this->enabled . '".';
+          die( $prompt );
+      }
+        // #47632, 130508, dwildt, 13+
       // Set the global $enabled
 
 
@@ -985,7 +1001,7 @@ if( $this->pObj->b_drs_todo )
       // map marker
     $str_mapMarker = '###MAP###';
 
-      // Get the template
+      // RETURN : HTML template is not proper
     $arr_result     = $this->renderMapGetTemplate( $pObj_template );
     $map_template   = $arr_result['map_template'];
     $pObj_template  = $arr_result['pObj_template'];
@@ -993,7 +1009,7 @@ if( $this->pObj->b_drs_todo )
     {
       return $pObj_template;
     }
-      // Get the template
+      // RETURN : HTML template is not proper
 
       // Substitute marker HTML
       // System marker
@@ -1010,7 +1026,6 @@ if( $this->pObj->b_drs_todo )
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Add data
 
-    
       // Substitute marker JSS
       // Dynamic marker
     $markerArray  = $markerArray + $this->renderMapMarkerSnippetsJssDynamic( $map_template );
