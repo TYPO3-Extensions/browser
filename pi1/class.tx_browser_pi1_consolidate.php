@@ -595,7 +595,7 @@ class tx_browser_pi1_consolidate
     // Store uids. We need it for link to single view and for the the Index-Browser.
     $arr_uids = false;
     $rows_new = array( );
-$this->pObj->dev_var_dump( $rows_cons, $arrMMSorting );    
+//$this->pObj->dev_var_dump( $rows_cons, $arrMMSorting );    
     foreach( ( array ) $rows_cons as $row_cons )
     {
       //$arr_uids[] = $row_cons[$localTable.'.uid'];
