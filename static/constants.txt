@@ -218,7 +218,7 @@ plugin.tx_browser_pi1 {
   map.marker.field.categoryOffsetX = 
   # cat=BrowserMaps - Database Marker//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
   map.marker.field.categoryOffsetY = 
-  # cat=BrowserMaps - Database/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  # cat=BrowserMaps - Database Marker/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.marker.database.links = Click me!
 
   # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added to the modules, LayerSwitcher to the controllers. There will be an alert in the frontend in case of a bug.
