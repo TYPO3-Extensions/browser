@@ -970,7 +970,7 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN : HTML template is not proper
 
-    $arr_result = $this->renderMapRoute( );
+//    $arr_result = $this->renderMapRoute( );
     if( $arr_result['error'] )
     {
       return $mapTemplate;
