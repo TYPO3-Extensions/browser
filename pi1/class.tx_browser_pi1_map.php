@@ -2266,6 +2266,28 @@ if( $this->pObj->b_drs_todo )
                     , 'prompt' => null
                   );
 
+$this->pObj->dev_var_dump( $this->pObj->rows );
+    
+//    $prompt = '<h1 style="color:red;">
+//              ' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '
+//              </h1>
+//              <p style="color:red;font-weight:bold;">
+//              ' . $this->pObj->pi_getLL( 'error_template_map_no' ) . '
+//              </p>';
+    $prompt = '<h1 style="color:red;">
+                ERROR with Map +Route
+              </h1>
+              <p style="color:red;font-weight:bold;">
+                Sorry, but there is an undefined error with Map +Route
+              </p>
+              <p style="color:red;font-weight:bold;">
+                Method: ' . __METHOD__ . ' at line ' . __LINE__ . '
+              </p>
+              ';
+
+    $arr_return['error']  = true;
+    $arr_return['prompt'] = $prompt;
+
     return $arr_return;
   }
 
