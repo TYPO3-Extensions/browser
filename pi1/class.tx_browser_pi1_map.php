@@ -2179,7 +2179,7 @@ if( $this->pObj->b_drs_todo )
 
   /***********************************************
   *
-  * Map +Route
+  * Map +Routes
   *
   **********************************************/
 
@@ -2197,6 +2197,20 @@ if( $this->pObj->b_drs_todo )
                       'error'  => false
                     , 'prompt' => null
                   );
+    
+      // RETURN : Map +Routes is disabled
+    if( $this->enabled != 'Map +Routes' )
+    {
+        // DRS
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'Map +Routes is disabled.';
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return $arr_return;
+    }
+      // RETURN : Map +Routes is disabled
 
     $arr_return = $this->renderMapRoutePaths( );
     if( $arr_return['error'] )
@@ -2235,10 +2249,10 @@ if( $this->pObj->b_drs_todo )
 //              ' . $this->pObj->pi_getLL( 'error_template_map_no' ) . '
 //              </p>';
     $prompt = '<h1 style="color:red;">
-                ERROR with Map +Route
+                ERROR with Map +Routes
               </h1>
               <p style="color:red;font-weight:bold;">
-                Sorry, but there is an undefined error with Map +Route
+                Sorry, but there is an undefined error with Map +Routes
               </p>
               <p style="color:red;font-weight:bold;">
                 Method: ' . __METHOD__ . ' at line ' . __LINE__ . '
@@ -2275,10 +2289,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 //              ' . $this->pObj->pi_getLL( 'error_template_map_no' ) . '
 //              </p>';
     $prompt = '<h1 style="color:red;">
-                ERROR with Map +Route
+                ERROR with Map +Routes
               </h1>
               <p style="color:red;font-weight:bold;">
-                Sorry, but there is an undefined error with Map +Route
+                Sorry, but there is an undefined error with Map +Routes
               </p>
               <p style="color:red;font-weight:bold;">
                 Method: ' . __METHOD__ . ' at line ' . __LINE__ . '

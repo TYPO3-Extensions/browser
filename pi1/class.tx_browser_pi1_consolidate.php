@@ -106,7 +106,7 @@ class tx_browser_pi1_consolidate
  */
   function consolidate( $rows )
   {
-$this->pObj->dev_var_dump( $rows );    
+//$this->pObj->dev_var_dump( $rows );    
     
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
