@@ -476,7 +476,7 @@ class tx_browser_pi1_consolidate
         // 121211, dwildt, 1-
       //foreach ($arr_localTable_foreignTables as $localTableUid => $arrTables)
         // 121211, dwildt, 1+
-$this->pObj->dev_var_dump( $arr_localTable_foreignTables );    
+//$this->pObj->dev_var_dump( $arr_localTable_foreignTables );    
       foreach( $arr_localTable_foreignTables as $arrTables )
       {
           // Loop through all tables (key is the uid of the local record)
