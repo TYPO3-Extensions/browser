@@ -1045,7 +1045,10 @@ if( $this->pObj->b_drs_todo )
     $arr_result = $this->renderMapRoute( );
     if( $arr_result['error'] )
     {
-      return $arr_result['prompt'];
+      $mapHashKey = '###MAP###';
+      $prompt     = $arr_result['prompt'];
+      $template   = str_replace( $mapHashKey, $prompt, $template );
+      return $template;
     }
 
     $template = $this->renderMapMarker( $template, $mapTemplate );
@@ -2184,9 +2187,62 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoute( )
   {
-    $arr_return           = array( );
-    $arr_return['error']  = false;
+    $arr_return = array
+                  ( 
+                      'error'  => false
+                    , 'prompt' => null 
+                  );
 
+    $prompt = '<h1 style="color:red;">
+              ' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '
+              </h1>
+              <p style="color:red;font-weight:bold;">
+              ' . $this->pObj->pi_getLL( 'error_template_map_no' ) . '
+              </p>';
+    
+    $arr_return['error']  = true;
+    $arr_return['prompt'] = $prompt;
+    return $arr_return;
+
+    $arr_return = $this->renderMapRoutePaths( );
+    $arr_return = $this->renderMapRouteMarker( );
+
+    return $arr_return;
+  }
+
+/**
+ * renderMapRouteMarker( ): 
+ *
+ * @return	array
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function renderMapRouteMarker( )
+  {
+    $arr_return = array
+                  ( 
+                      'error'  => false
+                    , 'prompt' => null 
+                  );
+    
+    return $arr_return;
+  }
+
+/**
+ * renderMapRoutePaths( ): 
+ *
+ * @return	array
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function renderMapRoutePaths( )
+  {
+    $arr_return = array
+                  ( 
+                      'error'  => false
+                    , 'prompt' => null 
+                  );
+    
     return $arr_return;
   }
 
