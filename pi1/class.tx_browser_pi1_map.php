@@ -102,6 +102,8 @@ class tx_browser_pi1_map
     // [OBJECT] parent object
   public $pObj          = null;
 
+    // [STRING] $viewWiDot . $mode. Example: 1.single
+  private $conf_path    = null;
     // [ARRAY] TypoScript configuration array of the current view
   private $conf_view    = null;
     // [INTEGER] Id of the single view
@@ -244,94 +246,12 @@ class tx_browser_pi1_map
  */
   private function init(  )
   {
-      // Get TypoScript configuration for the current view
-    $conf             = $this->pObj->conf;
-    $mode             = $this->pObj->piVar_mode;
-    $view             = $this->pObj->view;
-    $viewWiDot        = $view.'.';
-    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
-      // Get TypoScript configuration for the current view
-
-      // Set the global $enabled
-    if( $this->initVarEnabled( ) )
+      // RETURN : global vars are set before
+    if( $this->initVar( ) )
     {
       return;
     }
-      // Set the global $enabled
-
-
-      ///////////////////////////////////////////////////////////////
-      //
-      // Set the global $confMapLocal
-
-    switch( true )
-    {
-      case( isset( $conf['views.'][$viewWiDot][$mode.'.']['navigation.']['map.'] ) ):
-          // local configuration
-        $this->confMap = $conf['views.'][$viewWiDot][$mode.'.']['navigation.']['map.'];
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'Local configuration in: views.' . $viewWiDot . $mode . '.navigation.map';
-          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-        }
-        break;
-          // local configuration
-      default:
-          // global configuration
-        $this->confMap = $this->pObj->conf['navigation.']['map.'];
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'Global configuration in: navigation.map';
-          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-        }
-        break;
-          // global configuration
-    }
-      // Set the global $confMapLocal
-
-
-
-
-
-
-      ///////////////////////////////////////////////////////////////
-      //
-      // Set the global $provider
-
-      // ##42788, 121224, dwildt, +
-    $this->provider = $this->confMap['provider'];
-    switch( true )
-    {
-      case( $this->provider == 'GoogleMaps' ):
-        break;
-      case( $this->provider == 'Open Street Map' ):
-        break;
-      default:
-        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                  'TypoScript property map.provider is "' . $this->provider . '".';
-        die( $prompt );
-    }
-      // Set the global $enabled
-
-
-
-      // Get the typeNum from the current URL parameters
-    $typeNum = (int) t3lib_div::_GP( 'type' );
-
-      // Check the proper typeNum
-    $conf = $this->pObj->conf;
-    switch (true)
-    {
-      case( $typeNum == $conf['export.']['map.']['page.']['typeNum'] ) :
-          // Given typeNum is the internal typeNum for CSV export
-        $this->int_typeNum = $typeNum;
-        $this->str_typeNum = 'map';
-        break;
-      default :
-          // Given typeNum isn't the internal typeNum for CSV export
-        $this->str_typeNum = 'undefined';
-    }
-      // Check the proper typeNum
+      // RETURN : global vars are set before
 
       // Init the devider for the categories
     $this->initCatDevider( );
@@ -436,14 +356,22 @@ class tx_browser_pi1_map
     return $template;
   }
 
+
+
+  /***********************************************
+  *
+  * Init global variables
+  *
+  **********************************************/
+
 /**
- * initVarEnabled(  ) : 
+ * initVar( ): Set global vars
  *
- * @return	boolean       true, if var enabled is initiated before. false, if not.
+ * @return	boolean     true, if global vars are set before. flase, if not
  * @version 4.5.6
- * @since   4.5.6
+ * @since   3.9.6
  */
-  private function initVarEnabled(  )
+  private function initVar(  )
   {
       // RETURN: $enabled isn't null
     if( ! ( $this->enabled === null ) )
@@ -475,9 +403,87 @@ class tx_browser_pi1_map
       return true;
     }
       // RETURN: $enabled isn't null
+    
+      // Get TypoScript configuration for the current view
+    $conf             = $this->pObj->conf;
+    $mode             = $this->pObj->piVar_mode;
+    $view             = $this->pObj->view;
+    $viewWiDot        = $view . '.';
+    $this->conf_path  = $viewWiDot . $mode;
+    $this->conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
+      // Get TypoScript configuration for the current view
 
+      // Set the global var $confMap
+    $this->initVarConfMap( );
+
+      // Set the global $enabled
+    $this->initVarEnabled( );
+
+      // Set the global $provider
+    $this->initVarProvider( );
+
+      // Set the globals $int_typeNum and $str_typeNum
+    $this->initVarTypeNum( );
+
+      // Init the devider for the categories
+    $this->initCatDevider( );
+
+    return false;
+  }
+
+
+/**
+ * initVarConfMap( ): The method sets the global $confMap
+ *
+ * @return	void
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function initVarConfMap(  )
+  {
+
+      // Set the global $confMapLocal
+    switch( true )
+    {
+      case( isset( $this->conf_view['navigation.']['map.'] ) ):
+          // local configuration
+        $this->confMap = $this->conf_view['navigation.']['map.'];
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'Local configuration in: views.' . $this->conf_path . '.navigation.map';
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        break;
+          // local configuration
+      default:
+          // global configuration
+        $this->confMap = $this->pObj->conf['navigation.']['map.'];
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'Global configuration in: navigation.map';
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        break;
+          // global configuration
+    }
+      // Set the global $confMapLocal
+
+    return;
+  }
+
+/**
+ * initVarEnabled(  ) : 
+ *
+ * @return	boolean       true, if var enabled is initiated before. false, if not.
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function initVarEnabled(  )
+  {
+      // Set the global var $enabled
     $this->enabled = $this->confMap['enabled'];
 
+      // Evaluate the global var $enabled
       // #47632, 130508, dwildt, 13+
     switch( true )
     {
@@ -494,12 +500,16 @@ class tx_browser_pi1_map
         die( $prompt );
     }
       // #47632, 130508, dwildt, 13+
+      // Evaluate the global var $enabled
 
       // DRS - Development Reporting System
+      // RETURN : DRS is disabled
     if( ! $this->pObj->b_drs_map )
     {
       return false;
     }
+      // RETURN : DRS is disabled
+      // DRS is enabled
     switch( $this->enabled )
     {
         // #47632, 130508, dwildt
@@ -515,9 +525,64 @@ class tx_browser_pi1_map
         break;
     }
     t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+      // DRS is enabled
       // DRS - Development Reporting System
 
+      // RETURN false!
     return false;
+  }
+
+/**
+ * initVarProvider( ) : The method sets the global $provider
+ *
+ * @return	void
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function initVarProvider(  )
+  {
+    $this->provider = $this->confMap['provider'];
+    switch( true )
+    {
+      case( $this->provider == 'GoogleMaps' ):
+        break;
+      case( $this->provider == 'Open Street Map' ):
+        break;
+      default:
+        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                  'TypoScript property map.provider is "' . $this->provider . '".';
+        die( $prompt );
+    }
+    return;
+  }
+
+/**
+ * initVarTypeNum( ): The method sets the globals $int_typeNum and $str_typeNum
+ *
+ * @return	void
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function initVarTypeNum(  )
+  {
+      // Get the typeNum from the current URL parameters
+    $typeNum = ( int ) t3lib_div::_GP( 'type' );
+
+      // Check the proper typeNum
+    switch( true )
+    {
+      case( $typeNum == $this->pObj->conf['export.']['map.']['page.']['typeNum'] ) :
+          // Given typeNum is the internal typeNum for CSV export
+        $this->int_typeNum = $typeNum;
+        $this->str_typeNum = 'map';
+        break;
+      default :
+          // Given typeNum isn't the internal typeNum for CSV export
+        $this->str_typeNum = 'undefined';
+    }
+      // Check the proper typeNum
+
+    return;
   }
 
 
