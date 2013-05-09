@@ -618,7 +618,7 @@ class tx_browser_pi1_consolidate
     $arr_return['data']['rows'] = $rows_new;
     $this->pObj->arrConsolidate['rows_wi_cons'] = count( $rows_new );
 
-$this->pObj->dev_var_dump( $rows_new );    
+//$this->pObj->dev_var_dump( $rows_new );    
     return $arr_return;
   }
 
