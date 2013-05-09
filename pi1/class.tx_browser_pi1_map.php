@@ -1112,6 +1112,7 @@ if( $this->pObj->b_drs_todo )
         $centerCoor = $this->renderMapAutoCenterCoorVers13( $objLibMap );
         break;
     }
+    unset( $version );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -1390,15 +1391,9 @@ if( $this->pObj->b_drs_todo )
 
 
 
-
-
-
-
-
-
   /***********************************************
   *
-  * Map rendering data
+  * Map rendering marker
   *
   **********************************************/
 
@@ -2147,6 +2142,12 @@ if( $this->pObj->b_drs_todo )
 
 
 
+  /***********************************************
+  *
+  * Set Page Type
+  *
+  **********************************************/
+
 /**
  * set_typeNum( ):
  *
@@ -2160,22 +2161,8 @@ if( $this->pObj->b_drs_todo )
     $this->init( );
   }
 
-
-
-
-
-
-
-
-
-  /***********************************************
-  *
-  * Map rendering marker
-  *
-  **********************************************/
-
-
-
+  
+  
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_map.php']) {
