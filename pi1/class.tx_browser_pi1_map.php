@@ -988,11 +988,11 @@ if( $this->pObj->b_drs_todo )
 
 
 
-  /**
+/**
  * renderMap( ): Render the Map
  *
- * @param	string		$template  : current HTML template of the parent object
- * @return	string		$template  : parent object template with the map
+ * @param	string		$template     : current HTML template of the parent object
+ * @return	string		$mapTemplate  : the map
  * @version 4.5.6
  * @since   3.9.6
  */
@@ -1007,29 +1007,8 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN : HTML template is not proper
 
-      // Substitute marker HTML
-    $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate )
-                  + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
-    $mapTemplate     = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
-      // Substitute marker HTML
-
-      // Add data
-    $mapTemplate     = $this->renderMapMarkerVariablesSystem( $mapTemplate );
-    $markerArray  = $this->renderMapMarkerVariablesDynamic( $mapTemplate );
-    $mapTemplate     = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
-      // Add data
-
-      // Substitute marker JSS
-    $markerArray  = $markerArray 
-                  + $this->renderMapMarkerSnippetsJssDynamic( $mapTemplate );
-    $mapTemplate     = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
-      // Substitute marker JSS
-
-      // map marker
-    $mapHashKey     = '###MAP###';
-      // Replace the map marker in the template of the parent object
-    $template  = str_replace( $mapHashKey, $mapTemplate, $template );
-
+    $template = $this->renderMapMarker( $template, $mapTemplate );
+    
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $mapTemplate, $template );
       // RETURN the template
     return $template;
@@ -1054,29 +1033,24 @@ if( $this->pObj->b_drs_todo )
 /**
  * renderMapGetTemplate( ): Get the HTML template
  *
- * @param	string		$pObj_template  : current HTML template of the parent object
+ * @param	string		$template  : current HTML template of the parent object
  * @return	array		$arr_return     : with elements error, template
  * @version 4.5.6
  * @since   3.9.6
  */
-  private function renderMapGetTemplate( $pObj_template )
+  private function renderMapGetTemplate( $template )
   {
     $arr_return           = array( );
     $arr_return['error']  = false;
     
-      // map marker
+      // map hash key
     $mapHashKey = '###MAP###';
 
-      // Default content of the map marker
-    $str_map =  '<div style="border:2px solid red;text-align:center;color:red;padding:1em;">' .
-                  __METHOD__ . ' (' . __LINE__ . '): Error. MAP isn\'t rendered
-                </div>';
-
       // Get the template
-    $template = $this->pObj->cObj->fileResource( $this->confMap['template.']['file'] );
+    $mapTemplate = $this->pObj->cObj->fileResource( $this->confMap['template.']['file'] );
 
       // RETURN : no template file
-    if( empty( $template ) )
+    if( empty( $mapTemplate ) )
     {
         // DRS - Development Reporting System
       if ($this->b_drs_error)
@@ -1096,21 +1070,21 @@ if( $this->pObj->b_drs_todo )
                   '</p>';
         // Error message
         // Replace the map marker in the template of the parent object
-      $pObj_template = str_replace( $mapHashKey, $str_map, $pObj_template );
+      $template = str_replace( $mapHashKey, $str_map, $template );
         // RETURN the template
       $arr_return['error']    = true;
-      $arr_return['template'] = $pObj_template;
+      $arr_return['template'] = $template;
       return $arr_return;
     }
       // RETURN : no template file
 
       // Get the subpart
     $str_marker   = '###TEMPLATE_MAP###';
-    $template = $this->pObj->cObj->getSubpart( $template, $str_marker);
+    $mapTemplate  = $this->pObj->cObj->getSubpart( $mapTemplate, $str_marker);
       // Get the subpart
 
       // RETURN: no subpart marker
-    if( empty( $template ) )
+    if( empty( $mapTemplate ) )
     {
         // DRS - Development Reporting System
       if ($this->b_drs_error)
@@ -1129,16 +1103,16 @@ if( $this->pObj->b_drs_todo )
                   '</p>';
         // Error message
         // Replace the map marker in the template of the parent object
-      $pObj_template = str_replace( $mapHashKey, $str_map, $pObj_template );
+      $template = str_replace( $mapHashKey, $str_map, $template );
         // RETURN the template
       $arr_return['error']    = true;
-      $arr_return['template'] = $pObj_template;
+      $arr_return['template'] = $template;
       return $arr_return;
     }
       // RETURN: no subpart marker
 
       // RETURN : the template
-    $arr_return['template']   = $template;
+    $arr_return['template'] = $mapTemplate;
     return $arr_return;
   }
 
@@ -1156,7 +1130,44 @@ if( $this->pObj->b_drs_todo )
   *
   **********************************************/
 
+/**
+ * renderMap( ): Render the Map
+ *
+ * @param	string		$template     : current HTML template of the parent object
+ * @param	string		$mapTemplate  : the map
+ * @return	string		$template     : current HTML template with the rendered map
+ * @version 4.5.6
+ * @since   3.9.6
+ */
+  private function renderMapMarker( $template, $mapTemplate )
+  {
+      // Substitute marker HTML
+    $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate )
+                  + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
+    $mapTemplate  = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
+      // Substitute marker HTML
 
+      // Add data
+    $mapTemplate  = $this->renderMapMarkerVariablesSystem( $mapTemplate );
+    $markerArray  = $this->renderMapMarkerVariablesDynamic( $mapTemplate );
+    $mapTemplate  = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
+      // Add data
+
+      // Substitute marker JSS
+    $markerArray  = $markerArray 
+                  + $this->renderMapMarkerSnippetsJssDynamic( $mapTemplate );
+    $mapTemplate  = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
+      // Substitute marker JSS
+
+      // map marker
+    $mapHashKey = '###MAP###';
+      // Replace the map marker in the template of the parent object
+    $template   = str_replace( $mapHashKey, $mapTemplate, $template );
+
+//var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $mapTemplate, $template );
+      // RETURN the template
+    return $template;
+  }
 
   /**
  * renderMapMarkerVariablesDynamic( ):
