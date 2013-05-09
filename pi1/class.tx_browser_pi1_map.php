@@ -98,20 +98,20 @@
 class tx_browser_pi1_map
 {
     // [OBJECT] parent object
-  var $pObj = null;
+  public $pObj          = null;
 
     // [ARRAY] TypoScript configuration array of the current view
-  var $conf_view  = null;
+  private $conf_view    = null;
     // [INTEGER] Id of the single view
-  var $singlePid  = null;
+  private $singlePid    = null;
 
 
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
-  public $enabled      = null;
+  public $enabled       = null;
     // [STRING] GoogleMaps, Open Street Map
-  var $provider     = null;
+  private $provider     = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
-  var $confMap      = null;
+  private $confMap      = null;
     // [Integer] Number of the current typeNum
   var $int_typeNum  = null;
     // [String] Name of the current typeNum
@@ -125,12 +125,13 @@ class tx_browser_pi1_map
 
 
 
+  /***********************************************
+  *
+  * Constructor
+  *
+  **********************************************/
 
-
-
-
-
-  /**
+/**
  * Constructor. The method initiate the parent object
  *
  * @param	object		The parent object
@@ -143,21 +144,13 @@ class tx_browser_pi1_map
 
 
 
-
-
-
-
-
-
   /***********************************************
   *
   * Main
   *
   **********************************************/
 
-
-
-  /**
+/**
  * get_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
  * @param	string		$template: Current HTML template
@@ -234,21 +227,13 @@ class tx_browser_pi1_map
 
 
 
-
-
-
-
-
-
   /***********************************************
   *
   * Init
   *
   **********************************************/
 
-
-
-  /**
+/**
  * init(): The method sets the globals $enabled and $confMap
  *
  * @return	void
@@ -434,9 +419,7 @@ class tx_browser_pi1_map
     return;
   }
 
-
-
-  /**
+/**
  * initCatDevider( ): Init the class var $this->catDevider - the category devider.
  *
  * @return	void
@@ -450,13 +433,7 @@ class tx_browser_pi1_map
                         $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
   }
 
-
-
-
-
-
-
-  /**
+/**
  * initMainMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
  * @param	string		$template: Current HTML template
@@ -541,18 +518,13 @@ class tx_browser_pi1_map
 
 
 
-
-
-
   /***********************************************
   *
   * Categories
   *
   **********************************************/
 
-
-
-  /**
+/**
  * categoriesFormInputs( ): Returns the input fields for the category form
  *
  * @return	string
@@ -623,9 +595,7 @@ class tx_browser_pi1_map
     return $inputs;
   }
 
-
-
-  /**
+/**
  * categoriesGet( ): Get the category labels from the current rows. And set it in $this->arrCategories.
  *
  * @return	array		$this->arrCategories
@@ -756,9 +726,7 @@ if( $this->pObj->b_drs_todo )
     return $this->arrCategories;
   }
 
-
-
-  /**
+/**
  * categoriesMoreThanOne( ) : Set the class var $this->boolMoreThanOneCategory. It will be true, if there
  *                          are two categories at least
  *
@@ -801,16 +769,11 @@ if( $this->pObj->b_drs_todo )
 
 
 
-
-
-
   /***********************************************
   *
   * cObject
   *
   **********************************************/
-
-
 
 /**
  * cObjDataAddArray( ):
@@ -847,8 +810,6 @@ if( $this->pObj->b_drs_todo )
       $this->pObj->cObj->data[ $key ] = $value;
     }
   }
-
-
 
 /**
  * cObjDataAddMarker( ):
@@ -891,8 +852,6 @@ if( $this->pObj->b_drs_todo )
     }
   }
 
-
-
 /**
  * cObjDataAddRow( ):
  *
@@ -926,9 +885,7 @@ if( $this->pObj->b_drs_todo )
 
   }
 
-
-
-  /**
+/**
  * cObjDataRemoveArray( ):
  *
  * @param	array		$keyValue : array with key value pairs
@@ -944,9 +901,7 @@ if( $this->pObj->b_drs_todo )
     }
   }
 
-
-
-  /**
+/**
  * cObjDataRemoveMarker( ):
  *
  * @return	void
@@ -966,9 +921,7 @@ if( $this->pObj->b_drs_todo )
     }
   }
 
-
-
-  /**
+/**
  * cObjDataRemoveRow( ):
  *
  * @param	array
@@ -988,19 +941,11 @@ if( $this->pObj->b_drs_todo )
 
 
 
-
-
-
-
-
-
   /***********************************************
   *
   * Map rendering
   *
   **********************************************/
-
-
 
 /**
  * renderMap( ): Render the Map

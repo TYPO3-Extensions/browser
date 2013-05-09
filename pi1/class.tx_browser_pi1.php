@@ -1011,7 +1011,12 @@ class tx_browser_pi1 extends tslib_pibase {
         switch ( $this->objMap->enabled )
         {
             // CSV export is enabled
-          case( true ) :
+            // #47632, 130508, 1-
+          //case( true ) :
+            // #47632, 130508, 3+
+          case( 1 ) :
+          case( 'Map' ) :
+          case( 'Map +Route' ) :
               // Prompt the expired time to devlog
             $debugTrailLevel = 1;
             $this->timeTracking_log( $debugTrailLevel,  'END (file with map markers is returned)' );
@@ -1019,7 +1024,10 @@ class tx_browser_pi1 extends tslib_pibase {
             break;
             // CSV export isn't enabled
           case( false ) :
-          default :
+            // #47632, 130508, 1+
+          case( 'disabled' ) :
+            // #47632, 130508, 1-
+          //default :
             $prompt = 'Map marker export isn\'t enabled. Please enable it in your TYPO3-Browser. ' . PHP_EOL .
                       PHP_EOL .
                       'TypoScript: ' . PHP_EOL .
@@ -1035,6 +1043,11 @@ class tx_browser_pi1 extends tslib_pibase {
             $this->timeTracking_log( $debugTrailLevel,  'END (no file with map markers is returned)' );
             return $prompt;
             break;
+          // #47632, 130508, 5+
+        default :
+          $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                    'TypoScript property map.enabled is "' . $this->enabled . '".';
+          die( $prompt );
         }
         break;
         // typeNum name is map
