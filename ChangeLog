@@ -9,6 +9,7 @@
               * plugin.tx_browser_pi1.map.field.* -> plugin.tx_browser_pi1.map.marker.field.*
                 Effected files:
                 * static
+                  * downgrade/4.5.4/map/setup.txt
                   * constants.txt
                   * setup.txt
             * Files
