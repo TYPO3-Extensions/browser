@@ -39,30 +39,57 @@
  *
  *
  *
- *   69: class tx_browser_pi1_map
- *  103:     function __construct($pObj)
+ *   96: class tx_browser_pi1_map
+ *  137:     function __construct($pObj)
  *
  *              SECTION: Main
- *  132:     public function get_map( $template )
+ *  166:     public function get_map( $template )
  *
  *              SECTION: Init
- *  189:     private function init(  )
- *  330:     private function initMainMarker( $template )
- *  414:     public function set_typeNum( )
+ *  256:     private function init(  )
+ *  444:     private function initCatDevider( )
+ *  465:     private function initMainMarker( $template )
+ *
+ *              SECTION: Categories
+ *  560:     private function categoriesFormInputs( )
+ *  633:     private function categoriesGet( )
+ *  767:     private function categoriesMoreThanOne( )
+ *
+ *              SECTION: cObject
+ *  821:     private function cObjDataAddArray( $keyValue )
+ *  858:     private function cObjDataAddMarker( )
+ *  902:     private function cObjDataAddRow( $row )
+ *  937:     private function cObjDataRemoveArray( $keyValue )
+ *  954:     private function cObjDataRemoveMarker( )
+ *  977:     private function cObjDataRemoveRow( $row )
  *
  *              SECTION: Map rendering
- *  444:     private function renderMap( $pObj_template )
- *  598:     private function renderMapMarkerVariablesSystem( $map_template )
+ * 1011:     private function renderMap( $template )
  *
- *              SECTION: Map rendering marker
- *  630:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
- *  683:     private function renderMapMarkerSnippetsHtmlCategories( $map_template )
- *  732:     private function renderMapMarkerSnippetsJssDynamic( $map_template )
+ *              SECTION: Map center and zoom automatically
+ * 1048:     private function renderMapAutoCenterCoor( $map_template, $coordinates )
+ * 1146:     private function renderMapAutoCenterCoorVers12( $objLibMap )
+ * 1165:     private function renderMapAutoCenterCoorVers13( $objLibMap )
+ * 1185:     private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes )
  *
- *              SECTION: CSS
- *  798:     private function cssSetHtmlHeader( )
+ *              SECTION: Map HTML template
+ * 1313:     private function renderMapGetTemplate( $template )
  *
- * TOTAL FUNCTIONS: 11
+ *              SECTION: Map rendering data
+ * 1414:     private function renderMapMarker( $template, $mapTemplate )
+ * 1453:     private function renderMapMarkerCategoryIcons( )
+ * 1540:     private function renderMapMarkerPoints( )
+ * 1796:     private function renderMapMarkerPointsToJSON( $mapMarkers )
+ * 1895:     private function renderMapMarkerSnippetsHtml( $map_template, $tsProperty )
+ * 1948:     private function renderMapMarkerSnippetsHtmlCategories( $map_template )
+ * 1981:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
+ * 1999:     private function renderMapMarkerSnippetsJssDynamic( $map_template )
+ * 2050:     private function renderMapMarkerVariablesDynamic( $map_template )
+ * 2101:     private function renderMapMarkerVariablesSystem( $map_template )
+ * 2140:     private function renderMapMarkerVariablesSystemItem( $item )
+ * 2157:     public function set_typeNum( )
+ *
+ * TOTAL FUNCTIONS: 32
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -189,9 +216,9 @@ class tx_browser_pi1_map
     }
       // DRS
 
-      
-      
-      
+
+
+
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
 
@@ -327,7 +354,7 @@ class tx_browser_pi1_map
             // Follow the workflow
           break;
         default:
-          $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' . 
+          $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
                     'TypoScript property map.enabled is "' . $this->enabled . '".';
           die( $prompt );
       }
@@ -349,7 +376,7 @@ class tx_browser_pi1_map
       case( $this->provider == 'Open Street Map' ):
         break;
       default:
-        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' . 
+        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
                   'TypoScript property map.provider is "' . $this->provider . '".';
         die( $prompt );
     }
@@ -410,7 +437,7 @@ class tx_browser_pi1_map
   /**
  * initCatDevider( ): Init the class var $this->catDevider - the category devider.
  *
- * @return    void
+ * @return	void
  * @version 4.1.4
  * @since   4.1.4
  */
@@ -520,13 +547,13 @@ class tx_browser_pi1_map
   * Categories
   *
   **********************************************/
-  
-  
-  
+
+
+
   /**
  * categoriesFormInputs( ): Returns the input fields for the category form
  *
- * @return    string
+ * @return	string
  * @version 4.1.17
  * @since   4.1.4
  */
@@ -585,11 +612,11 @@ class tx_browser_pi1_map
       $arrInputs[ ] = $tab . $input;
     }
       // FOREACH category label
-    
+
       // Move array of input fields to a string
     $inputs = implode( PHP_EOL , $arrInputs );
     $inputs = trim ( $inputs );
-    
+
       // RETURN input fields
     return $inputs;
   }
@@ -599,7 +626,7 @@ class tx_browser_pi1_map
   /**
  * categoriesGet( ): Get the category labels from the current rows. And set it in $this->arrCategories.
  *
- * @return    array   $this->arrCategories
+ * @return	array		$this->arrCategories
  * @version 4.1.7
  * @since   4.1.4
  */
@@ -611,7 +638,7 @@ class tx_browser_pi1_map
       return $this->arrCategories;
     }
       // RETURN : method is called twice at least
-    
+
       // Local array for category labels
     $catLabels = null;
       // Local array for category icons
@@ -663,7 +690,7 @@ if( $this->pObj->b_drs_todo )
     }
       // FOREACH row
       // Get categories from the rows
-    
+
       // Remove non unique category labels
     $categoryLabels = array_unique( $categoryLabels );
 
@@ -717,23 +744,23 @@ if( $this->pObj->b_drs_todo )
       }
     }
       // Set the keys: keys should correspondend with keys of the item colours
-    
-    $this->arrCategories['labels']  = $catLabels; 
+
+    $this->arrCategories['labels']  = $catLabels;
     if( isset( $row[ $fieldForIcon ] ) )
     {
       $this->arrCategories['icons']   = $catIcons;
     }
-//$this->pObj->dev_var_dump( $this->arrCategories );    
+//$this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
   }
 
 
 
   /**
- * categoriesMoreThanOne( ) : Set the class var $this->boolMoreThanOneCategory. It will be true, if there 
-   *                          are two categories at least
+ * categoriesMoreThanOne( ) : Set the class var $this->boolMoreThanOneCategory. It will be true, if there
+ *                          are two categories at least
  *
- * @return    boolean   $this->boolMoreThanOneCategory: true, if there are two categories at least
+ * @return	boolean		$this->boolMoreThanOneCategory: true, if there are two categories at least
  * @version 4.1.7
  * @since   4.1.4
  */
@@ -746,7 +773,7 @@ if( $this->pObj->b_drs_todo )
       return $this->boolMoreThanOneCategory;
     }
       // RETURN : method is called twice at least
-      
+
     $categories = $this->categoriesGet( );
 
     if( count ( $categories['labels'] ) > 1 )
@@ -769,7 +796,7 @@ if( $this->pObj->b_drs_todo )
     }
     return $this->boolMoreThanOneCategory;
   }
-      
+
 
 
 
@@ -786,8 +813,8 @@ if( $this->pObj->b_drs_todo )
 /**
  * cObjDataAddArray( ):
  *
- * @param     array   $keyValue : array with key value pairs
- * @return    void
+ * @param	array		$keyValue : array with key value pairs
+ * @return	void
  * @version 4.1.7
  * @since   4.1.7
  */
@@ -824,7 +851,7 @@ if( $this->pObj->b_drs_todo )
 /**
  * cObjDataAddMarker( ):
  *
- * @return    void
+ * @return	void
  * @version 4.1.25
  * @since   4.1.0
  */
@@ -867,20 +894,20 @@ if( $this->pObj->b_drs_todo )
 /**
  * cObjDataAddRow( ):
  *
- * @param    array
- * @return    void
+ * @param	array
+ * @return	void
  * @version 4.1.0
  * @since   4.1.0
  */
   private function cObjDataAddRow( $row )
   {
     static $first_loop = true;
-    
+
     foreach( ( array ) $row as $key => $value )
     {
       $this->pObj->cObj->data[ $key ] = $value;
     }
-    
+
     if( $first_loop )
     {
       if( $this->pObj->b_drs_map )
@@ -894,7 +921,7 @@ if( $this->pObj->b_drs_todo )
     }
 
     $this->cObjDataAddMarker( );
-    
+
   }
 
 
@@ -902,8 +929,8 @@ if( $this->pObj->b_drs_todo )
   /**
  * cObjDataRemoveArray( ):
  *
- * @param     array   $keyValue : array with key value pairs
- * @return    void
+ * @param	array		$keyValue : array with key value pairs
+ * @return	void
  * @version 4.1.7
  * @since   4.1.7
  */
@@ -920,7 +947,7 @@ if( $this->pObj->b_drs_todo )
   /**
  * cObjDataRemoveMarker( ):
  *
- * @return    void
+ * @return	void
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -942,8 +969,8 @@ if( $this->pObj->b_drs_todo )
   /**
  * cObjDataRemoveRow( ):
  *
- * @param    array
- * @return    void
+ * @param	array
+ * @return	void
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -993,7 +1020,7 @@ if( $this->pObj->b_drs_todo )
       // RETURN : HTML template is not proper
 
     $template = $this->renderMapMarker( $template, $mapTemplate );
-    
+
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $mapTemplate, $template );
       // RETURN the template
     return $template;
@@ -1012,8 +1039,9 @@ if( $this->pObj->b_drs_todo )
   /**
  * renderMapAutoCenterCoor( ):
  *
- * @param    string        $map_template: ...
- * @return    string
+ * @param	string		$map_template: ...
+ * @param	[type]		$coordinates: ...
+ * @return	string
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -1021,7 +1049,7 @@ if( $this->pObj->b_drs_todo )
   {
       // Get the mode
     $mode = $this->confMap['configuration.']['centerCoordinates.']['mode'];
-    
+
       // SWITCH mode
     switch( $mode )
     {
@@ -1056,12 +1084,12 @@ if( $this->pObj->b_drs_todo )
       return $map_template;
     }
       // RETURN: center coordinates should not calculated
-    
+
       // Require map library
     require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
       // Create object
     $objLibMap = new tx_browser_map( );
-      
+
       // Get sum of coordinates
     $sumCoor = count( $coordinates );
     $curCoor = $sumCoor;
@@ -1092,7 +1120,7 @@ if( $this->pObj->b_drs_todo )
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
-      
+
       // Get the marker
     $marker     = $this->confMap['configuration.']['centerCoordinates.']['dynamicMarker'];
     $marker     = "'###" . strtoupper( $marker ). "###'";
@@ -1110,8 +1138,8 @@ if( $this->pObj->b_drs_todo )
 /**
  * renderMapAutoCenterCoorVers12( ) : Wrap center coordinates for oxMap version 1.2
  *
- * @param    object         $objLibMap  : ...
- * @return    string        $centerCoor :
+ * @param	object		$objLibMap  : ...
+ * @return	string		$centerCoor :
  * @version 4.5.6
  * @since   4.1.0
  */
@@ -1119,7 +1147,7 @@ if( $this->pObj->b_drs_todo )
   {
     $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
     $centerCoor = '[' . $centerCoor . ']';
-    
+
     return $centerCoor;
   }
 
@@ -1128,8 +1156,8 @@ if( $this->pObj->b_drs_todo )
 /**
  * renderMapAutoCenterCoorVers13( ) : Wrap center coordinates for oxMap version 1.3
  *
- * @param    object         $objLibMap  : ...
- * @return    string        $centerCoor :
+ * @param	object		$objLibMap  : ...
+ * @return	string		$centerCoor :
  * @internal  #47632
  * @version 4.5.6
  * @since   4.1.0
@@ -1147,8 +1175,10 @@ if( $this->pObj->b_drs_todo )
   /**
  * renderMapAutoZoomLevel( ):
  *
- * @param    string        $map_template: ...
- * @return    string
+ * @param	string		$map_template: ...
+ * @param	[type]		$longitudes: ...
+ * @param	[type]		$latitudes: ...
+ * @return	string
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -1156,7 +1186,7 @@ if( $this->pObj->b_drs_todo )
   {
       // Get the mode
     $mode = $this->confMap['configuration.']['zoomLevel.']['mode'];
-    
+
       // SWITCH mode
     switch( $mode )
     {
@@ -1191,7 +1221,7 @@ if( $this->pObj->b_drs_todo )
       return $map_template;
     }
       // RETURN: center coordinates should not calculated
-    
+
       // Calculate the zoom level
       // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
     $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
@@ -1249,7 +1279,7 @@ if( $this->pObj->b_drs_todo )
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
-      
+
       // Get the marker
     $marker     = $this->confMap['configuration.']['zoomLevel.']['dynamicMarker'];
     $marker     = "'###" . strtoupper( $marker ). "###'";
@@ -1284,7 +1314,7 @@ if( $this->pObj->b_drs_todo )
   {
     $arr_return           = array( );
     $arr_return['error']  = false;
-    
+
       // map hash key
     $mapHashKey = '###MAP###';
 
@@ -1396,7 +1426,7 @@ if( $this->pObj->b_drs_todo )
       // Add data
 
       // Substitute marker JSS
-    $markerArray  = $markerArray 
+    $markerArray  = $markerArray
                   + $this->renderMapMarkerSnippetsJssDynamic( $mapTemplate );
     $mapTemplate  = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
       // Substitute marker JSS
@@ -1414,26 +1444,26 @@ if( $this->pObj->b_drs_todo )
 
 
   /**
-   * renderMapMarkerCategoryIcons( ):  Render category icons by TypoScript default icons.
-   *
-   * @return    array    $catIcons  : Array with category icons and icons data like offset and size
-   * @version 4.1.0
-   * @since   4.1.0
-   */
+ * renderMapMarkerCategoryIcons( ):  Render category icons by TypoScript default icons.
+ *
+ * @return	array		$catIcons  : Array with category icons and icons data like offset and size
+ * @version 4.1.0
+ * @since   4.1.0
+ */
   private function renderMapMarkerCategoryIcons( )
   {
     $catIcons = null;
     $arrIcon  = array( );
-    
+
     foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] ) as $catKey )
     {
       if( substr( $catKey, -1 ) == '.' )
       {
         continue;
       }
-      
+
       unset( $arrIcon );
-      
+
         // Set the path
       $coa_name = $this->confMap['configuration.']['categories.']['colours.']['points.'][$catKey . '.']['pathToIcon'];
       $coa_conf = $this->confMap['configuration.']['categories.']['colours.']['points.'][$catKey . '.']['pathToIcon.'];
@@ -1452,7 +1482,7 @@ if( $this->pObj->b_drs_todo )
       $pathRelative = preg_replace('%' . PATH_site . '%', '', $pathAbsolute );
       $arrIcon[] = $pathRelative;
         // Set the path
-        
+
         // Add the icon width
       $value = $this->confMap['configuration.']['categories.']['colours.']['points.'][$catKey . '.']['width'];
       if( empty( $value ) )
@@ -1489,21 +1519,21 @@ if( $this->pObj->b_drs_todo )
       $arrIcon[] = ( int ) $value;
         // Add the icon y-offset
 
-//      $catIcons[$catKey] = '[' . implode( ', ', $arrIcon ) . ']';      
-      $catIcons[$catKey] = $arrIcon;      
-      
+//      $catIcons[$catKey] = '[' . implode( ', ', $arrIcon ) . ']';
+      $catIcons[$catKey] = $arrIcon;
+
     }
 
 //var_dump( __METHOD__, __LINE__, $catIcons );
     return $catIcons;
   }
-  
+
 
 
   /**
- * renderMapMarkerPoints( ): Points are map markers. 
+ * renderMapMarkerPoints( ): Points are map markers.
  *
- * @return    array
+ * @return	array
  * @version 4.1.13
  * @since   4.1.7
  */
@@ -1513,7 +1543,7 @@ if( $this->pObj->b_drs_todo )
     $lons         = array( );
     $lats         = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
-    
+
       // #44849, dwildt, 1+
     $llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
 
@@ -1530,7 +1560,7 @@ if( $this->pObj->b_drs_todo )
       $keys = array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] );
       $arrCategoriesFlipped = array( $llNoCat => $keys[ 0 ] );
     }
-      
+
 
       // FOREACH row
     $mapMarkers = null;
@@ -1615,13 +1645,13 @@ if( $this->pObj->b_drs_todo )
         {
           $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[ $key ] ) );
         }
-        
+
           // #42566, 121031, dwildt
         $this->cObjDataRemoveArray( array( $catField ) );
         $catValue = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $categories );
         $this->cObjDataAddArray( array( $catField => $catValue ) );
-        
-        
+
+
           // Add x offset and y offset to current cObject
           // #42125, 121031, dwildt, 2+
         $this->cObjDataAddArray( array( $catOffsetXField => $categoryOffsetsX[ $key ] ) );
@@ -1700,22 +1730,22 @@ if( $this->pObj->b_drs_todo )
           // Save each mapMarker
         $mapMarkers[] = $mapMarker;
           // Save each longitude
-        $lons[] = ( double ) $mapMarker['lon']; 
+        $lons[] = ( double ) $mapMarker['lon'];
           // Save each latitude
-        $lats[]  = ( double ) $mapMarker['lat']; 
+        $lats[]  = ( double ) $mapMarker['lat'];
 
           // Remove the current row from cObj->data
         $this->cObjDataRemoveRow( $row );
         $this->cObjDataRemoveMarker( );
         $this->cObjDataRemoveArray( array( $catIconsField => $categoryIcons[$key] ) );
-        
+
       }
         // FOREACH category
     }
     unset( $dontHandle00 );
       // FOREACH row
 
-//$this->pObj->dev_var_dump( $mapMarkers );    
+//$this->pObj->dev_var_dump( $mapMarkers );
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
@@ -1747,7 +1777,7 @@ if( $this->pObj->b_drs_todo )
         break;
     }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
-//$this->pObj->dev_var_dump( $mapMarkers );    
+//$this->pObj->dev_var_dump( $mapMarkers );
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
     return $arr_return;
@@ -1758,8 +1788,8 @@ if( $this->pObj->b_drs_todo )
   /**
  * renderMapMarkerPointsToJSON( ):
  *
- * @param    array        
- * @return    string    $jsonData
+ * @param	array
+ * @return	string		$jsonData
  * @version 4.1.7
  * @since   4.1.0
  */
@@ -1773,7 +1803,7 @@ if( $this->pObj->b_drs_todo )
     $catIcons = $this->renderMapMarkerCategoryIcons( );
       // Path to the root
     $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
-    
+
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
@@ -1845,7 +1875,7 @@ if( $this->pObj->b_drs_todo )
       // FOREACH map marker
 
     $jsonData = json_encode( $series );
-    
+
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
     return $arr_return;
@@ -1856,8 +1886,9 @@ if( $this->pObj->b_drs_todo )
   /**
  * renderMapMarkerSnippetsHtml( $map_template, $tsProperty ):
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @param	[type]		$$map_template: ...
+ * @param	[type]		$tsProperty: ...
+ * @return	array
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -1917,7 +1948,7 @@ if( $this->pObj->b_drs_todo )
   private function renderMapMarkerSnippetsHtmlCategories( $map_template )
   {
     $markerArray = array( );
-    
+
     if( ! $this->categoriesMoreThanOne( ) )
     {
       if( $this->pObj->b_drs_map )
@@ -1927,10 +1958,10 @@ if( $this->pObj->b_drs_todo )
       }
       return $markerArray;
     }
-    
+
     $tsProperty   = 'categories';
     $markerArray  =  $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
-    
+
     $inputs = $this->categoriesFormInputs( );
     $markerArray[ '###FILTER_FORM###' ] = str_replace('###INPUTS###', $inputs, $markerArray[ '###FILTER_FORM###' ] );
 
@@ -2011,8 +2042,8 @@ if( $this->pObj->b_drs_todo )
 /**
  * renderMapMarkerVariablesDynamic( ):
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @param	[type]		$$map_template: ...
+ * @return	array
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -2062,34 +2093,34 @@ if( $this->pObj->b_drs_todo )
   /**
  * renderMapMarkerVariablesSystem( ):
  *
- * @param    string        $map_template: ...
- * @return    string
+ * @param	string		$map_template: ...
+ * @return	string
  * @version 4.1.0
  * @since   4.1.0
  */
   private function renderMapMarkerVariablesSystem( $map_template )
   {
-//var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
+//var_dump( __METHOD__, __LINE__, $this->pObj->rows );
     $arr_return = array( );
     $mapMarkers = array( );
-    
+
       // Get rendered points (map marker), lats and lons
     $arr_return = $this->renderMapMarkerPoints( );
     $mapMarkers = $arr_return['data']['mapMarkers'];
     $lats       = $arr_return['data']['lats'];
     $lons       = $arr_return['data']['lons'];
       // Get rendered points (map marker), lats and lons
-    
+
       // Get points (map marker) as JSON array and coordinates
     $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
-//var_dump( __METHOD__, __LINE__, $arr_return ); 
+//var_dump( __METHOD__, __LINE__, $arr_return );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
       // Get points (map marker) as JSON array and coordinates
-    
+
       // Add JSON array
     $map_template = str_replace( "'###JSONDATA###'", $jsonData, $map_template );
-    
+
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
       // Set zoom level
@@ -2101,8 +2132,8 @@ if( $this->pObj->b_drs_todo )
   /**
  * renderMapMarkerVariablesSystemItem( ):
  *
- * @param    string        $map_template: ...
- * @return    string
+ * @param	string		$map_template: ...
+ * @return	string
  * @version 4.1.4
  * @since   4.1.0
  */
@@ -2142,7 +2173,7 @@ if( $this->pObj->b_drs_todo )
   * Map rendering marker
   *
   **********************************************/
-  
+
 
 
 }
