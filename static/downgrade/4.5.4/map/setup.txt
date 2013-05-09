@@ -215,6 +215,12 @@ plugin.tx_browser_pi1 {
  
   // plugin.tx_browser_pi1.map.marker.field.* -> plugin.tx_browser_pi1.map.field.*
 plugin.tx_browser_pi1 {
+  displayList {
+    master_templates.map.descriptionWiLinkToSingle {
+      10.field = {$plugin.tx_browser_pi1.map.marker.field.description}
+      20.field = {$plugin.tx_browser_pi1.map.marker.field.category}
+    }
+  }
   navigation {
     map {
       configuration {
