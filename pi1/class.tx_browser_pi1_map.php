@@ -39,68 +39,73 @@
  *
  *
  *
- *  107: class tx_browser_pi1_map
+ *  112: class tx_browser_pi1_map
  *
  *              SECTION: Constructor
- *  151:     function __construct($pObj)
+ *  156:     function __construct($pObj)
  *
  *              SECTION: Categories
- *  171:     private function categoriesFormInputs( )
- *  242:     private function categoriesGet( )
- *  374:     private function categoriesMoreThanOne( )
+ *  176:     private function categoriesFormInputs( )
+ *  247:     private function categoriesGet( )
+ *  379:     private function categoriesMoreThanOne( )
  *
  *              SECTION: cObject
- *  423:     private function cObjDataAddArray( $keyValue )
- *  458:     private function cObjDataAddMarker( )
- *  500:     private function cObjDataAddRow( $row )
- *  533:     private function cObjDataRemoveArray( $keyValue )
- *  548:     private function cObjDataRemoveMarker( )
- *  569:     private function cObjDataRemoveRow( $row )
+ *  428:     private function cObjDataAddArray( $keyValue )
+ *  463:     private function cObjDataAddMarker( )
+ *  505:     private function cObjDataAddRow( $row )
+ *  538:     private function cObjDataRemoveArray( $keyValue )
+ *  553:     private function cObjDataRemoveMarker( )
+ *  574:     private function cObjDataRemoveRow( $row )
  *
  *              SECTION: Main
- *  595:     public function get_map( $template )
+ *  600:     public function get_map( $template )
  *
  *              SECTION: Init
- *  677:     private function init(  )
- *  699:     private function initCatDevider( )
- *  714:     private function initMainMarker( $template )
+ *  682:     private function init(  )
+ *  704:     private function initCatDevider( )
+ *  719:     private function initMainMarker( $template )
  *
  *              SECTION: Init global variables
- *  804:     private function initVar(  )
- *  872:     private function initVarConfMap(  )
- *  911:     private function initVarEnabled(  )
- *  972:     private function initVarProvider(  )
- *  996:     private function initVarTypeNum(  )
+ *  809:     private function initVar(  )
+ *  877:     private function initVarConfMap(  )
+ *  916:     private function initVarEnabled(  )
+ *  977:     private function initVarProvider(  )
+ * 1001:     private function initVarTypeNum(  )
  *
  *              SECTION: Map rendering
- * 1034:     private function renderMap( $template )
+ * 1039:     private function renderMap( $template )
  *
  *              SECTION: Map center and zoom automatically
- * 1077:     private function renderMapAutoCenterCoor( $map_template, $coordinates )
- * 1176:     private function renderMapAutoCenterCoorVers12( $objLibMap )
- * 1195:     private function renderMapAutoCenterCoorVers13( $objLibMap )
- * 1215:     private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes )
+ * 1083:     private function renderMapAutoCenterCoor( $map_template, $coordinates )
+ * 1182:     private function renderMapAutoCenterCoorVers12( $objLibMap )
+ * 1201:     private function renderMapAutoCenterCoorVers13( $objLibMap )
+ * 1221:     private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes )
  *
  *              SECTION: Map HTML template
- * 1343:     private function renderMapGetTemplate( $template )
+ * 1349:     private function renderMapGetTemplate( $template )
  *
  *              SECTION: Map rendering marker
- * 1438:     private function renderMapMarker( $template, $mapTemplate )
- * 1477:     private function renderMapMarkerCategoryIcons( )
- * 1564:     private function renderMapMarkerPoints( )
- * 1820:     private function renderMapMarkerPointsToJSON( $mapMarkers )
- * 1919:     private function renderMapMarkerSnippetsHtml( $map_template, $tsProperty )
- * 1972:     private function renderMapMarkerSnippetsHtmlCategories( $map_template )
- * 2005:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
- * 2023:     private function renderMapMarkerSnippetsJssDynamic( $map_template )
- * 2074:     private function renderMapMarkerVariablesDynamic( $map_template )
- * 2125:     private function renderMapMarkerVariablesSystem( $map_template )
- * 2164:     private function renderMapMarkerVariablesSystemItem( $item )
+ * 1444:     private function renderMapMarker( $template, $mapTemplate )
+ * 1483:     private function renderMapMarkerCategoryIcons( )
+ * 1570:     private function renderMapMarkerPoints( )
+ * 1826:     private function renderMapMarkerPointsToJSON( $mapMarkers )
+ * 1925:     private function renderMapMarkerSnippetsHtml( $map_template, $tsProperty )
+ * 1978:     private function renderMapMarkerSnippetsHtmlCategories( $map_template )
+ * 2011:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
+ * 2029:     private function renderMapMarkerSnippetsJssDynamic( $map_template )
+ * 2080:     private function renderMapMarkerVariablesDynamic( $map_template )
+ * 2131:     private function renderMapMarkerVariablesSystem( $map_template )
+ * 2170:     private function renderMapMarkerVariablesSystemItem( $item )
+ *
+ *              SECTION: Map rendering Route
+ * 2193:     private function renderMapRoute( )
+ * 2235:     private function renderMapRouteMarker( )
+ * 2253:     private function renderMapRoutePaths( )
  *
  *              SECTION: Set Page Type
- * 2187:     public function set_typeNum( )
+ * 2279:     public function set_typeNum( )
  *
- * TOTAL FUNCTIONS: 37
+ * TOTAL FUNCTIONS: 40
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -2179,7 +2184,7 @@ if( $this->pObj->b_drs_todo )
   **********************************************/
 
 /**
- * renderMapRoute( ): 
+ * renderMapRoute( ):
  *
  * @return	array
  * @version 4.5.6
@@ -2188,9 +2193,9 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRoute( )
   {
     $arr_return = array
-                  ( 
+                  (
                       'error'  => false
-                    , 'prompt' => null 
+                    , 'prompt' => null
                   );
 
     $prompt = '<h1 style="color:red;">
@@ -2209,7 +2214,7 @@ if( $this->pObj->b_drs_todo )
                 Method: ' . __METHOD__ . ' at line ' . __LINE__ . '
               </p>
               ';
-    
+
     $arr_return['error']  = true;
     $arr_return['prompt'] = $prompt;
     return $arr_return;
@@ -2221,7 +2226,7 @@ if( $this->pObj->b_drs_todo )
   }
 
 /**
- * renderMapRouteMarker( ): 
+ * renderMapRouteMarker( ):
  *
  * @return	array
  * @version 4.5.6
@@ -2230,16 +2235,16 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRouteMarker( )
   {
     $arr_return = array
-                  ( 
+                  (
                       'error'  => false
-                    , 'prompt' => null 
+                    , 'prompt' => null
                   );
-    
+
     return $arr_return;
   }
 
 /**
- * renderMapRoutePaths( ): 
+ * renderMapRoutePaths( ):
  *
  * @return	array
  * @version 4.5.6
@@ -2248,11 +2253,11 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRoutePaths( )
   {
     $arr_return = array
-                  ( 
+                  (
                       'error'  => false
-                    , 'prompt' => null 
+                    , 'prompt' => null
                   );
-    
+
     return $arr_return;
   }
 
