@@ -153,7 +153,7 @@ class tx_browser_extmanager
       // #48613, dwildt, 3+
     $arrDefinedConstants  = get_defined_constants( );
     $path_typo3conf       = $arrDefinedConstants['PATH_typo3conf'];
-    $str_prompt           = str_replace( 'PATH_typo3conf', $path_typo3conf, $str_prompt );
+    $str_prompt           = str_replace( '%PATH_typo3conf%', $path_typo3conf, $str_prompt );
       // #48613, dwildt, 3+
 
     return $str_prompt;
