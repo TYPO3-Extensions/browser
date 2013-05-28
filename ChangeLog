@@ -1,5 +1,5 @@
 4.5.6
-  13-05-02
+  13-05-28
   Feature
   * #47823: Extend cObj->data +++ second step
             Effected file:
@@ -43,6 +43,7 @@
                   * setup.txt
                 * ext_tables.php
   Bugfix
+  * #48613: Unproper URL for icons in Backend-Module
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
             Effected files:
             * pi1
