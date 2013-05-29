@@ -201,12 +201,12 @@ class tx_browser_pi1_viewlist
       // Get template for csv
     switch( $this->pObj->objExport->str_typeNum )
     {
-//      case( 'csv' ) :
-//          // CASE csv
-//          // Take the CSV template
-//        $this->content_setCSV( );
-//        break;
-//          // CASE csv
+      case( 'csv' ) :
+          // CASE csv
+          // Take the CSV template
+        $this->content_setCSV( );
+        break;
+          // CASE csv
       default:
           // CASE no csv
           // Take the default template (the list view) and replace some subparts
@@ -531,6 +531,9 @@ class tx_browser_pi1_viewlist
  */
   private function content_setCSV( )
   {
+$arr_return = $this->subpart_setSearchboxFilter( $filter );
+$this->pObj->dev_var_dump( $arr_return );
+
       // Get the label of the subpart marker for the csv content
     $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
 
