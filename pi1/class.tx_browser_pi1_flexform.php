@@ -63,7 +63,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 4.1.25
+ * @version 4.5.7
  * @since   2.0.0
  */
 class tx_browser_pi1_flexform {
@@ -2673,7 +2673,7 @@ class tx_browser_pi1_flexform {
  * The method removes "unavailable" views from the TypoScript.
  *
  * @return    void
- * @version 4.1.25
+ * @version 4.5.7
  * @since   2.x
  */
   function sheet_viewList( )
@@ -3386,27 +3386,28 @@ class tx_browser_pi1_flexform {
     // Handle search properties'
 
 
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // csv export
-
-      // #29370, 110831, dwildt+
-      // Remove the search form in case of csv export
-    switch( $this->pObj->objExport->str_typeNum )
-    {
-      case( 'csv' ) :
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
-        {
-          t3lib_div::devlog('[INFO/EXPORT] searchform won\'t be handled. It is set to 0.',  $this->pObj->extKey, 0);
-        }
+    // #33336, 130529, dwildt, -
+//      //////////////////////////////////////////////////////////////////////
+//      //
+//      // csv export
+//
+//      // #29370, 110831, dwildt+
+//      // Remove the search form in case of csv export
+//    switch( $this->pObj->objExport->str_typeNum )
+//    {
+//      case( 'csv' ) :
+//        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+//        {
+//          t3lib_div::devlog('[INFO/EXPORT] searchform won\'t be handled. It is set to 0.',  $this->pObj->extKey, 0);
+//        }
 //        $this->bool_searchForm = false;
-        break;
-      default:
-        // Do nothing;
-    }
-      // Remove the search form in case of csv export
-      // csv export
+//        break;
+//      default:
+//        // Do nothing;
+//    }
+//      // Remove the search form in case of csv export
+//      // csv export
+    // #33336, 130529, dwildt, -
 
 
 

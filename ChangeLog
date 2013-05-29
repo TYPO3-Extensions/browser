@@ -1,3 +1,8 @@
+4.5.7
+  13-05-29
+  Bugfix
+  * #33336: Export: category-menu will ignored
+
 4.5.6
   13-05-28
   Feature
@@ -67,7 +72,6 @@
             Effected file:
             * pi1/class.tx_browser_pi1_sql_manual_3x.php
   * #47089: Filter can cause an unproper value in $arrConsolidate['addedTableFields']
-  * #33336: Export: category-menu will ignored
 
 4.5.5
   13-04-09
