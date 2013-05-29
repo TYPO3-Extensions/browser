@@ -521,7 +521,7 @@ class tx_browser_pi1_wrapper
       // csv export
 
       // #29370, 110831, dwildt+
-      // Remove the title in case of csv export
+      // Don't link to a single view in case of csv export
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
@@ -537,7 +537,7 @@ class tx_browser_pi1_wrapper
       default:
         // Do nothing;
     }
-      // Remove the title in case of csv export
+      // Don't link to a single view in case of csv export
       // csv export
 
 

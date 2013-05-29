@@ -201,12 +201,12 @@ class tx_browser_pi1_viewlist
       // Get template for csv
     switch( $this->pObj->objExport->str_typeNum )
     {
-      case( 'csv' ) :
-          // CASE csv
-          // Take the CSV template
-        $this->content_setCSV( );
-        break;
-          // CASE csv
+//      case( 'csv' ) :
+//          // CASE csv
+//          // Take the CSV template
+//        $this->content_setCSV( );
+//        break;
+//          // CASE csv
       default:
           // CASE no csv
           // Take the default template (the list view) and replace some subparts
