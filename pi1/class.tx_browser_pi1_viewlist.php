@@ -531,8 +531,11 @@ class tx_browser_pi1_viewlist
  */
   private function content_setCSV( )
   {
-$arr_return = $this->subpart_setSearchboxFilter( $filter );
-$this->pObj->dev_var_dump( $arr_return );
+      // #33336, 130529, dwildt, 3+
+    $arr_return = $this->subpart_setSearchboxFilter( $filter );
+    //$this->pObj->dev_var_dump( $arr_return );
+    unset( $arr_return );
+      // #33336, 130529, dwildt, 3+
 
       // Get the label of the subpart marker for the csv content
     $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
