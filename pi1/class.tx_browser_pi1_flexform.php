@@ -998,7 +998,6 @@ class tx_browser_pi1_flexform {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
 
-    $conf = $this->pObj->conf;
     $modeWiDot = (int) $this->mode . '.';
     $viewWiDot = $this->pObj->view . '.';
     $conf_view = $this->pObj->conf['views.'][$viewWiDot][$modeWiDot];
@@ -3122,7 +3121,7 @@ class tx_browser_pi1_flexform {
       // csv export
 
       // #29370, 110831, dwildt+
-      // Remove the title in case of csv export
+      // Remove the limit in case of csv export
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
@@ -3135,7 +3134,7 @@ class tx_browser_pi1_flexform {
       default:
         // Do nothing;
     }
-      // Remove the title in case of csv export
+      // Remove the limit in case of csv export
       // csv export
 
 
@@ -3401,7 +3400,7 @@ class tx_browser_pi1_flexform {
         {
           t3lib_div::devlog('[INFO/EXPORT] searchform won\'t be handled. It is set to 0.',  $this->pObj->extKey, 0);
         }
-        $this->bool_searchForm = false;
+//        $this->bool_searchForm = false;
         break;
       default:
         // Do nothing;
