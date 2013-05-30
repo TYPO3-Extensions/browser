@@ -2501,7 +2501,8 @@ $this->pObj->dev_var_dump( $row );
         $i = 0;
         foreach( $children as $child )
         {
-          $rowsOutput[$rowsCounter + $i][$tableField] = $child;
+          //$rowsOutput[$rowsCounter + $i][$tableField] = $child;
+          $rowsOutput[$rowsCounter][$i][$tableField] = $child;
           $i++;
         }
       }
