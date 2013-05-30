@@ -2353,12 +2353,20 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 $this->pObj->dev_var_dump( $tablePath, $tableMarker, $tableMarkerCat );
     
       // LOOP relations
+    $counterRows = 0;
     foreach( $relations as $relation )
     {
         // LOOP relation      
       foreach( $relation as $tablePathMarkerCat )
       {
         $arrTablePathMarkerCat = explode( $this->catDevider, $tablePathMarkerCat );
+        foreach( $arrTablePathMarkerCat as $arrTablePathMarkerCatChildren )
+        {
+          list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
+          unset( $pathUid );
+$this->pObj->dev_var_dump( $markerUid, $catUid );
+          $counterRows++;
+        }
 $this->pObj->dev_var_dump( $arrTablePathMarkerCat );
       }
         // LOOP relation      
