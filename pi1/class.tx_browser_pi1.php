@@ -981,6 +981,8 @@ class tx_browser_pi1 extends tslib_pibase {
             $this->timeTracking_log( $debugTrailLevel,  'END (CSV file is returned)' );
               // #33336, 130529, dwildt, 1+
             $str_template_completed = strip_tags( $str_template_completed );
+              // #33336, 130529, dwildt, sesamnet-bug, 1+
+            $str_template_completed = str_replace( 'begin -->"Status"', 'Status', $str_template_completed );
             return trim( $str_template_completed );
             break;
             // CSV export isn't enabled

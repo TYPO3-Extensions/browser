@@ -811,6 +811,7 @@ if( $this->pObj->b_drs_todo )
       // RETURN: $enabled isn't null
     if( ! ( $this->enabled === null ) )
     {
+        // DRS
       if( $this->pObj->b_drs_map )
       {
           // #47632, 130508, dwildt, 1-
@@ -835,6 +836,7 @@ if( $this->pObj->b_drs_todo )
         }
         t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
       }
+        // DRS
       return true;
     }
       // RETURN: $enabled isn't null
