@@ -2364,13 +2364,13 @@ $this->pObj->dev_var_dump( $tablePath, $tableMarker, $tableMarkerCat );
         {
           list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
           unset( $pathUid );
-$this->pObj->dev_var_dump( $markerUid, $catUid );
+          $rowsOutput[$markerUid][$catUid] = true;
           $counterRows++;
         }
-$this->pObj->dev_var_dump( $arrTablePathMarkerCat );
       }
         // LOOP relation      
     }
+$this->pObj->dev_var_dump( $rowsOutput );
     
     return;
     
