@@ -2486,25 +2486,25 @@ $this->pObj->dev_var_dump( $rowsOutput );
     $rowsCounter = 0;
     foreach( $this->pObj->rows as $row )
     {
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
         // LOOP row
       foreach( $row as $tableField => $value )
       {
-$this->pObj->dev_var_dump( $tableField, $value );
+//$this->pObj->dev_var_dump( $tableField, $value );
         list( $table ) = explode( '.', $tableField );
         if( $table != $tableMarker )
         {
           continue;
         }
         $children = explode( $this->catDevider, $value );
-$this->pObj->dev_var_dump( $children );
+//$this->pObj->dev_var_dump( $children );
         foreach( $children as $child )
         {
           $rowsOutput[$rowsCounter][$tableField] = $child;
         }
-        $rowsCounter++;
       }
         // LOOP row
+      $rowsCounter++;
     }
       // LOOP rows
 $this->pObj->dev_var_dump( $rowsOutput );
