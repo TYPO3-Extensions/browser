@@ -4,6 +4,16 @@
   * #47631: Route Interface oxMap
   * #47630: Backend Routes
   * #33336: Export: filter are respected
+  * #i0007: TypoScript version
+            Effected files
+            * ext_tables.php
+            * pi1/class.tx_browser_pi1.php
+            * static
+              * constants.txt
+              * setup.txt
+              * downgrade/4.5.4
+                * constants.txt
+                * setup.txt
 
 4.5.6
   13-05-28
