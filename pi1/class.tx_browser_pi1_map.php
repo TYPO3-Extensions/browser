@@ -2322,9 +2322,12 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
     $rowsInput = $this->pObj->rows;
 
+    $linktoSingle     = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
+    $latitude         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['latitude'];
+    $longitude        = $this->confMap['configuration.']['categories.']['fields.']['marker.']['longitude'];
+    $description      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['description'];
     $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
     $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
-      // #42125, 121031, dwildt, 2+
     $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
     $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
 
@@ -2333,10 +2336,14 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $rowsOutput = array( );
     foreach( $rowsInput as $elements )
     {
-      $rowsOutput[$countRow][$catField]        = $elements[$catField]; 
-      $rowsOutput[$countRow][$catIconsField]   = $elements[$catIconsField]; 
-      $rowsOutput[$countRow][$catOffsetXField] = $elements[$catOffsetXField]; 
-      $rowsOutput[$countRow][$catOffsetYField] = $elements[$catOffsetYField]; 
+      $rowsOutput[$countRow][$linktoSingle]     = $elements[$linktoSingle]; 
+      $rowsOutput[$countRow][$latitude]         = $elements[$latitude]; 
+      $rowsOutput[$countRow][$longitude]        = $elements[$longitude]; 
+      $rowsOutput[$countRow][$description]      = $elements[$description]; 
+      $rowsOutput[$countRow][$catField]         = $elements[$catField]; 
+      $rowsOutput[$countRow][$catIconsField]    = $elements[$catIconsField]; 
+      $rowsOutput[$countRow][$catOffsetXField]  = $elements[$catOffsetXField]; 
+      $rowsOutput[$countRow][$catOffsetYField]  = $elements[$catOffsetYField]; 
       $countRow++;
     }
       // LOOP each row
