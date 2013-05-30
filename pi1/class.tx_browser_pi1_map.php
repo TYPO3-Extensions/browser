@@ -2501,11 +2501,10 @@ $this->pObj->dev_var_dump( $rowsOutput );
         $childCounter = 0;
         foreach( $children as $child )
         {
-          $rowsOutput[ $rowsCounter ][ $childCounter ][ $fieldCounter ][ $tableField ] = $child;
+          $rowsOutput[ $rowsCounter ][ $childCounter ][ $tableField ] = $child;
 //$this->pObj->dev_var_dump( $rowsCounter, $fieldCounter, $childCounter, $tableField, $child );
           $childCounter++;
         }
-        $fieldCounter++;
       }
         // LOOP row
       $rowsCounter++;
