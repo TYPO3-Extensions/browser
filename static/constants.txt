@@ -271,7 +271,7 @@ plugin.tx_browser_pi1 {
   map.html.links = Click me!
 
   # cat=BrowserMaps - Route//101;        type=string;   label= Label marker table:The label of the table, which contain the marker. I.e: tx_route_marker
-  map.route.tables.marker = 1
+  map.route.tables.marker = 
   # cat=BrowserMaps - Route/others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.route.links = Click me!
 

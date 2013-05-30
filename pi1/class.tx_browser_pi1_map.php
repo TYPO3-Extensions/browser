@@ -2318,7 +2318,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
                     , 'prompt' => null
                   );
 
-$this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRelation( ) );
+$this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRelations( ) );
 
     $rowsInput = $this->pObj->rows;
 
@@ -2384,7 +2384,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
   }
 
 /**
- * renderMapRouteMarkerGetRelation( ):
+ * renderMapRouteMarkerGetRelations( ):
  *
  * @return	array
  * @version 4.5.7
@@ -2392,9 +2392,10 @@ $this->pObj->dev_var_dump( $rowsOutput );
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarkerGetRelation( )
+  private function renderMapRouteMarkerGetRelations( )
   {
-    $relation = array( );
+    $relations  = array( );
+    $rowCounter = 0;
     
       // LOOP each row
     foreach( $this->pObj->rows as $elements )
@@ -2406,13 +2407,14 @@ $this->pObj->dev_var_dump( $rowsOutput );
         {
           continue;
         }
-        $relation[$key] = $value;
-        continue 2;
+        $relations[$rowCounter][$key] = $value;
+        break;
       }
+      $rowCounter++;
     }
       // LOOP each row
 
-    return $relation;
+    return $relations;
   }
 
 /**
