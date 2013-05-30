@@ -2318,7 +2318,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
                     , 'prompt' => null
                   );
 
-$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRelation( ) );
 
     $rowsInput = $this->pObj->rows;
 
@@ -2335,12 +2335,18 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     {
       foreach( $elements as $key => $value )
       {
-        list( $table ) = explode( '.', $key );
-        if( ! ( $table == $tableMarker ) )
+        list( $relation ) = explode( ':', $key );
+        if( ! ( $relation == 'MARKER' ) )
         {
           continue;
         }
-        $rowsOutput[$countRow][$key] = $value; 
+      }
+//        list( $table ) = explode( '.', $key );
+//        if( ! ( $table == $tableMarker ) )
+//        {
+//          continue;
+//        }
+//        $rowsOutput[$countRow][$key] = $value; 
       }
       $rowsOutput[$countRow][$catField]         = $elements[$catField]; 
       $rowsOutput[$countRow][$catIconsField]    = $elements[$catIconsField]; 
@@ -2375,6 +2381,38 @@ $this->pObj->dev_var_dump( $rowsOutput );
 //    $arr_return['prompt'] = $prompt;
 
     return $arr_return;
+  }
+
+/**
+ * renderMapRouteMarkerGetRelation( ):
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerGetRelation( )
+  {
+    $relation = array( );
+    
+      // LOOP each row
+    foreach( $this->pObj->rows as $elements )
+    {
+      foreach( $elements as $key => $value )
+      {
+        list( $marker ) = explode( ':', $key );
+        if( ! ( $marker == 'MARKER' ) )
+        {
+          continue;
+        }
+        $relation[$key] = $value;
+        continue 2;
+      }
+    }
+      // LOOP each row
+
+    return $relation;
   }
 
 /**
