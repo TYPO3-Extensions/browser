@@ -2322,7 +2322,6 @@ $this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRela
 
     $rowsInput = $this->pObj->rows;
 
-    $tableMarker      = $this->confMap['configuration.']['route.']['tables.']['marker'];
     $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
     $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
     $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
