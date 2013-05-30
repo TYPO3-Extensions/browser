@@ -1,0 +1,5047 @@
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // INDEX
+  //
+  // includeLibs
+  // plugin.tx_browser_pi1: templating
+  // plugin.tx_browser_pi1: localTable
+  // plugin.tx_browser_pi1: navigation
+  // plugin.tx_browser_pi1: general
+  // plugin.tx_browser_pi1: document_stdWrap
+  // plugin.tx_browser_pi1: displaySingle
+  // plugin.tx_browser_pi1: displayList
+  // plugin.tx_browser_pi1: displayList master_templates
+  // plugin.tx_browser_pi1: displayList images
+  // plugin.tx_browser_pi1: cObjData
+  // plugin.tx_browser_pi1: marker
+  // plugin.tx_browser_pi1: flexform
+  // plugin.tx_browser_pi1: javascript
+  // plugin.tx_browser_pi1: export
+  // plugin.tx_browser_pi1: download
+  // plugin.tx_browser_pi1: rss
+  // plugin.tx_browser_pi1: autoconfig
+  // plugin.tx_browser_pi1: format
+  // plugin.tx_browser_pi1: advanced
+  // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
+  // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+  // plugin.tx_browser_pi1: version
+  // pages: browser_ajax
+  // pages: browser_csv
+  // pages: browser_download
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // includeLibs
+
+includeLibs {
+    // Extends tx_cssstyledcontent_pi1
+  tx_browser_cssstyledcontent = EXT:browser/lib/class.tx_browser_cssstyledcontent.php
+    // Extends tslib_pibase
+  tx_browser_typoscript       = EXT:browser/lib/class.tx_browser_typoscript.php
+}
+  // includeLibs
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: templating
+
+plugin.tx_browser_pi1 {
+    // [STRING] Path to the HTML template file
+  template {
+      // default file
+    file = EXT:browser/res/html/default.tmpl
+    css {
+      browser = EXT:browser/res/html/default.css
+      browser {
+          // [Boolean] 0 (default): CSS as external file, 1: CSS inline
+        inline = 0
+      }
+      jquery_ui = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
+      jquery_ui {
+          // [Boolean] 0 (default): CSS as external file, 1: CSS inline
+        inline = 0
+      }
+    }
+    extensions {
+      browser {
+        table {
+          name = Browser: Table (without any view)
+          file = EXT:browser/res/html/default.tmpl
+        }
+        list {
+          name = Browser: List (without any view)
+          file = EXT:browser/res/html/default_ul.tmpl
+        }
+          // #44131
+        main {
+          name      = Browser: Main
+          file      = EXT:browser/res/html/main.tmpl
+          csvViews  = all
+        }
+          // #44131
+        margin {
+          name      = Browser: Margin
+          file      = EXT:browser/res/html/margin.tmpl
+          csvViews  = all
+        }
+        table_until_3-9-6 {
+          name = Browser: Table (until version 4.0)
+          file = EXT:browser/res/html/until_3.9.6/default.tmpl
+        }
+      }
+    }
+    add_parameter {
+      comment   = Array for adding parameter to navigation elements.
+      tutorial  = http://typo3.org/extensions/repository/view/browser_tut_navigation_en/current/
+        // Default parameter
+      browser = COA
+      browser {
+          // showUid
+        10 = TEXT
+        10 {
+          dataWrap        = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+          if.isTrue.data  = GP:tx_browser_pi1|showUid
+        }
+          // azTab
+        20 = TEXT
+        20  {
+          dataWrap        = &tx_browser_pi1[azTab]={GP:tx_browser_pi1|azTab}
+          if.isTrue.data  = GP:tx_browser_pi1|azTab
+        }
+          // indexBrowserTab
+        21 = TEXT
+        21  {
+          dataWrap        = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
+          if.isTrue.data  = GP:tx_browser_pi1|indexBrowserTab
+        }
+          // mode
+        30 = TEXT
+        30  {
+          dataWrap        = &tx_browser_pi1[mode]={GP:tx_browser_pi1|mode}
+          if.isTrue.data  = GP:tx_browser_pi1|mode
+        }
+          // pointer
+        40 = TEXT
+        40  {
+          dataWrap        = &tx_browser_pi1[pointer]={GP:tx_browser_pi1|pointer}
+          if.isTrue.data  = GP:tx_browser_pi1|pointer
+        }
+          // sort
+        50 = TEXT
+        50  {
+          dataWrap        = &tx_browser_pi1[sort:tx_browser_pi1|sort}
+          if.isTrue.data  = GP:tx_browser_pi1|sort
+        }
+          // sword
+        60 = TEXT
+        60  {
+          dataWrap        = &tx_browser_pi1[sword]={GP:tx_browser_pi1|sword}
+          if.isTrue.data  = GP:tx_browser_pi1|sword
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: templating
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: localTable
+
+plugin.tx_browser_pi1 {
+  localTable {
+      // [STRING] Uid field of the local table. This is the name of the uid field of the record for a link to a single view. It is "uid" usually
+    uid = uid
+      // [STRING] Pid field of the local table.
+    pid = pid
+  }
+}
+  // plugin.tx_browser_pi1: localTable
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: navigation
+
+plugin.tx_browser_pi1 {
+    // indexBrowser (A-Z), map, modeSelector, pageBrowser, record_browser
+  navigation =
+  navigation {
+    indexBrowser {
+      display {
+          // [Boolean] Should tabs displayed, if they haven't any item?
+        tabWithoutItems = 1
+          // [Boolean] Should tabs use the title porperty of the HTML a tag?
+        tabHrefTitle    = 1
+      }
+        // [INTEGER] The key/id of the default tab (see the 'x' in indexBrowser.tabs.x). If the user didn't activate any tab, this is the current tab.
+      defaultTab = 0
+      defaultTab {
+          // [BOOLEAN] Display the name of the default tab in the URL path
+        display_in_url = 0
+      }
+        // [STRING] The default wrap for all tabs. If you need a wrap for only one tab, please use the wrap property of that tab.
+      defaultTabWrap = <span>|</span>
+        // [Boolean] Are initials of the tabs case sensitive?
+      caseSensitive = 0
+        // [STRING, syntax: table.field]: If you want to use another field than the first field of your SQL query.
+      field =
+      tabs {
+          // Tab with the property special (all)
+        0 = All
+        0 {
+            // [STRING] (all || others): Display all items
+          special =  all
+          stdWrap {
+            data = LLL:EXT:browser/pi1/locallang.xml:label_indexBrowser_all
+          }
+        }
+        1 = 0-9
+        1 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  0,1,2,3,4,5,6,7,8,9
+            // Don't use the default value displayWithoutItems. Display this tab only, if it has items
+          displayWithoutItems = 0
+        }
+        2 = A
+        2 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  A
+        }
+        3 = B
+        3 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  B
+        }
+        4 = C
+        4 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  C
+        }
+        5 = D
+        5 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  D
+        }
+        6 = E
+        6 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  E
+        }
+        7 = F
+        7 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  F
+        }
+        8 = G
+        8 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  G
+        }
+        9 = H
+        9 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  H
+        }
+        10 = I
+        10 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  I
+        }
+        11 = J
+        11 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  J
+        }
+        12 = K
+        12 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  K
+        }
+        13 = L
+        13 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  L
+        }
+        14 = M
+        14 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  M
+        }
+        15 = N
+        15 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  N
+        }
+        16 = O
+        16 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  O
+        }
+        17 = PQ
+        17 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  P, Q
+        }
+        18 = R
+        18 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  R
+        }
+        19 = S
+        19 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  S
+        }
+        20 = T
+        20 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  T
+        }
+        21 = U
+        21 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  U
+        }
+        22 = V
+        22 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  V
+        }
+        23 = W
+        23 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  W
+        }
+        24 = XYZ
+        24 {
+            // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+          valuesCSV =  X, Y, Z
+        }
+          // Tab with the property special (others)
+        25 = Others
+        25 {
+            // [STRING] (all || others): Display all items which aren't matched by the other tabs
+          special = others
+            // Don't use the default value displayWithoutItems. Display this tab only, if it has items
+          displayWithoutItems = 0
+          stdWrap {
+            data = LLL:EXT:browser/pi1/locallang.xml:label_indexBrowser_others
+          }
+        }
+      }
+        // [STRING] (auto || iso || utf): Manual configuring of using multibyte methods
+      charset = auto
+    }
+
+    map {
+        // [BOOLEAN] 0 (default), 1
+      enabled  = {$plugin.tx_browser_pi1.map.enabled}
+        // [STRING] GoogleMaps or Open Street Map
+      provider  = {$plugin.tx_browser_pi1.map.provider}
+      template {
+          // [STRING] Path to the map HTML template
+        file = EXT:browser/res/html/map/default_1.1.01.tmpl
+      }
+      configuration {
+        categories {
+          colours {
+            legend {
+                // Reddark
+              10 = IMAGE
+              10 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}reddark.png
+              }
+                // bluedark
+              20 = IMAGE
+              20 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}bluedark.png
+              }
+                // greendark
+              30 = IMAGE
+              30 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}greendark.png
+              }
+                // purple
+              40 = IMAGE
+              40 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}purple.png
+              }
+                // orange
+              50 = IMAGE
+              50 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}orange.png
+              }
+                // red
+              60 = IMAGE
+              60 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}red.png
+              }
+                // blue
+              70 = IMAGE
+              70 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}blue.png
+              }
+                // green
+              80 = IMAGE
+              80 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}green.png
+              }
+                // pink
+              90 = IMAGE
+              90 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}pink.png
+              }
+                // yellow
+              100 = IMAGE
+              100 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}yellow.png
+              }
+                // black
+              110 = IMAGE
+              110 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}black.png
+              }
+                // white
+              120 = IMAGE
+              120 {
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}white.png
+              }
+            }
+            points {
+                // Label for a clear view only and without any effect
+              10 = reddark
+              10 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/reddark.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}reddark.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              20 = bluedark
+              20 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/bluedark.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}bluedark.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              30 = greendark
+              30 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/greendark.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}greendark.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              40 = purple
+              40 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/purple.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}purple.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              50 = orange
+              50 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/orange.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}orange.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              60 = red
+              60 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/red.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}red.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              70 = blue
+              70 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/blue.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}blue.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              80 = green
+              80 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/green.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}green.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              90 = pink
+              90 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/pink.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}pink.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              100 = yellow
+              100 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/yellow.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}yellow.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              110 = black
+              110 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/black.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}black.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+                // Label for a clear view only and without any effect
+              120 = white
+              120 {
+                  // [STRING] path to the icon. Default: EXT:browser/res/js/map/icons/points/white.png
+                pathToIcon = TEXT
+                pathToIcon {
+                  value = {$plugin.tx_browser_pi1.map.pathToPoints}white.png
+                }
+                  // [INTEGER] x-offset of the icon in pixel
+                offsetX = 0
+                  // [INTEGER] y-offset of the icon in pixel
+                offsetY = 0
+                  // [INTEGER] height of the icon in pixel
+                height = 14
+                  // [INTEGER] width of the icon in pixel
+                width = 14
+              }
+            }
+          }
+            // Offset for category icons, which will delivered by the database categories
+          offset =
+          offset {
+              // [INTEGER] x-offset of the icon in pixel
+            x = 0
+              // [INTEGER] y-offset of the icon in pixel
+            y = 0
+          }
+            // Labels of category fields
+          fields = 
+          fields {
+              // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
+            category = {$plugin.tx_browser_pi1.map.field.category}
+              // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
+            categoryIcon = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+              // [STRING] table.field with the x offset of the category icons. Example: tx_org_headquarterscat.icon_offset_x
+            categoryOffsetX = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+              // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
+            categoryOffsetY = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+          }
+            // [STRING/HTML] Draft for an input field of the category form
+          form_input = TEXT
+          form_input {
+            value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMapFilter" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
+          }
+            // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
+          orderBy = SORT_STRING
+        }
+        centerCoordinates {
+            // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
+          mode          = auto
+            // [STRING] marker for the center in the HTML code. Example: oxMapConfigCenter
+          dynamicMarker = oxMapConfigCenter
+        }
+        00Coordinates {
+            // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
+          dontHandle = true  
+        }
+        zoomLevel {
+            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel 
+          mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}
+            // [STRING] marker for the center in the HTML code. Example: oxMapConfigStartLevel
+          dynamicMarker = oxMapConfigStartLevel
+            // [INTEGER] Maximum zoom level
+          max           = {$plugin.tx_browser_pi1.map.zoomLevel.max}
+        }
+      }
+      marker {
+          // Each item will be a part of the current record while runtime. You can create your own item in the system section
+        addToCData =
+        addToCData {
+          system {
+              // typolink parameter
+            mapLinkToSingle = COA
+            mapLinkToSingle {
+                // URL: page id, page type, parameters
+              10 = COA
+              10 {
+                  // Page uid
+                10 = TEXT
+                10 {
+                  data = page:uid
+                }
+                  // Page type
+                20 = TEXT
+                20 {
+                  value = 0
+                  wrap  = ,|
+                }
+                  // Parameter
+                30 = COA
+                30 {
+                    // ,&tx_browser_pi1[showuid]=
+                  10 = TEXT
+                  10 {
+                    if {
+                      isTrue {
+                        field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
+                      }
+                    }
+                    field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
+                    wrap  = ,&tx_browser_pi1[showUid]=|
+                  }
+                }
+              }
+                // target
+              20 = TEXT
+              20 {
+                  // [STRING] - (default). Examples: -, _self, _blank, _top
+                value = -
+                noTrimWrap = | | |
+              }
+                // class
+              30 = TEXT
+              30 {
+                  // [STRING] - (default)
+                value = -
+                noTrimWrap = | | |
+              }
+                // title
+              40 = TEXT
+              40 {
+                if {
+                  isTrue {
+                    field =
+                  }
+                }
+                  // [STRING]
+                field =
+                wrap  = "|"
+              }
+            }
+          }
+        }
+          // HTML code snippets and JSS code snippets. The properties correspondents with the markers of the HTML marker map
+        snippets =
+        snippets {
+          html {
+            categories {
+                // Category filter
+              filter_form = TEXT
+              filter_form {
+                value (
+                  <form id="oxMapFilter">
+                    ###INPUTS###
+                  </form>
+  )
+              }
+            }
+            dynamic {
+              map_css = TEXT
+              map_css {
+                value (
+                  <style type="text/css">
+                    .tx-browser-pi1 .mapview {
+                      margin-top:1em;
+                    }
+                    .tx-browser-pi1 .mapview-content {
+                      padding:1em;
+                    }
+                    .tx-browser-pi1 .mapview-content form {
+                      padding-bottom:1em;
+                      text-align:center;
+                    }
+                    .tx-browser-pi1 .olControlAttribution {
+                      background-color:white;
+                      bottom:0px;
+                      right:0px;
+                    }
+                    .tx-browser-pi1 .olMap {
+                      margin: auto !important;
+                    }
+                    .tx-browser-pi1 .oxMapArea {
+                      height:###CSS_MAPHEIGHT###;
+                      width:###CSS_MAPWIDTH###;
+                    }
+                    .tx-browser-pi1 .oxTextLayer {
+                      border:1px solid green;
+                      border-radius:6px;
+                      background:#fff;
+                      width:200px;
+                      overflow:hidden;
+                      position:absolute;
+                      padding:6px;
+                      box-shadow:3px 3px 3px #3d3d3d;
+                      z-index:99;
+                    }
+                  </style>
+  )
+              }
+                // HTML div tag for the map
+              map_html = TEXT
+              map_html {
+                value = <div id="oxMapArea" class="oxMapArea"></div>
+              }
+                // Javascript for the map
+              map_jss = TEXT
+              map_jss {
+                value (
+                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/OpenLayers.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
+                  <script>
+                  /* <![CDATA[ */
+                      // Be aware of the trailing slash!
+                    OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
+                    var rawdata = '###JSONDATA###';
+                    var oxMapConfig = {
+                      MapId:          'oxMapArea',                //    HTML map viewport id
+                      MapControls:    '###MAPCONTROLS###',        //    customized control types
+                      MapZoomWheel:   '###ZOOMWHEELENABLE###',
+                      MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
+                      MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | off | on (for drawing one point only)
+
+                      OSM:            true,                                              //    WMS type OSM
+                      OSMConfig:      {
+                        type:           'Mapnik',                  //    Mapnik
+                        name:           'OpenStreetMap (Mapnik)',  //    OpenStreetMap (Mapnik)
+                        center:         '###OSMCONFIGCENTER###',   //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
+                        zoomStartLevel: '###OSMCONFIGZOOM###',     //    integer (0 - 19) set zoom level
+                      }
+                    };
+                  /* ]]> */
+                  </script>
+                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.11.js"></script>
+)
+              }
+              map_jss >
+                // 20: Provider and API, 30: Custom, 40: oxRenderMap
+              map_jss = COA
+              map_jss {
+                  // 10: Error prompt, if provider isn't proper. 20: GoogleMaps API || OpenStreetMap API
+                20 = COA
+                20 {
+                    // Error prompt, if provider isn't in list of providers
+                  10 = TEXT
+                  10 {
+                    if {
+                      value     = GoogleMaps,Open Street Map
+                      isInList  = {$plugin.tx_browser_pi1.map.provider}
+                      negate  = 1
+                    }
+                    value (
+                      <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
+                        <h1>TypoScript Error</h1>
+                        <p>
+                          '{$plugin.tx_browser_pi1.map.provider}' isn't any element of the list: GoogleMaps,Open Street Map
+                        </p>
+                        <p>
+                          Browser - TYPO3 without PHP
+                        </p>
+                      </div>
+)
+                    lang.de (
+                      <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
+                        <h1>TypoScript Fehler</h1>
+                        <p>
+                          '{$plugin.tx_browser_pi1.map.provider}' ist kein Element der Liste: GoogleMaps,Open Street Map
+                        </p>
+                        <p>
+                          Browser - TYPO3 ohne PHP
+                        </p>
+                      </div>
+)
+                  }
+                    // Content, if provider is an element of the list of providers
+                  20 = COA
+                  20 {
+                    if {
+                      value     = GoogleMaps,Open Street Map
+                      isInList  = {$plugin.tx_browser_pi1.map.provider}
+                    }
+                      // OpenLayers
+                    10 = TEXT
+                    10 {
+                      value (
+                        <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/OpenLayers.js"></script>
+  )
+                    }
+                      // GoogleMaps or OpenStreetMap
+                    20 = COA
+                    20 {
+                        // GoogleMaps API, if GoogleMaps
+                      10 = TEXT
+                      10 {
+                        if {
+                          value   = {$plugin.tx_browser_pi1.map.provider}
+                          equals  = GoogleMaps
+                        }
+                        value (
+                          <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+)
+                      }
+                        // OpenStreetMap, if Open Street Map
+                      20 = TEXT
+                      20 {
+                        if {
+                          value   = {$plugin.tx_browser_pi1.map.provider}
+                          equals  = Open Street Map
+                        }
+                        value (
+                          <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
+)
+                      }
+                    }
+                  }
+                }
+                  // Custom configuration
+                30 = COA
+                30 {
+                    // Begin: Don't edit it!
+                  10 = TEXT
+                  10 {
+                    value (
+                      <script>
+                      /* <![CDATA[ */
+                          // Be aware of the trailing slash!
+                        OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
+                        var rawdata = '###JSONDATA###';
+                        window.oxMap = {};
+                        window.oxMap.Config = {
+
+)
+                  }
+                    // Variables: Adapt it to your needs
+                  20 = TEXT
+                  20 {
+                    value (
+                        language        : '###OXMAPCONFIGLANGUAGE###'         //  default | en | de
+                      , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
+                      , wms             : '###OXMAPCONFIGWMS###'              //  OSM | GMap
+                      , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
+                      , center          : '###OXMAPCONFIGCENTER###'
+                      , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
+                      , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
+                      , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
+                      , filter          : '#oxMapFilter'
+                      , filterItems     : '.oxMapFilter'
+                      , mapID           : 'oxMapArea'
+                      , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
+                      , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
+)
+                  }
+                    // End: Don't edit it!
+                  30 = TEXT
+                  30 {
+                    value (
+
+                        };
+                      /* ]]> */
+                      </script>
+)
+                  }
+                }
+                  // oxRenderMap: Compressed || Uncompressed
+                40 = COA
+                40 {
+                    // One compressed file (default mode)
+                  10 = TEXT
+                  10 {
+                    if {
+                      isFalse = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
+                    }
+                    value (
+                      <script src="typo3conf/ext/browser/res/js/map/oxMap.Render_1.2.01.js"></script>
+)
+                  }
+                    // All uncompressed files (debugging mode)
+                  20 = TEXT
+                  20 {
+                    if {
+                      isTrue = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
+                    }
+                    value (
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.Helper.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.Error.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.Marker.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.Filter.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.CDmap.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.js"></script>
+)
+                  }
+                }
+              }
+            }
+          }
+          jss {
+            dynamic {
+                // Path to the folder with the icons of the control panel among others
+              OpenLayersImgPath = TEXT
+              OpenLayersImgPath {
+                  // [STRING] Relative path. Be aware of the ending slash!
+                value = "{$plugin.tx_browser_pi1.map.openLayers.imgPath}"
+              }
+                // Default center of the map
+              oxMapConfigCenter = TEXT
+              oxMapConfigCenter {
+                  // [STRING] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
+                value = [9.15,50.1725]
+              }
+                // Default language for error prompts
+              oxMapConfigLanguage = TEXT
+              oxMapConfigLanguage {
+                  // [STRING] default, en, de
+                value = default
+                lang {
+                  de = de
+                  en = en
+                }
+                wrap  = '|'
+              }
+                // Map controlling tools
+              oxMapConfigMapControls = COA
+              oxMapConfigMapControls {
+                  // Debug mode off
+                10 = TEXT
+                10 {
+                  if {
+                    isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
+                  value = {$plugin.tx_browser_pi1.map.controls.default}
+                }
+                  // Debug mode on
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
+                  value = {$plugin.tx_browser_pi1.map.controls.debugging}
+                }
+              }
+                // Map marker event type
+              oxMapConfigMapMarkerEvent = TEXT
+              oxMapConfigMapMarkerEvent {
+                  // [STRING] customized marker events
+                value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
+              }
+                // Map zoom wheel
+              oxMapConfigZoomWheelEnable = TEXT
+              oxMapConfigZoomWheelEnable {
+                  // [BOOLEAN] enable or disable the zoom wheel
+                value = {$plugin.tx_browser_pi1.map.zoomWheel}
+              }
+                // Map modules
+              oxMapConfigModules = COA
+              oxMapConfigModules {
+                  // Debug mode off
+                10 = TEXT
+                10 {
+                  if {
+                    isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
+                  value = {$plugin.tx_browser_pi1.map.modules.default}
+                }
+                  // Debug mode on
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
+                  value = {$plugin.tx_browser_pi1.map.modules.debugging}
+                }
+              }
+                // Map zoom level
+              oxMapConfigNumZoomLevels = TEXT
+              oxMapConfigNumZoomLevels {
+                  // [INTEGER] Value from 0 to 18. Example: 4
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.levels}
+              }
+                // Map start level
+              oxMapConfigStartLevel = TEXT
+              oxMapConfigStartLevel {
+                  // [INTEGER] Value from 0 to 18. Example: 4
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.start}
+              }
+                // Map type: ROADMAP || Mapnik
+              oxMapConfigType = COA
+              oxMapConfigType {
+                  // ROADMAP, if GoogleMaps
+                10 = TEXT
+                10 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value = ['ROADMAP']
+                }
+                  // Mapnik, if Open Street Map
+                20 = TEXT
+                20 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
+                  value = ['Mapnik']
+                }
+              }
+                // Map wms: GMap || OSM
+              oxMapConfigWms = COA
+              oxMapConfigWms {
+                  // GMS, if GoogleMaps
+                10 = TEXT
+                10 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value = 'GMap'
+                }
+                  // OSM, if Open Street Map
+                20 = TEXT
+                20 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
+                  value = 'OSM'
+                }
+              }
+            }
+          }
+        }
+          // Values, which will set while runtime.
+        variables =
+        variables {
+          dynamic {
+            css_mapHeight = TEXT
+            css_mapHeight {
+                // [PIXEL] Default: 400px
+              value = {$plugin.tx_browser_pi1.map.height}px;
+            }
+            css_mapWidth = TEXT
+            css_mapWidth {
+                // [PIXEL] Default: 600px
+              value = {$plugin.tx_browser_pi1.map.width}px;
+            }
+          }
+          system {
+              // [STRING] category label in the filter
+            category = TEXT
+            category {
+                // [STRING] table.field. Example: tx_org_headquarterscat.title
+              field = {$plugin.tx_browser_pi1.map.field.category}
+            }
+              // Returns the icon as an HTML image tag
+            categoryIconLegend = IMAGE
+            categoryIconLegend {
+              file {
+                  // [STRING] Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
+                import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
+                import {
+                    // [STRING] table.field. Example: tx_org_headquarterscat.icons
+                  field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                    // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                  listNum = {$plugin.tx_browser_pi1.map.position.categoryIconLegend}
+                }
+              }
+            }
+              // [STRING] path to the category icon for the map
+            categoryIconMap = COA
+            categoryIconMap {
+                // Directory
+              10 = TEXT
+              10 {
+                  // [STRING] Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
+                value = {$plugin.tx_browser_pi1.map.path.categoryIcon}
+              }
+                // File
+              20 = TEXT
+              20 {
+                  // [STRING] table.field. Example: tx_org_headquarterscat.icons
+                field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                  // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                stdWrap.listNum = {$plugin.tx_browser_pi1.map.position.categoryIconMap}
+              }
+            }
+              // [INTEGER] x-offset of the current icon in pixel
+            categoryOffsetX = TEXT
+            categoryOffsetX {
+                // [STRING] table.field. Example: tx_org_headquarterscat.icon_offset_x
+              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+            }
+              // [INTEGER] y-offset of the current icon in pixel
+            categoryOffsetY = TEXT
+            categoryOffsetY {
+                // [STRING] table.field. Example: tx_org_headquarterscat.icon_offset_y
+              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+            }
+              // [STRING] content in the popup
+            description = TEXT
+            description {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              field = {$plugin.tx_browser_pi1.map.field.description}
+            }
+              // [NUMBER] latitude
+            latitude = TEXT
+            latitude {
+                // [STRING] table.field. Example: tx_org_headquarters.mail_lat
+              field = {$plugin.tx_browser_pi1.map.field.latitude}
+            }
+              // [NUMBER] longitude
+            longitude = TEXT
+            longitude {
+                // [STRING] table.field. Example: tx_org_headquarters.mail_lon
+              field = {$plugin.tx_browser_pi1.map.field.longitude}
+            }
+              // [STRING] number of the point (has an effect ...
+            number = TEXT
+            number {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              field = {$plugin.tx_browser_pi1.map.field.number}
+            }
+              // [STRING] URL of the point (has an effect in hoover mode only!)
+            url = TEXT
+            url {
+              typolink {
+                parameter.data = field:mapLinkToSingle
+                  // 130117
+                useCacheHash = 1
+                returnLast  = url
+              }
+            }
+          }
+        }
+      }
+    }
+
+    modeSelector {
+      wrap =
+    }
+
+    pageBrowser {
+        // [String] Name for the pagebrowser piVar
+      pointer                = pointer
+        // [INTEGER] The maximum pages, which will displayed in the page browser
+      maxPages               = 10
+        // [BOOLEAN] Display the text line "Displaying results x to y out of z"
+      showResultCount        =  1
+        // [BOOLEAN] Don't link the active page
+      dontLinkActivePage     =  1
+      tableParams            = cellpadding="2" align="center"
+      showFirstLast          =  1
+      pagefloat              = center
+        // [BOOLEAN] Display the text line "<< First < Previous 1-20 21-40 41-60 Next > Last >>"
+      showRange              =  1
+      wrap {
+        disabledLinkWrap       = <span class="SCell">|</span>
+        inactiveLinkWrap       = |
+        activeLinkWrap         = <span class="SCell">|</span>
+        showResultsWrap        = |<br />
+        showResultsNumbersWrap =
+        browseBoxWrap          =
+        browseLinksWrap        = |
+      }
+    }
+
+      // [BOOLEAN] 1 (default): Display the record browser. 0: Don't display it.
+    record_browser = 1
+    record_browser {
+      display {
+          // [BOOLEAN] 0: Don't display the record browser, if there isn't any result/record. 1 (default): Display it ever.
+        withoutResult     = 1
+          // [BOOLEAN] 0: Don't display the first and the last button. 1 (default): Display it.
+        firstAndLastButton  = 1
+          // [BOOLEAN] 0 (default): Display buttons with a link only.
+        buttonsWithoutLink  = 1
+      }
+      buttons {
+        chars {
+            // Box: wrap for all buttons
+          wrap_all = TEXT
+          wrap_all {
+              // [STRING] empty (default): empty value will allocated while runtime with the rendered buttons.
+            value =
+            wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
+          }
+            // The devider between of two buttons
+          devider = TEXT
+          devider {
+            value =
+            noTrimWrap = | | |
+          }
+            // First button of the record browser
+          first = TEXT
+          first {
+              // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
+            value = &lt;&lt;
+            noTrimWrap  = |<li class="ui-state-default ui-corner-all"> | </li>|
+            typolink {
+              parameter = {page:uid} - c###TT_CONTENT.UID###-record-browser ###RECORD_POSITION###/###RECORD_SUM###
+              parameter {
+                insertData = 1
+              }
+              additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.recordBrowser.uidName}]=###RECORD_UID###&L={GP:L}###PIVARS_FOR_SINGLEVIEW###
+              additionalParams {
+                insertData = 1
+              }
+              useCacheHash = 1
+            }
+          }
+            // Previous button of the record browser
+          prev < .first
+          prev {
+            value = &lt;
+          }
+            // Current button of the record browser
+          curr < .first
+          curr {
+            value = &Oslash;
+            typolink {
+              parameter = {page:uid}
+              additionalParams = &L={GP:L}###PIVARS_FOR_LISTVIEW###
+            }
+            //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
+          }
+            // Next button of the record browser
+          next < .first
+          next {
+            value = &gt;
+          }
+            // Last button of the record browser
+          last < .first
+          last {
+            value = &gt;&gt;
+          }
+        }
+        icons < .chars
+        icons {
+          first {
+            value = <span class="ui-icon ui-icon-seek-first" style="float: left;margin: 0 4px;"></span>
+          }
+          prev {
+            value = <span class="ui-icon ui-icon-seek-prev" style="float: left;margin: 0 4px;"></span>
+          }
+          curr {
+            value = <span class="ui-icon ui-icon-home" style="float: left;margin: 0 4px;"></span>
+          }
+          next {
+            value = <span class="ui-icon ui-icon-seek-next" style="float: left;margin: 0 4px;"></span>
+          }
+          last {
+            value = <span class="ui-icon ui-icon-seek-end" style="float: left;margin: 0 4px;"></span>
+          }
+        }
+        position < .chars
+        position {
+          first {
+            value = ###RECORD_POSITION###
+          }
+          prev {
+            value = ###RECORD_POSITION###
+          }
+          curr {
+            value = ###RECORD_POSITION###
+          }
+          next {
+            value = ###RECORD_POSITION###
+          }
+          last {
+            value = ###RECORD_POSITION###
+          }
+        }
+        text < .chars
+        text {
+          first {
+            value   = first
+            lang {
+              de = Erster
+              en = first
+            }
+          }
+          prev {
+            value   = previous
+            lang {
+              de = Vorheriger
+              en = previous
+            }
+          }
+          curr {
+            value   = current
+            lang {
+              de = Aktuell
+              en = current
+            }
+          }
+          next {
+            value   = next
+            lang {
+              de = N&auml;chster
+              en = next
+            }
+          }
+          last {
+            value   = last
+            lang {
+              de = Letzter
+              en = last
+            }
+          }
+        }
+        current < .icons
+      }
+      buttons_wo_link < .buttons
+      buttons_wo_link {
+        chars {
+          wrap_all  >
+          devider   >
+          first {
+            typolink  >
+          }
+          prev {
+            typolink  >
+          }
+          curr >
+          next {
+            typolink  >
+          }
+          last {
+            typolink  >
+          }
+        }
+        icons {
+          wrap_all  >
+          devider   >
+          first {
+            value = <span style="float: left;margin:8px 12px;"></span>
+            typolink  >
+          }
+          prev {
+            value = <span style="float: left;margin:8px 12px;"></span>
+            typolink  >
+          }
+          curr >
+          next {
+            value = <span style="float: left;margin:8px 12px;"></span>
+            typolink  >
+          }
+          last {
+            value = <span style="float: left;margin:8px 12px;"></span>
+            typolink  >
+          }
+        }
+        position {
+          wrap_all  >
+          devider   >
+          first {
+            typolink  >
+          }
+          prev {
+            typolink  >
+          }
+          curr >
+          next {
+            typolink  >
+          }
+          last {
+            typolink  >
+          }
+        }
+        text {
+          wrap_all  >
+          devider   >
+          first {
+            typolink  >
+          }
+          prev {
+            typolink  >
+          }
+          curr >
+          next {
+            typolink  >
+          }
+          last {
+            typolink  >
+          }
+        }
+        current < .icons
+      }
+      enable {
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_LISTVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+        pivars_for_listview = 0
+        pivars_for_listview {
+            // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
+          csvDontRenderPiVars = 
+        }
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_SINGLEVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+        pivars_for_singleview = 0
+        pivars_for_singleview {
+            // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
+          csvDontRenderPiVars = 
+        }
+      }
+      special {
+          // [BOOLEAN] 0 (recommended) || 1: Overwrites sys_lsysanguage_overlay temporarily (freemedia case)
+        listViewWithDefaultLanguage = 0
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: navigation
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: general
+
+plugin.tx_browser_pi1 {
+  # Rendering of news items. re-use the RTE parseFunc configuration for normal content
+  general_stdWrap {
+    parseFunc < lib.parseFunc_RTE
+    parseFunc {
+      nonTypoTagStdWrap {
+        encapsLines {
+          nonWrappedTag >
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: general
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: document_stdWrap
+
+plugin.tx_browser_pi1 {
+  document_stdWrap {
+    icon = 1
+    stdWrap {
+      noTrimWrap = || |
+    }
+  }
+}
+  // plugin.tx_browser_pi1: document_stdWrap
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displaySingle
+
+plugin.tx_browser_pi1 {
+  displaySingle {
+
+    seo {
+      htmlHead {
+          // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag.
+        title = 0
+        meta {
+            // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description.
+          description = 0
+            // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords.
+          keywords    = 0
+        }
+      }
+    }
+
+    display {
+      title         = 1
+      table {
+        summary     = 1
+        caption     = 1
+      }
+      backbutton = 1
+      backbutton {
+        data = LLL:EXT:browser/pi1/locallang.xml:backbutton
+        wrap = <a class="backbutton" href="javascript:history.back()">|</a>
+      }
+      searchform {
+          // [Boolean] 1: Wrap the Swords in the result, 0: Don't wrap it
+        wrapSwordInResults = 1
+        wrapSwordInResults {
+          0 {
+              // #ffff7f: light yellow
+            wrap = <span style="background:#ffff7f">|</span>
+          }
+          1 {
+              // #b3ffb2: light green
+            wrap = <span style="background:#b3ffb2">|</span>
+          }
+          2 {
+              // #ffb2b2: light red
+            wrap = <span style="background:#ffb2b2">|</span>
+          }
+          3 {
+              // #b2b3ff: light blue
+            wrap = <span style="background:#b2b3ff">|</span>
+          }
+          4 {
+              // #ffffb3: light light yellow
+            wrap = <span style="background:#ffffb3">|</span>
+          }
+          5 {
+              // #e6ffb2 light light yellow green
+            wrap = <span style="background:#e6ffb2">|</span>
+          }
+          6 {
+              // #ffd380: light orange
+            wrap = <span style="background:#ffd380">|</span>
+          }
+          7 {
+              // #b3ffff: light turkise
+            wrap = <span style="background:#b3ffff">|</span>
+          }
+        }
+      }
+    }
+
+    templateMarker = ###TEMPLATE_SINGLE###
+    templateMarker {
+      oddClass {
+          // [String] HTML class for odd columns (th, td)
+        columns = odd
+          // [String] HTML class for odd rows (tr)
+        rows    = ui-priority-secondary
+      }
+    }
+
+    content_stdWrap {
+      parseFunc < lib.parseFunc_RTE
+    }
+
+    caption_stdWrap {
+      wrap = <p class="single-image_caption"> | </p>
+      trim=1
+    }
+
+    imageCount      = {$plugin.tx_browser_pi1.singleImageCount}
+    imageWrapIfAny  = <div class="single-image single-image-###IMAGE_COUNT###"> | </div>
+    imageBoxWrap {
+        // [String] Wrap code for every image/imagecaption block #11211
+      wrap = <span class="single-imagebox single-imagebox-###IMAGE_COUNT###"> | </span>
+    }
+    image {
+        // [String] path and file name of the image, which should displayed, if a record hasn't any image #11204
+      file = EXT:browser/res/images/alternate_image_400x300.gif
+      file {
+        maxW = {$plugin.tx_browser_pi1.singleMaxW}
+        maxH = {$plugin.tx_browser_pi1.singleMaxH}
+      }
+      wrap =
+      imageLinkWrap = 1
+      imageLinkWrap {
+        enable = 1
+        bodyTag = <body bgColor="#ffffff">
+        wrap = <a href="javascript:close();"> | </a>
+        width = {$plugin.tx_browser_pi1.singlePopupMaxW}
+        height = {$plugin.tx_browser_pi1.singlePopupMaxH}
+        JSwindow = 1
+        JSwindow.newWindow = 1
+        JSwindow.expand = 17,20
+      }
+      noImage_stdWrap {
+      }
+    }
+
+      // [Boolean] If first image is for the preview, it wouldn't display in the single view
+    firstImageIsPreview       = 0
+      // [Boolean] If first image is for the preview, but there is no further image, preview image will displayed in the single view
+    forceFirstImageIsPreview  = 0
+
+      // Displays the no-item-message, if SQL query will return an empty result
+    noItemMessage = TEXT
+    noItemMessage {
+      data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
+      wrap = <p style="padding:2em 0;">|</p>
+    }
+
+  }
+}
+  // plugin.tx_browser_pi1: displaySingle
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displayList
+
+plugin.tx_browser_pi1 {
+  displayList {
+
+    singlePid =
+    seo {
+      htmlHead {
+          // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag.
+        title = 0
+        meta {
+            // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description.
+          description = 0
+            // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords.
+          keywords    = 0
+        }
+      }
+    }
+
+    display {
+      searchform {
+        and {
+            // [String] One word only
+          value = and
+          lang {
+              // [String] One word only
+            de = und
+          }
+        }
+        or {
+            // [String] One word only
+          value = or
+          lang {
+              // [String] One word only
+            de = oder
+          }
+        }
+        not {
+            // [String] One word only
+          value = not
+          lang {
+              // [String] One word only
+            de = nicht
+          }
+        }
+        resultPhrase {
+          searchFor {
+            value = Search for
+            lang {
+              de = Suche nach
+            }
+          }
+          hasResult {
+            value = has the result
+            lang {
+              de = hat folgendes Ergebnis
+            }
+          }
+          minLenPhrase = 1
+            // [Boolean] 1: display; 0: don't display
+          minLenPhrase {
+            value = (a single sword must content ###advanced.security.sword.minLenWord### at least).
+            lang {
+              de = (ein Suchbegriff muss mindestens ###advanced.security.sword.minLenWord### Zeichen lang sein).
+            }
+            wrap = <br />|
+          }
+          operatorPhrase = 1
+            // [Boolean] 1: display; 0: don't display
+          operatorPhrase {
+            value (
+<p>
+  You can fokus your search with "and", "not" and phrases. Examples:
+</p>
+<ul>
+  <li>
+    "green apples" and taste
+  </li>
+  <li>
+    apples and taste not "Golden Delicious"
+  </li>
+</ul>
+)
+            lang {
+              de (
+<p>
+  Sie k&ouml;nnen die Suche mit "und", "nicht" und Phrasen eingrenzen. Beispiele:
+</p>
+<ul>
+  <li>
+    "Gr&uuml;ne &Auml;pfel" und Geschmack
+  </li>
+  <li>
+    &Auml;pfel und Geschmack nicht "Golden Delicious"
+  </li>
+</ul>
+)
+            }
+            wrap = |
+          }
+          wildcardPhrase {
+            value (
+<ul>
+  <li>
+    apple%wildcard% will find apple and applepie
+  </li>
+</ul>
+)
+            lang {
+              de (
+<ul>
+  <li>
+    Apfel%wildcard% findet Apfel und Apfelmus
+  </li>
+</ul>
+)
+            }
+            wrap = |
+          }
+          wrap = <p>|</p>
+        }
+        wrapSwordInResults {
+          0 {
+              // #ffff7f: light yellow
+            wrap = <span style="background:#ffff7f;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          1 {
+              // #b3ffb2: light green
+            wrap = <span style="background:#b3ffb2;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          2 {
+              // #ffb2b2: light red
+            wrap = <span style="background:#ffb2b2;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          3 {
+              // #b2b3ff: light blue
+            wrap = <span style="background:#b2b3ff;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          4 {
+              // #ffffb3: light light yellow
+            wrap = <span style="background:#ffffb3;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          5 {
+              // #e6ffb2 light light yellow green
+            wrap = <span style="background:#e6ffb2;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          6 {
+              // #ffd380: light orange
+            wrap = <span style="background:#ffd380;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          7 {
+              // #b3ffff: light turkise
+            wrap = <span style="background:#b3ffff;font-weight:bold;padding:0 .2em;">|</span>
+          }
+        }
+        noResult {
+          value = Sorry, there is no matched record!
+          lang {
+            de = Zu Ihrer Anfrage gibt es keine Treffer.
+          }
+        }
+        respect_filters = Comment: The search ignore any filter, if all is false (default)
+        respect_filters {
+            // [Boolean] 0: Don't respect any filter (default), 1: Respect every filter
+          all = 0
+          but = Comment: but is an array for exceptions
+          but {
+              // table.field [Boolean] This is an example. This has an effect only, if all is false
+            tx_mytable_pi1.datetime = 1
+          }
+        }
+      }
+        // [Boolean] 0: subpart CATEGORY_MENU will removed from the HTML template (default). 1: Don't remove it!
+      category_menu = 0
+      emptyListByStart {
+        stdWrap {
+          data = LLL:EXT:browser/pi1/locallang.xml:label_first_visit
+          wrap = <p style="padding:2em 0;">|</p>
+        }
+      }
+      table {
+          // [Boolean] Display the HTML table property summary (WAI guideline)
+        summary     = 1
+          // [Boolean] Display the HTML table tag caption (WAI guideline)
+        caption     = 1
+      }
+        // [Boolean] If it isn't possible to link to a single view, link to a single nevertheless and display a JSS alert on click
+      jssAlert      = 1
+    }
+
+
+    templateMarker = ###TEMPLATE_LIST###
+    templateMarker {
+      oddClass {
+          // [String] HTML class for odd columns (th, td)
+        columns = odd
+          // [String] HTML class for odd rows (tr)
+        rows    = ui-priority-secondary
+      }
+    }
+
+    selectBox_orderBy {
+        // [Boolean] 1: Display the select box for ordering (default), 0: don't display.
+      display = 1
+        // upto 3.4.5: templateMarker = ###TEMPLATE_SELECTBOX###
+      templateMarker = ###TEMPLATE_SELECTBOX_VALID###
+      selectbox = SELECTBOX
+      selectbox {
+        form {
+            // [String] HTML class of the form
+          class = selectboxorderby
+          legend_stdWrap {
+            value   = Sorting
+            lang.de = Sortieren
+          }
+          button_stdWrap {
+            value   = Send
+            lang.de = Absenden
+          }
+        }
+          // [Boolean] Should be added a default item?
+        first_item = 1
+        first_item {
+          stdWrap {
+            data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_firstitem_default
+          }
+            // [STRING, unique] Value attribute in the option tag (#11401)
+          option_value = 0
+        }
+          // [Integer] How many items should the select box display in the visible area?
+        size = 1
+          // [String] Wrap the object
+          // upto 3.4.5: wrap = <div class="selectbox">|</div>
+        wrap = |
+        wrap {
+            // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+            // [String] Wrap the items
+            // upto 3.4.5: object  = <select name="orderby" size="###SIZE###" onchange="javascript:Go(this)">|</select>
+          object = <select name="tx_browser_pi1[sort]" size="###SIZE###">|</select>
+          object {
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 14
+          }
+            // [String] Wrap one item
+            // upto 3.4.5: item    = <option###CLASS######STYLE### value="###URL###"###ITEM_SELECTED###>|</option>
+          item = <option###CLASS######STYLE### value="###VALUE###"###ITEM_SELECTED###>|</option>
+          item {
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+              // [String] HTML code for a selected item
+            selected = selected="selected"
+              // [String] Default HTML class
+            class {
+              asc   = asc
+              desc  = desc
+            }
+              // [String] Default HTML style
+            style =
+            stdWrap {
+              htmlSpecialChars = 1
+              crop = 60 | ... | 1
+            }
+          }
+        }
+        order {
+            // [String] value || uid
+          field = value
+            // [String] ASC || DESC
+          orderFlag = ASC
+          html {
+            str_asc  =
+            str_desc =
+          }
+        }
+        sql {
+            // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere =
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: displayList
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displayList master_templates
+
+plugin.tx_browser_pi1 {
+  displayList {
+    master_templates {
+        // Master template for a category menu
+      category_menu = CATEGORY_MENU
+      category_menu {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
+        treeview {
+            // [Boolean] Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
+          enabled = TEXT
+          enabled {
+              // true, false (default)
+            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.enable}
+          }
+            // [String] HTML id of the treeview.
+          html_id = TEXT
+          html_id {
+              // treeview (default)
+            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+          }
+            // [String] type: category_menu or checkbox. Property is for evaluation only.
+          type = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.plugins}
+        }
+          // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar =
+          // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
+        count_hits = 1
+          // [Boolean] Should be added a default item?
+        first_item = 1
+        first_item { 
+            // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
+          display_wo_items = 1
+            // Wrap the first filter item
+          cObject = COA
+          cObject {
+              // Value from locallang.xml
+            20 = TEXT
+            20 {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+                // Append hits
+              append = TEXT
+              append {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue {
+                    field = hits
+                  }
+                }
+                field = hits
+                noTrimWrap  = | (|)|
+              }
+            }
+            wrap = <li><a href="###URL###"###CLASS######STYLE######TITLE###>|</a></li>
+          }
+            // [STRING, unique] Value attribute in the option tag (#11401)
+          option_value = 0
+        }
+          // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+          // [String] Wrap the object
+        wrap = <div class="category_menu">###TITLE###|</div>
+        wrap {
+            // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+              // [String] Title of the object. If it shouldn't displayed, please delete the title_stdWrap array
+            value = ###TABLE.FIELD###
+            wrap  = <div class="category_menu_title">|</div>
+          }
+            // [String] Wrap the items
+          object = <ul>|</ul>
+          object {
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 14
+          }
+            // [String] Wrap one item
+          item = ###VALUE###
+          item {
+              // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Item won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
+              // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+                // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
+            }
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+              // [String] Class for a selected item
+            selected = selected
+              // [String] Default HTML class
+            class = ###ITEM_SELECTED### ###ONCHANGE###
+              // [String] Default HTML style
+            style =
+              // DEPRECATED - please use the cObject!
+            wraps =
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue {
+                    field = value
+                  }
+                }
+                field = value
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue {
+                    field = value
+                  }
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_categorymenu_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue {
+                    field = hits
+                  }
+                }
+                field = hits
+                noTrimWrap  = | (|)|
+              }
+              if {
+                isTrue {
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                      // field = hits
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    }
+                      // field = tx_browser_pi1.flag_treeview
+                    30 = TEXT
+                    30 {
+                      field = tx_browser_pi1.flag_treeview
+                    }
+                  }
+                }
+              }
+              wrap = <li><a href="###URL###"###CLASS######STYLE######TITLE###>|</a></li>
+            }
+          }
+        }
+        order {
+            // [String] value || uid
+          field = value
+            // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+            // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere =
+        }
+          // [BOOLEAN] 1: Display an area filter, 0: Don't display an area (default)
+        area = 0
+      }
+        // Master template for a check box
+      checkbox = CHECKBOX
+      checkbox {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
+          // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar =
+          // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
+        count_hits = 1
+          // [Boolean] Is a selecting obligatory?
+        required = 0
+          // [String] Wrap the object
+          // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+        wrap (
+<fieldset class="checkbox ###ONCHANGE###">
+              <legend>###TITLE###</legend>
+                |
+            </fieldset>
+)
+        wrap {
+            // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+              // [String] Title of the object. If it shouldn't displayed, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = |
+          }
+            // [String] Wrap the items
+          object = |
+            // [String] Wrap one item
+          item = ###VALUE###
+          item {
+              // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Item won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
+              // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+                // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
+            }
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+              // [String] HTML code for a selected item
+            selected = checked="checked"
+              // [String] Default HTML class
+            class =
+              // [String] Default HTML style
+            style =
+              // DEPRECATED - please use the cObject!
+            wraps =
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Input
+              10 = TEXT
+              10 {
+                value       = <input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>
+                noTrimWrap  = | ||
+              }
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue {
+                    field = value
+                  }
+                }
+                field = value
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue {
+                    field = value
+                  }
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue {
+                    field = hits
+                  }
+                }
+                field = hits
+                noTrimWrap  = | (|)|
+              }
+              if {
+                isTrue {
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                      // field = hits
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    }
+                  }
+                }
+              }
+            }
+          }
+            // [Integer] Maximum items per row. 0: unlimited
+          itemsPerRow = 3
+          itemsPerRow {
+              // [String] Wrap the row
+            wrap = <div class="row row-###EVEN_ODD###">|</div>
+              // [String] if there aren't enough items to fill up a row
+            noItemValue = &nbsp;
+          }
+        }
+        order {
+            // [String] value || uid
+          field = value
+            // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+            // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere =
+        }
+          // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
+        area = 0
+      }
+        // Master template for radio buttons
+      radiobuttons = RADIOBUTTONS
+      radiobuttons {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
+          // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar =
+          // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
+        count_hits = 1
+          // [Boolean] Is a selecting obligatory?
+        required = 1
+          // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+          // [String] Wrap the object
+        wrap (
+<fieldset class="radiobuttons ###ONCHANGE###">
+              <legend>###TITLE###</legend>
+                |
+            </fieldset>
+)
+        wrap {
+            // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+              // [String] Title of the object. If it shouldn't displayed, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = |
+          }
+            // [String] Wrap the items
+          object = |
+            // [String] Wrap one item
+          item = ###VALUE###
+          item {
+              // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Item won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
+              // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+                // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
+            }
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+              // [String] HTML code for a selected item
+            selected = checked="checked"
+              // [String] Default HTML class
+            class =
+              // [String] Default HTML style
+            style =
+              // DEPRECATED - please use the cObject!
+            wraps =
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Input
+              10 = TEXT
+              10 {
+                value       = <input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>
+                noTrimWrap  = | ||
+              }
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue = ###VALUE###
+                }
+                value             = ###VALUE###
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue  = ###VALUE###
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = hits
+                }
+                field       = hits
+                noTrimWrap  = | (|)|
+              }
+              if {
+                isTrue {
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                      // field = hits
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    }
+                  }
+                }
+              }
+            }
+          }
+            // [Integer] Maximum items per row. 0: unlimited
+          itemsPerRow = 3
+          itemsPerRow {
+              // [String] Wrap the row
+            wrap = <div class="row row-###EVEN_ODD###">|</div>
+              // [String] if there aren't enough items to fill up a row
+            noItemValue = &nbsp;
+          }
+        }
+        order {
+            // [String] value || uid
+          field = value
+            // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+            // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere =
+        }
+          // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
+        area = 0
+      }
+        // Master template for a selectbox
+      selectbox = SELECTBOX
+      selectbox {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
+          // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar =
+          // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
+        count_hits = 1
+          // [Boolean] Should be added a default item?
+        first_item = 1
+        first_item {
+            // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
+          display_wo_items = 1
+            // Wrap the first items
+          cObject = COA
+          cObject {
+              // Value from locallang.xml
+            20 = TEXT
+            20 {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+                // Append hits
+              append = TEXT
+              append {
+                if {
+                  isTrue {
+                      // Display hits only in case of one hit at least
+                    field = hits
+                  }
+                }
+                field = hits
+                noTrimWrap  = | (|)|
+              }
+            }
+            wrap = <option###CLASS######STYLE### value="###UID###">|</option>
+          }
+            // [STRING, unique] Value attribute in the option tag (#11401)
+          option_value = 0
+        }
+          // [Boolean] Should it be possible to select more than one item?
+        multiple  = 1
+        multiple {
+            // [String] HTML code for multiple
+          selected = multiple="multiple"
+        }
+          // [Integer] How many items should the select box display in the visible area?
+        size = 1
+          // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+          // [String] Wrap the object
+        wrap = <div class="selectbox">###TITLE###|</div>
+        wrap {
+            // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+              // [String] Title of the object. If it shouldn't displayed, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = <div class="selectbox_title">|</div>
+          }
+            // [String] Wrap the items
+          object = <select class="###ONCHANGE###" name="###TABLE.FIELD###" id="###ID###" size="###SIZE###"###MULTIPLE###>|</select>
+          object {
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 14
+          }
+            // [String] Wrap one item
+          item = ###VALUE###
+          item {
+              // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Item won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
+              // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+                // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
+            }
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+              // [String] HTML code for a selected item
+            selected = selected="selected"
+              // [String] Default HTML class
+            class =
+              // [String] Default HTML style
+            style =
+              // DEPRECATED - please use the cObject!
+            wraps =
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue {
+                    field = value
+                  }
+                }
+                field             = value
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue {
+                    field = value
+                  }
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                  isTrue {
+                      // Display hits only in case of one hit at least
+                    field = hits
+                  }
+                }
+                field = hits
+                noTrimWrap  = | (|)|
+              }
+              if {
+                isTrue {
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                      // field = hits
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
+                    }
+                  }
+                }
+              }
+              wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
+            }
+          }
+        }
+        order {
+            // [String] value || uid
+          field = value
+            // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+            // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere =
+        }
+          // [BOOLEAN] You have to allocate one of the areas of the master template. Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+        area = 0
+      }
+      treeview < .category_menu
+        // Master template for a treeview in checkbox format. It is based on CATEGORY_MENU and not on CHECKBOX!
+      treeview = TREEVIEW
+      treeview {
+        first_item.cObject.wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
+        wrap.item.cObject.wrap  = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
+      }
+      areas {
+        sample_currency = 1
+        sample_currency {
+          faq = Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+            // [BOOLEAN] 1: One field - with individual from-to-string, 0: Don't take it
+          strings = 1
+          strings {
+            faq = FAQ: How to configure first_item, hits and nice_piVar?
+            faq {
+              first_item    = Properties for the first_item will be taken from first_item above
+              display_hits  = Properties will be taken from wrap.item above
+              nice_piVar    = Property will be taken from nice_piVar above
+            }
+            label_stdWrap {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_fromTo
+            }
+            options {
+              faq = FAQ: How do I configure a currency area?
+              faq {
+                area      = Define valueFrom and valueTo. If one is empty it is unlimited.
+                keys      = A key of an item should be an integer like: 10, 20, 30, 40, etc.
+                10_to_30  = Example for three items of a currency area
+              }
+              fields {
+                10 {
+                  comment = Upto 10.000 EUR
+                  valueFrom_stdWrap {
+                    value =
+                  }
+                  valueTo_stdWrap {
+                    value = 10000
+                  }
+                  value_stdWrap {
+                    value = Upto 10.000 EUR
+                    lang {
+                      de = Bis 10.000 EUR
+                    }
+                  }
+                }
+                20 {
+                  comment = From 10.000 EUR to 20.000 EUR
+                  valueFrom_stdWrap {
+                    value = 10000
+                  }
+                  valueTo_stdWrap {
+                    value = 20000
+                  }
+                  value_stdWrap {
+                    value = 10.000 - 20.000 EUR
+                  }
+                }
+                30 {
+                  comment = From 20.000 EUR without any limit
+                  valueFrom_stdWrap {
+                    value = 20000
+                  }
+                  valueTo_stdWrap {
+                    value =
+                  }
+                  value_stdWrap {
+                    value = From 20.000 EUR
+                    lang {
+                      de = Ab 20.000 EUR
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        sample_period = 1
+        sample_period {
+          faq = Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+            // [BOOLEAN] 1: One field - with individual from-to-string, 0: Don't take it
+          strings = 0
+          strings {
+            faq = FAQ: How to configure first_item, hits and nice_piVar?
+            faq {
+              first_item    = Properties for the first_item will be taken from first_item above
+              display_hits  = Properties will be taken from wrap.item above
+              nice_piVar    = Property will be taken from nice_piVar above
+            }
+            label_stdWrap {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_fromTo
+            }
+              // [STRING: number || string] number: sql query with >= and <=, string: sql query with LIKE ???
+            sql = number
+            options {
+              faq = FAQ: How do I configure an area for a period?
+              faq {
+                area      = Define valueFrom and valueTo. If one is empty it is unlimited.
+                keys      = A key of an item should be an integer like: 10, 20, 30, 40, etc.
+              }
+              fields {
+                10 {
+                  comment = Before 2010
+                  valueFrom_stdWrap {
+                    value =
+                  }
+                  valueTo_stdWrap {
+                    value = 1262300400
+                  }
+                  value_stdWrap {
+                    value = Before 2010
+                    lang {
+                      de = Vor 2010
+                    }
+                  }
+                }
+                20 {
+                  comment = From 2010 to 2011
+                  valueFrom_stdWrap {
+                    value = 1262300400
+                  }
+                  valueTo_stdWrap {
+                    value = 1293836400
+                  }
+                  value_stdWrap {
+                    value = 2010 - 2011
+                  }
+                }
+                30 {
+                  comment = After 2011
+                  valueFrom_stdWrap {
+                    value = 1293836400
+                  }
+                  valueTo_stdWrap {
+                    value =
+                  }
+                  value_stdWrap {
+                    value = After 2011
+                    lang {
+                      de = Nach 2011
+                    }
+                  }
+                }
+              }
+            }
+          }
+          interval = 1
+          interval {
+              // [BOOLEAN]: 1: dates are converted to timestamp. 0: undefined
+            compare_wiTimeStamp = 1
+              // [STRING] 'day', 'week', 'month' or 'year'
+            case = year
+            day {
+              start_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = this week
+                }
+              }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
+                }
+              }
+              times_stdWrap {
+                  // [INTEGER] Display the period n times
+                value = 7
+              }
+              value_stdWrap {
+                  // [STRING] Leave it empty! It will be handled while runtime.
+                value =
+                  // [STRING] See php method strftime
+                strftime = %A
+              }
+              url_stdWrap {
+                  // PHP strftime: %Y%m%d example: 20101231
+                strftime      = %Y%m%d
+                rawUrlEncode  = 1
+              }
+            }
+            week {
+              start_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: -3 weeks, now, today 0:00, next week
+                  value = last week
+                }
+              }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
+                }
+              }
+              times_stdWrap {
+                  // [INTEGER] Display the period n times
+                value = 6
+              }
+              firstday_stdWrap {
+                  // [INTEGER] 1: Mon, 2: Thu, ... 7: Sun
+                value = 1
+              }
+              value_stdWrap {
+                  // [STRING] Leave it empty! It will be handled while runtime.
+                value =
+                  // [STRING] See php method strftime
+                strftime = %V. ###MY_WEEK###
+              }
+              url_stdWrap {
+                  // PHP strftime: %Y%V example: 201053
+                strftime      = %Y%V
+                rawUrlEncode  = 1
+              }
+            }
+            month {
+              start_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: January, -1 month, now, today 0:00, next month
+                  value = now
+                }
+              }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
+                }
+              }
+              times_stdWrap {
+                  // [INTEGER] Display the period n times
+                value = 6
+              }
+              value_stdWrap {
+                  // [STRING] Leave it empty! It will be handled while runtime.
+                value =
+                  // [STRING] See php method strftime
+                strftime = %b %y
+              }
+              url_stdWrap {
+                  // PHP strftime: %B_%Y example: december_2010
+                strftime      = %B_%Y
+                rawUrlEncode  = 1
+              }
+            }
+            year {
+              start_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: -1 year, 2010, now, today 0:00, next year
+                  value = -1 year
+                }
+              }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
+                }
+              }
+              times_stdWrap {
+                  // [INTEGER] Display the period n times
+                value = 3
+              }
+              value_stdWrap {
+                  // [STRING] Leave it empty! It will be handled while runtime.
+                value =
+                  // [STRING] See php method strftime
+                strftime = %Y
+              }
+              url_stdWrap {
+                  // PHP strftime: %Y example: 2010
+                strftime      = %Y
+                rawUrlEncode  = 1
+              }
+            }
+          }
+        }
+      }
+      map {
+          // Content for the pop up with description. It contains a description and a link to the single view.
+        descriptionWiLinkToSingle = COA
+        descriptionWiLinkToSingle {
+            // Description
+          10 = TEXT
+          10 {
+            required    = 1
+            field       = {$plugin.tx_browser_pi1.map.field.description}
+            noTrimWrap  = || <br />|
+          }
+            // Categories
+          20 = TEXT
+          20 {
+            required    = 1
+            field       = {$plugin.tx_browser_pi1.map.field.category}
+            noTrimWrap  = |(|) <br />|
+          }
+            // Link to the single view (in 'click'-mode only)
+          30 = TEXT
+          30 {
+            if {
+              value   = '{$plugin.tx_browser_pi1.map.popup.behaviour}' 
+              equals  = 'click'
+            }
+            value = In detail &raquo;
+            lang {
+              de = Mehr Informationen &raquo;
+              en = In detail &raquo;
+            }
+            typolink {
+              parameter.data = field:mapLinkToSingle
+                // 130117
+              useCacheHash = 1
+            }
+          }
+        }
+      }
+      modules {
+        download {
+          thumbnails {
+            withLinkToListView < tt_content.uploads.20
+            withLinkToListView {
+              userFunc = tx_browser_cssstyledcontent->render_uploads
+              userFunc {
+                  // Enable the DRS (you need devlog)
+                drs = TEXT
+                drs {
+                  value = {$plugin.tx_browser_pi1.downloadmodule.drs}
+                }
+              }
+                // Don't outerWrap the thumbnail with <table> by default
+              outerWrap = |
+              field         >
+              filePath      >
+              color         >
+              tableParams_0 >
+              tableParams_1 >
+              tableParams_2 >
+              tableParams_3 >
+              itemRendering >
+              itemRendering = TEXT
+              itemRendering {
+                data = register:linkedIcon
+                wrap (
+                  <div class="csc-uploads-thumbnail csc-uploads-thumbnail-first">|</div>
+                  |*| 
+                  <div class="csc-uploads-thumbnail csc-uploads-thumbnail-even">|</div>
+                  ||
+                  <div class="csc-uploads-thumbnail">|</div>
+                  |*|
+                  <div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>
+)
+              }
+              linkProc {
+                iconCObject {
+                  file {
+                    width = {$plugin.tx_browser_pi1.downloadmodule.thumbnailListViewMaxW}
+                  }
+                }
+                  // Render the thumbnail
+                tx_browser_pi1 = COA
+                tx_browser_pi1 {
+                    // Link with preview or application icon
+                  10 = IMAGE
+                  10 {
+                    file {
+                      import {
+                        data = register : ICON_REL_PATH
+                      }
+                      width = {$plugin.tx_browser_pi1.downloadmodule.thumbnailListViewMaxW}
+                    }
+                    imageLinkWrap = 1
+                    imageLinkWrap {
+                      enable = 1
+                      typolink {
+                        parameter = {$plugin.tx_browser_pi1.downloadmodule.pageUid} - linktosingle
+                        title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+// 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
+//                        title = TEXT
+//                        title {
+//                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                          lang {
+//                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                          }
+//                        }
+                        additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
+                        useCacheHash      = 1
+                      }
+                    }
+                  }
+                    // Link devider
+                  20 = TEXT
+                  20 {
+                    value = //**//
+                  }
+                    // Link with label
+                  30 = TEXT
+                  30 {
+                    data = register : filename
+                    typolink {
+                      parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}### - linktosingle
+                      title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+// 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
+//                      title = TEXT
+//                      title {
+//                        value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                        lang {
+//                          de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                          en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                        }
+//                      }
+                      additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
+                      useCacheHash      = 1
+                    }
+                  }
+                }
+              }
+              tableField = {$plugin.tx_browser_pi1.downloadmodule.tableField}
+              fields {
+                from_path = ###{$plugin.tx_browser_pi1.downloadmodule.path}###
+                files     = ###{$plugin.tx_browser_pi1.downloadmodule.files}###
+                layout    >
+              }
+              stdWrap {
+                if.isTrue = ###{$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
+              }
+            }
+            withDownloadLink < .withLinkToListView
+            withDownloadLink {
+              linkProc {
+                tx_browser_pi1 {
+                  10 {
+                    file {
+                      width = {$plugin.tx_browser_pi1.downloadmodule.thumbnailSingleViewMaxW}
+                    }
+                    imageLinkWrap {
+                      typolink {
+                        parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj} - linktosingle
+                        additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                        useCacheHash      = 1
+                      }
+                    }
+                  }
+                  30 = TEXT
+                  30 {
+                    data = register : filename
+                    typolink {
+                      parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj} - linktosingle
+                      additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                      useCacheHash      = 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+          textlinks {
+            withLinkToListView = TEXT
+            withLinkToListView {
+              value = Proceed &raquo;
+              lang {
+                de  = Weiter &raquo;
+                en  = Proceed &raquo;
+              }
+              typolink {
+                parameter         = {$plugin.tx_browser_pi1.downloadmodule.pageUid} - linktosingle
+                title             = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
+                useCacheHash      = 1
+              }
+            }
+            withDownloadLink = TEXT
+            withDownloadLink {
+              value = Download &raquo;
+              lang {
+                de  = Download &raquo;
+                en  = Download &raquo;
+              }
+              typolink {
+                parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj} - linktosingle
+                additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                useCacheHash      = 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: displayList master_templates
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displayList images
+
+plugin.tx_browser_pi1 {
+  displayList {
+      // [Boolean] Display caption in List view?
+    caption_stdWrap.if.directReturn = 0
+
+      // [Integer] Amount of images which should be displayed
+    imageCount     = {$plugin.tx_browser_pi1.listImageCount}
+      // [String] Wrap code for the whole image block (if there is any image)
+    imageWrapIfAny =
+    imageBoxWrap {
+        // [String] Wrap code for every image/imagecaption block #11211
+      wrap = <span class="list-imagebox list-imagebox-###IMAGE_COUNT###"> | </span>
+    }
+    image {
+        // [String] path and file name of the image, which should displayed, if a record hasn't any image #11204
+      file = EXT:browser/res/images/alternate_image_400x300.gif
+      file {
+        maxW = {$plugin.tx_browser_pi1.listMaxW}
+        maxH = {$plugin.tx_browser_pi1.listMaxH}
+      }
+      wrap          =
+      imageLinkWrap = 1
+      imageLinkWrap {
+        enable = 1
+        bodyTag = <body bgColor="#ffffff">
+        wrap = <a href="javascript:close();"> | </a>
+        width = {$plugin.tx_browser_pi1.listPopupMaxW}
+        height = {$plugin.tx_browser_pi1.listPopupMaxH}
+        JSwindow = 1
+        JSwindow.newWindow = 1
+        JSwindow.expand = 17,20
+      }
+      noImage_stdWrap {
+      }
+      firstImageIsPreview       >
+      forceFirstImageIsPreview  >
+    }
+      // Displays the no-item-message, if SQL query will return an empty result
+    noItemMessage = TEXT
+    noItemMessage {
+      data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
+      wrap = <p style="padding:2em 0;">|</p>
+    }
+  }
+}
+  // plugin.tx_browser_pi1: displayList images
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: cObjDataFieldWrapper
+
+plugin.tx_browser_pi1 {
+    // #i0002: Value of given field will added to field. Example: filelink_link = tx_org_downloads.documentssize
+  cObjDataFieldWrapper =
+  cObjDataFieldWrapper {
+  }
+}
+  // plugin.tx_browser_pi1: cObjDataFieldWrapper
+ 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: cObjData
+
+plugin.tx_browser_pi1 {
+    // myData, system: Will added to cObjData while runtime
+  cObjData =
+  cObjData {
+  }
+}
+  // plugin.tx_browser_pi1: cObjData
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: marker
+
+plugin.tx_browser_pi1 {
+  marker {
+        // markers can use TEXT or COA
+    my_title = TEXT
+    my_title {
+      value =
+      lang {
+        de =
+      }
+      wrap = <h1>|</h1>
+    }
+        // markers can use TEXT or COA
+    my_url = TEXT
+    my_url {
+      typolink {
+        parameter = {page:uid}
+        parameter {
+          insertData = 1
+        }
+        returnLast = url
+      }
+    }
+        // markers can use TEXT or COA
+    my_reset = TEXT
+    my_reset {
+      value = Reset
+      lang {
+        de = Zur&uuml;cksetzen
+      }
+    }
+        // markers can use TEXT or COA
+    my_search = TEXT
+    my_search {
+      value = Search
+      lang {
+        de = Suchen
+      }
+    }
+        // markers can use TEXT or COA
+    my_search_legend = TEXT
+    my_search_legend {
+      data = LLL:EXT:browser/pi1/locallang.xml:label_search_legend
+    }
+        // markers can use TEXT or COA
+    my_csv_export = TEXT
+    my_csv_export {
+      value = Export
+      lang {
+        de = Export
+      }
+    }
+        // markers can use TEXT or COA
+    my_week = TEXT
+    my_week {
+      value = week
+      lang {
+        de = Woche
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: marker
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: flexform
+
+plugin.tx_browser_pi1 {
+  flexform {
+    sDEF {
+      controlling {
+          // Control the display of the plugin by URL parameters
+        enabled = TEXT
+        enabled {
+            // [Boolean] The display of the plugin isn't controlled by URL parameters (default)
+          value = 0
+        }
+        adjustment {
+            // Display the plugin only, if one of the following parameters is part of the URL ...
+          display_if_in_list = TEXT
+          display_if_in_list {
+              // [String/csv] Comma separated list of parameters
+            value =
+          }
+            // Hide the plugin, if one of the following parameters is part of the URL ...
+          hide_if_in_list = TEXT
+          hide_if_in_list {
+              // [String/csv] Comma separated list of parameters
+            value = ignore
+          }
+        }
+      }
+      downloads {
+          // Allow to download files
+        enabled = TEXT
+        enabled {
+            // [Boolean] Downloading is forbidden by default
+          value = 0
+        }
+      }
+      statistics {
+          // Enable the statistics module
+        enabled = TEXT
+        enabled {
+            // [Boolean] The statistics module is disabled by default
+          value = 0
+        }
+        adjustment {
+          fields {
+              // Label and type of the field for counting downloads
+            downloads {
+                // Label of the field for counting downloads
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_downloads
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
+            }
+              // Label and type of the field for counting downloadsByVisits
+            downloadsByVisits {
+                // Label of the field for counting downloads (with respect for timeout)
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_downloads_by_visits
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
+            }
+              // Label and type of the field for counting hits
+            hits {
+                // Label of the field for counting hits (without any respect for timeout)
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_hits
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
+            }
+              // Label and type of the field for counting visits
+            visits {
+                // Label of the field for counting visits (hits with respect for timeout)
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_visits
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
+            }
+          }
+            // Period between a current and a new download and visit in seconds
+          timeout = TEXT
+          timeout {
+              // [Integer] Period in seconds. Default is 1800 (60 sec x 30 min = 1.800 sec)
+            value = 1800
+          }
+            // List of IPs, which won't counted for downloads, hits and visits
+          dontAccountIPsOfCsvList = TEXT
+          dontAccountIPsOfCsvList {
+              // [String/csv] Comma seperated list of IPs, which won't counted
+            value = 127.0.0.1, 127.0.0.2
+          }
+            // Echo a debug report in the frontend in case of an unexpected result
+          debugging = TEXT
+          debugging {
+              // [Boolean] 0: debug report is disabled (default), 1: debug report is enabled
+            value = 0
+          }
+        }
+      }
+    }
+      // #43741, 121207, dwildt
+    javascript = 
+    javascript {
+        // [Boolean] 0: don't embed the jquery ui library (default), 1: embed it.
+      jquery_ui = 0
+    }
+    socialmedia {
+      socialbookmarks {
+        wraps {
+          stdWrap_items {
+            value = ###BOOKMARK_ITEMS###
+            wrap  = <span class="tx_browser_pi1.bookmark_items">|</span>
+          }
+          stdWrap_item {
+            value = <a href="###BOOKMARK_URL###" target="_blank" title="###BOOKMARK_NAME###"><img ###BOOKMARK_IMAGESIZE### src="###BOOKMARK_IMAGE###"></a>
+            wrap  = <span class="tx_browser_pi1.bookmark_item">|</span>
+          }
+        }
+        bookmarks {
+          items {
+            addthis {
+              name    = Add This
+              url     = http://www.addthis.com/bookmark.php?pub=geotek&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/addthis.png
+              stdWrap {
+                value = <a title="###BOOKMARK_NAME###" href="###BOOKMARK_URL###"><img ###BOOKMARK_IMAGESIZE### src="###BOOKMARK_IMAGE###"></a>
+                wrap  = <span class="tx_browser_pi1.bookmark_item tx_browser_pi1.bookmark_item_first">|</span>
+              }
+            }
+            ask {
+              name    = Ask.com
+              url     = http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/ask.png
+            }
+            backflip {
+              name    = Backflip
+              url     = http://www.backflip.com/add_page_pop.ihtml?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/backflip.png
+            }
+            blinkbits {
+              name    = BlinkBits
+              url     = http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;source_url=###URL###&amp;title=###TITLE###&amp;body=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/blinkbits.png
+            }
+            blinklist {
+              name    = blinklist
+              url     = http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url=###URL###&amp;Title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/blinklist.png
+            }
+            blogmarks {
+              name    = BlogMarks
+              url     = http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/blogmarks.png
+            }
+            bluedot {
+              name    = Bluedot
+              url     = http://bluedot.us/Authoring.aspx?u=###URL###&amp;t=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/bluedot.png
+            }
+            connotea {
+              name    = Connotea
+              url     = http://www.connotea.org/addpopup?continue=confirm&amp;uri=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/connotea.png
+            }
+            delicious {
+              name    = del.icio.us
+              url     = http://del.icio.us/post?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/delicious.png
+            }
+            delirious {
+              name    = de.lirio.us
+              url     = http://de.lirio.us/rubric/post?uri=###URL###;title=###TITLE###;when_done=go_back
+              image   = EXT:browser/res/images/socialmedia/bookmarks/delirious.png
+            }
+            digg {
+              name    = digg.com
+              url     = http://digg.com/submit?phase=2&amp;url=###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/digg.png
+            }
+            facebook {
+              name    = Facebook
+              url     = http://www.facebook.com/share.php?u=###URL###&t=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/facebook.png
+            }
+            fark {
+              name    = Fark.com
+              url     = http://cgi.fark.com/cgi/fark/edit.pl?new_url=###URL###&amp;new_comment=###TITLE###&amp;linktype=Misc
+              image   = EXT:browser/res/images/socialmedia/bookmarks/fark.png
+            }
+            feedmelinks {
+              name    = Feed me links
+              url     = http://feedmelinks.com/categorize?from=toolbar&amp;op=submit&amp;url=###URL###name=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/feedmelinks.png
+            }
+            folkd {
+              name    = Folkd
+              url     = http://www.folkd.com/submit/###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/folkd.png
+            }
+            furl {
+              name    = Furl
+              url     = http://www.furl.net/storeIt.jsp?u=###URL###&amp;t=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/furl.png
+            }
+            google {
+              name    = google.com
+              url     = http://www.google.com/bookmarks/mark?op=add&amp;bkmk=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/google.png
+            }
+            hype {
+              name    = hype it!
+              url     = http://hype.yeebase.com/submit/###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/hype.png
+            }
+            linkagogo {
+              name    = LinkaGoGo
+              url     = http://www.linkagogo.com/go/AddNoPopup?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/linkagogo.png
+            }
+            linkarena {
+              name    = LinkaARENA
+              url     = http://linkarena.com/bookmarks/addlink/?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/linkarena.png
+            }
+            magnolia {
+              name    = Ma.gnolia
+              url     = http://ma.gnolia.com/beta/bookmarklet/add?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/magnolia.png
+            }
+            misterwong {
+              name    = Mister Wong
+              url     = http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=###URL###&amp;bm_description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/wong.png
+            }
+            mylinkde {
+              name    = MyLink.de
+              url     = http://www.mylink.de/qa.asp?link=###URL###&amp;bez=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/mylinkde.png
+            }
+            netscape {
+              name    = Netscape
+              url     = http://www.netscape.com/submit/?U=###URL###&amp;T=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/netscape.png
+            }
+            netvouz {
+              name    = netvouz
+              url     = http://www.netvouz.com/action/submitBookmark?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/netvouz.png
+            }
+            newsvine {
+              name    = newsvine.com
+              url     = http://www.newsvine.com/_tools/seed&amp;save?u=###URL###&amp;h=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/newsvine.png
+            }
+            oneview {
+              name    = oneview
+              url     = http://www.oneview.de/quickadd/neu/addBookmark.jsf?URL=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/oneview.png
+            }
+            rawsugar {
+              name    = RawSugar
+              url     = http://www.rawsugar.com/tagger/?turl=###URL###&amp;tttl=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/rawsugar.png
+            }
+            reddit {
+              name    = Reddit
+              url     = http://reddit.com/submit?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/reddit.png
+            }
+            scuttle {
+              name    = Scuttle
+              url     = http://www.scuttle.org/bookmarks.php/maxpower?action=add&amp;address=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/scuttle.png
+            }
+            simpy {
+              name    = Simpy
+              url     = http://www.simpy.com/simpy/LinkAdd.do?href=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/simpy.png
+            }
+            smarking {
+              name    = Smarking
+              url     = http://smarking.com/editbookmark/?url=###URL###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/smarking.png
+            }
+            spurl {
+              name    = Spurl
+              url     = http://www.spurl.net/spurl.php?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/spurl.png
+            }
+            stumbleupon {
+              name    = stumbleupon.com
+              url     = http://www.stumbleupon.com/submit?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/su.png
+            }
+            tagthat {
+              name    = TagThat
+              url     = http://www.tagthat.de/bookmarken.php?action=neu&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/tagthat.png
+            }
+            tailrank {socialmedia
+              name    = TailRank
+              url     = http://tailrank.com/share/?text=&amp;link_href=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/tailrank.png
+            }
+            technorati {
+              name    = Technorati
+              url     = http://technorati.com/faves/?add=###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/technorati.png
+            }
+            twitter {
+              name    = Twitter
+              url     = http://twitter.com/home?status=###TITLE###+-+###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/twitter.png
+            }
+            webnews {
+              name    = Webnews
+              url     = http://www.webnews.de/einstellen?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/webnews.png
+            }
+            wink {
+              name    = Wink
+              url     = http://www.wink.com/_/tag?url=###URL###&amp;doctitle=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/wink.png
+            }
+            wists {
+              name    = Wists
+              url     = http://wists.com/r.php?c=&amp;r=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/wists.png
+            }
+            yahoomyweb {
+              name    = YahooMyWeb
+              url     = http://myweb.yahoo.com/myresults/bookmarklet?t=###TITLE###&amp;u=###URL###&amp;ei=UTF-8
+              image   = EXT:browser/res/images/socialmedia/bookmarks/yahoomyweb.png
+            }
+            yiggde {
+              name    = YiggIt
+              url     = http://yigg.de/neu?exturl=###URL###&amp;exttitle=###TITLE###&amp;extdesc=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/yiggit.png
+            }
+          }
+        }
+      }
+    }
+    templating {
+      arrDataQuery {
+        config {
+          ifNoItem {
+            value = No query available
+          }
+        }
+      }
+      jquery_ui {
+        z_own {
+          label   = sheet_templating.css.jqui.z_own
+          icon    = EXT:browser/res/images/jQuery/my_ui.gif
+        }
+        z_none {
+          label   = sheet_templating.css.jqui.z_none
+          icon    = EXT:browser/res/images/jQuery/dont_embed_it.gif
+        }
+        z_ts {
+          label   = sheet_templating.css.jqui.z_ts
+          css     =
+          icon    = EXT:browser/res/images/jQuery/typoscript.gif
+        }
+        black_tie {
+          label   = sheet_templating.css.jqui.black_tie
+          css     = EXT:browser/res/js/jquery/ui/black_tie/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_black_tie.png
+        }
+        blitzer {
+          label   = sheet_templating.css.jqui.blitzer
+          css     = EXT:browser/res/js/jquery/ui/blitzer/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_blitzer.png
+        }
+        cupertino {
+          label   = sheet_templating.css.jqui.cupertino
+          css     = EXT:browser/res/js/jquery/ui/cupertino/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_cupertino.png
+        }
+        dark_hive {
+          label   = sheet_templating.css.jqui.dark_hive
+          css     = EXT:browser/res/js/jquery/ui/dark_hive/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_dark_hive.png
+        }
+        darkness {
+          label   = sheet_templating.css.jqui.darkness
+          css     = EXT:browser/res/js/jquery/ui/darkness/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_ui_dark.png
+        }
+        dot_luv {
+          label   = sheet_templating.css.jqui.dot_luv
+          css     = EXT:browser/res/js/jquery/ui/dot_luv/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_dot_luv.png
+        }
+        eggplant {
+          label   = sheet_templating.css.jqui.eggplant
+          css     = EXT:browser/res/js/jquery/ui/eggplant/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_eggplant.png
+        }
+        excite_bike {
+          label   = sheet_templating.css.jqui.excite_bike
+          css     = EXT:browser/res/js/jquery/ui/excite_bike/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_excite_bike.png
+        }
+        flick {
+          label   = sheet_templating.css.jqui.flick
+          css     = EXT:browser/res/js/jquery/ui/flick/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_flick.png
+        }
+        hot_sneaks {
+          label   = sheet_templating.css.jqui.hot_sneaks
+          css     = EXT:browser/res/js/jquery/ui/hot_sneaks/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_hot_sneaks.png
+        }
+        humanity {
+          label   = sheet_templating.css.jqui.humanity
+          css     = EXT:browser/res/js/jquery/ui/humanity/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_humanity.png
+        }
+        le_frog {
+          label   = sheet_templating.css.jqui.le_frog
+          css     = EXT:browser/res/js/jquery/ui/le_frog/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_le_frog.png
+        }
+        lightness {
+          label   = sheet_templating.css.jqui.lightness
+          css     = EXT:browser/res/js/jquery/ui/lightness/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_ui_light.png
+        }
+        mint_choc {
+          label   = sheet_templating.css.jqui.mint_choc
+          css     = EXT:browser/res/js/jquery/ui/mint_choc/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_mint_choco.png
+        }
+        overcast {
+          label   = sheet_templating.css.jqui.overcast
+          css     = EXT:browser/res/js/jquery/ui/overcast/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_overcast.png
+        }
+        pepper_grinder {
+          label   = sheet_templating.css.jqui.pepper_grinder
+          css     = EXT:browser/res/js/jquery/ui/pepper_grinder/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_pepper_grinder.png
+        }
+        redmond {
+          label   = sheet_templating.css.jqui.redmond
+          css     = EXT:browser/res/js/jquery/ui/redmond/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_windoze.png
+        }
+        smoothness {
+          label   = sheet_templating.css.jqui.smoothness
+          css     = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_smoothness.png
+        }
+        south_street {
+          label   = sheet_templating.css.jqui.south_street
+          css     = EXT:browser/res/js/jquery/ui/south_street/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_south_street.png
+        }
+        start {
+          label   = sheet_templating.css.jqui.start
+          css     = EXT:browser/res/js/jquery/ui/start/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_start_menu.png
+        }
+        sunny {
+          label   = sheet_templating.css.jqui.sunny
+          css     = EXT:browser/res/js/jquery/ui/sunny/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_sunny.png
+        }
+        swanky_purse {
+          label   = sheet_templating.css.jqui.swanky_purse
+          css     = EXT:browser/res/js/jquery/ui/swanky_purse/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_swanky_purse.png
+        }
+        trontastic {
+          label   = sheet_templating.css.jqui.trontastic
+          css     = EXT:browser/res/js/jquery/ui/trontastic/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_trontastic.png
+        }
+        vader {
+          label   = sheet_templating.css.jqui.vader
+          css     = EXT:browser/res/js/jquery/ui/vader/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_black_matte.png
+        }
+      }
+    }
+    viewList {
+        // [BOOLEAN] 1 (default): Display the listview. 0: Don't display the listview.
+      display_listview = 1
+        // [STRING] independent (default) || controlled: Calculate total hits. Can be overriden while runtime by the flexform value.
+      total_hits = independent
+        // [Boolean] True: hits will counted (default). False: hits won't counted (best performance)
+      count_hits = true
+        // [BOOLEAN] false (default) || true. Can be overriden while runtime by the flexform value.
+      csvexport = false
+      csvexport {
+        devider {
+            // [STRING] field devider. Usually a comma: ,
+          stdWrap = TEXT
+          stdWrap {
+            value = ,
+          }
+        }
+        enclosure {
+            // [STRING] field enclosure. Usually a double quote: "
+          stdWrap = TEXT
+          stdWrap {
+            value = "
+          }
+        }
+        strip_tag {
+            // [BOOLEAN] true (recommended) || false. Remove HTML tags
+          stdWrap = TEXT
+          stdWrap {
+            value = true
+          }
+        }
+          // [STRING] Path to the HTML template file
+        template {
+            // default file
+          file    = EXT:browser/res/html/csv_export.tmpl
+          marker  = ###TEMPLATE_CSV###
+        }
+      }
+        // [BOOLEAN] false (default) || true. Can be overriden while runtime by the flexform value.
+      rotateviews = false
+    }
+    viewSingle {
+        // [BOOLEAN] 0 (default): Don't display the listview. 1: Display the listview.
+      display_listview = 0
+    }
+  }
+}
+  // plugin.tx_browser_pi1: flexform
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: javascript
+
+plugin.tx_browser_pi1 {
+
+    // jQuery, jQuery plugins, ajax, general
+  javascript =
+  javascript {
+      // library, plugins, ui, cleanup
+    jquery =
+    jquery {
+        // [STRING] Path to jQuery library
+      library = EXT:browser/res/js/jquery/jquery-1.8.3.min.js
+      library {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
+        // jstree, t3browser
+      plugins =
+      plugins {
+        jstree {
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree_1.0-rc3.js
+          plugin {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+          plugins {
+            cookie = EXT:browser/res/js/jquery/plugins/jquery.jstree/_lib/jquery.cookie.js
+            cookie {
+                // [Boolean] 0 (default): link to the script file, 1: include the script inline
+              inline = 0
+            }
+          }
+          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree_4.1.21.js
+          library {
+              // [Boolean] 0: link to the script file, 1 (default): include the script inline
+            inline = 1
+            marker {
+                // Id 1 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_01 = TEXT
+              selector_01 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+              }
+                // Id 2 of the div-wrap of the 2nd treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_02 = TEXT
+              selector_02 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_02}
+              }
+                // Id 3 of the div-wrap of the 3rd treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_03 = TEXT
+              selector_03 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_03}
+              }
+                // Id 4 of the div-wrap of the 4th treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_04 = TEXT
+              selector_04 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_04}
+              }
+                // Id 5 of the div-wrap of the 5th treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_05 = TEXT
+              selector_05 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_05}
+              }
+                // Dots for selector 1
+              dots_01 = TEXT
+              dots_01 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 2
+              dots_02 = TEXT
+              dots_02 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 3
+              dots_03 = TEXT
+              dots_03 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 4
+              dots_04 = TEXT
+              dots_04 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 5
+              dots_05 = TEXT
+              dots_05 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Theme for selector 1
+              icons_01 = TEXT
+              icons_01 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 2
+              icons_02 = TEXT
+              icons_02 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 3
+              icons_03 = TEXT
+              icons_03 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 4
+              icons_04 = TEXT
+              icons_04 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 5
+              icons_05 = TEXT
+              icons_05 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Path to theme for all selectors
+              path_to_themes = TEXT
+              path_to_themes {
+                  // [String] Path to the folder, which contains the themes (with ending slash)
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
+              }
+                // Plugins for selector 1: category_menu or checkbox
+              plugins_01 = COA
+              plugins_01 {
+                  // Plugins for the CATEGORY_MENU
+                10 = TEXT
+                10 {
+                    // [STRING] list of plugins
+                  value = "themes", "html_data", "cookies"
+                  if {
+                    value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.plugins}
+                    equals = category_menu
+                  }
+                }
+                  // Plugins for the CHECKBOX
+                20 = TEXT
+                20 {
+                    // [STRING] list of plugins
+                  value = "themes", "html_data", "checkbox",  "ui", "cookies"
+                  if {
+                    value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.plugins}
+                    equals = checkbox
+                  }
+                }
+              }
+              plugins_02 < .plugins_01
+                // Plugins for selector 2
+              plugins_02 = COA
+              plugins_03 < .plugins_01
+                // Plugins for selector 3
+              plugins_03 = COA
+              plugins_04 < .plugins_01
+                // Plugins for selector 4
+              plugins_04 = COA
+              plugins_05 < .plugins_01
+                // Plugins for selector 5
+              plugins_05 = COA
+                // table.field of Selector 1: Example tx_greencars_manufacturer.title
+              tablefield_01 = TEXT
+              tablefield_01 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_01}
+              }
+                // table.field of Selector 2: Example tx_greencars_manufacturer.title
+              tablefield_02 = TEXT
+              tablefield_02 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_02}
+              }
+                // table.field of Selector 3: Example tx_greencars_manufacturer.title
+              tablefield_03 = TEXT
+              tablefield_03 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_03}
+              }
+                // table.field of Selector 4: Example tx_greencars_manufacturer.title
+              tablefield_04 = TEXT
+              tablefield_04 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_04}
+              }
+                // table.field of Selector 5: Example tx_greencars_manufacturer.title
+              tablefield_05 = TEXT
+              tablefield_05 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_05}
+              }
+                // Theme for selector 1
+              theme_01 = TEXT
+              theme_01 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+                // Theme for selector 2
+              theme_02 = TEXT
+              theme_02 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+                // Theme for selector 3
+              theme_03 = TEXT
+              theme_03 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+                // Theme for selector 4
+              theme_04 = TEXT
+              theme_04 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+                // Theme for selector 5
+              theme_05 = TEXT
+              theme_05 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+            }
+          }
+        }
+        t3browser {
+            // [String] Path to the jss file of the t3browser plugin
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.5.js
+          plugin {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.5.js
+          library {
+              // [Boolean] 0: link to the script file, 1 (default): include the script inline
+            inline = 1
+            marker {
+              ajax_url_single = TEXT
+              ajax_url_single {
+                dataWrap = {getIndpEnv:TYPO3_SITE_URL}|
+                typolink {
+                  parameter = {page:uid},{$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+                  parameter {
+                    insertData = 1
+                  }
+                  //additionalParams = &tx_browser_pi1[showUid]=###SHOWUID###&###CHASH###
+                  additionalParams = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+                  additionalParams {
+                    insertData = 1
+                  }
+                  returnLast = url
+                }
+              }
+                // Enable/Disable JSS alerts
+              t3browseralert = TEXT
+              t3browseralert {
+                value = {$plugin.tx_browser_pi1.jQuery.debugging.alerts.enable}
+              }
+              typenum_ajax = TEXT
+              typenum_ajax {
+                value = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+              }
+              typenum_csv = TEXT
+              typenum_csv {
+                value = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
+              }
+            }
+          }
+            // [STRING] Path to the jss file of the t3browser localisation. ###LANG### will be replacedwhile runtime
+          localisation = EXT:browser/res/js/jquery/plugins/jquery.t3browser/localisation.###LANG###.js
+          localisation {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+      }
+        // [STRING] Path to the jss file of the user interface (ui). All features are enabled in the default script file!
+      ui = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
+      ui {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
+      cleanup {
+        library = EXT:browser/res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
+        library {
+            // [Boolean] 0: link to the script file, 1 (default): include the script inline
+          inline = 1
+          marker < plugin.tx_browser_pi1.javascript.jquery.plugins.jstree.library.marker
+            // marker is copied by plugins.jstree.library.marker
+          marker =
+        }
+      }
+    }
+    ajax {
+        // [STRING] Path to Javascript file with ajax methods
+      file    = EXT:browser/res/js/tx_browser_pi1_ajax-0.0.5.js
+      file {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
+        // [STRING] Path to Javascript file with ajax language values
+      fileLL  = EXT:browser/res/js/tx_browser_pi1_ajax_languages.js
+      fileLL {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
+      html {
+        marker {
+            // [STRING / UPPERCASE] Name of the class in CHECKBOX, RADIOBUTTONS, SELECTBOX.
+          ajax_onchange = ONCHANGE
+        }
+      }
+        // [PAGE] page object
+      page = PAGE
+      page {
+        typeNum = 0
+        config {
+          disableAllHeaderCode  = 1
+          xhtml_cleaning        = 0
+          admPanel              = 0
+        }
+        10 = CONTENT
+        10 {
+          table=tt_content
+          select{
+              // only use current page
+            pidInList = this
+              // only use current language
+            languageField=sys_language_uid
+            andWhere.cObject = COA
+            andWhere.cObject {
+                // choose all Browser plugins...
+              10 = TEXT
+              10.value = list_type = 'browser_pi1'
+                // if an UID is provided in the querystring, choose only that plugin
+              20 = TEXT
+              20.data = GP:tx_browser_pi1|plugin
+              20.if.isTrue.data = GP:tx_browser_pi1|plugin
+              20.outerWrap = AND uid = |
+            }
+          }
+        }
+      }
+      jQuery {
+          // [PAGE] page object II
+        default = PAGE
+        default {
+          typeNum = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+          config {
+            disableAllHeaderCode  = 1
+            xhtml_cleaning        = 0
+            admPanel              = 0
+            metaCharset           = UTF-8
+          }
+          10 < styles.content.get
+        }
+        en < .default
+        en {
+          config {
+              // [Integer] Uid of the language. See record in sys_language
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_en}
+              // [Keyword] page: content_fallback, strict, ignore
+            sys_language_mode     = content_fallback
+              // [Boolean / Keyword] records: 0, 1, hideNonTranslated
+            sys_language_overlay  = 1
+            language              = en
+            locale_all            = en_GB
+            htmlTag_langKey       = en
+          }
+          10 < styles.content.get
+        }
+        de < .en
+        de {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_de}
+            language              = de
+            locale_all            = de_DE
+            htmlTag_langKey       = de
+          }
+        }
+        fr < .en
+        fr {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_fr}
+            language              = fr
+            locale_all            = fr_FR
+            htmlTag_langKey       = fr
+          }
+        }
+        it < .en
+        it {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_it}
+            language              = it
+            locale_all            = it_IT
+            htmlTag_langKey       = it
+          }
+        }
+        es < .en
+        es {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_es}
+            language              = es
+            locale_all            = es_ES
+            htmlTag_langKey       = es
+          }
+        }
+      }
+    }
+    general {
+        // [STRING] Path to Javascript file general methods
+      file = EXT:browser/res/js/tx_browser_pi1.js
+    }
+  }
+}
+  // plugin.tx_browser_pi1: javascript
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: export
+
+plugin.tx_browser_pi1 {
+  export {
+    csv {
+      page = PAGE
+      page {
+        typeNum = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
+        config {
+          disableAllHeaderCode  = 1
+          disablePrefixComment  = 1
+            // CSV has a one byte charset!
+          metaCharset           = iso-8859-15
+          xhtml_cleaning        = 0
+          admPanel              = 0
+          additionalHeaders     = Content-Type: text/csv | Content-Disposition: attachment; filename="export.csv"
+        }
+        10 = CONTENT
+        10 {
+          table=tt_content
+          select{
+              // use current language
+            languageField = sys_language_uid
+            andWhere {
+              cObject = COA
+              cObject {
+                  // choose all Browser plugins...
+                10 = TEXT
+                10 {
+                  value = list_type = 'browser_pi1'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    map < .csv
+    map {
+      page {
+        typeNum = {$plugin.tx_browser_pi1.typeNum.mapPageObj}
+        config {
+          disableAllHeaderCode  = 1
+          disablePrefixComment  = 1
+            // CSV has a one byte charset!
+          metaCharset           = iso-8859-15
+          xhtml_cleaning        = 0
+          admPanel              = 0
+          additionalHeaders     = Content-Type: text/plain
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: export
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: download
+
+plugin.tx_browser_pi1 {
+  download {
+    page = PAGE
+    page {
+      typeNum = {$plugin.tx_browser_pi1.typeNum.downloadPageObj}
+      config {
+        disableAllHeaderCode  = 1
+        disablePrefixComment  = 1
+        metaCharset           = iso-8859-15
+        xhtml_cleaning        = 0
+        admPanel              = 0
+//        additionalHeaders     = Content-Type: text/csv | Content-Disposition: attachment; filename="export.csv"
+      }
+      10 = CONTENT
+      10 {
+        table=tt_content
+        select{
+            // use current language
+          languageField = sys_language_uid
+          andWhere {
+            cObject = COA
+            cObject {
+                // choose the current Browser plugin
+              10 = TEXT
+              10 {
+                data = GP:tx_browser_pi1|plugin
+                wrap = uid=|
+              }
+            }
+          }
+        }
+      }
+    }
+    mimetypes {
+      see = http://de.selfhtml.org/diverses/mimetypen.htm
+      fileext {
+        ai    = application/postscript
+        aif   = audio/x-aiff
+        aifc  = audio/x-aiff
+        aiff  = audio/x-aiff
+        avi   = video/x-msvideo
+        bin   = application/octet-stream
+        bin   = application/x-macbinary
+        cab   = application/x-shockwave-flash
+        class = application/octet-stream
+        com   = application/octet-stream
+        css   = text/css
+        csv   = text/comma-separated-values
+        dcr   = application/x-director
+        dir   = application/x-director
+        dll   = application/octet-stream
+        doc   = application/msword
+        dot   = application/msword
+        dvi   = application/x-dvi
+        dxr   = application/x-director
+        eps   = application/postscript
+        etx   = text/x-setext
+        exe   = application/octet-stream
+        fh4   = image/x-freehand
+        fh5   = image/x-freehand
+        fhc   = image/x-freehand
+        gif   = image/gif
+        gtar  = application/x-gtar
+        gz    = application/gzip
+        hqx   = application/mac-binhex40
+        htm   = application/xhtml+xml
+        html  = application/xhtml+xml
+        ico   = image/x-icon
+        jpe   = image/jpeg
+        jpeg  = image/jpeg
+        jpg   = image/jpeg
+        js    = text/javascript
+        latex = application/x-latex
+        mid   = audio/x-midi
+        midi  = audio/x-midi
+        mov   = video/quicktime
+        movie = video/x-sgi-movie
+        mp2   = audio/x-mpeg
+        mpe   = video/mpeg
+        mpeg  = video/mpeg
+        mpg   = video/mpeg
+        pbm   = image/x-portable-bitmap
+        pdf   = application/pdf
+        pgm   = image/x-portable-graymap
+        php   = application/x-httpd-php
+        phtml = application/x-httpd-php
+        png   = image/png
+        pot   = application/mspowerpoint
+        ppm   = image/x-portable-pixmap
+        pps   = application/mspowerpoint
+        ppt   = application/mspowerpoint
+        ppz   = application/mspowerpoint
+        ps    = application/postscript
+        qt    = video/quicktime
+        ra    = audio/x-pn-realaudio
+        ram   = audio/x-pn-realaudio
+        rgb   = image/x-rgb
+        rpm   = audio/x-pn-realaudio-plugin
+        rtc   = application/rtc
+        rtf   = text/rtf
+        rtx   = text/richtext
+        sgm   = text/x-sgml
+        sgml  = text/x-sgml
+        sh    = application/x-sh
+        shar  = application/x-shar
+        shtml = application/xhtml+xml
+        spc   = text/x-speech
+        stream = audio/x-qt-stream
+        swf   = application/x-shockwave-flash
+        talk  = text/x-speech
+        tar   = application/x-tar
+        tex   = application/x-tex
+        texi  = application/x-texinfo
+        texinfo = application/x-texinfo
+        tif   = image/tiff
+        tiff  = image/tiff
+        txt   = text/plain
+        viv   = video/vnd.vivo
+        vivo  = video/vnd.vivo
+        wav   = audio/x-wav
+        wbmp  = image/vnd.wap.wbmp
+        wml   = text/vnd.wap.wml
+        wmlc  = application/vnd.wap.wmlc
+        wmls  = text/vnd.wap.wmlscript
+        wmlsc = application/vnd.wap.wmlscriptc
+        xhtml = application/xhtml+xml
+        xla   = application/msexcel
+        xls   = application/msexcel
+        xml   = application/xml
+        xml   = text/xml
+        z     = application/x-compress
+        zip   = application/zip
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: download
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: rss
+
+plugin.tx_browser_pi1 {
+  rss {
+    page = PAGE
+    page {
+      typeNum = 0
+      config {
+        disableAllHeaderCode  = 1
+        disablePrefixComment  = 1
+        xhtml_cleaning        = 0
+        admPanel              = 0
+        additionalHeaders     = Content-type:text/xml
+      }
+      10 = CONTENT
+      10 {
+        table=tt_content
+        select{
+            // use current language
+          languageField = sys_language_uid
+          andWhere {
+            cObject = COA
+            cObject {
+                // choose all Browser plugins...
+              10 = TEXT
+              10 {
+                value = list_type = 'browser_pi1'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: rss
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: autoconfig
+
+plugin.tx_browser_pi1 {
+  autoconfig {
+      // [BOOLEAN] Build relations automatically
+    relations = {$plugin.tx_browser_pi1.autoSQLrelConfig}
+    relations {
+        // [BOOLEAN] Don't use relations from foreign tables back to the local table
+      oneWayOnly                = {$plugin.tx_browser_pi1.autoSQLrelOnlyOneway}
+        //  [BOOLEAN] Use simple relations from a local table field to a foreign table. If the frontend plugin is configured, the plugin will overwrite this value!
+      simpleRelations           = 1
+      simpleRelations {
+          //  [BOOLEAN] Don't use relations from a table to itself
+        selfReference           = {$plugin.tx_browser_pi1.autoSQLrelSelfReference}
+      }
+        // [BOOLEAN] Use MM relations from the local table over an mm-table to a foreign table.  If the frontend plugin is configured, the plugin will overwrite this value!
+      mmRelations               = 1
+      TCAconfig {
+          // [BOOLEAN] Respect the TCA type for relation building
+        type = 1
+          // [CSV-STRING] Comma separated list of field types in the TCA, which are allowed for looking up relations.
+        type {
+          csvValue = select
+        }
+      }
+        // [CSV-STRING, syntax: table.field] Comma separated list of fields in the TCA, which will ignored for looking up relations.
+      #csvDontUseFields            = tt_news.l18n_parent, tt_news.l18n_diffsource, tt_news_cat.parent_category
+      csvDontUseFields          =
+        // [BOOLEAN] Use LEFT JOIN statements, if left_join is TRUE. 1 is recommended.
+      left_join                 = 1
+    }
+    autoDiscover {
+      dontDiscoverFields {
+          // [CSV-STRING] Comma separated list of fields, which shouldn't checked in the TCA
+        csvValue = uid, pid
+      }
+      items {
+          // [BOOLEAN] Detect titles automatically
+        title = {$plugin.tx_browser_pi1.autoDiscoverTitle}
+        title {
+          localTableOnly  = 1
+          oneValueOnly    = 1
+          setUploadFolder = 0
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 0
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for the title
+            csvValue = title
+          }
+        }
+          // [BOOLEAN] Detect iamges automatically
+        image = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        image {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 1
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for the image
+            csvValue = image, images
+          }
+          TCAconfig {
+              // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+                // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = group
+            }
+              // [BOOLEAN] Respect the TCA internal type for the auto-detection
+            internal_type = 1
+            internal_type {
+              csvValue = file
+            }
+              // [BOOLEAN] Respect the TCA allowed value for the auto-detection
+            allowed = 1
+            allowed {
+                // [STRING] Respect the TCA allowed value for the auto-detection
+              value = imagefile_ext
+            }
+          }
+        }
+          // [BOOLEAN] Detect the caption of an image automatically
+        imageCaption = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        imageCaption {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 0
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 0
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for the image caption
+            csvValue = caption, imagecaption
+          }
+          TCAconfig {
+              // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+                // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = text
+            }
+          }
+        }
+          // [BOOLEAN] Detect the HTML-a-tag property alt of an image automatically
+        imageAltText = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        imageAltText {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 0
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for the HTML-a-tag property alt of the image
+            csvValue = imagealttext, imageseo
+          }
+          TCAconfig {
+              // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+                // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = text
+            }
+          }
+        }
+          // [BOOLEAN] Detect the HTML-a-tag property title of an image automatically
+        imageTitleText = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        imageTitleText {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 0
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for the HTML-a-tag property title of the image
+            csvValue = imagetitletext, imageseo
+          }
+          TCAconfig {
+              // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+                // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = text
+            }
+          }
+        }
+          // [BOOLEAN] Detect documents automatically
+        document = {$plugin.tx_browser_pi1.autoDiscoverDocument}
+        document {
+          localTableOnly  = 0
+          oneValueOnly    = 0
+            // [BOOLEAN] Take the TCA path to the upload folder
+          setUploadFolder = 1
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for documents
+            csvValue = media, document, documents
+          }
+          TCAconfig {
+              // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+                // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = group
+            }
+            internal_type = 1
+            internal_type {
+                // [CSV-STRING] Respect the TCA internal type values for the auto-detection
+              csvValue = file
+            }
+          }
+        }
+          // [BOOLEAN] Detect time stamps automatically
+        timestamp = {$plugin.tx_browser_pi1.autoDiscoverTimestamp}
+        timestamp {
+          oneValueOnly   = 0
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 0
+            // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel       = 1
+          TCAlabel {
+              // [CSV-STRING] Detect fields with this labels in the TCA for time stamps
+            csvValue = datetime, datetimeend, datetimestart, starttime, endtime,
+          }
+          TCAconfig {
+              // [STRING] Respect the value of TCA eval for the auto-detection
+            eval = datetime
+          }
+        }
+      }
+    }
+      // Marker
+    marker {
+      typoScript {
+          // Replace a marker with its value. I. e. ###TT_NEWS.TITLE### becomes "Title of the news"
+        replacement = 1
+      }
+    }
+    consolidation {
+      sql {
+        rows {
+            // [BOOLEAN] Try to change non unique rows to unique rows
+          unique = 1
+          unique {
+              // [BOOLEAN] Remove foreignUid fields from the rows
+            rm_foreignUid_fields = 1
+              // [BOOLEAN] Remove values, if they don't have an unique uid, but they are the same
+            rm_nonUnique_values = 1
+          }
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: autoconfig
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: format
+
+plugin.tx_browser_pi1 {
+  format {
+      // Default output format for timestamps
+    strftime    = {$plugin.tx_browser_pi1.strftime}
+    strftime {
+        // [BOOLEAN] Change the result of the php method strftime() to ISO, if the value is in UTF-8: 1 (TRUE), 0 (FALSE). 1 is recommended
+      utf8_encode = 1
+    }
+  }
+}
+  // plugin.tx_browser_pi1: format
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: advanced
+
+plugin.tx_browser_pi1 {
+  advanced {
+    downgrade {
+      3_6_0 {
+        marker {
+          in_typoscript {
+              // [Boolean] 1: Behaviour like <= 3.6.0; 0: Behaviour from 3.6.1
+            remove_emptyMarker = 0
+          }
+        }
+      }
+    }
+    localisation {
+      realURL {
+          // [BOOLEAN] Default 1 (it is compliant with realURL). 1: Record will get the link to the record in default language. I.e record title won't be translated in the realURL path. You can switch to the record in another language. 0: Record will get the link to the translated record. I.e record title will be translated in the realURL path. You can't switch to the record in another language.
+        defaultLanguageLink = 1
+      }
+      TCA {
+        field {
+            // [string] Fields with this appendix will be used for translation. I.e. tt_news_cat.title_lang_ol
+          appendix = _lang_ol
+        }
+        value {
+            // [string] Devider for seperating language entries like de:Aufmacher|fr:Accroche or Aufmacher|Accroche
+          devider = |
+            // [Boolean] 1: lang_ol values have a lang_prefix like en:Lead Story|de:Aufmacher|fr:Accroche, 0: lang_ol values are without lang_prefix like Lead Story|Aufmacher|Accroche
+          langPrefix = 1
+        }
+      }
+    }
+    performance {
+      GLOBALS {
+          // [Boolean] Will be overriden by the flexform while runtime! True: Don't look for markers with keys of the TYPO3 array $GLOBALS like TSFE:fe_user|... False: replace it
+        dont_replace = 1
+      }
+    }
+    php {
+      multisort {
+        eval {
+          sort_numeric {
+            db {
+                // [String, CSV] Comma seperated values for any database field name, which should order by php SORT_NUMERIC
+              csv_sortNumeric = bigint, decimal, double, float, int, mediumint, smallint, timestamp, tinyint
+            }
+            tca {
+                // [String, CSV] Comma seperated values for any TCA eval value, which should order by php SORT_NUMERIC
+              csv_sortNumeric = date, datetime, datetimeend, datetimestart, double2, int, num, md5, time, timesec, year
+            }
+          }
+        }
+      }
+    }
+      // [INTEGER] Guard for recursive methods. Every loop will break after x times.
+    recursionGuard = 10000
+    security {
+      sword {
+          // [Integer] The minimum length of a word in the sword. Example: "I am searching for" becomes "searching for"
+        minLenWord = 3
+        addSlashes {
+            // [String/CSV] Comma seperated list of chars, which will get a slash in every mysql query. You don't need \x00, \n, \r, \, ', " and \x1a, because it will be processed by mysql_real_escape_string().
+          csvChars = %
+        }
+      }
+    }
+    session_manager {
+      session {
+          // [Boolean] 1 (default): enable sessions; 0: disable sessions
+        enabled = 1
+      }
+    }
+    sql {
+      orderBy {
+          // [Boolean] FALSE: There is no different handling for capitals and lower-case letters
+        caseSensitive = 0
+      }
+      devider {
+        childrenRecords = TEXT
+        childrenRecords {
+            // [String] Values of children records will be devided by ... This value will be displayed, if there is no other TypoScript configured for the current element.
+          value      = ,
+          noTrimWrap = || |
+        }
+        workflow = TEXT
+        workflow {
+            // [String] Devider for internal workflow
+          value = ;|;
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: advanced
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
+
+plugin.tx_browser_pi1 {
+
+  _CSS_DEFAULT_STYLE (
+    .tx-browser-pi1 div.azSelector,
+    .tx-browser-pi1 div.indexBrowser,
+    .tx-browser-pi1 div.modeSelector {
+      padding:.4em 0;
+      /* 111218, 3.9.6, dwildt-*/
+      /*height:1.4em;*/
+    }
+    .tx-browser-pi1 div.azSelector,
+    .tx-browser-pi1 div.indexBrowser {
+      /* 111218, 3.9.6, dwildt+*/
+      height:2em;
+    }
+    .tx-browser-pi1 ul.azSelector,
+    .tx-browser-pi1 ul.indexBrowser,
+    .tx-browser-pi1 ul.modeSelector {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size:1em;
+      height:1em;
+      background:#EEE;
+    }
+    * html .tx-browser-pi1 ul.azSelector,
+    * html .tx-browser-pi1 ul.indexBrowser,
+    * html .tx-browser-pi1 ul.modeSelector {
+      width: 100%;
+    }
+    .tx-browser-pi1 ul.azSelector li,
+    .tx-browser-pi1 ul.indexBrowser li,
+    .tx-browser-pi1 ul.modeSelector li {
+      display: block;
+      margin: 0;
+      padding: 0;
+      float: left;
+      border-right:1px solid grey;
+    }
+    .tx-browser-pi1 ul.azSelector li.last,
+    .tx-browser-pi1 ul.indexBrowser li.last,
+    .tx-browser-pi1 ul.modeSelector li.last {
+      border-right:0;
+    }
+    .tx-browser-pi1 ul.azSelector li.selected,
+    .tx-browser-pi1 ul.indexBrowser li.selected,
+    .tx-browser-pi1 ul.modeSelector li.selected {
+      background:yellow;
+    }
+    .tx-browser-pi1 .ui-tabs ul li {
+      font-size:0.75em;
+      font-weight:bold;
+    }
+    .tx-browser-pi1 .ui-tabs ul li  a {
+      padding:0.3em 0.5em 0.1em;
+    }
+    .tx-browser-pi1 .ui-tabs .without-href {
+      opacity: 0.20;
+      cursor:default;
+    }
+    .tx-browser-pi1 .ui-tabs-list {
+      padding:0.2em;
+    }
+    /* #9659 */
+    .returntolist {
+      cursor: pointer;
+    }
+    .txbrowserpi1loader {
+      background: #fff url(/typo3conf/ext/browser/res/images/browser_loader.gif) no-repeat  center ;
+      background-color: #fff;
+      opacity:.8;
+      position: relative;
+      top:0;
+      left:0;
+      width:100%;
+      height:300px;
+      margin-bottom:-300px;
+      z-index:2;
+    }
+    .loading {
+      opacity:.8;
+    }
+    .txbrowserpi1ajaxerror {
+      color: #d00;
+    }
+    /* #9659 */
+
+  )
+}
+  // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+
+plugin.tx_browser_pi1 {
+  _LOCAL_LANG {
+    default {
+      pi_list_browseresults_prev      = &#171;
+      pi_list_browseresults_first     = &#171;&#171;
+      pi_list_browseresults_next      = &#187;
+      pi_list_browseresults_last      = &#187;&#187;
+      pi_list_browseresults_displays  = %s to %s out of %s records
+      pi_list_browseresults_page      = Page
+    }
+    de {
+      pi_list_browseresults_prev      = &#171;
+      pi_list_browseresults_first     = &#171;&#171;
+      pi_list_browseresults_next      = &#187;
+      pi_list_browseresults_last      = &#187;&#187;
+      pi_list_browseresults_displays  = %s bis %s von insgesamt %s Datens&auml;tzen
+      pi_list_browseresults_page      = Seite
+    }
+  }
+}
+  // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: version
+
+plugin.tx_browser_pi1 {
+    // TypoScript version. Don't touch this value!
+  version = 4.5.4
+}
+  // plugin.tx_browser_pi1: version
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // pages: browser_ajax
+
+  // TYPO3-Browser: ajax page object II. In case of localisation: Configure the id of sys_languagein the Constant Editor. Move in this line ...jQuery.default to ...jQuery.de (i.e.)
+browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
+
+[globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}]
+    // Don't handle header of content element
+  lib.stdheader >
+[global]
+  // pages: browser_ajax
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // pages: browser_csv
+
+  // TYPO3-Browser: CSV export page object
+browser_csv < plugin.tx_browser_pi1.export.csv.page
+
+[globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.csvPageObj}]
+    // Don't wrap the content of the CSV export page object by default
+  tt_content.stdWrap >
+[global]
+  // pages: browser_csv
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // pages: browser_download
+
+
+  // TYPO3-Browser: Download page object
+browser_download < plugin.tx_browser_pi1.download.page
+
+  // TYPO3-Browser: Page object for the map category markers
+browser_map < plugin.tx_browser_pi1.export.map.page
+
+[globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.mapPageObj}]
+    // Don't wrap the content of the page object for the map category markers by default
+  tt_content.stdWrap >
+[global]
+  // pages: browser_download
