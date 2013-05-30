@@ -2487,30 +2487,24 @@ $this->pObj->dev_var_dump( $rowsOutput );
     foreach( $this->pObj->rows as $row )
     {
 $this->pObj->dev_var_dump( $row );
-        // LOOP elements
-      foreach( $row as $elements )
+        // LOOP row
+      foreach( $row as $tableField => $value )
       {
-$this->pObj->dev_var_dump( $elements );
-          // LOOP element
-        foreach( $elements as $tableField => $value )
-        {
 $this->pObj->dev_var_dump( $tableField, $value );
-          list( $table ) = explode( '.', $tableField );
-          if( $table != $tableMarker )
-          {
-            continue;
-          }
-          $children = explode( $this->catDevider, $value );
-$this->pObj->dev_var_dump( $children );
-          foreach( $children as $child )
-          {
-            $rowsOutput[$rowsCounter][$tableField] = $child;
-          }
-          $rowsCounter++;
+        list( $table ) = explode( '.', $tableField );
+        if( $table != $tableMarker )
+        {
+          continue;
         }
-          // LOOP element
+        $children = explode( $this->catDevider, $value );
+$this->pObj->dev_var_dump( $children );
+        foreach( $children as $child )
+        {
+          $rowsOutput[$rowsCounter][$tableField] = $child;
+        }
+        $rowsCounter++;
       }
-        // LOOP elements
+        // LOOP row
     }
       // LOOP rows
 $this->pObj->dev_var_dump( $rowsOutput );
