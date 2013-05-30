@@ -43,7 +43,7 @@ window.oxMap.Base = function( oxMapConfig ){
 				item = item.split('.');
 
 				if( item.length === 2 ){
-					oxMap[ item[0] ][ item[1] ]();
+					oxMap[ item[0] ][ item[1] ];
 				}
 				else{
 					oxMap[ item[0] ];
