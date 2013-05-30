@@ -212,9 +212,9 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Database Marker//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.marker.field.categoryIcon = 
   # cat=BrowserMaps - Database Marker//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.position.categoryIconLegend = 0 
+  map.marker.position.categoryIconLegend = 0 
   # cat=BrowserMaps - Database Marker//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.position.categoryIconMap = 0 
+  map.marker.position.categoryIconMap = 0 
   # cat=BrowserMaps - Database Marker//110;             type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
   map.marker.field.categoryOffsetX = 
   # cat=BrowserMaps - Database Marker//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y

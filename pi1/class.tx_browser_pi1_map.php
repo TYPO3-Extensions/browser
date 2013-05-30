@@ -229,7 +229,6 @@ class tx_browser_pi1_map
             $cObj_name = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$labelKey];
             $cObj_conf = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$labelKey . '.'];
             $img       = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-//var_dump( __METHOD__, __LINE__, $labelKey, $cObj_name, $cObj_conf, $img );
             break;
         }
           // SWITCH : Render the image
