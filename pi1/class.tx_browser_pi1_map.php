@@ -2488,6 +2488,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
     {
 $this->pObj->dev_var_dump( $row );
         // LOOP row
+      $i = 0;
       foreach( $row as $tableField => $value )
       {
 //$this->pObj->dev_var_dump( $tableField, $value );
@@ -2498,7 +2499,6 @@ $this->pObj->dev_var_dump( $row );
         }
         $children = explode( $this->catDevider, $value );
 //$this->pObj->dev_var_dump( $children );
-        $i = 1;
         foreach( $children as $child )
         {
           $uid = $rowsCounter + $i;
