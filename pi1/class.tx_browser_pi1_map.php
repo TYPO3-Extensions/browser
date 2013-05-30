@@ -1613,7 +1613,7 @@ if( $this->pObj->b_drs_todo )
 
 
   /**
- * renderMapMarkerPoints( ): Points are map markers.
+ * renderMapMarkerPoints( ): Points are map marker
  *
  * @return	array
  * @version 4.1.13
@@ -1672,6 +1672,7 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
+$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
