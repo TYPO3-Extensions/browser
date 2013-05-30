@@ -50,8 +50,6 @@ includeLibs {
   //
   // plugin.tx_browser_pi1: templating
 
-plugin.tx_browser_pi1 >
-plugin.tx_browser_pi1 = USER
 plugin.tx_browser_pi1 {
     // [STRING] Path to the HTML template file
   template {
