@@ -1189,19 +1189,18 @@ if( $this->pObj->b_drs_todo )
     }
       // FOR all coordinates
 
-      // #47632
-    $version = $this->confMap['enabled.']['version'];
+      // #47632, #i0007, dwildt, 10+
     switch( true )
     {
-      case( $version == '1.3' ) :
-        $centerCoor = $this->renderMapAutoCenterCoorVers13( $objLibMap );
-        break;
-      case( $version == '1.2' ) :
-      default :
+      case( $this->pObj->typoscriptVersion <= 4005004 ):
         $centerCoor = $this->renderMapAutoCenterCoorVers12( $objLibMap );
         break;
+      case( $this->pObj->typoscriptVersion <= 4005007 ):
+      default:
+        $centerCoor = $this->renderMapAutoCenterCoorVers13( $objLibMap );
+        break;
     }
-    unset( $version );
+      // #47632, #i0007, dwildt, 10+
 
       // DRS
     if( $this->pObj->b_drs_map )
