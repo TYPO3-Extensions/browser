@@ -58,6 +58,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       // German
       // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/',                     'Browser');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/',     'Browser <= 4.5.4');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/',     'Browser <= 3.9.0');
         // Plugin 5
       t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/',                 '+Browser Kalender');
@@ -76,6 +77,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       // English
       // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/',                     'Browser');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/',     'Browser <= 4.5.4');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/',     'Browser <= 3.9.0');
         // Plugin 5
       t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/',                 '+Browser Calendar');

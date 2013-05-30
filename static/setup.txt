@@ -25,6 +25,7 @@
   // plugin.tx_browser_pi1: advanced
   // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
   // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+  // plugin.tx_browser_pi1: version
   // pages: browser_ajax
   // pages: browser_csv
   // pages: browser_download
@@ -634,17 +635,21 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in pixel
             y = 0
           }
-            // Labels of category fields
+            // marker, path
           fields = 
           fields {
-              // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
-            category = {$plugin.tx_browser_pi1.map.marker.field.category}
-              // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
-            categoryIcon = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
-              // [STRING] table.field with the x offset of the category icons. Example: tx_org_headquarterscat.icon_offset_x
-            categoryOffsetX = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetX}
-              // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
-            categoryOffsetY = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetY}
+              // category, categoryIcon, categoryOffsetX, categoryOffsetY. #47631
+            marker =
+            marker {
+                // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
+              category = {$plugin.tx_browser_pi1.map.marker.field.category}
+                // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
+              categoryIcon = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
+                // [STRING] table.field with the x offset of the category icons. Example: tx_org_headquarterscat.icon_offset_x
+              categoryOffsetX = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetX}
+                // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
+              categoryOffsetY = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetY}
+            }
           }
             // [STRING/HTML] Draft for an input field of the category form
           form_input = TEXT
@@ -4943,6 +4948,18 @@ plugin.tx_browser_pi1 {
   }
 }
   // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: version
+
+plugin.tx_browser_pi1 {
+    // TypoScript version. Don't touch this value!
+  version = 4.5.7
+}
+  // plugin.tx_browser_pi1: version
 
 
 

@@ -176,7 +176,10 @@ class tx_browser_pi1_map
   private function categoriesFormInputs( )
   {
       // Get the field name of the field with the category icon
-    $catIconsField = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+      // #47631, dwildt, 1-
+    //$catIconsField = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+      // #47631, dwildt, 1+
+    $catIconsField = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
 
       // Default space in HTML code
     $tab = '                    ';
@@ -258,10 +261,16 @@ class tx_browser_pi1_map
       // Local array for category icons
     $catIcons = null;
 
+      // #47631, dwildt, 4-
+//      // Get the field name of the field with the category label
+//    $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['category'];
+//      // Get the field name of the field with the category icon
+//    $fieldForIcon = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+      // #47631, dwildt, 4+
       // Get the field name of the field with the category label
-    $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['category'];
+    $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
       // Get the field name of the field with the category icon
-    $fieldForIcon = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+    $fieldForIcon = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
 
       // Get categories from the rows
     $categoryLabels = array( );
@@ -1616,11 +1625,18 @@ if( $this->pObj->b_drs_todo )
 
       // FOREACH row
     $mapMarkers = null;
-    $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
-    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+      // #47631, dwildt, 5-
+//    $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+//    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+//      // #42125, 121031, dwildt, 2+
+//    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+//    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+      // #47631, dwildt, 5+
+    $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
       // #42125, 121031, dwildt, 2+
-    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
-    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category

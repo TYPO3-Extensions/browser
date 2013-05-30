@@ -86,7 +86,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * 1693:     private function init_classVars( )
  *
  *              SECTION: Helper
- * 1934:     private function get_typo3version( )
+ * 1934:     private function init_typo3version( )
  * 1976:     private function init_accessByIP( )
  *
  *              SECTION: Time tracking
@@ -109,6 +109,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
     // [INTEGER] TYPO3 version. Sample: 4.7.7 -> 4007007
   var $typo3Version = null;
+  var $typoscriptVersion = null;
     // TYPO3
     
     ////////////////////////////////////////////////////////////////////
@@ -348,6 +349,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $b_drs_localisation = false;
   var $b_drs_map          = false;
   var $b_drs_marker       = false;
+  var $b_drs_navi         = false;
   var $b_drs_perform      = false;
   var $b_drs_realurl      = false;
   var $b_drs_search       = false;
@@ -414,28 +416,32 @@ class tx_browser_pi1 extends tslib_pibase {
  * @param    string        $content: The content of the PlugIn
  * @param    array        $conf: The PlugIn Configuration
  * @return    string        The content that should be displayed on the website
- * @version 4.4.0
+ * @version 4.5.7
  * @since   0.0.1
  */
   public function main( $content, $conf )
   {
+      // 130530, dwildt, -
+//      // Globalise TypoScript configuration
+//    $this->conf = $conf;
+//      // Set default values for piVars[]
+//    $this->pi_setPiVarDefaults();
+//      // Init localisation
+//    $this->pi_loadLL();
+//      // Set the global $bool_typo3_43
+//    $this->init_typo3version( );
+//      // Init timetracking, set the starttime
+//    $this->timeTracking_init( );
+//      // Get the values from the localconf.php file
+//    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
+//      // Init DRS - Development Reporting System
+//    $this->init_drs();
+//      // Init current IP
+//    $this->init_accessByIP( );
+      // 130530, dwildt, -
 
-      // Globalise TypoScript configuration
-    $this->conf = $conf;
-      // Set default values for piVars[]
-    $this->pi_setPiVarDefaults();
-      // Init localisation
-    $this->pi_loadLL();
-      // Set the global $bool_typo3_43
-    $this->get_typo3version( );
-      // Init timetracking, set the starttime
-    $this->timeTracking_init( );
-      // Get the values from the localconf.php file
-    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
-      // Init DRS - Development Reporting System
-    $this->init_drs();
-      // Init current IP
-    $this->init_accessByIP( );
+      // 130530, dwildt, 1+
+    $this->init( $conf );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -1322,345 +1328,6 @@ class tx_browser_pi1 extends tslib_pibase {
   }
 
 
- /**
-  * Set the booleans for Warnings, Errors and DRS - Development Reporting System
-  *
-  * @return    void
-  * @version  3.9.14
-  * @since    2.0.0
-  */
-  public function init_drs()
-  {
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Prepaire the developer contact prompt
-
-    $this->developer_contact =
-        'company: '.  $this->str_developer_company.'<br />'.
-        'name: '.     $this->str_developer_name   .'<br />'.
-        'web: <a href="'.$this->str_developer_web.'" title="Website" target="_blank">'.$this->str_developer_web.'</a><br />'.
-        'languages: '.$this->str_developer_lang.'<br /><br />'.
-        'TYPO3 Repository:<br /><a href="'.$this->str_developer_typo3ext.'" title="'.$this->extKey.' online" target="_blank">'.
-    $this->str_developer_typo3ext.'</a>';
-    $i_len = intval($this->conf['drs.']['sql.']['result.']['max_len']);
-    if ($i_len > 0)
-    {
-      $this->i_drs_max_sql_result_len = $i_len;
-    }
-      // Prepaire the developer contact prompt
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // If a plugin disabled the DRS ...
-
-    $this->b_drs_all          = false;
-    $this->b_drs_error        = false;
-    $this->b_drs_warn         = false;
-    $this->b_drs_info         = false;
-    $this->b_drs_cal          = false;
-    $this->b_drs_cObjData     = false;
-    $this->b_drs_devTodo      = false;
-    $this->b_drs_discover     = false;
-    $this->b_drs_download     = false;
-    $this->b_drs_export       = false;
-    $this->b_drs_filter       = false;
-    $this->b_drs_flexform     = false;
-    $this->b_drs_hooks        = false;
-    $this->b_drs_javascript   = false;
-    $this->b_drs_localisation = false;
-    $this->b_drs_map          = false;
-    $this->b_drs_marker       = false;
-    $this->b_drs_navi         = false;
-    $this->b_drs_perform      = false;
-    $this->b_drs_realurl      = false;
-    $this->b_drs_search       = false;
-    $this->b_drs_seo          = false;
-    $this->b_drs_session      = false;
-    $this->b_drs_socialmedia  = false;
-    $this->b_drs_sql          = false;
-    $this->b_drs_session      = false;
-    $this->b_drs_statistics   = false;
-    $this->b_drs_tca          = false;
-    $this->b_drs_templating   = false;
-    $this->b_drs_tsUpdate     = false;
-    $this->b_drs_ttc          = false;
-      // If a plugin disabled the DRS ...
-
-      
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Set the DRS mode
-
-    if( $this->arr_extConf['drs_mode'] == 'All' )
-    {
-      $this->b_drs_all          = true;
-      $this->b_drs_error        = true;
-      $this->b_drs_warn         = true;
-      $this->b_drs_info         = true;
-      $this->b_drs_cal          = true;
-      $this->b_drs_cObjData     = true;
-      $this->b_drs_devTodo      = true;
-      $this->b_drs_discover     = true;
-      $this->b_drs_download     = true;
-      $this->b_drs_export       = true;
-      $this->b_drs_filter       = true;
-      $this->b_drs_flexform     = true;
-      $this->b_drs_hooks        = true;
-      $this->b_drs_javascript   = true;
-      $this->b_drs_localisation = true;
-      $this->b_drs_map          = true;
-      $this->b_drs_marker       = true;
-      $this->b_drs_navi         = true;
-      $this->b_drs_perform      = true;
-      $this->b_drs_realurl      = true;
-      $this->b_drs_search       = true;
-      $this->b_drs_seo          = true;
-      $this->b_drs_session      = true;
-      $this->b_drs_socialmedia  = true;
-      $this->b_drs_sql          = true;
-      $this->b_drs_session      = true;
-      $this->b_drs_statistics   = true;
-      $this->b_drs_tca          = true;
-      $this->b_drs_templating   = true;
-      $this->b_drs_tsUpdate     = true;
-      $this->b_drs_ttc          = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Auto Discover development')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_discover   = true;
-      $this->b_drs_sql        = true;
-      $this->b_drs_tca        = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'BrowserMaps')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_map        = true;
-//      $this->b_drs_perform    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Calendar')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_cal        = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if( $this->arr_extConf['drs_mode'] == 'cObj->data' )
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_cObjData   = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Download')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_download   = true;
-      $this->b_drs_localisation  = true;
-      $this->b_drs_statistics = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Export')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_export     = true;
-        // #33336, 130529, dwildt, 1+
-      $this->b_drs_filter     = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Filter and Category Menu')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_cObjData   = true;
-      $this->b_drs_devTodo    = true;
-      $this->b_drs_filter     = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Flexform')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_flexform   = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Hooks')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_hooks      = true;
-      $this->b_drs_perform    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Javascript')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_javascript = true;
-      $this->b_drs_perform    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Localisation')
-    {
-      $this->b_drs_error        = true;
-      $this->b_drs_warn         = true;
-      $this->b_drs_info         = true;
-      $this->b_drs_localisation = true;
-      $this->b_drs_perform      = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Marker')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_marker     = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Navigation')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_navi       = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Performance')
-    {
-      $this->b_drs_perform    = true;
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Realurl')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_realurl    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Search')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_search     = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'SEO (Search Engine Optimization)')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_seo        = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Session Management')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_session    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Social media')
-    {
-      $this->b_drs_error        = true;
-      $this->b_drs_warn         = true;
-      $this->b_drs_info         = true;
-      $this->b_drs_socialmedia  = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System: Social media.', $this->extKey, 0);
-    }
-    if( $this->arr_extConf['drs_mode'] == 'SQL development' )
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      //$this->b_drs_perform    = true;
-      $this->b_drs_sql        = true;
-      //$this->b_drs_tca        = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if( $this->arr_extConf['drs_mode'] == 'Statistics' )
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_statistics = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Templating')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_marker     = true;
-      $this->b_drs_perform    = true;
-      $this->b_drs_templating = true;
-      $this->b_drs_ttc        = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Typoscript Template Container')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_marker     = true;
-      $this->b_drs_perform    = true;
-      $this->b_drs_templating = true;
-      $this->b_drs_ttc        = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Typoscript Update Checker')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_tsUpdate   = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if( $this->arr_extConf['drs_mode'] == ':TODO: for Development' )
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_devTodo    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if( $this->arr_extConf['drs_mode'] == 'Warnings and errors' )
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-      // Set the DRS mode
-
-  }
-
-
 
 
 
@@ -1914,12 +1581,89 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+  /***********************************************
+   *
+   * Init
+   *
+   **********************************************/
 
+  /**
+ * init( )
+ *
+ * @param    array        $conf: The PlugIn Configuration
+ * @return    void
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function init( $conf )
+  {
+      // Globalise TypoScript configuration
+    $this->conf = $conf;
+   
+      // Set default values for piVars[]
+    $this->pi_setPiVarDefaults( );
+    
+      // Init localisation
+    $this->pi_loadLL( );
+    
+      // Set the global $bool_typo3_43
+    $this->init_typo3version( );
+    
+      // Init timetracking, set the starttime
+    $this->timeTracking_init( );
+    
+      // Get the values from the localconf.php file
+    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
+    
+      // Init DRS - Development Reporting System
+    $this->init_drs( );
+    
+      // Init TypoScript version
+    $this->init_typoscriptVersion( );
+    
+      // Init current IP
+    $this->init_accessByIP( );
+  }
 
+  /**
+ * init_accessByIP( ):  Set the global $bool_accessByIP.
+ *
+ * @return    void
+ * @version 3.9.8
+ * @since   2.0.0
+ */
+  private function init_accessByIP( )
+  {
+      // No access by default
+    $this->bool_accessByIP = false;
 
+      // Get list with allowed IPs (< version 4.0)
+    $this->str_developer_csvIp = $this->arr_extConf['updateWizardAllowedIPs'];
+      // Get list with allowed IPs (>= version 4.0)
+    $csvIP      = $this->arr_extConf['updateWizardAllowedIPs'];
+    $currentIP  = t3lib_div :: getIndpEnv( 'REMOTE_ADDR' );
 
+      // Current IP is an element in the list
+    $pos = strpos($csvIP, $currentIP );
+    if( ! ( $pos === false ) )
+    {
+      $this->bool_accessByIP = true;
+    }
+      // Current IP is an element in the list
 
+      // RETURN no DRS prompt
+    if( ! $this->b_drs_all )
+    {
+      return;
+    }
+      // RETURN no DRS prompt
 
+      // DRS prompt
+    $prompt = $currentIP . ' is an element of ' . $csvIP;
+    t3lib_div::devLog('[INFO/ALL] ' . $prompt, $this->extKey, 0 );
+      // DRS prompt
+  }
+  
 /**
  * init_classVars( ): Set variables in the helper classes.
  *                    Start a script on some helper classes.
@@ -2269,34 +2013,388 @@ class tx_browser_pi1 extends tslib_pibase {
       // class.tx_browser_pi1_viewlist.php
   }
 
+ /**
+  * Set the booleans for Warnings, Errors and DRS - Development Reporting System
+  *
+  * @return    void
+  * @version  3.9.14
+  * @since    2.0.0
+  */
+  public function init_drs()
+  {
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Prepaire the developer contact prompt
+
+    $this->developer_contact =
+        'company: '.  $this->str_developer_company.'<br />'.
+        'name: '.     $this->str_developer_name   .'<br />'.
+        'web: <a href="'.$this->str_developer_web.'" title="Website" target="_blank">'.$this->str_developer_web.'</a><br />'.
+        'languages: '.$this->str_developer_lang.'<br /><br />'.
+        'TYPO3 Repository:<br /><a href="'.$this->str_developer_typo3ext.'" title="'.$this->extKey.' online" target="_blank">'.
+    $this->str_developer_typo3ext.'</a>';
+    $i_len = intval($this->conf['drs.']['sql.']['result.']['max_len']);
+    if ($i_len > 0)
+    {
+      $this->i_drs_max_sql_result_len = $i_len;
+    }
+      // Prepaire the developer contact prompt
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // If a plugin disabled the DRS ...
 
+    $this->b_drs_all          = false;
+    $this->b_drs_error        = false;
+    $this->b_drs_warn         = false;
+    $this->b_drs_info         = false;
+    $this->b_drs_cal          = false;
+    $this->b_drs_cObjData     = false;
+    $this->b_drs_devTodo      = false;
+    $this->b_drs_discover     = false;
+    $this->b_drs_download     = false;
+    $this->b_drs_export       = false;
+    $this->b_drs_filter       = false;
+    $this->b_drs_flexform     = false;
+    $this->b_drs_hooks        = false;
+    $this->b_drs_javascript   = false;
+    $this->b_drs_localisation = false;
+    $this->b_drs_map          = false;
+    $this->b_drs_marker       = false;
+    $this->b_drs_navi         = false;
+    $this->b_drs_perform      = false;
+    $this->b_drs_realurl      = false;
+    $this->b_drs_search       = false;
+    $this->b_drs_seo          = false;
+    $this->b_drs_session      = false;
+    $this->b_drs_socialmedia  = false;
+    $this->b_drs_sql          = false;
+    $this->b_drs_session      = false;
+    $this->b_drs_statistics   = false;
+    $this->b_drs_tca          = false;
+    $this->b_drs_templating   = false;
+    $this->b_drs_tsUpdate     = false;
+    $this->b_drs_ttc          = false;
+      // If a plugin disabled the DRS ...
 
+      
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set the DRS mode
 
+    if( $this->arr_extConf['drs_mode'] == 'All' )
+    {
+      $this->b_drs_all          = true;
+      $this->b_drs_error        = true;
+      $this->b_drs_warn         = true;
+      $this->b_drs_info         = true;
+      $this->b_drs_cal          = true;
+      $this->b_drs_cObjData     = true;
+      $this->b_drs_devTodo      = true;
+      $this->b_drs_discover     = true;
+      $this->b_drs_download     = true;
+      $this->b_drs_export       = true;
+      $this->b_drs_filter       = true;
+      $this->b_drs_flexform     = true;
+      $this->b_drs_hooks        = true;
+      $this->b_drs_javascript   = true;
+      $this->b_drs_localisation = true;
+      $this->b_drs_map          = true;
+      $this->b_drs_marker       = true;
+      $this->b_drs_navi         = true;
+      $this->b_drs_perform      = true;
+      $this->b_drs_realurl      = true;
+      $this->b_drs_search       = true;
+      $this->b_drs_seo          = true;
+      $this->b_drs_session      = true;
+      $this->b_drs_socialmedia  = true;
+      $this->b_drs_sql          = true;
+      $this->b_drs_session      = true;
+      $this->b_drs_statistics   = true;
+      $this->b_drs_tca          = true;
+      $this->b_drs_templating   = true;
+      $this->b_drs_tsUpdate     = true;
+      $this->b_drs_ttc          = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Auto Discover development')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_discover   = true;
+      $this->b_drs_sql        = true;
+      $this->b_drs_tca        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'BrowserMaps')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_map        = true;
+//      $this->b_drs_perform    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Calendar')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_cal        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if( $this->arr_extConf['drs_mode'] == 'cObj->data' )
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_cObjData   = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Download')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_download   = true;
+      $this->b_drs_localisation  = true;
+      $this->b_drs_statistics = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Export')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_export     = true;
+        // #33336, 130529, dwildt, 1+
+      $this->b_drs_filter     = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Filter and Category Menu')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_cObjData   = true;
+      $this->b_drs_devTodo    = true;
+      $this->b_drs_filter     = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Flexform')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_flexform   = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Hooks')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_hooks      = true;
+      $this->b_drs_perform    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Javascript')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_javascript = true;
+      $this->b_drs_perform    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Localisation')
+    {
+      $this->b_drs_error        = true;
+      $this->b_drs_warn         = true;
+      $this->b_drs_info         = true;
+      $this->b_drs_localisation = true;
+      $this->b_drs_perform      = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Marker')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_marker     = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Navigation')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_navi       = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Performance')
+    {
+      $this->b_drs_perform    = true;
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Realurl')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_realurl    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Search')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_search     = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'SEO (Search Engine Optimization)')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_seo        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Session Management')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_session    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Social media')
+    {
+      $this->b_drs_error        = true;
+      $this->b_drs_warn         = true;
+      $this->b_drs_info         = true;
+      $this->b_drs_socialmedia  = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System: Social media.', $this->extKey, 0);
+    }
+    if( $this->arr_extConf['drs_mode'] == 'SQL development' )
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      //$this->b_drs_perform    = true;
+      $this->b_drs_sql        = true;
+      //$this->b_drs_tca        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if( $this->arr_extConf['drs_mode'] == 'Statistics' )
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_statistics = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Templating')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_marker     = true;
+      $this->b_drs_perform    = true;
+      $this->b_drs_templating = true;
+      $this->b_drs_ttc        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Typoscript Template Container')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_marker     = true;
+      $this->b_drs_perform    = true;
+      $this->b_drs_templating = true;
+      $this->b_drs_ttc        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Typoscript Update Checker')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_tsUpdate   = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if( $this->arr_extConf['drs_mode'] == ':TODO: for Development' )
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_devTodo    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if( $this->arr_extConf['drs_mode'] == 'Warnings and errors' )
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+      // Set the DRS mode
 
-  /***********************************************
-   *
-   * Helper
-   *
-   **********************************************/
-
-
+  }
 
 /**
- * get_typo3version( ): Get the current TYPO3 version, move it to an integer
+ * init_typoscriptVersion( ):
+ *
+ * @return    void
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function init_typoscriptVersion( )
+  {
+      // RETURN : typoscriptVersion is set
+    if( $this->typoscriptVersion !== null )
+    {
+      return;
+    }
+      // RETURN : typoscriptVersion is set
+    
+      // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+    list( $main, $sub, $bugfix ) = explode( '.', $this->conf['version'] );
+    $version = ( ( int ) $main ) * 1000000;
+    $version = $version + ( ( int ) $sub ) * 1000;
+    $version = $version + ( ( int ) $bugfix ) * 1;
+    $this->typoscriptVersion = $version;
+      // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+    if( $this->b_drs_info ) 
+    {
+      $prompt = 'TypoScript version is ' . $this->conf['version'] . ' (internal ' . $version . ')';
+      t3lib_div::devLog('[INFO/TYPOSCRIPT] ' . $prompt, $this->extKey, 0 );
+    }
+
+  }
+
+/**
+ * init_typo3version( ): Get the current TYPO3 version, move it to an integer
  *                      and set the global $bool_typo3_43
  *                      This method is independent from
  *                        * t3lib_div::int_from_ver (upto 4.7)
  *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
  *
  * @return    void
- * @version 4.2.0
+ * @version 4.5.7
  * @since   2.0.0
  */
-  private function get_typo3version( )
+  private function init_typo3version( )
   {
       // #43108, 121212, dwildt, +
       // RETURN : typo3Version is set
@@ -2343,86 +2441,8 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->bool_typo3_43 = false;
     }
       // Set the global $bool_typo3_43
-      // #43108, 121212, dwildt, +
-    
-//      // Get the current TYPO3 version
-//    $str_version = TYPO3_version;
-//
-//      // Set default value
-//    if( ! $str_version )
-//    {
-//      $str_version = '4.2.9';
-//    }
-//      // Set default value
-//
-//      // Move version to an integer
-//    $int_version = t3lib_div::int_from_ver( $str_version );
-//    $this->typo3Version = $int_version;
-//
-//      // Set the global $bool_typo3_43
-//    if( $int_version >= 4003000 )
-//    {
-//      $this->bool_typo3_43 = true;
-//    }
-//    if( $int_version < 4003000 )
-//    {
-//      $this->bool_typo3_43 = false;
-//    }
-//      // Set the global $bool_typo3_43
+      // #43108, 121212, dwildt, +    
   }
-
-
-
-
-
-
-
-
-
-  /**
- * init_accessByIP( ):  Set the global $bool_accessByIP.
- *
- * @return    void
- * @version 3.9.8
- * @since   2.0.0
- */
-  private function init_accessByIP( )
-  {
-      // No access by default
-    $this->bool_accessByIP = false;
-
-      // Get list with allowed IPs (< version 4.0)
-    $this->str_developer_csvIp = $this->arr_extConf['updateWizardAllowedIPs'];
-      // Get list with allowed IPs (>= version 4.0)
-    $csvIP      = $this->arr_extConf['updateWizardAllowedIPs'];
-    $currentIP  = t3lib_div :: getIndpEnv( 'REMOTE_ADDR' );
-
-      // Current IP is an element in the list
-    $pos = strpos($csvIP, $currentIP );
-    if( ! ( $pos === false ) )
-    {
-      $this->bool_accessByIP = true;
-    }
-      // Current IP is an element in the list
-
-      // RETURN no DRS prompt
-    if( ! $this->b_drs_all )
-    {
-      return;
-    }
-      // RETURN no DRS prompt
-
-      // DRS prompt
-    $prompt = $currentIP . ' is an element of ' . $csvIP;
-    t3lib_div::devLog('[INFO/ALL] ' . $prompt, $this->extKey, 0 );
-      // DRS prompt
-  }
-
-
-
-
-
-
 
 
 
@@ -2431,14 +2451,6 @@ class tx_browser_pi1 extends tslib_pibase {
    * Time tracking
    *
    **********************************************/
-
-
-
-
-
-
-
-
 
   /**
  * timeTracking_init( ):  Init the timetracking object.
