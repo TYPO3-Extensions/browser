@@ -2486,7 +2486,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
     $rowsCounter = 0;
     foreach( $this->pObj->rows as $row )
     {
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
         // LOOP row
       $fieldCounter = 0;
       foreach( $row as $tableField => $value )
@@ -2501,8 +2501,8 @@ $this->pObj->dev_var_dump( $row );
         $childCounter = 0;
         foreach( $children as $child )
         {
-          $rowsOutput[ $rowsCounter ][ $fieldCounter ][ $childCounter ][ $tableField ] = $child;
-$this->pObj->dev_var_dump( $rowsCounter, $fieldCounter, $childCounter, $tableField, $child );
+          $rowsOutput[ $rowsCounter ][ $childCounter ][ $fieldCounter ][ $tableField ] = $child;
+//$this->pObj->dev_var_dump( $rowsCounter, $fieldCounter, $childCounter, $tableField, $child );
           $childCounter++;
         }
         $fieldCounter++;
