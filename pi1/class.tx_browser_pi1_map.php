@@ -2498,9 +2498,11 @@ $this->pObj->dev_var_dump( $row );
         }
         $children = explode( $this->catDevider, $value );
 //$this->pObj->dev_var_dump( $children );
+        $i = 0;
         foreach( $children as $child )
         {
-          $rowsOutput[$rowsCounter][$tableField] = $child;
+          $rowsOutput[$rowsCounter][$i][$tableField] = $child;
+          $i++;
         }
       }
         // LOOP row
