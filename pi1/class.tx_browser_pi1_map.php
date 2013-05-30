@@ -2480,6 +2480,36 @@ $this->pObj->dev_var_dump( $rowsOutput );
   private function renderMapRouteMarkerGetRowsMarker( $tableMarker )
   {
 $this->pObj->dev_var_dump( $this->pObj->rows, $tableMarker );
+
+      // LOOP rows
+    $rowsCounter = 0;
+    foreach( $this->pObj->rows as $row )
+    {
+        // LOOP elements
+      foreach( $row as $elements )
+      {
+          // LOOP element
+        foreach( $elements as $tableField => $value )
+        {
+          list( $table ) = explode( '.', $tableField );
+          if( ! ( $table != $tableMarker ) )
+          {
+            continue;
+          }
+          $children = explode( $this->catDevider, $value );
+          foreach( $children as $child )
+          {
+            $rowsOutput[$rowsCounter][$tableField] = $child;
+          }
+          $rowsCounter++;
+        }
+          // LOOP element
+      }
+        // LOOP elements
+    }
+      // LOOP rows
+$this->pObj->dev_var_dump( $rowsOutput );
+
   }
 
 /**
