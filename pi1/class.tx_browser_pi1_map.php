@@ -2483,12 +2483,12 @@ $this->pObj->dev_var_dump( $rowsOutput );
 //$this->pObj->dev_var_dump( $this->pObj->rows, $tableMarker );
 
       // LOOP rows
-    $rowsCounter = 0;
+    $rowsCounter = 100;
     foreach( $this->pObj->rows as $row )
     {
 //$this->pObj->dev_var_dump( $row );
         // LOOP row
-      $fieldCounter = 0;
+      $childCounter = 0;
       foreach( $row as $tableField => $value )
       {
 //$this->pObj->dev_var_dump( $tableField, $value );
@@ -2498,16 +2498,14 @@ $this->pObj->dev_var_dump( $rowsOutput );
           continue;
         }
         $children = explode( $this->catDevider, $value );
-        $childCounter = 0;
         foreach( $children as $child )
         {
           $rowsOutput[ $rowsCounter ][ $childCounter ][ $tableField ] = $child;
-//$this->pObj->dev_var_dump( $rowsCounter, $fieldCounter, $childCounter, $tableField, $child );
           $childCounter++;
         }
       }
         // LOOP row
-      $rowsCounter++;
+      $rowsCounter = $rowsCounter + 100;
     }
       // LOOP rows
 $this->pObj->dev_var_dump( $rowsOutput );
