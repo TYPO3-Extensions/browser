@@ -1,3 +1,4 @@
+plugin.tx_browser_pi1 >
 plugin.tx_browser_pi1 {
 
   # cat=Browser - Download Module/enable/100;   type=boolean;   label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
