@@ -488,10 +488,10 @@ if( $this->pObj->b_drs_todo )
 
       if( $this->pObj->b_drs_map )
       {
-        if( empty ( $value ) )
+        if( $value === null )
         {
-          $prompt = $key . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+          $prompt = $key . ' is null. Maybe this is an error!';
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         }
         else
         {
