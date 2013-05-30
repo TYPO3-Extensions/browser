@@ -645,6 +645,14 @@ plugin.tx_browser_pi1 {
               categoryOffsetX = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetX}
                 // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
               categoryOffsetY = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetY}
+                // [STRING] table.field with the description. Example: tx_org_headquarters.title
+              description = {$plugin.tx_browser_pi1.map.marker.field.description}
+                // [STRING] table.field with the latitude labels. Example: tx_org_headquarters.mail_lat
+              latitude = {$plugin.tx_browser_pi1.map.marker.field.latitude}
+                // [STRING] table.field with the linktoSingle labels. Example: tx_org_headquarters.uid
+              linktoSingle = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
+                // [STRING] table.field with the longitude labels. Example: tx_org_headquarters.mail_lon
+              longitude = {$plugin.tx_browser_pi1.map.marker.field.longitude}
             }
           }
             // [STRING/HTML] Draft for an input field of the category form
