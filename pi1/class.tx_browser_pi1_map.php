@@ -2333,6 +2333,15 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $rowsOutput = array( );
     foreach( $rowsInput as $elements )
     {
+      foreach( $elements as $key => $value )
+      {
+        list( $table ) = explode( '.', $key );
+        if( ! ( $table == $tableMarker ) )
+        {
+          continue;
+        }
+        $rowsOutput[$countRow][$key] = $value; 
+      }
       $rowsOutput[$countRow][$tableMarker]      = $tableMarker; 
       $rowsOutput[$countRow][$catField]         = $elements[$catField]; 
       $rowsOutput[$countRow][$catIconsField]    = $elements[$catIconsField]; 
