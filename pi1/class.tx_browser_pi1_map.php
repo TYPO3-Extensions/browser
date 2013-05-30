@@ -2336,26 +2336,37 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRouteMarkerEachRelation( )
   {
-    $relations  = $this->renderMapRouteMarkerGetRelations( );
-$this->pObj->dev_var_dump( $relations );
+    // Example
+    // $relation[0]['MARKER:tx_route_path->tx_route_marker->tx_route_marker_cat->listOf.uid'] = '2.3.10, ;|;2.3.9, ;|;2.3.8, ;|;2.4.10, ;|;2.4.8, ;|;2.4.7, ;|;2.5.10, ;|;2.5.8';
 
+      // Get rows with key with a MARKER prefix
+    $relations  = $this->renderMapRouteMarkerGetRelations( );
+
+      // Get the key of a relation
     $markerTables = key( $relations[0] );
-$this->pObj->dev_var_dump( $markerTables );
+    
+      // Get the tables path, marker and markerCat
     list( $marker, $tables ) = explode( ':', $markerTables );
-$this->pObj->dev_var_dump( $tables );
     unset( $marker );
     list( $tablePath, $tableMarker, $tableMarkerCat ) = explode( '->', $tables );
+
 $this->pObj->dev_var_dump( $tablePath, $tableMarker, $tableMarkerCat );
+    
+      // LOOP relations
+    foreach( $relations as $relation )
+    {
+        // LOOP relation      
+      foreach( $relation as $tablePathMarkerCat )
+      {
+        $arrTablePathMarkerCat = explode( $this->catDevider, $tablePathMarkerCat );
+$this->pObj->dev_var_dump( $arrTablePathMarkerCat );
+      }
+        // LOOP relation      
+    }
     
     return;
     
-    foreach( $relations as $relation )
-    {
-      foreach( $relation as $key => $children )
-      {
-
-      }
-    }
+      // LOOP relations
     $rowsInput = $this->pObj->rows;
 
     $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
