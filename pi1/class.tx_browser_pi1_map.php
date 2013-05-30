@@ -2347,7 +2347,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRela
 //          continue;
 //        }
 //        $rowsOutput[$countRow][$key] = $value; 
-      }
+//      }
       $rowsOutput[$countRow][$catField]         = $elements[$catField]; 
       $rowsOutput[$countRow][$catIconsField]    = $elements[$catIconsField]; 
       $rowsOutput[$countRow][$catOffsetXField]  = $elements[$catOffsetXField]; 
