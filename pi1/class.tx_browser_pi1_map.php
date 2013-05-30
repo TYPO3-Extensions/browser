@@ -2502,9 +2502,9 @@ $this->pObj->dev_var_dump( $rowsOutput );
         {
           $rowsOutput[$rowsCounter][$tableField] = $child;
         }
+        $rowsCounter++;
       }
         // LOOP row
-      $rowsCounter++;
     }
       // LOOP rows
 $this->pObj->dev_var_dump( $rowsOutput );
