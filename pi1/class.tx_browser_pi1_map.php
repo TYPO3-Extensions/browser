@@ -2492,7 +2492,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows, $tableMarker );
         foreach( $elements as $tableField => $value )
         {
           list( $table ) = explode( '.', $tableField );
-          if( ! ( $table != $tableMarker ) )
+          if( $table != $tableMarker )
           {
             continue;
           }
