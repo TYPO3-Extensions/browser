@@ -2322,10 +2322,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
     $rowsInput = $this->pObj->rows;
 
-    $linktoSingle     = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
-    $latitude         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['latitude'];
-    $longitude        = $this->confMap['configuration.']['categories.']['fields.']['marker.']['longitude'];
-    $description      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['description'];
+    $tableMarker      = $this->confMap['configuration.']['route.']['tables.']['marker'];
     $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
     $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
     $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
@@ -2336,10 +2333,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $rowsOutput = array( );
     foreach( $rowsInput as $elements )
     {
-      $rowsOutput[$countRow][$linktoSingle]     = $elements[$linktoSingle]; 
-      $rowsOutput[$countRow][$latitude]         = $elements[$latitude]; 
-      $rowsOutput[$countRow][$longitude]        = $elements[$longitude]; 
-      $rowsOutput[$countRow][$description]      = $elements[$description]; 
+      $rowsOutput[$countRow][$tableMarker]      = $tableMarker; 
       $rowsOutput[$countRow][$catField]         = $elements[$catField]; 
       $rowsOutput[$countRow][$catIconsField]    = $elements[$catIconsField]; 
       $rowsOutput[$countRow][$catOffsetXField]  = $elements[$catOffsetXField]; 

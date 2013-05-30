@@ -673,6 +673,14 @@ plugin.tx_browser_pi1 {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = true  
         }
+          // tables
+        route =
+        route {
+          tables =
+          tables {
+            marker = {$plugin.tx_browser_pi1.map.route.tables.marker}
+          }
+        }
         zoomLevel {
             // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel 
           mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}

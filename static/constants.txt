@@ -270,6 +270,11 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - HTML/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.html.links = Click me!
 
+  # cat=BrowserMaps - Route//101;        type=string;   label= Label marker table:The label of the table, which contain the marker. I.e: tx_route_marker
+  map.route.tables.marker = 1
+  # cat=BrowserMaps - Route/others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  map.route.links = Click me!
+
   # cat=BrowserMaps - Zoom//101;        type=boolean;   label= Zoom wheel:Enable or disable the zoom wheel.
   map.zoomWheel = 1
   # cat=BrowserMaps - Zoom//102;        type=options[auto,fixed];  label= Zoom level mode:Auto: An optimal zoom level will calculated. Fixed: Zoom level will taken from the field "Fixed zoom level" below.
