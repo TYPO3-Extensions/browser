@@ -2491,17 +2491,16 @@ $this->pObj->dev_var_dump( $row );
       foreach( $row as $tableField => $value )
       {
 //$this->pObj->dev_var_dump( $tableField, $value );
-        $i = 0;
         list( $table ) = explode( '.', $tableField );
         if( $table != $tableMarker )
         {
           continue;
         }
         $children = explode( $this->catDevider, $value );
+        $i = 0;
         foreach( $children as $child )
         {
-          $uid = $rowsCounter + $i;
-          $rowsOutput[ $uid ][ $tableField ] = $child;
+          $rowsOutput[ $rowsCounter ][ $i ][ $tableField ] = $child;
 $this->pObj->dev_var_dump( $rowsCounter, $i, $tableField, $child );
           $i++;
         }
