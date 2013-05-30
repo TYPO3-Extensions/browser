@@ -2486,7 +2486,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
     $rowsCounter = 0;
     foreach( $this->pObj->rows as $row )
     {
-//$this->pObj->dev_var_dump( $row );
+$this->pObj->dev_var_dump( $row );
         // LOOP row
       foreach( $row as $tableField => $value )
       {
@@ -2502,9 +2502,9 @@ $this->pObj->dev_var_dump( $rowsOutput );
         {
           $rowsOutput[$rowsCounter][$tableField] = $child;
         }
-        $rowsCounter++;
       }
         // LOOP row
+      $rowsCounter++;
     }
       // LOOP rows
 $this->pObj->dev_var_dump( $rowsOutput );
