@@ -2364,7 +2364,7 @@ $this->pObj->dev_var_dump( $tablePath, $tableMarker, $tableMarkerCat );
         {
           list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
           unset( $pathUid );
-          $rowsOutput[$markerUid][$catUid] = true;
+          $rowsOutput[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
           $counterRows++;
         }
       }
