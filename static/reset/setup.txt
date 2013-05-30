@@ -1,0 +1,6 @@
+plugin.tx_browser_pi1 >
+plugin.tx_browser_pi1 = USER
+plugin.tx_browser_pi1 {
+  includeLibs = typo3conf/ext/browser/pi1/class.tx_browser_pi1.php
+  userFunc    = tx_browser_pi1->main
+}
