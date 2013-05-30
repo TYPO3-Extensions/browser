@@ -2318,8 +2318,44 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
                     , 'prompt' => null
                   );
 
-$this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRelations( ) );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
+    $rows       = $this->renderMapRouteMarkerEachRelation(  );
 
+
+    return $arr_return;
+  }
+
+/**
+ * renderMapRouteMarkerEachRelation( ):
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerEachRelation( )
+  {
+    $relations  = $this->renderMapRouteMarkerGetRelations( );
+$this->pObj->dev_var_dump( $relations );
+
+    $markerTables = key( $relations[0] );
+$this->pObj->dev_var_dump( $markerTables );
+    list( $marker, $tables ) = explode( ':', $markerTables );
+$this->pObj->dev_var_dump( $tables );
+    unset( $marker );
+    list( $tablePath, $tableMarker, $tableMarkerCat ) = explode( '->', $tables );
+$this->pObj->dev_var_dump( $tablePath, $tableMarker, $tableMarkerCat );
+    
+    return;
+    
+    foreach( $relations as $relation )
+    {
+      foreach( $relation as $key => $children )
+      {
+
+      }
+    }
     $rowsInput = $this->pObj->rows;
 
     $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
@@ -2355,37 +2391,12 @@ $this->pObj->dev_var_dump( $this->pObj->rows, $this->renderMapRouteMarkerGetRela
     }
       // LOOP each row
 $this->pObj->dev_var_dump( $rowsOutput );
-      
-      // LOOP each field
-        // LOOP each child 
-    
-//    $prompt = '<h1 style="color:red;">
-//              ' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '
-//              </h1>
-//              <p style="color:red;font-weight:bold;">
-//              ' . $this->pObj->pi_getLL( 'error_template_map_no' ) . '
-//              </p>';
-//    $prompt = '<h1 style="color:red;">
-//                ERROR with Map +Routes
-//              </h1>
-//              <p style="color:red;font-weight:bold;">
-//                Sorry, but there is an undefined error with Map +Routes
-//              </p>
-//              <p style="color:red;font-weight:bold;">
-//                Method: ' . __METHOD__ . ' at line ' . __LINE__ . '
-//              </p>
-//              ';
-//
-//    $arr_return['error']  = true;
-//    $arr_return['prompt'] = $prompt;
-
-    return $arr_return;
   }
 
 /**
- * renderMapRouteMarkerGetRelations( ):
+ * renderMapRouteMarkerGetRelations( ): Returns all rows which habe a key with the prefix MARKER
  *
- * @return	array
+ * @return	array     $relations  : rows with keys with prefix MARKER
  * @version 4.5.7
  * @since   4.5.7
  * 
@@ -2412,6 +2423,15 @@ $this->pObj->dev_var_dump( $rowsOutput );
       $rowCounter++;
     }
       // LOOP each row
+    
+      // die: no relation
+    if( empty ( $relations ) )
+    {
+      $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                'rows doesn\'t contain any row with a key with the prefix MARKER!';
+      die( $prompt );
+    }
+      // die: no relation
 
     return $relations;
   }
