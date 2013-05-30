@@ -2305,8 +2305,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * renderMapRouteMarker( ):
  *
  * @return	array
- * @version 4.5.6
- * @since   4.5.6
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
  */
   private function renderMapRouteMarker( )
   {
@@ -2317,6 +2319,31 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
                   );
 
 $this->pObj->dev_var_dump( $this->pObj->rows );
+
+    $rowsInput = $this->pObj->rows;
+
+    $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+      // #42125, 121031, dwildt, 2+
+    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+
+      // LOOP each row
+    $countRow   = 0;
+    $rowsOutput = array( );
+    foreach( $rowsInput as $elements )
+    {
+      $rowsOutput[$countRow][$catField]        = $elements[$catField]; 
+      $rowsOutput[$countRow][$catIconsField]   = $elements[$catIconsField]; 
+      $rowsOutput[$countRow][$catOffsetXField] = $elements[$catOffsetXField]; 
+      $rowsOutput[$countRow][$catOffsetYField] = $elements[$catOffsetYField]; 
+      $countRow++;
+    }
+      // LOOP each row
+$this->pObj->dev_var_dump( $rowsOutput );
+      
+      // LOOP each field
+        // LOOP each child 
     
 //    $prompt = '<h1 style="color:red;">
 //              ' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '
