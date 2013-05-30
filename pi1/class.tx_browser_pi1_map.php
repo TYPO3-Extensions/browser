@@ -268,7 +268,7 @@ class tx_browser_pi1_map
       // FOREACH row
 if( $this->pObj->b_drs_todo )
 {
-  $prompt = 'TODO: Lokalisation of the map form labels.';
+  $prompt = 'TODO: Localisation of the map form labels.';
   t3lib_div :: devLog( '[TODO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
 // #46062, 130306, dwildt: TODO: Lokalisierung der Labels:
 // Wenn Standortdatensatz uebersetzt ist, sind die Kategorie-Labels leer
@@ -276,15 +276,35 @@ if( $this->pObj->b_drs_todo )
     foreach( $this->pObj->rows as $row )
     {
         // RETURN : field for category label is missing
-      if( ! isset( $row[ $fieldForLabel ] ) )
+        // 130530, dwildt
+      switch( true )
       {
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'current rows doesn\'t contain the field "' . $fieldForLabel . '"';
-          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
-        }
-        $this->arrCategories = array( );
-        return $this->arrCategories;
+        case( ! $fieldForLabel ):
+            // DRS
+          if( $this->pObj->b_drs_map )
+          {
+            $prompt = 'table.field with the category is empty';
+            t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+            $prompt = 'Please use the TypoScript Constant Editor and maintain map.marker.field.category ';
+            t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
+          }
+            // DRS
+          $this->arrCategories = array( );
+          return $this->arrCategories;
+          break;
+        case( ! isset( $row[ $fieldForLabel ] ) ):
+            // DRS
+          if( $this->pObj->b_drs_map )
+          {
+            $prompt = 'current rows doesn\'t contain the field "' . $fieldForLabel . '"';
+            t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+          }
+            // DRS
+          $this->arrCategories = array( );
+          return $this->arrCategories;
+          break;
+        default:
+          // follow the workflow
       }
         // RETURN : field for category label is missing
         // 4.1.7, dwildt, 1-
