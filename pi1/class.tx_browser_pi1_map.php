@@ -2650,7 +2650,6 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRoutePaths( )
   {
     $jsonData   = array( );
-    $rowsBackup = $this->pObj->rows;
     
     // Get relations marker -> categrories
     $arrResult    = $this->renderMapRoutePathRelations( );
@@ -2660,12 +2659,26 @@ if( $this->pObj->b_drs_todo )
     //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     unset( $arrResult );
     
+      // Get rows with categories 
     $rowsPathWiCat  = $this->renderMapRouteTableWiCat( $tablePath, $tableCat, $rowsRelation );
-    $this->pObj->dev_var_dump( $rowsPathWiCat );
+      // Get json0 from rows
+    $jsonData       = $this->renderMapRoutePathsJson( $rowsPathWiCat );
+    
+    return $jsonData;
+  }
 
-    //return $rowsMarkerWiCat;
 
-    $this->pObj->rows = $rowsBackup;
+/**
+ * renderMapRoutePathsJson( ) :
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRoutePathsJson( $rowsPathWiCat )
+  {
+    $jsonData = array( );
+
     $series = array
     (
       'type'      =>  'FeatureCollection',
@@ -2746,18 +2759,6 @@ if( $this->pObj->b_drs_todo )
 //$this->pObj->dev_var_dump( $series, $jsonData );
     
     return $jsonData;
-  }
-
-/**
- * renderMapRoutePathsConsolidateRows( ):
- *
- * @return	array
- * @version 4.5.7
- * @since   4.5.7
- */
-  private function renderMapRoutePathsConsolidateRows( )
-  {
-    $this->pObj->dev_var_dump( $this->pObj->rows );
   }
 
 /**
