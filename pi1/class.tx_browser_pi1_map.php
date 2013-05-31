@@ -2944,6 +2944,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       foreach( $relation as $tablePathMarkerCat )
       {
         $arrTablePathMarkerCat = explode( $this->catDevider, $tablePathMarkerCat );
+        $this->pObj->dev_var_dump( $arrTablePathMarkerCat );
           // SWITCH : children
         switch( true )
         {
@@ -2952,9 +2953,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
               // LOOP children
             foreach( $arrTablePathMarkerCat as $tablePathMarkerCatChildren )
             {
-              list( $pathUid, $markerUid, $catUid )   = explode( '.', $tablePathMarkerCatChildren );
-              $rowsRelation[ $pathUid ][ $markerUid ] = $catUid;
-              $rowsRelation[ $pathUid ][ $markerUid ] = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
+              list( $pathUid, $markerUid, $catUid )       = explode( '.', $tablePathMarkerCatChildren );
+              $rowsRelation[ $pathUid ][ $markerUid ][ ]  = $catUid;
+              $rowsRelation[ $pathUid ][ $markerUid ]     = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
             }
               // LOOP children
             break;
@@ -2962,9 +2963,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
             // CASE : no children
           case( count( $arrTablePathMarkerCat ) == 1 ):
           default:
-            list( $pathUid, $markerUid, $catUid )   = explode( '.', $tablePathMarkerCat );
-            $rowsRelation[ $pathUid ][ $markerUid ] = $catUid;
-            $rowsRelation[ $pathUid ][ $markerUid ] = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
+            list( $pathUid, $markerUid, $catUid )       = explode( '.', $tablePathMarkerCat );
+            $rowsRelation[ $pathUid ][ $markerUid ][ ]  = $catUid;
+            $rowsRelation[ $pathUid ][ $markerUid ]     = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
             break;            
             // CASE : no children
         }
