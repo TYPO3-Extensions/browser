@@ -717,7 +717,7 @@ if( $this->pObj->b_drs_todo )
 //var_dump( $template );
       // RETURN the template
     $this->rowsReset( );
-    $this->pObj->dev_var_dump( $this->pObj.>rows );
+    $this->pObj->dev_var_dump( $this->pObj->rows );
     return $template;
   }
 
