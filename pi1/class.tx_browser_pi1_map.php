@@ -2761,8 +2761,6 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
       $coordinates[ $key ] = ( array ) trim( $coordinate );
     }
 
-      // wrap $coordinates by an array
-    $coordinates = array ( $coordinates );
     return $coordinates;
   }
 
