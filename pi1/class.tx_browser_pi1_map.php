@@ -2788,7 +2788,6 @@ if( $this->pObj->b_drs_todo )
             foreach( $arrTablePathCat as $tablePathCatChildren )
             {
               list( $pathUid, $catUid ) = explode( '.', $tablePathCatChildren );
-              unset( $pathUid );
               $rowsRelation[ $pathUid ][ ]  = $catUid;
               $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
             }
@@ -2797,7 +2796,6 @@ if( $this->pObj->b_drs_todo )
           case( count( $arrTablePathCat ) == 1 ):
           default:
             list( $pathUid, $catUid ) = explode( '.', $tablePathCat );
-            unset( $pathUid );
             $rowsRelation[ $pathUid ][ ]  = $catUid;
             $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
             break;            
