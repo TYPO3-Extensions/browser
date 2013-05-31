@@ -2844,16 +2844,17 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     {
       foreach( $catUids as $catUid )
       {
-        $catTitle = $arrCat[ $catUid ];
-        $marker   = $catTitle . ':' . $markerUid; 
-        $this->pObj->dev_var_dump( $marker );
+        $catTitle   = $arrCat[ $catUid ];
+        $marker[ ]  = $catTitle . ':' . $markerUid; 
       }
     }
-    $marker = array
-              (
-                0 => 'nt77:nt6',
-                1 => 'nt77:point2',
-              );
+
+    $this->pObj->dev_var_dump( $marker );
+//    $marker = array
+//              (
+//                0 => 'nt77:nt6',
+//                1 => 'nt77:point2',
+//              );
     return $marker;
   }
 
