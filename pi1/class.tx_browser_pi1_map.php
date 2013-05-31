@@ -2488,7 +2488,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
     {
 //$this->pObj->dev_var_dump( $row );
         // LOOP row
-      $childCounter = 0;
+      $rowCounter = 0;
       foreach( $row as $tableField => $value )
       {
 //$this->pObj->dev_var_dump( $tableField, $value );
@@ -2498,11 +2498,14 @@ $this->pObj->dev_var_dump( $rowsOutput );
           continue;
         }
         $children = explode( $this->catDevider, $value );
+        $childCounter = 0;
         foreach( $children as $child )
         {
           $rowsOutput[ $rowsCounter ][ $childCounter ][ $tableField ] = $child;
           $childCounter++;
+$this->pObj->dev_var_dump( $rowsCounter, $rowCounter, $childCounter );
         }
+        $rowCounter++;
       }
         // LOOP row
       $rowsCounter = $rowsCounter + 100;
