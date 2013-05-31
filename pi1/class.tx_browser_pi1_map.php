@@ -2365,9 +2365,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $rowsRelation as $markerUid => $catUids )
     {
         // LOOP categories
-      foreach( $catUids as $catUid => $dummy )
+      foreach( $catUids as $catUid )
       {
-        unset( $dummy );
           // LOOP category fields
         foreach( $rowsCat[ $catUid ] as $tableField => $value )
         {
