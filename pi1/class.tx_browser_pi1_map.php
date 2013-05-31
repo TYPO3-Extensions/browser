@@ -2667,7 +2667,6 @@ if( $this->pObj->b_drs_todo )
     return $jsonData;
   }
 
-
 /**
  * renderMapRoutePathsJson( ) :
  *
@@ -2677,88 +2676,74 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJson( $rowsPathWiCat )
   {
-    $jsonData = array( );
-
     $series = array
     (
       'type'      =>  'FeatureCollection',
-      'features'  =>  array
-      (
-        array
-        (
-          'type'  => 'Feature',
-          'geometry'  => array
-          (
-            'type'  => 'LineString',
-            'coordinates'  => array
-            (
-              array( 
-                13.64,
-                54.51,
-              ),
-              array( 
-                13.65,
-                54.52,
-              ),
-            ),
-          ),
-          'properties'  => array
-          (
-            'name'        => 'route1',
-            'id'          => 345,
-            'category'    => 'radweg1',
-            'markerList'  => array
-            (
-              'nt77:nt6',
-              'nt77:point2',
-            ),
-            'style' => array
-            (
-              'strokeWidth' => 3,
-              'strokeColor' => '#a00',
-            ),
-          ),
-        ),
-        array
-        (
-          'type'  => 'Feature',
-          'geometry'  => array
-          (
-            'type'  => 'LineString',
-            'coordinates'  => array
-            (
-              array( 
-                13.09,
-                54.31,
-              ),
-              array( 
-                13.10,
-                54.32,
-              ),
-            ),
-          ),
-          'properties'  => array
-          (
-            'name'        => 'route2',
-            'id'          => 567,
-            'category'    => 'radweg2',
-            'markerList'  => array
-            (
-            ),
-            'style' => array
-            (
-              'strokeWidth' => 2,
-              'strokeColor' => 'blue',
-            ),
-          ),
-        ),
-      ),  
+      'features'  =>  $this->renderMapRoutePathsJsonFeatures( $rowsPathWiCat ),
     );
-    
+   
     $jsonData = json_encode( $series );
-//$this->pObj->dev_var_dump( $series, $jsonData );
+$this->pObj->dev_var_dump( $series, $jsonData );
     
     return $jsonData;
+  }
+
+/**
+ * renderMapRoutePathsJsonFeatures( ) :
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRoutePathsJsonFeatures( $rowsPathWiCat )
+  {
+    $features = array( );
+    
+    foreach( $rowsPathWiCat as $rowPathWiCat )
+    {
+      foreach( $rowPathWiCat as $tableField => $value )
+      {
+        $features = $features
+                  + array
+                    (
+                      'type'      => 'Feature',
+                      'geometry'  => array
+                      (
+                        'type'        => 'LineString',
+                        'coordinates' => array
+                        (
+                          array( 
+                            13.64,
+                            54.51,
+                          ),
+                          array( 
+                            13.65,
+                            54.52,
+                          ),
+                        ),
+                      ),
+                      'properties'  => array
+                      (
+                        'name'        => 'route1',
+                        'id'          => 345,
+                        'category'    => 'radweg1',
+                        'markerList'  => array
+                        (
+                          'nt77:nt6',
+                          'nt77:point2',
+                        ),
+                        'style' => array
+                        (
+                          'strokeWidth' => 3,
+                          'strokeColor' => '#a00',
+                        ),
+                      ),
+                    )
+                  ;
+      }
+    }
+
+    return $features;
   }
 
 /**
