@@ -2787,6 +2787,12 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $catUid               = null;
     $markerTitle          = null;
     $markerUid            = null;
+    $arrCat               = null;
+    $arrCatUid            = null;
+    $arrCatTitle          = null;
+    $arrMarker            = null;
+    $arrMarkerUid         = null;
+    $arrMarkerTitle       = null;
       // variables
     
       // Get relations path -> marker -> marker_cat
@@ -2814,15 +2820,13 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $markerUid    = $row[ 'tx_route_marker.uid' ];
       break;
     }
-    $this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
+    //$this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
       // Get marker and marker_cat values of the given row
     
     $arrCatUid      = explode( $this->catDevider, $catUid );
     $arrCatTitle    = explode( $this->catDevider, $catTitle );
     $arrMarkerUid   = explode( $this->catDevider, $markerUid );
     $arrMarkerTitle = explode( $this->catDevider, $markerTitle );
-    
-    $this->pObj->dev_var_dump( $this->catDevider, $arrCatUid, $arrCatTitle );
     
     foreach( $arrCatUid as $key => $uid )
     {
@@ -2836,6 +2840,15 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     
     $this->pObj->dev_var_dump( $arrCat, $arrMarker );
     
+    foreach( $rowsRelation[ $tablePathUid ] as $markerUid => $catUids )
+    {
+      foreach( $catUids as $catUid )
+      {
+        $catTitle = $arrCat[ $catUid ];
+        $marker   = $catTitle . ':' . $markerUid; 
+        $this->pObj->dev_var_dump( $marker );
+      }
+    }
     $marker = array
               (
                 0 => 'nt77:nt6',
