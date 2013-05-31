@@ -706,10 +706,18 @@ if( $this->pObj->b_drs_todo )
       // DRS
 
     $arr_result = $this->renderMapRoute( );
-    $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
+    if( ! empty( $arr_result['rowsMarkerWiCat'] ) )
+    {
+      $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
+    }
+    $routes = $arr_result['routes'];
+    unset( $arr_result );
+    
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
+
+    $template = str_replace( '###ROUTES###', $routes, $template );
 
       // render the map
     $template = $this->renderMap( $template );
@@ -2293,13 +2301,15 @@ if( $this->pObj->b_drs_todo )
 
     $rowsMarkerWiCat = $this->renderMapRouteMarker( );
     
-    $arr_return = $this->renderMapRoutePaths( );
-    if( $arr_return['error'] )
+    $arr_result = $this->renderMapRoutePaths( );
+    if( $arr_result['error'] )
     {
-      return $arr_return;
+      return $arr_result;
     }
+    $routes = $arr_result['jsonData'];
 
-    $arr_return['rowsMarkerWiCat'] = $rowsMarkerWiCat;
+    $arr_return['rowsMarkerWiCat']  = $rowsMarkerWiCat;
+    $arr_return['routes']           = $routes;
     return $arr_return;
   }
 
@@ -2606,32 +2616,11 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePaths( )
   {
-    $arr_return = array
-                  (
-                      'error'  => false
-                    , 'prompt' => null
-                  );
+    $jsonData = array( );
 
-//    $prompt = '<h1 style="color:red;">
-//              ' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '
-//              </h1>
-//              <p style="color:red;font-weight:bold;">
-//              ' . $this->pObj->pi_getLL( 'error_template_map_no' ) . '
-//              </p>';
-//    $prompt = '<h1 style="color:red;">
-//                ERROR with Map +Routes
-//              </h1>
-//              <p style="color:red;font-weight:bold;">
-//                Sorry, but there is an undefined error with Map +Routes
-//              </p>
-//              <p style="color:red;font-weight:bold;">
-//                Method: ' . __METHOD__ . ' at line ' . __LINE__ . '
-//              </p>
-//              ';
-//
-//    $arr_return['error']  = true;
-//    $arr_return['prompt'] = $prompt;
-
+    $rowsBackup = $this->pObj->rows;
+    $this->renderMapRoutePathsRows( );
+    $this->pObj->rows = $rowsBackup;
     $series = array
     (
       'type'      =>  'FeatureCollection',
@@ -2711,7 +2700,7 @@ if( $this->pObj->b_drs_todo )
     $jsonData = json_encode( $series );
 $this->pObj->dev_var_dump( $series, $jsonData );
     
-    return $arr_return;
+    return $jsonData;
   }
 
 
