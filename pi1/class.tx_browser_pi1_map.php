@@ -716,18 +716,13 @@ if( $this->pObj->b_drs_todo )
     
 
       // set the map marker (in case template is without the marker)
-$this->pObj->dev_var_dump( $template );
     $template = $this->initMainMarker( $template );
 
-$this->pObj->dev_var_dump( $template );
-    $template = str_replace( "'###ROUTES###'", $routes, $template );
 
       // render the map
-$this->pObj->dev_var_dump( $template );
     $template = $this->renderMap( $template );
+    $template = str_replace( "'###ROUTES###'", $routes, $template );
 
-$this->pObj->dev_var_dump( $template );
-//var_dump( $template );
       // RETURN the template
     $this->rowsReset( );
 //    $this->pObj->dev_var_dump( $this->pObj->rows );
