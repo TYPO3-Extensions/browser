@@ -2637,25 +2637,28 @@ if( $this->pObj->b_drs_todo )
       'type'      =>  'FeatureCollection',
       'features'  =>  array
       (
-        'type'  => 'Feature',
-        'geometry'  => array
+        array
         (
           'type'  => 'Feature',
           'geometry'  => array
           (
-            'type'  => 'LineString',
-            'coordinates'  => array
+            'type'  => 'Feature',
+            'geometry'  => array
             (
-              array( 
-                13.64,
-                54.51,
+              'type'  => 'LineString',
+              'coordinates'  => array
+              (
+                array( 
+                  13.64,
+                  54.51,
+                ),
+                array( 
+                  13.65,
+                  54.52,
+                ),
               ),
-              array( 
-                13.65,
-                54.52,
-              ),
-            ),
-          ), 
+            ), 
+          ),
         ),
       ),  
     );
