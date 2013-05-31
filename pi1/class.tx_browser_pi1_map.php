@@ -2822,14 +2822,16 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $arrMarkerUid   = explode( $this->catDevider, ( array ) $markerUid );
     $arrMarkerTitle = explode( $this->catDevider, ( array ) $markerTitle );
     
-    foreach( $arrCatUid as $key => $value )
+    $this->pObj->dev_var_dump( $arrCatUid, $arrCatTitle );
+    
+    foreach( $arrCatUid as $key => $uid )
     {
-      $arrCat[ $value ] = $arrCatTitle[ $key ];
+      $arrCat[ $uid ] = $arrCatTitle[ $key ];
     }
     
-    foreach( $arrMarkerUid as $key => $value )
+    foreach( $arrMarkerUid as $key => $uid )
     {
-      $arrMarker[ $value ] = $arrMarkerTitle[ $key ];
+      $arrMarker[ $uid ] = $arrMarkerTitle[ $key ];
     }
     
     $this->pObj->dev_var_dump( $arrCat, $arrMarker );
