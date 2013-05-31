@@ -721,7 +721,7 @@ if( $this->pObj->b_drs_todo )
 
 //var_dump( $template );
       // RETURN the template
-    $this->rowsReset( );
+    //$this->rowsReset( );
     return $template;
   }
 
