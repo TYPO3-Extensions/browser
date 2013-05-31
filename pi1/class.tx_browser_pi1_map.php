@@ -2777,13 +2777,19 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRoutePathsJsonFeaturesMarker( $tablePathUid )
   {
+      // variables
     static $arrResult     = array( );
     static $rowsRelation  = null;
     static $tableCat      = null;
     static $tableMarker   = null;
     static $tablePath     = null;
+    $catTitle             = null;
+    $catUid               = null;
+    $markerTitle          = null;
+    $markerUid            = null;
+      // variables
     
-      // Get relations path -> marker
+      // Get relations path -> marker -> marker_cat
     if( empty( $arrResult ) )
     {
       $arrResult    = $this->renderMapRoutePathMarkerCatRelations( );    
@@ -2793,7 +2799,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $tablePath    = $arrResult['tablePath'];
     }
     $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
+      // Get relations path -> marker -> marker_cat
 
+      // Get marker and marker_cat values of the given row
     foreach( $this->pObj->rows as $row )
     {
       if( $row[ 'tx_route_path.uid' ] != $tablePathUid )
@@ -2806,9 +2814,25 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $markerUid    = $row[ 'tx_route_marker.uid' ];
       break;
     }
-    
     $this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
+      // Get marker and marker_cat values of the given row
     
+    $arrCatUid      = explode( $this->catDevider, ( array ) $catUid );
+    $arrCatTitle    = explode( $this->catDevider, ( array ) $catTitle );
+    $arrMarkerUid   = explode( $this->catDevider, ( array ) $markerUid );
+    $arrMarkerTitle = explode( $this->catDevider, ( array ) $markerTitle );
+    
+    foreach( $arrCatUid as $key => $value )
+    {
+      $arrCat[ $value ] = $arrCatTitle[ $key ];
+    }
+    
+    foreach( $arrMarkerUid as $key => $value )
+    {
+      $arrMarker[ $value ] = $arrMarkerTitle[ $key ];
+    }
+    
+    $this->pObj->dev_var_dump( $arrCat, $arrMarker );
     
     $marker = array
               (
