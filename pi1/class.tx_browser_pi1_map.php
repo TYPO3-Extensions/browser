@@ -2700,10 +2700,14 @@ $this->pObj->dev_var_dump( $series, $jsonData );
 $this->pObj->dev_var_dump( $rowsPathWiCat );
     $features = array( );
     
+      // LOOP rows
     foreach( $rowsPathWiCat as $rowPathWiCat )
     {
-      $features = $features
-                + array
+      $name     = "'" . $rowPathWiCat[ 'tx_route_path.title' ] . "'";
+      $id       = $rowPathWiCat[ 'tx_route_path.title' ];
+      $category = "'" . $rowPathWiCat[ 'tx_route_path_cat.title' ] . "'";
+        // feature begin
+      $feature =  array
                   (
                     'type'      => 'Feature',
                     'geometry'  => array
@@ -2723,9 +2727,9 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                     ),
                     'properties'  => array
                     (
-                      'name'        => 'route1',
-                      'id'          => 345,
-                      'category'    => 'radweg1',
+                      'name'        => $name,
+                      'id'          => $id,
+                      'category'    => $category,
                       'markerList'  => array
                       (
                         'nt77:nt6',
@@ -2737,10 +2741,13 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                         'strokeColor' => '#a00',
                       ),
                     ),
-                  )
-                ;
+                  );
+        // feature end
+      $features[] = $feature;
     }
+      // LOOP rows
 
+      // wrap features in an array
     $features = array ( $features );
     return $features;
   }
