@@ -717,6 +717,7 @@ if( $this->pObj->b_drs_todo )
 //var_dump( $template );
       // RETURN the template
     $this->rowsReset( );
+    $this->pObj->dev_var_dump( $this->pObj.>rows );
     return $template;
   }
 
@@ -2314,7 +2315,6 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
   private function renderMapRouteMarker( )
   {
 
-//$this->pObj->dev_var_dump( $this->pObj->rows );
       // Get relations marker -> categrories
     $arrResult    = $this->renderMapRouteMarkerRelations( );
     $rowsRelation = $arrResult['rowsRelation'];
@@ -2324,7 +2324,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $arrResult );
     
     $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
-    $this->pObj->dev_var_dump( $rowsMarkerWiCat );
+    //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
 
     return $rowsMarkerWiCat;
   }
