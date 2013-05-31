@@ -1689,7 +1689,7 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
-$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion, $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion, $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
@@ -2241,6 +2241,7 @@ $this->pObj->dev_var_dump( $mapMarkers );
 
       // Add JSON array
     $map_template = str_replace( "'###RAWDATA###'", $jsonData, $map_template );
+$this->pObj->dev_var_dump( $jsonData );
 
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
