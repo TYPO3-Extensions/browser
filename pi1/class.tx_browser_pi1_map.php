@@ -2676,7 +2676,7 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJson( $rowsPathWiCat )
   {
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     $series = array
     (
       'type'      =>  'FeatureCollection',
@@ -2804,7 +2804,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $tableMarker  = $arrResult['tableMarker'];
       $tablePath    = $arrResult['tablePath'];
     }
-    $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
+    //$this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
       // Get relations path -> marker -> marker_cat
 
       // Get marker and marker_cat values of the given row
@@ -2838,7 +2838,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $arrMarker[ $uid ] = $arrMarkerTitle[ $key ];
     }
     
-    $this->pObj->dev_var_dump( $arrCat, $arrMarker );
+    //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
     
     foreach( $rowsRelation[ $tablePathUid ] as $markerUid => $catUids )
     {
@@ -2849,12 +2849,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       }
     }
 
-    $this->pObj->dev_var_dump( $marker );
-//    $marker = array
-//              (
-//                0 => 'nt77:nt6',
-//                1 => 'nt77:point2',
-//              );
+    //$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
