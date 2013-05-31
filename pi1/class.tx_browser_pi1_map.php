@@ -2286,11 +2286,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     }
       // RETURN : Map +Routes is disabled
 
-    $arr_return = $this->renderMapRouteMarker( );
-    if( $arr_return['error'] )
-    {
-      return $arr_return;
-    }
+    $rowsMarkerWiCat = $this->renderMapRouteMarker( );
+    
+    $this->pObj->rows = $rowsMarkerWiCat;
 
     $arr_return = $this->renderMapRoutePaths( );
     if( $arr_return['error'] )
@@ -2314,9 +2312,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
   {
 
 //$this->pObj->dev_var_dump( $this->pObj->rows );
-      // Get relations from marker to categrories
-      //   like: 7 = array( 4, 10, 7 )
-      //         tableMarker.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
+      // Get relations marker -> categrories
     $arrResult    = $this->renderMapRouteMarkerRelations( );
     $rowsRelation = $arrResult['rowsRelation'];
     $tableMarker  = $arrResult['tableMarker'];
@@ -2350,16 +2346,16 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       //  3 => 
       //  array (
       //    'tx_route_marker.title' => 'Reichstag',
-      //    'tx_route_marker.lat' => '13.376210',
-      //    'tx_route_marker.lon' => '52.518572',
+      //    'tx_route_marker.lat'   => '13.376210',
+      //    'tx_route_marker.lon'   => '52.518572',
       //    'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
-      //    'tx_route_marker.uid' => '3',
+      //    'tx_route_marker.uid'   => '3',
       //  ),
     
       // Get marker rows (they don't have any category currently)
-    $rowsMarker   = $this->renderMapRouteMarkerGetRowsByTable( $tableMarker );
+    $rowsMarker = $this->renderMapRouteMarkerGetRowsByTable( $tableMarker );
       // Get category rows
-    $rowsCat      = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
+    $rowsCat    = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
 
       // LOOP relations
     foreach( $rowsRelation as $markerUid => $catUids )
@@ -2401,24 +2397,25 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       //array (
       //  3 => 
       //  array (
-      //    'tx_route_marker.title' => 'Reichstag',
-      //    'tx_route_marker.lat' => '13.376210',
-      //    'tx_route_marker.lon' => '52.518572',
-      //    'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
-      //    'tx_route_marker.uid' => '3',
-      //    'tx_route_marker_cat.title' => 'Geschichte, ;|;Politik, ;|;Politik-Pfad',
-      //    'tx_route_marker_cat.icons' => 'history.png, ;|;badge.png, ;|;badge_01.png',
+      //    'tx_route_marker.title'             => 'Reichstag',
+      //    'tx_route_marker.lat'               => '13.376210',
+      //    ...
+      //    'tx_route_marker_cat.title'         => 'Geschichte, ;|;Politik, ;|;Politik-Pfad',
+      //    'tx_route_marker_cat.icons'         => 'history.png, ;|;badge.png, ;|;badge_01.png',
       //    'tx_route_marker_cat.icon_offset_x' => '2, ;|;4, ;|;6',
       //    'tx_route_marker_cat.icon_offset_y' => '2, ;|;4, ;|;6',
-      //    'tx_route_marker_cat.uid' => '10, ;|;9, ;|;8',
+      //    'tx_route_marker_cat.uid'           => '10, ;|;9, ;|;8',
       //  ),
     return $rowsMarker;
   }
 
 /**
- * renderMapRouteMarkerRelations( ):
+ * renderMapRouteMarkerRelations( ) : Get relations marker -> categrories
+ *                                    rowsRelation array will look like:
+ *                                    * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
+ *                                    * tableMarker.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
  *
- * @return	array
+ * @return	array   $arrReturn : with Elements rowsRelation, tableCat, tableMarker, tablePath
  * @version 4.5.7
  * @since   4.5.7
  * 
@@ -2431,8 +2428,11 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     
     // Example
     // $relation[0]['MARKER:tx_route_path->tx_route_marker->tx_route_marker_cat->listOf.uid'] = '2.3.10, ;|;2.3.9, ;|;2.3.8, ;|;2.4.10, ;|;2.4.8, ;|;2.4.7, ;|;2.5.10, ;|;2.5.8';
+    //    '2.3.10' is a relation like
+    //    tx_route_path.uid -> tx_route_marker.uid -> tx_route_marker_cat.uid
+    //
 
-      // Get rows with key with a MARKER prefix
+      // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteMarkerGetRelations( );
 
       // Get the key of a relation
@@ -2451,20 +2451,30 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       foreach( $relation as $tablePathMarkerCat )
       {
         $arrTablePathMarkerCat = explode( $this->catDevider, $tablePathMarkerCat );
+          // LOOP children
         foreach( $arrTablePathMarkerCat as $arrTablePathMarkerCatChildren )
         {
           list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
           unset( $pathUid );
-          //$rowsRelation[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
           $rowsRelation[$markerUid][] = $catUid;
-          $rowsRelation[$markerUid] = array_unique( $rowsRelation[$markerUid] );
+          $rowsRelation[$markerUid]   = array_unique( $rowsRelation[$markerUid] );
         }
+          // LOOP children
       }
         // LOOP relation      
     }
       // LOOP relations
-$this->pObj->dev_var_dump( $rowsRelation );
     
+      // $rowsRelation will look like:
+      // array( 
+      //  '7' => array( 4, 10, 7 ),
+      //  '5' => array( 10, 8 ),
+      // )
+      // array(
+      //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
+      //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
+      // )
+    //$this->pObj->dev_var_dump( $rowsRelation );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableMarkerCat;
     $arrReturn['tableMarker']   = $tableMarker;
@@ -2474,9 +2484,9 @@ $this->pObj->dev_var_dump( $rowsRelation );
   }
 
 /**
- * renderMapRouteMarkerGetRelations( ): Returns all rows which habe a key with the prefix MARKER
+ * renderMapRouteMarkerGetRelations( ): Returns all elements which have a key with the prefix MARKER
  *
- * @return	array     $relations  : rows with keys with prefix MARKER
+ * @return	array     $relations  : elements with keys with prefix MARKER
  * @version 4.5.7
  * @since   4.5.7
  * 
@@ -2484,25 +2494,31 @@ $this->pObj->dev_var_dump( $rowsRelation );
  */
   private function renderMapRouteMarkerGetRelations( )
   {
+    // Example
+    // $rows[0]['MARKER:tx_route_path->tx_route_marker->tx_route_marker_cat->listOf.uid'] = '2.3.10, ;|;2.3.9, ;|;2.3.8, ;|;2.4.10, ;|;2.4.8, ;|;2.4.7, ;|;2.5.10, ;|;2.5.8';
+
     $relations  = array( );
     $rowCounter = 0;
     
-      // LOOP each row
+      // LOOP rows
     foreach( $this->pObj->rows as $elements )
     {
+        // LOOP elements
       foreach( $elements as $key => $value )
       {
         list( $marker ) = explode( ':', $key );
         if( ! ( $marker == 'MARKER' ) )
         {
+            // CONTINUE : element hasn't any prefix MARKER
           continue;
         }
         $relations[$rowCounter][$key] = $value;
         break;
       }
+        // LOOP elements
       $rowCounter++;
     }
-      // LOOP each row
+      // LOOP rows
     
       // die: no relation
     if( empty ( $relations ) )
@@ -2517,10 +2533,10 @@ $this->pObj->dev_var_dump( $rowsRelation );
   }
 
 /**
- * renderMapRouteMarkerGetRowsByTable( ):
+ * renderMapRouteMarkerGetRowsByTable( )  : Get from rows all elements, which tableField match the given tableMarker
  *
- * @param       string      $tableMarker : label of the table with the marker
- * @return	array
+ * @param       string      $tableMarker  : label of the table with the marker
+ * @return	array       $rowsOutput   : rows with elements of the given tableMarker only
  * @version 4.5.7
  * @since   4.5.7
  */
@@ -2543,12 +2559,22 @@ $this->pObj->dev_var_dump( $rowsRelation );
         }
         $children     = explode( $this->catDevider, $value );
         $childCounter = 0;
+          // LOOP children
         foreach( $children as $child )
         {
           $uid = $rowsCounter + $childCounter;
           $rowsTemp[ $uid ][ $tableField ] = $child;
           $childCounter++;
+            // DIE  : if there are more than 99 children
+          if( $childCounter > 99 )
+          {
+            $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                      'There are more than 99 children.';
+            die( $prompt );
+          }
+            // DIE  : if there are more than 99 children
         }
+          // LOOP children
       }
         // LOOP row
       $rowsCounter = $rowsCounter + 100;
