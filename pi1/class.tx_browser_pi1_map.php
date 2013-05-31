@@ -2301,12 +2301,7 @@ if( $this->pObj->b_drs_todo )
 
     $rowsMarkerWiCat = $this->renderMapRouteMarker( );
     
-    $arr_result = $this->renderMapRoutePaths( );
-    if( $arr_result['error'] )
-    {
-      return $arr_result;
-    }
-    $routes = $arr_result['jsonData'];
+    $routes = $this->renderMapRoutePaths( );
 
     $arr_return['rowsMarkerWiCat']  = $rowsMarkerWiCat;
     $arr_return['routes']           = $routes;
