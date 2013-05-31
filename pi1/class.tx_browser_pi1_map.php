@@ -2769,9 +2769,9 @@ if( $this->pObj->b_drs_todo )
     $relationKey = key( $relations[0] );
     
       // Get the lables for the tables path and pathCat
-    list( $marker, $tables ) = explode( ':', $relationKey );
-    unset( $marker );
-    list( $tablePath, $tablePathCat ) = explode( '->', $tables );
+    list( $prefix, $tables ) = explode( ':', $relationKey );
+    unset( $prefix );
+    list( $tablePath, $tableCat ) = explode( '->', $tables );
       // Get the lables for the tables path and pathCat
 
       // LOOP relations
@@ -2781,6 +2781,7 @@ if( $this->pObj->b_drs_todo )
       foreach( $relation as $tablePathCat )
       {
         $arrTablePathCat = explode( $this->catDevider, $tablePathCat );
+$this->pObj->dev_var_dump( $arrTablePathCat, $tablePathCat );
           // LOOP children
         foreach( $arrTablePathCat as $arrTablePathCatChildren )
         {
@@ -2804,9 +2805,9 @@ if( $this->pObj->b_drs_todo )
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
-    $this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tablePathCat );
+    $this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     $arrReturn['rowsRelation']  = $rowsRelation;
-    $arrReturn['tableCat']      = $tablePathCat;
+    $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tablePath']     = $tablePath;
     return $arrReturn;
     
