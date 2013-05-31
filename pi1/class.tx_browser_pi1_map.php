@@ -2632,6 +2632,31 @@ if( $this->pObj->b_drs_todo )
 //    $arr_return['error']  = true;
 //    $arr_return['prompt'] = $prompt;
 
+    $series = array
+    (
+      'type'      =>  'FeatureCollection',
+      'features'  =>  array
+      (
+        'type'  => 'Feature',
+        'geometry'  => array
+        (
+          'type'  => 'Feature',
+          'geometry'  => array
+          (
+            'type'  => 'LineString',
+            'coordinates'  => array
+            (
+                'a,b',
+                'c,d',
+            ),
+          ), 
+        ),
+      ),  
+    );
+    
+    $jsonData = json_encode( $series );
+$this->pObj->dev_var_dump( $series, $jsonData );
+    
     return $arr_return;
   }
 
