@@ -2328,7 +2328,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $arrResult );
     
     $rowsMarker   = $this->renderMapRouteMarkerGetRowsMarker( $tableMarker );
-$this->pObj->dev_var_dump( $rowsMarker, $rowsRelation );
+    $rowsCat      = $this->renderMapRouteMarkerGetRowsMarker( $tableCat );
+$this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
 
 
     return $arr_return;
@@ -2475,8 +2476,8 @@ $this->pObj->dev_var_dump( $rowsOutput );
  *
  * @param       string      $tableMarker : label of the table with the marker
  * @return	array
- * @version 4.5.6
- * @since   4.5.6
+ * @version 4.5.7
+ * @since   4.5.7
  */
   private function renderMapRouteMarkerGetRowsMarker( $tableMarker )
   {
