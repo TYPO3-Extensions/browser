@@ -129,15 +129,18 @@ class tx_browser_pi1_map
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
   private $confMap      = null;
     // [Integer] Number of the current typeNum
-  var $int_typeNum  = null;
+  public $int_typeNum  = null;
     // [String] Name of the current typeNum
-  var $str_typeNum  = null;
+  public $str_typeNum  = null;
     // [ARRAY] Contains the categories of the current records
-  var $arrCategories = null;
+  private $arrCategories = null;
     // [BOOLEAN] true, if there are more than one category
-  var $boolMoreThanOneCategory = null;
+  private $boolMoreThanOneCategory = null;
     // [STRING] Devider of categories. Example: ', ;|;'
-  var $catDevider = null;
+  private $catDevider = null;
+  
+    // [array] rows
+  private $rowsBackup = null;
 
 
 
@@ -650,9 +653,13 @@ if( $this->pObj->b_drs_todo )
  */
   public function get_map( $template )
   {
+    $this->rowsBackup( );
+    
       // init the map
     $this->init( );
     $arr_result = $this->renderMapRoute( );
+    $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
+    
 
 
 
@@ -680,6 +687,7 @@ if( $this->pObj->b_drs_todo )
           $prompt = 'RETURN. Map is disabled.';
           t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
         }
+        $this->rowsReset( );
         return $template;
         break;
       default:
@@ -713,6 +721,7 @@ if( $this->pObj->b_drs_todo )
 
 //var_dump( $template );
       // RETURN the template
+    $this->rowsReset( );
     return $template;
   }
 
@@ -2286,10 +2295,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     }
       // RETURN : Map +Routes is disabled
 
-    $rowsMarkerWiCat = $this->renderMapRouteMarker( );
+    $arr_return['rowsMarkerWiCat'] = $this->renderMapRouteMarker( );
     
-    $this->pObj->rows = $rowsMarkerWiCat;
-
     $arr_return = $this->renderMapRoutePaths( );
     if( $arr_return['error'] )
     {
@@ -2630,6 +2637,39 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 //    $arr_return['prompt'] = $prompt;
 
     return $arr_return;
+  }
+
+
+
+  /***********************************************
+  *
+  * Rows
+  *
+  **********************************************/
+
+/**
+ * rowsBackup( ): 
+ *
+ * @return	void
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  public function rowsBackup( )
+  {
+    $this->rowsBackup = $this->pObj->rows;
+  }
+
+/**
+ * rowsReset( ): 
+ *
+ * @return	void
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  public function rowsReset( )
+  {
+    $this->pObj->rows = $this->rowsBackup;
+    $this->rowsBackup = null;
   }
 
 
