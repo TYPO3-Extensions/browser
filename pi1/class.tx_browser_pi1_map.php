@@ -2756,7 +2756,13 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
     $coordinates = explode( PHP_EOL, $strLonLat );
     foreach( $coordinates as $key => $coordinate )
     {
-      $coordinates[ $key ] = ( array ) trim( $coordinate );
+      $coordinate           = trim( $coordinate );
+      list( $lon, $lat )    = explode( ',', $coordinate ); 
+      $coordinates[ $key ]  = array
+                              (
+                                ( double ) $lon,
+                                ( double ) $lat
+                              );
     }
 
     return $coordinates;
