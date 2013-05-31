@@ -706,7 +706,7 @@ if( $this->pObj->b_drs_todo )
       // DRS
 
     $arr_result = $this->renderMapRoute( );
-$this->pObj->dev_var_dump( $arr_result );
+//$this->pObj->dev_var_dump( $arr_result );
     if( ! empty( $arr_result['rowsMarkerWiCat'] ) )
     {
       $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
@@ -714,7 +714,7 @@ $this->pObj->dev_var_dump( $arr_result );
     $routes = $arr_result['routes'];
     unset( $arr_result );
     
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
@@ -1689,7 +1689,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         break;
     }
       // #47631, #i0007, dwildt, 18+
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion, $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
@@ -1898,7 +1898,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         break;
     }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
-//$this->pObj->dev_var_dump( $mapMarkers );
+$this->pObj->dev_var_dump( $mapMarkers );
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
     return $arr_return;
@@ -2241,7 +2241,6 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // Add JSON array
     $map_template = str_replace( "'###RAWDATA###'", $jsonData, $map_template );
-$this->pObj->dev_var_dump( $map_template, $jsonData );
 
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
