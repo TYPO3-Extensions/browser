@@ -2704,10 +2704,12 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
     foreach( $rowsPathWiCat as $rowPathWiCat )
     {
         // short variables
-      $name         = "'" . $rowPathWiCat[ 'tx_route_path.title' ] . "'";
-      $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
-      $category     = "'" . $rowPathWiCat[ 'tx_route_path_cat.title' ] . "'";
+      $category     = $rowPathWiCat[ 'tx_route_path_cat.title' ];
       $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.gpxdata' ] );
+      $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
+      $name         = $rowPathWiCat[ 'tx_route_path.title' ];
+      $strokeColor  = $rowPathWiCat[ 'tx_route_path.color' ];
+      $strokeWidth  = $rowPathWiCat[ 'tx_route_path.line_width' ];
         // short variables
 
         // feature begin
@@ -2721,9 +2723,9 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                     ),
                     'properties'  => array
                     (
-                      'name'        => $name,
+                      'name'        => "'" . $name . "'",
                       'id'          => $id,
-                      'category'    => $category,
+                      'category'    => "'" . $category . "'",
                       'markerList'  => array
                       (
                         'nt77:nt6',
@@ -2731,8 +2733,8 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                       ),
                       'style' => array
                       (
-                        'strokeWidth' => 3,
-                        'strokeColor' => '#a00',
+                        'strokeWidth' => $strokeWidth,
+                        'strokeColor' => $strokeColor . "'",
                       ),
                     ),
                   );
