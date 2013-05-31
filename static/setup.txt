@@ -871,7 +871,7 @@ plugin.tx_browser_pi1 {
                       /* <![CDATA[ */
                           // Be aware of the trailing slash!
                         var rawdata = '###RAWDATA###';
-                        '###VAR_ROUTES###'; // var routes
+                        var routes  = '###VAR_ROUTES###';
                         configuration = {
 
 )
