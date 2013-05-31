@@ -2479,7 +2479,7 @@ if( $this->pObj->b_drs_todo )
         switch( true )
         {
             // CASE : children
-          case( count( $arrTablePathCat ) > 1 ):
+          case( count( $arrTablePathMarkerCat ) > 1 ):
               // LOOP children
             foreach( $arrTablePathMarkerCat as $arrTablePathMarkerCatChildren )
             {
@@ -2492,7 +2492,7 @@ if( $this->pObj->b_drs_todo )
             break;
             // CASE : children
             // CASE : no children
-          case( count( $arrTablePathCat ) == 1 ):
+          case( count( $arrTablePathMarkerCat ) == 1 ):
           default:
             list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
             unset( $pathUid );
