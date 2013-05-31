@@ -2743,6 +2743,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
       }
     }
 
+    $features = array ( $features );
     return $features;
   }
 
