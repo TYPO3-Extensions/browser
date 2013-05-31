@@ -2777,17 +2777,18 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRoutePathsJsonFeaturesMarker( $tablePathUid )
   {
-//    static $arrResult = array( );
-//    
-//      // Get relations path -> marker
-//    if( empty( $arrResult ) )
-//    {
-//      $arrResult    = $this->renderMapRoutePathMarkerRelations( );    
-//      $rowsRelation = $arrResult['rowsRelation'];
-//      $tablePath    = $arrResult['tablePath'];
-//      $tableMarker  = $arrResult['tableMarker'];
-//    }
-//    $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker );
+    static $arrResult = array( );
+    
+      // Get relations path -> marker
+    if( empty( $arrResult ) )
+    {
+      $arrResult    = $this->renderMapRoutePathMarkerCatRelations( );    
+      $rowsRelation = $arrResult['rowsRelation'];
+      $tableCat     = $arrResult['tableCat'];
+      $tableMarker  = $arrResult['tableMarker'];
+      $tablePath    = $arrResult['tablePath'];
+    }
+    $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
 
     foreach( $this->pObj->rows as $row )
     {
@@ -2901,7 +2902,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
   }
 
 /**
- * renderMapRoutePathMarkerRelations( ) : Get relations path -> marker
+ * renderMapRoutePathMarkerCatRelations( ) : Get relations path -> marker
  *                                  rowsRelation array will look like:
  *                                  * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
  *                                  * tablePath.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
@@ -2912,7 +2913,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * 
  * @internal    #47630
  */
-  private function renderMapRoutePathMarkerRelations( )
+  private function renderMapRoutePathMarkerCatRelations( )
   {
     $arrReturn    = array( );
     $rowsRelation = array( );
@@ -2932,37 +2933,37 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       // Get the lables for the tables path and pathCat
     list( $prefix, $tables ) = explode( ':', $relationKey );
     unset( $prefix );
-    list( $tablePath, $tableMarker ) = explode( '->', $tables );
+    list( $tablePath, $tableMarker, $tableCat ) = explode( '->', $tables );
       // Get the lables for the tables path and pathCat
 
       // LOOP relations
     foreach( $relations as $relation )
     {
         // LOOP relation      
-      foreach( $relation as $tablePathMarker )
+      foreach( $relation as $tablePathMarkerCat )
       {
-        $arrTablePathMarker = explode( $this->catDevider, $tablePathMarker );
+        $arrTablePathMarkerCat = explode( $this->catDevider, $tablePathMarkerCat );
           // SWITCH : children
         switch( true )
         {
             // CASE : children
-          case( count( $arrTablePathMarker ) > 1 ):
+          case( count( $arrTablePathMarkerCat ) > 1 ):
               // LOOP children
-            foreach( $arrTablePathMarker as $tablePathMarkerChildren )
+            foreach( $arrTablePathMarkerCat as $tablePathMarkerCatChildren )
             {
-              list( $pathUid, $markerUid )  = explode( '.', $tablePathMarkerChildren );
-              $rowsRelation[ $pathUid ][ ]  = $markerUid;
-              $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+              list( $pathUid, $markerUid, $catUid )   = explode( '.', $tablePathMarkerCatChildren );
+              $rowsRelation[ $pathUid ][ $markerUid ] = $catUid;
+              $rowsRelation[ $pathUid ][ $markerUid ] = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
             }
               // LOOP children
             break;
             // CASE : children
             // CASE : no children
-          case( count( $arrTablePathMarker ) == 1 ):
+          case( count( $arrTablePathMarkerCat ) == 1 ):
           default:
-            list( $pathUid, $markerUid ) = explode( '.', $tablePathMarker );
-            $rowsRelation[ $pathUid ][ ]  = $markerUid;
-            $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            list( $pathUid, $markerUid, $catUid )   = explode( '.', $tablePathMarkerCat );
+            $rowsRelation[ $pathUid ][ $markerUid ] = $catUid;
+            $rowsRelation[ $pathUid ][ $markerUid ] = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
             break;            
             // CASE : no children
         }
@@ -2983,6 +2984,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       // )
     //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     $arrReturn['rowsRelation']  = $rowsRelation;
+    $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tableMarker']   = $tableMarker;
     $arrReturn['tablePath']     = $tablePath;
     return $arrReturn;
