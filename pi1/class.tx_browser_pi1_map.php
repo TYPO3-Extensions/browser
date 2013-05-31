@@ -2777,19 +2777,19 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRoutePathsJsonFeaturesMarker( $tablePathUid )
   {
-    static $arrResult = array( );
-    
-      // Get relations path -> marker
-    if( empty( $arrResult ) )
-    {
-      $arrResult    = $this->renderMapRoutePathMarkerRelations( );    
-      $rowsRelation = $arrResult['rowsRelation'];
-      $tablePath    = $arrResult['tablePath'];
-      $tableMarker  = $arrResult['tableMarker'];
-    }
-    $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker );
+//    static $arrResult = array( );
+//    
+//      // Get relations path -> marker
+//    if( empty( $arrResult ) )
+//    {
+//      $arrResult    = $this->renderMapRoutePathMarkerRelations( );    
+//      $rowsRelation = $arrResult['rowsRelation'];
+//      $tablePath    = $arrResult['tablePath'];
+//      $tableMarker  = $arrResult['tableMarker'];
+//    }
+//    $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker );
 
-    foreach( $this->pObj->rows as $key => $row )
+    foreach( $this->pObj->rows as $row )
     {
       if( $row[ 'tx_route_path.uid' ] != $tablePathUid )
       {
