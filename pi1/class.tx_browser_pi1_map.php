@@ -2240,6 +2240,7 @@ $this->pObj->dev_var_dump( $mapMarkers );
       // Get points (map marker) as JSON array and coordinates
 
       // Add JSON array
+      // #47631, #i0007, dwildt, 10+
     switch( true )
     {
       case( $this->pObj->typoscriptVersion <= 4005004 ):
@@ -2250,10 +2251,8 @@ $this->pObj->dev_var_dump( $mapMarkers );
         $jsonMarker = "'###RAWDATA###'";
         break;
     }
-      // #47631, #i0007, dwildt, 18+
-$this->pObj->dev_var_dump( $map_template );
+      // #47631, #i0007, dwildt, 10+
     $map_template = str_replace( $jsonMarker, $jsonData, $map_template );
-$this->pObj->dev_var_dump( $jsonData );
 
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
