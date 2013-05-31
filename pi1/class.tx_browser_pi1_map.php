@@ -2822,7 +2822,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $arrMarkerUid   = explode( $this->catDevider, ( array ) $markerUid );
     $arrMarkerTitle = explode( $this->catDevider, ( array ) $markerTitle );
     
-    $this->pObj->dev_var_dump( $arrCatUid, $arrCatTitle );
+    $this->pObj->dev_var_dump( $this->catDevider, $arrCatUid, $arrCatTitle );
     
     foreach( $arrCatUid as $key => $uid )
     {
