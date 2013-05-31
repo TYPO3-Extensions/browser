@@ -2795,8 +2795,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       {
         continue;
       }
-      $catTitle = $this->pObj->rows[ $tablePathUid ][ 'tx_route_marker_cat.title' ];
-      $catUid   = $this->pObj->rows[ $tablePathUid ][ 'tx_route_marker_cat.uid' ];
+      $catTitle = $row[ 'tx_route_marker_cat.title' ];
+      $catUid   = $row[ 'tx_route_marker_cat.uid' ];
       break;
     }
     
