@@ -657,12 +657,7 @@ if( $this->pObj->b_drs_todo )
     
       // init the map
     $this->init( );
-    $arr_result = $this->renderMapRoute( );
-    $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
     
-
-
-
       ///////////////////////////////////////////////////////////////
       //
       // RETURN: map isn't enabled
@@ -710,8 +705,8 @@ if( $this->pObj->b_drs_todo )
     }
       // DRS
 
-
-
+    $arr_result = $this->renderMapRoute( );
+    $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
@@ -721,7 +716,7 @@ if( $this->pObj->b_drs_todo )
 
 //var_dump( $template );
       // RETURN the template
-    //$this->rowsReset( );
+    $this->rowsReset( );
     return $template;
   }
 
