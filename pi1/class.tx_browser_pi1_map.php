@@ -2926,7 +2926,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteRelations( 'MARKER' );
-    $this->pObj->dev_var_dump( $relations );
+//    $this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
@@ -2944,7 +2944,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       foreach( $relation as $tablePathMarkerCat )
       {
         $arrTablePathMarkerCat = explode( $this->catDevider, $tablePathMarkerCat );
-        $this->pObj->dev_var_dump( $arrTablePathMarkerCat );
+//        $this->pObj->dev_var_dump( $arrTablePathMarkerCat );
           // SWITCH : children
         switch( true )
         {
@@ -2955,7 +2955,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
             {
               list( $pathUid, $markerUid, $catUid )       = explode( '.', $tablePathMarkerCatChildren );
               $rowsRelation[ $pathUid ][ $markerUid ][ ]  = $catUid;
-              $rowsRelation[ $pathUid ][ $markerUid ]     = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
+              //$rowsRelation[ $pathUid ][ $markerUid ]     = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
             }
               // LOOP children
             break;
@@ -2965,7 +2965,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
           default:
             list( $pathUid, $markerUid, $catUid )       = explode( '.', $tablePathMarkerCat );
             $rowsRelation[ $pathUid ][ $markerUid ][ ]  = $catUid;
-            $rowsRelation[ $pathUid ][ $markerUid ]     = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
+            //$rowsRelation[ $pathUid ][ $markerUid ]     = array_unique( $rowsRelation[ $pathUid ][ $markerUid ] );
             break;            
             // CASE : no children
         }
