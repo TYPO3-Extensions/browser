@@ -2327,9 +2327,29 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $tablePath    = $arrResult['tables']['path'];
     unset( $arrResult );
     
+    $rowsMarker   = $this->renderMapRouteMarkerConsolidate( $tableMarker, $tableCat, $rowsRelation );
+    $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
+
+    return $arr_return;
+  }
+
+/**
+ * renderMapRouteMarkerConsolidate( ) : Consolidate marker rows.
+ *                                      Categories will added to each marker.
+ *                                      If there is mor than one category, categories will
+ *                                      handle as children - devided by the devider from typoScript 
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerConsolidate( $tableMarker, $tableCat, $rowsRelation )
+  {
     $rowsMarker   = $this->renderMapRouteMarkerGetRowsByTable( $tableMarker );
     $rowsCat      = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
-$this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
+    //$this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
 
     foreach( $rowsRelation as $markerUid => $catUids )
     {
@@ -2352,15 +2372,12 @@ $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
               break;
           }
         }
-//        $rowsMarker[ $markerUid ] = $rowsMarker[ $markerUid ]
-//                                  + $rowsCat[ $catUid ];
-//        $rowsMarker[ $markerUid ][ $catUid ] = $rowsCat[ $catUid ];
       }
     }
-$this->pObj->dev_var_dump( $rowsMarker );
+    //$this->pObj->dev_var_dump( $rowsMarker );
 
 
-    return $arr_return;
+    return $rowsMarker;
   }
 
 /**
