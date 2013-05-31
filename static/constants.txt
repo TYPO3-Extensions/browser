@@ -222,28 +222,18 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Database Marker/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.marker.database.links = Click me!
 
-  # cat=BrowserMaps - Database Path//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
-  map.path.field.linktoSingle = 
-  # cat=BrowserMaps - Database Path//102;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
-  map.path.field.latitude = 
-  # cat=BrowserMaps - Database Path//103;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
-  map.path.field.longitude = 
-  # cat=BrowserMaps - Database Path//104;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
-  map.path.field.description = 
-  # cat=BrowserMaps - Database Path//105;             type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
-  map.path.field.number = 
-  # cat=BrowserMaps - Database Path//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
-  map.path.field.category = 
-  # cat=BrowserMaps - Database Path//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
-  map.path.field.categoryIcon = 
-  # cat=BrowserMaps - Database Path//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.path.position.categoryIconLegend = 0 
-  # cat=BrowserMaps - Database Path//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.path.position.categoryIconMap = 0 
-  # cat=BrowserMaps - Database Path//110;             type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
-  map.path.field.categoryOffsetX = 
-  # cat=BrowserMaps - Database Path//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
-  map.path.field.categoryOffsetY = 
+  # cat=BrowserMaps - Database Path//201;             type=string;    label= table.field with the path title: Example: tx_route_path.title
+  map.path.field.path.title = 
+  # cat=BrowserMaps - Database Path//202;             type=string;    label= table.field with the geodata: Example: tx_route_path.gpxdata
+  map.path.field.path.geodata = 
+  # cat=BrowserMaps - Database Path//203;             type=string;    label= table.field with the path color: Example: tx_route_path.color
+  map.path.field.path.color = 
+  # cat=BrowserMaps - Database Path//204;             type=string;    label= table.field with the path thickness: Example: tx_route_path.line_width
+  map.path.field.path.lineWidth = 
+  # cat=BrowserMaps - Database Path//205;             type=string;    label= table.field with path category titles: Example: tx_route_path_cat.title
+  map.path.field.pathCategory.title = 
+  # cat=BrowserMaps - Database Path//206;             type=string;    label= table.field with path marker title: Example: tx_route_marker_cat.title
+  map.path.field.markerCategory.title = 
   # cat=BrowserMaps - Database Path/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.path.database.links = Click me!
 
