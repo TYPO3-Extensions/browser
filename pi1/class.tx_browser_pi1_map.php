@@ -2817,10 +2817,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
       // Get marker and marker_cat values of the given row
     
-    $arrCatUid      = explode( $this->catDevider, ( array ) $catUid );
-    $arrCatTitle    = explode( $this->catDevider, ( array ) $catTitle );
-    $arrMarkerUid   = explode( $this->catDevider, ( array ) $markerUid );
-    $arrMarkerTitle = explode( $this->catDevider, ( array ) $markerTitle );
+    $arrCatUid      = explode( $this->catDevider, $catUid );
+    $arrCatTitle    = explode( $this->catDevider, $catTitle );
+    $arrMarkerUid   = explode( $this->catDevider, $markerUid );
+    $arrMarkerTitle = explode( $this->catDevider, $markerTitle );
     
     $this->pObj->dev_var_dump( $this->catDevider, $arrCatUid, $arrCatTitle );
     
