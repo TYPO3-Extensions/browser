@@ -2502,14 +2502,16 @@ $this->pObj->dev_var_dump( $rowsOutput );
         {
           $uid = $rowsCounter + $childCounter;
           $rowsOutput[ $uid ][ $tableField ] = $child;
+          $rowsChildren[ $tableField ] = $child;
           $childCounter++;
         }
       }
         // LOOP row
       $rowsCounter = $rowsCounter + 100;
+      $rowsOutput2[] = $rowsChildren;
     }
       // LOOP rows
-$this->pObj->dev_var_dump( $rowsOutput );
+$this->pObj->dev_var_dump( $rowsOutput, $rowsOutput2 );
 
   }
 
