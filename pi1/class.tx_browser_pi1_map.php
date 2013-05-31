@@ -2660,7 +2660,7 @@ if( $this->pObj->b_drs_todo )
     $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
     //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
 
-    return $rowsMarkerWiCat;
+    //return $rowsMarkerWiCat;
 
     $this->pObj->rows = $rowsBackup;
     $series = array
