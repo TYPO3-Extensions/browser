@@ -2800,12 +2800,14 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       {
         continue;
       }
+      $catTitle     = $row[ 'tx_route_marker_cat.title' ];
+      $catUid       = $row[ 'tx_route_marker_cat.uid' ];
       $markerTitle  = $row[ 'tx_route_marker.title' ];
       $markerUid    = $row[ 'tx_route_marker.uid' ];
       break;
     }
     
-    $this->pObj->dev_var_dump( $markerTitle, $markerUid );
+    $this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
     
     
     $marker = array
