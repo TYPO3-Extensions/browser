@@ -2228,7 +2228,7 @@ if( $this->pObj->b_drs_todo )
       // Get points (map marker) as JSON array and coordinates
 
       // Add JSON array
-    $map_template = str_replace( "'###JSONDATA###'", $jsonData, $map_template );
+    $map_template = str_replace( "'###RAWDATA###'", $jsonData, $map_template );
 
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );

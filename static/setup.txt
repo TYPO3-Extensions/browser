@@ -765,6 +765,7 @@ plugin.tx_browser_pi1 {
               }
             }
             dynamic {
+                // CSS properties
               map_css = TEXT
               map_css {
                 value (
@@ -869,7 +870,7 @@ plugin.tx_browser_pi1 {
                       <script>
                       /* <![CDATA[ */
                           // Be aware of the trailing slash!
-                        var rawdata = '###JSONDATA###';
+                        var rawdata = '###RAWDATA###';
                         configuration = {
 
 )

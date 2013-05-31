@@ -2,6 +2,11 @@
   13-05-29
   Feature
   * #47631: Route Interface oxMap
+            Marker
+            * ###JSONDATA### -> ###RAWDATA###
+              Effected files
+              * pi1/class.tx_browser_pi1_map.php
+              * static/setup.txt
   * #47630: Backend Routes
   * #33336: Export: filter are respected
   * #i0007: TypoScript version
