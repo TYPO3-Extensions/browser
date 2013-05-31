@@ -706,7 +706,7 @@ if( $this->pObj->b_drs_todo )
       // DRS
 
     $arr_result = $this->renderMapRoute( );
-$this->pObj->dev_var_dump( $arr_result );
+//$this->pObj->dev_var_dump( $arr_result );
     if( ! empty( $arr_result['rowsMarkerWiCat'] ) )
     {
       $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
@@ -716,13 +716,17 @@ $this->pObj->dev_var_dump( $arr_result );
     
 
       // set the map marker (in case template is without the marker)
+$this->pObj->dev_var_dump( $template );
     $template = $this->initMainMarker( $template );
 
+$this->pObj->dev_var_dump( $template );
     $template = str_replace( "'###ROUTES###'", $routes, $template );
 
       // render the map
+$this->pObj->dev_var_dump( $template );
     $template = $this->renderMap( $template );
 
+$this->pObj->dev_var_dump( $template );
 //var_dump( $template );
       // RETURN the template
     $this->rowsReset( );
