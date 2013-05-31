@@ -2327,9 +2327,20 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $tablePath    = $arrResult['tables']['path'];
     unset( $arrResult );
     
-    $rowsMarker   = $this->renderMapRouteMarkerGetRowsMarker( $tableMarker );
-    $rowsCat      = $this->renderMapRouteMarkerGetRowsMarker( $tableCat );
+    $rowsMarker   = $this->renderMapRouteMarkerGetRowsByTable( $tableMarker );
+    $rowsCat      = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
 $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
+
+    foreach( $rowsRelation as $markerUid => $catUids )
+    {
+      foreach( $catUids as $catUid => $dummy )
+      {
+        unset( $dummy );
+        $rowsMarker[ $markerUid ] = $rowsMarker[ $markerUid ]
+                                  + $rowsCat[ $catUid ];
+      }
+    }
+$this->pObj->dev_var_dump( $rowsMarker );
 
 
     return $arr_return;
@@ -2472,14 +2483,14 @@ $this->pObj->dev_var_dump( $rowsOutput );
   }
 
 /**
- * renderMapRouteMarkerGetRowsMarker( ):
+ * renderMapRouteMarkerGetRowsByTable( ):
  *
  * @param       string      $tableMarker : label of the table with the marker
  * @return	array
  * @version 4.5.7
  * @since   4.5.7
  */
-  private function renderMapRouteMarkerGetRowsMarker( $tableMarker )
+  private function renderMapRouteMarkerGetRowsByTable( $tableMarker )
   {
     $rowsOutput = array( );
     $rowsTemp   = array( );
