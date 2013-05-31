@@ -2715,29 +2715,29 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
         // feature begin
       $feature =  array
                   (
-                    'type'      => 'Feature',
-                    'geometry'  => array
-                    (
-                      'type'        => 'LineString',
-                      'coordinates' => $coordinates,
-                    ),
-                    'properties'  => array
-                    (
-                      'name'        => "'" . $name . "'",
-                      'id'          => $id,
-                      'category'    => "'" . $category . "'",
-                      'markerList'  => array
-                      (
-                        'nt77:nt6',
-                        'nt77:point2',
-                      ),
-                      'style' => array
-                      (
-                        'strokeWidth' => $strokeWidth,
-                        'strokeColor' => "'" . $strokeColor . "'",
-                      ),
-                    ),
-                  );
+                    'type'        =>  'Feature',
+                    'geometry'    =>  array
+                                      (
+                                        'type'        => 'LineString',
+                                        'coordinates' => $coordinates,
+                                      ),  // geometry
+                    'properties'  =>  array
+                                      (
+                                        'name'        =>  "'" . $name . "'",
+                                        'id'          =>  $id,
+                                        'category'    =>  "'" . $category . "'",
+                                        'markerList'  =>  array
+                                                          (
+                                                            'nt77:nt6',
+                                                            'nt77:point2',
+                                                          ),  // markerList
+                                        'style'       =>  array
+                                                          (
+                                                            'strokeWidth' => ( int ) $strokeWidth,
+                                                            'strokeColor' => "'" . $strokeColor . "'",
+                                                          ),  // style
+                                      ),  // properties
+                  );  // feature
         // feature end
       $features[] = $feature;
     }
