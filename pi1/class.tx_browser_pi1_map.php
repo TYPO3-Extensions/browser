@@ -2295,7 +2295,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     }
       // RETURN : Map +Routes is disabled
 
-    $arr_return['rowsMarkerWiCat'] = $this->renderMapRouteMarker( );
+    $rowsMarkerWiCat = $this->renderMapRouteMarker( );
     
     $arr_return = $this->renderMapRoutePaths( );
     if( $arr_return['error'] )
@@ -2303,6 +2303,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       return $arr_return;
     }
 
+    $arr_return['rowsMarkerWiCat'] = $rowsMarkerWiCat;
     return $arr_return;
   }
 
