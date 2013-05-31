@@ -2240,7 +2240,19 @@ $this->pObj->dev_var_dump( $mapMarkers );
       // Get points (map marker) as JSON array and coordinates
 
       // Add JSON array
-    $map_template = str_replace( "'###RAWDATA###'", $jsonData, $map_template );
+    switch( true )
+    {
+      case( $this->pObj->typoscriptVersion <= 4005004 ):
+        $jsonMarker = "'###JSONDATA###'";
+        break;
+      case( $this->pObj->typoscriptVersion <= 4005007 ):
+      default:
+        $jsonMarker = "'###RAWDATA###'";
+        break;
+    }
+      // #47631, #i0007, dwildt, 18+
+$this->pObj->dev_var_dump( $map_template );
+    $map_template = str_replace( $jsonMarker, $jsonData, $map_template );
 $this->pObj->dev_var_dump( $jsonData );
 
       // Set center coordinates
