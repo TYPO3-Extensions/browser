@@ -2619,7 +2619,7 @@ if( $this->pObj->b_drs_todo )
     $jsonData = array( );
 
     $rowsBackup = $this->pObj->rows;
-    $this->renderMapRoutePathsRows( );
+    //$this->renderMapRoutePathsRows( );
     $this->pObj->rows = $rowsBackup;
     $series = array
     (
