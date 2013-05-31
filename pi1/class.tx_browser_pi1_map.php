@@ -2457,7 +2457,7 @@ if( $this->pObj->b_drs_todo )
     //
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
-    $relations  = $this->renderMapRouteMarkerGetRelations( );
+    $relations  = $this->renderMapRouteRelations( 'MARKER' );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
@@ -2508,15 +2508,16 @@ if( $this->pObj->b_drs_todo )
   }
 
 /**
- * renderMapRouteMarkerGetRelations( ): Returns all elements which have a key with the prefix MARKER
+ * renderMapRouteRelations( ): Returns all elements which have a key with the given prefixMarker
  *
- * @return	array     $relations  : elements with keys with prefix MARKER
+ * @param       string    $prefixMarker : MARKER || PATH
+ * @return	array     $relations    : elements with keys with prefix MARKER
  * @version 4.5.7
  * @since   4.5.7
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarkerGetRelations( )
+  private function renderMapRouteRelations( $prefixMarker )
   {
     // Example
     // $rows[0]['MARKER:tx_route_path->tx_route_marker->tx_route_marker_cat->listOf.uid'] = '2.3.10, ;|;2.3.9, ;|;2.3.8, ;|;2.4.10, ;|;2.4.8, ;|;2.4.7, ;|;2.5.10, ;|;2.5.8';
@@ -2530,8 +2531,8 @@ if( $this->pObj->b_drs_todo )
         // LOOP elements
       foreach( $elements as $key => $value )
       {
-        list( $marker ) = explode( ':', $key );
-        if( ! ( $marker == 'MARKER' ) )
+        list( $prefix ) = explode( ':', $key );
+        if( ! ( $prefix == $prefixMarker ) )
         {
             // CONTINUE : element hasn't any prefix MARKER
           continue;
@@ -2548,7 +2549,7 @@ if( $this->pObj->b_drs_todo )
     if( empty ( $relations ) )
     {
       $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                'rows doesn\'t contain any row with a key with the prefix MARKER!';
+                'rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!';
       die( $prompt );
     }
       // die: no relation
@@ -2627,10 +2628,22 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePaths( )
   {
-    $jsonData = array( );
-
+    $jsonData   = array( );
     $rowsBackup = $this->pObj->rows;
-    $this->renderMapRoutePathsConsolidateRows( );
+    
+    // Get relations marker -> categrories
+    $arrResult    = $this->renderMapRoutePathRelations( );
+    $rowsRelation = $arrResult['rowsRelation'];
+    $tableMarker  = $arrResult['tableMarker'];
+    $tableCat     = $arrResult['tableCat'];
+    //$tablePath    = $arrResult['tablePath'];
+    unset( $arrResult );
+    
+    $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
+    //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
+
+    return $rowsMarkerWiCat;
+
     $this->pObj->rows = $rowsBackup;
     $series = array
     (
@@ -2724,6 +2737,79 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRoutePathsConsolidateRows( )
   {
     $this->pObj->dev_var_dump( $this->pObj->rows );
+  }
+
+/**
+ * renderMapRoutePathRelations( ) : Get relations path -> categrories
+ *                                  rowsRelation array will look like:
+ *                                  * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
+ *                                  * tablePath.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
+ *
+ * @return	array   $arrReturn : with Elements rowsRelation, tableCat, tablePath
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRoutePathRelations( )
+  {
+    $arrReturn    = array( );
+    $rowsRelation = array( );
+    
+    // Example
+    // $relation[0]['PATH:tx_route_path->tx_route_path_cat->listOf.uid' => '2.8';
+    //    '2.8' is a relation like
+    //    tx_route_path.uid -> tx_route_path_cat.uid
+    //
+
+      // Get the PATH relations (each element with a prefix PATH - see example above)
+    $relations  = $this->renderMapRouteRelations( 'PATH' );
+
+      // Get the key of a relation
+    $relationKey = key( $relations[0] );
+    
+      // Get the lables for the tables path and pathCat
+    list( $marker, $tables ) = explode( ':', $relationKey );
+    unset( $marker );
+    list( $tablePath, $tablePathCat ) = explode( '->', $tables );
+      // Get the lables for the tables path and pathCat
+
+      // LOOP relations
+    foreach( $relations as $relation )
+    {
+        // LOOP relation      
+      foreach( $relation as $tablePathCat )
+      {
+        $arrTablePathCat = explode( $this->catDevider, $tablePathCat );
+          // LOOP children
+        foreach( $arrTablePathCat as $arrTablePathCatChildren )
+        {
+          list( $pathUid, $catUid ) = explode( '.', $arrTablePathCatChildren );
+          unset( $pathUid );
+          $rowsRelation[ $pathUid ][ ]  = $catUid;
+          $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+        }
+          // LOOP children
+      }
+        // LOOP relation      
+    }
+      // LOOP relations
+    
+      // $rowsRelation will look like:
+      // array( 
+      //  '7' => array( 4, 10, 7 ),
+      //  '5' => array( 10, 8 ),
+      // )
+      // array(
+      //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
+      //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
+      // )
+    $this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tablePathCat );
+    $arrReturn['rowsRelation']  = $rowsRelation;
+    $arrReturn['tableCat']      = $tablePathCat;
+    $arrReturn['tablePath']     = $tablePath;
+    return $arrReturn;
+    
   }
 
 
