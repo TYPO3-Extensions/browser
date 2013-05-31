@@ -2697,50 +2697,48 @@ $this->pObj->dev_var_dump( $series, $jsonData );
  */
   private function renderMapRoutePathsJsonFeatures( $rowsPathWiCat )
   {
+$this->pObj->dev_var_dump( $rowsPathWiCat );
     $features = array( );
     
     foreach( $rowsPathWiCat as $rowPathWiCat )
     {
-      foreach( $rowPathWiCat as $tableField => $value )
-      {
-        $features = $features
-                  + array
+      $features = $features
+                + array
+                  (
+                    'type'      => 'Feature',
+                    'geometry'  => array
                     (
-                      'type'      => 'Feature',
-                      'geometry'  => array
+                      'type'        => 'LineString',
+                      'coordinates' => array
                       (
-                        'type'        => 'LineString',
-                        'coordinates' => array
-                        (
-                          array( 
-                            13.64,
-                            54.51,
-                          ),
-                          array( 
-                            13.65,
-                            54.52,
-                          ),
+                        array( 
+                          13.64,
+                          54.51,
+                        ),
+                        array( 
+                          13.65,
+                          54.52,
                         ),
                       ),
-                      'properties'  => array
+                    ),
+                    'properties'  => array
+                    (
+                      'name'        => 'route1',
+                      'id'          => 345,
+                      'category'    => 'radweg1',
+                      'markerList'  => array
                       (
-                        'name'        => 'route1',
-                        'id'          => 345,
-                        'category'    => 'radweg1',
-                        'markerList'  => array
-                        (
-                          'nt77:nt6',
-                          'nt77:point2',
-                        ),
-                        'style' => array
-                        (
-                          'strokeWidth' => 3,
-                          'strokeColor' => '#a00',
-                        ),
+                        'nt77:nt6',
+                        'nt77:point2',
                       ),
-                    )
-                  ;
-      }
+                      'style' => array
+                      (
+                        'strokeWidth' => 3,
+                        'strokeColor' => '#a00',
+                      ),
+                    ),
+                  )
+                ;
     }
 
     $features = array ( $features );
