@@ -2755,7 +2755,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
  */
   private function renderMapRoutePathsJsonFeaturesCoordinates( $arrLonLat )
   {
-    $coordinates = explode( "\n\l", $arrLonLat );
+    $coordinates = explode( "\l\n", $arrLonLat );
 
       // wrap $coordinates by an array
     $coordinates = array ( $coordinates );
