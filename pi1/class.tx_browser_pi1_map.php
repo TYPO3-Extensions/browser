@@ -2741,8 +2741,6 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
     }
       // LOOP rows
 
-      // wrap features by an array
-    $features = array ( $features );
     return $features;
   }
 
