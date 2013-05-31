@@ -652,6 +652,7 @@ if( $this->pObj->b_drs_todo )
   {
       // init the map
     $this->init( );
+    $arr_result = $this->renderMapRoute( );
 
 
 
@@ -1100,7 +1101,6 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN : HTML template is not proper
 
-    $arr_result = $this->renderMapRoute( );
     if( $arr_result['error'] )
     {
       $mapHashKey = '###MAP###';
