@@ -896,6 +896,13 @@ plugin.tx_browser_pi1 {
                           , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
                           , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
                           , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
+                          , route           : {
+                                                  data : routes
+                                                , defaultStyle : {
+                                                                      strokeWidth : 1
+                                                                    , strokeColor : '#000'
+                                                                  }
+                                              }
 )
                   }
                     // End: Don't edit it!
