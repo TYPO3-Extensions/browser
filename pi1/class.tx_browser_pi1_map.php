@@ -2926,6 +2926,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteRelations( 'MARKER' );
+    $this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
