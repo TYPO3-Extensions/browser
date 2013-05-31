@@ -673,6 +673,21 @@ plugin.tx_browser_pi1 {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = true  
         }
+        route =
+        route {
+          fields =
+          fields {
+            path =
+            path {
+              title     = {$plugin.tx_browser_pi1.map.path.field.path.title}
+              geodata   = {$plugin.tx_browser_pi1.map.path.field.path.geodata}
+              color     = {$plugin.tx_browser_pi1.map.path.field.path.color}
+              lineWidth = {$plugin.tx_browser_pi1.map.path.field.path.lineWidth}
+            }
+            pathCategory    = {$plugin.tx_browser_pi1.map.path.field.pathCategory}
+            markerCategory  = {$plugin.tx_browser_pi1.map.path.field.markerCategory}
+          }
+        }
         zoomLevel {
             // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel 
           mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}
