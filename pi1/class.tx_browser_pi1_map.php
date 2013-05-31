@@ -714,6 +714,7 @@ $this->pObj->dev_var_dump( $arr_result );
     $routes = $arr_result['routes'];
     unset( $arr_result );
     
+$this->pObj->dev_var_dump( $this->pObj->rows );
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
