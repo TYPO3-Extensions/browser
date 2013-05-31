@@ -2676,6 +2676,7 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJson( $rowsPathWiCat )
   {
+$this->pObj->dev_var_dump( $this->pObj->data );
     $series = array
     (
       'type'      =>  'FeatureCollection',
@@ -2683,7 +2684,7 @@ if( $this->pObj->b_drs_todo )
     );
    
     $jsonData = json_encode( $series );
-$this->pObj->dev_var_dump( $series, $jsonData );
+//$this->pObj->dev_var_dump( $series, $jsonData );
     
     return $jsonData;
   }
@@ -2697,7 +2698,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
  */
   private function renderMapRoutePathsJsonFeatures( $rowsPathWiCat )
   {
-$this->pObj->dev_var_dump( $rowsPathWiCat );
+//$this->pObj->dev_var_dump( $rowsPathWiCat );
     $features = array( );
     
       // LOOP rows
@@ -2707,6 +2708,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
       $category     = $rowPathWiCat[ 'tx_route_path_cat.title' ];
       $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.gpxdata' ] );
       $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
+      $markerList   = $this->renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat );
       $name         = $rowPathWiCat[ 'tx_route_path.title' ];
       $strokeColor  = $rowPathWiCat[ 'tx_route_path.color' ];
       $strokeWidth  = $rowPathWiCat[ 'tx_route_path.line_width' ];
@@ -2726,11 +2728,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                                         'name'        =>  $name,
                                         'id'          =>  $id,
                                         'category'    =>  $category,
-                                        'markerList'  =>  array
-                                                          (
-                                                            'nt77:nt6',
-                                                            'nt77:point2',
-                                                          ),  // markerList
+                                        'markerList'  =>  $markerList,
                                         'style'       =>  array
                                                           (
                                                             'strokeWidth' => ( int ) $strokeWidth,
@@ -2768,6 +2766,23 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
     }
 
     return $coordinates;
+  }
+
+/**
+ * renderMapRoutePathsJsonFeaturesMarker( ) :
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat )
+  {
+    $marker = array
+              (
+                0 => 'nt77:nt6',
+                1 => 'nt77:point2',
+              );
+    return $marker;
   }
 
 /**
