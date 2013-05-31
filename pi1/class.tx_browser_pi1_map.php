@@ -2336,9 +2336,25 @@ $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
       foreach( $catUids as $catUid => $dummy )
       {
         unset( $dummy );
-        $rowsMarker[ $markerUid ] = $rowsMarker[ $markerUid ]
-                                  + $rowsCat[ $catUid ];
-        $rowsMarker[ $markerUid ][ $catUid ] = $rowsCat[ $catUid ];
+        foreach( $rowsCat[ $catUid ] as $tableField => $value )
+        {
+          switch( true )
+          {
+            case( isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
+              $rowsMarker[ $markerUid ][ $tableField ]  = $rowsMarker[ $markerUid ][ $tableField ]
+                                                        + $this->catDevider
+                                                        + $value
+                                                        ;
+              break;
+            case( ! isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
+            default:
+              $rowsMarker[ $markerUid ][ $tableField ]  = $value;
+              break;
+          }
+        }
+//        $rowsMarker[ $markerUid ] = $rowsMarker[ $markerUid ]
+//                                  + $rowsCat[ $catUid ];
+//        $rowsMarker[ $markerUid ][ $catUid ] = $rowsCat[ $catUid ];
       }
     }
 $this->pObj->dev_var_dump( $rowsMarker );
