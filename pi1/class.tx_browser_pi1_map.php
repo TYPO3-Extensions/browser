@@ -2509,8 +2509,8 @@ if( $this->pObj->b_drs_todo )
     
       // $rowsRelation will look like:
       // array( 
-      //  '7' => array( 4, 10, 7 ),
-      //  '5' => array( 10, 8 ),
+      //  7 => array( 4, 10, 7 ),
+      //  5 => array( 10, 8 ),
       // )
       // array(
       //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
@@ -2652,13 +2652,13 @@ if( $this->pObj->b_drs_todo )
     // Get relations marker -> categrories
     $arrResult    = $this->renderMapRoutePathRelations( );
     $rowsRelation = $arrResult['rowsRelation'];
-    $tableMarker  = $arrResult['tableMarker'];
+    $tablePath    = $arrResult['tablePath'];
     $tableCat     = $arrResult['tableCat'];
-    //$tablePath    = $arrResult['tablePath'];
+    //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     unset( $arrResult );
     
-    $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
-    //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
+    $rowsPathWiCat  = $this->renderMapRouteMarkerWiCat( $tablePath, $tableCat, $rowsRelation );
+    $this->pObj->dev_var_dump( $rowsPathWiCat );
 
     //return $rowsMarkerWiCat;
 
@@ -2831,14 +2831,14 @@ if( $this->pObj->b_drs_todo )
     
       // $rowsRelation will look like:
       // array( 
-      //  '7' => array( 4, 10, 7 ),
-      //  '5' => array( 10, 8 ),
+      //  2 => array( 8 ),
+      //  1 => array( 7 ),
       // )
       // array(
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
-    $this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
+    //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tablePath']     = $tablePath;
