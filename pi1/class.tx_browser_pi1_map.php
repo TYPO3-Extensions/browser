@@ -2703,9 +2703,13 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
       // LOOP rows
     foreach( $rowsPathWiCat as $rowPathWiCat )
     {
-      $name     = "'" . $rowPathWiCat[ 'tx_route_path.title' ] . "'";
-      $id       = $rowPathWiCat[ 'tx_route_path.uid' ];
-      $category = "'" . $rowPathWiCat[ 'tx_route_path_cat.title' ] . "'";
+        // short variables
+      $name         = "'" . $rowPathWiCat[ 'tx_route_path.title' ] . "'";
+      $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
+      $category     = "'" . $rowPathWiCat[ 'tx_route_path_cat.title' ] . "'";
+      $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.title' ] );
+        // short variables
+
         // feature begin
       $feature =  array
                   (
@@ -2713,17 +2717,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                     'geometry'  => array
                     (
                       'type'        => 'LineString',
-                      'coordinates' => array
-                      (
-                        array( 
-                          13.64,
-                          54.51,
-                        ),
-                        array( 
-                          13.65,
-                          54.52,
-                        ),
-                      ),
+                      'coordinates' => $coordinates,
                     ),
                     'properties'  => array
                     (
@@ -2747,9 +2741,25 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
     }
       // LOOP rows
 
-      // wrap features in an array
+      // wrap features by an array
     $features = array ( $features );
     return $features;
+  }
+
+/**
+ * renderMapRoutePathsJsonFeaturesCoordinates( ) :
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRoutePathsJsonFeaturesCoordinates( $arrLonLat )
+  {
+    $coordinates = explode( PHP_EOL, $arrLonLat );
+
+      // wrap $coordinates by an array
+    $coordinates = array ( $coordinates );
+    return $coordinates;
   }
 
 /**
