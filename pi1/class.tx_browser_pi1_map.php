@@ -2781,16 +2781,27 @@ if( $this->pObj->b_drs_todo )
       foreach( $relation as $tablePathCat )
       {
         $arrTablePathCat = explode( $this->catDevider, $tablePathCat );
-$this->pObj->dev_var_dump( $arrTablePathCat, $tablePathCat );
-          // LOOP children
-        foreach( $arrTablePathCat as $arrTablePathCatChildren )
+        switch( true )
         {
-          list( $pathUid, $catUid ) = explode( '.', $arrTablePathCatChildren );
-          unset( $pathUid );
-          $rowsRelation[ $pathUid ][ ]  = $catUid;
-          $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+          case( count( $arrTablePathCat ) > 1 ):
+              // LOOP children
+            foreach( $arrTablePathCat as $tablePathCatChildren )
+            {
+              list( $pathUid, $catUid ) = explode( '.', $tablePathCatChildren );
+              unset( $pathUid );
+              $rowsRelation[ $pathUid ][ ]  = $catUid;
+              $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            }
+              // LOOP children
+            break;
+          case( count( $arrTablePathCat ) == 1 ):
+          default:
+            list( $pathUid, $catUid ) = explode( '.', $tablePathCat );
+            unset( $pathUid );
+            $rowsRelation[ $pathUid ][ ]  = $catUid;
+            $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            break;            
         }
-          // LOOP children
       }
         // LOOP relation      
     }
