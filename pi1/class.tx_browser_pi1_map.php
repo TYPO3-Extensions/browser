@@ -2342,8 +2342,8 @@ $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
           {
             case( isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
               $rowsMarker[ $markerUid ][ $tableField ]  = $rowsMarker[ $markerUid ][ $tableField ]
-                                                        + $this->catDevider
-                                                        + $value
+                                                        . $this->catDevider
+                                                        . $value
                                                         ;
               break;
             case( ! isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
