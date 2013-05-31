@@ -673,10 +673,13 @@ plugin.tx_browser_pi1 {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = true  
         }
+          // fields
         route =
         route {
+            // path, pathCategory, markerCategory
           fields =
           fields {
+              // title, geodata, color, lineWidth
             path =
             path {
               title     = {$plugin.tx_browser_pi1.map.path.field.path.title}
@@ -684,8 +687,16 @@ plugin.tx_browser_pi1 {
               color     = {$plugin.tx_browser_pi1.map.path.field.path.color}
               lineWidth = {$plugin.tx_browser_pi1.map.path.field.path.lineWidth}
             }
-            pathCategory    = {$plugin.tx_browser_pi1.map.path.field.pathCategory}
-            markerCategory  = {$plugin.tx_browser_pi1.map.path.field.markerCategory}
+              // title
+            pathCategory = 
+            pathCategory {
+              title = {$plugin.tx_browser_pi1.map.path.field.pathCategory.title}
+            }
+              // title
+            markerCategory =
+            markerCategory {
+              title = {$plugin.tx_browser_pi1.map.path.field.markerCategory.title}
+            }
           }
         }
         zoomLevel {
