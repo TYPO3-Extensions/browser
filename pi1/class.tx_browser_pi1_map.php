@@ -2312,25 +2312,19 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRouteMarker( )
   {
-    $arr_return = array
-                  (
-                      'error'  => false
-                    , 'prompt' => null
-                  );
 
 //$this->pObj->dev_var_dump( $this->pObj->rows );
     $arrResult    = $this->renderMapRouteMarkerEachRelation( );
-    $rowsRelation = $arrResult['rows'];
-    $relationKey  = $arrResult['relationKey'];
-    $tableCat     = $arrResult['tables']['cat'];
-    $tableMarker  = $arrResult['tables']['marker'];
-    $tablePath    = $arrResult['tables']['path'];
+    $rowsRelation = $arrResult['rowsRelation'];
+    $tableCat     = $arrResult['tableCat'];
+    $tableMarker  = $arrResult['tableMarker'];
+    //$tablePath    = $arrResult['tablePath'];
     unset( $arrResult );
     
     $rowsMarker   = $this->renderMapRouteMarkerConsolidate( $tableMarker, $tableCat, $rowsRelation );
-    $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
+    $this->pObj->dev_var_dump( $rowsRelation, $rowsMarker );
 
-    return $arr_return;
+    return $rowsMarker;
   }
 
 /**
@@ -2391,8 +2385,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRouteMarkerEachRelation( )
   {
-    $arrReturn  = array( );
-    $rowsOutput = array( );
+    $arrReturn    = array( );
+    $rowsRelation = array( );
     
     // Example
     // $relation[0]['MARKER:tx_route_path->tx_route_marker->tx_route_marker_cat->listOf.uid'] = '2.3.10, ;|;2.3.9, ;|;2.3.8, ;|;2.4.10, ;|;2.4.8, ;|;2.4.7, ;|;2.5.10, ;|;2.5.8';
@@ -2409,8 +2403,6 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     list( $tablePath, $tableMarker, $tableMarkerCat ) = explode( '->', $tables );
       // Get the lables for the tables path, marker and markerCat
 
-//$this->pObj->dev_var_dump( $tablePath, $tableMarker, $tableMarkerCat );
-    
       // LOOP relations
     foreach( $relations as $relation )
     {
@@ -2422,55 +2414,19 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         {
           list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
           unset( $pathUid );
-          $rowsOutput[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
+          $rowsRelation[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
         }
       }
         // LOOP relation      
     }
       // LOOP relations
-//$this->pObj->dev_var_dump( $rowsOutput );
     
-    $arrReturn['rows']              = $rowsOutput;
-    $arrReturn['tables']['cat']     = $tableMarkerCat;
-    $arrReturn['tables']['marker']  = $tableMarker;
-    $arrReturn['tables']['path']    = $tablePath;
+    $arrReturn['rowsRelation']  = $rowsRelation;
+    $arrReturn['tableCat']      = $tableMarkerCat;
+    $arrReturn['tableMarker']   = $tableMarker;
+    $arrReturn['tablePath']     = $tablePath;
     return $arrReturn;
     
-    $rowsInput = $this->pObj->rows;
-
-    $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
-    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
-    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
-    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
-
-      // LOOP each row
-    $countRow   = 0;
-    $rowsOutput = array( );
-    foreach( $rowsInput as $elements )
-    {
-      foreach( $elements as $key => $value )
-      {
-        list( $relation ) = explode( ':', $key );
-        if( ! ( $relation == 'MARKER' ) )
-        {
-          continue;
-        }
-      }
-//        list( $table ) = explode( '.', $key );
-//        if( ! ( $table == $tableMarker ) )
-//        {
-//          continue;
-//        }
-//        $rowsOutput[$countRow][$key] = $value; 
-//      }
-      $rowsOutput[$countRow][$catField]         = $elements[$catField]; 
-      $rowsOutput[$countRow][$catIconsField]    = $elements[$catIconsField]; 
-      $rowsOutput[$countRow][$catOffsetXField]  = $elements[$catOffsetXField]; 
-      $rowsOutput[$countRow][$catOffsetYField]  = $elements[$catOffsetYField]; 
-      $countRow++;
-    }
-      // LOOP each row
-$this->pObj->dev_var_dump( $rowsOutput );
   }
 
 /**
