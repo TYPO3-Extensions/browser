@@ -2707,7 +2707,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
       $name         = "'" . $rowPathWiCat[ 'tx_route_path.title' ] . "'";
       $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
       $category     = "'" . $rowPathWiCat[ 'tx_route_path_cat.title' ] . "'";
-      $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.title' ] );
+      $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.gpxdata' ] );
         // short variables
 
         // feature begin
