@@ -2642,22 +2642,67 @@ if( $this->pObj->b_drs_todo )
           'type'  => 'Feature',
           'geometry'  => array
           (
-            'type'  => 'Feature',
-            'geometry'  => array
+            'type'  => 'LineString',
+            'coordinates'  => array
             (
-              'type'  => 'LineString',
-              'coordinates'  => array
-              (
-                array( 
-                  13.64,
-                  54.51,
-                ),
-                array( 
-                  13.65,
-                  54.52,
-                ),
+              array( 
+                13.64,
+                54.51,
               ),
-            ), 
+              array( 
+                13.65,
+                54.52,
+              ),
+            ),
+          ),
+          'properties'  => array
+          (
+            'name'        => 'route1',
+            'id'          => 345,
+            'category'    => 'radweg1',
+            'markerList'  => array
+            (
+              'nt77:nt6',
+              'nt77:point2',
+            ),
+            'style' => array
+            (
+              'strokeWidth' => 3,
+              'strokeColor' => '#a00',
+            ),
+          ),
+        ),
+        array
+        (
+          'type'  => 'Feature',
+          'geometry'  => array
+          (
+            'type'  => 'LineString',
+            'coordinates'  => array
+            (
+              array( 
+                13.09,
+                54.31,
+              ),
+              array( 
+                13.10,
+                54.32,
+              ),
+            ),
+          ),
+          'properties'  => array
+          (
+            'name'        => 'route2',
+            'id'          => 567,
+            'category'    => 'radweg2',
+            'markerList'  => array
+            (
+            ),
+            'style' => array
+            (
+              'strokeWidth' => 2,
+              'strokeColor' => 'blue',
+            ),
           ),
         ),
       ),  
