@@ -2646,8 +2646,14 @@ if( $this->pObj->b_drs_todo )
             'type'  => 'LineString',
             'coordinates'  => array
             (
-                'a,b',
-                'c,d',
+              array( 
+                13.64,
+                54.51,
+              ),
+              array( 
+                13.65,
+                54.52,
+              ),
             ),
           ), 
         ),
