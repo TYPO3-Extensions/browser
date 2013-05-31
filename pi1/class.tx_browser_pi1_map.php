@@ -2484,10 +2484,12 @@ $this->pObj->dev_var_dump( $rowsOutput );
 
       // LOOP rows
     $rowsCounter = 100;
+    $uid2 = 0;
     foreach( $this->pObj->rows as $row )
     {
 //$this->pObj->dev_var_dump( $row );
         // LOOP row
+      $uid2++;
       foreach( $row as $tableField => $value )
       {
 //$this->pObj->dev_var_dump( $tableField, $value );
@@ -2502,16 +2504,15 @@ $this->pObj->dev_var_dump( $rowsOutput );
         {
           $uid = $rowsCounter + $childCounter;
           $rowsOutput[ $uid ][ $tableField ] = $child;
-          $rowsChildren[ $tableField ] = $child;
+          $rowsOutput[ $uid ][ 'uid2' ] = $uid2;
           $childCounter++;
         }
       }
         // LOOP row
       $rowsCounter = $rowsCounter + 100;
-      $rowsOutput2[] = $rowsChildren;
     }
       // LOOP rows
-$this->pObj->dev_var_dump( $rowsOutput, $rowsOutput2 );
+$this->pObj->dev_var_dump( $rowsOutput );
 
   }
 
