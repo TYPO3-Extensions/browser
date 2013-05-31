@@ -721,7 +721,10 @@ if( $this->pObj->b_drs_todo )
 
       // render the map
     $template = $this->renderMap( $template );
-    $template = str_replace( "'###ROUTES###'", $routes, $template );
+    if( ! empty( $routes ) )
+    {
+      $template = str_replace( "'###ROUTES###'", $routes, $template );
+    }
 
       // RETURN the template
     $this->rowsReset( );
