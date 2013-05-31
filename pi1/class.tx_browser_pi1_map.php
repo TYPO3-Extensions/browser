@@ -2734,7 +2734,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                       'style' => array
                       (
                         'strokeWidth' => $strokeWidth,
-                        'strokeColor' => $strokeColor . "'",
+                        'strokeColor' => "'" . $strokeColor . "'",
                       ),
                     ),
                   );
