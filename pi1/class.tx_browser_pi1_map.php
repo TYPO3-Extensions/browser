@@ -2723,9 +2723,9 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                                       ),  // geometry
                     'properties'  =>  array
                                       (
-                                        'name'        =>  "'" . $name . "'",
+                                        'name'        =>  $name,
                                         'id'          =>  $id,
-                                        'category'    =>  "'" . $category . "'",
+                                        'category'    =>  $category,
                                         'markerList'  =>  array
                                                           (
                                                             'nt77:nt6',
@@ -2734,7 +2734,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
                                         'style'       =>  array
                                                           (
                                                             'strokeWidth' => ( int ) $strokeWidth,
-                                                            'strokeColor' => "'" . $strokeColor . "'",
+                                                            'strokeColor' => $strokeColor,
                                                           ),  // style
                                       ),  // properties
                   );  // feature
