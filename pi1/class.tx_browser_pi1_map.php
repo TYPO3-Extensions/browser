@@ -2328,6 +2328,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $arrResult );
     
     $rowsMarker   = $this->renderMapRouteMarkerGetRowsMarker( $tableMarker );
+$this->pObj->dev_var_dump( $rowsMarker, $rowsRelation );
 
 
     return $arr_return;
@@ -2511,12 +2512,13 @@ $this->pObj->dev_var_dump( $rowsOutput );
       // LOOP rows
     foreach( $rowsTemp as $row )
     {
+        // unique array
       $uid = $row[ $tableMarker . '.uid' ];
       $rowsOutput[ $uid ] = $row;
     }
       // LOOP rows
 
-$this->pObj->dev_var_dump( $rowsOutput );
+//$this->pObj->dev_var_dump( $rowsOutput );
     return $rowsOutput;
   }
 
