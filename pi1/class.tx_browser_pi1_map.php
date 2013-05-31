@@ -2328,6 +2328,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $arrResult );
     
     $rowsMarker   = $this->renderMapRouteMarkerGetRowsMarker( $tableMarker );
+$this->pObj->dev_var_dump( $rowsMarker );
 
 
     return $arr_return;
@@ -2480,23 +2481,21 @@ $this->pObj->dev_var_dump( $rowsOutput );
   private function renderMapRouteMarkerGetRowsMarker( $tableMarker )
   {
     $rowsOutput = array( );
+    $rowsTemp   = array( );
 //$this->pObj->dev_var_dump( $this->pObj->rows, $tableMarker );
 
       // LOOP rows
     $rowsCounter = 100;
-    $uid2 = 0;
     foreach( $this->pObj->rows as $row )
     {
 //$this->pObj->dev_var_dump( $row );
         // LOOP row
-      $uid2++;
       foreach( $row as $tableField => $value )
       {
 //$this->pObj->dev_var_dump( $tableField, $value );
         list( $table ) = explode( '.', $tableField );
         if( $table != $tableMarker )
         {
-          $uid2--;
           continue;
         }
         $children = explode( $this->catDevider, $value );
@@ -2504,8 +2503,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
         foreach( $children as $child )
         {
           $uid = $rowsCounter + $childCounter;
-          $rowsOutput[ $uid ][ $tableField ] = $child;
-          $rowsOutput[ $uid ][ 'uid2' ] = $uid2;
+          $rowsTemp[ $uid ][ $tableField ] = $child;
           $childCounter++;
           $uid2++;
         }
@@ -2514,8 +2512,13 @@ $this->pObj->dev_var_dump( $rowsOutput );
       $rowsCounter = $rowsCounter + 100;
     }
       // LOOP rows
-$this->pObj->dev_var_dump( $rowsOutput );
-
+    
+    //$this->pObj->dev_var_dump( $rowsOutput );
+    foreach( $rowsTemp as $row )
+    {
+      $rowsOutput[ ] = $row;
+    }
+    return $rowsOutput;
   }
 
 /**
