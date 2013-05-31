@@ -2704,7 +2704,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat );
     foreach( $rowsPathWiCat as $rowPathWiCat )
     {
       $name     = "'" . $rowPathWiCat[ 'tx_route_path.title' ] . "'";
-      $id       = $rowPathWiCat[ 'tx_route_path.title' ];
+      $id       = $rowPathWiCat[ 'tx_route_path.uid' ];
       $category = "'" . $rowPathWiCat[ 'tx_route_path_cat.title' ] . "'";
         // feature begin
       $feature =  array
