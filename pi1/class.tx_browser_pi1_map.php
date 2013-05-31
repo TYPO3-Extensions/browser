@@ -2622,15 +2622,15 @@ if( $this->pObj->b_drs_todo )
  * renderMapRoutePaths( ):
  *
  * @return	array
- * @version 4.5.6
- * @since   4.5.6
+ * @version 4.5.7
+ * @since   4.5.7
  */
   private function renderMapRoutePaths( )
   {
     $jsonData = array( );
 
     $rowsBackup = $this->pObj->rows;
-    //$this->renderMapRoutePathsRows( );
+    $this->renderMapRoutePathsConsolidateRows( );
     $this->pObj->rows = $rowsBackup;
     $series = array
     (
@@ -2712,6 +2712,18 @@ if( $this->pObj->b_drs_todo )
 //$this->pObj->dev_var_dump( $series, $jsonData );
     
     return $jsonData;
+  }
+
+/**
+ * renderMapRoutePathsConsolidateRows( ):
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRoutePathsConsolidateRows( )
+  {
+    $this->pObj->dev_var_dump( $this->pObj->rows );
   }
 
 
