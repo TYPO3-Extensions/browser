@@ -2241,6 +2241,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // Add JSON array
     $map_template = str_replace( "'###RAWDATA###'", $jsonData, $map_template );
+$this->pObj->dev_var_dump( $map_template, $jsonData );
 
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
