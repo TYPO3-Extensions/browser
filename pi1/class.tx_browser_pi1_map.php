@@ -2788,7 +2788,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $tableMarker  = $arrResult['tableMarker'];
       $tablePath    = $arrResult['tablePath'];
     }
-    $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
+    $this->pObj->dev_var_dump( $arrResult );
+    //$this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
 
     foreach( $this->pObj->rows as $row )
     {
