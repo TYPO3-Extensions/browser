@@ -2456,7 +2456,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         {
           list( $pathUid, $markerUid, $catUid ) = explode( '.', $arrTablePathMarkerCatChildren );
           unset( $pathUid );
-          $rowsRelation[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
+          //$rowsRelation[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
+          $rowsRelation[$markerUid][] = $catUid;
         }
       }
         // LOOP relation      
