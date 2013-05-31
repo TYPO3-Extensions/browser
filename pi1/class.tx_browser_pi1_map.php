@@ -2496,6 +2496,7 @@ $this->pObj->dev_var_dump( $rowsOutput );
         list( $table ) = explode( '.', $tableField );
         if( $table != $tableMarker )
         {
+          $uid2--;
           continue;
         }
         $children = explode( $this->catDevider, $value );
