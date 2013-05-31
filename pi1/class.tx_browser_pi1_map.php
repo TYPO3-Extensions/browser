@@ -2651,8 +2651,8 @@ if( $this->pObj->b_drs_todo )
   {
     $jsonData   = array( );
     
-    // Get relations marker -> categrories
-    $arrResult    = $this->renderMapRoutePathRelations( );
+      // Get relations marker -> categrories
+    $arrResult    = $this->renderMapRoutePathCatRelations( );
     $rowsRelation = $arrResult['rowsRelation'];
     $tablePath    = $arrResult['tablePath'];
     $tableCat     = $arrResult['tableCat'];
@@ -2708,7 +2708,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $category     = $rowPathWiCat[ 'tx_route_path_cat.title' ];
       $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.gpxdata' ] );
       $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
-      $markerList   = $this->renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat );
+      $markerList   = $this->renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat[ 'tx_route_path.uid' ] );
       $name         = $rowPathWiCat[ 'tx_route_path.title' ];
       $strokeColor  = $rowPathWiCat[ 'tx_route_path.color' ];
       $strokeWidth  = $rowPathWiCat[ 'tx_route_path.line_width' ];
@@ -2775,8 +2775,16 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * @version 4.5.7
  * @since   4.5.7
  */
-  private function renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat )
+  private function renderMapRoutePathsJsonFeaturesMarker( $tablePathUid )
   {
+      // Get relations marker -> categrories
+    $arrResult    = $this->renderMapRoutePathMarkerRelations( );
+    $rowsRelation = $arrResult['rowsRelation'];
+    $tablePath    = $arrResult['tablePath'];
+    $tableMarker  = $arrResult['tableMarker'];
+    $this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableMarker );
+    unset( $arrResult );
+    
     $marker = array
               (
                 0 => 'nt77:nt6',
@@ -2786,7 +2794,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
   }
 
 /**
- * renderMapRoutePathRelations( ) : Get relations path -> categrories
+ * renderMapRoutePathCatRelations( ) : Get relations path -> categrories
  *                                  rowsRelation array will look like:
  *                                  * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
  *                                  * tablePath.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
@@ -2797,7 +2805,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * 
  * @internal    #47630
  */
-  private function renderMapRoutePathRelations( )
+  private function renderMapRoutePathCatRelations( )
   {
     $arrReturn    = array( );
     $rowsRelation = array( );
@@ -2869,6 +2877,95 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableCat;
+    $arrReturn['tablePath']     = $tablePath;
+    return $arrReturn;
+    
+  }
+
+/**
+ * renderMapRoutePathMarkerRelations( ) : Get relations path -> marker
+ *                                  rowsRelation array will look like:
+ *                                  * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
+ *                                  * tablePath.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
+ *
+ * @return	array   $arrReturn : with Elements rowsRelation, tableCat, tablePath
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRoutePathMarkerRelations( )
+  {
+    $arrReturn    = array( );
+    $rowsRelation = array( );
+    
+    // Example
+    // $relation[0]['MARKER:tx_route_path->tx_route_marker->tx_route_marker_cat->listOf.uid' => '2.3.10, ;|;2.3.9, ;|;2.4.10, ;|;2.5.10';
+    //    '2.3.1' is a relation like
+    //    tx_route_path.uid -> tx_route_marker.uid
+    //
+
+      // Get the MARKER relations (each element with a prefix MARKER - see example above)
+    $relations  = $this->renderMapRouteRelations( 'MARKER' );
+
+      // Get the key of a relation
+    $relationKey = key( $relations[0] );
+    
+      // Get the lables for the tables path and pathCat
+    list( $prefix, $tables ) = explode( ':', $relationKey );
+    unset( $prefix );
+    list( $tablePath, $tableMarker ) = explode( '->', $tables );
+      // Get the lables for the tables path and pathCat
+
+      // LOOP relations
+    foreach( $relations as $relation )
+    {
+        // LOOP relation      
+      foreach( $relation as $tablePathMarker )
+      {
+        $arrTablePathMarker = explode( $this->catDevider, $tablePathMarker );
+          // SWITCH : children
+        switch( true )
+        {
+            // CASE : children
+          case( count( $arrTablePathMarker ) > 1 ):
+              // LOOP children
+            foreach( $arrTablePathMarker as $tablePathMarkerChildren )
+            {
+              list( $pathUid, $markerUid )  = explode( '.', $tablePathMarkerChildren );
+              $rowsRelation[ $pathUid ][ ]  = $markerUid;
+              $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            }
+              // LOOP children
+            break;
+            // CASE : children
+            // CASE : no children
+          case( count( $arrTablePathMarker ) == 1 ):
+          default:
+            list( $pathUid, $markerUid ) = explode( '.', $tablePathMarker );
+            $rowsRelation[ $pathUid ][ ]  = $markerUid;
+            $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            break;            
+            // CASE : no children
+        }
+          // SWITCH : children
+      }
+        // LOOP relation      
+    }
+      // LOOP relations
+    
+      // $rowsRelation will look like:
+      // array( 
+      //  2 => array( 8 ),
+      //  1 => array( 7 ),
+      // )
+      // array(
+      //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
+      //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
+      // )
+    //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
+    $arrReturn['rowsRelation']  = $rowsRelation;
+    $arrReturn['tableMarker']   = $tableMarker;
     $arrReturn['tablePath']     = $tablePath;
     return $arrReturn;
     
