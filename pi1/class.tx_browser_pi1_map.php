@@ -2676,7 +2676,7 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJson( $rowsPathWiCat )
   {
-$this->pObj->dev_var_dump( $this->pObj->data );
+$this->pObj->dev_var_dump( $this->pObj->rows );
     $series = array
     (
       'type'      =>  'FeatureCollection',
