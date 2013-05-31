@@ -2344,17 +2344,17 @@ if( $this->pObj->b_drs_todo )
     //$tablePath    = $arrResult['tablePath'];
     unset( $arrResult );
     
-    $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
+    $rowsMarkerWiCat  = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
     //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
 
     return $rowsMarkerWiCat;
   }
 
 /**
- * renderMapRouteMarkerWiCat( ) : Consolidate marker rows.
- *                                      Categories will added to each marker.
- *                                      If there is mor than one category, categories will
- *                                      handle as children - devided by the devider from typoScript 
+ * renderMapRouteTableWiCat( )  : Consolidate table rows.
+ *                                Categories will added to each row.
+ *                                If there is more than one category, categories will
+ *                                handled as children - devided by the devider from typoScript 
  *
  * @return	array
  * @version 4.5.7
@@ -2362,9 +2362,10 @@ if( $this->pObj->b_drs_todo )
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation )
+  private function renderMapRouteTableWiCat( $tableLocal, $tableCat, $rowsRelation )
   {
-      // $rowsMarker: Marker row without categories
+      // $rowsLocal: rows without categories
+      //    tx_route_marker is the local table in the sample below
       //
       //array (
       //  3 => 
@@ -2376,39 +2377,39 @@ if( $this->pObj->b_drs_todo )
       //    'tx_route_marker.uid'   => '3',
       //  ),
     
-      // Get marker rows (they don't have any category currently)
-    $rowsMarker = $this->renderMapRouteMarkerGetRowsByTable( $tableMarker );
+      // Get rows (they don't have any category currently)
+    $rowsLocal  = $this->renderMapRouteMarkerGetRowsByTable( $tableLocal );
       // Get category rows
     $rowsCat    = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
 
       // LOOP relations
-    foreach( $rowsRelation as $markerUid => $catUids )
+    foreach( $rowsRelation as $localUid => $catUids )
     {
         // LOOP categories
       foreach( $catUids as $catUid )
       {
           // LOOP category fields
-        foreach( $rowsCat[ $catUid ] as $tableField => $value )
+        foreach( $rowsCat[ $catUid ] as $catTableField => $catValue )
         {
-            // SWITCH: marker with or without category field
+            // SWITCH: local with or without category field
           switch( true )
           {
               // CASE: with category field
-            case( isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
-              $rowsMarker[ $markerUid ][ $tableField ]  = $rowsMarker[ $markerUid ][ $tableField ]
+            case( isset( $rowsLocal[ $localUid ][ $catTableField ] ) ):
+              $rowsLocal[ $localUid ][ $catTableField ] = $rowsLocal[ $localUid ][ $catTableField ]
                                                         . $this->catDevider
-                                                        . $value
+                                                        . $catValue
                                                         ;
               break;
               // CASE: with category field
               // CASE: without category field
-            case( ! isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
+            case( ! isset( $rowsLocal[ $localUid ][ $catTableField ] ) ):
             default:
-              $rowsMarker[ $markerUid ][ $tableField ]  = $value;
+              $rowsLocal[ $localUid ][ $catTableField ] = $catValue;
               break;
               // CASE: without category field
           }
-            // SWITCH: marker with or without category field
+            // SWITCH: local with or without category field
         }
           // LOOP category fields
       }
@@ -2416,7 +2417,9 @@ if( $this->pObj->b_drs_todo )
     }
       // LOOP relations
 
-      // $rowsMarker: Marker row with categories
+      // $rowsLocal: rows with categories
+      //    tx_route_marker     is the local    table in the sample below
+      //    tx_route_marker_cat is the category table in the sample below
       // 
       //array (
       //  3 => 
@@ -2430,7 +2433,7 @@ if( $this->pObj->b_drs_todo )
       //    'tx_route_marker_cat.icon_offset_y' => '2, ;|;4, ;|;6',
       //    'tx_route_marker_cat.uid'           => '10, ;|;9, ;|;8',
       //  ),
-    return $rowsMarker;
+    return $rowsLocal;
   }
 
 /**
@@ -2657,7 +2660,7 @@ if( $this->pObj->b_drs_todo )
     //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     unset( $arrResult );
     
-    $rowsPathWiCat  = $this->renderMapRouteMarkerWiCat( $tablePath, $tableCat, $rowsRelation );
+    $rowsPathWiCat  = $this->renderMapRouteTableWiCat( $tablePath, $tableCat, $rowsRelation );
     $this->pObj->dev_var_dump( $rowsPathWiCat );
 
     //return $rowsMarkerWiCat;
