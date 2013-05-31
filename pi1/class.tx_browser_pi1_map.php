@@ -2314,21 +2314,24 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
   {
 
 //$this->pObj->dev_var_dump( $this->pObj->rows );
-    $arrResult    = $this->renderMapRouteMarkerEachRelation( );
+      // Get relations from marker to categrories
+      //   like: 7 = array( 4, 10, 7 )
+      //         tableMarker.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
+    $arrResult    = $this->renderMapRouteMarkerRelations( );
     $rowsRelation = $arrResult['rowsRelation'];
-    $tableCat     = $arrResult['tableCat'];
     $tableMarker  = $arrResult['tableMarker'];
+    $tableCat     = $arrResult['tableCat'];
     //$tablePath    = $arrResult['tablePath'];
     unset( $arrResult );
     
-    $rowsMarker   = $this->renderMapRouteMarkerConsolidate( $tableMarker, $tableCat, $rowsRelation );
-    $this->pObj->dev_var_dump( $rowsRelation, $rowsMarker );
+    $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
+    $this->pObj->dev_var_dump( $rowsRelation, $rowsMarkerWiCat );
 
-    return $rowsMarker;
+    return $rowsMarkerWiCat;
   }
 
 /**
- * renderMapRouteMarkerConsolidate( ) : Consolidate marker rows.
+ * renderMapRouteMarkerWiCat( ) : Consolidate marker rows.
  *                                      Categories will added to each marker.
  *                                      If there is mor than one category, categories will
  *                                      handle as children - devided by the devider from typoScript 
@@ -2339,43 +2342,82 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarkerConsolidate( $tableMarker, $tableCat, $rowsRelation )
+  private function renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation )
   {
+      // $rowsMarker: Marker row without categories
+      //
+      //array (
+      //  3 => 
+      //  array (
+      //    'tx_route_marker.title' => 'Reichstag',
+      //    'tx_route_marker.lat' => '13.376210',
+      //    'tx_route_marker.lon' => '52.518572',
+      //    'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
+      //    'tx_route_marker.uid' => '3',
+      //  ),
+    
+      // Get marker rows (they don't have any category currently)
     $rowsMarker   = $this->renderMapRouteMarkerGetRowsByTable( $tableMarker );
+      // Get category rows
     $rowsCat      = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
-    //$this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
 
+      // LOOP relations
     foreach( $rowsRelation as $markerUid => $catUids )
     {
+        // LOOP categories
       foreach( $catUids as $catUid => $dummy )
       {
         unset( $dummy );
+          // LOOP category fields
         foreach( $rowsCat[ $catUid ] as $tableField => $value )
         {
+            // SWITCH: marker with or without category field
           switch( true )
           {
+              // CASE: with category field
             case( isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
               $rowsMarker[ $markerUid ][ $tableField ]  = $rowsMarker[ $markerUid ][ $tableField ]
                                                         . $this->catDevider
                                                         . $value
                                                         ;
               break;
+              // CASE: with category field
+              // CASE: without category field
             case( ! isset( $rowsMarker[ $markerUid ][ $tableField ] ) ):
             default:
               $rowsMarker[ $markerUid ][ $tableField ]  = $value;
               break;
+              // CASE: without category field
           }
+            // SWITCH: marker with or without category field
         }
+          // LOOP category fields
       }
+        // LOOP categories
     }
-    //$this->pObj->dev_var_dump( $rowsMarker );
+      // LOOP relations
 
-
+      // $rowsMarker: Marker row with categories
+      // 
+      //array (
+      //  3 => 
+      //  array (
+      //    'tx_route_marker.title' => 'Reichstag',
+      //    'tx_route_marker.lat' => '13.376210',
+      //    'tx_route_marker.lon' => '52.518572',
+      //    'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
+      //    'tx_route_marker.uid' => '3',
+      //    'tx_route_marker_cat.title' => 'Geschichte, ;|;Politik, ;|;Politik-Pfad',
+      //    'tx_route_marker_cat.icons' => 'history.png, ;|;badge.png, ;|;badge_01.png',
+      //    'tx_route_marker_cat.icon_offset_x' => '2, ;|;4, ;|;6',
+      //    'tx_route_marker_cat.icon_offset_y' => '2, ;|;4, ;|;6',
+      //    'tx_route_marker_cat.uid' => '10, ;|;9, ;|;8',
+      //  ),
     return $rowsMarker;
   }
 
 /**
- * renderMapRouteMarkerEachRelation( ):
+ * renderMapRouteMarkerRelations( ):
  *
  * @return	array
  * @version 4.5.7
@@ -2383,7 +2425,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarkerEachRelation( )
+  private function renderMapRouteMarkerRelations( )
   {
     $arrReturn    = array( );
     $rowsRelation = array( );
