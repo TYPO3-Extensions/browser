@@ -2325,7 +2325,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $arrResult );
     
     $rowsMarkerWiCat  = $this->renderMapRouteMarkerWiCat( $tableMarker, $tableCat, $rowsRelation );
-    $this->pObj->dev_var_dump( $rowsRelation, $rowsMarkerWiCat );
+    $this->pObj->dev_var_dump( $rowsMarkerWiCat );
 
     return $rowsMarkerWiCat;
   }
@@ -2458,11 +2458,13 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
           unset( $pathUid );
           //$rowsRelation[$markerUid][$catUid] = $tableMarker . '->' .  $tableMarkerCat;
           $rowsRelation[$markerUid][] = $catUid;
+          array_unique( $rowsRelation[$markerUid] );
         }
       }
         // LOOP relation      
     }
       // LOOP relations
+$this->pObj->dev_var_dump( $rowsRelation );
     
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableMarkerCat;
