@@ -2789,8 +2789,16 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     }
     $this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker );
 
-    $catTitle = $this->pObj->rows[ $tablePathUid ][ 'tx_route_marker_cat.title' ];
-    $catUid   = $this->pObj->rows[ $tablePathUid ][ 'tx_route_marker_cat.uid' ];
+    foreach( $this->pObj->rows as $key => $row )
+    {
+      if( $row[ 'tx_route_path.uid' ] != $tablePathUid )
+      {
+        continue;
+      }
+      $catTitle = $this->pObj->rows[ $tablePathUid ][ 'tx_route_marker_cat.title' ];
+      $catUid   = $this->pObj->rows[ $tablePathUid ][ 'tx_route_marker_cat.uid' ];
+      break;
+    }
     
     $this->pObj->dev_var_dump( $catTitle, $catUid );
     
