@@ -2335,6 +2335,7 @@ $this->pObj->dev_var_dump( $rowsMarker, $rowsCat, $rowsRelation );
     {
       foreach( $catUids as $catUid => $dummy )
       {
+$this->pObj->dev_var_dump( $dummy );
         unset( $dummy );
         $rowsMarker[ $markerUid ] = $rowsMarker[ $markerUid ]
                                   + $rowsCat[ $catUid ];
