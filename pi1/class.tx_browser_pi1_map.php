@@ -1711,6 +1711,9 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
+      // 130601, dwildt, 1+
+    $markerCounter = 0;
+      // LOOP row
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
@@ -1777,8 +1780,6 @@ if( $this->pObj->b_drs_todo )
         // IF there is one category exactly
 
         // FOREACH category
-        // 130601, dwildt, 1+
-      $markerCounter = 0;
       foreach( $categories as $key => $category )
       {
           // Add the current row to cObj->data
@@ -1889,6 +1890,7 @@ $this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
       }
         // FOREACH category
     }
+      // LOOP row
     unset( $dontHandle00 );
       // FOREACH row
 $this->pObj->dev_var_dump( $mapMarkers );
