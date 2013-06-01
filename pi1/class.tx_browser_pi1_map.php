@@ -2462,9 +2462,9 @@ if( $this->pObj->b_drs_todo )
 
           // DIE  : $value is empty
         $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
-                . $table . $field . ' is empty.<br />' . PHP_EOL
+                . '<p style="color:red;font-weight:bold;">' . $table . $field . ' is empty.</p>' . PHP_EOL
                 . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
-                . '<p style="color:red;">plugin.tx_browser_pi1.navigation.map.configuration.route.tables.' . $table . $field . '</p>' . PHP_EOL
+                . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.tables.' . $table . $field . '</p>' . PHP_EOL
                 . 'Please use the TypoScript Editor<br />' . PHP_EOL
                 . '<br />' . PHP_EOL
                 . 'Sorry for the trouble.<br />' . PHP_EOL
