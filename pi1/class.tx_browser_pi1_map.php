@@ -1693,6 +1693,7 @@ if( $this->pObj->b_drs_todo )
     switch( true )
     {
       case( $this->pObj->typoscriptVersion <= 4005004 ):
+          // 130601, dwildt, 1+
         $catUidField      = $this->confMap['configuration.']['categories.']['fields.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
@@ -1702,6 +1703,7 @@ if( $this->pObj->b_drs_todo )
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
+          // 130601, dwildt, 1+
         $catUidField      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
@@ -1873,6 +1875,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
           // Save each mapMarker
           // 130601, dwildt, 1-
         //$mapMarkers[] = $mapMarker;
+          // 130601, dwildt, 1+
         $mapMarkers[ $row[ $catUidField ] ] = $mapMarker;
           // Save each longitude
         $lons[] = ( double ) $mapMarker['lon'];
