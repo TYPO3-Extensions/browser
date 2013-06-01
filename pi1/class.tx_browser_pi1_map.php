@@ -2706,9 +2706,14 @@ $this->pObj->dev_var_dump( $row );
       $valuePath    = $field['path'];             
       $valueMarker  = $field['marker'];   
       
-      $pathTableField   = $tablePath    . '.' . $valuePath;
-      $markerTableField = $tableMarker  . '.' . $valueMarker;
+      $pathTableField = $tablePath    . '.' . $valuePath;
       
+      if( ! isset( $elements[ $pathTableField ] ) )
+      {
+        continue;
+      }
+
+      $markerTableField         = $tableMarker  . '.' . $valueMarker;
       $row[ $markerTableField ] = $elements[ $pathTableField ];
     }
     
