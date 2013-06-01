@@ -2660,8 +2660,8 @@ if( $this->pObj->b_drs_todo )
         // CONTINUE : field doesn't have any property
 
       $key          = trim( $fields, '.' );
-      $valuePath    = $fields['path'];             
-      $valueMarker  = $fields['marker'];   
+      $valuePath    = $field['path'];             
+      $valueMarker  = $field['marker'];   
       
       $pathTableField   = $tablePath    . '.' . $valuePath;
       $markerTableField = $tableMarker  . '.' . $valueMarker;
