@@ -707,11 +707,11 @@ if( $this->pObj->b_drs_todo )
 
     $arr_result = $this->renderMapRoute( );
 //$this->pObj->dev_var_dump( $arr_result );
-    if( ! empty( $arr_result['rowsMarkerWiCat'] ) )
+    if( ! empty( $arr_result['marker'] ) )
     {
-      $this->pObj->rows = $arr_result['rowsMarkerWiCat'];
+      $this->pObj->rows = $arr_result['marker'];
     }
-    $routes = $arr_result['routes'];
+    $paths = $arr_result['paths'];
     unset( $arr_result );
     
 //$this->pObj->dev_var_dump( $this->pObj->rows );
@@ -722,9 +722,9 @@ if( $this->pObj->b_drs_todo )
 
       // render the map
     $template = $this->renderMap( $template );
-    if( ! empty( $routes ) )
+    if( ! empty( $paths ) )
     {
-      $template = str_replace( "'###ROUTES###'", $routes, $template );
+      $template = str_replace( "'###ROUTES###'", $paths, $template );
     }
 
       // RETURN the template
@@ -2315,14 +2315,17 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN : Map +Routes is disabled
     
+      // Init
     $this->renderMapRouteInit( );
 
-    $rowsMarkerWiCat = $this->renderMapRouteMarker( );
-    
-    $routes = $this->renderMapRoutePaths( );
+      // Get paths
+    $paths  = $this->renderMapRoutePaths( );
 
-    $arr_return['rowsMarkerWiCat']  = $rowsMarkerWiCat;
-    $arr_return['routes']           = $routes;
+      // Get marker
+    $marker = $this->renderMapRouteMarker( );
+    
+    $arr_return['marker'] = $marker;
+    $arr_return['paths']  = $paths;
     return $arr_return;
   }
 
