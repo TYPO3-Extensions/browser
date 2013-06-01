@@ -2713,8 +2713,24 @@ $localUid = $row[ $localUidField ];
             // follow the workflow
           break;
       }
-
+      
       $row[ $markerTableField ] = $elements[ $pathTableField ];
+
+      switch( true )
+      {
+        case( $key == 'lat' ):
+        case( $key == 'lon' ):
+          if( empty( $elements[ $pathTableField ] ) )
+          {
+            //$row[ $markerTableField ] = $this->getLatLon( $key );
+            $row[ $markerTableField ] = 10;
+$this->pObj->dev_var_dump( $markerTableField, 10 );
+          }
+          break;
+        default:
+            // Do nothing
+          break;
+      }
     }
 
     return $row;
