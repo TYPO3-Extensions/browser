@@ -1891,6 +1891,7 @@ $this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
     }
     unset( $dontHandle00 );
       // FOREACH row
+$this->pObj->dev_var_dump( $mapMarkers );
 
 //    if( $this->pObj->b_drs_map )
 //    {
