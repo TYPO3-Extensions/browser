@@ -3141,18 +3141,15 @@ if( $this->pObj->b_drs_todo )
     $centerNumber   = ( int ) ( count( $arrGeodata ) / 2 ); 
     $centerGeodata  = $arrGeodata[ $centerNumber ];
 
-$this->pObj->dev_var_dump( $arrGeodata, $centerNumber );
-    
-    list( $lon, $lat ) = explode( ',', $centerGeodata );
-$this->pObj->dev_var_dump( $lon, $lat );
+//$this->pObj->dev_var_dump( $arrGeodata, $centerNumber );
     
     switch( $key )
     {
       case( 'lat' ):
-        return $lat;
+        return $centerGeodata[ 1 ];
         break;
       case( 'lon' ):
-        return $lon;
+        return $centerGeodata[ 0 ];
         break;
       default:
         $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
