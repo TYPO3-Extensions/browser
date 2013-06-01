@@ -677,30 +677,30 @@ plugin.tx_browser_pi1 {
         route =
         route {
             // path, pathCategory, markerCategory
-          fields =
-          fields {
+          tables =
+          tables {
               // title, geodata, color, lineWidth
             path =
             path {
-              title     = {$plugin.tx_browser_pi1.map.path.field.path.title}
-              geodata   = {$plugin.tx_browser_pi1.map.path.field.path.geodata}
-              color     = {$plugin.tx_browser_pi1.map.path.field.path.color}
-              lineWidth = {$plugin.tx_browser_pi1.map.path.field.path.lineWidth}
+              title     = {$plugin.tx_browser_pi1.map.path.table.path.title}
+              geodata   = {$plugin.tx_browser_pi1.map.path.table.path.geodata}
+              color     = {$plugin.tx_browser_pi1.map.path.table.path.color}
+              lineWidth = {$plugin.tx_browser_pi1.map.path.table.path.lineWidth}
             }
               // title
             pathCategory = 
             pathCategory {
-              title = {$plugin.tx_browser_pi1.map.path.field.pathCategory.title}
+              title = {$plugin.tx_browser_pi1.map.path.table.pathCategory.title}
             }
               // title
             marker =
             marker {
-              title = {$plugin.tx_browser_pi1.map.path.field.marker.title}
+              title = {$plugin.tx_browser_pi1.map.path.table.marker.title}
             }
               // title
             markerCategory =
             markerCategory {
-              title = {$plugin.tx_browser_pi1.map.path.field.markerCategory.title}
+              title = {$plugin.tx_browser_pi1.map.path.table.markerCategory.title}
             }
           }
         }

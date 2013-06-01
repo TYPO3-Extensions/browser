@@ -2314,6 +2314,8 @@ if( $this->pObj->b_drs_todo )
       return $arr_return;
     }
       // RETURN : Map +Routes is disabled
+    
+    $this->renderMapRouteInit( );
 
     $rowsMarkerWiCat = $this->renderMapRouteMarker( );
     
@@ -2401,6 +2403,65 @@ if( $this->pObj->b_drs_todo )
     //$this->pObj->dev_var_dump( $arrReturn );
     
     return $arrReturn;
+  }
+
+/**
+ * renderMapRouteInit( ):
+ *
+ * @return	void
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function renderMapRouteInit( )
+  {
+    $this->renderMapRouteInitRequire( );
+  }
+
+/**
+ * renderMapRouteInitRequire( ):
+ *
+ * @return	void
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function renderMapRouteInitRequire( )
+  {
+    $this->renderMapRouteInitRequireFields( );
+  }
+
+/**
+ * renderMapRouteInitRequireFields( ):
+ *
+ * @return	void
+ * @version 4.5.6
+ * @since   4.5.6
+ */
+  private function renderMapRouteInitRequireFields( )
+  {
+    $tables = $this->confMap['configuration.']['route.']['fields.'];
+      // LOOP tables
+    foreach( $tables as $table => $fields )
+    {
+        // CONTINUE : current value isn't an array
+      if( substr( $key, -1, 1 ) != '.' )
+      {
+        continue;
+      }
+        // CONTINUE : current value isn't an array
+
+      foreach( $tables as $table => $fields )
+      {
+          // CONTINUE : current value isn't an array
+        if( substr( $key, -1, 1 ) != '.' )
+        {
+          continue;
+        }
+          // CONTINUE : current value isn't an array
+
+
+      }
+    }
+      // LOOP tables
   }
 
 /**
@@ -2856,14 +2917,25 @@ if( $this->pObj->b_drs_todo )
   }
 
 /**
- * renderMapRoutePathsJsonFeaturesMarker( ) :
+ * renderMapRoutePathsJsonFeaturesMarker( ) : Returns the marker of the current path
+ *                                            A marker has two parts:
+ *                                            * the categorie title
+ *                                            * the marker uid
+ *                                            The syntax is
+ *                                            * catTitle:markerUid
+ *                                            Example:
+ *                                            * history:3
  *
- * @return	array
+ * @param       integer $pathUid  : uid of the current path
+ * @return	array   $marker   : marker of the current path
  * @version 4.5.7
  * @since   4.5.7
  */
   private function renderMapRoutePathsJsonFeaturesMarker( $pathUid )
-  {
+  {   
+      // Return array
+    $marker = array( );
+
       // variables
     static $arrResult     = array( );
     static $rowsRelation  = null;
@@ -2872,17 +2944,19 @@ if( $this->pObj->b_drs_todo )
     static $tablePath     = null;
     $catTitle             = null;
     $catUid               = null;
-    $marker               = array( );
     $markerUid            = null;
     $arrCat               = null;
     $arrMarker            = null;
     $confMapRouteFields   = $this->confMap['configuration.']['route.']['fields.'];
     $tablePathTitle       = $confMapRouteFields['path.']['title'];
-    list( $tablePath )    = explode( '.', $tablePathTitle );
     $tableMarkerTitle     = $confMapRouteFields['marker.']['title'];
-    list( $tableMarker )  = explode( '.', $tableMarkerTitle );
       // variables
     
+      // Get the labels of the tables path and marker
+    list( $tablePath )    = explode( '.', $tablePathTitle );
+    list( $tableMarker )  = explode( '.', $tableMarkerTitle );
+      // Get the labels of the tables path and marker
+
       // Get relations path -> marker -> marker_cat
     if( empty( $arrResult ) )
     {
@@ -2895,20 +2969,26 @@ if( $this->pObj->b_drs_todo )
     //$this->pObj->dev_var_dump( $pathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
       // Get relations path -> marker -> marker_cat
 
+      // Get the array with categories and marker
     $arrResult  = $this->renderMapRouteArrCatAndMarker( );
     $arrCat     = $arrResult['cat'];
     $arrMarker  = $arrResult['marker'];
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
+      // Get the array with categories and marker
     
+      // LOOP relations of current path
     foreach( $rowsRelation[ $pathUid ] as $markerUid => $catUids )
     {
+        // LOOP categories
       foreach( $catUids as $catUid )
       {
         $catTitle   = $arrCat[ $catUid ];
         $marker[ ]  = $catTitle . ':' . $markerUid; 
       }
+        // LOOP categories
     }
+      // LOOP relations of current path
 
     //$this->pObj->dev_var_dump( $marker );
     return $marker;
