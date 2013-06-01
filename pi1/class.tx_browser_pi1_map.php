@@ -2639,9 +2639,10 @@ $this->pObj->dev_var_dump( $fieldsObligate );
       }
         // CONTINUE : field doesn't have any property
 
+      $label = trim( '.', $fields );
       foreach( $field as $key => $value )
       {
-$this->pObj->dev_var_dump( $fields, $key, $value );
+$this->pObj->dev_var_dump( $label, $key, $value );
       }
     }
     $row = array 
