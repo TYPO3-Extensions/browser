@@ -239,25 +239,25 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Database Path/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.path.database.links = Click me!
 
-  # cat=BrowserMaps - Database Path Mapper//201;      type=string;    label= table with the path data: Example: tx_route_path
+  # cat=BrowserMaps - Database Path Mapper//201;      type=string;    label= table with the path data*: *Obligate! Example: tx_route_path
   map.path.mapper.tables.local.path = 
-  # cat=BrowserMaps - Database Path Mapper//202;      type=string;    label= table with the marker data: Example: tx_route_marker
+  # cat=BrowserMaps - Database Path Mapper//202;      type=string;    label= table with the marker data*: *Obligate! Example: tx_route_marker
   map.path.mapper.tables.local.marker = 
-  # cat=BrowserMaps - Database Path Mapper//203;      type=string;    label= table with the path categories: Example: tx_route_path_cat
+  # cat=BrowserMaps - Database Path Mapper//203;      type=string;    label= table with the path categories*: *Obligate! Example: tx_route_path_cat
   map.path.mapper.tables.cat.path = 
-  # cat=BrowserMaps - Database Path Mapper//204;      type=string;    label= table with the marker data: Example: tx_route_marker_cat
+  # cat=BrowserMaps - Database Path Mapper//204;      type=string;    label= table with the marker data*: *Obligate! Example: tx_route_marker_cat
   map.path.mapper.tables.cat.marker = 
   # cat=BrowserMaps - Database Path Mapper//301;      type=string;    label= title field of the path table: Example: title
   map.path.mapper.fields.local.title.path = 
   # cat=BrowserMaps - Database Path Mapper//302;      type=string;    label= title field of the marker table: Example: title
   map.path.mapper.fields.local.title.marker = 
-  # cat=BrowserMaps - Database Path Mapper//303;      type=string;    label= latitude field of the path table: Example: icon_lat
+  # cat=BrowserMaps - Database Path Mapper//303;      type=string;    label= latitude field of the path table*: *Obligate! Example: icon_lat
   map.path.mapper.fields.local.lat.path = 
-  # cat=BrowserMaps - Database Path Mapper//304;      type=string;    label= latitude field of the marker table: Example: lat
+  # cat=BrowserMaps - Database Path Mapper//304;      type=string;    label= latitude field of the marker table*: *Obligate! Example: lat
   map.path.mapper.fields.local.lat.marker = 
-  # cat=BrowserMaps - Database Path Mapper//305;      type=string;    label= longitude field of the path table: Example: icon_lon
+  # cat=BrowserMaps - Database Path Mapper//305;      type=string;    label= longitude field of the path table*: *Obligate! Example: icon_lon
   map.path.mapper.fields.local.lon.path = 
-  # cat=BrowserMaps - Database Path Mapper//306;      type=string;    label= longitude field of the marker table: Example: lon
+  # cat=BrowserMaps - Database Path Mapper//306;      type=string;    label= longitude field of the marker table*: *Obligate! Example: lon
   map.path.mapper.fields.local.lon.marker = 
   # cat=BrowserMaps - Database Path Mapper//401;      type=string;    label= title field of the path cat table: Example: title
   map.path.mapper.fields.cat.title.path = 
