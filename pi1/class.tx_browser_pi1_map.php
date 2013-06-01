@@ -2623,7 +2623,7 @@ if( $this->pObj->b_drs_todo )
       // DRS
     if( $this->pObj->b_drs_map )
     {
-      $prompt = var_export( $rowsLocal, true );
+      $prompt = 'Rows of ' . $tableLocal . ': ' . var_export( $rowsLocal, true );
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
@@ -2901,7 +2901,7 @@ if( $this->pObj->b_drs_todo )
       // DRS
     if( $this->pObj->b_drs_map )
     {
-      $prompt = var_export( $series, true );
+      $prompt = 'JSON data: ' . var_export( $jsonData, true );
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
