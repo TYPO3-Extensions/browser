@@ -2351,9 +2351,11 @@ if( $this->pObj->b_drs_todo )
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
-    $marker = $marker
-            + $this->renderMapRouteMarkerByPath( )
-            ;
+    $marker = array_merge
+              (
+                $marker, 
+                $this->renderMapRouteMarkerByPath( )
+              );
 $this->pObj->dev_var_dump( $marker );
     
     $arr_return['marker'] = $marker;
