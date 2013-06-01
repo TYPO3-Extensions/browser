@@ -682,7 +682,7 @@ plugin.tx_browser_pi1 {
               // local, cat
             fields =
             fields {
-                
+                // obligate, optional
               local =
               local {
                   // lat, lon, ...
