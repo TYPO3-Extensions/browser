@@ -1709,7 +1709,7 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
@@ -2351,6 +2351,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
+    $marker = $this->renderMapRouteMarkerByPath( $marker );
     
     $arr_return['marker'] = $marker;
     $arr_return['paths']  = $paths;
@@ -2543,6 +2544,42 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     
     return $rowsMarkerWiCat;
   }
+
+/**
+ * renderMapRouteMarkerByPath( )  : Adds a marker for each path
+ *
+ * @param       array   $marker : rows with current marker
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerByPath( $marker )
+  {
+    $addMarker = array 
+              ( 
+                3 =>  array
+                      (
+                        'tx_route_marker.title' => 'Test',
+                        'tx_route_marker.lat' => '52',
+                        'tx_route_marker.lon' => '13',
+                        'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
+                        'tx_route_marker.uid' => '33',
+                        'tx_route_marker_cat.title' => 'Test',
+                        'tx_route_marker_cat.icons' => 'target_018px.png,target_036px_shadow.png,target_48px.png',
+                        'tx_route_marker_cat.icon_offset_x' => '-24',
+                        'tx_route_marker_cat.icon_offset_y' => '-24',
+                        'tx_route_marker_cat.uid' => '10',                    
+                      ),
+              ); 
+    
+    $marker = $marker
+            + $addMarker
+            ;
+    return $marker;
+  }
+
 
 /**
  * renderMapRouteTableWiCat( )  : Consolidate table rows.
