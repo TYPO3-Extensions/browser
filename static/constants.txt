@@ -259,21 +259,21 @@ plugin.tx_browser_pi1 {
   map.path.mapper.fields.local.lon.path = 
   # cat=BrowserMaps - Database Path Mapper//306;      type=string;    label= longitude field of the marker table: Example: lon
   map.path.mapper.fields.local.lon.marker = 
-  # cat=BrowserMaps - Database Path Mapper//401;      type=string;    label= title field of the path category table: Example: title
+  # cat=BrowserMaps - Database Path Mapper//401;      type=string;    label= title field of the path cat table: Example: title
   map.path.mapper.fields.cat.title.path = 
-  # cat=BrowserMaps - Database Path Mapper//402;      type=string;    label= title field of the marker category table: Example: title
+  # cat=BrowserMaps - Database Path Mapper//402;      type=string;    label= title field of the marker cat table: Example: title
   map.path.mapper.fields.cat.title.marker = 
-  # cat=BrowserMaps - Database Path Mapper//403;      type=string;    label= icons field of the path category table: Example: icons
+  # cat=BrowserMaps - Database Path Mapper//403;      type=string;    label= icons field of the path cat table: Example: icons
   map.path.mapper.fields.cat.icons.path = 
-  # cat=BrowserMaps - Database Path Mapper//404;      type=string;    label= icons field of the marker category table: Example: icons
+  # cat=BrowserMaps - Database Path Mapper//404;      type=string;    label= icons field of the marker cat table: Example: icons
   map.path.mapper.fields.cat.icons.marker = 
-  # cat=BrowserMaps - Database Path Mapper//405;      type=string;    label= icons-offset-x field of the path category table: Example: icons_offset_x
+  # cat=BrowserMaps - Database Path Mapper//405;      type=string;    label= icons-offset-x field of the path cat table: Example: icons_offset_x
   map.path.mapper.fields.cat.iconOffsetX.path = 
-  # cat=BrowserMaps - Database Path Mapper//406;      type=string;    label= icons-offset-x field of the marker category table: Example: icons_offset_x
+  # cat=BrowserMaps - Database Path Mapper//406;      type=string;    label= icons-offset-x field of the marker cat table: Example: icons_offset_x
   map.path.mapper.fields.cat.iconOffsetX.marker = 
-  # cat=BrowserMaps - Database Path Mapper//407;      type=string;    label= icons-offset-y field of the path category table: Example: icons_offset_y
+  # cat=BrowserMaps - Database Path Mapper//407;      type=string;    label= icons-offset-y field of the path cat table: Example: icons_offset_y
   map.path.mapper.fields.cat.iconOffsetY.path = 
-  # cat=BrowserMaps - Database Path Mapper//408;      type=string;    label= icons-offset-y field of the marker category table: Example: icons_offset_y
+  # cat=BrowserMaps - Database Path Mapper//408;      type=string;    label= icons-offset-y field of the marker cat table: Example: icons_offset_y
   map.path.mapper.fields.cat.iconOffsetY.marker = 
   # cat=BrowserMaps - Database Path/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.path.database.links = Click me!
