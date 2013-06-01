@@ -197,27 +197,27 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.controlling.links = Click me!
 
-  # cat=BrowserMaps - Database Marker//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
+  # cat=BrowserMaps - Database Marker//101;           type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
   map.marker.field.linktoSingle = 
-  # cat=BrowserMaps - Database Marker//102;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
+  # cat=BrowserMaps - Database Marker//102;           type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
   map.marker.field.latitude = 
-  # cat=BrowserMaps - Database Marker//103;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
+  # cat=BrowserMaps - Database Marker//103;           type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
   map.marker.field.longitude = 
-  # cat=BrowserMaps - Database Marker//104;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
+  # cat=BrowserMaps - Database Marker//104;           type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
   map.marker.field.description = 
-  # cat=BrowserMaps - Database Marker//105;             type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
+  # cat=BrowserMaps - Database Marker//105;           type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
   map.marker.field.number = 
-  # cat=BrowserMaps - Database Marker//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
+  # cat=BrowserMaps - Database Marker//106;           type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.marker.field.category = 
-  # cat=BrowserMaps - Database Marker//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
+  # cat=BrowserMaps - Database Marker//107;           type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.marker.field.categoryIcon = 
-  # cat=BrowserMaps - Database Marker//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=BrowserMaps - Database Marker//108;           type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.marker.position.categoryIconLegend = 0 
-  # cat=BrowserMaps - Database Marker//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=BrowserMaps - Database Marker//109;           type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.marker.position.categoryIconMap = 0 
-  # cat=BrowserMaps - Database Marker//110;             type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
+  # cat=BrowserMaps - Database Marker//110;           type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
   map.marker.field.categoryOffsetX = 
-  # cat=BrowserMaps - Database Marker//111;             type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
+  # cat=BrowserMaps - Database Marker//111;           type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
   map.marker.field.categoryOffsetY = 
   # cat=BrowserMaps - Database Marker/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.marker.database.links = Click me!
@@ -236,7 +236,34 @@ plugin.tx_browser_pi1 {
   map.path.table.marker.title = 
   # cat=BrowserMaps - Database Path//207;             type=string;    label= table.field with path marker title: Example: tx_route_marker_cat.title
   map.path.table.markerCategory.title = 
-  # cat=BrowserMaps - Database Path/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  # cat=BrowserMaps - Database Path/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  map.path.database.links = Click me!
+
+  # cat=BrowserMaps - Database Path Mapper//201;      type=string;    label= table with the path data: Example: tx_route_path
+  map.path.mapper.tables.local.path = 
+  # cat=BrowserMaps - Database Path Mapper//202;      type=string;    label= table with the marker data: Example: tx_route_marker
+  map.path.mapper.tables.local.marker = 
+  # cat=BrowserMaps - Database Path Mapper//203;      type=string;    label= table with the path categories: Example: tx_route_path_cat
+  map.path.mapper.tables.cat.path = 
+  # cat=BrowserMaps - Database Path Mapper//204;      type=string;    label= table with the marker data: Example: tx_route_marker_cat
+  map.path.mapper.tables.cat.marker = 
+  # cat=BrowserMaps - Database Path Mapper//301;      type=string;    label= title field of the path table: Example: title
+  map.path.mapper.fields.local.title.path = 
+  # cat=BrowserMaps - Database Path Mapper//302;      type=string;    label= title field of the marker table: Example: title
+  map.path.mapper.fields.local.title.marker = 
+  # cat=BrowserMaps - Database Path Mapper//301;      type=string;    label= title field of the path table: Example: title
+  map.path.mapper.fields.local.title.path = 
+  # cat=BrowserMaps - Database Path Mapper//302;      type=string;    label= title field of the marker table: Example: title
+  map.path.mapper.fields.local.title.marker = 
+  # cat=BrowserMaps - Database Path Mapper//303;      type=string;    label= latitude field of the path table: Example: icon_lat
+  map.path.mapper.fields.local.lat.path = 
+  # cat=BrowserMaps - Database Path Mapper//304;      type=string;    label= latitude field of the marker table: Example: lat
+  map.path.mapper.fields.local.lat.marker = 
+  # cat=BrowserMaps - Database Path Mapper//305;      type=string;    label= longitude field of the path table: Example: icon_lon
+  map.path.mapper.fields.local.lon.path = 
+  # cat=BrowserMaps - Database Path Mapper//306;      type=string;    label= longitude field of the marker table: Example: lon
+  map.path.mapper.fields.local.lon.marker = 
+  # cat=BrowserMaps - Database Path/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.path.database.links = Click me!
 
   # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added to the modules, LayerSwitcher to the controllers. There will be an alert in the frontend in case of a bug.

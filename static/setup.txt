@@ -685,50 +685,50 @@ plugin.tx_browser_pi1 {
                 // Extendable array: title, lat, lon, ...
               local =
               local {
-                  // title: route, marker
+                  // title: path, marker
                 0 =
                 0 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.marker}
                 }
-                  // lat: route, marker
+                  // lat: path, marker
                 1 =
                 1 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lat.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lat.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lat.marker}
                 }
-                  // lon: route, marker
+                  // lon: path, marker
                 2 =
                 2 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.marker}
                 }
               }
                 // Extendable array: title, icons, iconOffsetX, iconOffsetY,  ...
               cat =
               cat {
-                  // title: route, marker
+                  // title: path, marker
                 0 =
                 0 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.marker}
                 }
-                  // icons: route, marker
+                  // icons: path, marker
                 1 =
                 1 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.marker}
                 }
-                  // iconOffsetX: route, marker
+                  // iconOffsetX: path, marker
                 2 =
                 2 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.marker}
                 }
-                  // iconOffsetY: route, marker
+                  // iconOffsetY: path, marker
                 3 =
                 3 {
-                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.route}
+                  path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.marker}
                 }
               }
@@ -736,16 +736,16 @@ plugin.tx_browser_pi1 {
               // local, cat
             tables =
             tables {
-                // route, marker
+                // path, marker
               local =
               local {
-                route   = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.route}
+                path    = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.path}
                 marker  = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.marker}
               }
-                // route, marker
+                // path, marker
               cat =
               cat {
-                route   = {$plugin.tx_browser_pi1.map.path.mapper.tables.cat.route}
+                path    = {$plugin.tx_browser_pi1.map.path.mapper.tables.cat.path}
                 marker  = {$plugin.tx_browser_pi1.map.path.mapper.tables.cat.marker}
               }
             }
