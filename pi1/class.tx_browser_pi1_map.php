@@ -1874,7 +1874,7 @@ if( $this->pObj->b_drs_todo )
 
           // Save each mapMarker
 $localUid = $row[ $localUidField ];
-$this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
+//$this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
         $mapMarkers[ $markerCounter ] = $mapMarker;
           // Save each longitude
         $lons[] = ( double ) $mapMarker['lon'];
@@ -1893,7 +1893,7 @@ $this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
       // LOOP row
     unset( $dontHandle00 );
       // FOREACH row
-$this->pObj->dev_var_dump( $mapMarkers );
+//$this->pObj->dev_var_dump( $mapMarkers );
 
 //    if( $this->pObj->b_drs_map )
 //    {
@@ -2541,14 +2541,14 @@ $this->pObj->dev_var_dump( $mapMarkers );
     unset( $arrResult );
     
     $marker = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
 //    $marker = $marker
 //            + $this->renderMapRouteMarkerByPath( )
 //            ;
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
