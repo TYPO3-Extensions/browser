@@ -2539,7 +2539,7 @@ if( $this->pObj->b_drs_todo )
                 $marker, 
                 $this->renderMapRouteMarkerByPath( )
               );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
