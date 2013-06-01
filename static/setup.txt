@@ -673,10 +673,10 @@ plugin.tx_browser_pi1 {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = true  
         }
-          // fields
+          // tables
         route =
         route {
-            // path, pathCategory, markerCategory
+            // path, pathCategory, marker, markerCategory
           tables =
           tables {
               // title, geodata, color, lineWidth

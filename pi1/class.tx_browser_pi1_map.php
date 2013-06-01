@@ -2438,7 +2438,7 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRouteInitRequireFields( )
   {
-    $tables = $this->confMap['configuration.']['route.']['fields.'];
+    $tables = $this->confMap['configuration.']['route.']['tables.'];
       // LOOP tables
     foreach( $tables as $table => $fields )
     {
@@ -2449,17 +2449,12 @@ if( $this->pObj->b_drs_todo )
       }
         // CONTINUE : current value isn't an array
 
-      foreach( $tables as $table => $fields )
+        // LOOP fields
+      foreach( $fields as $field => $value )
       {
-          // CONTINUE : current value isn't an array
-        if( substr( $key, -1, 1 ) != '.' )
-        {
-          continue;
-        }
-          // CONTINUE : current value isn't an array
-
-
+        $this->pObj->dev_var_dump( $field, $value );
       }
+        // LOOP fields
     }
       // LOOP tables
   }
