@@ -3132,13 +3132,33 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRouteMarkerGeodata( $key, $elements )
   {
+//$this->pObj->dev_var_dump( $geodata );
+
       // short variables
     $tableFieldGeodata  = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
-    $geodata = $elements[ $tableFieldGeodata ];
-$this->pObj->dev_var_dump( $geodata );
-
-
-    return 14;
+    $strGeodata   = $elements[ $tableFieldGeodata ];
+    $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
+    
+    $centerNumber   = ( int ) ( count( $arrGeodata ) / 2 ); 
+    $centerGeodata  = $arrGeodata[ $centerNumber ];
+    
+    list( $lon, $lat ) = explode( ',', $centerGeodata );
+    
+    switch( $key )
+    {
+      case( 'lat' ):
+        return $lat;
+        break;
+      case( 'lon' ):
+        return $lon;
+        break;
+      default:
+        $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                  'key must be "lat" or "lon", but key is "' . $key . '"';
+        die( $prompt );
+        break;
+    }
+    
   }
 
 /**
