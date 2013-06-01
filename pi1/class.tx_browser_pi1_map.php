@@ -2444,7 +2444,7 @@ $this->pObj->dev_var_dump( $tables );
     foreach( $tables as $table => $fields )
     {
         // CONTINUE : current value isn't an array
-      if( substr( $key, -1, 1 ) != '.' )
+      if( substr( $table, -1, 1 ) != '.' )
       {
         continue;
       }
