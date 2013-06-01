@@ -2633,7 +2633,7 @@ $this->pObj->dev_var_dump( $fieldsObligate );
     foreach( $fieldsObligate as $fields => $field )
     {
         // CONTINUE : field doesn't have any property
-      if( ! is_array( $fields ) )
+      if( ! is_array( $field ) )
       {
         continue;
       }
