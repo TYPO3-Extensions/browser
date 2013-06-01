@@ -2806,6 +2806,9 @@ if( $this->pObj->b_drs_todo )
     $tablePathTitle       = $confMapRouteFields['path.']['title'];
     list( $tablePath )    = explode( '.', $tablePathTitle );
     $tablePathUid         = $tablePath . '.uid';
+    $tableMarkerTitle     = $confMapRouteFields['marker.']['title'];
+    list( $tableMarker )  = explode( '.', $tableMarkerTitle );
+    $tableMarkerUid       = $tableMarker . '.uid';
     $tableMarkerCatTitle  = $confMapRouteFields['markerCategory.']['title'];
     list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
     $tableMarkerCatUid    = $tableMarkerCat . '.uid';
@@ -2832,8 +2835,8 @@ if( $this->pObj->b_drs_todo )
       }
       $catTitle     = $row[ $tableMarkerCatTitle ];
       $catUid       = $row[ $tableMarkerCatUid ];
-      $markerTitle  = $row[ 'tx_route_marker.title' ];
-      $markerUid    = $row[ 'tx_route_marker.uid' ];
+      $markerTitle  = $row[ $tableMarkerTitle ];
+      $markerUid    = $row[ $tableMarkerUid ];
       break;
     }
     //$this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
