@@ -2452,7 +2452,7 @@ if( $this->pObj->b_drs_todo )
         // LOOP fields
       foreach( $fields as $field => $value )
       {
-        $this->pObj->dev_var_dump( $field, $value );
+        $this->pObj->dev_var_dump( $table, $field, $value );
       }
         // LOOP fields
     }
