@@ -2325,6 +2325,85 @@ if( $this->pObj->b_drs_todo )
   }
 
 /**
+ * renderMapRouteArrCatAndMarker( ) : Returns an array with the elements cat and marker.
+ *                                    * Cat
+ *                                      * key   is the uid    of a category
+ *                                      * value is the title  of a category
+ *                                    * Marker
+ *                                      * key   is the uid    of a marker
+ *                                      * value is the title  of a marker
+ *
+ * @return	array   $arrReturn  : Array with elements cat and marker
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRouteArrCatAndMarker( )
+  {
+      // variables
+    $catTitle             = null;
+    $catUid               = null;
+    $markerTitle          = null;
+    $markerUid            = null;
+    $arrCat               = null;
+    $arrCatUid            = null;
+    $arrCatTitle          = null;
+    $arrMarker            = null;
+    $arrMarkerUid         = null;
+    $arrMarkerTitle       = null;
+    $confMapRouteFields   = $this->confMap['configuration.']['route.']['fields.'];
+    $tablePathTitle       = $confMapRouteFields['path.']['title'];
+    list( $tablePath )    = explode( '.', $tablePathTitle );
+    $tablePathUid         = $tablePath . '.uid';
+    $tableMarkerTitle     = $confMapRouteFields['marker.']['title'];
+    list( $tableMarker )  = explode( '.', $tableMarkerTitle );
+    $tableMarkerUid       = $tableMarker . '.uid';
+    $tableMarkerCatTitle  = $confMapRouteFields['markerCategory.']['title'];
+    list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
+    $tableMarkerCatUid    = $tableMarkerCat . '.uid';
+      // variables
+    
+      // Get marker and marker_cat values of the given row
+    foreach( $this->pObj->rows as $row )
+    {
+      if( $row[ $tablePathUid ] != $pathUid )
+      {
+        continue;
+      }
+      $catTitle     = $row[ $tableMarkerCatTitle ];
+      $catUid       = $row[ $tableMarkerCatUid ];
+      $markerTitle  = $row[ $tableMarkerTitle ];
+      $markerUid    = $row[ $tableMarkerUid ];
+      break;
+    }
+    //$this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
+      // Get marker and marker_cat values of the given row
+    
+    $arrCatUid      = explode( $this->catDevider, $catUid );
+    $arrCatTitle    = explode( $this->catDevider, $catTitle );
+    $arrMarkerUid   = explode( $this->catDevider, $markerUid );
+    $arrMarkerTitle = explode( $this->catDevider, $markerTitle );
+    
+    foreach( $arrCatUid as $key => $uid )
+    {
+      $arrCat[ $uid ] = $arrCatTitle[ $key ];
+    }
+    
+    foreach( $arrMarkerUid as $key => $uid )
+    {
+      $arrMarker[ $uid ] = $arrMarkerTitle[ $key ];
+    }
+    
+    $arrReturn =  array
+                  (
+                    'cat'     => $arrCat,
+                    'marker'  => $arrMarker
+                  );
+    //$this->pObj->dev_var_dump( $arrReturn );
+    
+    return $arrReturn;
+  }
+
+/**
  * renderMapRouteMarker( ):
  *
  * @return	array
@@ -2794,24 +2873,14 @@ if( $this->pObj->b_drs_todo )
     $catTitle             = null;
     $catUid               = null;
     $marker               = array( );
-    $markerTitle          = null;
     $markerUid            = null;
     $arrCat               = null;
-    $arrCatUid            = null;
-    $arrCatTitle          = null;
     $arrMarker            = null;
-    $arrMarkerUid         = null;
-    $arrMarkerTitle       = null;
     $confMapRouteFields   = $this->confMap['configuration.']['route.']['fields.'];
     $tablePathTitle       = $confMapRouteFields['path.']['title'];
     list( $tablePath )    = explode( '.', $tablePathTitle );
-    $tablePathUid         = $tablePath . '.uid';
     $tableMarkerTitle     = $confMapRouteFields['marker.']['title'];
     list( $tableMarker )  = explode( '.', $tableMarkerTitle );
-    $tableMarkerUid       = $tableMarker . '.uid';
-    $tableMarkerCatTitle  = $confMapRouteFields['markerCategory.']['title'];
-    list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
-    $tableMarkerCatUid    = $tableMarkerCat . '.uid';
       // variables
     
       // Get relations path -> marker -> marker_cat
@@ -2826,37 +2895,10 @@ if( $this->pObj->b_drs_todo )
     //$this->pObj->dev_var_dump( $pathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
       // Get relations path -> marker -> marker_cat
 
-      // Get marker and marker_cat values of the given row
-    foreach( $this->pObj->rows as $row )
-    {
-      if( $row[ $tablePathUid ] != $pathUid )
-      {
-        continue;
-      }
-      $catTitle     = $row[ $tableMarkerCatTitle ];
-      $catUid       = $row[ $tableMarkerCatUid ];
-      $markerTitle  = $row[ $tableMarkerTitle ];
-      $markerUid    = $row[ $tableMarkerUid ];
-      break;
-    }
-    //$this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
-      // Get marker and marker_cat values of the given row
-    
-    $arrCatUid      = explode( $this->catDevider, $catUid );
-    $arrCatTitle    = explode( $this->catDevider, $catTitle );
-    $arrMarkerUid   = explode( $this->catDevider, $markerUid );
-    $arrMarkerTitle = explode( $this->catDevider, $markerTitle );
-    
-    foreach( $arrCatUid as $key => $uid )
-    {
-      $arrCat[ $uid ] = $arrCatTitle[ $key ];
-    }
-    
-    foreach( $arrMarkerUid as $key => $uid )
-    {
-      $arrMarker[ $uid ] = $arrMarkerTitle[ $key ];
-    }
-    
+    $arrResult  = $this->renderMapRouteArrCatAndMarker( );
+    $arrCat     = $arrResult['cat'];
+    $arrMarker  = $arrResult['marker'];
+    unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
     
     foreach( $rowsRelation[ $pathUid ] as $markerUid => $catUids )
