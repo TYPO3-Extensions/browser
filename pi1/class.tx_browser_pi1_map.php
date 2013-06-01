@@ -2622,9 +2622,27 @@ if( $this->pObj->b_drs_todo )
   {
 //$this->pObj->dev_var_dump( $elements );
 //
-//    $tablesLocal  = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.'];
-//    $tablesCat    = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['cat.'];
+      // short variables
+    $confMapper   = $this->confMap['configuration.']['route.']['markerMapper.'];
+    $tablePath    = $confMapper['tables.']['local.']['path'];
+    $tableMarker  = $confMapper['tables.']['local.']['marker'];
+      // short variables
 
+    $fieldsObligate = $confMapper['fields.']['local.']['obligate.'];
+    foreach( $fieldsObligate as $fields => $field )
+    {
+        // CONTINUE : field doesn't have any property
+      if( ! is_array( $fields ) )
+      {
+        continue;
+      }
+        // CONTINUE : field doesn't have any property
+
+      foreach( $field as $key => $value )
+      {
+$this->pObj->dev_var_dump( $key, $value );
+      }
+    }
     $row = array 
           ( 
             'tx_route_marker.title' => 'Test',
