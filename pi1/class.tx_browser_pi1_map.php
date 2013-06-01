@@ -707,9 +707,19 @@ if( $this->pObj->b_drs_todo )
 
     $arr_result = $this->renderMapRoute( );
 //$this->pObj->dev_var_dump( $arr_result );
-    if( ! empty( $arr_result['marker'] ) )
+    switch( true )
     {
-      $this->pObj->rows = $arr_result['marker'];
+      case( empty( $arr_result['marker'] ) ):
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'There isn\'t any marker row!';
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+        }
+        break;
+      case( ! empty( $arr_result['marker'] ) ):
+      default:
+        $this->pObj->rows = $arr_result['marker'];
+        break;
     }
     $paths = $arr_result['paths'];
     unset( $arr_result );
@@ -722,9 +732,19 @@ if( $this->pObj->b_drs_todo )
 
       // render the map
     $template = $this->renderMap( $template );
-    if( ! empty( $paths ) )
+    switch( true )
     {
-      $template = str_replace( "'###ROUTES###'", $paths, $template );
+      case( empty( $paths ) ):
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'JSON array for the variable routes is empty!';
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+        }
+        break;
+      case( ! empty( $paths ) ):
+      default:
+        $template = str_replace( "'###ROUTES###'", $paths, $template );
+        break;
     }
 
       // RETURN the template
