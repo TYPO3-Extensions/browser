@@ -1702,7 +1702,7 @@ if( $this->pObj->b_drs_todo )
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
           // 130601, dwildt, 1+
-        $localUidField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
+//        $localUidField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
@@ -2032,6 +2032,7 @@ if( $this->pObj->b_drs_todo )
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
+$this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
@@ -2273,7 +2274,6 @@ if( $this->pObj->b_drs_todo )
 //var_dump( __METHOD__, __LINE__, $arr_return );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
-$this->pObj->dev_var_dump( $coordinates, $this->rowsBackup );
       // Get points (map marker) as JSON array and coordinates
 
       // Add JSON array
