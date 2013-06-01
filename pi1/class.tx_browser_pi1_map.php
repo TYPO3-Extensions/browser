@@ -2535,11 +2535,9 @@ if( $this->pObj->b_drs_todo )
 $this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
-    $marker = array_merge
-              (
-                $marker, 
-                $this->renderMapRouteMarkerByPath( )
-              );
+    $marker = $marker
+            + $this->renderMapRouteMarkerByPath( )
+            ;
 //$this->pObj->dev_var_dump( $marker );
 
       // DRS
@@ -2564,9 +2562,18 @@ $this->pObj->dev_var_dump( $marker );
  */
   private function renderMapRouteMarkerByPath( )
   {
+    $marker = array( );
+    
+      // short variables
+    $confMapper   = $this->confMap['configuration.']['route.']['markerMapper.'];
+    $tableMarker  = $confMapper['tables.']['local.']['marker'];
+      // short variables
+
     foreach( $this->pObj->rows as $row )
     {
-      $marker[ ] = $this->renderMapRouteMarkerByPathRow( $row );
+      $rowOut = $this->renderMapRouteMarkerByPathRow( $row );
+      $key    = $rowOut[ $tableMarker . '.uid' ];
+      $marker[ $key ] = $rowOut;
     }
     return $marker;
   }
