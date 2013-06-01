@@ -2916,6 +2916,19 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJsonFeaturesCoordinates( $strLonLat )
   {
+      // DIE  : $strLonLat is empty
+    $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+            . '<p style="color:red;font-weight:bold;">there isn\'t any geodata.</p>' . PHP_EOL
+            . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
+            . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
+            . 'Please use the TypoScript Editor<br />' . PHP_EOL
+            . '<br />' . PHP_EOL
+            . 'Sorry for the trouble.<br />' . PHP_EOL
+            . 'Browser - TYPO3 without PHP'
+            ;
+    die( $prompt );
+      // DIE  : $strLonLat is empty
+    
     $coordinates = explode( PHP_EOL, $strLonLat );
     foreach( $coordinates as $key => $coordinate )
     {
