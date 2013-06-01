@@ -676,6 +676,80 @@ plugin.tx_browser_pi1 {
           // tables
         route =
         route {
+            // fields, tables
+          markerMapper =
+          markerMapper {
+              // local, cat
+            fields =
+            fields {
+                // Extendable array: title, lat, lon, ...
+              local =
+              local {
+                  // title: route, marker
+                0 =
+                0 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.marker}
+                }
+                  // lat: route, marker
+                1 =
+                1 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lat.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lat.marker}
+                }
+                  // lon: route, marker
+                2 =
+                2 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.marker}
+                }
+              }
+                // Extendable array: title, icons, iconOffsetX, iconOffsetY,  ...
+              cat =
+              cat {
+                  // title: route, marker
+                0 =
+                0 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.marker}
+                }
+                  // icons: route, marker
+                1 =
+                1 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.marker}
+                }
+                  // iconOffsetX: route, marker
+                2 =
+                2 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.marker}
+                }
+                  // iconOffsetY: route, marker
+                3 =
+                3 {
+                  route   = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.route}
+                  marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.marker}
+                }
+              }
+            }
+              // local, cat
+            tables =
+            tables {
+                // route, marker
+              local =
+              local {
+                route   = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.route}
+                marker  = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.marker}
+              }
+                // route, marker
+              cat =
+              cat {
+                route   = {$plugin.tx_browser_pi1.map.path.mapper.tables.cat.route}
+                marker  = {$plugin.tx_browser_pi1.map.path.mapper.tables.cat.marker}
+              }
+            }
+          }
             // path, pathCategory, marker, markerCategory
           tables =
           tables {
