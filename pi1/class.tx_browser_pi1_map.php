@@ -1873,7 +1873,7 @@ if( $this->pObj->b_drs_todo )
           // Add offset to the mapMarker
 
           // Save each mapMarker
-$localUid = $row[ $localUidField ];
+//$localUid = $row[ $localUidField ];
 //$this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
         $mapMarkers[ $markerCounter ] = $mapMarker;
           // Save each longitude
@@ -2754,7 +2754,7 @@ $localUid = $row[ $localUidField ];
       // short variables
 
     $fieldsOptional = $confMapper['fields.']['local.']['optional.'];
-    foreach( $fieldsOptional as $fields => $field )
+    foreach( $fieldsOptional as $field )
     {
         // CONTINUE : field doesn't have any property
       if( ! is_array( $field ) )
@@ -3134,6 +3134,8 @@ $localUid = $row[ $localUidField ];
   {
       // short variables
     $tableFieldGeodata  = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
+    $geodata = $elements[ $tableFieldGeodata ];
+$this->pObj->dev_var_dump( $geodata );
 
 
     return 14;
