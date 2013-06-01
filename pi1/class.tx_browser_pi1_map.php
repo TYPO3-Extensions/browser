@@ -2641,7 +2641,7 @@ $this->pObj->dev_var_dump( $fieldsObligate );
 
       foreach( $field as $key => $value )
       {
-$this->pObj->dev_var_dump( $key, $value );
+$this->pObj->dev_var_dump( $fields, $key, $value );
       }
     }
     $row = array 
