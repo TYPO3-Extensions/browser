@@ -721,27 +721,33 @@ plugin.tx_browser_pi1 {
                 // [optional] Extendable array: title, icons, iconOffsetX, iconOffsetY,  ...
               cat =
               cat {
-                  // title: path, marker
+                  // uid: path, marker
                 0 =
                 0 {
+                  path    = uid
+                  marker  = uid
+                }
+                  // title: path, marker
+                1 =
+                1 {
                   path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.title.marker}
                 }
                   // icons: path, marker
-                1 =
-                1 {
+                2 =
+                2 {
                   path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.icons.marker}
                 }
                   // iconOffsetX: path, marker
-                2 =
-                2 {
+                3 =
+                3 {
                   path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetX.marker}
                 }
                   // iconOffsetY: path, marker
-                3 =
-                3 {
+                4 =
+                4 {
                   path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.path}
                   marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.cat.iconOffsetY.marker}
                 }
