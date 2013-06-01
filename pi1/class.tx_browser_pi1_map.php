@@ -2544,9 +2544,10 @@ $this->pObj->dev_var_dump( $mapMarkers );
 $this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
-    $marker = $marker
-            + $this->renderMapRouteMarkerByPath( )
-            ;
+//    $marker = $marker
+//            + $this->renderMapRouteMarkerByPath( )
+//            ;
+    $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
 $this->pObj->dev_var_dump( $marker );
 
       // DRS
