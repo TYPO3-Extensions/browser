@@ -3132,7 +3132,6 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRouteMarkerGeodata( $key, $elements )
   {
-//$this->pObj->dev_var_dump( $geodata );
 
       // short variables
     $tableFieldGeodata  = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
@@ -3141,8 +3140,11 @@ if( $this->pObj->b_drs_todo )
     
     $centerNumber   = ( int ) ( count( $arrGeodata ) / 2 ); 
     $centerGeodata  = $arrGeodata[ $centerNumber ];
+
+$this->pObj->dev_var_dump( $arrGeodata, $centerNumber );
     
     list( $lon, $lat ) = explode( ',', $centerGeodata );
+$this->pObj->dev_var_dump( $lon, $lat );
     
     switch( $key )
     {
