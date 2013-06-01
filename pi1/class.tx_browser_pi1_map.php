@@ -2352,7 +2352,7 @@ if( $this->pObj->b_drs_todo )
     $arrMarker            = null;
     $arrMarkerUid         = null;
     $arrMarkerTitle       = null;
-    $confMapRouteFields   = $this->confMap['configuration.']['route.']['fields.'];
+    $confMapRouteFields   = $this->confMap['configuration.']['route.']['tables.'];
     $tablePathTitle       = $confMapRouteFields['path.']['title'];
     list( $tablePath )    = explode( '.', $tablePathTitle );
     $tablePathUid         = $tablePath . '.uid';
@@ -2853,7 +2853,7 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJsonFeatures( $rowsPathWiCat )
   {
-    $confMapRouteFields = $this->confMap['configuration.']['route.']['fields.'];
+    $confMapRouteFields = $this->confMap['configuration.']['route.']['tables.'];
     $tablePathCatTitle  = $confMapRouteFields['pathCategory.']['title'];
     $tablePathTitle     = $confMapRouteFields['path.']['title'];
     list( $tablePath )  = explode( '.', $tablePathTitle );
@@ -2940,6 +2940,22 @@ if( $this->pObj->b_drs_todo )
                                 ( double ) $lat
                               );
     }
+    
+      // DIE  : $coordinates are empty
+    if( empty( $coordinates ) )
+    {
+      $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+              . '<p style="color:red;font-weight:bold;">coordinates are empty.</p>' . PHP_EOL
+              . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
+              . 'Please use the TypoScript Editor<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Sorry for the trouble.<br />' . PHP_EOL
+              . 'Browser - TYPO3 without PHP'
+              ;
+      die( $prompt );
+    }
+      // DIE  : $coordinates are empty
 
     return $coordinates;
   }
@@ -2975,7 +2991,7 @@ if( $this->pObj->b_drs_todo )
     $markerUid            = null;
     $arrCat               = null;
     $arrMarker            = null;
-    $confMapRouteFields   = $this->confMap['configuration.']['route.']['fields.'];
+    $confMapRouteFields   = $this->confMap['configuration.']['route.']['tables.'];
     $tablePathTitle       = $confMapRouteFields['path.']['title'];
     $tableMarkerTitle     = $confMapRouteFields['marker.']['title'];
       // variables
