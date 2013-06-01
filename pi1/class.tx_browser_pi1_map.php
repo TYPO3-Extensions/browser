@@ -2670,9 +2670,15 @@ if( $this->pObj->b_drs_todo )
       unset( $elements[ $pathTableField ] );
     }
     
-    foreach( $elements as $key => $value )
+    foreach( $elements as $tableField => $value )
     {
-      $row[ $key ] = $value;      
+      list( $table, $field ) = explode( '.', $tableField );
+      if( $table != $tablePath )
+      {
+        continue;
+      }
+      $markerTableField = $tableMarker  . '.' . $field;
+      $row[ $markerTableField ] = $value;      
     }
 
 $this->pObj->dev_var_dump( $row );
