@@ -2562,7 +2562,7 @@ class tx_browser_pi1_template
       {
         if ($this->pObj->b_drs_templating || $this->pObj->b_drs_error)
         {
-          t3lib_div::devlog('[ERROR/TEMPLATING] '.$templateMarker.' is empty or missing!', $this->pObj->extKey, 3);
+          t3lib_div::devlog('[WARN/TEMPLATING] '.$templateMarker.' is empty or missing!', $this->pObj->extKey, 2);
           t3lib_div::devlog('[INFO/TEMPLATING] Please take care of your HTML code.', $this->pObj->extKey, 1);
         }
       }

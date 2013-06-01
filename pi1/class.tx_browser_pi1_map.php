@@ -2753,6 +2753,14 @@ if( $this->pObj->b_drs_todo )
     }
       // die: no relation
 
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = var_export( $relations, true );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+
     return $relations;
   }
 
