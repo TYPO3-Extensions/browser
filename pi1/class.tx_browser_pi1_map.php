@@ -2370,7 +2370,7 @@ if( $this->pObj->b_drs_todo )
  * @version 4.5.7
  * @since   4.5.7
  */
-  private function renderMapRouteArrCatAndMarker( )
+  private function renderMapRouteArrCatAndMarker( $pathUid )
   {
       // variables
     $catTitle             = null;
@@ -3401,7 +3401,7 @@ $this->pObj->dev_var_dump( $row );
       // Get relations path -> marker -> marker_cat
 
       // Get the array with categories and marker
-    $arrResult  = $this->renderMapRouteArrCatAndMarker( );
+    $arrResult  = $this->renderMapRouteArrCatAndMarker( $pathUid );
     $arrCat     = $arrResult['cat'];
     $arrMarker  = $arrResult['marker'];
 $this->pObj->dev_var_dump( $arrResult );
