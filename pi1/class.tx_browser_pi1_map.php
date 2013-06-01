@@ -2439,6 +2439,7 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRouteInitRequireFields( )
   {
     $tables = $this->confMap['configuration.']['route.']['tables.'];
+$this->pObj->dev_var_dump( $tables );
       // LOOP tables
     foreach( $tables as $table => $fields )
     {
