@@ -1887,11 +1887,11 @@ if( $this->pObj->b_drs_todo )
       // FOREACH row
 
 //$this->pObj->dev_var_dump( $mapMarkers );
-    if( $this->pObj->b_drs_map )
-    {
-      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
-      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
-    }
+//    if( $this->pObj->b_drs_map )
+//    {
+//      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
+//      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+//    }
     switch( true )
     {
       case( $mapMarkers == null ):
@@ -2016,6 +2016,14 @@ if( $this->pObj->b_drs_todo )
       // FOREACH map marker
 
     $jsonData = json_encode( $series );
+
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = 'JSON array for the marker: ' . var_export( $jsonData, true);
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
@@ -2528,7 +2536,7 @@ if( $this->pObj->b_drs_todo )
       // DRS
     if( $this->pObj->b_drs_map )
     {
-      $prompt = var_export( $rowsMarkerWiCat, true );
+      $prompt = 'Marker rows: ' . var_export( $rowsMarkerWiCat, true );
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
@@ -2901,7 +2909,7 @@ if( $this->pObj->b_drs_todo )
       // DRS
     if( $this->pObj->b_drs_map )
     {
-      $prompt = 'JSON data: ' . var_export( $jsonData, true );
+      $prompt = 'JSON array for the paths: ' . var_export( $jsonData, true );
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
