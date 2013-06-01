@@ -2525,6 +2525,14 @@ if( $this->pObj->b_drs_todo )
     $rowsMarkerWiCat  = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
     //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
 
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = var_export( $rowsMarkerWiCat, true );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+    
     return $rowsMarkerWiCat;
   }
 
@@ -2611,6 +2619,15 @@ if( $this->pObj->b_drs_todo )
       //    'tx_route_marker_cat.icon_offset_y' => '2, ;|;4, ;|;6',
       //    'tx_route_marker_cat.uid'           => '10, ;|;9, ;|;8',
       //  ),
+      
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = var_export( $rowsLocal, true );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+
     return $rowsLocal;
   }
 
@@ -2702,6 +2719,15 @@ if( $this->pObj->b_drs_todo )
     $arrReturn['tableCat']      = $tableMarkerCat;
     $arrReturn['tableMarker']   = $tableMarker;
     $arrReturn['tablePath']     = $tablePath;
+
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = var_export( $rowsRelation, true );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+
     return $arrReturn;
     
   }
@@ -2872,6 +2898,14 @@ if( $this->pObj->b_drs_todo )
     $jsonData = json_encode( $series );
 //$this->pObj->dev_var_dump( $series, $jsonData );
     
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = var_export( $series, true );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+
     return $jsonData;
   }
 
@@ -3157,6 +3191,15 @@ if( $this->pObj->b_drs_todo )
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tablePath']     = $tablePath;
+
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = var_export( $rowsRelation, true );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+
     return $arrReturn;
     
   }
