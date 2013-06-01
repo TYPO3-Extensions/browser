@@ -2366,6 +2366,7 @@ if( $this->pObj->b_drs_todo )
  *                                      * key   is the uid    of a marker
  *                                      * value is the title  of a marker
  *
+ * @param       integer $pathUid  : uid of the current path
  * @return	array   $arrReturn  : Array with elements cat and marker
  * @version 4.5.7
  * @since   4.5.7
@@ -2531,7 +2532,7 @@ if( $this->pObj->b_drs_todo )
     unset( $arrResult );
     
     $marker = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
-    //$this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
     $marker = array_merge
@@ -2563,26 +2564,6 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRouteMarkerByPath( )
   {
-    $marker = array 
-              ( 
-                3 =>  array
-                      (
-                        'tx_route_marker.title' => 'Test',
-                        'tx_route_marker.lat' => '52',
-                        'tx_route_marker.lon' => '13',
-                        'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
-                        'tx_route_marker.uid' => '33',
-                        'tx_route_marker_cat.title' => 'Test',
-                        'tx_route_marker_cat.icons' => 'target_018px.png,target_036px_shadow.png,target_48px.png',
-                        'tx_route_marker_cat.icon_offset_x' => '-24',
-                        'tx_route_marker_cat.icon_offset_y' => '-24',
-                        'tx_route_marker_cat.uid' => '10',                    
-                      ),
-              ); 
-    
-      // Get rows
-//$this->pObj->dev_var_dump( $this->pObj->rows );
-    
     foreach( $this->pObj->rows as $row )
     {
       $marker[ ] = $this->renderMapRouteMarkerByPathRow( $row );
