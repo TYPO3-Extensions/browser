@@ -1701,6 +1701,7 @@ if( $this->pObj->b_drs_todo )
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
+          // 130601, dwildt, 1+
         $localUidField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
@@ -1776,6 +1777,8 @@ if( $this->pObj->b_drs_todo )
         // IF there is one category exactly
 
         // FOREACH category
+        // 130601, dwildt, 1+
+      $markerCounter = 0;
       foreach( $categories as $key => $category )
       {
           // Add the current row to cObj->data
@@ -1870,8 +1873,8 @@ if( $this->pObj->b_drs_todo )
 
           // Save each mapMarker
 $localUid = $row[ $localUidField ];
-$this->pObj->dev_var_dump( $key, $category, $localUid );
-        $mapMarkers[ ] = $mapMarker;
+$this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
+        $mapMarkers[ $markerCounter ] = $mapMarker;
           // Save each longitude
         $lons[] = ( double ) $mapMarker['lon'];
           // Save each latitude
@@ -1881,7 +1884,8 @@ $this->pObj->dev_var_dump( $key, $category, $localUid );
         $this->cObjDataRemoveRow( $row );
         $this->cObjDataRemoveMarker( );
         $this->cObjDataRemoveArray( array( $catIconsField => $categoryIcons[$key] ) );
-
+          // 130601, dwildt, 1+
+        $markerCounter++;
       }
         // FOREACH category
     }
