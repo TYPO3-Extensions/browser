@@ -1709,7 +1709,7 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
-//$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion, $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
@@ -1912,7 +1912,7 @@ if( $this->pObj->b_drs_todo )
         {
           $prompt = 'JSON array seem\'s to be proper.';
           t3lib_div :: devLog( '[OK/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, -1 );
-          $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
+          $prompt = 'If you have an unexpected effect in your map, please check the JSON array from below!';
           t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
         }
         break;
