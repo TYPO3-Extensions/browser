@@ -2581,7 +2581,7 @@ $this->pObj->dev_var_dump( $marker );
               ); 
     
       // Get rows
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     
     foreach( $this->pObj->rows as $row => $elements )
     {
@@ -2601,6 +2601,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  */
   private function renderMapRouteMarkerByPathRow( $elements )
   {
+$this->pObj->dev_var_dump( $elements );
+    
     $row = array 
           ( 
             'tx_route_marker.title' => 'Test',
