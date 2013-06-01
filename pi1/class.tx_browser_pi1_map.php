@@ -2620,8 +2620,30 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRouteMarkerByPathRowLocal( $elements )
   {
-//$this->pObj->dev_var_dump( $elements );
-//
+    $row = array( );
+    
+    $row  = $this->renderMapRouteMarkerByPathRowLocalObligate( $elements )
+          + $this->renderMapRouteMarkerByPathRowLocalOptional( $elements )
+          ;
+
+$this->pObj->dev_var_dump( $row );
+    
+    return $row;
+  }
+
+/**
+ * renderMapRouteMarkerByPathLocalObligate( )  : Adds a marker for each path
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerByPathRowLocalObligate( $elements )
+  {
+    $row = array( );
+    
       // short variables
     $confMapper   = $this->confMap['configuration.']['route.']['markerMapper.'];
     $tablePath    = $confMapper['tables.']['local.']['path'];
@@ -2646,8 +2668,29 @@ if( $this->pObj->b_drs_todo )
       $markerTableField = $tableMarker  . '.' . $valueMarker;
       
       $row[ $markerTableField ] = $elements[ $pathTableField ];
-      unset( $elements[ $pathTableField ] );
     }
+
+    return $row;
+  }
+
+/**
+ * renderMapRouteMarkerByPathLocalOptional( )  : Adds a marker for each path
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerByPathRowLocalOptional( $elements )
+  {
+    $row = array( );
+    
+      // short variables
+    $confMapper   = $this->confMap['configuration.']['route.']['markerMapper.'];
+    $tablePath    = $confMapper['tables.']['local.']['path'];
+    $tableMarker  = $confMapper['tables.']['local.']['marker'];
+      // short variables
 
     $fieldsOptional = $confMapper['fields.']['local.']['optional.'];
     foreach( $fieldsOptional as $fields => $field )
@@ -2667,29 +2710,7 @@ if( $this->pObj->b_drs_todo )
       $markerTableField = $tableMarker  . '.' . $valueMarker;
       
       $row[ $markerTableField ] = $elements[ $pathTableField ];
-      unset( $elements[ $pathTableField ] );
     }
-    
-//    foreach( $elements as $tableField => $value )
-//    {
-//      list( $table, $field ) = explode( '.', $tableField );
-//      if( $table != $tablePath )
-//      {
-//        continue;
-//      }
-//      $markerTableField = $tableMarker  . '.' . $field;
-//      $row[ $markerTableField ] = $value;      
-//    }
-
-$this->pObj->dev_var_dump( $row );
-//    $row = array 
-//          ( 
-//            'tx_route_marker.title' => 'Test',
-//            'tx_route_marker.lat' => '52',
-//            'tx_route_marker.lon' => '13',
-//            'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
-//            'tx_route_marker.uid' => '33',
-//          ); 
     
     return $row;
   }
