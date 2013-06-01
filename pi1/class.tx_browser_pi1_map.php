@@ -2629,6 +2629,7 @@ if( $this->pObj->b_drs_todo )
       // short variables
 
     $fieldsObligate = $confMapper['fields.']['local.']['obligate.'];
+$this->pObj->dev_var_dump( $fieldsObligate );
     foreach( $fieldsObligate as $fields => $field )
     {
         // CONTINUE : field doesn't have any property
