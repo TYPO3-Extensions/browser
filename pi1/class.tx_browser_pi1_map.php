@@ -3404,6 +3404,7 @@ $this->pObj->dev_var_dump( $row );
     $arrResult  = $this->renderMapRouteArrCatAndMarker( );
     $arrCat     = $arrResult['cat'];
     $arrMarker  = $arrResult['marker'];
+$this->pObj->dev_var_dump( $arrResult );
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
       // Get the array with categories and marker
@@ -3421,7 +3422,7 @@ $this->pObj->dev_var_dump( $row );
     }
       // LOOP relations of current path
 
-    //$this->pObj->dev_var_dump( $marker );
+    $this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
