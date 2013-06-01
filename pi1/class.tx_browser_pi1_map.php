@@ -2722,9 +2722,7 @@ $localUid = $row[ $localUidField ];
         case( $key == 'lon' ):
           if( empty( $elements[ $pathTableField ] ) )
           {
-            //$row[ $markerTableField ] = $this->getLatLon( $key );
-            $row[ $markerTableField ] = 10;
-$this->pObj->dev_var_dump( $markerTableField, 10 );
+            $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
           }
           break;
         default:
@@ -3121,6 +3119,24 @@ $this->pObj->dev_var_dump( $markerTableField, 10 );
       // DRS
 
     return $relations;
+  }
+
+/**
+ * renderMapRouteMarkerGeodata( )  : Adds a marker for each path
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerGeodata( $key, $elements )
+  {
+      // short variables
+    $tableFieldGeodata  = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
+
+
+    return 14;
   }
 
 /**
