@@ -2426,20 +2426,20 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRouteInitRequire( )
   {
-    $this->renderMapRouteInitRequireFields( );
+    $this->renderMapRouteInitRequireTables( );
   }
 
 /**
- * renderMapRouteInitRequireFields( ):
+ * renderMapRouteInitRequireTables( ):
  *
  * @return	void
  * @version 4.5.6
  * @since   4.5.6
  */
-  private function renderMapRouteInitRequireFields( )
+  private function renderMapRouteInitRequireTables( )
   {
     $tables = $this->confMap['configuration.']['route.']['tables.'];
-$this->pObj->dev_var_dump( $tables );
+
       // LOOP tables
     foreach( $tables as $table => $fields )
     {
@@ -2453,7 +2453,26 @@ $this->pObj->dev_var_dump( $tables );
         // LOOP fields
       foreach( $fields as $field => $value )
       {
-        $this->pObj->dev_var_dump( $table, $field, $value );
+          // CONTINUE : $value is set
+        if( ! empty ( $value ) )
+        {
+          continue;
+        }
+          // CONTINUE : $value is set
+
+          // DIE  : $value is empty
+        $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+                . $table . $field . ' is empty.<br />' . PHP_EOL
+                . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
+                . 'plugin.tx_browser_pi1.navigation.map.configuration.route.tables.' . $table . $field . '<br />' . PHP_EOL
+                . 'Please use the TypoScript Editor<br />' . PHP_EOL
+                . PHP_EOL
+                . 'Sorry for the trouble.<br />' . PHP_EOL
+                . 'Browser - TYPO3 without PHP'
+                ;
+        die( $prompt );
+          // DIE  : $value is empty
+//        $this->pObj->dev_var_dump( $table, $field, $value );
       }
         // LOOP fields
     }
