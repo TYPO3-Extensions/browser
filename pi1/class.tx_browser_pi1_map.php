@@ -2351,12 +2351,6 @@ if( $this->pObj->b_drs_todo )
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
-    $marker = array_merge
-              (
-                $marker, 
-                $this->renderMapRouteMarkerByPath( )
-              );
-$this->pObj->dev_var_dump( $marker );
     
     $arr_return['marker'] = $marker;
     $arr_return['paths']  = $paths;
@@ -2539,6 +2533,14 @@ $this->pObj->dev_var_dump( $marker );
     $marker = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
     //$this->pObj->dev_var_dump( $marker );
 
+      // Merge a marker for each path
+    $marker = array_merge
+              (
+                $marker, 
+                $this->renderMapRouteMarkerByPath( )
+              );
+$this->pObj->dev_var_dump( $marker );
+
       // DRS
     if( $this->pObj->b_drs_map )
     {
@@ -2578,6 +2580,14 @@ $this->pObj->dev_var_dump( $marker );
                       ),
               ); 
     
+      // Get rows
+$this->pObj->dev_var_dump( $this->pObj->rows );
+    $rows = $this->rowsBackup;
+    
+    foreach( $this->pObj->rows as $row => $elements )
+    {
+      
+    }
     return $marker;
   }
 
