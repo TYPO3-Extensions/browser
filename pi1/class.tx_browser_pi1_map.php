@@ -2828,7 +2828,7 @@ $this->pObj->dev_var_dump( $row );
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'navigation.map.configuration.route.markerMapper.fields.cat.' . $key . '.* is configured,'
-                  . 'but the current row doesn\'t contain the element ' . $tableLocal . '.';
+                  . 'but the current row doesn\'t contain the element ' . $pathTableField . '.';
           t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         }
           // DRS
