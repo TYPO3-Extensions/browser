@@ -724,7 +724,7 @@ if( $this->pObj->b_drs_todo )
     $paths = $arr_result['paths'];
     unset( $arr_result );
     
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
@@ -1886,7 +1886,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $dontHandle00 );
       // FOREACH row
 
-//$this->pObj->dev_var_dump( $mapMarkers );
+$this->pObj->dev_var_dump( $mapMarkers );
 //    if( $this->pObj->b_drs_map )
 //    {
 //      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
@@ -2351,7 +2351,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
     
     $arr_return['marker'] = $marker;
     $arr_return['paths']  = $paths;
@@ -2594,7 +2594,7 @@ $this->pObj->dev_var_dump( $marker );
           + $this->renderMapRouteMarkerByPathRowLocal( $elements )
           + $this->renderMapRouteMarkerByPathRowCat( $elements )
           ;
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
 
     return $row;
   }
@@ -3392,7 +3392,7 @@ $this->pObj->dev_var_dump( $row );
     $arrResult  = $this->renderMapRouteArrCatAndMarker( $pathUid );
     $arrCat     = $arrResult['cat'];
     $arrMarker  = $arrResult['marker'];
-$this->pObj->dev_var_dump( $arrResult );
+//$this->pObj->dev_var_dump( $arrResult );
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
       // Get the array with categories and marker
@@ -3410,7 +3410,7 @@ $this->pObj->dev_var_dump( $arrResult );
     }
       // LOOP relations of current path
 
-    $this->pObj->dev_var_dump( $marker );
+//    $this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
