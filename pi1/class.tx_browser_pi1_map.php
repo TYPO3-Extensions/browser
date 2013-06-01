@@ -2583,9 +2583,9 @@ if( $this->pObj->b_drs_todo )
       // Get rows
 //$this->pObj->dev_var_dump( $this->pObj->rows );
     
-    foreach( $this->pObj->rows as $row => $elements )
+    foreach( $this->pObj->rows as $row )
     {
-      $marker[ ] = $this->renderMapRouteMarkerByPathRow( $elements );
+      $marker[ ] = $this->renderMapRouteMarkerByPathRow( $row );
     }
     return $marker;
   }
@@ -2606,6 +2606,8 @@ if( $this->pObj->b_drs_todo )
           + $this->renderMapRouteMarkerByPathRowLocal( $elements )
           + $this->renderMapRouteMarkerByPathRowCat( $elements )
           ;
+$this->pObj->dev_var_dump( $row );
+
     return $row;
   }
 
@@ -2626,8 +2628,6 @@ if( $this->pObj->b_drs_todo )
           + $this->renderMapRouteMarkerByPathRowLocalOptional( $elements )
           ;
 
-$this->pObj->dev_var_dump( $row );
-    
     return $row;
   }
 
@@ -2650,6 +2650,25 @@ $this->pObj->dev_var_dump( $row );
     $tableMarker  = $confMapper['tables.']['local.']['marker'];
       // short variables
 
+    switch( true )
+    {
+      case( empty( $tablePath ) ):
+      case( empty( $tableMarker ) ):
+        $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '):<br /> ' . PHP_EOL
+                . 'A label for the table with the path data is missing!<br /> ' . PHP_EOL
+                . 'Please take care off a proper TypoScript configuration at:<br /> ' . PHP_EOL
+                . 'plugin.tx_browser_pi1.navigation.map.configuration.route.markerMapper.tables.local.*<br /> ' . PHP_EOL
+                . '<br /> ' . PHP_EOL
+                . 'Sorry for the trouble.<br /> ' . PHP_EOL
+                . 'Browser - TYPO3 without PHP.<br /> ' . PHP_EOL
+                ;
+        die( $prompt );
+        break;
+      default:
+          // follow the workflow
+        break;
+    }
+
     $fieldsObligate = $confMapper['fields.']['local.']['obligate.'];
     foreach( $fieldsObligate as $fields => $field )
     {
@@ -2667,6 +2686,36 @@ $this->pObj->dev_var_dump( $row );
       $pathTableField   = $tablePath    . '.' . $valuePath;
       $markerTableField = $tableMarker  . '.' . $valueMarker;
       
+      switch( true )
+      {
+        case( empty( $valuePath ) ):
+        case( empty( $valueMarker ) ):
+          $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '):<br /> ' . PHP_EOL
+                  . 'A label for a field is missing!<br /> ' . PHP_EOL
+                  . 'Please take care off a proper TypoScript configuration at:<br /> ' . PHP_EOL
+                  . 'plugin.tx_browser_pi1.navigation.map.configuration.route.markerMapper.fields.local.obligate.' . $key . '.*<br /> ' . PHP_EOL
+                  . '<br /> ' . PHP_EOL
+                  . 'Sorry for the trouble.<br /> ' . PHP_EOL
+                  . 'Browser - TYPO3 without PHP.<br /> ' . PHP_EOL
+                  ;
+          die( $prompt );
+          break;
+        case( ! isset( $elements[ $pathTableField ] ) ):
+          $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '):<br /> ' . PHP_EOL
+                  . 'Row doesn\'t contain the element ' . $pathTableField . '!<br /> ' . PHP_EOL
+                  . 'Please take care off a proper TypoScript configuration.<br /> ' . PHP_EOL
+                  . 'Please check, if your SQL query contains ' . $pathTableField . '<br /> ' . PHP_EOL
+                  . '<br /> ' . PHP_EOL
+                  . 'Sorry for the trouble.<br /> ' . PHP_EOL
+                  . 'Browser - TYPO3 without PHP.<br /> ' . PHP_EOL
+                  ;
+          die( $prompt );
+          break;
+        default:
+            // follow the workflow
+          break;
+      }
+
       $row[ $markerTableField ] = $elements[ $pathTableField ];
     }
 
@@ -2702,7 +2751,6 @@ $this->pObj->dev_var_dump( $row );
       }
         // CONTINUE : field doesn't have any property
 
-      $key          = trim( $fields, '.' );
       $valuePath    = $field['path'];             
       $valueMarker  = $field['marker'];   
       
@@ -2731,22 +2779,79 @@ $this->pObj->dev_var_dump( $row );
  */
   private function renderMapRouteMarkerByPathRowCat( $elements )
   {
-//$this->pObj->dev_var_dump( $elements );
-//
-//    $tablesLocal  = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.'];
-//    $tablesCat    = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['cat.'];
-
-    $row = array 
-          ( 
-            'tx_route_marker_cat.title' => 'Test',
-            'tx_route_marker_cat.icons' => 'target_018px.png,target_036px_shadow.png,target_48px.png',
-            'tx_route_marker_cat.icon_offset_x' => '-24',
-            'tx_route_marker_cat.icon_offset_y' => '-24',
-            'tx_route_marker_cat.uid' => '10',                    
-          ); 
+    $row = array( );
     
-      // Get rows
+      // short variables
+    $confMapper     = $this->confMap['configuration.']['route.']['markerMapper.'];
+    $tablePathCat   = $confMapper['tables.']['cat.']['path'];
+    $tableMarkerCat = $confMapper['tables.']['cat.']['marker'];
+      // short variables
+
+    switch( true )
+    {
+      case( empty( $tablePathCat ) ):
+      case( empty( $tableMarkerCat ) ):
+        $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '):<br /> ' . PHP_EOL
+                . 'A label for the table with the path data is missing!<br /> ' . PHP_EOL
+                . 'Please take care off a proper TypoScript configuration at:<br /> ' . PHP_EOL
+                . 'plugin.tx_browser_pi1.navigation.map.configuration.route.markerMapper.tables.cat.*<br /> ' . PHP_EOL
+                . '<br /> ' . PHP_EOL
+                . 'Sorry for the trouble.<br /> ' . PHP_EOL
+                . 'Browser - TYPO3 without PHP.<br /> ' . PHP_EOL
+                ;
+        die( $prompt );
+        break;
+      default:
+          // follow the workflow
+        break;
+    }
+
+    $fieldsCat = $confMapper['fields.']['cat.'];
+    foreach( $fieldsCat as $fields => $field )
+    {
+        // CONTINUE : field doesn't have any property
+      if( ! is_array( $field ) )
+      {
+        continue;
+      }
+        // CONTINUE : field doesn't have any property
+
+      $key          = trim( $fields, '.' );
+      $valuePath    = $field['path'];             
+      $valueMarker  = $field['marker'];   
+      
+      $pathTableField = $tablePathCat    . '.' . $valuePath;
+      
+      if( ! isset( $elements[ $pathTableField ] ) )
+      {
+          // DRS
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'navigation.map.configuration.route.markerMapper.fields.cat.' . $key . '.* is configured,'
+                  . 'but the current row doesn\'t contain the element ' . $tableLocal . '.';
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+          // DRS
+        continue;
+      }
+
+      $markerTableField         = $tableMarkerCat  . '.' . $valueMarker;
+      $row[ $markerTableField ] = $elements[ $pathTableField ];
+    }
+    
     return $row;
+
+//    $row = array 
+//          ( 
+//            'tx_route_marker_cat.title' => 'Test',
+//            'tx_route_marker_cat.icons' => 'target_018px.png,target_036px_shadow.png,target_48px.png',
+//            'tx_route_marker_cat.icon_offset_x' => '-24',
+//            'tx_route_marker_cat.icon_offset_y' => '-24',
+//            'tx_route_marker_cat.uid' => '10',                    
+//          ); 
+//    
+//      // Get rows
+//    return $row;
   }
 
 
