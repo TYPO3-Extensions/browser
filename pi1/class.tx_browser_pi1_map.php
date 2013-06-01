@@ -1701,6 +1701,7 @@ if( $this->pObj->b_drs_todo )
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
+        $localUidField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
@@ -1868,7 +1869,7 @@ if( $this->pObj->b_drs_todo )
           // Add offset to the mapMarker
 
           // Save each mapMarker
-        $mapMarkers[] = $mapMarker;
+        $mapMarkers[ $row[ $localUidField ] ] = $mapMarker;
           // Save each longitude
         $lons[] = ( double ) $mapMarker['lon'];
           // Save each latitude
