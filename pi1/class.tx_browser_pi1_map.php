@@ -2582,13 +2582,41 @@ $this->pObj->dev_var_dump( $marker );
     
       // Get rows
 $this->pObj->dev_var_dump( $this->pObj->rows );
-    $rows = $this->rowsBackup;
     
     foreach( $this->pObj->rows as $row => $elements )
     {
-      
+      $marker[ ] = $this->renderMapRouteMarkerByPathRow( $elements );
     }
     return $marker;
+  }
+
+/**
+ * renderMapRouteMarkerByPath( )  : Adds a marker for each path
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerByPathRow( $elements )
+  {
+    $row = array 
+          ( 
+            'tx_route_marker.title' => 'Test',
+            'tx_route_marker.lat' => '52',
+            'tx_route_marker.lon' => '13',
+            'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
+            'tx_route_marker.uid' => '33',
+            'tx_route_marker_cat.title' => 'Test',
+            'tx_route_marker_cat.icons' => 'target_018px.png,target_036px_shadow.png,target_48px.png',
+            'tx_route_marker_cat.icon_offset_x' => '-24',
+            'tx_route_marker_cat.icon_offset_y' => '-24',
+            'tx_route_marker_cat.uid' => '10',                    
+          ); 
+    
+      // Get rows
+    return $row;
   }
 
 
