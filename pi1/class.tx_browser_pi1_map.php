@@ -2629,7 +2629,6 @@ if( $this->pObj->b_drs_todo )
       // short variables
 
     $fieldsObligate = $confMapper['fields.']['local.']['obligate.'];
-$this->pObj->dev_var_dump( $fieldsObligate );
     foreach( $fieldsObligate as $fields => $field )
     {
         // CONTINUE : field doesn't have any property
@@ -2639,20 +2638,52 @@ $this->pObj->dev_var_dump( $fieldsObligate );
       }
         // CONTINUE : field doesn't have any property
 
-      $label = trim( $fields, '.' );
-      foreach( $field as $key => $value )
-      {
-$this->pObj->dev_var_dump( $label, $key, $value );
-      }
+      $key          = trim( $fields, '.' );
+      $valuePath    = $fields['path'];             
+      $valueMarker  = $fields['marker'];   
+      
+      $pathTableField   = $tablePath    . '.' . $valuePath;
+      $markerTableField = $tableMarker  . '.' . $valueMarker;
+      
+      $row[ $markerTableField ] = $elements[ $pathTableField ];
+      unset( $elements[ $pathTableField ] );
     }
-    $row = array 
-          ( 
-            'tx_route_marker.title' => 'Test',
-            'tx_route_marker.lat' => '52',
-            'tx_route_marker.lon' => '13',
-            'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
-            'tx_route_marker.uid' => '33',
-          ); 
+
+    $fieldsOptional = $confMapper['fields.']['local.']['optional.'];
+    foreach( $fieldsOptional as $fields => $field )
+    {
+        // CONTINUE : field doesn't have any property
+      if( ! is_array( $field ) )
+      {
+        continue;
+      }
+        // CONTINUE : field doesn't have any property
+
+      $key          = trim( $fields, '.' );
+      $valuePath    = $fields['path'];             
+      $valueMarker  = $fields['marker'];   
+      
+      $pathTableField   = $tablePath    . '.' . $valuePath;
+      $markerTableField = $tableMarker  . '.' . $valueMarker;
+      
+      $row[ $markerTableField ] = $elements[ $pathTableField ];
+      unset( $elements[ $pathTableField ] );
+    }
+    
+    foreach( $elements as $key => $value )
+    {
+      $row[ $key ] = $value;      
+    }
+
+$this->pObj->dev_var_dump( $row );
+//    $row = array 
+//          ( 
+//            'tx_route_marker.title' => 'Test',
+//            'tx_route_marker.lat' => '52',
+//            'tx_route_marker.lon' => '13',
+//            'tx_route_marker.image' => 'Reichstag_Berlin.jpg',
+//            'tx_route_marker.uid' => '33',
+//          ); 
     
     return $row;
   }
