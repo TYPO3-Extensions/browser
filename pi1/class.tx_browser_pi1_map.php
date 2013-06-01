@@ -1693,8 +1693,6 @@ if( $this->pObj->b_drs_todo )
     switch( true )
     {
       case( $this->pObj->typoscriptVersion <= 4005004 ):
-          // 130601, dwildt, 1+
-        $catUidField      = $this->confMap['configuration.']['categories.']['fields.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
@@ -1703,8 +1701,6 @@ if( $this->pObj->b_drs_todo )
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
-          // 130601, dwildt, 1+
-        $catUidField      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
         $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
         $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
@@ -1713,7 +1709,6 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
-$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
@@ -1873,10 +1868,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
           // Add offset to the mapMarker
 
           // Save each mapMarker
-          // 130601, dwildt, 1-
-        //$mapMarkers[] = $mapMarker;
-          // 130601, dwildt, 1+
-        $mapMarkers[ $row[ $catUidField ] ] = $mapMarker;
+        $mapMarkers[] = $mapMarker;
           // Save each longitude
         $lons[] = ( double ) $mapMarker['lon'];
           // Save each latitude
@@ -1893,7 +1885,6 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $dontHandle00 );
       // FOREACH row
 
-$this->pObj->dev_var_dump( $mapMarkers );
 //    if( $this->pObj->b_drs_map )
 //    {
 //      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
