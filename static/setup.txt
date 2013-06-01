@@ -710,6 +710,12 @@ plugin.tx_browser_pi1 {
                     path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.path}
                     marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.marker}
                   }
+                    // uid: path, marker
+                  1 =
+                  1 {
+                    path    = uid
+                    marker  = uid
+                  }
                 }
               }
                 // [optional] Extendable array: title, icons, iconOffsetX, iconOffsetY,  ...
