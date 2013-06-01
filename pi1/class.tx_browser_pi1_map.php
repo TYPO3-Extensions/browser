@@ -2351,7 +2351,10 @@ if( $this->pObj->b_drs_todo )
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
-    $marker = $this->renderMapRouteMarkerByPath( $marker );
+    $marker = $marker
+            + $this->renderMapRouteMarkerByPath( )
+            ;
+$this->pObj->dev_var_dump( $marker );
     
     $arr_return['marker'] = $marker;
     $arr_return['paths']  = $paths;
@@ -2531,33 +2534,32 @@ if( $this->pObj->b_drs_todo )
     //$tablePath    = $arrResult['tablePath'];
     unset( $arrResult );
     
-    $rowsMarkerWiCat  = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
-    //$this->pObj->dev_var_dump( $rowsMarkerWiCat );
+    $marker = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
+    //$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
     {
-      $prompt = 'Marker rows: ' . var_export( $rowsMarkerWiCat, true );
+      $prompt = 'Marker rows: ' . var_export( $marker, true );
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
     
-    return $rowsMarkerWiCat;
+    return $marker;
   }
 
 /**
  * renderMapRouteMarkerByPath( )  : Adds a marker for each path
  *
- * @param       array   $marker : rows with current marker
  * @return	array
  * @version 4.5.7
  * @since   4.5.7
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarkerByPath( $marker )
+  private function renderMapRouteMarkerByPath( )
   {
-    $addMarker = array 
+    $marker = array 
               ( 
                 3 =>  array
                       (
@@ -2574,9 +2576,6 @@ if( $this->pObj->b_drs_todo )
                       ),
               ); 
     
-    $marker = $marker
-            + $addMarker
-            ;
     return $marker;
   }
 
