@@ -2273,7 +2273,7 @@ if( $this->pObj->b_drs_todo )
 //var_dump( __METHOD__, __LINE__, $arr_return );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
-$this->pObj->dev_var_dump( $coordinates, $this->pObj->rows );
+$this->pObj->dev_var_dump( $coordinates, $this->rowsBackup );
       // Get points (map marker) as JSON array and coordinates
 
       // Add JSON array
