@@ -1870,7 +1870,7 @@ if( $this->pObj->b_drs_todo )
 
           // Save each mapMarker
 $localUid = $row[ $localUidField ];
-$this->pObj->dev_var_dump( $key, $category, $localUid ] );
+$this->pObj->dev_var_dump( $key, $category, $localUid );
         $mapMarkers[ ] = $mapMarker;
           // Save each longitude
         $lons[] = ( double ) $mapMarker['lon'];
