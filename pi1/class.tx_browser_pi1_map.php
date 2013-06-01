@@ -2698,6 +2698,14 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapRoutePathsJsonFeatures( $rowsPathWiCat )
   {
+    $confMapRouteFields = $this->confMap['configuration.']['route.']['fields.'];
+    $tablePathCatTitle  = $confMapRouteFields['pathCategory.']['title'];
+    $tablePathTitle     = $confMapRouteFields['path.']['title'];
+    list( $tablePath )  = explode( '.', $tablePathTitle );
+    $tablePathColor     = $confMapRouteFields['path.']['color'];
+    $tablePathGeodata   = $confMapRouteFields['path.']['geodata'];
+    $tablePathLinewidth = $confMapRouteFields['path.']['lineWidth'];
+    $tablePathUid       = $tablePath . '.uid';
 //$this->pObj->dev_var_dump( $rowsPathWiCat );
     $features = array( );
     
@@ -2705,13 +2713,13 @@ if( $this->pObj->b_drs_todo )
     foreach( $rowsPathWiCat as $rowPathWiCat )
     {
         // short variables
-      $category     = $rowPathWiCat[ 'tx_route_path_cat.title' ];
-      $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ 'tx_route_path.gpxdata' ] );
-      $id           = $rowPathWiCat[ 'tx_route_path.uid' ];
-      $markerList   = $this->renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat[ 'tx_route_path.uid' ] );
-      $name         = $rowPathWiCat[ 'tx_route_path.title' ];
-      $strokeColor  = $rowPathWiCat[ 'tx_route_path.color' ];
-      $strokeWidth  = $rowPathWiCat[ 'tx_route_path.line_width' ];
+      $category     = $rowPathWiCat[ $tablePathCatTitle ];
+      $coordinates  = $this->renderMapRoutePathsJsonFeaturesCoordinates( $rowPathWiCat[ $tablePathGeodata ] );
+      $id           = $rowPathWiCat[ $tablePathUid ];
+      $markerList   = $this->renderMapRoutePathsJsonFeaturesMarker( $rowPathWiCat[ $tablePathUid ] );
+      $name         = $rowPathWiCat[ $tablePathTitle ];
+      $strokeColor  = $rowPathWiCat[ $tablePathColor ];
+      $strokeWidth  = $rowPathWiCat[ $tablePathLinewidth ];
         // short variables
 
         // feature begin
@@ -2775,7 +2783,7 @@ if( $this->pObj->b_drs_todo )
  * @version 4.5.7
  * @since   4.5.7
  */
-  private function renderMapRoutePathsJsonFeaturesMarker( $tablePathUid )
+  private function renderMapRoutePathsJsonFeaturesMarker( $pathUid )
   {
       // variables
     static $arrResult     = array( );
@@ -2785,6 +2793,7 @@ if( $this->pObj->b_drs_todo )
     static $tablePath     = null;
     $catTitle             = null;
     $catUid               = null;
+    $marker               = array( );
     $markerTitle          = null;
     $markerUid            = null;
     $arrCat               = null;
@@ -2793,6 +2802,13 @@ if( $this->pObj->b_drs_todo )
     $arrMarker            = null;
     $arrMarkerUid         = null;
     $arrMarkerTitle       = null;
+    $confMapRouteFields   = $this->confMap['configuration.']['route.']['fields.'];
+    $tablePathTitle       = $confMapRouteFields['path.']['title'];
+    list( $tablePath )    = explode( '.', $tablePathTitle );
+    $tablePathUid         = $tablePath . '.uid';
+    $tableMarkerCatTitle  = $confMapRouteFields['markerCategory.']['title'];
+    list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
+    $tableMarkerCatUid    = $tableMarkerCat . '.uid';
       // variables
     
       // Get relations path -> marker -> marker_cat
@@ -2804,18 +2820,18 @@ if( $this->pObj->b_drs_todo )
       $tableMarker  = $arrResult['tableMarker'];
       $tablePath    = $arrResult['tablePath'];
     }
-    //$this->pObj->dev_var_dump( $tablePathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
+    //$this->pObj->dev_var_dump( $pathUid, $rowsRelation, $tablePath, $tableMarker, $tableCat );
       // Get relations path -> marker -> marker_cat
 
       // Get marker and marker_cat values of the given row
     foreach( $this->pObj->rows as $row )
     {
-      if( $row[ 'tx_route_path.uid' ] != $tablePathUid )
+      if( $row[ $tablePathUid ] != $pathUid )
       {
         continue;
       }
-      $catTitle     = $row[ 'tx_route_marker_cat.title' ];
-      $catUid       = $row[ 'tx_route_marker_cat.uid' ];
+      $catTitle     = $row[ $tableMarkerCatTitle ];
+      $catUid       = $row[ $tableMarkerCatUid ];
       $markerTitle  = $row[ 'tx_route_marker.title' ];
       $markerUid    = $row[ 'tx_route_marker.uid' ];
       break;
@@ -2840,7 +2856,7 @@ if( $this->pObj->b_drs_todo )
     
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
     
-    foreach( $rowsRelation[ $tablePathUid ] as $markerUid => $catUids )
+    foreach( $rowsRelation[ $pathUid ] as $markerUid => $catUids )
     {
       foreach( $catUids as $catUid )
       {

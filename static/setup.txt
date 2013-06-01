@@ -693,6 +693,11 @@ plugin.tx_browser_pi1 {
               title = {$plugin.tx_browser_pi1.map.path.field.pathCategory.title}
             }
               // title
+            marker =
+            marker {
+              title = {$plugin.tx_browser_pi1.map.path.field.marker.title}
+            }
+              // title
             markerCategory =
             markerCategory {
               title = {$plugin.tx_browser_pi1.map.path.field.markerCategory.title}
