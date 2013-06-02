@@ -1270,17 +1270,25 @@ $this->pObj->dev_var_dump( $coordinates );
  * @param	string		$map_template: ...
  * @param	[type]		$coordinates: ...
  * @return	string
- * @version 4.1.0
- * @since   4.1.0
+ * @version 4.5.7
+ * @since   4.5.7
  */
   private function renderMapAutoCenterCoorRoute( )
   {
     $coordinates = array( );
+    
+    $tableFieldGeodata = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
+    
+    foreach( $this->rowsBackup as $row )
+    {
+      $strGeodata = $row[ $tableFieldGeodata ]; 
+$this->pObj->dev_var_dump( $strGeodata );
+    }
+
       // 130601, dwildt, +
 //    $coordinates  = $coordinates
 //                  + $this->renderMapAutoCenterCoorRoute( );
 //                  ;
-$this->pObj->dev_var_dump( $this->pObj->rows, $this->rowsBackup );
 
     return $coordinates;
   }
