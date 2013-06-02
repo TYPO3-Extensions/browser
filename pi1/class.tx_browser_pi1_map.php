@@ -2059,7 +2059,6 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
       // Get category icons
       // Get category offsets
       // #42125, 121031, dwildt, 8+
-$this->pObj->dev_var_dump( $row, $arrLabels );
     if( isset( $row[ $arrLabels[ 'catOffsetX' ] ] ) )
     {
       $catOffsetsX = explode( $this->catDevider, $row[ $arrLabels[ 'catOffsetX' ] ] );
@@ -2078,6 +2077,7 @@ $this->pObj->dev_var_dump( $row, $arrLabels );
                     'catOffsetsX'  => $catOffsetsX,
                     'catOffsetsY'  => $catOffsetsY
                   );
+$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
       // RETURN result
   }
