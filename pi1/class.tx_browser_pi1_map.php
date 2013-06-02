@@ -1777,12 +1777,12 @@ if( $this->pObj->b_drs_todo )
       // LOOP row
     foreach( $this->pObj->rows as $row )
     {
-        // IF there are more than one category
-        // #44849, dwildt, 1-
-//      if( $this->boolMoreThanOneCategory )
-        // #44849, dwildt, 1+
-      if( $this->boolMoreThanOneCategory || 1 )
-      {
+//        // IF there are more than one category
+//        // #44849, dwildt, 1-
+////      if( $this->boolMoreThanOneCategory )
+//        // #44849, dwildt, 1+
+//      if( $this->boolMoreThanOneCategory || 1 )
+//      {
           // Get categories
         if( isset( $row[ $catField ] ) )
         {
@@ -1810,35 +1810,35 @@ if( $this->pObj->b_drs_todo )
           $categoryOffsetsY = explode( $this->catDevider, $row[ $catOffsetYField ] );
         }
           // Get category offsets
-      }
-        // IF there are more than one category
-        // IF there is one category exactly
-        // #44849, dwildt, 1-
-//      if( ! $this->boolMoreThanOneCategory )
-        // #44849, dwildt, 1+
-      if( ! $this->boolMoreThanOneCategory && 0 )
-      {
-          // Set dummy category
-        $categories = array( $keys[ 0 ] => $llNoCat );
-          // IF there are one icon at least
-        if( isset( $this->arrCategories['icons'] ) )
-        {
-          list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
-        }
-          // IF there are one icon at least
-          // Get category offset
-          // #42125, 121031, dwildt, 8+
-        if( isset( $row[ $catOffsetXField ] ) )
-        {
-          list( $categoryOffsetsX[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetXField ] );
-        }
-        if( isset( $row[ $catOffsetYField ] ) )
-        {
-          list( $categoryOffsetsY[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetYField ] );
-        }
-          // Get category offset
-      }
-        // IF there is one category exactly
+//      }
+//        // IF there are more than one category
+//        // IF there is one category exactly
+//        // #44849, dwildt, 1-
+////      if( ! $this->boolMoreThanOneCategory )
+//        // #44849, dwildt, 1+
+//      if( ! $this->boolMoreThanOneCategory && 0 )
+//      {
+//          // Set dummy category
+//        $categories = array( $keys[ 0 ] => $llNoCat );
+//          // IF there are one icon at least
+//        if( isset( $this->arrCategories['icons'] ) )
+//        {
+//          list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
+//        }
+//          // IF there are one icon at least
+//          // Get category offset
+//          // #42125, 121031, dwildt, 8+
+//        if( isset( $row[ $catOffsetXField ] ) )
+//        {
+//          list( $categoryOffsetsX[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetXField ] );
+//        }
+//        if( isset( $row[ $catOffsetYField ] ) )
+//        {
+//          list( $categoryOffsetsY[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetYField ] );
+//        }
+//          // Get category offset
+//      }
+//        // IF there is one category exactly
 
         // FOREACH category
       foreach( $categories as $key => $category )
