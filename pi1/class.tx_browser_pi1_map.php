@@ -1710,11 +1710,11 @@ if( $this->pObj->b_drs_todo )
 
 
 
-  /**
+/**
  * renderMapMarkerPoints( ): Points are map marker
  *
  * @return	array
- * @version 4.1.13
+ * @version 4.5.7
  * @since   4.1.7
  */
   private function renderMapMarkerPoints( )
@@ -1724,26 +1724,27 @@ if( $this->pObj->b_drs_todo )
     $lats         = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
 
-      // #44849, dwildt, 1+
-    $llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
+      // 130602, dwildt, -
+//      // #44849, dwildt, 1+
+//    $llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
+//
+//      // #44849, dwildt, 1-
+////    if( $this->boolMoreThanOneCategory )
+//      // #44849, dwildt, 1+
+//    if( $this->boolMoreThanOneCategory || 1 )
+//    {
+//      $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
+//    }
+//    else
+//    {
+//      $keys = array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] );
+//      $arrCategoriesFlipped = array( $llNoCat => $keys[ 0 ] );
+//    }
+      // 130602, dwildt, -
+    
+      // 130602, dwildt, 1+
+    $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
-
-      // #44849, dwildt, 1-
-//    if( $this->boolMoreThanOneCategory )
-      // #44849, dwildt, 1+
-    if( $this->boolMoreThanOneCategory || 1 )
-    {
-      $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
-    }
-    else
-    {
-      $keys = array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] );
-      $arrCategoriesFlipped = array( $llNoCat => $keys[ 0 ] );
-    }
-
-
-      // FOREACH row
-    $mapMarkers = null;
       // #47631, dwildt, 5-
 //    $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
 //    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
@@ -1772,73 +1773,21 @@ if( $this->pObj->b_drs_todo )
         break;
     }
       // #47631, #i0007, dwildt, 18+
+      
       // 130601, dwildt, 1+
-    $markerCounter = 0;
+    $markerCounter  = 0;
+    $mapMarkers     = null;
       // LOOP row
     foreach( $this->pObj->rows as $row )
     {
-//        // IF there are more than one category
-//        // #44849, dwildt, 1-
-////      if( $this->boolMoreThanOneCategory )
-//        // #44849, dwildt, 1+
-//      if( $this->boolMoreThanOneCategory || 1 )
-//      {
-          // Get categories
-        if( isset( $row[ $catField ] ) )
-        {
-          $categories = explode( $this->catDevider, $row[ $catField ] );
-        }
-        else
-        {
-          $categories = array( $keys[ 0 ] => $llNoCat );
-        }
-          // Get categories
-          // Get category icons
-        if( isset( $this->arrCategories['icons'] ) )
-        {
-          $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
-        }
-          // Get category icons
-          // Get category offsets
-          // #42125, 121031, dwildt, 8+
-        if( isset( $row[ $catOffsetXField ] ) )
-        {
-          $categoryOffsetsX = explode( $this->catDevider, $row[ $catOffsetXField ] );
-        }
-        if( isset( $row[ $catOffsetYField ] ) )
-        {
-          $categoryOffsetsY = explode( $this->catDevider, $row[ $catOffsetYField ] );
-        }
-          // Get category offsets
-//      }
-//        // IF there are more than one category
-//        // IF there is one category exactly
-//        // #44849, dwildt, 1-
-////      if( ! $this->boolMoreThanOneCategory )
-//        // #44849, dwildt, 1+
-//      if( ! $this->boolMoreThanOneCategory && 0 )
-//      {
-//          // Set dummy category
-//        $categories = array( $keys[ 0 ] => $llNoCat );
-//          // IF there are one icon at least
-//        if( isset( $this->arrCategories['icons'] ) )
-//        {
-//          list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
-//        }
-//          // IF there are one icon at least
-//          // Get category offset
-//          // #42125, 121031, dwildt, 8+
-//        if( isset( $row[ $catOffsetXField ] ) )
-//        {
-//          list( $categoryOffsetsX[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetXField ] );
-//        }
-//        if( isset( $row[ $catOffsetYField ] ) )
-//        {
-//          list( $categoryOffsetsY[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetYField ] );
-//        }
-//          // Get category offset
-//      }
-//        // IF there is one category exactly
+        // Get category properties
+      $arr_result       = $this->renderMapMarkerPointsCatProperties( $row );
+      $categories       = $arr_result[ 'categories' ];
+      $categoryIcons    = $arr_result[ 'categoryIcons' ];
+      $categoryOffsetsX = $arr_result[ 'categoryOffsetsX' ];
+      $categoryOffsetsY = $arr_result[ 'categoryOffsetsY' ];
+      unset( $arr_result );
+        // Get category properties
 
         // FOREACH category
       foreach( $categories as $key => $category )
@@ -1953,7 +1902,7 @@ if( $this->pObj->b_drs_todo )
     }
       // LOOP row
     unset( $dontHandle00 );
-      // FOREACH row
+
 //$this->pObj->dev_var_dump( $mapMarkers );
 
 //    if( $this->pObj->b_drs_map )
@@ -1961,6 +1910,8 @@ if( $this->pObj->b_drs_todo )
 //      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
 //      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
 //    }
+
+      // DRS
     switch( true )
     {
       case( $mapMarkers == null ):
@@ -1986,11 +1937,93 @@ if( $this->pObj->b_drs_todo )
         }
         break;
     }
+      // DRS
+
+      // Return array
     $arr_return['data']['mapMarkers'] = $mapMarkers;
-//$this->pObj->dev_var_dump( $mapMarkers );
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
+      // Return array
+
     return $arr_return;
+  }
+
+/**
+ * renderMapMarkerPointsCatProperties( ): Points are map marker
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapMarkerPointsCatProperties( $row )
+  {
+    switch( true )
+    {
+      case( $this->pObj->typoscriptVersion <= 4005004 ):
+        $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+        $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+          // #42125, 121031, dwildt, 2+
+        $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+        $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+        break;
+      case( $this->pObj->typoscriptVersion <= 4005007 ):
+      default:
+        $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+        $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+          // #42125, 121031, dwildt, 2+
+        $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+        $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+        break;
+    }
+
+      // Get categories
+    if( isset( $row[ $catField ] ) )
+    {
+      $categories = explode( $this->catDevider, $row[ $catField ] );
+    }
+    else
+    {
+        // 130602, dwildt, 1-
+      //$categories = array( $keys[ 0 ] => $llNoCat );
+        // 130602, dwildt, +
+      $categories = array
+                    ( 
+                      array
+                      ( 
+                        '0' => $llNoCat
+                      )
+                    );
+    }
+      // Get categories
+
+      // Get category icons
+    if( isset( $this->arrCategories['icons'] ) )
+    {
+      $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
+    }
+      // Get category icons
+      // Get category offsets
+      // #42125, 121031, dwildt, 8+
+    if( isset( $row[ $catOffsetXField ] ) )
+    {
+      $categoryOffsetsX = explode( $this->catDevider, $row[ $catOffsetXField ] );
+    }
+    if( isset( $row[ $catOffsetYField ] ) )
+    {
+      $categoryOffsetsY = explode( $this->catDevider, $row[ $catOffsetYField ] );
+    }
+      // Get category offsets
+
+      // RETURN result
+    $arr_return = array
+                  ( 
+                    'categories'        => $categories,
+                    'categoryIcons'     => $categoryIcons,
+                    'categoryOffsetsX'  => $categoryOffsetsX,
+                    'categoryOffsetsY'  => $categoryOffsetsY
+                  );
+    return $arr_return;
+      // RETURN result
   }
 
 
