@@ -1746,7 +1746,6 @@ if( $this->pObj->b_drs_todo )
         // Get mapMarkers, lats and lons
     }
       // LOOP row
-$this->pObj->dev_var_dump( $mapMarkers, $lats, $lons );
 
       // DRS
     switch( true )
