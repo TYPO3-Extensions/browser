@@ -1210,7 +1210,11 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN: center coordinates should not calculated
 
-$this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
+      // 130601, dwildt, +
+    $coordinates  = $coordinates
+                  + $this->renderMapAutoCenterCoorRoute( );
+                  ;
+$this->pObj->dev_var_dump( $coordinates );
 
       // Require map library
     require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
@@ -1258,6 +1262,27 @@ $this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
 
       // RETURN the handled template
     return $map_template;
+  }
+
+  /**
+ * renderMapAutoCenterCoorRoute( ):
+ *
+ * @param	string		$map_template: ...
+ * @param	[type]		$coordinates: ...
+ * @return	string
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapAutoCenterCoorRoute( )
+  {
+    $coordinates = array( );
+      // 130601, dwildt, +
+//    $coordinates  = $coordinates
+//                  + $this->renderMapAutoCenterCoorRoute( );
+//                  ;
+$this->pObj->dev_var_dump( $this->pObj->rows, $this->rowsBackup );
+
+    return $coordinates;
   }
 
 
