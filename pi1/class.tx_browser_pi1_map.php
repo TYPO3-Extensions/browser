@@ -1808,7 +1808,6 @@ if( $this->pObj->b_drs_todo )
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-$this->pObj->dev_var_dump( $row, $catValues );
 
       // FOREACH category title
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
@@ -2137,8 +2136,7 @@ $this->pObj->dev_var_dump( $row, $catValues );
     $catIcons = $this->renderMapMarkerCategoryIcons( );
 
       // FOREACH marker
-$this->pObj->dev_var_dump( $markers );
-    foreach( ( array ) $markers as $markerDataKey => $marker )
+    foreach( ( array ) $markers as $marker )
     {
       $catTitle = $marker['cat'];
       $dataKey  = $marker['markerTable'] . ':' . $marker['markerUid'];
@@ -2781,11 +2779,8 @@ $this->pObj->dev_var_dump( $series, $jsonData );
 //$this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
-//    $marker = $marker
-//            + $this->renderMapRouteMarkerByPath( )
-//            ;
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
-//$this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
