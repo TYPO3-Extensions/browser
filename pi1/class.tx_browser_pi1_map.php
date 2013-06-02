@@ -198,7 +198,7 @@ class tx_browser_pi1_map
     $tab = '                    ';
 
       // FOREACH category label
-$this->pObj->dev_var_dump( $this->arrCategories );
+//$this->pObj->dev_var_dump( $this->arrCategories );
     foreach( $this->arrCategories['labels'] as $labelKey => $labelValue )
     {
         // Get the draft for an input field
@@ -308,7 +308,7 @@ if( $this->pObj->b_drs_todo )
 // #46062, 130306, dwildt: TODO: Lokalisierung der Labels:
 // Wenn Standortdatensatz uebersetzt ist, sind die Kategorie-Labels leer
 }
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
         // RETURN : field for category label is missing
@@ -414,7 +414,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       }
     }
       // Set the keys: keys should correspondend with keys of the item colours
-$this->pObj->dev_var_dump( $catLabels );
+//$this->pObj->dev_var_dump( $catLabels );
 
     $this->arrCategories['labels']  = $catLabels;
     if( isset( $row[ $fieldForIcon ] ) )
