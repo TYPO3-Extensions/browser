@@ -1172,6 +1172,12 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapAutoCenterCoor( $map_template, $coordinates )
   {
+    $arr_return = array
+                  ( 
+                    'map_template'  => $map_template,
+                    'coordinates'   => null
+                  );
+
       // Get the mode
     $mode = $this->confMap['configuration.']['centerCoordinates.']['mode'];
 
@@ -1191,7 +1197,7 @@ if( $this->pObj->b_drs_todo )
         }
           // DRS
           // RETURN: there is an error!
-        return $map_template;
+        return $arr_return;
         break;
     }
       // SWITCH mode
@@ -1206,7 +1212,7 @@ if( $this->pObj->b_drs_todo )
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
         // DRS
-      return $map_template;
+      return $arr_return;
     }
       // RETURN: center coordinates should not calculated
 
@@ -1258,7 +1264,12 @@ if( $this->pObj->b_drs_todo )
     $map_template = str_replace( $marker, $centerCoor, $map_template );
 
       // RETURN the handled template
-    return $map_template;
+    $arr_return = array
+                  ( 
+                    'map_template'  => $map_template,
+                    'coordinates'   => $coordinates
+                  );
+    return $arr_return;
   }
 
   /**
@@ -1273,6 +1284,11 @@ if( $this->pObj->b_drs_todo )
   private function renderMapAutoCenterCoorRoute( )
   {
     $coordinates = array( );
+    
+    if( ! $this->enabled )
+    {
+      return $coordinates;
+    }
     
     $tableFieldGeodata = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
     
@@ -2328,7 +2344,10 @@ $this->pObj->dev_var_dump( $longitudes, $latitudes );
     $map_template = str_replace( $jsonMarker, $jsonData, $map_template );
 
       // Set center coordinates
-    $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
+    $arr_result   = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
+    $map_template = $arr_result[ 'map_template' ];
+    $coordinates  = $arr_result[ 'coordinates' ];
+    unset( $arr_result );
       // Set zoom level
     $map_template = $this->renderMapAutoZoomLevel( $map_template, $lons, $lats );
 
