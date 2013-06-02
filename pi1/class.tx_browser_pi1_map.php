@@ -2418,7 +2418,7 @@ $this->pObj->dev_var_dump( $coordinates );
 
       // Get points (map marker) as JSON array and coordinates
     $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
-//var_dump( __METHOD__, __LINE__, $arr_return );
+$this->pObj->dev_var_dump( $arr_return );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
       // Get points (map marker) as JSON array and coordinates
