@@ -1400,7 +1400,6 @@ if( $this->pObj->b_drs_todo )
       // RETURN: center coordinates should not calculated
 
       // 130601, dwildt, +
-$this->pObj->dev_var_dump( $coordinates );
     foreach( ( array ) $coordinates as $coordinate )
     {
       list( $lon, $lat ) = explode( ',', $coordinate );
@@ -1820,6 +1819,7 @@ $this->pObj->dev_var_dump( $coordinates );
 
       // Get category titles
     $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
+$this->pObj->dev_var_dump( $catTitles );
 
       // FOREACH category title
     foreach( $catTitles as $key => $catTitle )
