@@ -1361,7 +1361,6 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes, $coordinates )
   {
-$this->pObj->dev_var_dump( $longitudes, $latitudes, $coordinates );
       // Get the mode
     $mode = $this->confMap['configuration.']['zoomLevel.']['mode'];
 
@@ -1407,6 +1406,8 @@ $this->pObj->dev_var_dump( $longitudes, $latitudes, $coordinates );
       $longitudes[ ]  = $lon;
       $latitudes[ ]   = $lat;
     }
+
+$this->pObj->dev_var_dump( $longitudes, $latitudes );
 
       // Calculate the zoom level
       // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
