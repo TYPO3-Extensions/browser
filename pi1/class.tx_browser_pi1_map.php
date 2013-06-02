@@ -1810,12 +1810,6 @@ if( $this->pObj->b_drs_todo )
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-    $catValues[ 'catTitles' ]   = $catValues[ 'catTitles' ];
-    $catValues[ 'catIcons' ]    = $catValues[ 'catIcons' ];
-    $catValues[ 'catOffsetsX' ] = $catValues[ 'catOffsetsX' ];
-    $catValues[ 'catOffsetsY' ] = $catValues[ 'catOffsetsY' ];
-    unset( $catValues );
-      // Get category properties
 
       // Get category titles
     $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
