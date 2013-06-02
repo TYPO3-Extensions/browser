@@ -1808,7 +1808,7 @@ if( $this->pObj->b_drs_todo )
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-$this->pObj->dev_var_dump( $catValues );
+$this->pObj->dev_var_dump( $row, $catValues );
 
       // FOREACH category title
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
