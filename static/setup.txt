@@ -638,21 +638,21 @@ plugin.tx_browser_pi1 {
             marker =
             marker {
                 // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
-              category = {$plugin.tx_browser_pi1.map.marker.field.category}
+              categoryTitle   = {$plugin.tx_browser_pi1.map.marker.field.category}
                 // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
-              categoryIcon = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
+              categoryIcon    = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
                 // [STRING] table.field with the x offset of the category icons. Example: tx_org_headquarterscat.icon_offset_x
               categoryOffsetX = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetX}
                 // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
               categoryOffsetY = {$plugin.tx_browser_pi1.map.marker.field.categoryOffsetY}
                 // [STRING] table.field with the description. Example: tx_org_headquarters.title
-              description = {$plugin.tx_browser_pi1.map.marker.field.description}
+              description     = {$plugin.tx_browser_pi1.map.marker.field.description}
                 // [STRING] table.field with the latitude labels. Example: tx_org_headquarters.mail_lat
-              latitude = {$plugin.tx_browser_pi1.map.marker.field.latitude}
+              latitude        = {$plugin.tx_browser_pi1.map.marker.field.latitude}
                 // [STRING] table.field with the linktoSingle labels. Example: tx_org_headquarters.uid
-              linktoSingle = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
+              linktoSingle    = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
                 // [STRING] table.field with the longitude labels. Example: tx_org_headquarters.mail_lon
-              longitude = {$plugin.tx_browser_pi1.map.marker.field.longitude}
+              longitude       = {$plugin.tx_browser_pi1.map.marker.field.longitude}
             }
           }
             // [STRING/HTML] Draft for an input field of the category form
