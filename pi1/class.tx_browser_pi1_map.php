@@ -1874,7 +1874,9 @@ if( $this->pObj->b_drs_todo )
                       'catIconMap'  => $catIconMap,
                       'iconKey'     => $iconKey,
                       'iconOffsetX' => $iconOffsetX,
-                      'iconOffsetY' => $iconOffsetY
+                      'iconOffsetY' => $iconOffsetY,
+                      'markerUid'   => 73,
+                      'markerTable' => 'tx_marker_table'
                     );
 //$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 //list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
