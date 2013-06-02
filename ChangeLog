@@ -28,9 +28,11 @@
             pi1/class.tx_browser_pi1_template.php
   * #47632: oxMap 1.3 for Routes
             * Properties
-              * plugin.tx_browser_pi1.map.field.* -> plugin.tx_browser_pi1.map.marker.field.*
-              * plugin.tx_browser_pi1.map.field.category -> plugin.tx_browser_pi1.map.marker.field.categoryTitle
-                Effected files:
+              * Constant Editor
+                * plugin.tx_browser_pi1.map.field.* -> plugin.tx_browser_pi1.map.marker.field.*
+              * Setup
+                * plugin.tx_browser_pi1.navigation.map.configuration.categories.fields.category -> plugin.tx_browser_pi1.navigation.map.configuration.categories.fields.category
+              * Effected files:
                 * static
                   * downgrade/4.5.4/map/setup.txt
                   * constants.txt

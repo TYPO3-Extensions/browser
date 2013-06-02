@@ -649,10 +649,10 @@ plugin.tx_browser_pi1 {
               description     = {$plugin.tx_browser_pi1.map.marker.field.description}
                 // [STRING] table.field with the latitude labels. Example: tx_org_headquarters.mail_lat
               latitude        = {$plugin.tx_browser_pi1.map.marker.field.latitude}
-                // [STRING] table.field with the linktoSingle labels. Example: tx_org_headquarters.uid
-              linktoSingle    = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
                 // [STRING] table.field with the longitude labels. Example: tx_org_headquarters.mail_lon
               longitude       = {$plugin.tx_browser_pi1.map.marker.field.longitude}
+                // [STRING] table.field with the marker uid. Example: tx_org_headquarters.uid
+              uid             = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
             }
           }
             // [STRING/HTML] Draft for an input field of the category form
