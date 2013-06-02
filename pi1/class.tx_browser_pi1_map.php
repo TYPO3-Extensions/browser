@@ -2650,6 +2650,8 @@ if( $this->pObj->b_drs_todo )
     list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
     $tableMarkerCatUid    = $tableMarkerCat . '.uid';
       // variables
+
+$this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
     
       // Get marker and marker_cat values of the given row
     foreach( $this->pObj->rows as $row )
@@ -3733,7 +3735,7 @@ $this->pObj->dev_var_dump( $arrReturn );
     }
       // LOOP relations of current path
 
-//$this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
