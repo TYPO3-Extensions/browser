@@ -198,6 +198,7 @@ class tx_browser_pi1_map
     $tab = '                    ';
 
       // FOREACH category label
+$this->pObj->dev_var_dump( $this->arrCategories );
     foreach( $this->arrCategories['labels'] as $labelKey => $labelValue )
     {
         // Get the draft for an input field
@@ -2689,7 +2690,7 @@ if( $this->pObj->b_drs_todo )
                     'cat'     => $arrCat,
                     'marker'  => $arrMarker
                   );
-$this->pObj->dev_var_dump( $arrReturn );
+//$this->pObj->dev_var_dump( $arrReturn );
     
     return $arrReturn;
   }
@@ -3735,7 +3736,7 @@ $this->pObj->dev_var_dump( $arrReturn );
     }
       // LOOP relations of current path
 
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
