@@ -1907,6 +1907,7 @@ list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] )
           ),
         )
       );
+      $dataCounter++;
 $this->pObj->dev_var_dump( $mapMarker2 );
         // Set mapMarker
 
