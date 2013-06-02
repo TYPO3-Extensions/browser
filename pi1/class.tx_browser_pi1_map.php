@@ -2246,24 +2246,6 @@ if( $this->pObj->b_drs_todo )
     {
       $arrLabels = $this->renderMapMarkerPointsCatLabels( );
     }
-    switch( true )
-    {
-      case( $this->pObj->typoscriptVersion <= 4005004 ):
-        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
-        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
-          // #42125, 121031, dwildt, 2+
-        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
-        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
-        break;
-      case( $this->pObj->typoscriptVersion <= 4005007 ):
-      default:
-        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
-        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
-          // #42125, 121031, dwildt, 2+
-        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
-        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
-        break;
-    }
 
       // Get categories
     if( isset( $row[ $arrLabels['category'] ] ) )
