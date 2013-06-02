@@ -1862,6 +1862,10 @@ $this->pObj->dev_var_dump( $row, $catValues );
       $iconOffsetX = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
       $iconOffsetY = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
         // Get the icon properties
+      
+        // Get
+      $markerTable  = $catValues[ 'markerTable' ];
+      $markerUid    = $catValues[ 'markerUid' ];
 
         // Set mapMarker
       $mapMarker  = array
@@ -1876,8 +1880,8 @@ $this->pObj->dev_var_dump( $row, $catValues );
                       'iconKey'     => $iconKey,
                       'iconOffsetX' => $iconOffsetX,
                       'iconOffsetY' => $iconOffsetY,
-                      'markerUid'   => 73,
-                      'markerTable' => 'tx_marker_table'
+                      'markerUid'   => $markerUid,
+                      'markerTable' => $markerTable
                     );
 //$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 //list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
@@ -2145,6 +2149,7 @@ $this->pObj->dev_var_dump( $markers );
 
         // Set icon and data
       $series[ $catTitle ][ 'icon' ] = $icon;
+      //$series[ $catTitle ][ 'data' ][ $dataKey . ':' . $markerDataKey ] = $data;
       $series[ $catTitle ][ 'data' ][ $dataKey . ':' . $markerDataKey ] = $data;
   
         // Set coordinates
