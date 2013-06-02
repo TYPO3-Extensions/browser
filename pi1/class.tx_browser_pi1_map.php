@@ -1281,8 +1281,11 @@ $this->pObj->dev_var_dump( $coordinates );
     
     foreach( $this->rowsBackup as $row )
     {
-      $strGeodata = $row[ $tableFieldGeodata ]; 
-      $arrGeodata = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata, false );
+      $strGeodata   = $row[ $tableFieldGeodata ]; 
+      $coordinates  = $coordinates
+                    + $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata, false )
+                    ;
+              
 $this->pObj->dev_var_dump( $arrGeodata );
     }
 
