@@ -2099,7 +2099,7 @@ if( $this->pObj->b_drs_todo )
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
         // Set category icon
-      $series[$mapMarker['cat']]['icon'] = renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons );
+      $series[$mapMarker['cat']]['icon'] = $this->renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons );
 
         // Set coordinates
       $series[$mapMarker['cat']]['data'][$key]['coors']   = array( $mapMarker['lon'], $mapMarker['lat'] );
