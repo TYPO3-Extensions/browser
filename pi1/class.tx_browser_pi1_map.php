@@ -1410,6 +1410,7 @@ if( $this->pObj->b_drs_todo )
 
       // Calculate the zoom level
       // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
+$this->pObj->dev_var_dump( $longitudes, $latitudes );
     $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
       // Get max distance latitude (latidudes are from -180° to 180°). 0° is Greenwich
     $distances[]  = max( $latitudes ) - min( $latitudes );
@@ -1907,7 +1908,6 @@ if( $this->pObj->b_drs_todo )
       $this->renderMapMarkerPointsPointCobjDataRemove( $row, $arrLabels );
     }
       // FOREACH category title
-$this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
     
     unset( $dontHandle00 );
@@ -1955,7 +1955,6 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
       // Add x offset and y offset to current cObject
       // #42125, 121031, dwildt, 2+
-$this->pObj->dev_var_dump( $arrLabels, $catValues );
     $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetX' ] => $catValues[ 'catOffsetsX' ][ $key ] ) );
     $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetY' ] => $catValues[ 'catOffsetsY' ][ $key ] ) );
       // Add x offset and y offset to current cObject
