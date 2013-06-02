@@ -1808,7 +1808,7 @@ if( $this->pObj->b_drs_todo )
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
 
       // FOREACH category title
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
@@ -2167,7 +2167,7 @@ $this->pObj->dev_var_dump( $row );
       // FOREACH marker
 
     $jsonData = json_encode( $series );
-$this->pObj->dev_var_dump( $series, $jsonData );
+//$this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -3733,7 +3733,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
     }
       // LOOP relations of current path
 
-//    $this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
