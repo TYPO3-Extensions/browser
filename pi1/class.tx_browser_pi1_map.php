@@ -1212,7 +1212,6 @@ if( $this->pObj->b_drs_todo )
 
       // 130601, dwildt, +
     $coordinates = array_merge( $coordinates, $this->renderMapAutoCenterCoorRoute( ) );
-$this->pObj->dev_var_dump( $coordinates );
 
       // Require map library
     require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
@@ -1346,6 +1345,7 @@ $this->pObj->dev_var_dump( $coordinates );
  */
   private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes )
   {
+$this->pObj->dev_var_dump( $longitudes, $latitudes );
       // Get the mode
     $mode = $this->confMap['configuration.']['zoomLevel.']['mode'];
 
