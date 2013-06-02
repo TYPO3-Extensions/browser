@@ -2141,7 +2141,7 @@ $this->pObj->dev_var_dump( $markers );
     foreach( ( array ) $markers as $markerDataKey => $marker )
     {
       $catTitle = $marker['cat'];
-      $dataKey  = $marker['markerTable'];
+      $dataKey  = $marker['markerTable'] . ':' . $marker['markerUid'];
 
         // Get icon and data
       $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
@@ -2150,7 +2150,7 @@ $this->pObj->dev_var_dump( $markers );
         // Set icon and data
       $series[ $catTitle ][ 'icon' ] = $icon;
       //$series[ $catTitle ][ 'data' ][ $dataKey . ':' . $markerDataKey ] = $data;
-      $series[ $catTitle ][ 'data' ][ $dataKey . ':' . $markerDataKey ] = $data;
+      $series[ $catTitle ][ 'data' ][ $dataKey ] = $data;
   
         // Set coordinates
       $coordinates[] = $marker['lon'] . ',' . $marker['lat'];
