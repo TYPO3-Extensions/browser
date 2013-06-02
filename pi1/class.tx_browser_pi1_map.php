@@ -1811,11 +1811,7 @@ if( $this->pObj->b_drs_todo )
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
 
-      // Get category titles
-//    $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
-
       // FOREACH category title
-    //foreach( $catTitles as $key => $catTitle )
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
     {
         // Add cObj->data
@@ -1959,8 +1955,9 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
       // Add x offset and y offset to current cObject
       // #42125, 121031, dwildt, 2+
-    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetsX' ] => $catValues[ 'catOffsetsX' ][ $key ] ) );
-    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetsY' ] => $catValues[ 'catOffsetsY' ][ $key ] ) );
+$this->pObj->dev_var_dump( $arrLabels,$catValues );
+    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetX' ] => $catValues[ 'catOffsetsX' ][ $key ] ) );
+    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetY' ] => $catValues[ 'catOffsetsY' ][ $key ] ) );
       // Add x offset and y offset to current cObject
   }
 
