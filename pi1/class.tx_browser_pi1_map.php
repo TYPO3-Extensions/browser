@@ -1210,6 +1210,8 @@ if( $this->pObj->b_drs_todo )
     }
       // RETURN: center coordinates should not calculated
 
+$this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
+
       // Require map library
     require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
       // Create object
@@ -2032,7 +2034,6 @@ if( $this->pObj->b_drs_todo )
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
-$this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
@@ -3346,11 +3347,13 @@ $this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
 /**
  * renderMapRoutePathsJsonFeaturesCoordinates( ) :
  *
+ * @param       string    $strLonLat    : list of points (lon, lat), seperated by line feeds
+ * @param       boolean   $pointAsArray : true: return point as an array. false: return point as a CSV list
  * @return	array
  * @version 4.5.7
  * @since   4.5.7
  */
-  private function renderMapRoutePathsJsonFeaturesCoordinates( $strLonLat )
+  private function renderMapRoutePathsJsonFeaturesCoordinates( $strLonLat, $pointAsArray=true )
   {
       // DIE  : $strLonLat is empty
     if( empty ( $strLonLat) )
@@ -3373,11 +3376,20 @@ $this->pObj->dev_var_dump( $coordinates, $this->pObj->rows, $this->rowsBackup );
     {
       $coordinate           = trim( $coordinate );
       list( $lon, $lat )    = explode( ',', $coordinate ); 
-      $coordinates[ $key ]  = array
-                              (
-                                ( double ) $lon,
-                                ( double ) $lat
-                              );
+      switch( $pointAsArray )
+      {
+        case( false ):
+          $coordinates[ $key ]  = ( double ) trim( $lon ) . ',' . ( double ) trim( $lat );
+          break;
+        case( true ):
+        default:
+          $coordinates[ $key ]  = array
+                                  (
+                                    ( double ) trim( $lon ),
+                                    ( double ) trim( $lat )
+                                  );
+          break;
+      }
     }
     
       // DIE  : $coordinates are empty
