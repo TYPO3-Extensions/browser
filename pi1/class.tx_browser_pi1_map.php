@@ -1722,7 +1722,6 @@ $this->pObj->dev_var_dump( $coordinates );
   {
     static $arrLabels = array( );
 
-    $arr_return   = array( );
     $mapMarkers   = array( );
     $lons         = array( );
     $lats         = array( );
@@ -1780,9 +1779,17 @@ $this->pObj->dev_var_dump( $coordinates );
       // DRS
 
       // Return array
-    $arr_return['data']['mapMarkers'] = $mapMarkers;
-    $arr_return['data']['lats']       = $lats;
-    $arr_return['data']['lons']       = $lons;
+$this->pObj->dev_var_dump( $mapMarkers );
+
+    $arr_return = array
+                  (
+                    'data' => array
+                              ( 
+                                'mapMarkers' => $mapMarkers,
+                                'lats'       => $lats,
+                                'lons'       => $lons                              
+                              )
+                  );
       // Return array
 
     return $arr_return;
@@ -2412,7 +2419,6 @@ $this->pObj->dev_var_dump( $coordinates );
       // Get rendered points (map marker), lats and lons
     $arr_return = $this->renderMapMarkerPoints( );
     $mapMarkers = $arr_return['data']['mapMarkers'];
-$this->pObj->dev_var_dump( $mapMarkers );
     $lats       = $arr_return['data']['lats'];
     $lons       = $arr_return['data']['lons'];
       // Get rendered points (map marker), lats and lons
