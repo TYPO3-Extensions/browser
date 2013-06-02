@@ -1359,9 +1359,9 @@ if( $this->pObj->b_drs_todo )
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes )
+  private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes, $coordinates )
   {
-$this->pObj->dev_var_dump( $longitudes, $latitudes );
+$this->pObj->dev_var_dump( $longitudes, $latitudes, $coordinates );
       // Get the mode
     $mode = $this->confMap['configuration.']['zoomLevel.']['mode'];
 
@@ -2349,7 +2349,7 @@ $this->pObj->dev_var_dump( $longitudes, $latitudes );
     $coordinates  = $arr_result[ 'coordinates' ];
     unset( $arr_result );
       // Set zoom level
-    $map_template = $this->renderMapAutoZoomLevel( $map_template, $lons, $lats );
+    $map_template = $this->renderMapAutoZoomLevel( $map_template, $lons, $lats, $coordinates );
 
     return $map_template;
   }
