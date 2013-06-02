@@ -1799,8 +1799,6 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped )
   {
-    static $dataCounter = 0;
-    
     $mapMarkers = array( );
     $lons       = array( );
     $lats       = array( );
@@ -1878,38 +1876,38 @@ if( $this->pObj->b_drs_todo )
                       'iconOffsetX' => $iconOffsetX,
                       'iconOffsetY' => $iconOffsetY
                     );
-$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
-list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
-      $mapMarker2 = array
-      (
-        $catTitleWoSpc => array
-        (
-          'icon' => array
-          ( 
-            0 => $mapMarker[ 'catIconMap' ],
-            1 => $width,
-            2 => $height,
-            3 => $iconOffsetX,
-            4 => $iconOffsetY,
-          ),
-          'data' => array
-          ( 
-            $dataCounter => array
-            ( 
-              'desc'    => $description,
-              'number'  => $number,
-              'url'     => $url,
-              'coors'   => array
-              (
-                0 => $lon,
-                1 => $lat,
-              ),
-            ),
-          ),
-        )
-      );
-      $dataCounter++;
-$this->pObj->dev_var_dump( $mapMarker2 );
+//$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
+//list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
+//      $mapMarker2 = array
+//      (
+//        $catTitleWoSpc => array
+//        (
+//          'icon' => array
+//          ( 
+//            0 => $mapMarker[ 'catIconMap' ],
+//            1 => $width,
+//            2 => $height,
+//            3 => $iconOffsetX,
+//            4 => $iconOffsetY,
+//          ),
+//          'data' => array
+//          ( 
+//            $dataCounter => array
+//            ( 
+//              'desc'    => $description,
+//              'number'  => $number,
+//              'url'     => $url,
+//              'coors'   => array
+//              (
+//                0 => $lon,
+//                1 => $lat,
+//              ),
+//            ),
+//          ),
+//        )
+//      );
+//      $dataCounter++;
+//$this->pObj->dev_var_dump( $mapMarker2 );
         // Set mapMarker
 
         // Unset some mapMarker elements, if they are empty
@@ -2118,7 +2116,7 @@ $this->pObj->dev_var_dump( $mapMarker2 );
  * @version 4.1.7
  * @since   4.1.0
  */
-  private function renderMapMarkerPointsToJson( $mapMarkers )
+  private function renderMapMarkerPointsToJson( $markers )
   {
     $arr_return   = array( );
     $series       = null;
@@ -2128,25 +2126,21 @@ $this->pObj->dev_var_dump( $mapMarker2 );
     $catIcons = $this->renderMapMarkerCategoryIcons( );
 
       // FOREACH marker
-    foreach( ( array ) $mapMarkers as $key => $mapMarker )
+$this->pObj->dev_var_dump( $markers );
+    foreach( ( array ) $markers as $markerDataKey => $marker )
     {
-      $markerTitle = $mapMarker['cat'];
+      $markerTitle = $marker['cat'];
 
-        // Set marker icon
-      $series[ $markerTitle ][ 'icon' ] = $this->renderMapMarkerPointsToJsonIcon
-                                            (
-                                              $series, 
-                                              $mapMarker, 
-                                              $catIcons 
-                                            );
+        // Get icon and data
+      $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
+      $data = $this->renderMapMarkerPointsToJsonData( $marker );
 
-        // Set marker data
-      $series[ $markerTitle ][ 'data' ][ $key ] = $this->renderMapMarkerPointsToJsonData
-                                                  (
-                                                    $mapMarker
-                                                  );
+        // Set icon and data
+      $series[ $markerTitle ][ 'icon' ] = $icon;
+      $series[ $markerTitle ][ 'data' ][ $markerDataKey ] = $data;
   
-      $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
+        // Set coordinates
+      $coordinates[] = $marker['lon'] . ',' . $marker['lat'];
     }
       // FOREACH marker
 
