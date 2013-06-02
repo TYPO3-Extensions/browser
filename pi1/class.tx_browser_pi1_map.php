@@ -1740,7 +1740,7 @@ if( $this->pObj->b_drs_todo )
         // Get mapMarkers, lats and lons
       $arr_result     = $this->renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped );
       $mapMarkers[ ]  = $arr_result['data']['mapMarkers'];
-      $lats[ ]        = $arr_result['data']['lats'];
+      $lats        = array_merge( $lats, $arr_result['data']['lats'] );
       $lons[ ]        = $arr_result['data']['lons'];
       unset( $arr_result );
         // Get mapMarkers, lats and lons
