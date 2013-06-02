@@ -88,7 +88,7 @@
  * 1444:     private function renderMapMarker( $template, $mapTemplate )
  * 1483:     private function renderMapMarkerCategoryIcons( )
  * 1570:     private function renderMapMarkerPoints( )
- * 1826:     private function renderMapMarkerPointsToJSON( $mapMarkers )
+ * 1826:     private function renderMapMarkerPointsToJson( $mapMarkers )
  * 1925:     private function renderMapMarkerSnippetsHtml( $map_template, $tsProperty )
  * 1978:     private function renderMapMarkerSnippetsHtmlCategories( $map_template )
  * 2011:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
@@ -2077,14 +2077,14 @@ if( $this->pObj->b_drs_todo )
 
 
   /**
- * renderMapMarkerPointsToJSON( ):
+ * renderMapMarkerPointsToJson( ):
  *
  * @param	array
  * @return	string		$jsonData
  * @version 4.1.7
  * @since   4.1.0
  */
-  private function renderMapMarkerPointsToJSON( $mapMarkers )
+  private function renderMapMarkerPointsToJson( $mapMarkers )
   {
     $arr_return   = array( );
     $series       = null;
@@ -2099,50 +2099,8 @@ if( $this->pObj->b_drs_todo )
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
         // Set category icon
-      if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
-      {
-          // Database category has its own icon
-        if( isset( $mapMarker['catIconMap'] ) )
-        {
-          list( $width, $height ) = getimagesize( $rootPath . $mapMarker['catIconMap'] );
-          $series[$mapMarker['cat']]['icon'][] = $mapMarker['catIconMap'];
-          $series[$mapMarker['cat']]['icon'][] = $width;
-          $series[$mapMarker['cat']]['icon'][] = $height;
-            // #42125, 121031, dwildt, 2-
-//          $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
-//          $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
-            // IF database has a field x-offset, take calue from database
-            // #42125, 121031, dwildt, 8+
-          if( isset( $mapMarker['iconOffsetX'] ) )
-          {
-            $series[$mapMarker['cat']]['icon'][] = ( int ) $mapMarker['iconOffsetX'];
-          }
-          else
-          {
-            $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
-          }
-            // IF database has a field x-offset, take calue from database
-            // IF database has a field y-offset, take calue from database
-            // #42125, 121031, dwildt, 8+
-          if( isset( $mapMarker['iconOffsetY'] ) )
-          {
-            $series[$mapMarker['cat']]['icon'][] = ( int ) $mapMarker['iconOffsetY'];
-          }
-          else
-          {
-            $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
-          }
-            // IF database has a field y-offset, take calue from database
-        }
-          // Database category has its own icon
-          // Database categories without own icons
-        if( ! isset( $mapMarker['catIconMap'] ) )
-        {
-          $series[$mapMarker['cat']]['icon'] = $catIcons[$mapMarker['iconKey']];
-        }
-          // Database categories without own icons
-      }
-        // Set category icon
+      $series[$mapMarker['cat']]['icon'] = renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons );
+
         // Set coordinates
       $series[$mapMarker['cat']]['data'][$key]['coors']   = array( $mapMarker['lon'], $mapMarker['lat'] );
       $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
@@ -2179,6 +2137,70 @@ $this->pObj->dev_var_dump( $series, $jsonData );
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
     return $arr_return;
+  }
+
+  /**
+ * renderMapMarkerPointsToJsonIcon( ):
+ *
+ * @param	array
+ * @return	string		$jsonData
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons )
+  {
+    $arrIcon         = array( );
+    $markerTitle  = $mapMarker['cat'];
+    
+      // RETURN  : json icon array is set
+    if( isset( $series[ $markerTitle ][ 'icon' ] ) )
+    {
+      $arrIcon = $series[ $markerTitle ][ 'icon' ];
+      return $arrIcon;
+    }
+      // RETURN  : json icon array is set
+
+      // RETURN : Any own icon
+    if( ! isset( $mapMarker[ 'catIconMap' ] ) )
+    {
+      $arrIcon = $catIcons[ $mapMarker[ 'iconKey' ] ];
+      return $arrIcon;
+    }
+      // RETURN : Any own icon
+      
+      // Database category has its own icon
+    list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
+    $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
+    $arrIcon[ ] = $width;
+    $arrIcon[ ] = $height;
+      // #42125, 121031, dwildt, 2-
+//          $arrIcon[] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
+//          $arrIcon[] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
+      // IF database has a field x-offset, take calue from database
+      // #42125, 121031, dwildt, 8+
+    if( isset( $mapMarker[ 'iconOffsetX' ] ) )
+    {
+      $arrIcon[] = ( int ) $mapMarker[ 'iconOffsetX' ];
+    }
+    else
+    {
+      $arrIcon[] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
+    }
+      // IF database has a field x-offset, take calue from database
+      // IF database has a field y-offset, take calue from database
+      // #42125, 121031, dwildt, 8+
+    if( isset( $mapMarker[ 'iconOffsetY' ] ) )
+    {
+      $arrIcon[] = ( int ) $mapMarker[ 'iconOffsetY' ];
+    }
+    else
+    {
+      $arrIcon[] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
+    }
+      // IF database has a field y-offset, take calue from database
+      // Database category has its own icon
+    
+    return $arrIcon;
   }
 
 
@@ -2411,7 +2433,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
       // Get rendered points (map marker), lats and lons
 
       // Get points (map marker) as JSON array and coordinates
-    $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
+    $arr_return   = $this->renderMapMarkerPointsToJson( $mapMarkers );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
       // Get points (map marker) as JSON array and coordinates
