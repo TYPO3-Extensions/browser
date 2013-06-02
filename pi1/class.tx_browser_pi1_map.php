@@ -2098,28 +2098,23 @@ if( $this->pObj->b_drs_todo )
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
-        // Set category icon
-      $series[$mapMarker['cat']]['icon'] = $this->renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons );
+      $markerTitle = $mapMarker['cat'];
 
-        // Set coordinates
-      $series[$mapMarker['cat']]['data'][$key]['coors']   = array( $mapMarker['lon'], $mapMarker['lat'] );
+        // Set marker icon
+      $series[ $markerTitle ][ 'icon' ] = $this->renderMapMarkerPointsToJsonIcon
+                                            (
+                                              $series, 
+                                              $mapMarker, 
+                                              $catIcons 
+                                            );
+
+        // Set marker data
+      $series[ $markerTitle ][ 'data' ][ $key ] = $this->renderMapMarkerPointsToJsonData
+                                                  (
+                                                    $mapMarker
+                                                  );
+  
       $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
-        // Set coordinates
-        // Set description
-      $series[$mapMarker['cat']]['data'][$key]['desc']    = $mapMarker['desc'];
-
-        // #41057, 120919, dwildt, +
-        // Set url
-      if( ! empty ( $mapMarker['url'] ) )
-      {
-        $series[$mapMarker['cat']]['data'][$key]['url'] = $mapMarker['url'];
-      }
-        // Set number
-      if( ! empty ( $mapMarker['number'] ) )
-      {
-        $series[$mapMarker['cat']]['data'][$key]['number'] = $mapMarker['number'];
-      }
-        // #41057, 120919, dwildt, +
     }
       // FOREACH map marker
 
@@ -2137,6 +2132,42 @@ $this->pObj->dev_var_dump( $series, $jsonData );
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
     return $arr_return;
+  }
+
+  /**
+ * renderMapMarkerPointsToJsonData( ):
+ *
+ * @param	array
+ * @return	string		$jsonData
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapMarkerPointsToJsonData( $mapMarker )
+  {
+    $arrData = array
+    (
+      'coors' => array
+      ( 
+        $mapMarker['lon'], 
+        $mapMarker['lat'] 
+      ),
+      'desc'    => $mapMarker['desc'],
+      'url'     => $mapMarker['url'],
+      'number'  => $mapMarker['number']
+    );
+
+      // Remove elements, if their value is empty
+    if( empty ( $arrData['url'] ) )
+    {
+      unset( $arrData['url'] );
+    }
+    if( empty ( $arrData['number'] ) )
+    {
+      unset( $arrData['number'] );
+    }
+      // Remove elements, if their value is empty
+    
+    return $arrData;
   }
 
   /**
