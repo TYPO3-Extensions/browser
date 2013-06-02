@@ -1211,9 +1211,7 @@ if( $this->pObj->b_drs_todo )
       // RETURN: center coordinates should not calculated
 
       // 130601, dwildt, +
-    $coordinates  = $coordinates
-                  + $this->renderMapAutoCenterCoorRoute( );
-                  ;
+    $coordinates = array_merge( $coordinates, $this->renderMapAutoCenterCoorRoute( ) );
 $this->pObj->dev_var_dump( $coordinates );
 
       // Require map library
@@ -1282,11 +1280,11 @@ $this->pObj->dev_var_dump( $coordinates );
     foreach( $this->rowsBackup as $row )
     {
       $strGeodata   = $row[ $tableFieldGeodata ]; 
-      $coordinates  = $coordinates
-                    + $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata, false )
-                    ;
-              
-$this->pObj->dev_var_dump( $arrGeodata );
+      $coordinates  = array_merge
+                      (
+                        $coordinates,
+                        $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata, false )
+                      );
     }
 
       // 130601, dwildt, +
