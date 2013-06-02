@@ -2025,7 +2025,6 @@ $this->pObj->dev_var_dump( $row, $catValues );
       case( $this->pObj->typoscriptVersion <= 4005004 ):
         $arrLabels[ 'catTitle' ]    = $this->confMap['configuration.']['categories.']['fields.']['category'];
         $arrLabels[ 'catIcon' ]     = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
-          // #42125, 121031, dwildt, 2+
         $arrLabels[ 'catOffsetX' ]  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
         $arrLabels[ 'catOffsetY' ]  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
         break;
@@ -2033,9 +2032,9 @@ $this->pObj->dev_var_dump( $row, $catValues );
       default:
         $arrLabels[ 'catTitle' ]    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryTitle'];
         $arrLabels[ 'catIcon' ]     = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
-          // #42125, 121031, dwildt, 2+
         $arrLabels[ 'catOffsetX' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
         $arrLabels[ 'catOffsetY' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+        $arrLabels[ 'markerUid' ]   = $this->confMap['configuration.']['categories.']['fields.']['marker.']['uid'];
         break;
     }
     
@@ -2096,14 +2095,19 @@ $this->pObj->dev_var_dump( $row, $catValues );
       $catOffsetsY = explode( $this->catDevider, $row[ $arrLabels[ 'catOffsetY' ] ] );
     }
       // Get category offsets
-
+    
+    $markerUid    = $row[ $arrLabels[ 'markerUid' ] ];
+    list( $markerTable ) = explode( '.', $arrLabels[ 'markerUid' ] );
+    
       // RETURN result
     $arr_return = array
                   ( 
                     'catTitles'    => $catTitles,
                     'catIcons'     => $catIcons,
                     'catOffsetsX'  => $catOffsetsX,
-                    'catOffsetsY'  => $catOffsetsY
+                    'catOffsetsY'  => $catOffsetsY,
+                    'markerTable'  => $markerTable,
+                    'markerUid'    => $markerUid
                   );
     return $arr_return;
       // RETURN result
