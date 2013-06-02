@@ -1810,6 +1810,7 @@ if( $this->pObj->b_drs_todo )
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
 
       // FOREACH category title
+    $dataCounter = 0;
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
     {
         // Add cObj->data
@@ -1876,6 +1877,37 @@ if( $this->pObj->b_drs_todo )
                       'iconOffsetX' => $iconOffsetX,
                       'iconOffsetY' => $iconOffsetY
                     );
+$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
+list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
+      $mapMarker2 = array
+      (
+        $catTitleWoSpc => array
+        (
+          'icon' => array
+          ( 
+            0 => $mapMarker[ 'catIconMap' ],
+            1 => $width,
+            2 => $height,
+            3 => $iconOffsetX,
+            4 => $iconOffsetY,
+          ),
+          'data' => array
+          ( 
+            $dataCounter => array
+            ( 
+              'desc'    => $description,
+              'number'  => $number,
+              'url'     => $url,
+              'coors'   => array
+              (
+                0 => $lon,
+                1 => $lat,
+              ),
+            ),
+          ),
+        )
+      );
+$this->pObj->dev_var_dump( $mapMarker2 );
         // Set mapMarker
 
         // Unset some mapMarker elements, if they are empty
@@ -2092,10 +2124,8 @@ if( $this->pObj->b_drs_todo )
 
       // Category icons in case of database categories without own icons
     $catIcons = $this->renderMapMarkerCategoryIcons( );
-      // Path to the root
-    $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 
-      // FOREACH map marker
+      // FOREACH marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
       $markerTitle = $mapMarker['cat'];
@@ -2116,10 +2146,10 @@ if( $this->pObj->b_drs_todo )
   
       $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
     }
-      // FOREACH map marker
+      // FOREACH marker
 
     $jsonData = json_encode( $series );
-$this->pObj->dev_var_dump( $series, $jsonData );
+//$this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -2200,6 +2230,8 @@ $this->pObj->dev_var_dump( $series, $jsonData );
       // RETURN : Any own icon
       
       // Database category has its own icon
+      // Path to the root
+    $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
     list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
     $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
     $arrIcon[ ] = $width;
