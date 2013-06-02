@@ -1813,10 +1813,11 @@ if( $this->pObj->b_drs_todo )
 
       // Get category titles
     $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
-$this->pObj->dev_var_dump( $catTitles );
+$this->pObj->dev_var_dump( $catValues[ 'catTitles' ], $catTitles );
 
       // FOREACH category title
-    foreach( $catTitles as $key => $catTitle )
+    //foreach( $catTitles as $key => $catTitle )
+    foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
     {
         // Add cObj->data
       $this->renderMapMarkerPointsPointCobjDataAdd( $row, $arrLabels, $catValues, $key );
