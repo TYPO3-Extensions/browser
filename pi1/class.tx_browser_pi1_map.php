@@ -2150,7 +2150,7 @@ if( $this->pObj->b_drs_todo )
     foreach( ( array ) $markers as $marker )
     {
       $catTitle = $marker['cat'];
-      $dataKey  = $marker['markerTable'] . ':' . $marker['markerUid'];
+      $dataKey  = $marker['markerTable'] . '_' . $marker['markerUid'];
 
         // Get icon and data
       $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
@@ -3728,7 +3728,7 @@ $this->pObj->dev_var_dump( $arrReturn );
         // LOOP categories
       foreach( $catUids as $catUid )
       {
-        $catTitle   = $arrCat[ $catUid ] . ':' . $markerUid;
+        $catTitle   = $arrCat[ $catUid ] . '_' . $markerUid;
         $marker[ ]  = $catTitle; 
       }
         // LOOP categories
