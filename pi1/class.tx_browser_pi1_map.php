@@ -1799,6 +1799,8 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped )
   {
+    static $dataCounter = 0;
+    
     $mapMarkers = array( );
     $lons       = array( );
     $lats       = array( );
@@ -1810,7 +1812,6 @@ if( $this->pObj->b_drs_todo )
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
 
       // FOREACH category title
-    $dataCounter = 0;
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
     {
         // Add cObj->data
