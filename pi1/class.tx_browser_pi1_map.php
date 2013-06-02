@@ -3729,7 +3729,7 @@ $this->pObj->dev_var_dump( $arrReturn );
       foreach( $catUids as $catUid )
       {
         $catTitle   = $arrCat[ $catUid ];
-        $marker[ ]  = $catTitle . '_' . $markerUid; 
+        $marker[ ]  = $catTitle . ':' . $markerUid; 
       }
         // LOOP categories
     }
