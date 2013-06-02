@@ -1863,9 +1863,19 @@ $this->pObj->dev_var_dump( $row );
       $iconOffsetY = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
         // Get the icon properties
       
-        // Get
-      $markerTable  = $catValues[ 'markerTable' ];
-      $markerUid    = $catValues[ 'markerUid' ];
+        // Get markerTable and markerUid
+      switch( true )
+      {
+        case( $row[ 'markerTable' ] ):
+          $markerTable = $row[ 'markerTable' ];
+          break;
+        case( $catValues[ 'markerTable' ] ):
+        default:
+          $markerTable = $catValues[ 'markerTable' ];
+          break;
+      }
+      $markerUid = $catValues[ 'markerUid' ];
+        // Get markerTable and markerUid
 
         // Set mapMarker
       $mapMarker  = array
