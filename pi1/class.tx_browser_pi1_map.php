@@ -180,16 +180,16 @@ class tx_browser_pi1_map
   {
       // Get the field name of the field with the category icon
       // #47631, dwildt, 1-
-    //$catIconsField = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+    //$arrLabels['categoryIcon'] = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
       // #47631, #i0007, dwildt, 10+
     switch( true )
     {
       case( $this->pObj->typoscriptVersion <= 4005004 ):
-        $catIconsField = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+        $arrLabels['categoryIcon'] = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
-        $catIconsField = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+        $arrLabels['categoryIcon'] = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
         break;
     }
       // #47631, #i0007, dwildt, 10+
@@ -221,10 +221,10 @@ class tx_browser_pi1_map
         {
           case( is_array( $this->arrCategories[ 'icons' ] ) ):
               // 4.1.7, dwildt, +
-            $this->cObjDataAddArray( array( $catIconsField => $this->arrCategories[ 'icons' ][ $labelKey ] ) );
-//$this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsField ] );
+            $this->cObjDataAddArray( array( $arrLabels['categoryIcon'] => $this->arrCategories[ 'icons' ][ $labelKey ] ) );
+//$this->pObj->dev_var_dump( $arrLabels['categoryIcon'], $this->pObj->cObj->data[ $arrLabels['categoryIcon'] ] );
             $img = $this->renderMapMarkerVariablesSystemItem( 'categoryIconLegend' );
-            $this->cObjDataRemoveArray( array( $catIconsField => $this->arrCategories[ 'icons' ][ $labelKey ] ) );
+            $this->cObjDataRemoveArray( array( $arrLabels['categoryIcon'] => $this->arrCategories[ 'icons' ][ $labelKey ] ) );
               // 4.1.7, dwildt, +
             break;
           default:
@@ -1746,30 +1746,30 @@ if( $this->pObj->b_drs_todo )
     $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
       // #47631, dwildt, 5-
-//    $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
-//    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+//    $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+//    $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
 //      // #42125, 121031, dwildt, 2+
-//    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
-//    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+//    $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+//    $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
       // #47631, #i0007, dwildt, 18+
     switch( true )
     {
       case( $this->pObj->typoscriptVersion <= 4005004 ):
-        $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
-        $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
-        $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
-        $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
           // 130601, dwildt, 1+
 //        $localUidField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
-        $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
-        $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
-        $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
-        $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
         break;
     }
       // #47631, #i0007, dwildt, 18+
@@ -1798,19 +1798,19 @@ if( $this->pObj->b_drs_todo )
         $this->cObjDataAddMarker( );
         if( isset( $this->arrCategories['icons'] ) )
         {
-          $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[ $key ] ) );
+          $this->cObjDataAddArray( array( $arrLabels['categoryIcon'] => $categoryIcons[ $key ] ) );
         }
 
           // #42566, 121031, dwildt
-        $this->cObjDataRemoveArray( array( $catField ) );
+        $this->cObjDataRemoveArray( array( $arrLabels['category'] ) );
         $catValue = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $categories );
-        $this->cObjDataAddArray( array( $catField => $catValue ) );
+        $this->cObjDataAddArray( array( $arrLabels['category'] => $catValue ) );
 
 
           // Add x offset and y offset to current cObject
           // #42125, 121031, dwildt, 2+
-        $this->cObjDataAddArray( array( $catOffsetXField => $categoryOffsetsX[ $key ] ) );
-        $this->cObjDataAddArray( array( $catOffsetYField => $categoryOffsetsY[ $key ] ) );
+        $this->cObjDataAddArray( array( $arrLabels['categoryOffsetX'] => $categoryOffsetsX[ $key ] ) );
+        $this->cObjDataAddArray( array( $arrLabels['categoryOffsetY'] => $categoryOffsetsY[ $key ] ) );
           // Add x offset and y offset to current cObject
 
           // Get the longitude
@@ -1894,12 +1894,19 @@ if( $this->pObj->b_drs_todo )
           // Remove the current row from cObj->data
         $this->cObjDataRemoveRow( $row );
         $this->cObjDataRemoveMarker( );
-        $this->cObjDataRemoveArray( array( $catIconsField => $categoryIcons[$key] ) );
+        $this->cObjDataRemoveArray( array( $arrLabels['categoryIcon'] => $categoryIcons[$key] ) );
           // 130601, dwildt, 1+
         $markerCounter++;
       }
         // FOREACH category
+//      $arr_result                   = $this->renderMapMarkerPointsCategories( );
+//      $mapMarkers[ $markerCounter ] = $arr_result['data']['mapMarker'];
+//      $lats[ ]                      = $arr_result['data']['lat'];
+//      $lons[ ]                      = $arr_result['data']['lon'];
+//      unset( $arr_result );
     }
+    
+
       // LOOP row
     unset( $dontHandle00 );
 
@@ -1949,6 +1956,282 @@ if( $this->pObj->b_drs_todo )
   }
 
 /**
+ * renderMapMarkerPointsCategories( ): Points are map marker
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.1.7
+ */
+  private function renderMapMarkerPointsCategories( )
+  {
+    $arr_return   = array( );
+    $lons         = array( );
+    $lats         = array( );
+    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
+
+      // 130602, dwildt, -
+//      // #44849, dwildt, 1+
+//    $llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
+//
+//      // #44849, dwildt, 1-
+////    if( $this->boolMoreThanOneCategory )
+//      // #44849, dwildt, 1+
+//    if( $this->boolMoreThanOneCategory || 1 )
+//    {
+//      $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
+//    }
+//    else
+//    {
+//      $keys = array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] );
+//      $arrCategoriesFlipped = array( $llNoCat => $keys[ 0 ] );
+//    }
+      // 130602, dwildt, -
+    
+      // 130602, dwildt, 1+
+    $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
+
+      // #47631, dwildt, 5-
+//    $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+//    $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+//      // #42125, 121031, dwildt, 2+
+//    $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+//    $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+      // #47631, #i0007, dwildt, 18+
+    switch( true )
+    {
+      case( $this->pObj->typoscriptVersion <= 4005004 ):
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+          // #42125, 121031, dwildt, 2+
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+        break;
+      case( $this->pObj->typoscriptVersion <= 4005007 ):
+      default:
+          // 130601, dwildt, 1+
+//        $localUidField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['linktoSingle'];
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+          // #42125, 121031, dwildt, 2+
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+        break;
+    }
+      // #47631, #i0007, dwildt, 18+
+      
+      // 130601, dwildt, 1+
+    $markerCounter  = 0;
+    $mapMarkers     = null;
+      // LOOP row
+    foreach( $this->pObj->rows as $row )
+    {
+        // Get category properties
+      $arr_result       = $this->renderMapMarkerPointsCatProperties( $row );
+      $categories       = $arr_result[ 'categories' ];
+      $categoryIcons    = $arr_result[ 'categoryIcons' ];
+      $categoryOffsetsX = $arr_result[ 'categoryOffsetsX' ];
+      $categoryOffsetsY = $arr_result[ 'categoryOffsetsY' ];
+      unset( $arr_result );
+        // Get category properties
+
+        // FOREACH category
+      foreach( $categories as $key => $category )
+      {
+          // Add the current row to cObj->data
+        $this->cObjDataAddRow( $row );
+
+        $this->cObjDataAddMarker( );
+        if( isset( $this->arrCategories['icons'] ) )
+        {
+          $this->cObjDataAddArray( array( $arrLabels['categoryIcon'] => $categoryIcons[ $key ] ) );
+        }
+
+          // #42566, 121031, dwildt
+        $this->cObjDataRemoveArray( array( $arrLabels['category'] ) );
+        $catValue = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $categories );
+        $this->cObjDataAddArray( array( $arrLabels['category'] => $catValue ) );
+
+
+          // Add x offset and y offset to current cObject
+          // #42125, 121031, dwildt, 2+
+        $this->cObjDataAddArray( array( $arrLabels['categoryOffsetX'] => $categoryOffsetsX[ $key ] ) );
+        $this->cObjDataAddArray( array( $arrLabels['categoryOffsetY'] => $categoryOffsetsY[ $key ] ) );
+          // Add x offset and y offset to current cObject
+
+          // Get the longitude
+        $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
+          // Get the latitude
+        $mapMarker['lat'] = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
+
+          // SWITCH logitude and latitude
+        switch( true )
+        {
+          case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
+              // CONTINUE: longituda and latitude are empty
+            continue 3;
+            break;
+          case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
+              // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
+            continue 3;
+            break;
+        }
+          // SWITCH logitude and latitude
+
+          // Get the desc
+        $mapMarker['desc']  = $this->renderMapMarkerVariablesSystemItem( 'description' );
+        if( empty ( $mapMarker['desc'] ) )
+        {
+          $mapMarker['desc'] = 'Please take care of a proper configuration<br />
+                                of the TypoScript property marker.mapMarker.description!';
+        }
+          // Get the desc
+
+          // #41057, 120919, dwildt, +
+          // Get the url
+        $url  = $this->renderMapMarkerVariablesSystemItem( 'url' );
+        if( ! empty ( $url ) )
+        {
+          $mapMarker['url'] = $url;
+        }
+          // Get the url
+          // #41057, 120919, dwildt, +
+
+          // #41057, 120919, dwildt, +
+          // Get the number
+        $number  = $this->renderMapMarkerVariablesSystemItem( 'number' );
+        if( ! empty ( $number ) )
+        {
+          $mapMarker['number'] = $number;
+        }
+          // Get the number
+          // #41057, 120919, dwildt, +
+
+          // 4.1.17, 120927, dwildt, 2-
+//          // Get the category label
+//        $mapMarker['cat'] = $category;
+          // 4.1.17, 120927, dwildt, 3+
+          // Get the category label
+        $categoryWoSpc    = str_replace( ' ', null, $category );
+        $mapMarker['cat'] = $categoryWoSpc;
+          // 4.1.7, 3+
+          // Get the category icon
+        if( isset( $this->arrCategories['icons'] ) )
+        {
+          $mapMarker['catIconMap'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
+        }
+          // Get the iconKey
+        $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
+
+          // Add offset to the mapMarker
+        $mapMarker['iconOffsetX'] = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
+        $mapMarker['iconOffsetY'] = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
+          // Add offset to the mapMarker
+
+          // Save each mapMarker
+//$localUid = $row[ $localUidField ];
+//$this->pObj->dev_var_dump( $key, $category, $localUid, $markerCounter );
+        $mapMarkers[ $markerCounter ] = $mapMarker;
+          // Save each longitude
+        $lons[] = ( double ) $mapMarker['lon'];
+          // Save each latitude
+        $lats[]  = ( double ) $mapMarker['lat'];
+
+          // Remove the current row from cObj->data
+        $this->cObjDataRemoveRow( $row );
+        $this->cObjDataRemoveMarker( );
+        $this->cObjDataRemoveArray( array( $arrLabels['categoryIcon'] => $categoryIcons[$key] ) );
+          // 130601, dwildt, 1+
+        $markerCounter++;
+      }
+        // FOREACH category
+    }
+    
+    $mapMarkers = $arr_return['data']['mapMarker'];
+    $lats       = $arr_return['data']['lat'];
+    $lons       = $arr_return['data']['lon'];
+
+      // LOOP row
+    unset( $dontHandle00 );
+
+//$this->pObj->dev_var_dump( $mapMarkers );
+
+//    if( $this->pObj->b_drs_map )
+//    {
+//      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
+//      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+//    }
+
+      // DRS
+    switch( true )
+    {
+      case( $mapMarkers == null ):
+      case( ! is_array( $mapMarkers ) ):
+      case( ( is_array( $mapMarkers ) ) && ( count( $mapMarkers ) < 1 ) ):
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'JSON array is null.';
+          t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+          $prompt = 'You will get an empty map!';
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+          $prompt = 'Please check the TypoScript Constant Editor > Category [BROWSER - MAP].';
+          t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
+        }
+        break;
+      default:
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'JSON array seem\'s to be proper.';
+          t3lib_div :: devLog( '[OK/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, -1 );
+          $prompt = 'If you have an unexpected effect in your map, please check the JSON array from below!';
+          t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
+        }
+        break;
+    }
+      // DRS
+
+      // Return array
+    $arr_return['data']['mapMarkers'] = $mapMarkers;
+    $arr_return['data']['lats']       = $lats;
+    $arr_return['data']['lons']       = $lons;
+      // Return array
+
+    return $arr_return;
+  }
+
+/**
+ * renderMapMarkerPointsCatLabels( ): 
+ *
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapMarkerPointsCatLabels( )
+  {
+    $arrLabels = array( );
+    
+    switch( true )
+    {
+      case( $this->pObj->typoscriptVersion <= 4005004 ):
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+          // #42125, 121031, dwildt, 2+
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+        break;
+      case( $this->pObj->typoscriptVersion <= 4005007 ):
+      default:
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+          // #42125, 121031, dwildt, 2+
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+        break;
+    }
+    
+    return $arrLabels;
+  }
+  
+/**
  * renderMapMarkerPointsCatProperties( ): Points are map marker
  *
  * @return	array
@@ -1957,29 +2240,35 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapMarkerPointsCatProperties( $row )
   {
+    static $arrLabels = array( );
+    
+    if( empty ( $arrLabels ) )
+    {
+      $arrLabels = $this->renderMapMarkerPointsCatLabels( );
+    }
     switch( true )
     {
       case( $this->pObj->typoscriptVersion <= 4005004 ):
-        $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
-        $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
-        $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
-        $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
-        $catField         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
-        $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
+        $arrLabels['category']         = $this->confMap['configuration.']['categories.']['fields.']['marker.']['category'];
+        $arrLabels['categoryIcon']    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
           // #42125, 121031, dwildt, 2+
-        $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
-        $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
+        $arrLabels['categoryOffsetX']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
+        $arrLabels['categoryOffsetY']  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
         break;
     }
 
       // Get categories
-    if( isset( $row[ $catField ] ) )
+    if( isset( $row[ $arrLabels['category'] ] ) )
     {
-      $categories = explode( $this->catDevider, $row[ $catField ] );
+      $categories = explode( $this->catDevider, $row[ $arrLabels['category'] ] );
     }
     else
     {
@@ -1999,18 +2288,18 @@ if( $this->pObj->b_drs_todo )
       // Get category icons
     if( isset( $this->arrCategories['icons'] ) )
     {
-      $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
+      $categoryIcons = explode( $this->catDevider, $row[ $arrLabels['categoryIcon'] ] );
     }
       // Get category icons
       // Get category offsets
       // #42125, 121031, dwildt, 8+
-    if( isset( $row[ $catOffsetXField ] ) )
+    if( isset( $row[ $arrLabels['categoryOffsetX'] ] ) )
     {
-      $categoryOffsetsX = explode( $this->catDevider, $row[ $catOffsetXField ] );
+      $categoryOffsetsX = explode( $this->catDevider, $row[ $arrLabels['categoryOffsetX'] ] );
     }
-    if( isset( $row[ $catOffsetYField ] ) )
+    if( isset( $row[ $arrLabels['categoryOffsetY'] ] ) )
     {
-      $categoryOffsetsY = explode( $this->catDevider, $row[ $catOffsetYField ] );
+      $categoryOffsetsY = explode( $this->catDevider, $row[ $arrLabels['categoryOffsetY'] ] );
     }
       // Get category offsets
 
