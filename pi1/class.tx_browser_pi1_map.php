@@ -2412,13 +2412,13 @@ $this->pObj->dev_var_dump( $coordinates );
       // Get rendered points (map marker), lats and lons
     $arr_return = $this->renderMapMarkerPoints( );
     $mapMarkers = $arr_return['data']['mapMarkers'];
+$this->pObj->dev_var_dump( $mapMarkers );
     $lats       = $arr_return['data']['lats'];
     $lons       = $arr_return['data']['lons'];
       // Get rendered points (map marker), lats and lons
 
       // Get points (map marker) as JSON array and coordinates
     $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
-$this->pObj->dev_var_dump( $arr_return );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
       // Get points (map marker) as JSON array and coordinates
