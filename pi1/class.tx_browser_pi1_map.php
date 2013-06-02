@@ -2780,7 +2780,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
 
       // Merge a marker for each path
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -2900,6 +2900,7 @@ $this->pObj->dev_var_dump( $marker );
     }
 
     $fieldsObligate = $confMapper['fields.']['local.']['obligate.'];
+      // FOREACH  : obligate fields
     foreach( $fieldsObligate as $fields => $field )
     {
         // CONTINUE : field doesn't have any property
@@ -2916,6 +2917,7 @@ $this->pObj->dev_var_dump( $marker );
       $pathTableField   = $tablePath    . '.' . $valuePath;
       $markerTableField = $tableMarker  . '.' . $valueMarker;
       
+        // DIE  : one off the values is empty
       switch( true )
       {
         case( empty( $valuePath ) ):
@@ -2945,6 +2947,7 @@ $this->pObj->dev_var_dump( $marker );
             // follow the workflow
           break;
       }
+        // DIE  : one off the values is empty
       
       $row[ $markerTableField ] = $elements[ $pathTableField ];
 
@@ -2962,6 +2965,9 @@ $this->pObj->dev_var_dump( $marker );
           break;
       }
     }
+      // FOREACH  : obligate fields
+
+    $row[ 'markerTable' ] = $tablePath;
 
     return $row;
   }
