@@ -2681,7 +2681,7 @@ if( $this->pObj->b_drs_todo )
     
     foreach( $arrMarkerUid as $key => $uid )
     {
-      $arrMarker[ $uid ] = $arrMarkerTitle[ $key ] . ':' . $tableMarker . '_' . $pathUid;
+      $arrMarker[ $uid ] = $arrMarkerTitle[ $key ] . ':' . $tableMarker . '_' . $uid;
     }
     
     $arrReturn =  array
