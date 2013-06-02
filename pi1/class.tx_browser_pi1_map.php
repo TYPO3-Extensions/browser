@@ -1282,7 +1282,8 @@ $this->pObj->dev_var_dump( $coordinates );
     foreach( $this->rowsBackup as $row )
     {
       $strGeodata = $row[ $tableFieldGeodata ]; 
-$this->pObj->dev_var_dump( $strGeodata );
+      $arrGeodata = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata, false );
+$this->pObj->dev_var_dump( $arrGeodata );
     }
 
       // 130601, dwildt, +
