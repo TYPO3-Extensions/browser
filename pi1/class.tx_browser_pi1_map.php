@@ -2676,7 +2676,7 @@ if( $this->pObj->b_drs_todo )
     
     foreach( $arrCatUid as $key => $uid )
     {
-      $arrCat[ $uid ] = $arrCatTitle[ $key ] . ':' . $tableMarker . '_' . $uid;
+      $arrCat[ $uid ] = $arrCatTitle[ $key ] . ':' . $tableMarker . '_' . $markerUid;
     }
     
     foreach( $arrMarkerUid as $key => $uid )
