@@ -1285,7 +1285,7 @@ if( $this->pObj->b_drs_todo )
   {
     $coordinates = array( );
     
-    if( ! $this->enabled )
+    if( $this->enabled != 'Map +Routes' )
     {
       return $coordinates;
     }
