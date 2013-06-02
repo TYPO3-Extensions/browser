@@ -1959,8 +1959,8 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
       // Add x offset and y offset to current cObject
       // #42125, 121031, dwildt, 2+
-    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetX' ] => $catValues[ 'catOffsetsX' ][ $key ] ) );
-    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetY' ] => $catValues[ 'catOffsetsY' ][ $key ] ) );
+    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetsX' ] => $catValues[ 'catOffsetsX' ][ $key ] ) );
+    $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetsY' ] => $catValues[ 'catOffsetsY' ][ $key ] ) );
       // Add x offset and y offset to current cObject
   }
 
@@ -2077,7 +2077,6 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
                     'catOffsetsX'  => $catOffsetsX,
                     'catOffsetsY'  => $catOffsetsY
                   );
-$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
       // RETURN result
   }
