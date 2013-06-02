@@ -1812,8 +1812,7 @@ if( $this->pObj->b_drs_todo )
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
 
       // Get category titles
-    $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
-//$this->pObj->dev_var_dump( $catValues[ 'catTitles' ], $catTitles );
+//    $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
 
       // FOREACH category title
     //foreach( $catTitles as $key => $catTitle )
@@ -2060,6 +2059,7 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
       // Get category icons
       // Get category offsets
       // #42125, 121031, dwildt, 8+
+$this->pObj->dev_var_dump( $row, $arrLabels );
     if( isset( $row[ $arrLabels[ 'catOffsetX' ] ] ) )
     {
       $catOffsetsX = explode( $this->catDevider, $row[ $arrLabels[ 'catOffsetX' ] ] );
