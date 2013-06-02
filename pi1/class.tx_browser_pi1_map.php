@@ -2676,7 +2676,7 @@ $this->pObj->dev_var_dump( $row );
     
     foreach( $arrCatUid as $key => $uid )
     {
-      $arrCat[ $uid ] = $arrCatTitle[ $key ] . ':' . $tablePath;
+      $arrCat[ $uid ] = $arrCatTitle[ $key ] . ':' . $tableMarker;
     }
     
     foreach( $arrMarkerUid as $key => $uid )
