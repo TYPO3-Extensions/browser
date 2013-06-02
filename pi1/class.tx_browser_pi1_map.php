@@ -1799,7 +1799,7 @@ if( $this->pObj->b_drs_todo )
  * @version 4.5.7
  * @since   4.1.7
  */
-  private function renderMapMarkerPointsPoint( $row, $arrLables, $arrCategoriesFlipped )
+  private function renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped )
   {
     $mapMarkers = array( );
     $lons       = array( );
@@ -1911,7 +1911,7 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
     
     unset( $dontHandle00 );
-    unset( $arrLables );
+    unset( $arrLabels );
     
     $arr_return = array
     ( 
@@ -1955,7 +1955,7 @@ $this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
       // Add x offset and y offset to current cObject
       // #42125, 121031, dwildt, 2+
-$this->pObj->dev_var_dump( $arrLabels,$catValues );
+$this->pObj->dev_var_dump( $arrLabels, $catValues );
     $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetX' ] => $catValues[ 'catOffsetsX' ][ $key ] ) );
     $this->cObjDataAddArray( array( $arrLabels[ 'catOffsetY' ] => $catValues[ 'catOffsetsY' ][ $key ] ) );
       // Add x offset and y offset to current cObject
