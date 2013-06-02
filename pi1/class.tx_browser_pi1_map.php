@@ -1400,6 +1400,14 @@ $this->pObj->dev_var_dump( $longitudes, $latitudes, $coordinates );
     }
       // RETURN: center coordinates should not calculated
 
+      // 130601, dwildt, +
+    foreach( ( array ) $coordinates as $coordinate )
+    {
+      list( $lon, $lat ) = explode( ',', $coordinate );
+      $longitudes[ ]  = $lon;
+      $latitudes[ ]   = $lat;
+    }
+
       // Calculate the zoom level
       // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
     $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
