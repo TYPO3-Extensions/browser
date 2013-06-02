@@ -2687,7 +2687,7 @@ if( $this->pObj->b_drs_todo )
                     'cat'     => $arrCat,
                     'marker'  => $arrMarker
                   );
-    //$this->pObj->dev_var_dump( $arrReturn );
+$this->pObj->dev_var_dump( $arrReturn );
     
     return $arrReturn;
   }
@@ -3733,7 +3733,7 @@ if( $this->pObj->b_drs_todo )
     }
       // LOOP relations of current path
 
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
