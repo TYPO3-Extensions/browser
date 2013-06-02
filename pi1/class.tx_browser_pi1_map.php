@@ -2131,15 +2131,16 @@ if( $this->pObj->b_drs_todo )
 $this->pObj->dev_var_dump( $markers );
     foreach( ( array ) $markers as $markerDataKey => $marker )
     {
-      $markerTitle = $marker['cat'];
+      $catTitle = $marker['cat'];
+      $dataKey  = $marker['markerTable'];
 
         // Get icon and data
       $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
       $data = $this->renderMapMarkerPointsToJsonData( $marker );
 
         // Set icon and data
-      $series[ $markerTitle ][ 'icon' ] = $icon;
-      $series[ $markerTitle ][ 'data' ][ $markerDataKey ] = $data;
+      $series[ $catTitle ][ 'icon' ] = $icon;
+      $series[ $catTitle ][ 'data' ][ $dataKey . ':' . $markerDataKey ] = $data;
   
         // Set coordinates
       $coordinates[] = $marker['lon'] . ',' . $marker['lat'];
@@ -2209,12 +2210,12 @@ $this->pObj->dev_var_dump( $markers );
   private function renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons )
   {
     $arrIcon         = array( );
-    $markerTitle  = $mapMarker['cat'];
+    $catTitle  = $mapMarker['cat'];
     
       // RETURN  : json icon array is set
-    if( isset( $series[ $markerTitle ][ 'icon' ] ) )
+    if( isset( $series[ $catTitle ][ 'icon' ] ) )
     {
-      $arrIcon = $series[ $markerTitle ][ 'icon' ];
+      $arrIcon = $series[ $catTitle ][ 'icon' ];
       return $arrIcon;
     }
       // RETURN  : json icon array is set
