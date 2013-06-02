@@ -2166,6 +2166,7 @@ if( $this->pObj->b_drs_todo )
       // FOREACH map marker
 
     $jsonData = json_encode( $series );
+$this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -2399,7 +2400,6 @@ if( $this->pObj->b_drs_todo )
  */
   private function renderMapMarkerVariablesSystem( $map_template )
   {
-//var_dump( __METHOD__, __LINE__, $this->pObj->rows );
     $arr_return = array( );
     $mapMarkers = array( );
 
@@ -2503,7 +2503,6 @@ if( $this->pObj->b_drs_todo )
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
-//$this->pObj->dev_var_dump( $marker );
     
     $arr_return['marker'] = $marker;
     $arr_return['paths']  = $paths;
