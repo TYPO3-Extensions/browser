@@ -1779,17 +1779,15 @@ $this->pObj->dev_var_dump( $coordinates );
       // DRS
 
       // Return array
-$this->pObj->dev_var_dump( $mapMarkers );
-
     $arr_return = array
-                  (
-                    'data' => array
-                              ( 
-                                'mapMarkers' => $mapMarkers,
-                                'lats'       => $lats,
-                                'lons'       => $lons                              
-                              )
-                  );
+    (
+      'data' => array
+      ( 
+        'mapMarkers' => $mapMarkers,
+        'lats'       => $lats,
+        'lons'       => $lons                              
+      )
+    );
       // Return array
 
     return $arr_return;
@@ -1919,6 +1917,8 @@ $this->pObj->dev_var_dump( $mapMarkers );
       $this->renderMapMarkerPointsPointCobjDataRemove( $row, $arrLabels );
     }
       // FOREACH category title
+$this->pObj->dev_var_dump( $mapMarkers );
+
     
     unset( $dontHandle00 );
     unset( $arrLables );
