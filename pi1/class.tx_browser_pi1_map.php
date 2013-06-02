@@ -2651,11 +2651,11 @@ if( $this->pObj->b_drs_todo )
     $tableMarkerCatUid    = $tableMarkerCat . '.uid';
       // variables
 
-$this->pObj->dev_var_dump( $row );
     
       // Get marker and marker_cat values of the given row
     foreach( $this->pObj->rows as $row )
     {
+$this->pObj->dev_var_dump( $row );
       if( $row[ $tablePathUid ] != $pathUid )
       {
         continue;
