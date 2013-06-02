@@ -1813,7 +1813,7 @@ if( $this->pObj->b_drs_todo )
 
       // Get category titles
     $catTitles = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $catValues[ 'catTitles' ] );
-$this->pObj->dev_var_dump( $catValues[ 'catTitles' ], $catTitles );
+//$this->pObj->dev_var_dump( $catValues[ 'catTitles' ], $catTitles );
 
       // FOREACH category title
     //foreach( $catTitles as $key => $catTitle )
@@ -1912,7 +1912,7 @@ $this->pObj->dev_var_dump( $catValues[ 'catTitles' ], $catTitles );
       $this->renderMapMarkerPointsPointCobjDataRemove( $row, $arrLabels );
     }
       // FOREACH category title
-$this->pObj->dev_var_dump( $mapMarkers );
+$this->pObj->dev_var_dump( $mapMarkers, $lons, $lats );
 
     
     unset( $dontHandle00 );
