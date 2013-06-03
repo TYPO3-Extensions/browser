@@ -3394,17 +3394,17 @@ if( $this->pObj->b_drs_todo )
     $intPosition  = $elements[ $tableFieldIconposition ];
     $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
     
-    switch( $intPosition )
+    switch( true )
     {
-      case( 0 ):
+      case( $intPosition === 0 ):
           // beginning
         $itemNumber = 0; 
         break;
-      case( 2 ):
+      case( $intPosition == 2 ):
           // end
         $itemNumber = count( $arrGeodata ); 
         break;
-      case( 1 ):
+      case( $intPosition == 1 ):
       default:
           // center
         $itemNumber = ( int ) ( count( $arrGeodata ) / 2 ); 
