@@ -226,14 +226,6 @@ class tx_browser_tcemainprocdm
     $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ];
     $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'geodata' ];
     
-    if( isset( $fieldArray[ $fieldGpxfile ] ) )
-    {
-      $error  = 1;
-      $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
-      $this->log( $prompt, $error );    
-      return;
-    }
-
     if (!is_array($GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ]))
     {
       t3lib_div::loadTCA( $this->processTable );
@@ -278,6 +270,13 @@ class tx_browser_tcemainprocdm
     
     switch( true )
     {
+      case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
+        $error  = 1;
+        $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
+        $this->log( $prompt, $error );    
+        $requirementsMatched = false; 
+        return $requirementsMatched;
+        break;
       case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
         $error  = 1;
@@ -288,6 +287,7 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt, $error );
         $requirementsMatched = false; 
         return $requirementsMatched;
+        break;
     }
     
     unset( $fieldGpxfile );
