@@ -2971,6 +2971,7 @@ if( $this->pObj->b_drs_todo )
       {
         case( $key == 'lat' ):
         case( $key == 'lon' ):
+$this->pObj->dev_var_dump( $pathTableField, $elements[ $pathTableField ] );
           if( empty( $elements[ $pathTableField ] ) )
           {
             $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
