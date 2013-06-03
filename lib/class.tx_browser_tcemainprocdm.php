@@ -271,9 +271,8 @@ class tx_browser_tcemainprocdm
     switch( true )
     {
       case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
-        $error  = 1;
         $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
-        $this->log( $prompt, $error );    
+        $this->log( $prompt );    
         $requirementsMatched = false; 
         return $requirementsMatched;
         break;
@@ -290,6 +289,7 @@ class tx_browser_tcemainprocdm
         break;
     }
     
+    unset( $fieldArray );
     unset( $fieldGpxfile );
     unset( $fieldGeodata );
     
