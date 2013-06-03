@@ -58,7 +58,7 @@ class tx_browser_processcatamapclass {
  * @since     4.5.7
  * @version   4.5.7
  */
-  public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$this )
+  public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$pObj )
   {
     $prompt = 'Test processDatamap_postProcessFieldArray';
     t3lib_div :: devLog( '[TEST/BROWSER] ' . $prompt , $this->pObj->extKey, 3 );
