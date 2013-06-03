@@ -773,13 +773,14 @@ plugin.tx_browser_pi1 {
             // path, pathCategory, marker, markerCategory
           tables =
           tables {
-              // title, geodata, color, lineWidth
+              // title, geodata, color, lineWidth, iconposition
             path =
             path {
-              title     = {$plugin.tx_browser_pi1.map.path.table.path.title}
-              geodata   = {$plugin.tx_browser_pi1.map.path.table.path.geodata}
-              color     = {$plugin.tx_browser_pi1.map.path.table.path.color}
-              lineWidth = {$plugin.tx_browser_pi1.map.path.table.path.lineWidth}
+              title         = {$plugin.tx_browser_pi1.map.path.table.path.title}
+              geodata       = {$plugin.tx_browser_pi1.map.path.table.path.geodata}
+              color         = {$plugin.tx_browser_pi1.map.path.table.path.color}
+              lineWidth     = {$plugin.tx_browser_pi1.map.path.table.path.lineWidth}
+              iconposition  = {$plugin.tx_browser_pi1.map.path.table.path.iconposition}
             }
               // title
             pathCategory = 

@@ -3388,22 +3388,38 @@ if( $this->pObj->b_drs_todo )
   {
 
       // short variables
-    $tableFieldGeodata  = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
+    $tableFieldGeodata      = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
+    $tableFieldIconposition = $this->confMap['configuration.']['route.']['tables.']['path.']['iconposition'];
     $strGeodata   = $elements[ $tableFieldGeodata ];
     $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
     
-    $centerNumber   = ( int ) ( count( $arrGeodata ) / 2 ); 
-    $centerGeodata  = $arrGeodata[ $centerNumber ];
+    switch( true )
+    {
+      case( 0 ):
+          // beginning
+        $geodataItemNumber = 0; 
+        break;
+      case( 2 ):
+          // end
+        $geodataItemNumber = count( $arrGeodata ); 
+        break;
+      case( 1 ):
+      default:
+          // center
+        $geodataItemNumber = ( int ) ( count( $arrGeodata ) / 2 ); 
+        break;
+    }
+    $geodata = $arrGeodata[ $geodataItemNumber ];
 
-//$this->pObj->dev_var_dump( $arrGeodata, $centerNumber );
+//$this->pObj->dev_var_dump( $arrGeodata, $geodataItemNumber );
     
     switch( $key )
     {
       case( 'lat' ):
-        return $centerGeodata[ 1 ];
+        return $geodata[ 1 ];
         break;
       case( 'lon' ):
-        return $centerGeodata[ 0 ];
+        return $geodata[ 0 ];
         break;
       default:
         $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
