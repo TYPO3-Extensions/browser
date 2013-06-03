@@ -60,7 +60,7 @@
 class tx_browser_tcemainprocdm 
 {
     // [String] status of the current process: update, edit, delete, moved
-  private $prefixLog = '[tx_browser -> route] ';
+  private $prefixLog = 'tx_browser ';
 
     // [String] status of the current process: update, edit, delete, moved
   private $processStatus  = null;
@@ -146,15 +146,15 @@ class tx_browser_tcemainprocdm
   private function log( $prompt, $error=0, $action=2 ) 
   {
     $table  = $this->processTable;
-    $recuid = $this->processId;
-    $recpid = $this->processId; 
+    $uid    = $this->processId;
+    $pid    = null; 
     
-    $prompt = $this->prefixLog . $prompt;
+    $prompt = '[' . $this->prefixLog . $table . ':' . $uid . ']' . $prompt;
     //    $details_nr = -1;
     //    $data       = array( );
     //    $event_pid  = null; // page id
     //    $NEWid      = null;
-    $this->pObj->log( $table, $recuid, $action, $recpid, $error, $prompt );
+    $this->pObj->log( $table, $uid, $action, $pid, $error, $prompt );
   }
 
 
