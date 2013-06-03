@@ -58,6 +58,7 @@ class tx_browser_processcatamapclass {
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$pObj )
   {
     $fieldArray['hidden'] = 1;
+    unset( $pObj );
 //    $prompt = 'Test processDatamap_postProcessFieldArray';
 //    t3lib_div :: devLog( '[TEST/BROWSER] ' . $prompt , $this->pObj->extKey, 3 );
 //    echo __METHOD__ . ':' . __LINE__;
