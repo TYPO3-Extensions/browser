@@ -64,13 +64,19 @@ class tx_browser_tcemainprocdm
 //      {
 //        $fieldArray[ 'hidden' ] = 1;
 //      }
+        // TCA eval value
+      if( ! is_array( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ] ) )
+      {
+        t3lib_div::loadTCA( $table );
+      }
+      $prompt = implode( ', ', array_keys( $GLOBALS['TCA'][$table]['columns'] ) );
       
       $table      = $table;
       $recuid     = $id;
       $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
       $recpid     = $id; 
       $error      = 3;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
-      $details    = $table . ': ' . var_export( $fieldArray, true );    
+      $details    = $table . ': ' . $prompt . '|' . var_export( $fieldArray, true );    
       $details_nr = -1;
       $data       = array( );
       $event_pid  = $id; 
