@@ -259,9 +259,7 @@ class tx_browser_tcemainprocdm
 
     $xml = simplexml_load_file( $absPath );
 
-    print_r( $xml->trk );
-    print_r( $xml->trkseg );
-    print_r( $xml );
+    print_r( $xml->trk->trjkseg->trkpt );
 //    $error  = 1;
 //    $prompt = $absPath . ': ' . $fileExist;
 //    $this->log( $prompt, $error );
