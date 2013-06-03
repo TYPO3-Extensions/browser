@@ -48,7 +48,7 @@ require_once(PATH_t3lib.'class.t3lib_tceforms.php');
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_processDatamapClass {
+class tx_browser_processcatamapclass {
 
 /**
  * processDatamap_beforeStart( ): 
@@ -62,6 +62,7 @@ class tx_browser_processDatamapClass {
   {
     $prompt = 'Test processDatamap_postProcessFieldArray';
     t3lib_div :: devLog( '[TEST/BROWSER] ' . $prompt , $this->pObj->extKey, 3 );
+    echo __METHOD__ . ':' . __LINE__;
     die( __METHOD__ . ':' . __LINE__ );
   }
     // 0.2.0, 110815, dwildt +
