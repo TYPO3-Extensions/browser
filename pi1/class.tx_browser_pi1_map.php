@@ -3391,9 +3391,10 @@ if( $this->pObj->b_drs_todo )
     $tableFieldGeodata      = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
     $tableFieldIconposition = $this->confMap['configuration.']['route.']['tables.']['path.']['iconposition'];
     $strGeodata   = $elements[ $tableFieldGeodata ];
+    $intPosition  = $elements[ $tableFieldIconposition ];
     $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
     
-    switch( $tableFieldIconposition )
+    switch( $intPosition )
     {
       case( 0 ):
           // beginning
