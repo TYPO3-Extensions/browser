@@ -239,7 +239,9 @@ class tx_browser_tcemainprocdm
     
     $fileExist = file_exists( $file );
     
-    
+    $error  = 1;
+    $prompt = $fieldGpxfile . ': ' . var_export( $confGpxfile, false );
+    $this->log( $prompt, $error );    
     
     $error  = 1;
     $prompt = $file . ': ' . $fileExist;
