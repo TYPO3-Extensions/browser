@@ -3390,7 +3390,7 @@ if( $this->pObj->b_drs_todo )
       // short variables
     $tableFieldGeodata      = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
     $tableFieldIconposition = $this->confMap['configuration.']['route.']['tables.']['path.']['iconposition'];
-    $intPosition  = $elements[ $tableFieldIconposition ];
+    $intPosition  = ( int ) $elements[ $tableFieldIconposition ];
     $strGeodata   = $elements[ $tableFieldGeodata ];
     $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
     
