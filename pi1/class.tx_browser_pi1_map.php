@@ -3612,7 +3612,7 @@ if( $this->pObj->b_drs_todo )
     {
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">there isn\'t any geodata.</p>' . PHP_EOL
-              . 'Your path record must contain geodata! Please check your path records.<br />' . PHP_EOL
+              . 'Your path records must contain geodata! Please check your path records.<br />' . PHP_EOL
               . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
               . 'Please use the TypoScript Editor<br />' . PHP_EOL
