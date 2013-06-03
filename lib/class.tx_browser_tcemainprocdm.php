@@ -69,6 +69,7 @@ class tx_browser_tcemainprocdm
       {
         t3lib_div::loadTCA( $table );
       }
+      t3lib_div::loadTCA( $table );
       $prompt = var_export( $GLOBALS['TCA'][$table]['ctrl'], true );
       
       $table      = $table;
