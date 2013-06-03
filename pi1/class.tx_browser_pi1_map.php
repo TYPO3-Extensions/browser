@@ -3393,25 +3393,25 @@ if( $this->pObj->b_drs_todo )
     $strGeodata   = $elements[ $tableFieldGeodata ];
     $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
     
-    switch( true )
+    switch( $tableFieldIconposition )
     {
       case( 0 ):
           // beginning
-        $geodataItemNumber = 0; 
+        $itemNumber = 0; 
         break;
       case( 2 ):
           // end
-        $geodataItemNumber = count( $arrGeodata ); 
+        $itemNumber = count( $arrGeodata ); 
         break;
       case( 1 ):
       default:
           // center
-        $geodataItemNumber = ( int ) ( count( $arrGeodata ) / 2 ); 
+        $itemNumber = ( int ) ( count( $arrGeodata ) / 2 ); 
         break;
     }
-    $geodata = $arrGeodata[ $geodataItemNumber ];
+    $geodata = $arrGeodata[ $itemNumber ];
 
-//$this->pObj->dev_var_dump( $arrGeodata, $geodataItemNumber );
+$this->pObj->dev_var_dump( $arrGeodata, $itemNumber, $geodata );
     
     switch( $key )
     {
