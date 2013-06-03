@@ -256,24 +256,17 @@ class tx_browser_tcemainprocdm
       return;
     }
       // RETURN : file is missing
-    
-      // RETURN : file is missing
-      $error  = 1;
-      $prompt = 'ERROR: file is missing: ' . $absPath;
-      $this->log( $prompt, $error );    
-      // RETURN : file is missing
-    
-    $error  = 1;
-    $prompt = $fieldGpxfile . ': ' . var_export( $confGpxfile, true );
-    $this->log( $prompt, $error );    
-    
-    $error  = 1;
-    $prompt = $file . ': ' . $fileExist;
-    $this->log( $prompt, $error );
 
-    $error  = 1;
-    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
-    $this->log( $prompt, $error );
+    $xml = simplexml_load_file( $absPath );
+
+    print_r($xml);
+//    $error  = 1;
+//    $prompt = $absPath . ': ' . $fileExist;
+//    $this->log( $prompt, $error );
+//
+//    $error  = 1;
+//    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+//    $this->log( $prompt, $error );
   }
 
 /**
