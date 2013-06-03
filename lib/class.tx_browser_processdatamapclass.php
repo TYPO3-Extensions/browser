@@ -60,12 +60,12 @@ class tx_browser_processcatamapclass {
  */
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$pObj )
   {
-    $prompt = 'Test processDatamap_postProcessFieldArray';
-    t3lib_div :: devLog( '[TEST/BROWSER] ' . $prompt , $this->pObj->extKey, 3 );
-    echo __METHOD__ . ':' . __LINE__;
-    die( __METHOD__ . ':' . __LINE__ );
+    $fieldArray['hidden'] = 1;
+//    $prompt = 'Test processDatamap_postProcessFieldArray';
+//    t3lib_div :: devLog( '[TEST/BROWSER] ' . $prompt , $this->pObj->extKey, 3 );
+//    echo __METHOD__ . ':' . __LINE__;
+//    die( __METHOD__ . ':' . __LINE__ );
   }
-    // 0.2.0, 110815, dwildt +
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_processDatamapClass.php']) {
