@@ -263,7 +263,7 @@ class tx_browser_tcemainprocdm
     {
       foreach( $point->attributes( ) as $key => $value )
       {
-        echo $key . ' = "' . $value '"; ';
+        echo $key . ' = "' . $value . '"; ';
       }
     }
 //    $error  = 1;
