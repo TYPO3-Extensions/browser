@@ -3390,8 +3390,8 @@ if( $this->pObj->b_drs_todo )
       // short variables
     $tableFieldGeodata      = $this->confMap['configuration.']['route.']['tables.']['path.']['geodata'];
     $tableFieldIconposition = $this->confMap['configuration.']['route.']['tables.']['path.']['iconposition'];
-    $strGeodata   = $elements[ $tableFieldGeodata ];
     $intPosition  = $elements[ $tableFieldIconposition ];
+    $strGeodata   = $elements[ $tableFieldGeodata ];
     $arrGeodata   = $this->renderMapRoutePathsJsonFeaturesCoordinates( $strGeodata );
     
     switch( true )
@@ -3428,6 +3428,8 @@ $this->pObj->dev_var_dump( $arrGeodata, $itemNumber, $geodata );
         die( $prompt );
         break;
     }
+    
+    unset( $intPosition );
     
   }
 
