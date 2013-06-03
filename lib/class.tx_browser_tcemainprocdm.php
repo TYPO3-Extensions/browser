@@ -197,23 +197,24 @@ class tx_browser_tcemainprocdm
 
   private function routeGpx( &$fieldArray, &$reference ) 
   {
-    $fieldGpxfile = $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route']['gpxfile'];
-    $fieldGoedata = $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route']['geodata'];
+    $fieldGpxfile = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['gpxfile'];
+    $fieldGoedata = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['geodata'];
     
     switch( true )
     {
-      case( empty( $fieldGpxfile ) ):
+      case( empty( $fieldGpxfileXXX ) ):
       case( empty( $fieldGeodata ) ):
         $error  = 1;
         $prompt = '$GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
-                . 'but gpxfile and/or geodata isn\'t configured!';
+                . 'but gpxfile and/or geodata isn\'t configured!<br />' . PHP_EOL
+                . 'Please take care off a proper TCA configuration!'
+                ;
         $this->log( $prompt, $error );
 //        return;
     }
     
     $error  = 1;
-    $prompt = var_export( $fieldArray, true );
-    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . $prompt . '|' . var_export( $fieldArray, true );
+    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
     $this->log( $prompt, $error );
   }
 
