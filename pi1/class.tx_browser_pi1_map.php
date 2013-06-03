@@ -3396,18 +3396,18 @@ if( $this->pObj->b_drs_todo )
     
     switch( true )
     {
-      case( $intPosition === 0 ):
-          // beginning
-        $itemNumber = 0; 
+      case( $intPosition == 1 ):
+          // center
+        $itemNumber = ( int ) ( count( $arrGeodata ) / 2 ); 
         break;
       case( $intPosition == 2 ):
           // end
         $itemNumber = count( $arrGeodata ) - 1; 
         break;
-      case( $intPosition == 1 ):
+      case( $intPosition === 0 ):
       default:
-          // center
-        $itemNumber = ( int ) ( count( $arrGeodata ) / 2 ); 
+          // beginning
+        $itemNumber = 0; 
         break;
     }
     $geodata = $arrGeodata[ $itemNumber ];
