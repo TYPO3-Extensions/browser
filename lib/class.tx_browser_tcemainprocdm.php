@@ -54,8 +54,8 @@ class tx_browser_tcemainprocdm
 
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference ) 
   {
-    if( $status == 'update' && $table == 'pages' )
-    {
+//    if( $status == 'update' && $table == 'pages' )
+//    {
       $fieldArray[ 'hidden' ] = 1;
       
       $table      = $table;
@@ -112,7 +112,7 @@ class tx_browser_tcemainprocdm
 //      $error    = 1;
 //      $reference->BE_USER->simplelog( $message, $extKey, $error );
 
-    }
+//    }
   }
 
 }
