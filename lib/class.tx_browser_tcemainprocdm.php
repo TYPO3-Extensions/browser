@@ -300,6 +300,12 @@ class tx_browser_tcemainprocdm
         $requirementsMatched = false; 
         return $requirementsMatched;
         break;
+      case( empty( $fieldArray[ $fieldGpxfile ] ) ):
+        $prompt = 'OK: GPX file is removed. Nothing to do.';
+        $this->log( $prompt );    
+        $requirementsMatched = false; 
+        return $requirementsMatched;
+        break;
       case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
         $error  = 1;
