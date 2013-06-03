@@ -235,7 +235,7 @@ class tx_browser_tcemainprocdm
     $confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
     
     $uploadfolder = $confGpxfile[ 'uploadfolder' ];
-    $file = TYPO3_DOCUMENT_ROOT . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
+    $file = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' ) . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
     
     $fileExist = file_exists( $file );
     
