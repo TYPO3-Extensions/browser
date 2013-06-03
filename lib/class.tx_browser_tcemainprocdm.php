@@ -163,9 +163,6 @@ class tx_browser_tcemainprocdm
 /**
  * route( )
  *
- * @param	string		$status     : update, edit, delete, moved
- * @param	string		$table      : label of the current table
- * @param	integer		$id         : uid of the current record
  * @param	array		$fieldArray : Array of modified fields
  * @param	object		$reference  : reference to parent object
  * @return	void
@@ -184,9 +181,6 @@ class tx_browser_tcemainprocdm
 /**
  * routeGpx( )
  *
- * @param	string		$status     : update, edit, delete, moved
- * @param	string		$table      : label of the current table
- * @param	integer		$id         : uid of the current record
  * @param	array		$fieldArray : Array of modified fields
  * @param	object		$reference  : reference to parent object
  * @return	void
@@ -197,25 +191,99 @@ class tx_browser_tcemainprocdm
 
   private function routeGpx( &$fieldArray, &$reference ) 
   {
-    $fieldGpxfile = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['gpxfile'];
-    $fieldGeodata = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['geodata'];
+      // RETURN : requirements aren't matched
+    if( ! $this->routeGpxRequired( ) )
+    {
+      return;
+    }
+      // RETURN : requirements aren't matched
+
+    $arrResult = $this->routeGpxHandleData( &$fieldArray, &$reference );
+    if( $arrResult['error'] )
+    {
+      return;
+    }
+
+    return;
+    $error  = 1;
+    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+    $this->log( $prompt, $error );
+  }
+
+/**
+ * routeGpxHandleData( )
+ *
+ * @param	array		$fieldArray : Array of modified fields
+ * @param	object		$reference  : reference to parent object
+ * @return	void
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
+  private function routeGpxHandleData( &$fieldArray, &$reference ) 
+  {
+    $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ];
+    $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'geodata' ];
+
+    if (!is_array($GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ]))
+    {
+      t3lib_div::loadTCA( $this->processTable );
+    }
+    
+    $confGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGpxfile ][ 'config' ];
+    $confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
+    
+    $uploadfolder = $confGpxfile[ 'uploadfolder '];
+    $file = TYPO3_DOCUMENT_ROOT . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
+    
+    $fileExist = file_exists( $file );
+    
+    
+    
+    $error  = 1;
+    $prompt = $file . ': ' . $fileExist;
+    $this->log( $prompt, $error );
+
+    $error  = 1;
+    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+    $this->log( $prompt, $error );
+  }
+
+/**
+ * routeGpx( )
+ *
+ * @return	boolean         $requirementsMatched  : true if requierements matched, false if not.
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
+  private function routeGpxRequired( ) 
+  {
+    $requirementsMatched = true; 
+    
+    $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['gpxfile'];
+    $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['geodata'];
     
     switch( true )
     {
       case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
         $error  = 1;
-        $prompt = '$GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
+        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
                 . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
                 . 'Please take care off a proper TCA configuration!'
                 ;
         $this->log( $prompt, $error );
-        return;
+        $requirementsMatched = false; 
+        return $requirementsMatched;
     }
     
-    $error  = 1;
-    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
-    $this->log( $prompt, $error );
+    unset( $fieldGpxfile );
+    unset( $fieldGeodata );
+    
+    return $requirementsMatched;
   }
 
 }
