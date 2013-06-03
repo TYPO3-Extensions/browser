@@ -23,8 +23,16 @@
  ***************************************************************/
 
 
-require_once(PATH_t3lib.'class.t3lib_tceforms.php');
-
+/**
+* The class tx_browser_tcemainprocdm bundles methods for evaluating data in backend forms
+*
+* @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
+* @package    TYPO3
+* @subpackage  browser
+*
+* @version 4.5.7
+* @since 4.5.7
+*/
 
  /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -52,80 +60,88 @@ require_once(PATH_t3lib.'class.t3lib_tceforms.php');
 class tx_browser_tcemainprocdm 
 {
 
+
+
+  /***********************************************
+  *
+  * Hook: processDatamap_postProcessFieldArray
+  *
+  **********************************************/
+
+/**
+ * processDatamap_postProcessFieldArray( )
+ *
+ * @param	string		$status     : update, edit, delete, moved
+ * @param	string		$table      : label of the current table
+ * @param	integer		$id         : uid of the current record
+ * @param	array		$fieldArray : Array of modified fields
+ * @param	object		$reference  : reference to parent object
+ * @return	void
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference ) 
   {
-//    if( $status == 'update' && $table == 'pages' )
+//    if( ! is_array( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ] ) )
 //    {
-//      if( $fieldArray[ 'hidden' ] == 1 )
-//      {
-//        $fieldArray[ 'hidden' ] = 0;
-//      }
-//      else
-//      {
-//        $fieldArray[ 'hidden' ] = 1;
-//      }
-        // TCA eval value
-      if( ! is_array( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ] ) )
-      {
-        t3lib_div::loadTCA( $table );
-      }
-      $prompt = var_export( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'], true );
-      
-      $table      = $table;
-      $recuid     = $id;
-      $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
-      $recpid     = $id; 
-      $error      = 3;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
-      $details    = $table . ': ' . $prompt . '|' . var_export( $fieldArray, true );    
-      $details_nr = -1;
-      $data       = array( );
-      $event_pid  = $id; 
-      $NEWid      = null;
-      $reference->log( $table, $recuid, $action, $recpid, $error, $details, $details_nr, $data, $event_pid );
-
-//      $table      = $table;
-//      $recuid     = $id;
-//      $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
-//      $recpid     = $id; 
-//      $error      = 1;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
-//      $details    = 'prompt';    
-//      $details_nr = -1;
-//      $data       = array( );
-//      $event_pid  = $id; 
-//      $NEWid      = null;
-//      $reference->log( $table, $recuid, $action, $recpid, $error, $details, $details_nr, $data, $event_pid );
-
-//      $type       = 4;    // 4: Modules like an extension
-//      $action     = 0;
-//      $error      = 1;    // 0 = message, 1 = error, 2 = System Error, 3 = Security notice
-//      $details_nr = 0;
-//      $details    = 'message';
-//      $data       = array( );
-//      $table      = $table;
-//      $recuid     = $id;
-//      $recpid     = null; // obsolete
-//      $event_pid  = $id;  // page id
-//      $NEWid      = null;
-//      $reference->BE_USER->writelog
-//                          (
-//                            $type, 
-//                            $action, 
-//                            $error, 
-//                            $details_nr, 
-//                            $details, 
-//                            $data, 
-//                            $table, 
-//                            $recuid, 
-//                            $recpid,
-//                            $event_pid, 
-//                            $NEWid
-//                          );
-//      $message  = 'simplelog';
-//      $extKey   = 'tx_browser';
-//      $error    = 1;
-//      $reference->BE_USER->simplelog( $message, $extKey, $error );
-
+//      t3lib_div::loadTCA( $table );
 //    }
+
+    switch( true )
+    {
+      case( ! is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'] ) ):
+          // follow the workflow: RETURN
+        break;
+      case( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) ):
+        $this->route( $status, $table, $id, &$fieldArray, &$reference );
+          // follow other cases in this switch
+      default:
+          // follow the workflow: RETURN
+        break;
+    }
+    
+    return;
+  }
+
+
+
+  /***********************************************
+  *
+  * Route
+  *
+  **********************************************/
+
+/**
+ * route( )
+ *
+ * @param	string		$status     : update, edit, delete, moved
+ * @param	string		$table      : label of the current table
+ * @param	integer		$id         : uid of the current record
+ * @param	array		$fieldArray : Array of modified fields
+ * @param	object		$reference  : reference to parent object
+ * @return	void
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
+  private function route( $status, $table, $id, &$fieldArray, &$reference ) 
+  {
+    $prompt = var_export( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'], true );
+
+    $table      = $table;
+    $recuid     = $id;
+    $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+    $recpid     = $id; 
+    $error      = 3;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
+    $details    = $status . ': ' . $table . ': ' . $id  . ': ' . $prompt . '|' . var_export( $fieldArray, true );    
+    $details_nr = -1;
+    $data       = array( );
+    $event_pid  = $id; 
+    $NEWid      = null;
+    $reference->log( $table, $recuid, $action, $recpid, $error, $details, $details_nr, $data, $event_pid );
   }
 
 }
