@@ -210,7 +210,7 @@ class tx_browser_tcemainprocdm
                 . 'Please take care off a proper TCA configuration!'
                 ;
         $this->log( $prompt, $error );
-//        return;
+        return;
     }
     
     $error  = 1;
