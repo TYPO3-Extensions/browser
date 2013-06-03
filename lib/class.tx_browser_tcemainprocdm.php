@@ -206,7 +206,7 @@ class tx_browser_tcemainprocdm
       case( empty( $fieldGeodata ) ):
         $error  = 1;
         $prompt = '$GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
-                . 'but gpxfile and/or geodata isn\'t configured!<br />' . PHP_EOL
+                . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
                 . 'Please take care off a proper TCA configuration!'
                 ;
         $this->log( $prompt, $error );
