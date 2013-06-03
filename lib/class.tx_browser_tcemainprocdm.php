@@ -149,7 +149,7 @@ class tx_browser_tcemainprocdm
     $uid    = $this->processId;
     $pid    = null; 
     
-    $prompt = '[' . $this->prefixLog . $table . ':' . $uid . ']' . $prompt;
+    $prompt = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt;
     //    $details_nr = -1;
     //    $data       = array( );
     //    $event_pid  = null; // page id
