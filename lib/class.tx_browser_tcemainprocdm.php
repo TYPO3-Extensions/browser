@@ -69,7 +69,7 @@ class tx_browser_tcemainprocdm
       {
         t3lib_div::loadTCA( $table );
       }
-      $prompt = implode( ', ', array_keys( $GLOBALS['TCA'][$table]['columns'] ) );
+      $prompt = var_export( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'], true );
       
       $table      = $table;
       $recuid     = $id;
