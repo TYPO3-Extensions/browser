@@ -267,21 +267,28 @@ class tx_browser_tcemainprocdm
       foreach( $trackPoint->attributes( ) as $key => $value )
       {
         $arrTrackPoint[ $key ] = $value;
-        echo $key . ' = "' . $value . '"; ';
       }
       $arrTrackpoints[] = $arrTrackPoint[ 'lon' ] . ',' . $arrTrackPoint[ 'lat' ];
     }
     
-    $strGeodata = implode( PHP_EOL, $arrTrackpoints );
-    echo $strGeodata;
+    $strGeodata = implode( PHP_EOL, ( array ) $arrTrackpoints );
     
-//    $error  = 1;
-//    $prompt = $absPath . ': ' . $fileExist;
-//    $this->log( $prompt, $error );
-//
-//    $error  = 1;
-//    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
-//    $this->log( $prompt, $error );
+    if( empty( $strGeodata ) )
+    {
+      $error  = 1;
+      $prompt = 'ERROR: GPX file seems to be empty or XML structure is unproper. Data can\ imported.';
+      $this->log( $prompt, $error );
+      $error  = 1;
+      $prompt = 'INFO: Please take care off a proper XML structure: XML->trk->trkseg->trkpt->attributes[ lat || lon ]';
+      $this->log( $prompt, $error );
+      return;
+    }
+
+    $fieldArray[ $fieldGeodata ] = $strGeodata;
+
+    $error  = 1;
+    $prompt = 'OK: GPX data are updated!';
+    $this->log( $prompt, $error );
   }
 
 /**
