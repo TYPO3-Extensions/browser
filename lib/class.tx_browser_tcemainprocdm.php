@@ -60,7 +60,7 @@ class tx_browser_tcemainprocdm
       
       $table      = $table;
       $recuid     = $id;
-      $action     = 3; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+      $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
       $recpid     = $id; 
       $error      = 1;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
       $details    = 'prompt';    
@@ -103,6 +103,10 @@ class tx_browser_tcemainprocdm
     }
   }
 
+}
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_tcemainprocdm.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_tcemainprocdm.php']);
 }
 
 ?>
