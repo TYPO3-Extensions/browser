@@ -2971,7 +2971,6 @@ if( $this->pObj->b_drs_todo )
       {
         case( $key == 'lat' ):
         case( $key == 'lon' ):
-$this->pObj->dev_var_dump( $pathTableField, $elements[ $pathTableField ] );
           if( empty( $elements[ $pathTableField ] ) )
           {
             $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
@@ -3403,7 +3402,7 @@ $this->pObj->dev_var_dump( $pathTableField, $elements[ $pathTableField ] );
         break;
       case( $intPosition == 2 ):
           // end
-        $itemNumber = count( $arrGeodata ); 
+        $itemNumber = count( $arrGeodata ) - 1; 
         break;
       case( $intPosition == 1 ):
       default:
