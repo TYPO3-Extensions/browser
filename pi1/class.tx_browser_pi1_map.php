@@ -1827,11 +1827,11 @@ if( $this->pObj->b_drs_todo )
       {
         case( $lon . $lat == '' ):
             // CONTINUE: longitude and latitude are empty
-          continue 3;
+          continue 2;
           break;
         case( $dontHandle00 && $lon == 0 && $lat == 0 ):
             // CONTINUE: longitude and latitude are 0 and 0,0 shouldn't handled
-          continue 3;
+          continue 2;
           break;
       }
         // SWITCH logitude and latitude
