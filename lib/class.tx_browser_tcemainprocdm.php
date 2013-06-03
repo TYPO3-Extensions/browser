@@ -228,21 +228,40 @@ class tx_browser_tcemainprocdm
 
   private function routeGpxHandleData( &$fieldArray, &$reference ) 
   {
+      // Get field labels
     $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ];
     $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'geodata' ];
     
+      // Update TCA array of the current table
     if (!is_array($GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ]))
     {
       t3lib_div::loadTCA( $this->processTable );
     }
+      // Update TCA array of the current table
     
+      // Get field configuration
     $confGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGpxfile ][ 'config' ];
     $confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
     
+      // Get the absoulte path of the uploaded file
     $uploadfolder = $confGpxfile[ 'uploadfolder' ];
-    $file = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' ) . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
+    $absPath      = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' ) . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
     
-    $fileExist = file_exists( $file );
+      // RETURN : file is missing
+    if( ! file_exists( $absPath ) )
+    {
+      $error  = 1;
+      $prompt = 'ERROR: file is missing: ' . $absPath;
+      $this->log( $prompt, $error );    
+      return;
+    }
+      // RETURN : file is missing
+    
+      // RETURN : file is missing
+      $error  = 1;
+      $prompt = 'ERROR: file is missing: ' . $absPath;
+      $this->log( $prompt, $error );    
+      // RETURN : file is missing
     
     $error  = 1;
     $prompt = $fieldGpxfile . ': ' . var_export( $confGpxfile, true );
