@@ -205,14 +205,15 @@ class tx_browser_tcemainprocdm
       case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
         $error  = 1;
-        $prompt = '$GLOBALS[TCA][' . $table . '][ctrl][tx_browser][route] is set, '
+        $prompt = '$GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
                 . 'but gpxfile and/or geodata isn\'t configured!';
         $this->log( $prompt, $error );
 //        return;
     }
     
     $error  = 1;
-    $prompt = $status . ': ' . $table . ': ' . $id  . ': ' . $prompt . '|' . var_export( $fieldArray, true );
+    $prompt = var_export( $fieldArray, true );
+    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . $prompt . '|' . var_export( $fieldArray, true );
     $this->log( $prompt, $error );
   }
 
