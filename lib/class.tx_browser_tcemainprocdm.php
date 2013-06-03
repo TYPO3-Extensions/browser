@@ -56,7 +56,7 @@ class tx_browser_tcemainprocdm
   {
 //    if( $status == 'update' && $table == 'pages' )
 //    {
-      if( $fieldArray[ 'hidden' ] )
+      if( $fieldArray[ 'hidden' ] == 1 )
       {
         $fieldArray[ 'hidden' ] = 0;
       }
