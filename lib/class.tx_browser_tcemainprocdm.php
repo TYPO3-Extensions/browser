@@ -198,7 +198,7 @@ class tx_browser_tcemainprocdm
   private function routeGpx( &$fieldArray, &$reference ) 
   {
     $fieldGpxfile = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['gpxfile'];
-    $fieldGoedata = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['geodata'];
+    $fieldGeodata = $GLOBALS['TCA'][$this->processTable]['ctrl']['tx_browser']['route']['geodata'];
     
     switch( true )
     {
