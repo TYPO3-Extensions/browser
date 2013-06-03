@@ -58,10 +58,10 @@ class tx_browser_processDatamapClass {
  * @since     4.5.7
  * @version   4.5.7
  */
-  public function processDatamap_beforeStart( &$this )
+  public function processDatamap_beforeStart( $this )
   {
     echo var_export( $this, false );
-    exit;
+    die( __METHOD__ . ':' . __LINE__ );
   }
     // 0.2.0, 110815, dwildt +
 }
