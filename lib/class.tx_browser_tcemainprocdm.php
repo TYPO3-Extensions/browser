@@ -202,7 +202,7 @@ class tx_browser_tcemainprocdm
     
     switch( true )
     {
-      case( empty( $fieldGpxfileXXX ) ):
+      case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
         $error  = 1;
         $prompt = '$GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
