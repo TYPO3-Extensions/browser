@@ -60,6 +60,9 @@
 class tx_browser_tcemainprocdm 
 {
     // [String] status of the current process: update, edit, delete, moved
+  private $prefixLog = '[tx_browser -> route] ';
+
+    // [String] status of the current process: update, edit, delete, moved
   private $processStatus  = null;
     // [String] label of the table of the current process
   private $processTable   = null;
@@ -145,6 +148,8 @@ class tx_browser_tcemainprocdm
     $table  = $this->processTable;
     $recuid = $this->processId;
     $recpid = $this->processId; 
+    
+    $prompt = $this->prefixLog . $prompt;
     //    $details_nr = -1;
     //    $data       = array( );
     //    $event_pid  = null; // page id
