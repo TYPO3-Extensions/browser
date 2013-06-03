@@ -60,8 +60,8 @@ class tx_browser_processDatamapClass {
  */
   public function processDatamap_beforeStart( $this )
   {
-    echo var_export( $this, false );
-    die( __METHOD__ . ':' . __LINE__ );
+    $prompt = 'Test processDatamap_beforeStart';
+    t3lib_div :: devLog( '[TEST/BROWSER] ' . $prompt , $this->pObj->extKey, 3 );
   }
     // 0.2.0, 110815, dwildt +
 }
