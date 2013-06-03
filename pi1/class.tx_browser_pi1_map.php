@@ -3412,7 +3412,12 @@ if( $this->pObj->b_drs_todo )
     }
     $geodata = $arrGeodata[ $itemNumber ];
 
-$this->pObj->dev_var_dump( $arrGeodata, $itemNumber, $geodata );
+    if( empty ( $geodata ) )
+    {
+      $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                'Array geodata is empty!';
+      die( $prompt );
+    }
     
     switch( $key )
     {
