@@ -1,6 +1,6 @@
 <?php
 
-class tx_myextension_tcemainprocdm 
+class tx_browser_tcemainprocdm 
 {
 
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference ) 
