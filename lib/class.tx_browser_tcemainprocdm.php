@@ -257,15 +257,24 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : file is missing
 
-    $xml = simplexml_load_file( $absPath );
+    $gpxXml         = simplexml_load_file( $absPath );
+    $arrTrackpoint  = array( );
+    $arrTrackpoints = array( );
+    $strGeodata     = null;
 
-    foreach( $xml->trk->trkseg->trkpt as $point )
+    foreach( $gpxXml->trk->trkseg->trkpt as $trackPoint )
     {
-      foreach( $point->attributes( ) as $key => $value )
+      foreach( $trackPoint->attributes( ) as $key => $value )
       {
+        $arrTrackPoint[ $key ] = $value;
         echo $key . ' = "' . $value . '"; ';
       }
+      $arrTrackpoints[] = $arrTrackPoint[ 'lon' ] . ',' . $arrTrackPoint[ 'lat' ];
     }
+    
+    $strGeodata = implode( PHP_EOL, $arrTrackpoints );
+    echo $strGeodata;
+    
 //    $error  = 1;
 //    $prompt = $absPath . ': ' . $fileExist;
 //    $this->log( $prompt, $error );
