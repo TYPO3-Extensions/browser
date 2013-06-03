@@ -259,7 +259,13 @@ class tx_browser_tcemainprocdm
 
     $xml = simplexml_load_file( $absPath );
 
-    print_r( $xml->trk->trkseg->trkpt );
+    foreach( $xml->trk->trkseg->trkpt as $point )
+    {
+      foreach( $point->attributes( ) as $key => $value )
+      {
+        echo $key . ' = "' . $value '"; ';
+      }
+    }
 //    $error  = 1;
 //    $prompt = $absPath . ': ' . $fileExist;
 //    $this->log( $prompt, $error );
