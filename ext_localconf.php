@@ -20,8 +20,10 @@ t3lib_extMgm::addPItoST43( $_EXTKEY,'pi4/class.tx_browser_pi4.php','_pi4','list_
   // SC_OPTIONS
 
   // #33673, 120203, dwildt
-$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['getTable'][] = 'EXT:browser/lib/class.tx_browser_befilter_hooks.php:tx_browser_befilter_hooks';
-$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list.inc']['makeQueryArray'][] = 'EXT:browser/lib/class.tx_browser_befilter_sql.php:tx_browser_befilter_sql';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['getTable'][] = 'EXT:browser/lib/class.tx_browser_befilter_hooks.php:tx_browser_befilter_hooks';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list.inc']['makeQueryArray'][] = 'EXT:browser/lib/class.tx_browser_befilter_sql.php:tx_browser_befilter_sql';
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] ='EXT::browser/lib/class.tx_browser_processDatamapClass.php:processDatamap_beforeStart';
   // SC_OPTIONS
 
 ?>
