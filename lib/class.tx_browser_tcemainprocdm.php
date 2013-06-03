@@ -59,6 +59,15 @@
 
 class tx_browser_tcemainprocdm 
 {
+    // [String] status of the current process: update, edit, delete, moved
+  private $processStatus  = null;
+    // [String] label of the table of the current process
+  private $processTable   = null;
+    // [String] record uid of the current process
+  private $processId      = null;
+  
+    // [Object] parent object
+  private $pObj       = null;
 
 
 
@@ -74,8 +83,8 @@ class tx_browser_tcemainprocdm
  * @param	string		$status     : update, edit, delete, moved
  * @param	string		$table      : label of the current table
  * @param	integer		$id         : uid of the current record
- * @param	array		$fieldArray : Array of modified fields
- * @param	object		$reference  : reference to parent object
+ * @param	array		$fieldArray : modified fields - reference!
+ * @param	object		$reference  : parent object - reference!
  * @return	void
  * 
  * @version   4.5.7
@@ -84,25 +93,63 @@ class tx_browser_tcemainprocdm
 
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference ) 
   {
-//    if( ! is_array( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ] ) )
-//    {
-//      t3lib_div::loadTCA( $table );
-//    }
+      // RETURN : current table is without any tx_browser configuration
+    if( ! is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'] ) )
+    {
+      return;
+    }
+      // RETURN : current table is without any tx_browser configuration
+    
+      // Initial global variables
+    $this->processStatus  = $status;
+    $this->processTable   = $table;
+    $this->processId      = $id;
+    $this->pObj           = $reference;
 
+      
     switch( true )
     {
-      case( ! is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'] ) ):
-          // follow the workflow: RETURN
-        break;
       case( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) ):
-        $this->route( $status, $table, $id, &$fieldArray, &$reference );
-          // follow other cases in this switch
+        $this->route( &$fieldArray, &$reference );
+          // follow cases below
       default:
-          // follow the workflow: RETURN
+          // follow the workflow
         break;
     }
     
     return;
+  }
+
+
+
+  /***********************************************
+  *
+  * Log
+  *
+  **********************************************/
+
+/**
+ * log( )
+ *
+ * @param	string		$prompt : prompt
+ * @param	integer		$error  : 0 = message, 1 = error, 2 = System Error, 3 = security notice 
+ * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+ * @return	void
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
+  private function log( $prompt, $error=0, $action=2 ) 
+  {
+    $table  = $this->processTable;
+    $recuid = $this->processId;
+    $recpid = $$this->processId; 
+    //    $details_nr = -1;
+    //    $data       = array( );
+    //    $event_pid  = null; // page id
+    //    $NEWid      = null;
+    $this->pObj->log( $table, $recuid, $action, $recpid, $error, $prompt );
   }
 
 
@@ -127,21 +174,46 @@ class tx_browser_tcemainprocdm
  * @since     4.5.7
  */
 
-  private function route( $status, $table, $id, &$fieldArray, &$reference ) 
+  private function route( &$fieldArray, &$reference ) 
   {
-    $prompt = var_export( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'], true );
+    $this->routeGpx( &$fieldArray, &$reference );
 
-    $table      = $table;
-    $recuid     = $id;
-    $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
-    $recpid     = $id; 
-    $error      = 3;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
-    $details    = $status . ': ' . $table . ': ' . $id  . ': ' . $prompt . '|' . var_export( $fieldArray, true );    
-    $details_nr = -1;
-    $data       = array( );
-    $event_pid  = $id; 
-    $NEWid      = null;
-    $reference->log( $table, $recuid, $action, $recpid, $error, $details, $details_nr, $data, $event_pid );
+    return;
+  }
+
+/**
+ * routeGpx( )
+ *
+ * @param	string		$status     : update, edit, delete, moved
+ * @param	string		$table      : label of the current table
+ * @param	integer		$id         : uid of the current record
+ * @param	array		$fieldArray : Array of modified fields
+ * @param	object		$reference  : reference to parent object
+ * @return	void
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
+  private function routeGpx( &$fieldArray, &$reference ) 
+  {
+    $fieldGpxfile = $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route']['gpxfile'];
+    $fieldGoedata = $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route']['geodata'];
+    
+    switch( true )
+    {
+      case( empty( $fieldGpxfile ) ):
+      case( empty( $fieldGeodata ) ):
+        $error  = 1;
+        $prompt = '$GLOBALS[TCA][' . $table . '][ctrl][tx_browser][route] is set, '
+                . 'but gpxfile and/or geodata isn\'t configured!';
+        $this->log( $prompt, $error );
+//        return;
+    }
+    
+    $error  = 1;
+    $prompt = $status . ': ' . $table . ': ' . $id  . ': ' . $prompt . '|' . var_export( $fieldArray, true );
+    $this->log( $prompt, $error );
   }
 
 }
