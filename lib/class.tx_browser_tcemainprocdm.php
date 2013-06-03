@@ -225,6 +225,14 @@ class tx_browser_tcemainprocdm
   {
     $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ];
     $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'geodata' ];
+    
+    if( isset( $fieldArray[ $fieldGpxfile ] ) )
+    {
+      $error  = 1;
+      $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
+      $this->log( $prompt, $error );    
+      return;
+    }
 
     if (!is_array($GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ]))
     {
