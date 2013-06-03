@@ -224,7 +224,7 @@ plugin.tx_browser_pi1 {
 
   # cat=BrowserMaps - Database Path//201;             type=string;    label= table.field with the path title: Example: tx_route_path.title
   map.path.table.path.title = 
-  # cat=BrowserMaps - Database Path//202;             type=string;    label= table.field with the geodata: Example: tx_route_path.gpxdata
+  # cat=BrowserMaps - Database Path//202;             type=string;    label= table.field with the geodata: Example: tx_route_path.geodata
   map.path.table.path.geodata = 
   # cat=BrowserMaps - Database Path//203;             type=string;    label= table.field with the path color: Example: tx_route_path.color
   map.path.table.path.color = 
