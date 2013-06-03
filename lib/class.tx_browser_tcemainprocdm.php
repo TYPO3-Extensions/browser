@@ -144,7 +144,7 @@ class tx_browser_tcemainprocdm
   {
     $table  = $this->processTable;
     $recuid = $this->processId;
-    $recpid = $$this->processId; 
+    $recpid = $this->processId; 
     //    $details_nr = -1;
     //    $data       = array( );
     //    $event_pid  = null; // page id
