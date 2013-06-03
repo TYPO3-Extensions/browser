@@ -63,7 +63,7 @@ class tx_browser_tcemainprocdm
       $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
       $recpid     = $id; 
       $error      = 0;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
-      $details    = var_export( $fieldArray );    
+      $details    = var_export( $fieldArray, true );    
       $details_nr = -1;
       $data       = array( );
       $event_pid  = $id; 
