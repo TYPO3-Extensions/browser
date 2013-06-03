@@ -234,13 +234,13 @@ class tx_browser_tcemainprocdm
     $confGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGpxfile ][ 'config' ];
     $confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
     
-    $uploadfolder = $confGpxfile[ 'uploadfolder '];
+    $uploadfolder = $confGpxfile[ 'uploadfolder' ];
     $file = TYPO3_DOCUMENT_ROOT . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
     
     $fileExist = file_exists( $file );
     
     $error  = 1;
-    $prompt = $fieldGpxfile . ': ' . var_export( $confGpxfile, false );
+    $prompt = $fieldGpxfile . ': ' . var_export( $confGpxfile, true );
     $this->log( $prompt, $error );    
     
     $error  = 1;
