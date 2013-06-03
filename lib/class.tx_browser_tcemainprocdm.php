@@ -62,6 +62,18 @@ class tx_browser_tcemainprocdm
       $recuid     = $id;
       $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
       $recpid     = $id; 
+      $error      = 0;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
+      $details    = var_export( $fieldArray );    
+      $details_nr = -1;
+      $data       = array( );
+      $event_pid  = $id; 
+      $NEWid      = null;
+      $reference->log( $table, $recuid, $action, $recpid, $error, $details, $details_nr, $data, $event_pid );
+
+      $table      = $table;
+      $recuid     = $id;
+      $action     = 5; // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+      $recpid     = $id; 
       $error      = 1;  // 0 = message, 1 = error, 2 = System Error, 3 = security notice 
       $details    = 'prompt';    
       $details_nr = -1;
