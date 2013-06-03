@@ -192,7 +192,7 @@ class tx_browser_tcemainprocdm
   private function routeGpx( &$fieldArray, &$reference ) 
   {
       // RETURN : requirements aren't matched
-    if( ! $this->routeGpxRequired( ) )
+    if( ! $this->routeGpxRequired( $fieldArray ) )
     {
       return;
     }
@@ -261,7 +261,7 @@ class tx_browser_tcemainprocdm
  * @since     4.5.7
  */
 
-  private function routeGpxRequired( ) 
+  private function routeGpxRequired( $fieldArray ) 
   {
     $requirementsMatched = true; 
     
