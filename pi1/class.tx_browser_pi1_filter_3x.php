@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 3.9.12
+* @version 4.5.7
 * @since 3.0.1
 */
 
@@ -879,12 +879,13 @@ class tx_browser_pi1_filter_3x {
 
 
 
-  /**
+/**
  * andWhere_filter: Generate the andWhere statement, if it is needed.
  *                  Init area.
  *
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
- * @version 3.6.0
+ * @version 4.5.7
+ * @since   2.0.0
  */
   function andWhere_filter()
   {
@@ -947,6 +948,13 @@ class tx_browser_pi1_filter_3x {
       unset ($arr_result);
         // Process nice_piVar
 
+        // #48859, 130528, dwildt: make SQL query safe, 4+
+      foreach( ( array ) $arr_piVar as $key => $value )
+      {
+        $arr_piVar[$key] = ( int ) $value;
+      }
+        // #48859, 130528, dwildt: make SQL query safe, 4+
+        
         // Current piVar isn't set
       $bool_handleCurrPiVar = true;
       if (count($arr_piVar) < 1)
@@ -999,6 +1007,12 @@ class tx_browser_pi1_filter_3x {
           }
           // dwildt, 101223
           //$str_andWhere .= " AND " . $lTable . ".uid IN (" . $str_uidList . ")\n";
+          // #48859, 130528, dwildt: make SQL query safe, 4+
+          foreach( ( array ) $arr_piVar as $key => $value )
+          {
+            $arr_piVar[$key] = ( int ) $value;
+          }
+            // #48859, 130528, dwildt: make SQL query safe, 4+
           $str_andWhere = $lTable . ".uid IN (" . $str_uidList . ")\n";
         }
           // SQL manual mode
@@ -1167,7 +1181,7 @@ class tx_browser_pi1_filter_3x {
  * @param	string		$tableField   Current table.field
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @internal              #30912: Filter: count items with no relation to category:
- * @version 3.9.6
+ * @version 4.5.7
  * @since   3.6.0
  */
   function andWhere_foreignTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
@@ -1175,6 +1189,12 @@ class tx_browser_pi1_filter_3x {
     list ($table, $field) = explode('.', $tableField);
     $str_andWhere = null;
 
+      // #48859, 130528, dwildt: make SQL query safe, 4+
+    foreach( ( array ) $arr_piVar as $key => $value )
+    {
+      $arr_piVar[$key] = ( int ) $value;
+    }
+      // #48859, 130528, dwildt: make SQL query safe, 4+
 
 
       /////////////////////////////////////////////////////////////////

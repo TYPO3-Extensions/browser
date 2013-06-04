@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.4.7
+ * @version      4.5.7
  * @since        3.9.9
  */
 
@@ -570,7 +570,7 @@ class tx_browser_pi1_filter_4x {
  * @param	string		$tableField   Current table.field
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @internal              #30912: Filter: count items with no relation to category:
- * @version 4.1.21
+ * @version 4.5.7
  * @since   3.6.0
  */
   private function init_andWhereFilter_foreignTable( $arr_piVar, $tableField )
@@ -588,6 +588,12 @@ class tx_browser_pi1_filter_4x {
         break;
       default:
           // Handle default filter (without area)
+          // #48859, 130528, dwildt: make SQL query safe, 4+
+        foreach( ( array ) $arr_piVar as $key => $value )
+        {
+          $arr_piVar[$key] = ( int ) $value;
+        }
+          // #48859, 130528, dwildt: make SQL query safe, 4+
         $str_uidList  = implode( ', ', ( array ) $arr_piVar );
 //$this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
         $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
@@ -1147,13 +1153,20 @@ class tx_browser_pi1_filter_4x {
  * @param	[type]		$tableField: ...
  * @param	[type]		$conf_view: ...
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
- * @version 4.1.21
+ * @version 4.5.7
  * @since   4.1.21
  */
   private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
   {
     list( $table ) = explode( '.', $tableField );
 
+      // #48859, 130528, dwildt: make SQL query safe, 4+
+    foreach( ( array ) $arr_piVar as $key => $value )
+    {
+      $arr_piVar[$key] = ( int ) $value;
+    }
+      // #48859, 130528, dwildt: make SQL query safe, 4+
+      
       // List of record uids
     $csvUids = implode( ', ', $arr_piVar );
 
@@ -3140,7 +3153,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resSysLanguageRows: Get the SQL ressource for localised rows
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
- * @version 3.9.9
+ * @version 4.5.7
  * @since   3.9.9
  */
   private function sql_resSysLanguageRows( )
@@ -3159,6 +3172,12 @@ class tx_browser_pi1_filter_4x {
 
       // Get ids
     $uids_arr = array_keys( $this->rows );
+      // #48859, 130528, dwildt: make SQL query safe, 4+
+    foreach( ( array ) $uids_arr as $key => $value )
+    {
+      $uids_arr[$key] = ( int ) $value;
+    }
+      // #48859, 130528, dwildt: make SQL query safe, 4+
     $uids_csv = implode( ',', $uids_arr );
 
       // transOrigPointerField

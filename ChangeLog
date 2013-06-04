@@ -1,5 +1,11 @@
 4.5.7
-  13-05-29
+  13-06-05
+  SECURITY FIX!
+  * #48859: Security fix
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_filter_3x.php
+              * class.tx_browser_pi1_filter_4x.php
   Feature
   * #47631: Route Interface oxMap
             Marker
@@ -94,7 +100,6 @@
   * #47089: Filter can cause an unproper value in $arrConsolidate['addedTableFields']
 
 4.5.5
-  13-04-09
   Bugfixes
   * #i0006: * array_multisort() : invalid arguments passed in line 989
             * array_diff()      : invalid arguments passed in line 192
