@@ -861,7 +861,7 @@ var_dump( __METHOD__, __LINE__, $absPath );
                             );
   // 130605, dwildt
 var_dump( __METHOD__, __LINE__, $key );
-var_dump( __METHOD__, __LINE__, $key, var_export( $splitConf[$key]['itemRendering.'], true ) );
+var_dump( __METHOD__, __LINE__, var_export( $splitConf[$key]['itemRendering.'], true ) );
 var_dump( __METHOD__, __LINE__, var_export( $coa_conf_itemRendering, true ) );
 var_dump( __METHOD__, __LINE__, var_export( $str_outputEntry, true ) );
 
