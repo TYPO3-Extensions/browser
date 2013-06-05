@@ -137,20 +137,20 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //    // #44858, 130130, dwildt, 1+ 
 //  $this->cObjDataAddFieldsWoTablePrefix( );
     $this->cObjDataSet( );
-$pos = strpos( '87.177.72.26 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-if ( ! ( $pos === false ) )
-{
-  echo '<pre>';
-//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
-//  var_dump( __METHOD__, __LINE__, $this->cObj->data );
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi1 );
-  echo '</pre>' . PHP_EOL;
-}
- #i0008
-var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->register );
- #i0002
-var_dump( __METHOD__, __LINE__, $this->cObj->data );
+//s$pos = strpos( '87.177.72.26 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+//if ( ! ( $pos === false ) )
+//{
+//  echo '<pre>';
+////  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+////  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
+////  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi1 );
+//  echo '</pre>' . PHP_EOL;
+//}
+// #i0008
+//var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->register );
+// #i0002
+//var_dump( __METHOD__, __LINE__, $this->cObj->data );
 
       //////////////////////////////////////////////////////////////////////////
       //
