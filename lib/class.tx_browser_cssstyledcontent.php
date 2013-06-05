@@ -701,7 +701,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       foreach($fileArray as $key => $fileName)
       {
         $absPath = t3lib_div::getFileAbsFileName( $path . $fileName );
-var_dump( __METHOD__, __LINE__, $absPath );
+//var_dump( __METHOD__, __LINE__, $absPath );
 
           // DRS
         if ( $this->b_drs_error )
