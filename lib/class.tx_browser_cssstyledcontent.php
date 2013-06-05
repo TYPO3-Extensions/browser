@@ -833,13 +833,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                               $coa_name,
                               $coa_conf_itemRendering
                             );
-var_dump( __METHOD__, 
-          __LINE__, 
-          $key, 
-          var_export( $splitConf[$key]['itemRendering.'], true ), 
-          var_export( $coa_conf_itemRendering, true ) ,
-          var_export( $str_outputEntry, true ) 
-        );
+  // 130605, dwildt
+//var_dump( __METHOD__, 
+//          __LINE__, 
+//          $key, 
+//          var_export( $splitConf[$key]['itemRendering.'], true ), 
+//          var_export( $coa_conf_itemRendering, true ) ,
+//          var_export( $str_outputEntry, true ) 
+//        );
 
           // Error management
           // 120215, dwildt+
