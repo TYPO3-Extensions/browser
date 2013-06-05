@@ -546,7 +546,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
     }
       // 130207, +
-var_dump( __METHOD__, __LINE__, $field, $thumbTableField, $thumbPath, $thumbList );
+//var_dump( __METHOD__, __LINE__, $field, $thumbTableField, $thumbPath, $thumbList );
     
       // get table and field
       // #44858, 130207, dwildt, 11+
@@ -860,13 +860,13 @@ var_dump( __METHOD__, __LINE__, $absPath );
                               $coa_conf_itemRendering
                             );
   // 130605, dwildt
-//var_dump( __METHOD__, 
-//          __LINE__, 
-//          $key, 
-//          var_export( $splitConf[$key]['itemRendering.'], true ), 
-//          var_export( $coa_conf_itemRendering, true ) ,
-//          var_export( $str_outputEntry, true ) 
-//        );
+var_dump( __METHOD__, 
+          __LINE__, 
+          $key, 
+          var_export( $splitConf[$key]['itemRendering.'], true ), 
+          var_export( $coa_conf_itemRendering, true ) ,
+          var_export( $str_outputEntry, true ) 
+        );
 
           // Error management
           // 120215, dwildt+
