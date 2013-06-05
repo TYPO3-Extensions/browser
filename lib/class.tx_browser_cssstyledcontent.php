@@ -488,35 +488,35 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     else
     {
       $table = $this->table;
-        // #48871, 130605, dwildt, 6-
-        //$field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
-        //list( $tableInTca, $fieldInTca ) = explode( '.', $field );
-        //if( empty ( $fieldInTca ) )
-        //{
-        //  $fieldInTca = $tableInTca;
-        //}
-        // #48871, 130605, dwildt, 6-
-        // #48871, 130605, dwildt, 17+
-      $cObj_name  = $conf['field'];
-      $cObj_conf  = $conf['field.'];
-      $field      = $this->helper_cObjGetSingle( $cObj_name, $cObj_conf );
-      switch( true )
-      {
-        case( empty( $field ) ):
-          $field      = 'media';
-          $fieldInTca = 'media';
-          break;
-        case( ! empty( $field ) ):
-        default:
-          list( $tableInTca, $fieldInTca ) = explode( '.', $field );
-          if( empty ( $fieldInTca ) )
-          {
-            $fieldInTca = $tableInTca;
-          }
-          break;
-      }
-var_dump( __METHOD__, __LINE__, $field, $tableInTca, $fieldInTca, $this->cObj->data[ $field ] );
-        // #48871, 130605, dwildt, 17+
+        #48871, 130605, dwildt, 6-
+        $field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
+        list( $tableInTca, $fieldInTca ) = explode( '.', $field );
+        if( empty ( $fieldInTca ) )
+        {
+          $fieldInTca = $tableInTca;
+        }
+        #48871, 130605, dwildt, 6-
+//        // #48871, 130605, dwildt, 17+
+//      $cObj_name  = $conf['field'];
+//      $cObj_conf  = $conf['field.'];
+//      $field      = $this->helper_cObjGetSingle( $cObj_name, $cObj_conf );
+//      switch( true )
+//      {
+//        case( empty( $field ) ):
+//          $field      = 'media';
+//          $fieldInTca = 'media';
+//          break;
+//        case( ! empty( $field ) ):
+//        default:
+//          list( $tableInTca, $fieldInTca ) = explode( '.', $field );
+//          if( empty ( $fieldInTca ) )
+//          {
+//            $fieldInTca = $tableInTca;
+//          }
+//          break;
+//      }
+//var_dump( __METHOD__, __LINE__, $field, $tableInTca, $fieldInTca, $this->cObj->data[ $field ] );
+//        // #48871, 130605, dwildt, 17+
     }
     
       // 130207, +
