@@ -644,7 +644,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
     }
       // 130207, dwildt, +
-var_dump( __METHOD__, __LINE__, $fileList, $path );
+//var_dump( __METHOD__, __LINE__, $fileList, $path );
 
       // explode into an array
     $fileArray = t3lib_div::trimExplode( ',', $fileList, 1 );
@@ -860,13 +860,10 @@ var_dump( __METHOD__, __LINE__, $absPath );
                               $coa_conf_itemRendering
                             );
   // 130605, dwildt
-var_dump( __METHOD__, 
-          __LINE__, 
-          $key, 
-          var_export( $splitConf[$key]['itemRendering.'], true ), 
-          var_export( $coa_conf_itemRendering, true ) ,
-          var_export( $str_outputEntry, true ) 
-        );
+var_dump( __METHOD__, __LINE__, $key );
+var_dump( __METHOD__, __LINE__, $key, var_export( $splitConf[$key]['itemRendering.'], true ) );
+var_dump( __METHOD__, __LINE__, var_export( $coa_conf_itemRendering, true ) );
+var_dump( __METHOD__, __LINE__, var_export( $str_outputEntry, true ) );
 
           // Error management
           // 120215, dwildt+
