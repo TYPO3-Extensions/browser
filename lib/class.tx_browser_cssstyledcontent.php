@@ -701,6 +701,7 @@ var_dump( __METHOD__, __LINE__, $fileList, $path );
       foreach($fileArray as $key => $fileName)
       {
         $absPath = t3lib_div::getFileAbsFileName( $path . $fileName );
+var_dump( __METHOD__, __LINE__, $absPath );
 
           // DRS
         if ( $this->b_drs_error )
