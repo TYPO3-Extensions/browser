@@ -546,7 +546,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
     }
       // 130207, +
-var_dump( __METHOD__, __LINE__, $field, $thumbTableField );
+var_dump( __METHOD__, __LINE__, $field, $thumbTableField, $thumbPath );
     
       // get table and field
       // #44858, 130207, dwildt, 11+
