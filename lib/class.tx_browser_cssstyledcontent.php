@@ -489,12 +489,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $table = $this->table;
         // #48871, 130605, dwildt, 6-
-      //$field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
-      //list( $tableInTca, $fieldInTca ) = explode( '.', $field );
-      //if( empty ( $fieldInTca ) )
-      //{
-      //  $fieldInTca = $tableInTca;
-      //}
+$field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
+list( $tableInTca, $fieldInTca ) = explode( '.', $field );
+if( empty ( $fieldInTca ) )
+{
+  $fieldInTca = $tableInTca;
+}
+var_dump( __METHOD__, __LINE__, $tableInTca, $fieldInTca );
         // #48871, 130605, dwildt, 6-
         // #48871, 130605, dwildt, 17+
       $cObj_name = $conf['field'];
@@ -514,7 +515,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           }
           break;
       }
-var_dump( __METHOD__, __LINE__, $tableFieldInTca, $fieldInTca );
+var_dump( __METHOD__, __LINE__, $tableInTca, $fieldInTca );
         // #48871, 130605, dwildt, 17+
     }
     
