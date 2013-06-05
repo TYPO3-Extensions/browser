@@ -515,7 +515,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           }
           break;
       }
-var_dump( __METHOD__, __LINE__, $tableInTca, $fieldInTca );
+var_dump( __METHOD__, __LINE__, $field, $tableInTca, $fieldInTca );
         // #48871, 130605, dwildt, 17+
     }
     
