@@ -488,12 +488,33 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     else
     {
       $table = $this->table;
-      $field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
-      list( $tableInTca, $fieldInTca ) = explode( '.', $field );
-      if( empty ( $fieldInTca ) )
+        // #48871, 130605, dwildt, 6-
+      //$field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
+      //list( $tableInTca, $fieldInTca ) = explode( '.', $field );
+      //if( empty ( $fieldInTca ) )
+      //{
+      //  $fieldInTca = $tableInTca;
+      //}
+        // #48871, 130605, dwildt, 6-
+        // #48871, 130605, dwildt, 17+
+      $cObj_name = $conf['field'];
+      $cObj_conf = $conf['field.'];
+      $tableFieldInTca = $this->helper_cObjGetSingle( $cObj_name, $cObj_conf );
+      switch( true )
       {
-        $fieldInTca = $tableInTca;
+        case( empty( $tableFieldInTca ) ):
+          $fieldInTca = 'media';
+          break;
+        case( ! empty( $tableFieldInTca ) ):
+        default:
+          list( $tableInTca, $fieldInTca ) = explode( '.', $tableFieldInTca );
+          if( empty ( $fieldInTca ) )
+          {
+            $fieldInTca = $tableInTca;
+          }
+          break;
       }
+        // #48871, 130605, dwildt, 17+
     }
     
       // 130207, +
