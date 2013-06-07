@@ -1,5 +1,5 @@
 4.5.7
-  13-06-05
+  13-06-07
   SECURITY FIX!
   * #48859: Security fix
             Effected files:
@@ -26,8 +26,11 @@
                 * constants.txt
                 * setup.txt
   Bugfix
-  * #48871: Form Download and Ordering
-            Effected files:
+  * #i0008: 3x->get_queryArray .> 3x->get_query_array
+            Effected files
+            * pi1
+              * class.tx_browser_pi1_views.php
+              * class.tx_browser_pi1_viewlist_3x.php
 
 4.5.6
   13-05-28

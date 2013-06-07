@@ -251,7 +251,7 @@ class tx_browser_pi1_views
     {
         // Process the query building automatically
         // dwildt, 130508, 1-
-//      $arr_result = $this->pObj->objSqlAut_3x->get_queryArray();
+//      $arr_result = $this->pObj->objSqlAut_3x->get_query_array();
         // dwildt, 130508, 1+
       $arr_result = $this->pObj->objSqlAut_3x->get_query_array();
     }
