@@ -2664,7 +2664,7 @@ if( $this->pObj->b_drs_todo )
       // Get marker and marker_cat values of the given row
     foreach( $this->pObj->rows as $row )
     {
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
       if( $row[ $tablePathUid ] != $pathUid )
       {
         continue;
@@ -2708,7 +2708,7 @@ $this->pObj->dev_var_dump( $row );
                     'pathCat' => $arrPathCat,
                     'marker'  => $arrMarker
                   );
-$this->pObj->dev_var_dump( $arrReturn );
+//$this->pObj->dev_var_dump( $arrReturn );
     
     return $arrReturn;
   }
@@ -3788,7 +3788,7 @@ $this->pObj->dev_var_dump( $arrReturn );
     }
       // LOOP path marker
 
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
