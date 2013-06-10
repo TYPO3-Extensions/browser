@@ -414,37 +414,52 @@ class tx_browser_pi1_viewlist
 
 
 
-  /**
+/**
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
  * @return    void
- * @version 3.9.8
+ * @version 4.5.7
  * @since 1.0.0
  */
   private function init( )
   {
+    $this->init_generalStdWrap( );
+    $this->init_lDisplayList( );
+    $this->init_lDisplay( );
+    $this->init_localisation( );
+  }
+
+/**
+ * init_generalStdWrap( ) :
+ *
+ * @return    void
+ * @version 4.5.7
+ * @since 1.0.0
+ */
+  private function init_generalStdWrap( )
+  {
+    if( ! is_array( $this->conf_view['general_stdWrap.'] ) )
+    {
+      return;
+    }
+
       // Overwrite global general_stdWrap
       // #12471, 110123, dwildt+
-    if( is_array( $this->conf_view['general_stdWrap.'] ) )
-    {
-      $this->pObj->conf['general_stdWrap.'] = $this->conf_view['general_stdWrap.'];
-      $this->conf['general_stdWrap.']       = $this->pObj->conf['general_stdWrap.'];
-    }
+    $this->pObj->conf['general_stdWrap.'] = $this->conf_view['general_stdWrap.'];
+    $this->conf['general_stdWrap.']       = $this->pObj->conf['general_stdWrap.'];
       // Overwrite global general_stdWrap
 
-      // Get the local or global displayList
-    if( is_array( $this->conf_view['displayList.'] ) )
-    {
-      $this->pObj->lDisplayList = $this->conf_view['displayList.'];
-    }
-    if( ! is_array( $this->conf_view['displayList.'] ) )
-    {
-      $this->pObj->lDisplayList = $this->conf['displayList.'];
-    }
-      // Get the local or global displayList
+  }
 
-
-
+/**
+ * init_lDisplay( ): 
+ *
+ * @return    void
+ * @version 4.5.7
+ * @since 1.0.0
+ */
+  private function init_lDisplay( )
+  {
       // Get the local or global displayList.display
     if( is_array( $this->conf_view['displayList.']['display.'] ) )
     {
@@ -455,6 +470,78 @@ class tx_browser_pi1_viewlist
       $this->pObj->lDisplay = $this->conf['displayList.']['display.'];
     }
       // Get the local or global displayList.display
+  }
+
+/**
+ * init_lDisplayList( ): 
+ *
+ * @return    void
+ * @version 4.5.7
+ * @since 1.0.0
+ */
+  private function init_lDisplayList( )
+  {
+      // Get the local or global displayList
+    if( is_array( $this->conf_view['displayList.'] ) )
+    {
+      $this->pObj->lDisplayList = $this->conf_view['displayList.'];
+    }
+    if( ! is_array( $this->conf_view['displayList.'] ) )
+    {
+      $this->pObj->lDisplayList = $this->conf['displayList.'];
+    }
+      // Get the local or global displayList
+  }
+
+/**
+ * init_localisation( ) :
+ *
+ * @return    void
+ * @internal  #46062
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function init_localisation( )
+  {
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields);
+    
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add localisation fields
+
+    //$arr_addedTableFields = array( );
+      // Loop through all used tables
+    foreach( array_keys( $this->pObj->arr_realTables_arrFields ) as $table )
+    {
+      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+        // Get the and SELECT statement with aliases
+      if( $arr_result['wiAlias'] )
+      {
+        $arr_localSelect[] = $arr_result['wiAlias'];
+      }
+        // Get all added table.fields
+      if( is_array( $arr_result['addedFields'] ) )
+      {
+        $arr_addedTableFields = array_merge
+                                (
+                                  ( array ) $arr_addedTableFields,
+                                  $arr_result['addedFields']
+                                );
+      }
+    }
+    unset( $arr_result );
+      // Loop through all used tables
+
+      // Build the SELECT statement
+    $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
+    if( $str_localSelect )
+    {
+      $select = $select . ', ' . $str_localSelect;
+    }
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised, $str_localSelect );
+      // Build the SELECT statement
+      // Add localisation fields
   }
 
 

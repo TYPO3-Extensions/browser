@@ -2830,6 +2830,7 @@ class tx_browser_pi1_sql_auto
  */
   public function init_localisation( )
   {
+    return;
 $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields);
     
       ////////////////////////////////////////////////////////////////////
