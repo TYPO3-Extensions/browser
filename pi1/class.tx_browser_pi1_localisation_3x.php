@@ -1022,7 +1022,7 @@ class tx_browser_pi1_localisation_3x
 
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
     $rows2 = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $rows );
-$this->pObj->dev_var_dump( $rows2 );
+$this->pObj->dev_var_dump( $rows, $rows2 );
     // Do we have localised records?
     if( is_array( $arrUidsLocalisedDefault ) )
     {
@@ -1565,7 +1565,7 @@ $this->pObj->dev_var_dump( $rows );
       if( $this->pObj->b_drs_localisation )
       {
         $prompt = 'Any field hasn\'t the l10n_mode exlude or mergeIfNotBlank.';
-        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
         $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
