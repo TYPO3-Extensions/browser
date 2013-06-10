@@ -1005,7 +1005,10 @@ class tx_browser_pi1_localisation_3x
       // Just for development
     $this->zzDevPromptRows( $promptForDev, $rows );
 
-    // 2. Fetch all language default records
+    $arr_localise = $this->consolidate_rows02getUids( $rows, $table );
+$this->pObj->dev_var_dump( $arr_localise );
+
+      // 2. Fetch all language default records
     $int_count = 0;
 //var_dump('localisation 934', $rows);
     foreach ($rows as $row => $elements)
@@ -1551,6 +1554,52 @@ $this->pObj->dev_var_dump( $arr_localise );
     return false;
   }
 
+/**
+ * consolidate_rows02getUids( )  : 
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$arr_localise
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  private function consolidate_rows02getUids( $rows, $table )
+  {
+    $arrReturn = array( );
+    
+    $tableUid     = $table . '.uid';
+      // I.e: l18n_parent
+    $langPidField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
+    $langField    = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
+
+    foreach( $rows as $key => $row )
+    {
+      $int_languagePid  = $row[ $table . '.' . $langPidField ];
+      $int_sys_language = $row[ $table . '.' . $langField    ];
+      $recordUid        = $row[ $tableUid ];
+      
+      switch( true )
+      {
+        case( $int_sys_language > 0 ):
+        default:
+          $arrReturn[ 'localised' ][ $tableUid ][ $recordUid ][ $langPidField ]     = $int_languagePid;
+          $arrReturn[ 'localised' ][ $tableUid ][ $recordUid ][ 'keys_in_rows' ][ ] = $key;
+          break;
+        case( $int_sys_language <= 0 ):
+        default:
+          $arrReturn[ 'default' ][ $tableUid ][ $recordUid ][ 'keys_in_rows' ][ ] = $key;
+          break;          
+      }
+      
+      unset( $int_sys_language );
+    }
+    // 2. Fetch all language default records
+$this->pObj->dev_var_dump( $arrReturn );
+
+    return $arrReturn;
+  }
+  
 /**
  * consolidate_rowsNoRow( )  : Returns true, if there isn't any row
  *
