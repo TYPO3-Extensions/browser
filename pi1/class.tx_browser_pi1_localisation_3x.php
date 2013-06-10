@@ -973,7 +973,7 @@ class tx_browser_pi1_localisation_3x
   public function consolidate_rows( $rows, $table )
   {
       // For development only, IP must allowed in the extension manager!
-    $promptForDev = true; 
+    $promptForDev = false; 
 
       // RETURN : there is no row
     if( $this->consolidate_rowsNoRow( $rows ) )
@@ -1016,7 +1016,7 @@ class tx_browser_pi1_localisation_3x
     unset( $arrResult );
       // 2. Get uids of records with default language and localised records
 
-//$this->pObj->dev_var_dump( $arr_default, $arr_localise );
+$this->pObj->dev_var_dump( $rows );
 
 
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
@@ -1110,6 +1110,7 @@ class tx_browser_pi1_localisation_3x
     }
     // We have localised records
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+$this->pObj->dev_var_dump( $rows );
 
 
     // 4. In case of a non localised table: Copy values from default to current language record
