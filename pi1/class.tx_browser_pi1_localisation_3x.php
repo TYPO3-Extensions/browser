@@ -959,89 +959,51 @@ class tx_browser_pi1_localisation_3x
 
 
 
-  /**
- * Consolidate the SQL-Result: The non current language records will be deleted.
- * Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
+/**
+ * consolidate_rows( )  : Consolidate the SQL-Result: The non current language records will be deleted.
+ *                        Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
  *
- * @param	array		$rows: SQL result rows
- * @param	string		$table: The current table name
- * @return	array		$rows: Consolidated rows
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
  */
-  function consolidate_rows($rows, $table)
+  public function consolidate_rows( $rows, $table )
   {
+      // For development only, IP must allowed in the extension manager!
+    $promptForDev = false; 
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Return, if we don't have an array or we have an empty array
-
-    if (!is_array($rows))
+      // RETURN : there is no row
+    if( $this->consolidate_rowsNoRow( $rows ) )
     {
-      if ($this->pObj->b_drs_localisation)
-      {
-        t3lib_div::devlog('[WARN/LOCALISATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[INFO/LOCALISATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
-      }
-      return false;
-    }
-    if (count($rows) < 1)
-    {
-      if ($this->pObj->b_drs_localisation)
-      {
-        t3lib_div::devlog('[WARN/LOCALISATION] Rows are #0. Is it ok?', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[INFO/LOCALISATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
-      }
       return $rows;
     }
-    // Return, if we don't have an array or we have an empty array
+      // RETURN : there is no row
 
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Consolidation Steps
+      // 1. If language should not replaced RETURN
+      // 2. Fetch all language default records
+      // 3. Process l10n_mode in case of exclude or mergeIfNotBlank
+      // 4. In case of a non localised table: Copy values from default to current language record
+      // 5. Remove the default records from $rows, if they have a translation.
+      // 6. Set the default language record uid
+      // 7. Language Overlay
+      // 8. Return $rows
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Consolidation Steps
-    // 1. If language should not replaced RETURN
-    // 2. Fetch all language default records
-    // 3. Process l10n_mode in case of exclude or mergeIfNotBlank
-    // 4. In case of a non localised table: Copy values from default to current language record
-    // 5. Remove the default records from $rows, if they have a translation.
-    // 6. Set the default language record uid
-    // 7. Language Overlay
-    // 8. Return $rows
-
-    // 1. If language should not replaced RETURN
-//var_dump($this->int_localisation_mode);  //:todo:
-//    if ($this->int_localisation_mode === false)
-//    {
-      $this->int_localisation_mode = $this->localisationConfig();
-      if ($this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE)
-      {
-        if ($this->pObj->b_drs_localisation)
-        {
-          t3lib_div::devlog('[INFO/LOCALISATION] Records in default language should ignored in every case.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[INFO/LOCALISATION] We don\'t need any consolidation.', $this->pObj->extKey, 0);
-        }
-        return $rows;
-      }
-//    }
-    // 1. If language should not replaced RETURN
-
-    // Just for development
-    if (false)
+      // RETURN : current language is the default
+    if( $this->consolidate_rows01NoLocalisation( ) )
     {
-      $int_count    = 0;
-      $int_max_rows = 10;
-      $rows_prompt  = $rows;
-      foreach ($rows as $row => $elements)
-      {
-        if($int_count >= $int_max_rows)
-        {
-          unset($rows_prompt[$row]);
-        }
-        $int_count++;
-      }
-      var_dump($rows_prompt);
+      return $rows;
     }
-    // Just for development
+      // RETURN : current language is the default
+
+
+      // Just for development
+    $this->zzDevPromptRows( $promptForDev, $rows );
 
     // 2. Fetch all language default records
     $int_count = 0;
@@ -1557,30 +1519,77 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
 
       // Just for development
-    if( true )
-    //if( false )
-    {
-      $int_count    = 0;
-      $int_max_rows = 10;
-      $rows_prompt  = $rows;
-      foreach ($rows as $row => $elements)
-      {
-        if($int_count >= $int_max_rows)
-        {
-          unset($rows_prompt[$row]);
-        }
-        $int_count++;
-      }
-        // #46062, 130610, dwildt, 1+
-      $this->pObj->dev_var_dump( $rows_prompt );
-    }
-      // Just for development
+    $this->zzDevPromptRows( $promptForDev, $rows );
 
     // 8. Return $rows
     return $rows;
   }
 
+/**
+ * consolidate_rows01NoLocalisation( )  : Returns true, if current language is the default language
+ *
+ * @return	boolean
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows01NoLocalisation( )
+  {
+    $this->int_localisation_mode = $this->localisationConfig( );
+    
+    if( $this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Records in default language should ignored in every case.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'We don\'t need any localisation consolidation.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+    
+    return false;
+  }
 
+/**
+ * consolidate_rowsNoRow( )  : Returns true, if there isn't any row
+ *
+ * @param	array	$rows   : SQL result rows
+ * @return	boolean         : Returns true, if there isn't any row
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rowsNoRow( $rows )
+  {
+
+    if( ! is_array( $rows ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Rows aren\'t an array. Is it ok?';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Without any row we don\'t need any consolidation.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+    
+    if( count( $rows ) < 1 )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Rows are #0. Is it ok?';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Without any row we don\'t need any consolidation.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+    
+    return false;
+  }
 
 
 
@@ -2454,6 +2463,38 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       // RETURN the localised uid
   }
 
+/**
+ * zzDevPromptRows( )  : Just for development
+ *
+ * @param	array	$rows     : SQL result rows
+ * @param	string	$maxRows  : number of rows for prompting
+ * @return	void
+ * @internal    #46062
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function zzDevPromptRows( $promptForDev, $rows, $maxRows=10 )
+  {
+    if( ! $promptForDev )
+    {
+      return;
+    }
+
+    $rows_prompt  = array( );
+    $int_count    = 0;
+    foreach( $rows as $key => $row )
+    {
+      if( $int_count >= $maxRows )
+      {
+        break;
+      }
+      $rows_prompt[ $key ] = $row;
+      $int_count++;
+    }
+
+    $this->pObj->dev_var_dump( $rows_prompt );
+  }
 
 
 
