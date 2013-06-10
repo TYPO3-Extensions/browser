@@ -985,8 +985,8 @@ class tx_browser_pi1_localisation_3x
       ////////////////////////////////////////////////////////////////////////////////
       //
       // Consolidation Steps
-      // 1. If language should not replaced RETURN
-      // 2. Fetch all language default records
+      // 1. RETURN : current language is the default
+      // 2. Get uids of records with default language and localised records
       // 3. Process l10n_mode in case of exclude or mergeIfNotBlank
       // 4. In case of a non localised table: Copy values from default to current language record
       // 5. Remove the default records from $rows, if they have a translation.
@@ -994,76 +994,34 @@ class tx_browser_pi1_localisation_3x
       // 7. Language Overlay
       // 8. Return $rows
 
-      // RETURN : current language is the default
+      // 1. RETURN : current language is the default
     if( $this->consolidate_rows01NoLocalisation( ) )
     {
       return $rows;
     }
-      // RETURN : current language is the default
+      // 1. RETURN : current language is the default
 
+
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Just for development
     $this->zzDevPromptRows( $promptForDev, $rows );
 
+      // 2. Get uids of records with default language and localised records
     $arrResult    = $this->consolidate_rows02getUids( $rows, $table );
     $arr_default  = $arrResult[ 'default'   ];
     $arr_localise = $arrResult[ 'localised' ];
     unset( $arrResult );
-//$this->pObj->dev_var_dump( $arr_localise );
+      // 2. Get uids of records with default language and localised records
 
-//      // 2. Fetch all language default records
-//    $int_count = 0;
-////var_dump('localisation 934', $rows);
-//    foreach ($rows as $row => $elements)
-//    {
-//      $langPidField         = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-//      $int_languagePid      = $elements[$table.'.'.$langPidField];
-//      $langField            = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-//      $int_sys_language     = $elements[$table.'.'.$langField];
-//      if ($int_sys_language <= 0)
-//      {
-////        $arr_default[$table][$elements[$table.'.uid']][] = $row;
-//        $arr_default[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][] = $row;
-//      }
-//      if ($int_sys_language > 0)
-//      {
-//        $arr_localise[$table.'.uid'][$elements[$table.'.uid']][$langPidField]     = $int_languagePid;
-//        $arr_localise[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][]  = $row;
-//      }
-//      $int_count++;
-//    }
-//    // 2. Fetch all language default records
-$this->pObj->dev_var_dump( $arr_default, $arr_localise );
-
-
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] All records in default language are fetched: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
+//$this->pObj->dev_var_dump( $arr_default, $arr_localise );
 
 
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-    $bool_l10n_mode = false;
     // Do we have localised records?
     if(is_array($arr_localise))
-    {
-      $bool_l10n_mode = true;
-    }
-
-    // We have localised records
-    if ($bool_l10n_mode)
     {
       reset($rows);
 //var_dump('localisation 966', $rows);
@@ -1152,24 +1110,6 @@ $this->pObj->dev_var_dump( $arr_default, $arr_localise );
     }
     // We have localised records
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-
-
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After l10n_mode: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
 
 
     // 4. In case of a non localised table: Copy values from default to current language record
@@ -1317,24 +1257,6 @@ $this->pObj->dev_var_dump( $arr_default, $arr_localise );
     // 4. In case of a non localised table: Copy values from default to current language record
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After non localised tables: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
-
-
     // 5. Remove the default records from $rows, if they have a translation.
     if(is_array($arr_default))
     {
@@ -1357,24 +1279,6 @@ $this->pObj->dev_var_dump( $arr_default, $arr_localise );
       }
     }
     // 5. Remove the default records from $rows, if they have a translation.
-
-
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After removing waste records: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
 
 
     // 6. Set the default language record uid
@@ -1505,28 +1409,12 @@ $this->pObj->dev_var_dump( $arr_default, $arr_localise );
     // 7. Language Overlay
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After language overlay: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
-
-
       // Just for development
     $this->zzDevPromptRows( $promptForDev, $rows );
 
-    // 8. Return $rows
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+
+      // 8. Return $rows
     return $rows;
   }
 
