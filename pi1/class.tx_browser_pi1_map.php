@@ -301,7 +301,7 @@ class tx_browser_pi1_map
       // Get categories from the rows
     $categoryLabels = array( );
 
-$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion, $fieldForLabel, $fieldForIcon, $this->arrCategories, $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion, $fieldForLabel, $fieldForIcon, $this->pObj->rows );
 if( $this->pObj->b_drs_todo )
 {
   $prompt = 'TODO: Localisation of the map form labels.';
@@ -658,6 +658,7 @@ if( $this->pObj->b_drs_todo )
  */
   public function get_map( $template )
   {
+$this->pObj->dev_var_dump( $this->pObj->rows );
     $this->rowsBackup( );
     
       // init the map
