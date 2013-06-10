@@ -3784,7 +3784,7 @@ if( $this->pObj->b_drs_todo )
     foreach( $arrPathCat as $pathCatUid => $pathCatTitleTable )
     {
       $catTitle   = $pathCatTitleTable . '_' . $pathCatUid;
-//      $marker[ ]  = $catTitle; 
+      $marker[ ]  = $catTitle; 
     }
       // LOOP path marker
 
