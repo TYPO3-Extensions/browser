@@ -1486,8 +1486,7 @@ $this->pObj->dev_var_dump( $rows );
       
       unset( $int_sys_language );
     }
-    // 2. Fetch all language default records
-$this->pObj->dev_var_dump( $arrReturn );
+//$this->pObj->dev_var_dump( $arrReturn );
 
     return $arrReturn;
   }
