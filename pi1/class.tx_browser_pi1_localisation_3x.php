@@ -1431,6 +1431,8 @@ class tx_browser_pi1_localisation_3x
 
     // 7. Language Overlay
     // Do we have lang_ol fields?
+// #46062, 130610, dwildt, 1+
+$this->pObj->dev_var_dump( $this->pObj->rows );
     $arr_lang_ol        = false;
     $conf_tca           = $this->conf_localisation['TCA.'];
     $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
