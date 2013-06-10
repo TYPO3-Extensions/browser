@@ -319,6 +319,48 @@ class tx_browser_pi1_sql_auto
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
       // Add table.uid
     $csvSelect = $this->zz_addUidsToSelect( $csvSelect );
+
+    
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add localisation fields
+
+    //$arr_addedTableFields = array( );
+      // Loop through all used tables
+    foreach( array_keys( $this->pObj->arr_realTables_arrFields ) as $table )
+    {
+      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+        // Get the and SELECT statement with aliases
+      if( $arr_result['wiAlias'] )
+      {
+        $arr_localSelect[] = $arr_result['wiAlias'];
+      }
+        // Get all added table.fields
+      if( is_array( $arr_result['addedFields'] ) )
+      {
+        $arr_addedTableFields = array_merge
+                                (
+                                  ( array ) $arr_addedTableFields,
+                                  $arr_result['addedFields']
+                                );
+      }
+    }
+    unset( $arr_result );
+      // Loop through all used tables
+
+      // Build the SELECT statement
+    $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
+    if( $str_localSelect )
+    {
+      $select = $select . ', ' . $str_localSelect;
+    }
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised, $str_localSelect );
+      // Build the SELECT statement
+      // Add localisation fields
+    
+    
+    
+    
       // Add aliases
     $csvSelect = $this->zz_addAliases( $csvSelect );
 
