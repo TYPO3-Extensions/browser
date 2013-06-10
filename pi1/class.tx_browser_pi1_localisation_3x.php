@@ -1021,99 +1021,99 @@ class tx_browser_pi1_localisation_3x
 
 
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-    $rows2 = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $arrUidsLocalisedDefault, $rows );
-$this->pObj->dev_var_dump( $rows, $rows2 );
-    // Do we have localised records?
-    if( is_array( $arrUidsLocalisedDefault ) )
-    {
-      reset($rows);
-//var_dump('localisation 966', $rows);
-      $firstKey = key($rows);
-      $int_count = 0;
-      // Loop through the first row for getting the tableFields
-      foreach ($rows[$firstKey] as $tableField => $value)
-      {
-        $bool_count = false;
-        list($tableL10n, $field) = explode('.', $tableField);
-        // Get exclude mode
-        if ($GLOBALS['TCA'][$tableL10n]['columns'][$field]['l10n_mode'] == 'exclude')
-        {
-          $arr_l10n_mode[$int_count][$tableField] = 'exclude';
-          $bool_count = true;
-        }
-        // Get exclude mode
-        // Get mergeIfNotBlank mode
-        if ($GLOBALS['TCA'][$tableL10n]['columns'][$field]['l10n_mode'] == 'mergeIfNotBlank')
-        {
-          $arr_l10n_mode[$int_count][$tableField] = 'mergeIfNotBlank';
-          $bool_count = true;
-        }
-        // Get mergeIfNotBlank mode
-        if ($bool_count)
-        {
-          $int_count++;
-        }
-      }
-      // Loop through the first row for getting the tableFields
-
-      // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
-      if (is_array($arr_l10n_mode))
-      {
-        // Loop through the array with localisation information
-//var_dump('localisation 998', $arrUidsLocalisedDefault);
-        foreach ($arrUidsLocalisedDefault as $tableFieldLUid => $arr_uid)
-        {
-          list($tableLoc, $fieldLoc) = explode('.', $tableFieldLUid);                   // tx_wine_main.uid
-          $langPidField = $GLOBALS['TCA'][$tableLoc]['ctrl']['transOrigPointerField'];  // I.e: l18n_parent
-
-          // Loop through the records with localisation information
-          foreach((array) $arr_uid as $uid_localise => $rec_localise)
-          {
-//var_dump('localisation 1008', $uid_localise, $rec_localise);
-            $uid_default        = $rec_localise[$langPidField];
-            $arr_keysInRowsLoc  = $rec_localise['keys_in_rows'];
-            $key_in_rowsDef     = $arrUidsKeyDefault[$tableFieldLUid][$uid_default]['keys_in_rows'][0];
-
-            // Loop through all rows with localised records
-            foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
-            {
-              // Loop through the array with the l10n_mode fields
-              foreach ($arr_l10n_mode as $key => $arr_tableFieldMode)
-              {
-                $tableField     = key($arr_tableFieldMode);
-                $str_l10n_mode  = $arr_tableFieldMode[$tableField];
-//var_dump('localisation 1021', $str_l10n_mode.': $rows['.$key_in_rowsLoc.']['.$tableField.'] = $rows['.$key_in_rowsDef.']['.$tableField.']', $rows[$key_in_rowsDef][$tableField]);
-                // Allocates to the field of the localised row the value from the field out of the default row
-                if ($str_l10n_mode == 'exclude')
-                {
-                  $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
-//                  if ($this->pObj->b_drs_localisation)
-//                  {
-//                    t3lib_div::devlog('[INFO/LOCALISATION] Exclude', $this->pObj->extKey, 0);
-//                  }
-                }
-                // Allocates to the field of the localised row the value from the field out of the default row, if localised field is empty
-                if ($str_l10n_mode == 'mergeIfNotBlank')
-                {
-                  if ($rows[$key_in_rowsLoc][$tableField] == false)
-                  {
-                    $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
-                  }
-                }
-              }
-              // Loop through the array with the l10n_mode fields
-            }
-            // Loop through all rows with localised records
-          }
-          // Loop through the records with localisation information
-        }
-        // Loop through the array with localisation information
-      }
-      // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
-    }
-    // We have localised records
-    // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+    $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $arrUidsLocalisedDefault, $rows );
 $this->pObj->dev_var_dump( $rows );
+//    // Do we have localised records?
+//    if( is_array( $arrUidsLocalisedDefault ) )
+//    {
+//      reset($rows);
+////var_dump('localisation 966', $rows);
+//      $firstKey = key($rows);
+//      $int_count = 0;
+//      // Loop through the first row for getting the tableFields
+//      foreach ($rows[$firstKey] as $tableField => $value)
+//      {
+//        $bool_count = false;
+//        list($tableL10n, $field) = explode('.', $tableField);
+//        // Get exclude mode
+//        if ($GLOBALS['TCA'][$tableL10n]['columns'][$field]['l10n_mode'] == 'exclude')
+//        {
+//          $arr_l10n_mode[$int_count][$tableField] = 'exclude';
+//          $bool_count = true;
+//        }
+//        // Get exclude mode
+//        // Get mergeIfNotBlank mode
+//        if ($GLOBALS['TCA'][$tableL10n]['columns'][$field]['l10n_mode'] == 'mergeIfNotBlank')
+//        {
+//          $arr_l10n_mode[$int_count][$tableField] = 'mergeIfNotBlank';
+//          $bool_count = true;
+//        }
+//        // Get mergeIfNotBlank mode
+//        if ($bool_count)
+//        {
+//          $int_count++;
+//        }
+//      }
+//      // Loop through the first row for getting the tableFields
+//
+//      // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
+//      if (is_array($arr_l10n_mode))
+//      {
+//        // Loop through the array with localisation information
+////var_dump('localisation 998', $arrUidsLocalisedDefault);
+//        foreach ($arrUidsLocalisedDefault as $tableFieldLUid => $arr_uid)
+//        {
+//          list($tableLoc, $fieldLoc) = explode('.', $tableFieldLUid);                   // tx_wine_main.uid
+//          $langPidField = $GLOBALS['TCA'][$tableLoc]['ctrl']['transOrigPointerField'];  // I.e: l18n_parent
+//
+//          // Loop through the records with localisation information
+//          foreach((array) $arr_uid as $uid_localise => $rec_localise)
+//          {
+////var_dump('localisation 1008', $uid_localise, $rec_localise);
+//            $uid_default        = $rec_localise[$langPidField];
+//            $arr_keysInRowsLoc  = $rec_localise['keys_in_rows'];
+//            $key_in_rowsDef     = $arrUidsKeyDefault[$tableFieldLUid][$uid_default]['keys_in_rows'][0];
+//
+//            // Loop through all rows with localised records
+//            foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
+//            {
+//              // Loop through the array with the l10n_mode fields
+//              foreach ($arr_l10n_mode as $key => $arr_tableFieldMode)
+//              {
+//                $tableField     = key($arr_tableFieldMode);
+//                $str_l10n_mode  = $arr_tableFieldMode[$tableField];
+////var_dump('localisation 1021', $str_l10n_mode.': $rows['.$key_in_rowsLoc.']['.$tableField.'] = $rows['.$key_in_rowsDef.']['.$tableField.']', $rows[$key_in_rowsDef][$tableField]);
+//                // Allocates to the field of the localised row the value from the field out of the default row
+//                if ($str_l10n_mode == 'exclude')
+//                {
+//                  $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
+////                  if ($this->pObj->b_drs_localisation)
+////                  {
+////                    t3lib_div::devlog('[INFO/LOCALISATION] Exclude', $this->pObj->extKey, 0);
+////                  }
+//                }
+//                // Allocates to the field of the localised row the value from the field out of the default row, if localised field is empty
+//                if ($str_l10n_mode == 'mergeIfNotBlank')
+//                {
+//                  if ($rows[$key_in_rowsLoc][$tableField] == false)
+//                  {
+//                    $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
+//                  }
+//                }
+//              }
+//              // Loop through the array with the l10n_mode fields
+//            }
+//            // Loop through all rows with localised records
+//          }
+//          // Loop through the records with localisation information
+//        }
+//        // Loop through the array with localisation information
+//      }
+//      // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
+//    }
+//    // We have localised records
+//    // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+//$this->pObj->dev_var_dump( $rows );
 
 
     // 4. In case of a non localised table: Copy values from default to current language record
@@ -1545,13 +1545,6 @@ $this->pObj->dev_var_dump( $rows );
           break;
         default:
             // Do nothing;
-          if( $this->pObj->b_drs_localisation )
-          {
-            $prompt = 'l10n_mode of ' . $tableField . ' is neither exclude nor mergeIfNotBlank. This is strange.';
-            t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-            $prompt = $tableField . ' won\'t handled for localisation consolidation.';
-            t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-          }
           break;
       }
       
@@ -1584,7 +1577,6 @@ $this->pObj->dev_var_dump( $rows );
         // Loop through the records with localisation information
       foreach( ( array ) $arr_uid as $rec_localise )
       {
-//var_dump('localisation 1008', $uid_localise, $rec_localise);
         $uid_default        = $rec_localise[ $langPidField ];
         $arr_keysInRowsLoc  = $rec_localise[ 'keys_in_rows' ];
         $key_in_rowsDef     = $arrUidsKeyDefault[ $tableFieldLUid ][ $uid_default ][ 'keys_in_rows' ][ 0 ];
@@ -1597,28 +1589,31 @@ $this->pObj->dev_var_dump( $rows );
           {
             $tableField     = key( $arr_tableFieldMode );
             $str_l10n_mode  = $arr_tableFieldMode[ $tableField ];
-//var_dump('localisation 1021', $str_l10n_mode.': $rows['.$key_in_rowsLoc.']['.$tableField.'] = $rows['.$key_in_rowsDef.']['.$tableField.']', $rows[$key_in_rowsDef][$tableField]);
-            // Allocates to the field of the localised row the value from the field out of the default row
-            if ($str_l10n_mode == 'exclude')
+
+            switch( true )
             {
-              $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
-            }
-            // Allocates to the field of the localised row the value from the field out of the default row, if localised field is empty
-            if( $str_l10n_mode == 'mergeIfNotBlank' )
-            {
-              if( $rows[ $key_in_rowsLoc ][ $tableField ] == false )
-              {
+              case( $str_l10n_mode == 'exclude' ):
                 $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
-              }
+                break;
+              case( $str_l10n_mode == 'mergeIfNotBlank' ):
+                if( $rows[ $key_in_rowsLoc ][ $tableField ] == false )
+                {
+                  $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
+                }
+                break;
+              default:
+                  // Do nothing;
+                break;
+              
             }
           }
-          // Loop through the array with the l10n_mode fields
+            // Loop through the array with the l10n_mode fields
         }
-        // Loop through all rows with localised records
+          // Loop through all rows with localised records
       }
-      // Loop through the records with localisation information
+        // Loop through the records with localisation information
     }
-    // Loop through the array with localisation information
+      // Loop through the array with localisation information
     
     return $rows;
   }
