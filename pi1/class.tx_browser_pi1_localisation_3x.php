@@ -1013,7 +1013,7 @@ class tx_browser_pi1_localisation_3x
     $arrResult                = $this->consolidate_rows02getUids( $rows, $table );
     $arrUidsKeyDefault        = $arrResult[ 'default'   ];
     $arrUidsLocalisedDefault  = $arrResult[ 'localised' ];
-$this->pObj->dev_var_dump( $arrResult, $rows );
+//$this->pObj->dev_var_dump( $arrResult, $rows );
     unset( $arrResult );
       // 2. Get uids of records with default language and localised records
 
@@ -1021,7 +1021,8 @@ $this->pObj->dev_var_dump( $arrResult, $rows );
 
 
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-//    $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $rows );
+    $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $rows );
+$this->pObj->dev_var_dump( $rows );
     // Do we have localised records?
     if( is_array( $arrUidsLocalisedDefault ) )
     {
@@ -1544,6 +1545,13 @@ $this->pObj->dev_var_dump( $rows );
           break;
         default:
             // Do nothing;
+          if( $this->pObj->b_drs_localisation )
+          {
+            $prompt = 'l10n_mode of ' . $tableField . ' is neither exclude nor mergeIfNotBlank.';
+            t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+            $prompt = $tableField . ' won\'t handled for localisation consolidation.';
+            t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+          }
           break;
       }
       
@@ -1556,7 +1564,7 @@ $this->pObj->dev_var_dump( $rows );
     {
       if( $this->pObj->b_drs_localisation )
       {
-        $prompt = 'Any field has the l10n_mode exlude or mergeIfNotBlank.';
+        $prompt = 'Any field hasn\'t the l10n_mode exlude or mergeIfNotBlank.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
