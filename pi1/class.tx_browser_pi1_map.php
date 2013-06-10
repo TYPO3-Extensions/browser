@@ -2694,7 +2694,7 @@ if( $this->pObj->b_drs_todo )
     
     foreach( $arrPathCatUid as $key => $uid )
     {
-      $arrPathCat[ $uid ] = $arrPathCatTitle[ $key ] . ':' . $tableMarker;
+      $arrPathCat[ $uid ] = $arrPathCatTitle[ $key ] . ':' . $tablePathCat;
     }
     
     foreach( $arrMarkerUid as $key => $uid )
