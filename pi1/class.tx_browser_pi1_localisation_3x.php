@@ -1021,8 +1021,8 @@ class tx_browser_pi1_localisation_3x
 
 
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-    $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $rows );
-$this->pObj->dev_var_dump( $rows );
+    $rows2 = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $rows );
+$this->pObj->dev_var_dump( $rows2 );
     // Do we have localised records?
     if( is_array( $arrUidsLocalisedDefault ) )
     {
