@@ -1006,7 +1006,7 @@ class tx_browser_pi1_localisation_3x
     $this->zzDevPromptRows( $promptForDev, $rows );
 
     $arr_localise = $this->consolidate_rows02getUids( $rows, $table );
-$this->pObj->dev_var_dump( $arr_localise );
+//$this->pObj->dev_var_dump( $arr_localise );
 
       // 2. Fetch all language default records
     $int_count = 0;
@@ -1030,7 +1030,7 @@ $this->pObj->dev_var_dump( $arr_localise );
       $int_count++;
     }
     // 2. Fetch all language default records
-$this->pObj->dev_var_dump( $arr_localise );
+$this->pObj->dev_var_dump( $arr_default, $arr_localise );
 
 
     ////////////////////////////////////////////////////////////////////////
