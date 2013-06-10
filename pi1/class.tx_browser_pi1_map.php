@@ -2774,7 +2774,7 @@ if( $this->pObj->b_drs_todo )
 /**
  * renderMapRouteMarker( ):
  *
- * @return	array
+ * @return	array     $marker : Marker array
  * @version 4.5.7
  * @since   4.5.7
  * 
@@ -3745,7 +3745,7 @@ if( $this->pObj->b_drs_todo )
     $arrResult  = $this->renderMapRouteArrCatAndMarker( $pathUid );
     $arrCat     = $arrResult['cat'];
     $arrMarker  = $arrResult['marker'];
-//$this->pObj->dev_var_dump( $arrResult );
+$this->pObj->dev_var_dump( $arrResult );
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
       // Get the array with categories and marker
@@ -3890,7 +3890,7 @@ if( $this->pObj->b_drs_todo )
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteRelations( 'MARKER' );
-//    $this->pObj->dev_var_dump( $relations );
+$this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
