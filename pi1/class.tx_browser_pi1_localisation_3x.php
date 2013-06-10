@@ -1010,18 +1010,20 @@ class tx_browser_pi1_localisation_3x
     $this->zzDevPromptRows( $promptForDev, $rows );
 
       // 2. Get uids of records with default language and localised records
-    $arrResult    = $this->consolidate_rows02getUids( $rows, $table );
-    $arrUidsKeyDefault  = $arrResult[ 'default'   ];
-    $arrUidsLocalisedDefault = $arrResult[ 'localised' ];
+    $arrResult                = $this->consolidate_rows02getUids( $rows, $table );
+    $arrUidsKeyDefault        = $arrResult[ 'default'   ];
+    $arrUidsLocalisedDefault  = $arrResult[ 'localised' ];
+$this->pObj->dev_var_dump( $arrResult, $rows );
     unset( $arrResult );
       // 2. Get uids of records with default language and localised records
 
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
 
 
-    // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+      // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+//    $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $rows );
     // Do we have localised records?
-    if(is_array($arrUidsLocalisedDefault))
+    if( is_array( $arrUidsLocalisedDefault ) )
     {
       reset($rows);
 //var_dump('localisation 966', $rows);
@@ -1489,6 +1491,128 @@ $this->pObj->dev_var_dump( $rows );
 //$this->pObj->dev_var_dump( $arrReturn );
 
     return $arrReturn;
+  }
+
+/**
+ * consolidate_rows03HandleExcludeAndMergeifnotblank( )  : 
+ *
+ * @param       array   $arrUidsLocalisedDefault : 
+ * @param	array	$rows   : SQL result rows
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows03HandleExcludeAndMergeifnotblank( $arrUidsLocalisedDefault, $rows )
+  {
+      // RETURN : no localised records
+    if( ! is_array( $arrUidsLocalisedDefault ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'There isn\'t any öocalised record.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return $rows;
+    }
+      // RETURN : no localised records
+    
+      // Set variables
+    reset( $rows );
+    $arr_l10n_mode  = array( );
+    $firstKey       = key( $rows );
+    $int_count      = 0;
+      // Set variables
+
+      // Loop through the first row for getting the l10n_mode of each field
+    foreach( array_keys( $rows[ $firstKey ] ) as $tableField )
+    {
+      list( $tableL10n, $field ) = explode( '.', $tableField );
+      $l10n_mode  = $GLOBALS[ 'TCA' ][ $tableL10n ][ 'columns' ][ $field ][ 'l10n_mode' ];
+        
+      switch( true )
+      {
+        case( $l10n_mode == 'exclude' ):
+          $arr_l10n_mode[ $int_count ][ $tableField ] = 'exclude';
+          $int_count++;
+          break;
+        case( $l10n_mode == 'mergeIfNotBlank' ):
+          $arr_l10n_mode[ $int_count ][ $tableField ] = 'mergeIfNotBlank';
+          $int_count++;
+          break;
+        default:
+            // Do nothing;
+          break;
+      }
+      
+      unset( $l10n_mode );
+    }
+      // Loop through the first row for getting the l10n_mode for each field
+
+      // RETURN : any record hasn't any exclude or mergeIfNotBlank property
+    if( empty( $arr_l10n_mode ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Any field has the l10n_mode exlude or mergeIfNotBlank.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return $rows;
+    }
+      // RETURN : any record hasn't any exclude or mergeIfNotBlank property
+
+      // Loop through the array with localisation information
+    foreach( $arrUidsLocalisedDefault as $tableFieldLUid => $arr_uid )
+    {
+        // I.e: $tableFieldLUid = 'tx_wine_main.uid'
+      list( $tableLoc ) = explode( '.', $tableFieldLUid );
+        // I.e: $langPidField = 'l18n_parent'
+      $langPidField     = $GLOBALS[ 'TCA' ][ $tableLoc ][ 'ctrl' ][ 'transOrigPointerField' ];
+
+        // Loop through the records with localisation information
+      foreach( ( array ) $arr_uid as $rec_localise )
+      {
+//var_dump('localisation 1008', $uid_localise, $rec_localise);
+        $uid_default        = $rec_localise[ $langPidField ];
+        $arr_keysInRowsLoc  = $rec_localise[ 'keys_in_rows' ];
+        $key_in_rowsDef     = $arrUidsKeyDefault[ $tableFieldLUid ][ $uid_default ][ 'keys_in_rows' ][ 0 ];
+
+          // Loop through all rows with localised records
+        foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
+        {
+            // Loop through the array with the l10n_mode fields
+          foreach( $arr_l10n_mode as $arr_tableFieldMode )
+          {
+            $tableField     = key( $arr_tableFieldMode );
+            $str_l10n_mode  = $arr_tableFieldMode[ $tableField ];
+//var_dump('localisation 1021', $str_l10n_mode.': $rows['.$key_in_rowsLoc.']['.$tableField.'] = $rows['.$key_in_rowsDef.']['.$tableField.']', $rows[$key_in_rowsDef][$tableField]);
+            // Allocates to the field of the localised row the value from the field out of the default row
+            if ($str_l10n_mode == 'exclude')
+            {
+              $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
+            }
+            // Allocates to the field of the localised row the value from the field out of the default row, if localised field is empty
+            if( $str_l10n_mode == 'mergeIfNotBlank' )
+            {
+              if( $rows[ $key_in_rowsLoc ][ $tableField ] == false )
+              {
+                $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
+              }
+            }
+          }
+          // Loop through the array with the l10n_mode fields
+        }
+        // Loop through all rows with localised records
+      }
+      // Loop through the records with localisation information
+    }
+    // Loop through the array with localisation information
+    
+    return $rows;
   }
   
 /**
