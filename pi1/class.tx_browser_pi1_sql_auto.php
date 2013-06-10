@@ -181,9 +181,6 @@ class tx_browser_pi1_sql_auto
   {
     $arr_return = array( );
 
-      // #46062, 130611, dwildt, 1+
-    $this->init_localisation( );
-
       // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter( );
 
@@ -2817,58 +2814,6 @@ class tx_browser_pi1_sql_auto
     $arrFilter  = array_keys( ( array ) $this->conf_view['filter.'] );
     $csvFilter  = implode( ', ', ( array ) $arrFilter );
     $this->init_class_statementTables( 'filter', $csvFilter );
-  }
-
-/**
- * init_localisation( ): 
- *
- * @return    void
- * @internal #46062 
- * 
- * @version 4.5.7
- * @since   4.5.7
- */
-  public function init_localisation( )
-  {
-    return;
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields);
-    
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Add localisation fields
-
-    //$arr_addedTableFields = array( );
-      // Loop through all used tables
-    foreach( array_keys( $this->pObj->arr_realTables_arrFields ) as $table )
-    {
-      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-        // Get the and SELECT statement with aliases
-      if( $arr_result['wiAlias'] )
-      {
-        $arr_localSelect[] = $arr_result['wiAlias'];
-      }
-        // Get all added table.fields
-      if( is_array( $arr_result['addedFields'] ) )
-      {
-        $arr_addedTableFields = array_merge
-                                (
-                                  ( array ) $arr_addedTableFields,
-                                  $arr_result['addedFields']
-                                );
-      }
-    }
-    unset( $arr_result );
-      // Loop through all used tables
-
-      // Build the SELECT statement
-    $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
-    if( $str_localSelect )
-    {
-      $select = $select . ', ' . $str_localSelect;
-    }
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised, $str_localSelect );
-      // Build the SELECT statement
-      // Add localisation fields
   }
 
 

@@ -504,42 +504,56 @@ class tx_browser_pi1_viewlist
  */
   private function init_localisation( )
   {
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields);
-    
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Add localisation fields
+      // SWITCH $int_localisation_mode
+    switch( $this->pObj->objLocalise->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+          // RETURN : nothing to do
+        return;
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // Follow the workflow
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
 
-    //$arr_addedTableFields = array( );
       // Loop through all used tables
     foreach( array_keys( $this->pObj->arr_realTables_arrFields ) as $table )
     {
-      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-        // Get the and SELECT statement with aliases
-      if( $arr_result['wiAlias'] )
+        // Get the field names for sys_language_content and for l10n_parent
+      $languageField          = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
+      $transOrigPointerField  = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
+      
+      switch( true )
       {
-        $arr_localSelect[] = $arr_result['wiAlias'];
-      }
-        // Get all added table.fields
-      if( is_array( $arr_result['addedFields'] ) )
-      {
-        $arr_addedTableFields = array_merge
-                                (
-                                  ( array ) $arr_addedTableFields,
-                                  $arr_result['addedFields']
-                                );
+        case( empty( $languageField         ) ):
+        case( empty( $transOrigPointerField ) ):
+          $this->pObj->arr_realTables_notLocalised[ ] = $table;
+          if ($this->pObj->b_drs_localisation)
+          {
+            t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localised.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/LOCALISATION] Localisation isn\'t needed.', $this->pObj->extKey, 0);
+          }
+          break;
+        default:
+          $this->pObj->arr_realTables_localised[ ] = $table;
+          if ($this->pObj->b_drs_localisation)
+          {
+            t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localised.', $this->pObj->extKey, 0);
+          }
+          break;
       }
     }
-    unset( $arr_result );
       // Loop through all used tables
 
-      // Build the SELECT statement
-    $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
-    if( $str_localSelect )
-    {
-      $select = $select . ', ' . $str_localSelect;
-    }
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised, $str_localSelect );
+      $this->pObj->arr_realTables_localised     = array_unique( $this->pObj->arr_realTables_localised );
+      $this->pObj->arr_realTables_notLocalised  = array_unique( $this->pObj->arr_realTables_notLocalised );
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised );
       // Build the SELECT statement
       // Add localisation fields
   }
