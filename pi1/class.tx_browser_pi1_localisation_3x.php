@@ -1533,21 +1533,31 @@ class tx_browser_pi1_localisation_3x
   {
     $arr_lang_ol = array( );
 
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_notLocalised, $this->pObj->arr_realTables_notLocalised );
-    if( is_array( $this->pObj->arr_realTables_notLocalised ) )
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised );
+      
+      // RETURN : All tables are localised
+    if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
-
-      reset( $rows );
-      $firstKey = key( $rows );
-
-        // Check first row for lang_ol fields
-      foreach( array_keys ( $rows[ $firstKey ] ) as $tableField_ol )
+      if( $this->pObj->b_drs_localisation )
       {
-        list( $table_ol ) = explode('.', $tableField_ol);
-        if( in_array( $table_ol, $this->pObj->arr_realTables_notLocalised ) )
-        {
-          $arr_lang_ol[ ] = $tableField_ol;
-        }
+        $prompt = 'All tables are localised.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'This is strange, if you are using foreign / category tables!';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      return $rows;
+    }
+      // RETURN : All tables are localised
+
+      // Check first row for lang_ol fields
+    reset( $rows );
+    $firstKey = key( $rows );
+    foreach( array_keys ( $rows[ $firstKey ] ) as $tableField_ol )
+    {
+      list( $table_ol ) = explode('.', $tableField_ol);
+      if( in_array( $table_ol, $this->pObj->arr_realTables_notLocalised ) )
+      {
+        $arr_lang_ol[ ] = $tableField_ol;
       }
     }
       // Check first row for lang_ol fields

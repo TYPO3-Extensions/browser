@@ -248,7 +248,7 @@ class tx_browser_pi1_localisation
     }
     if ($bool_tableIsLocalised)
     {
-      $this->pObj->arr_realTables_localised[] = $table;
+      $this->pObj->arr_realTables_localised[ ] = $table;
       if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localised.', $this->pObj->extKey, 0);
@@ -256,7 +256,7 @@ class tx_browser_pi1_localisation
     }
     if (!$bool_tableIsLocalised)
     {
-      $this->pObj->arr_realTables_notLocalised[] = $table;
+      $this->pObj->arr_realTables_notLocalised[ ] = $table;
       if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localised.', $this->pObj->extKey, 0);
