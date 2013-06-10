@@ -300,7 +300,8 @@ class tx_browser_pi1_map
 
       // Get categories from the rows
     $categoryLabels = array( );
-      // FOREACH row
+
+$this->pObj->dev_var_dump( $this->pObj->rows, $categoryLabels );
 if( $this->pObj->b_drs_todo )
 {
   $prompt = 'TODO: Localisation of the map form labels.';
@@ -308,7 +309,8 @@ if( $this->pObj->b_drs_todo )
 // #46062, 130306, dwildt: TODO: Lokalisierung der Labels:
 // Wenn Standortdatensatz uebersetzt ist, sind die Kategorie-Labels leer
 }
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+
+      // FOREACH row
     foreach( $this->pObj->rows as $row )
     {
         // RETURN : field for category label is missing
