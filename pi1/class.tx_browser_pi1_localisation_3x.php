@@ -1011,8 +1011,8 @@ class tx_browser_pi1_localisation_3x
 
       // 2. Get uids of records with default language and localised records
     $arrResult    = $this->consolidate_rows02getUids( $rows, $table );
-    $arr_default  = $arrResult[ 'default'   ];
-    $arr_localise = $arrResult[ 'localised' ];
+    $arrUidsKeyDefault  = $arrResult[ 'default'   ];
+    $arrUidsLocalisedDefault = $arrResult[ 'localised' ];
     unset( $arrResult );
       // 2. Get uids of records with default language and localised records
 
@@ -1021,7 +1021,7 @@ $this->pObj->dev_var_dump( $rows );
 
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
     // Do we have localised records?
-    if(is_array($arr_localise))
+    if(is_array($arrUidsLocalisedDefault))
     {
       reset($rows);
 //var_dump('localisation 966', $rows);
@@ -1057,8 +1057,8 @@ $this->pObj->dev_var_dump( $rows );
       if (is_array($arr_l10n_mode))
       {
         // Loop through the array with localisation information
-//var_dump('localisation 998', $arr_localise);
-        foreach ($arr_localise as $tableFieldLUid => $arr_uid)
+//var_dump('localisation 998', $arrUidsLocalisedDefault);
+        foreach ($arrUidsLocalisedDefault as $tableFieldLUid => $arr_uid)
         {
           list($tableLoc, $fieldLoc) = explode('.', $tableFieldLUid);                   // tx_wine_main.uid
           $langPidField = $GLOBALS['TCA'][$tableLoc]['ctrl']['transOrigPointerField'];  // I.e: l18n_parent
@@ -1069,7 +1069,7 @@ $this->pObj->dev_var_dump( $rows );
 //var_dump('localisation 1008', $uid_localise, $rec_localise);
             $uid_default        = $rec_localise[$langPidField];
             $arr_keysInRowsLoc  = $rec_localise['keys_in_rows'];
-            $key_in_rowsDef     = $arr_default[$tableFieldLUid][$uid_default]['keys_in_rows'][0];
+            $key_in_rowsDef     = $arrUidsKeyDefault[$tableFieldLUid][$uid_default]['keys_in_rows'][0];
 
             // Loop through all rows with localised records
             foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
@@ -1259,17 +1259,17 @@ $this->pObj->dev_var_dump( $rows );
 
 
     // 5. Remove the default records from $rows, if they have a translation.
-    if(is_array($arr_default))
+    if(is_array($arrUidsKeyDefault))
     {
       $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
       foreach ($rows as $row => $elements)
       {
         $int_languagePid = $elements[$table.'.'.$langPidField];
         // If the record has an element with the key l18n_parent i.e.
-        if (in_array($int_languagePid, array_keys($arr_default[$table.'.uid'])))
+        if (in_array($int_languagePid, array_keys($arrUidsKeyDefault[$table.'.uid'])))
         {
           // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
-          foreach((array) $arr_default[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
+          foreach((array) $arrUidsKeyDefault[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
           {
             //var_dump($table.'.uid: '.$int_languagePid.': '.$row_default);
             unset($rows[$row_default]);
@@ -1287,10 +1287,10 @@ $this->pObj->dev_var_dump( $rows );
     $bool_defaultLanguageLink = $this->conf_localisation['realURL.']['defaultLanguageLink'];
     if ($bool_defaultLanguageLink)
     {
-      if (is_array($arr_localise))
+      if (is_array($arrUidsLocalisedDefault))
       {
         $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-        foreach((array) $arr_localise[$table.'.uid'] as $uid_localiseRecord => $row_localise)
+        foreach((array) $arrUidsLocalisedDefault[$table.'.uid'] as $uid_localiseRecord => $row_localise)
         {
           foreach((array) $row_localise['keys_in_rows'] as $key_in_rows)
           {
