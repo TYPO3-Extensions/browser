@@ -179,6 +179,8 @@ class tx_browser_pi1_sql_auto
  */
   public function get_statements( )
   {
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields);
+
     $arr_return = array( );
 
       // Add filter tables to class var $statementTables
