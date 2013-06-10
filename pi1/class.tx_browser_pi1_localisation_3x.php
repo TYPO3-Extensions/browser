@@ -1533,6 +1533,7 @@ class tx_browser_pi1_localisation_3x
   {
     $arr_lang_ol = array( );
 
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_notLocalised, $this->pObj->arr_realTables_notLocalised );
     if( is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
 
