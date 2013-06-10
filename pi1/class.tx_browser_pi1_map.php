@@ -3784,7 +3784,7 @@ if( $this->pObj->b_drs_todo )
     foreach( $arrPathCat as $pathCatUid => $pathCatTitleTable )
     {
       $catTitle   = $pathCatTitleTable . '_' . $pathCatUid;
-      $marker[ ]  = $catTitle; 
+//      $marker[ ]  = $catTitle; 
     }
       // LOOP path marker
 
@@ -3915,7 +3915,7 @@ if( $this->pObj->b_drs_todo )
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteRelations( 'MARKER' );
-$this->pObj->dev_var_dump( $relations );
+    //$this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
