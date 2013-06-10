@@ -505,7 +505,7 @@ class tx_browser_pi1_viewlist
   private function init_localisation( )
   {
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->int_localisation_mode )
+    switch( $this->pObj->objLocalise->localisationConfig( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
