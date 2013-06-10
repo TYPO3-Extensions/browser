@@ -7,6 +7,11 @@
               * class.tx_browser_pi1_filter_3x.php
               * class.tx_browser_pi1_filter_4x.php
   Feature
+  * #i0009: Bugfix oxMap Route Categories
+            1.3.04 ->1.3.05
+            Effected files:
+            * res/js/map/api/1.3.05       (new)
+            * static/setup.txt
   * #47631: Route Interface oxMap
             Marker
             * ###JSONDATA### -> ###RAWDATA###
