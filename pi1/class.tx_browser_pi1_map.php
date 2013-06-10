@@ -2664,7 +2664,7 @@ if( $this->pObj->b_drs_todo )
       // Get marker and marker_cat values of the given row
     foreach( $this->pObj->rows as $row )
     {
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
       if( $row[ $tablePathUid ] != $pathUid )
       {
         continue;
@@ -3760,8 +3760,9 @@ $this->pObj->dev_var_dump( $row );
       // Get the array with categories and marker
     $arrResult  = $this->renderMapRouteArrCatAndMarker( $pathUid );
     $arrCat     = $arrResult['cat'];
+    $arrPathCat = $arrResult['pathCat'];
     $arrMarker  = $arrResult['marker'];
-$this->pObj->dev_var_dump( $arrResult );
+//$this->pObj->dev_var_dump( $arrResult );
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
       // Get the array with categories and marker
@@ -3778,8 +3779,16 @@ $this->pObj->dev_var_dump( $arrResult );
         // LOOP categories
     }
       // LOOP relations of current path
+    
+      // LOOP path marker
+    foreach( $arrPathCat as $pathCatUid => $pathCatTitleTable )
+    {
+      $catTitle   = $pathCatTitleTable . '_' . $pathCatUid;
+      $marker[ ]  = $catTitle; 
+    }
+      // LOOP path marker
 
-//$this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
