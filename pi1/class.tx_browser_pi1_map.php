@@ -2632,8 +2632,10 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRouteArrCatAndMarker( $pathUid )
   {
       // variables
-    $catTitle             = null;
-    $catUid               = null;
+    $markerCatTitle             = null;
+    $markerCatUid               = null;
+    $pathCatTitle             = null;
+    $pathCatUid               = null;
     $markerTitle          = null;
     $markerUid            = null;
     $arrCat               = null;
@@ -2652,6 +2654,10 @@ if( $this->pObj->b_drs_todo )
     $tableMarkerCatTitle  = $confMapRouteFields['markerCategory.']['title'];
     list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
     $tableMarkerCatUid    = $tableMarkerCat . '.uid';
+
+    $tablePathCatTitle  = $confMapRouteFields['pathCategory.']['title'];
+    list( $tablePathCat ) = explode( '.', $tablePathCatTitle );
+    $tablePathCatUid    = $tablePathCat . '.uid';
       // variables
 
     
@@ -2663,23 +2669,32 @@ $this->pObj->dev_var_dump( $row );
       {
         continue;
       }
-      $catTitle     = $row[ $tableMarkerCatTitle ];
-      $catUid       = $row[ $tableMarkerCatUid ];
+      $markerCatTitle     = $row[ $tableMarkerCatTitle ];
+      $markerCatUid       = $row[ $tableMarkerCatUid ];
+      $pathCatTitle     = $row[ $tablePathCatTitle ];
+      $pathCatUid       = $row[ $tablePathCatUid ];
       $markerTitle  = $row[ $tableMarkerTitle ];
       $markerUid    = $row[ $tableMarkerUid ];
       break;
     }
-    //$this->pObj->dev_var_dump( $catTitle, $catUid, $markerTitle, $markerUid );
+    //$this->pObj->dev_var_dump( $markerCatTitle, $markerCatUid, $markerTitle, $markerUid );
       // Get marker and marker_cat values of the given row
     
-    $arrCatUid      = explode( $this->catDevider, $catUid );
-    $arrCatTitle    = explode( $this->catDevider, $catTitle );
+    $arrMarkerCatUid      = explode( $this->catDevider, $markerCatUid );
+    $arrMarkerCatTitle    = explode( $this->catDevider, $markerCatTitle );
+    $arrPathCatUid      = explode( $this->catDevider, $pathCatUid );
+    $arrPathCatTitle    = explode( $this->catDevider, $pathCatTitle );
     $arrMarkerUid   = explode( $this->catDevider, $markerUid );
     $arrMarkerTitle = explode( $this->catDevider, $markerTitle );
     
-    foreach( $arrCatUid as $key => $uid )
+    foreach( $arrMarkerCatUid as $key => $uid )
     {
-      $arrCat[ $uid ] = $arrCatTitle[ $key ] . ':' . $tableMarker;
+      $arrMarkerCat[ $uid ] = $arrMarkerCatTitle[ $key ] . ':' . $tableMarker;
+    }
+    
+    foreach( $arrPathCatUid as $key => $uid )
+    {
+      $arrPathCat[ $uid ] = $arrPathCatTitle[ $key ] . ':' . $tableMarker;
     }
     
     foreach( $arrMarkerUid as $key => $uid )
@@ -2689,7 +2704,8 @@ $this->pObj->dev_var_dump( $row );
     
     $arrReturn =  array
                   (
-                    'cat'     => $arrCat,
+                    'cat'     => $arrMarkerCat,
+                    'pathCat' => $arrPathCat,
                     'marker'  => $arrMarker
                   );
 //$this->pObj->dev_var_dump( $arrReturn );
