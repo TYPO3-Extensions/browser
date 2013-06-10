@@ -2632,15 +2632,20 @@ if( $this->pObj->b_drs_todo )
   private function renderMapRouteArrCatAndMarker( $pathUid )
   {
       // variables
-    $markerCatTitle             = null;
-    $markerCatUid               = null;
-    $pathCatTitle             = null;
-    $pathCatUid               = null;
     $markerTitle          = null;
     $markerUid            = null;
-    $arrCat               = null;
-    $arrCatUid            = null;
-    $arrCatTitle          = null;
+    $markerCatTitle       = null;
+    $markerCatUid         = null;
+      // #i0009, 130610, dwildt, 2+
+    $pathCatTitle         = null;
+    $pathCatUid           = null;
+    $arrMarkerCat         = null;
+    $arrMarkerCatUid      = null;
+    $arrMarkerCatTitle    = null;
+      // #i0009, 130610, dwildt, 3+
+    $arrPathCat           = null;
+    $arrPathCatUid        = null;
+    $arrPathCatTitle      = null;
     $arrMarker            = null;
     $arrMarkerUid         = null;
     $arrMarkerTitle       = null;
@@ -2654,7 +2659,7 @@ if( $this->pObj->b_drs_todo )
     $tableMarkerCatTitle  = $confMapRouteFields['markerCategory.']['title'];
     list( $tableMarkerCat ) = explode( '.', $tableMarkerCatTitle );
     $tableMarkerCatUid    = $tableMarkerCat . '.uid';
-
+      // #i0009, 130610, dwildt, 3+
     $tablePathCatTitle  = $confMapRouteFields['pathCategory.']['title'];
     list( $tablePathCat ) = explode( '.', $tablePathCatTitle );
     $tablePathCatUid    = $tablePathCat . '.uid';
@@ -2680,18 +2685,20 @@ if( $this->pObj->b_drs_todo )
     //$this->pObj->dev_var_dump( $markerCatTitle, $markerCatUid, $markerTitle, $markerUid );
       // Get marker and marker_cat values of the given row
     
-    $arrMarkerCatUid      = explode( $this->catDevider, $markerCatUid );
-    $arrMarkerCatTitle    = explode( $this->catDevider, $markerCatTitle );
+    $arrMarkerCatUid    = explode( $this->catDevider, $markerCatUid );
+    $arrMarkerCatTitle  = explode( $this->catDevider, $markerCatTitle );
+      // #i0009, 130610, dwildt, 2+
     $arrPathCatUid      = explode( $this->catDevider, $pathCatUid );
     $arrPathCatTitle    = explode( $this->catDevider, $pathCatTitle );
-    $arrMarkerUid   = explode( $this->catDevider, $markerUid );
-    $arrMarkerTitle = explode( $this->catDevider, $markerTitle );
+    $arrMarkerUid       = explode( $this->catDevider, $markerUid );
+    $arrMarkerTitle     = explode( $this->catDevider, $markerTitle );
     
     foreach( $arrMarkerCatUid as $key => $uid )
     {
       $arrMarkerCat[ $uid ] = $arrMarkerCatTitle[ $key ] . ':' . $tableMarker;
     }
     
+      // #i0009, 130610, dwildt, 4+
     foreach( $arrPathCatUid as $key => $uid )
     {
       $arrPathCat[ $pathUid ] = $arrPathCatTitle[ $key ] . ':' . $tablePath;
@@ -2705,6 +2712,7 @@ if( $this->pObj->b_drs_todo )
     $arrReturn =  array
                   (
                     'cat'     => $arrMarkerCat,
+                      // #i0009, 130610, dwildt, 1+
                     'pathCat' => $arrPathCat,
                     'marker'  => $arrMarker
                   );
@@ -3760,6 +3768,7 @@ if( $this->pObj->b_drs_todo )
       // Get the array with categories and marker
     $arrResult  = $this->renderMapRouteArrCatAndMarker( $pathUid );
     $arrCat     = $arrResult['cat'];
+      // #i0009, 130610, dwildt, 1+
     $arrPathCat = $arrResult['pathCat'];
     $arrMarker  = $arrResult['marker'];
 //$this->pObj->dev_var_dump( $arrResult );
@@ -3781,6 +3790,7 @@ if( $this->pObj->b_drs_todo )
       // LOOP relations of current path
     
       // LOOP path marker
+      // #i0009, 130610, dwildt, 5+
     foreach( $arrPathCat as $pathCatUid => $pathCatTitleTable )
     {
       $catTitle   = $pathCatTitleTable . '_' . $pathCatUid;
