@@ -1547,7 +1547,7 @@ $this->pObj->dev_var_dump( $rows );
             // Do nothing;
           if( $this->pObj->b_drs_localisation )
           {
-            $prompt = 'l10n_mode of ' . $tableField . ' is neither exclude nor mergeIfNotBlank.';
+            $prompt = 'l10n_mode of ' . $tableField . ' is neither exclude nor mergeIfNotBlank. This is strange.';
             t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
             $prompt = $tableField . ' won\'t handled for localisation consolidation.';
             t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
