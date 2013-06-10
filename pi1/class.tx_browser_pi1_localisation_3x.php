@@ -973,7 +973,7 @@ class tx_browser_pi1_localisation_3x
   public function consolidate_rows( $rows, $table )
   {
       // For development only, IP must allowed in the extension manager!
-    $promptForDev = false; 
+    $promptForDev = true; 
 
       // RETURN : there is no row
     if( $this->consolidate_rowsNoRow( $rows ) )
