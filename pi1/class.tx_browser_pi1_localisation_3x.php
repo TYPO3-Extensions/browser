@@ -1556,8 +1556,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     // DRS - Performance
 
 
-    // Just for development
-    if (false)
+      // Just for development
+    if( true )
+    //if( false )
     {
       $int_count    = 0;
       $int_max_rows = 10;
@@ -1570,9 +1571,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         }
         $int_count++;
       }
-      var_dump($rows_prompt);
+        // #46062, 130610, dwildt, 1+
+      $this->pObj->dev_var_dump( $rows_prompt );
     }
-    // Just for development
+      // Just for development
 
     // 8. Return $rows
     return $rows;
