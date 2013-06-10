@@ -1005,31 +1005,34 @@ class tx_browser_pi1_localisation_3x
       // Just for development
     $this->zzDevPromptRows( $promptForDev, $rows );
 
-    $arr_localise = $this->consolidate_rows02getUids( $rows, $table );
+    $arrResult    = $this->consolidate_rows02getUids( $rows, $table );
+    $arr_default  = $arrResult[ 'default'   ];
+    $arr_localise = $arrResult[ 'localised' ];
+    unset( $arrResult );
 //$this->pObj->dev_var_dump( $arr_localise );
 
-      // 2. Fetch all language default records
-    $int_count = 0;
-//var_dump('localisation 934', $rows);
-    foreach ($rows as $row => $elements)
-    {
-      $langPidField         = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-      $int_languagePid      = $elements[$table.'.'.$langPidField];
-      $langField            = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-      $int_sys_language     = $elements[$table.'.'.$langField];
-      if ($int_sys_language <= 0)
-      {
-//        $arr_default[$table][$elements[$table.'.uid']][] = $row;
-        $arr_default[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][] = $row;
-      }
-      if ($int_sys_language > 0)
-      {
-        $arr_localise[$table.'.uid'][$elements[$table.'.uid']][$langPidField]     = $int_languagePid;
-        $arr_localise[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][]  = $row;
-      }
-      $int_count++;
-    }
-    // 2. Fetch all language default records
+//      // 2. Fetch all language default records
+//    $int_count = 0;
+////var_dump('localisation 934', $rows);
+//    foreach ($rows as $row => $elements)
+//    {
+//      $langPidField         = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+//      $int_languagePid      = $elements[$table.'.'.$langPidField];
+//      $langField            = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+//      $int_sys_language     = $elements[$table.'.'.$langField];
+//      if ($int_sys_language <= 0)
+//      {
+////        $arr_default[$table][$elements[$table.'.uid']][] = $row;
+//        $arr_default[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][] = $row;
+//      }
+//      if ($int_sys_language > 0)
+//      {
+//        $arr_localise[$table.'.uid'][$elements[$table.'.uid']][$langPidField]     = $int_languagePid;
+//        $arr_localise[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][]  = $row;
+//      }
+//      $int_count++;
+//    }
+//    // 2. Fetch all language default records
 $this->pObj->dev_var_dump( $arr_default, $arr_localise );
 
 
