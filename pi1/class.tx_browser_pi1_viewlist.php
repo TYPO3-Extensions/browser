@@ -1952,16 +1952,17 @@ class tx_browser_pi1_viewlist
       ////////////////////////////////////////////////////////////////////
       //
       // Add localisation fields
-// 46062
+// #46062
     //$arr_addedTableFields = array( );
       // Loop through all used tables
+    $arr_addedTableFields = array( );
     foreach( array_keys( $this->pObj->arr_realTables_arrFields ) as $table )
     {
       $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
         // Get the and SELECT statement with aliases
       if( $arr_result['wiAlias'] )
       {
-        $arr_localSelect[] = $arr_result['wiAlias'];
+        $arr_localSelect[ ] = $arr_result['wiAlias'];
       }
         // Get all added table.fields
       if( is_array( $arr_result['addedFields'] ) )
@@ -1969,7 +1970,7 @@ class tx_browser_pi1_viewlist
         $arr_addedTableFields = array_merge
                                 (
                                   ( array ) $arr_addedTableFields,
-                                  $arr_result['addedFields']
+                                  $arr_result[ 'addedFields' ]
                                 );
       }
       unset( $arr_result );
@@ -1977,13 +1978,13 @@ class tx_browser_pi1_viewlist
       // Loop through all used tables
 
       // Build the SELECT statement
-$this->pObj->dev_var_dump( $select );
+//$this->pObj->dev_var_dump( $select );
     $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
     if( $str_localSelect )
     {
       $select = $select . ', ' . $str_localSelect;
     }
-$this->pObj->dev_var_dump( $select );
+//$this->pObj->dev_var_dump( $select );
       // Build the SELECT statement
       // Add localisation fields
       ////////////////////////////////////////////////////////////////////
@@ -1994,12 +1995,12 @@ $this->pObj->dev_var_dump( $select );
     foreach( ( array ) $arr_addedTableFields as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
-      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
+      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[ $table ] ) )
       {
           // Add every new table.field to the global array arr_realTables_arrFields
-        $this->pObj->arr_realTables_arrFields[$table][] = $field;
+        $this->pObj->arr_realTables_arrFields[ $table ][ ] = $field;
           // Add every new table.field to the global array consolidate
-        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
+        $this->pObj->arrConsolidate[ 'addedTableFields' ][ ] = $tableField;
       }
     }
       // LOOP through all new table.fields
@@ -2012,22 +2013,6 @@ $this->pObj->dev_var_dump( $select );
       // Check array for non unique elements
     $testArray = explode( ',', $select );
     $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
-
-      // Add tables to the consolidation array
-      // LOOP through all new table.fields
-    foreach( ( array ) $arr_result['addedFields'] as $tableField )
-    {
-      list( $table, $field ) = explode( '.', $tableField );
-      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
-      {
-          // Add every new table.field to the global array arr_realTables_arrFields
-        $this->pObj->arr_realTables_arrFields[$table][] = $field;
-          // Add every new table.field to the global array consolidate
-        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
-      }
-    }
-      // LOOP through all new table.fields
-      // Add tables to the consolidation array
 
     return $select;
   }
