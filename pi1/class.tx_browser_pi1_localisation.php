@@ -1414,8 +1414,12 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN : if there isn't any need for language override
     switch( true )
     {
-      case( $bool_tableIsLocalised ): // Table is localised
-      case( $bool_dontLocalise ):     // Localisation should not handled
+      case( ! $bool_tableIsLocalised ): // Table is not localised
+      case( ! $bool_dontLocalise ):     // Localisation should handled
+          // Follow the workflow
+          // Get fields for translation / language overlay
+        break;
+      default:
           // DRS
         if ($this->pObj->b_drs_localisation)
         {
@@ -1425,10 +1429,6 @@ $this->pObj->dev_var_dump( $rows );
           // DRS
           // RETURN : no language overlay
         return false;
-        break;
-      default:
-          // Follow the workflow
-          // Get fields for translation / language overlay
         break;
     }
       // RETURN : if there isn't any need for language override
@@ -2618,7 +2618,6 @@ $this->pObj->dev_var_dump( $rows );
         $bool_tableIsLocalised = false;
         break;
     }
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_localised, $this->pObj->arr_realTables_notLocalised, $bool_tableIsLocalised );
 
     unset( $table );
 
