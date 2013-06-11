@@ -248,7 +248,7 @@ class tx_browser_pi1_localisation
 
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
       // 8. Return $rows
     return $rows;
   }
@@ -1410,13 +1410,12 @@ $this->pObj->dev_var_dump( $rows );
     $bool_dontLocalise = $this->zz_dontLocalise( );
       // Do we have a localised table?
     $bool_tableIsLocalised = $this->zz_tableIsLocalised( $table );
-$this->pObj->dev_var_dump( $table, $bool_dontLocalise, $bool_tableIsLocalised );
 
       // RETURN : if there isn't any need for language override
     switch( true )
     {
-      case( ! $bool_tableIsLocalised ): // Table is localised
-      case( ! $bool_dontLocalise ):     // Localisation should not handled
+      case( ! $bool_tableIsLocalised ): // Table isn't localised
+      case( ! $bool_dontLocalise ):     // AND Localisation shouldn't not handled
           // DRS
         if ($this->pObj->b_drs_localisation)
         {
@@ -1433,7 +1432,6 @@ $this->pObj->dev_var_dump( $table, $bool_dontLocalise, $bool_tableIsLocalised );
         break;
     }
       // RETURN : if there isn't any need for language override
-$this->pObj->dev_var_dump( $table, $bool_dontLocalise, $bool_tableIsLocalised );
 
     unset( $bool_tableIsLocalised );
     unset( $bool_dontLocalise );
