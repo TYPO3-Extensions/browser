@@ -1955,9 +1955,9 @@ class tx_browser_pi1_viewlist
 // 46062
     //$arr_addedTableFields = array( );
       // Loop through all used tables
-    foreach( $this->pObj->arr_realTables_arrFields as $table => $arrFields )
+    foreach( array_keys( $this->pObj->arr_realTables_arrFields ) as $table )
     {
-      $arr_result = $this->pObj->objLocalise3x->localisationFields_select( $table );
+      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
         // Get the and SELECT statement with aliases
       if( $arr_result['wiAlias'] )
       {
@@ -1984,6 +1984,27 @@ class tx_browser_pi1_viewlist
     }
       // Build the SELECT statement
       // Add localisation fields
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add tables to the consolidation array
+      
+      // LOOP through all new table.fields
+    foreach( ( array ) $arr_addedTableFields as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
+      {
+          // Add every new table.field to the global array arr_realTables_arrFields
+        $this->pObj->arr_realTables_arrFields[$table][] = $field;
+          // Add every new table.field to the global array consolidate
+        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
+      }
+    }
+      // LOOP through all new table.fields
+      // Add tables to the consolidation array
+
+ 
+
 
     
       // Check array for non unique elements
