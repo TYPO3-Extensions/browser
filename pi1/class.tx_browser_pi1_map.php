@@ -2053,9 +2053,8 @@ $this->pObj->dev_var_dump( $row, $catValues );
         $arrLabels[ 'catIcon' ]     = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
         $arrLabels[ 'catOffsetX' ]  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
         $arrLabels[ 'catOffsetY' ]  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
-          // 130612, dwildt, 2+
-        list( $table )              = explode( '.', $arrLabels[ 'catTitle' ] );
-        $arrLabels[ 'markerUid' ]   = $table. '.uid';
+          // 130612, dwildt, 1+
+        $arrLabels[ 'markerUid' ]   = $this->confMap['configuration.']['categories.']['fields.']['uid'];
         break;
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:

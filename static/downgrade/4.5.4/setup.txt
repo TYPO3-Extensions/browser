@@ -642,6 +642,8 @@ plugin.tx_browser_pi1 {
             categoryOffsetX = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
               // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
             categoryOffsetY = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+              // [STRING] table.field with the marker uid. Example: tx_org_headquarters.uid
+            uid             = {$plugin.tx_browser_pi1.map.field.linktoSingle}
           }
             // [STRING/HTML] Draft for an input field of the category form
           form_input = TEXT
