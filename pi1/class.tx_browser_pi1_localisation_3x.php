@@ -1022,55 +1022,34 @@ class tx_browser_pi1_localisation_3x
       // 4. In case of a non localised table: Copy values from default to current language record
     $rows = $this->consolidate_rows04handleTableTranslated( $rows );
 
-
-
-$this->pObj->dev_var_dump( $rows );
       // 5. Remove the default records from $rows, if they have a translation.
-    $rows = $this->consolidate_rows05RemoveDefault( $arrUidsKeyDefault, $rows, $table );
+    $rows = $this->consolidate_rows05removeDefault( $arrUidsKeyDefault, $rows, $table );
+
+
+    // 6. Set the default language record uid
+    // Should we set it?
 $this->pObj->dev_var_dump( $rows );
-//    if(is_array($arrUidsKeyDefault))
+    $rows = $this->consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table );
+$this->pObj->dev_var_dump( $rows );
+
+//    $bool_defaultLanguageLink = $this->conf_localisation['realURL.']['defaultLanguageLink'];
+//    if ($bool_defaultLanguageLink)
 //    {
-//      $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-//      foreach ($rows as $row => $elements)
+//      if (is_array($arrUidsLocalisedDefault))
 //      {
-//        $int_languagePid = $elements[$table.'.'.$langPidField];
-//        // If the record has an element with the key l18n_parent i.e.
-//        if (in_array($int_languagePid, array_keys($arrUidsKeyDefault[$table.'.uid'])))
+//        $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+//        foreach((array) $arrUidsLocalisedDefault[$table.'.uid'] as $uid_localiseRecord => $row_localise)
 //        {
-//          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
-//          foreach((array) $arrUidsKeyDefault[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
+//          foreach((array) $row_localise['keys_in_rows'] as $key_in_rows)
 //          {
-//            //var_dump($table.'.uid: '.$int_languagePid.': '.$row_default);
-//            unset($rows[$row_default]);
+//            //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localise[$langPidField]);
+//            $rows[$key_in_rows][$table.'.uid'] = $row_localise[$langPidField];
 //          }
-//          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
 //        }
-//        // If the record has an element with the key l18n_parent i.e.
 //      }
 //    }
-//    // 5. Remove the default records from $rows, if they have a translation.
-
-
-    // 6. Set the default language record uid
-    // Should we set it?
-    $bool_defaultLanguageLink = $this->conf_localisation['realURL.']['defaultLanguageLink'];
-    if ($bool_defaultLanguageLink)
-    {
-      if (is_array($arrUidsLocalisedDefault))
-      {
-        $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-        foreach((array) $arrUidsLocalisedDefault[$table.'.uid'] as $uid_localiseRecord => $row_localise)
-        {
-          foreach((array) $row_localise['keys_in_rows'] as $key_in_rows)
-          {
-            //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localise[$langPidField]);
-            $rows[$key_in_rows][$table.'.uid'] = $row_localise[$langPidField];
-          }
-        }
-      }
-    }
-    // Should we set it?
-    // 6. Set the default language record uid
+//    // Should we set it?
+//    // 6. Set the default language record uid
 
     // 7. Language Overlay
     // Do we have lang_ol fields?
@@ -1558,7 +1537,7 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows05RemoveDefault( )  : Remove the default records from $rows, if they have a translation.
+ * consolidate_rows05removeDefault( )  : Remove the default records from $rows, if they have a translation.
  *
  * @param	array	$rows   : SQL result rows
  * @param	string	$table  : The current table name
@@ -1567,7 +1546,7 @@ $this->pObj->dev_var_dump( $rows );
  * @version   4.5.7
  * @since     2.0.0
  */
-  public function consolidate_rows05RemoveDefault( $arrUidsKeyDefault, $rows, $table )
+  private function consolidate_rows05removeDefault( $arrUidsKeyDefault, $rows, $table )
   {
     if( empty ( $arrUidsKeyDefault ) )
     {
@@ -1596,6 +1575,39 @@ $this->pObj->dev_var_dump( $rows );
     }
     
     return $rows;
+  }
+
+/**
+ * consolidate_rows06setDefaultUid( )  : Set the default language record uid
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table )
+  {
+    if( ! $this->conf_localisation['realURL.']['defaultLanguageLink'] )
+    {
+      return $rows;
+    }
+
+    if( empty( $arrUidsLocalisedDefault ) )
+    {
+      return $rows;
+    }
+    
+    $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+
+    foreach( ( array ) $arrUidsLocalisedDefault[ $table . '.uid' ] as $row_localise )
+    {
+      foreach( ( array ) $row_localise[ 'keys_in_rows' ] as $key_in_rows )
+      {
+        $rows[ $key_in_rows ][ $table . '.uid' ] = $row_localise[ $langPidField ];
+      }
+    }
   }
   
 /**
