@@ -1410,7 +1410,7 @@ $this->pObj->dev_var_dump( $rows );
     $bool_dontLocalise = $this->zz_dontLocalise( );
       // Do we have a localised table?
     $bool_tableIsLocalised = $this->zz_tableIsLocalised( $table );
-$this->pObj->dev_var_dump( $bool_dontLocalise, $bool_tableIsLocalised );
+$this->pObj->dev_var_dump( $table, $bool_dontLocalise, $bool_tableIsLocalised );
 
       // RETURN : if there isn't any need for language override
     switch( true )
@@ -1433,7 +1433,7 @@ $this->pObj->dev_var_dump( $bool_dontLocalise, $bool_tableIsLocalised );
         break;
     }
       // RETURN : if there isn't any need for language override
-$this->pObj->dev_var_dump( $bool_dontLocalise, $bool_tableIsLocalised );
+$this->pObj->dev_var_dump( $table, $bool_dontLocalise, $bool_tableIsLocalised );
 
     unset( $bool_tableIsLocalised );
     unset( $bool_dontLocalise );
