@@ -1144,9 +1144,9 @@ $this->pObj->dev_var_dump( $arr_tables );
       // Loop through the array with all used tableFields
     foreach( $this->pObj->arr_realTables_arrFields[ $table ] as $field )
     {
+      $field_lang_ol      = $field . $conf_tca['field.']['appendix'];
       $tableField         = $table . '.' . $field;
       $tableFieldOverlay  = $table . '.' . $field_lang_ol;
-      $field_lang_ol      = $field . $conf_tca['field.']['appendix'];
 
         // CONTINUE : current field hasn't any language overlay
       if( ! is_array( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $field_lang_ol ] ) )
