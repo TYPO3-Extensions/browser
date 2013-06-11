@@ -897,89 +897,9 @@ $this->pObj->dev_var_dump( $rows );
 
       // Get array with elements woAlias, filter, wiAlias and addedFields 
     $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
-$this->pObj->dev_var_dump( $arr_tables );
 
-
+      // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
-$this->pObj->dev_var_dump( $arr_andSelect );
-unset( $arr_andSelect );
-
-      // Get the field names for sys_language_content and for l10n_parent
-    $arr_localise = array( );
-    $arr_localise['id_field']   = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
-    $arr_localise['pid_field']  = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
-      // Get the field names for sys_language_content and for l10n_parent
-      // Clean up the array
-    $arr_localise = $this->zz_propperLocArray( $arr_localise, $table );
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Building AND SELECT
-
-    $str_dummyFilter = "'".intval($this->lang_id)."' AS `table." . $arr_localise['id_field'] . "`, ".
-      "'' AS `table." . $arr_localise['pid_field'] . "` ";  // 13573, 110303, dwildt
-    // The user can use more than one filter. If he uses more than one filter, it will be built a UNION SELECT
-    // query. So every SELECT statement should have the same amount of fields. We need the dummy filter,
-    // because it is possible that one filter is a field from a localised table and another filter isn't a
-    // field from a localised table.
-
-    $arr_andSelect = array( );
-    $arr_andSelect['woAlias'] = false;  // Default
-    // Without Alias. I.e.: tx_bzdstaffdirectory_groups.sys_language_uid, tx_bzdstaffdirectory_groups.l18n_parent
-//BUGFIX 091112
-//    $arr_andSelect['filter']  = $str_dummyFilter;
-    $arr_andSelect['filter']  = "'0' AS `table.title_lang_ol`, ".$str_dummyFilter;
-    // Filter. I.e.:        tx_bzdstaffdirectory_groups.sys_language_uid AS `table.sys_language_uid`, tx_bzdsta...
-    $arr_andSelect['wiAlias'] = false;  // Default
-    // With Alias. I.e.:    tx_bzdstaffdirectory_groups.sys_language_uid AS `tx_bzdstaffdirectory_groups.sys_la...
-    $arr_andSelect['addedFields'] = false;          // Default
-//    $arr_andSelect['addedFields'][] = 'table.l10n_parent';          // Default
-//    $arr_andSelect['addedFields'][] = 'table.sys_language_content'; // Default
-
-    // Case is PI1_DEFAULT_LANGUAGE
-    if ($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
-    {
-      // Nothing to do. Take the default values.
-    }
-    // Case is PI1_DEFAULT_LANGUAGE
-
-    // Case is PI1_SELECTED_OR_DEFAULT_LANGUAGE
-    if ($this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
-    {
-      if (is_array($arr_localise))
-      {
-        foreach ($arr_localise as $tableField)
-        {
-          list($table, $field) = explode('.', $tableField);
-          $arr_tables['woAlias'][] = $tableField;
-          $arr_tables['filter'][]  = $tableField." AS `table.".$field."`";
-          $arr_tables['wiAlias'][] = $tableField." AS `".$tableField."`";
-        }
-//BUGFIX 091112
-        $arr_tables['filter'][]  = "'0' AS `table.title_lang_ol`";
-      }
-    }
-    // Case is PI1_SELECTED_OR_DEFAULT_LANGUAGE
-
-    // Case is PI1_SELECTED_LANGUAGE_ONLY
-    if ($this->int_localisation_mode == PI1_SELECTED_LANGUAGE_ONLY)
-    {
-      // Nothing to do. Take the default values.
-    }
-    // Case is PI1_SELECTED_LANGUAGE_ONLY
-
-    // Extend the SELECT query if we have fields for localisation or overlay
-    if( ! empty( $arr_tables ) )
-    {
-      $arr_andSelect['woAlias']     = implode(', ', $arr_tables['woAlias']);
-      $arr_andSelect['filter']      = implode(', ', $arr_tables['filter']);
-      $arr_andSelect['wiAlias']     = implode(', ', $arr_tables['wiAlias']);
-      $arr_andSelect['addedFields'] = $arr_tables['woAlias'];
-      // These andWhere needs a consolidation
-    }
-    // Extend the SELECT query if we have fields for localisation or overlay
-    // Building AND SELECT
-$this->pObj->dev_var_dump( $arr_andSelect );
 
     return $arr_andSelect;
   }
