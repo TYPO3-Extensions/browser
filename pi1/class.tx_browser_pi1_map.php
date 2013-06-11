@@ -2153,7 +2153,7 @@ class tx_browser_pi1_map
     $catIcons = $this->renderMapMarkerCategoryIcons( );
 
       // FOREACH marker
-$this->pObj->dev_var_dump( $series, $jsonData );
+$this->pObj->dev_var_dump( $markers );
     foreach( ( array ) $markers as $marker )
     {
       $catTitle = $marker['cat'];
