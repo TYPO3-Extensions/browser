@@ -352,7 +352,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
+      $this->int_localisation_mode = $this->pObj->objLocalise->get_localisationMode( );
       $this->pObj->objLocalise->init_typoscript( );
     }
 

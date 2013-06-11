@@ -505,7 +505,7 @@ class tx_browser_pi1_viewlist
   private function init_localisation( )
   {
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
+    switch( $this->pObj->objLocalise->get_localisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1167,14 +1167,14 @@ class tx_browser_pi1_viewlist
         t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
         // Store current localisation mode
-      $curr_int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
+      $curr_int_localisation_mode = $this->pObj->objLocalise->get_localisationMode( );
         // Set all to default language
       //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
       $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
     }
       // 120704, freemedia case, dwildt
 
-    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
+    switch( $this->pObj->objLocalise->get_localisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1370,7 +1370,7 @@ class tx_browser_pi1_viewlist
     $arr_return = array( );
 
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
+    switch( $this->pObj->objLocalise->get_localisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1602,7 +1602,7 @@ class tx_browser_pi1_viewlist
       // #38612, 120703, dwildt+
     
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
+    switch( $this->pObj->objLocalise->get_localisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1909,7 +1909,7 @@ class tx_browser_pi1_viewlist
   private function sql_selectLocalised( $select )
   {
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
+    switch( $this->pObj->objLocalise->get_localisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):

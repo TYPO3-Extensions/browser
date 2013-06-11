@@ -170,7 +170,7 @@ class tx_browser_pi1_sql_manual
       // #47678, 130429, dwildt, 3+      
     $table      = $this->pObj->localTable;
     $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-//var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->getLocalisationMode( ) );
+//var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->get_localisationMode( ) );
     unset( $arr_result );
 
       // Return the result

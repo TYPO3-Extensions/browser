@@ -53,7 +53,7 @@
  *  839:     private function consolidate_rowsNoRow( $rows )
  *
  *              SECTION: Get methods
- *  892:     public function getLocalisationMode( )
+ *  892:     public function get_localisationMode( )
  * 1034:     public function get_localisedUid( $table, $uid )
  *
  *              SECTION: Init
@@ -117,13 +117,13 @@ class tx_browser_pi1_localisation
   var $arr_localisedTables        = null;
     // [Array] $arr_localisedTableFields[$table]['id_field']
   var $arr_localisedTableFields   = null;
-    // [Integer] See defines in the contructor. Set by getLocalisationMode( ).
+    // [Integer] See defines in the contructor. Set by get_localisationMode( ).
   private $int_localisation_mode  = null;
-    // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by getLocalisationMode( ).
+    // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by get_localisationMode( ).
   var $lang_id                    = null;
     // ...
   var $lang_mode                  = null;
-    // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by getLocalisationMode( ).
+    // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by get_localisationMode( ).
   var $overlay_mode               = null;
     // [Array] The current TypoScript configuration array local or global: advanced.localisation
   var $conf_localisation          = false;
@@ -158,7 +158,7 @@ class tx_browser_pi1_localisation
     define('PI1_DEFAULT_LANGUAGE_ONLY',         2);
     define('PI1_SELECTED_OR_DEFAULT_LANGUAGE',  3);
     define('PI1_SELECTED_LANGUAGE_ONLY',        4);
-    // See method getLocalisationMode( )
+    // See method get_localisationMode( )
     // See class.tx_browser_pi1_views.php: Workaround filter and localisation - Bugfix #9024
 
   }
@@ -262,7 +262,7 @@ $this->pObj->dev_var_dump( $rows );
  */
   private function consolidate_rows01noLocalisation( )
   {
-    $this->int_localisation_mode = $this->getLocalisationMode( );
+    $this->int_localisation_mode = $this->get_localisationMode( );
 
     if( $this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE )
     {
@@ -875,7 +875,7 @@ $this->pObj->dev_var_dump( $rows );
   **********************************************/
 
 /**
- * getLocalisationMode( ) : Get the localisation configuration out of TypoScript config.
+ * get_localisationMode( ) : Get the localisation configuration out of TypoScript config.
  *                          Set the class vars $lang_id and $overlay_mode. Returns one of the constants:
  *                          * PI1_ANY_LANGUAGE
  *                          * PI1_DEFAULT_LANGUAGE_ONLY
@@ -889,7 +889,7 @@ $this->pObj->dev_var_dump( $rows );
  * @version   4.5.7
  * @since     2.0.0
  */
-  public function getLocalisationMode( )
+  public function get_localisationMode( )
   {
       ////////////////////////////////////////////////////////////////////////////////
       //
@@ -1037,7 +1037,7 @@ $this->pObj->dev_var_dump( $rows );
       //
       // Init localisation
 
-    $this->getLocalisationMode( );
+    $this->get_localisationMode( );
       // Init localisation
 
 
@@ -1532,7 +1532,7 @@ $this->pObj->dev_var_dump( $rows );
     $arr_localise = $this->zz_propperLocArray($arr_localise, $table);
 
     // Get the localisation configuration
-    $this->int_localisation_mode = $this->getLocalisationMode( );
+    $this->int_localisation_mode = $this->get_localisationMode( );
 
 
 
@@ -1659,7 +1659,7 @@ $this->pObj->dev_var_dump( $rows );
 
     if ($this->int_localisation_mode === false)
     {
-      $this->int_localisation_mode = $this->getLocalisationMode( );
+      $this->int_localisation_mode = $this->get_localisationMode( );
     }
     // Get the localisation configuration
 
@@ -2315,7 +2315,7 @@ $this->pObj->dev_var_dump( $rows );
       // Set localisation mode
     if( $this->int_localisation_mode === null )
     {
-      $this->int_localisation_mode = $this->getLocalisationMode( );
+      $this->int_localisation_mode = $this->get_localisationMode( );
     }
       // Set localisation mode
 

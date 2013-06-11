@@ -1488,7 +1488,7 @@ class tx_browser_pi1_filter_4x {
       // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
+      $this->int_localisation_mode = $this->pObj->objLocalise->get_localisationMode( );
       $this->pObj->objLocalise->init_typoscript( );
     }
 
@@ -3918,7 +3918,7 @@ class tx_browser_pi1_filter_4x {
     $table = $this->pObj->localTable;
 
       // Store current localisation mode
-    $curr_int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
+    $curr_int_localisation_mode = $this->pObj->objLocalise->get_localisationMode( );
       // Set localisation mode to default language
     //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
     $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
