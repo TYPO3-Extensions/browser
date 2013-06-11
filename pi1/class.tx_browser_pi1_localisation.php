@@ -160,6 +160,7 @@ class tx_browser_pi1_localisation
  */
   public function consolidate_rows( $rows, $table )
   {
+$this->pObj->dev_var_dump( $select );
       // For development only, IP must allowed in the extension manager!
     $promptForDev = false; 
 
