@@ -1972,17 +1972,18 @@ class tx_browser_pi1_viewlist
                                   $arr_result['addedFields']
                                 );
       }
-$this->pObj->dev_var_dump( $arr_result );
       unset( $arr_result );
     }
       // Loop through all used tables
 
       // Build the SELECT statement
+$this->pObj->dev_var_dump( $select );
     $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
     if( $str_localSelect )
     {
       $select = $select . ', ' . $str_localSelect;
     }
+$this->pObj->dev_var_dump( $select );
       // Build the SELECT statement
       // Add localisation fields
       ////////////////////////////////////////////////////////////////////
