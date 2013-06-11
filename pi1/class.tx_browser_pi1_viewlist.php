@@ -1931,24 +1931,61 @@ class tx_browser_pi1_viewlist
     }
       // SWITCH $int_localisation_mode
 
-      // Get array with localised parts
-      // Get localtable
-    $table = $this->pObj->localTable;
-    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+//      // Get array with localised parts
+//      // Get localtable
+//    $table = $this->pObj->localTable;
+//    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+//
+//      // Add the localised parts with aliases to the current SELECT statement
+//    $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
+//    if( $selectLocalisedPart )
+//    {
+//      $select = $select . ', ' . $selectLocalisedPart;
+//      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+//      {
+//        $prompt = 'SELECT got the part for localising: ... ' . $selectLocalisedPart;
+//        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+//      }
+//    }
+//      // Add the localised part with aliases to the current SELECT statement
 
-      // Add the localised parts with aliases to the current SELECT statement
-    $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
-    if( $selectLocalisedPart )
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add localisation fields
+// 46062
+    //$arr_addedTableFields = array( );
+      // Loop through all used tables
+    foreach( $this->pObj->arr_realTables_arrFields as $table => $arrFields )
     {
-      $select = $select . ', ' . $selectLocalisedPart;
-      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+      $arr_result = $this->pObj->objLocalise3x->localisationFields_select( $table );
+        // Get the and SELECT statement with aliases
+      if( $arr_result['wiAlias'] )
       {
-        $prompt = 'SELECT got the part for localising: ... ' . $selectLocalisedPart;
-        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $arr_localSelect[] = $arr_result['wiAlias'];
+      }
+        // Get all added table.fields
+      if( is_array( $arr_result['addedFields'] ) )
+      {
+        $arr_addedTableFields = array_merge
+                                (
+                                  ( array ) $arr_addedTableFields,
+                                  $arr_result['addedFields']
+                                );
       }
     }
-      // Add the localised part with aliases to the current SELECT statement
+    unset( $arr_result );
+      // Loop through all used tables
 
+      // Build the SELECT statement
+    $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
+    if( $str_localSelect )
+    {
+      $select = $select . ', ' . $str_localSelect;
+    }
+      // Build the SELECT statement
+      // Add localisation fields
+
+    
       // Check array for non unique elements
     $testArray = explode( ',', $select );
     $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
