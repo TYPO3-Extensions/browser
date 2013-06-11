@@ -2563,6 +2563,39 @@ class tx_browser_pi1_localisation_3x
     $this->pObj->dev_var_dump( $rows_prompt );
   }
 
+/**
+ * zzDevPromptRows( )  : Just for development
+ *
+ * @param	array	$rows     : SQL result rows
+ * @param	string	$maxRows  : number of rows for prompting
+ * @return	void
+ * @internal    #46062
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function zzDevPromptRows( $promptForDev, $rows, $maxRows=10 )
+  {
+    if( ! $promptForDev )
+    {
+      return;
+    }
+
+    $rows_prompt  = array( );
+    $int_count    = 0;
+    foreach( $rows as $key => $row )
+    {
+      if( $int_count >= $maxRows )
+      {
+        break;
+      }
+      $rows_prompt[ $key ] = $row;
+      $int_count++;
+    }
+
+    $this->pObj->dev_var_dump( $rows_prompt );
+  }
+
 
 
 
