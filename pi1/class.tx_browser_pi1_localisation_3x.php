@@ -1026,7 +1026,7 @@ class tx_browser_pi1_localisation_3x
 
 $this->pObj->dev_var_dump( $rows );
       // 5. Remove the default records from $rows, if they have a translation.
-    $rows = $this->consolidate_rows05RemoveDefault( $rows );
+    $rows = $this->consolidate_rows05RemoveDefault( $arrUidsKeyDefault, $rows, $table );
 $this->pObj->dev_var_dump( $rows );
 //    if(is_array($arrUidsKeyDefault))
 //    {
