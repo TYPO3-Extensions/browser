@@ -1415,8 +1415,8 @@ $this->pObj->dev_var_dump( $table, $bool_dontLocalise, $bool_tableIsLocalised );
       // RETURN : if there isn't any need for language override
     switch( true )
     {
-      case( $bool_tableIsLocalised ): // Table is localised
-      case( $bool_dontLocalise ):     // Localisation should not handled
+      case( ! $bool_tableIsLocalised ): // Table is localised
+      case( ! $bool_dontLocalise ):     // Localisation should not handled
           // DRS
         if ($this->pObj->b_drs_localisation)
         {
