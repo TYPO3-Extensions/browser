@@ -1505,15 +1505,6 @@ $this->pObj->dev_var_dump( $rows );
     return $arrReturn;
   }
 
-
-
-
-
-
-
-
-
-
  /**
   * localisationFields_where( ):  Returns an AND WHERE statement with the localisation
   *                               fields from the current table,
@@ -1559,36 +1550,6 @@ $this->pObj->dev_var_dump( $rows );
       return false;
     }
       // Return, if we don't have localisation fields
-
-
-//      // DRS :TODO:
-//    if( $this->pObj->b_drs_devTodo )
-//    {
-//      $prompt = '$this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE';
-//      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-//    }
-//      // DRS :TODO:
-//    if ($this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
-//    {
-//      // These andWhere needs a consolidation
-//        // DEVELOPMENT: Browser engine 4.x
-//      if( $this->pObj->dev_browserEngine == 4 )
-//      {
-//          // DRS
-//        if( $this->pObj->b_drs_filter || $this->pObj->b_drs_localisation || $this->pObj->b_drs_sql )
-//        {
-//          $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
-//          t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
-//          $prompt = 'Browser engine 4.x: andWhere for localised fields is modified. ' .
-//                    'Only records of the default language will selected.';
-//          t3lib_div::devlog( '[WARN/FILTER+LL+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-//          $prompt = 'Browser engine 4.x: If you are using this with the Browser engine 3.x, you will get trouble.';
-//          t3lib_div::devlog( '[WARN/FILTER+LL+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-//        }
-//          // DRS
-//        $str_andWhere = $arr_localise['id_field']." <= 0 ";
-//      }
-//    }
 
       ////////////////////////////////////////////////////////////////////////////////
       //
@@ -1655,20 +1616,6 @@ $this->pObj->dev_var_dump( $rows );
 
     return $str_andWhere;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  /**
   * Returns an AND WHERE statement either 'AND table.uid = showuid' or 'AND (table.uid = showuid OR table.l18n_parent = showuid)'
