@@ -2127,6 +2127,25 @@ $this->pObj->dev_var_dump( $row, $catValues );
     $markerUid    = $row[ $arrLabels[ 'markerUid' ] ];
     list( $markerTable ) = explode( '.', $arrLabels[ 'markerUid' ] );
     
+      // 130612, dwildt, 16+
+      // DIE  : if $markerUid is empty
+    if( empty( $markerUid ) )
+    {
+      $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                '$markerUid is empty.';
+      die( $prompt );
+    }
+      // DIE  : if $markerUid is empty
+      // DIE  : if $markerTable is empty
+    if( empty( $markerTable ) )
+    {
+      $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                '$markerTable is empty.';
+      die( $prompt );
+    }
+      // DIE  : if $markerTable is empty
+      // 130612, dwildt, 16+
+
       // RETURN result
     $arr_return = array
                   ( 
