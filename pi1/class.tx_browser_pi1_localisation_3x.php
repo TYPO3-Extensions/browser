@@ -1590,7 +1590,11 @@ class tx_browser_pi1_localisation_3x
       // RETURN : Don't set the default uid
     if( ! $this->conf_localisation['realURL.']['defaultLanguageLink'] )
     {
-$this->pObj->dev_var_dump( $rows );
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'realURL.defaultLanguageLink is false';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
       return $rows;
     }
       // RETURN : Don't set the default uid
@@ -1598,7 +1602,6 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN ; There isn't any localised record
     if( empty( $arrUidsLocalisedDefault ) )
     {
-$this->pObj->dev_var_dump( $rows );
       return $rows;
     }
       // RETURN ; There isn't any localised record
@@ -1607,6 +1610,7 @@ $this->pObj->dev_var_dump( $rows );
 
     foreach( ( array ) $arrUidsLocalisedDefault[ $table . '.uid' ] as $row_localise )
     {
+$this->pObj->dev_var_dump( $row_localise );
       foreach( ( array ) $row_localise[ 'keys_in_rows' ] as $key_in_rows )
       {
         $rows[ $key_in_rows ][ $table . '.uid' ] = $row_localise[ $langPidField ];
