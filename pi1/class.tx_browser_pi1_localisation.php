@@ -57,7 +57,7 @@
  * 1592:     public function get_localisedUid( $table, $uid )
  * 1670:     function init_typoscript()
  * 1735:     private function is_tableLocalised( $table )
- * 1846:     function propper_locArray($arr_langFields, $table)
+ * 1846:     function zz_propperLocArray($arr_langFields, $table)
  *
  *              SECTION: SQL
  * 1935:     public function sql_getLanguages( )
@@ -893,79 +893,24 @@ $this->pObj->dev_var_dump( $rows );
   public function localisationFields_select( $table )
   {
       // Load the TCA, if we don't have an table.columns array
-    $this->pObj->objZz->loadTCA($table);
+    $this->pObj->objZz->loadTCA( $table );
+
+      // Get array with elements woAlias, filter, wiAlias and addedFields 
+    $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
+$this->pObj->dev_var_dump( $arr_tables );
+
+
+    $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
+$this->pObj->dev_var_dump( $arr_andSelect );
+unset( $arr_andSelect );
 
       // Get the field names for sys_language_content and for l10n_parent
     $arr_localise = array( );
     $arr_localise['id_field']   = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
     $arr_localise['pid_field']  = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
-
-      // Do we need translated/localised records?
-    $bool_dontLocalise = $this->localisationFields_selectDontLocalise( );
-      // Do we have a localised table?
-    $bool_tableIsLocalised = $this->localisationFields_selectTableIsLocalised( $table );
-
-    $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
-$this->pObj->dev_var_dump( $arr_tables );
-    unset( $arr_tables );
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Do we have translated fields in case of a not localised table?
-
-    $arr_tables = array( );
-    if (!$bool_tableIsLocalised and !$bool_dontLocalise)
-    {
-      $bool_fieldIsLocalised = false;
-      $conf_tca = $this->conf_localisation['TCA.'];
-      // Loop through the array with all used tableFields
-      if(is_array($this->pObj->arr_realTables_arrFields[$table]))
-      {
-        foreach ($this->pObj->arr_realTables_arrFields[$table] as $str_field)
-        {
-          $str_field_lang_ol = $str_field.$conf_tca['field.']['appendix'];
-          // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
-          if (is_array($GLOBALS['TCA'][$table]['columns'][$str_field_lang_ol]))
-          {
-            if ($this->pObj->b_drs_localisation)
-            {
-              t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'.'.$str_field.'\' is translated in '.$str_field_lang_ol.'.', $this->pObj->extKey, 0);
-            }
-            // 130611
-            //$arr_lang_ol[] = $table.'.'.$str_field_lang_ol;
-            $this->pObj->arr_realTables_arrFields[$table][]   = $str_field_lang_ol;
-            $this->pObj->arrConsolidate['addedTableFields'][] = $table.'.'.$str_field_lang_ol;
-            $arr_tables['woAlias'][]                          = $table.'.'.$str_field_lang_ol;
-            $arr_tables['filter'][]                           = $table.'.'.$str_field_lang_ol." AS `table.".$str_field_lang_ol."`";
-            $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table." . $arr_localise['id_field'] . "`, ".
-            $arr_tables['wiAlias'][]                          = $table.'.'.$str_field_lang_ol." AS `".$table.'.'.$str_field_lang_ol."`";
-              // 13573, 110303, dwildt
-            $bool_fieldIsLocalised = true;
-          }
-          // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
-        }
-      }
-      // Loop through the array with all used tableFields
-
-      if (!$bool_fieldIsLocalised)
-      {
-        if ($this->pObj->b_drs_localisation)
-        {
-          t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' hasn\'t any field with appendix '.$conf_tca['field.']['appendix'].'.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[INFO/LOCALISATION] Overlay isn\'t needed.', $this->pObj->extKey, 0);
-        }
-        return false;
-      }
-    }
-    // Do we have translated fields in case of a not localised table?
-$this->pObj->dev_var_dump( $arr_tables );
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Clean up the array
-
-    $arr_localise = $this->propper_locArray($arr_localise, $table);
-    // Clean up the array
+      // Get the field names for sys_language_content and for l10n_parent
+      // Clean up the array
+    $arr_localise = $this->zz_propperLocArray( $arr_localise, $table );
 
     ////////////////////////////////////////////////////////////////////////////////
     //
@@ -1034,6 +979,7 @@ $this->pObj->dev_var_dump( $arr_tables );
     }
     // Extend the SELECT query if we have fields for localisation or overlay
     // Building AND SELECT
+$this->pObj->dev_var_dump( $arr_andSelect );
 
     return $arr_andSelect;
   }
@@ -1073,6 +1019,86 @@ $this->pObj->dev_var_dump( $arr_tables );
     }
     
     return $bool_dontLocalise;
+  }
+
+/**
+ * localisationFields_selectGetAndSelect( ) :
+ *
+ * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+ * @return	array		$arr_andSelect with elements woAlias, filter, wiAlias and addedFields
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function localisationFields_selectGetAndSelect( $table, $arr_tables )
+  {
+    $arr_andSelect = array( );
+
+      // Get the field names for sys_language_content and for l10n_parent
+    $arr_localise = array( );
+    $arr_localise['id_field']   = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
+    $arr_localise['pid_field']  = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
+      // Get the field names for sys_language_content and for l10n_parent
+      // Clean up the array
+    $arr_localise = $this->zz_propperLocArray( $arr_localise, $table );
+
+
+      // Get a dummy filter
+      //    The user can use more than one filter. If he uses more than one filter, it will be built a UNION SELECT
+      //    query. So every SELECT statement should have the same amount of fields. We need the dummy filter,
+      //    because it is possible that one filter is a field from a localised table and another filter isn't a
+      //    field from a localised table.
+    $str_dummyFilter  = "'" . intval($this->lang_id) . "' AS `table." . $arr_localise['id_field'] . "`, "
+                      . "'' AS `table." . $arr_localise['pid_field'] . "` "
+                      ;
+
+      // I.e.: $arr_andSelect['woAlias'] = tx_bzdstaffdirectory_groups.sys_language_uid, tx_bzdstaffdirectory_groups.l18n_parent
+    $arr_andSelect['woAlias']     = false;
+      // Filter. I.e.:        tx_bzdstaffdirectory_groups.sys_language_uid AS `table.sys_language_uid`, tx_bzdsta...
+    $arr_andSelect['filter']      = "'0' AS `table.title_lang_ol`, " . $str_dummyFilter;
+    // With Alias. I.e.:    tx_bzdstaffdirectory_groups.sys_language_uid AS `tx_bzdstaffdirectory_groups.sys_la...
+    $arr_andSelect['wiAlias']     = false;
+    $arr_andSelect['addedFields'] = false;
+
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_SELECTED_LANGUAGE_ONLY ):
+          // Nothing to do. Take the default values.
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        if( ! is_array( $arr_localise ) )
+        {
+          break;
+        }
+        foreach( $arr_localise as $tableField )
+        {
+          list( $table, $field ) = explode( '.', $tableField );
+          $arr_tables[ 'woAlias' ][ ] = $tableField;
+          $arr_tables[ 'filter'  ][ ] = $tableField . " AS `table." . $field . "`";
+          $arr_tables[ 'wiAlias' ][ ] = $tableField . " AS `" . $tableField . "`";
+        }
+        $arr_tables[ 'filter' ][ ]  = "'0' AS `table.title_lang_ol`";
+        break;
+      default:
+        $prompt = 'Unexpected value for $this->int_localisation_mode at ' . __METHOD__ . ' line(' . __LINE__ . ')';
+        die( $prompt );
+        break;
+    }
+
+      // RETURN : no values
+    if( empty( $arr_tables ) )
+    {
+      return false;
+    }
+      // RETURN : no values
+
+      // Extend the SELECT query if we have fields for localisation or overlay
+    $arr_andSelect[ 'woAlias'     ] = implode( ', ', $arr_tables[ 'woAlias' ] );
+    $arr_andSelect[ 'filter'      ] = implode( ', ', $arr_tables[ 'filter'  ] );
+    $arr_andSelect[ 'wiAlias'     ] = implode( ', ', $arr_tables[ 'wiAlias' ] );
+    $arr_andSelect[ 'addedFields' ] = $arr_tables[ 'woAlias' ];
+
+    return $arr_andSelect;
   }
 
 /**
@@ -1284,7 +1310,7 @@ $this->pObj->dev_var_dump( $arr_tables );
       // Get the field names for sys_language_content and for l10n_parent
 
       // Clean up the array
-    $arr_localise = $this->propper_locArray($arr_localise, $table);
+    $arr_localise = $this->zz_propperLocArray($arr_localise, $table);
 
     // Get the localisation configuration
     $this->int_localisation_mode = $this->getLocalisationMode( );
@@ -1448,7 +1474,7 @@ $this->pObj->dev_var_dump( $arr_tables );
     //
     // Clean up the array
 
-    $arr_localise = $this->propper_locArray($arr_localise, $table);
+    $arr_localise = $this->zz_propperLocArray($arr_localise, $table);
     // Clean up the array
 
 
@@ -2002,68 +2028,55 @@ $this->pObj->dev_var_dump( $arr_tables );
 
 
 
-  /**
- * propper_locArray( ): Make the array propper for localisation fields.
- * Empty elements will removed. Field names become a table prefix.
+/**
+ * zz_propperLocArray( )  : Make the array propper for localisation fields.
+ *                        Empty elements will removed. Field names become a table prefix.
  *
  * @param	array		$arr_langFields: Array with the field names of localisation fields
  * @param	string		$table: Name of the table in the TYPO3 database / in TCA
  * @return	array		$arr_langFields: Cleaned up array
+ * 
+ * @version 4.5.7
+ * @since   3.x
  */
-  function propper_locArray( $arr_langFields, $table )
+  private function zz_propperLocArray( $arr_langFields, $table )
   {
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Return, if we don't have an array
-
-    if (!is_array($arr_langFields))
+      // Return, if we don't have an array
+    if( ! is_array( $arr_langFields ) )
     {
       return false;
     }
-    // Return, if we don't have an array
+      // Return, if we don't have an array
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Remove empty elements
-
-    foreach((array) $arr_langFields as $key => $field)
+      // Remove empty elements
+    foreach( ( array ) $arr_langFields as $key => $field )
     {
-      if(!$field)
+      if( ! $field )
       {
-        unset($arr_langFields[$key]);
+        unset( $arr_langFields[ $key ] );
       }
     }
-    // Remove empty elements
+      // Remove empty elements
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Return, if we don't have an array
-
-    if (!is_array($arr_langFields))
+      // Return, if we don't have an array
+    if( ! is_array( $arr_langFields ) )
     {
       return false;
     }
-    // Return, if we don't have an array
+      // Return, if we don't have an array
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Add the table. We like the table.field syntax.
-
-    foreach((array) $arr_langFields as $key => $field)
+      // Add the table. We like the table.field syntax.
+    foreach( ( array ) $arr_langFields as $key => $field )
     {
-      $arr_langFields[$key] = $table.'.'.$field;
+      $arr_langFields[ $key ] = $table . '.' . $field;
     }
-    // Add the table. We like the table.field syntax.
+      // Add the table. We like the table.field syntax.
 
-    if(is_array($arr_langFields))
+    if( is_array( $arr_langFields ) )
     {
-      if(count($arr_langFields) == 0)
+      if( count( $arr_langFields ) == 0 )
       {
-        unset($arr_langFields);
+        unset( $arr_langFields );
         $arr_langFields = false;
       }
     }
