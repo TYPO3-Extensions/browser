@@ -1602,7 +1602,6 @@ class tx_browser_pi1_map
       // Substitute marker HTML
     $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate )
                   + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
-$this->pObj->dev_var_dump( $markerArray );
     $mapTemplate  = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
       // Substitute marker HTML
 
@@ -1746,6 +1745,7 @@ $this->pObj->dev_var_dump( $markerArray );
     {
         // Get mapMarkers, lats and lons
       $arr_result = $this->renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped );
+$this->pObj->dev_var_dump( $row, $arr_result );
       $mapMarkers = array_merge( $mapMarkers, $arr_result['data']['mapMarkers'] );
       $lats       = array_merge( $lats, $arr_result['data']['lats'] );
       $lons       = array_merge( $lons, $arr_result['data']['lons'] );
