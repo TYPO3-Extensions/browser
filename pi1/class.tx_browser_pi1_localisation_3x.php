@@ -1531,8 +1531,6 @@ class tx_browser_pi1_localisation_3x
  */
   private function consolidate_rows04CopyDefaultToLocalised( $rows )
   {
-    $arr_lang_ol = array( );
-
       // RETURN : All tables are localised
     if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
@@ -1549,7 +1547,8 @@ class tx_browser_pi1_localisation_3x
 
       // Check first row for lang_ol fields
     reset( $rows );
-    $firstKey = key( $rows );
+    $firstKey     = key( $rows );
+    $arr_lang_ol  = array( );
     foreach( array_keys ( $rows[ $firstKey ] ) as $tableField_ol )
     {
       list( $table_ol ) = explode('.', $tableField_ol);
@@ -1559,34 +1558,47 @@ class tx_browser_pi1_localisation_3x
       }
     }
       // Check first row for lang_ol fields
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_notLocalised, $arr_lang_ol );
+$this->pObj->dev_var_dump( $arr_lang_ol );
 
-    // Get default lang overlay values
-    $arr_default_lang_ol  = false;
-    $int_count            = 0;
-    if(is_array($arr_lang_ol))
+      // RETURN : there isn't any not localised table
+    if( empty ($arr_lang_ol) )
     {
-      $localTable       = $this->pObj->localTable;
-      $uid_localTable   = $localTable.'.uid';
-      $sys_language_uid = $GLOBALS['TCA'][$localTable]['ctrl']['languageField'];  // I.e. tx_wine_main.sys_language_uid
-
-      $arr_default_lang_ol = false;
-      foreach((array) $rows as $row => $elements)
+      if( $this->pObj->b_drs_localisation )
       {
-        // Default language record
-        if($elements[$localTable.'.'.$sys_language_uid] <= 0)
-        {
-          foreach((array) $arr_lang_ol as $key => $field_lang_ol)
-          {
-            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['field_lang_ol'] = $field_lang_ol;
-            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['value']         = $elements[$field_lang_ol];
-            $int_count++;
-          }
-        }
-        // Default language record
+        $prompt = 'Any tables isn\'t localised.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'This is strange, if you are using foreign / category tables!';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
       }
+      return $rows;
     }
-    // Get default lang overlay values
+      // RETURN : there isn't any not localised table
+
+      // Get default lang overlay values
+    $arr_default_lang_ol  = array( );
+    $int_count            = 0;
+    $localTable           = $this->pObj->localTable;
+    $uid_localTable       = $localTable . '.uid';
+      // I.e: $sys_language_uid = tx_wine_main.sys_language_uid
+    $sys_language_uid     = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'languageField' ];
+
+    foreach( ( array ) $rows as $row )
+    {
+        // Default language record
+      if( $row[ $localTable . '.' . $sys_language_uid ] <= 0 )
+      {
+        foreach( ( array ) $arr_lang_ol as $field_lang_ol )
+        {
+          $uidLocal = $row[ $uid_localTable ];
+          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'field_lang_ol' ] = $field_lang_ol;
+          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'value' ]         = $row[ $field_lang_ol ];
+          $int_count++;
+        }
+      }
+      // Default language record
+    }
+      // Get default lang overlay values
+$this->pObj->dev_var_dump( $arr_default_lang_ol );
 
 //var_dump('localisation 1108', $arr_default_lang_ol);
 //string(17) "localisation 1108"
