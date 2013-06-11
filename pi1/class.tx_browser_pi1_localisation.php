@@ -141,6 +141,713 @@ class tx_browser_pi1_localisation
 
 
 
+  /***********************************************
+  *
+  * Consolidation
+  *
+  **********************************************/
+
+/**
+ * consolidate_rows( )  : Consolidate the SQL-Result: The non current language records will be deleted.
+ *                        Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  public function consolidate_rows( $rows, $table )
+  {
+      // For development only, IP must allowed in the extension manager!
+    $promptForDev = false; 
+
+      // RETURN : there is no row
+    if( $this->consolidate_rowsNoRow( $rows ) )
+    {
+      return $rows;
+    }
+      // RETURN : there is no row
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Consolidation Steps
+      // 1. RETURN : current language is the default
+      // 2. Get uids of records with default language and localised records
+      // 3. Process l10n_mode in case of exclude or mergeIfNotBlank
+      // 4. In case of a non localised table: Copy values from default to current language record
+      // 5. Remove the default records from $rows, if they have a translation.
+      // 6. Set the default language record uid
+      // 7. Language Overlay
+      // 8. Return $rows
+
+      // 1. RETURN : current language is the default
+    if( $this->consolidate_rows01noLocalisation( ) )
+    {
+      return $rows;
+    }
+      // 1. RETURN : current language is the default
+
+
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+
+      // Just for development
+    $this->zzDevPromptRows( $promptForDev, $rows );
+
+      // 2. Get uids of records with default language and localised records
+    $arrResult                = $this->consolidate_rows02getUids( $rows, $table );
+    $arrUidsKeyDefault        = $arrResult[ 'default'   ];
+    $arrUidsLocalisedDefault  = $arrResult[ 'localised' ];
+    unset( $arrResult );
+      // 2. Get uids of records with default language and localised records
+
+      // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+    $rows = $this->consolidate_rows03handleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows );
+
+      // 4. In case of a non localised table: Copy values from default to current language record
+    $rows = $this->consolidate_rows04handleTableTranslated( $rows );
+
+      // 5. Remove the default records from $rows, if they have a translation.
+    $rows = $this->consolidate_rows05removeDefault( $arrUidsKeyDefault, $rows, $table );
+
+      // 6. Set the default language record uid
+    $rows = $this->consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table );
+
+      // 7. Language Overlay
+    $rows = $this->consolidate_rows07languageOverlay( $rows, $table );
+
+      // Just for development
+    $this->zzDevPromptRows( $promptForDev, $rows );
+
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+
+      // 8. Return $rows
+    return $rows;
+  }
+
+/**
+ * consolidate_rows01noLocalisation( )  : Returns true, if current language is the default language
+ *
+ * @return	boolean
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows01noLocalisation( )
+  {
+    $this->int_localisation_mode = $this->localisationConfig( );
+    
+    if( $this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Records in default language should ignored in every case.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'We don\'t need any localisation consolidation.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+    
+    return false;
+  }
+
+/**
+ * consolidate_rows02getUids( )  : 
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$arr_localise
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  private function consolidate_rows02getUids( $rows, $table )
+  {
+    $arrReturn = array( );
+    
+    $tableUid     = $table . '.uid';
+      // I.e: l18n_parent
+    $langPidField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
+    $langField    = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
+
+    foreach( $rows as $key => $row )
+    {
+      $int_languagePid  = $row[ $table . '.' . $langPidField ];
+      $int_sys_language = $row[ $table . '.' . $langField    ];
+      $recordUid        = $row[ $tableUid ];
+      
+      switch( true )
+      {
+        case( $int_sys_language > 0 ):
+        default:
+          $arrReturn[ 'localised' ][ $tableUid ][ $recordUid ][ $langPidField ]     = $int_languagePid;
+          $arrReturn[ 'localised' ][ $tableUid ][ $recordUid ][ 'keys_in_rows' ][ ] = $key;
+          break;
+        case( $int_sys_language <= 0 ):
+        default:
+          $arrReturn[ 'default' ][ $tableUid ][ $recordUid ][ 'keys_in_rows' ][ ] = $key;
+          break;          
+      }
+      
+      unset( $int_sys_language );
+    }
+//$this->pObj->dev_var_dump( $arrReturn );
+
+    return $arrReturn;
+  }
+
+/**
+ * consolidate_rows03handleTableLocalised( )  : 
+ *
+ * @param       array   $arrUidsLocalisedDefault : 
+ * @param	array	$rows   : SQL result rows
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows03handleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows )
+  {
+      // RETURN : no localised records
+    if( ! is_array( $arrUidsLocalisedDefault ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'There isn\'t any localised record.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return $rows;
+    }
+      // RETURN : no localised records
+    
+      // Set variables
+    $arr_l10n_mode  = array( );
+    reset( $rows );
+    $firstKey       = key( $rows );
+    $int_count      = 0;
+      // Set variables
+
+      // Loop through the first row for getting the l10n_mode of each field
+    foreach( array_keys( $rows[ $firstKey ] ) as $tableField )
+    {
+      list( $tableL10n, $field ) = explode( '.', $tableField );
+      $l10n_mode  = $GLOBALS[ 'TCA' ][ $tableL10n ][ 'columns' ][ $field ][ 'l10n_mode' ];
+        
+      switch( true )
+      {
+        case( $l10n_mode == 'exclude' ):
+          $arr_l10n_mode[ $int_count ][ $tableField ] = 'exclude';
+          $int_count++;
+          break;
+        case( $l10n_mode == 'mergeIfNotBlank' ):
+          $arr_l10n_mode[ $int_count ][ $tableField ] = 'mergeIfNotBlank';
+          $int_count++;
+          break;
+        default:
+            // Do nothing;
+          break;
+      }
+      
+      unset( $l10n_mode );
+    }
+      // Loop through the first row for getting the l10n_mode for each field
+
+      // RETURN : any record hasn't any exclude or mergeIfNotBlank property
+    if( empty( $arr_l10n_mode ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Any field hasn\'t the l10n_mode exlude or mergeIfNotBlank.';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return $rows;
+    }
+      // RETURN : any record hasn't any exclude or mergeIfNotBlank property
+
+      // Loop through the array with localisation information
+    foreach( $arrUidsLocalisedDefault as $tableFieldLUid => $arr_uid )
+    {
+        // I.e: $tableFieldLUid = 'tx_wine_main.uid'
+      list( $tableLoc ) = explode( '.', $tableFieldLUid );
+        // I.e: $langPidField = 'l18n_parent'
+      $langPidField     = $GLOBALS[ 'TCA' ][ $tableLoc ][ 'ctrl' ][ 'transOrigPointerField' ];
+
+        // Loop through the records with localisation information
+      foreach( ( array ) $arr_uid as $rec_localise )
+      {
+        $uid_default        = $rec_localise[ $langPidField ];
+        $arr_keysInRowsLoc  = $rec_localise[ 'keys_in_rows' ];
+        $key_in_rowsDef     = $arrUidsKeyDefault[ $tableFieldLUid ][ $uid_default ][ 'keys_in_rows' ][ 0 ];
+
+          // Loop through all rows with localised records
+        foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
+        {
+            // Loop through the array with the l10n_mode fields
+          foreach( $arr_l10n_mode as $arr_tableFieldMode )
+          {
+            $tableField     = key( $arr_tableFieldMode );
+            $str_l10n_mode  = $arr_tableFieldMode[ $tableField ];
+
+            switch( true )
+            {
+              case( $str_l10n_mode == 'exclude' ):
+                $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
+                break;
+              case( $str_l10n_mode == 'mergeIfNotBlank' ):
+                if( $rows[ $key_in_rowsLoc ][ $tableField ] == false )
+                {
+                  $rows[ $key_in_rowsLoc ][ $tableField ] = $rows[ $key_in_rowsDef ][ $tableField ];
+                }
+                break;
+              default:
+                  // Do nothing;
+                break;
+              
+            }
+            
+            unset( $str_l10n_mode );
+          }
+            // Loop through the array with the l10n_mode fields
+        }
+          // Loop through all rows with localised records
+      }
+        // Loop through the records with localisation information
+    }
+      // Loop through the array with localisation information
+    
+    return $rows;
+  }
+
+/**
+ * consolidate_rows04handleTableTranslated( )  : In case of a non localised table: Copy values from default to current language record
+ *
+ * @param	array	$rows   : SQL result rows
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows04handleTableTranslated( $rows )
+  {
+      // RETURN : All tables are localised
+    if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'All tables are localised.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'This is strange, if you are using foreign / category tables!';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      return $rows;
+    }
+      // RETURN : All tables are localised
+
+      // Check first row for lang_ol fields
+    reset( $rows );
+    $firstKey     = key( $rows );
+    $arr_lang_ol  = array( );
+    foreach( array_keys ( $rows[ $firstKey ] ) as $tableField_ol )
+    {
+      list( $table_ol ) = explode('.', $tableField_ol);
+      if( in_array( $table_ol, $this->pObj->arr_realTables_notLocalised ) )
+      {
+        $arr_lang_ol[ ] = $tableField_ol;
+      }
+    }
+      // Check first row for lang_ol fields
+
+      // RETURN : there isn't any not localised table
+    if( empty ($arr_lang_ol) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Any tables isn\'t localised.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'This is strange, if you are using foreign / category tables!';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      return $rows;
+    }
+      // RETURN : there isn't any not localised table
+
+      // Get default lang overlay values
+    $arr_default_lang_ol  = array( );
+    $int_count            = 0;
+    $localTable           = $this->pObj->localTable;
+    $uid_localTable       = $localTable . '.uid';
+      // I.e: $sys_language_uid = tx_wine_main.sys_language_uid
+    $sys_language_uid     = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'languageField' ];
+
+    foreach( ( array ) $rows as $row )
+    {
+        // Default language record
+      if( $row[ $localTable . '.' . $sys_language_uid ] <= 0 )
+      {
+        foreach( ( array ) $arr_lang_ol as $field_lang_ol )
+        {
+          $uidLocal = $row[ $uid_localTable ];
+          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'field_lang_ol' ] = $field_lang_ol;
+          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'value' ]         = $row[ $field_lang_ol ];
+          $int_count++;
+        }
+      }
+      // Default language record
+    }
+      // Get default lang overlay values
+
+//var_dump('localisation 1108', $arr_default_lang_ol);
+//string(17) "localisation 1108"
+//array(3) {
+//  [1]=>
+//  array(5) {
+//    [0]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(28) "tx_wine_region.title_lang_ol"
+//      ["value"]=>
+//      string(0) ""
+//    }
+//    [1]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(28) "tx_wine_winery.title_lang_ol"
+//      ["value"]=>
+//      string(0) ""
+//    }
+//    [2]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(27) "tx_wine_style.title_lang_ol"
+//      ["value"]=>
+//      string(32) "de:Rotwein (jung)|es:Tinto Joven"
+//    }
+//    [3]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(30) "tx_wine_varietal.title_lang_ol"
+//      ["value"]=>
+//      string(33) "de:Garnacha 100%|es:Garnacha 100%"
+//    }
+//    [4]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(34) "tx_wine_drinkability.title_lang_ol"
+//      ["value"]=>
+//      string(72) "de:Sofort und die nächsten 3-4 Jahre|es:Ahora y los próximos 3-4 años"
+//    }
+//  [7]=>
+//  ...
+//  [2]=>
+//  ...
+//}
+
+      // RETURN : ...
+    if( empty ( $arr_default_lang_ol ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = '$arr_default_lang_ol is empty.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'This is strange.!';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      return $rows;
+    }
+      // RETURN : ...
+
+      // Set lang overlay values in current language record
+      // I.e: l18n_parent
+    $langPidField = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'transOrigPointerField' ]; 
+    $int_count    = 0;
+    foreach( ( array ) $rows as $key => $row )
+    {
+        // CONTINUE : current row is the default language
+      if( $row[ $localTable . '.' . $sys_language_uid ] <= 0 )
+      {
+        continue;
+      }
+        // CONTINUE : current row is the default language
+
+        // Get parent language uid
+      $uid_l10n_parent = $row[ $localTable . '.' . $langPidField ];
+        // Current language record
+      foreach( ( array ) $arr_default_lang_ol[ $uid_l10n_parent ] as $arr_field_value )
+      {
+        $field_lang_ol                  = $arr_field_value[ 'field_lang_ol' ];
+        $value_lang_ol                  = $arr_field_value[ 'value' ];
+        $rows[ $key ][ $field_lang_ol ] = $value_lang_ol;
+      }
+        // Current language record
+    }
+      // Set lang overlay values in current language record
+
+    unset( $arr_default_lang_ol );
+    unset( $arr_lang_ol );
+
+  
+    return $rows;
+  }
+
+/**
+ * consolidate_rows05removeDefault( )  : Remove the default records from $rows, if they have a translation.
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  private function consolidate_rows05removeDefault( $arrUidsKeyDefault, $rows, $table )
+  {
+    if( empty ( $arrUidsKeyDefault ) )
+    {
+      return $rows;
+    }
+
+      // I.e: $langPidField = 'l18n_parent'
+    $tableUid     = $table . '.uid';
+    $langPidField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
+    
+    foreach( ( array ) $rows as $row )
+    {
+      $int_languagePid = $row[ $table . '.' . $langPidField ];
+
+        // CONTINUE : record is without l18n_parent
+      if( ! in_array( $int_languagePid, array_keys( $arrUidsKeyDefault[ $tableUid ] ) ) )
+      {
+        continue;
+      }
+        // CONTINUE : record is without l18n_parent
+
+      foreach( ( array ) $arrUidsKeyDefault[ $tableUid ][ $int_languagePid ][ 'keys_in_rows' ] as $row_default )
+      {
+        unset( $rows[ $row_default ] );
+      }
+    }
+    
+    return $rows;
+  }
+
+/**
+ * consolidate_rows06setDefaultUid( )  : Set the default language record uid
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table )
+  {
+      // RETURN : Don't set the default uid
+    if( ! $this->conf_localisation['realURL.']['defaultLanguageLink'] )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'realURL.defaultLanguageLink is false';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return $rows;
+    }
+      // RETURN : Don't set the default uid
+
+      // RETURN ; There isn't any localised record
+    if( empty( $arrUidsLocalisedDefault ) )
+    {
+      return $rows;
+    }
+      // RETURN ; There isn't any localised record
+    
+    $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+
+    foreach( ( array ) $arrUidsLocalisedDefault[ $table . '.uid' ] as $row_localise )
+    {
+      foreach( ( array ) $row_localise[ 'keys_in_rows' ] as $key_in_rows )
+      {
+        $rows[ $key_in_rows ][ $table . '.uid' ] = $row_localise[ $langPidField ];
+      }
+    }
+    return $rows;
+  }
+
+/**
+ * consolidate_rows07languageOverlay( )  : Language Overlay
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  public function consolidate_rows07languageOverlay( $rows, $table )
+  {
+    // Do we have lang_ol fields?
+    $arr_lang_ol        = false;
+    $conf_tca           = $this->conf_localisation[ 'TCA.' ];
+    $str_field_lang_ol  = $conf_tca[ 'field.' ][ 'appendix' ];
+    $str_devider        = $conf_tca['value.']['devider'];
+    $bool_langPrefix    = $conf_tca['value.']['langPrefix'];
+
+      // DRS
+    if( $this->pObj->b_drs_localisation )
+    {
+      $prompt = 'Fields with the appendix ' . $str_field_lang_ol . ' will be used for language overlaying.';
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'If you want to use another appendix please configure: ' 
+              . $this->conf_localisation_path . '.TCA.field.appendix.';
+      t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      if( $bool_langPrefix )
+      {
+        $prompt = 'Overlay values need the language prefix. I.e. en, de, fr.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want to use overlay values without this prefixes please configure: ' 
+                . $this->conf_localisation_path . '.TCA.value.langPrefix.';
+        t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+      if( ! $bool_langPrefix )
+      {
+        $prompt = 'Overlay values don\'t need any language prefix like en, de, fr.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want to use overlay values with this prefixes please configure: '
+                . $this->conf_localisation_path . '.TCA.value.langPrefix.';
+        t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+    }
+      // DRS
+
+    $arr_lang_ol  = array( );
+    reset($rows);
+    $firstKey     = key($rows);
+    $int_count    = 0;
+
+      // Check first row for lang_ol fields
+    foreach( array_keys( $rows[ $firstKey ] ) as $tableField_ol )
+    {
+      list( $table, $field_ol ) = explode( '.' , $tableField_ol );
+      $int_field_len  = strlen( $field_ol ) - strlen( $str_field_lang_ol );
+      $field_appendix = substr( $field_ol, $int_field_len );
+      $field          = substr( $field_ol, 0, $int_field_len );
+      if( $field_appendix == $str_field_lang_ol )
+      {
+        $arr_lang_ol[ $int_count ][ 'default' ] = $table . '.' . $field;
+        $arr_lang_ol[ $int_count ][ 'overlay' ] = $tableField_ol;
+        $int_count ++;
+      }
+    }
+      // Check first row for lang_ol fields
+
+    // Process language overlay, if there are lang_ol fields
+    if( empty( $arr_lang_ol ) )
+    {
+      return $rows;
+    }
+    
+      // I.e.: $lang_prefix = 'de'
+    $lang_prefix = $GLOBALS['TSFE']->lang; 
+      // FOREACH  : rows
+    foreach( $rows as $row => $elements )
+    {
+        // Loop through all lang_ol fields
+      foreach( $arr_lang_ol as $row_lang_ol )
+      {
+          // I.e: $str_overlay = 'en:Lead Story|fr:Accroche'
+        $str_overlay = $elements[ $row_lang_ol[ 'overlay' ] ];
+          // CONTINUE : lang_ol hasn't any value
+        if( empty( $str_overlay ) )
+        {
+          continue;
+        }
+          // CONTINUE : lang_ol hasn't any value
+
+        $str_phrase_ol  = false;
+        $arr_overlay    = explode( $str_devider, trim( $str_overlay ) );
+
+        switch( $bool_langPrefix )
+        {
+          case( true ):
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+            foreach( $arr_overlay as $str_phrase )
+            {
+              if( $lang_prefix . ':' == substr( $str_phrase, 0, strlen( $lang_prefix . ':' ) ) )
+              {
+                $str_phrase_ol = substr( $str_phrase, strlen( $lang_prefix . ':' ) );
+              }
+            }
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+            break;
+          case( false ):
+          default:
+            $str_phrase_ol = $arr_overlay[ $this->lang_id - 1 ];
+            break;
+        }
+
+        if( empty( $str_phrase_ol ) )
+        {
+          continue;
+        }
+
+        $rows[ $row ][ $row_lang_ol[ 'default' ] ] = $str_phrase_ol;
+      }
+        // Loop through all lang_ol fields
+    }
+      // FOREACH  : rows
+    
+    return $rows;
+  }
+  
+/**
+ * consolidate_rowsNoRow( )  : Returns true, if there isn't any row
+ *
+ * @param	array	$rows   : SQL result rows
+ * @return	boolean         : Returns true, if there isn't any row
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function consolidate_rowsNoRow( $rows )
+  {
+
+    if( ! is_array( $rows ) )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Rows aren\'t an array. Is it ok?';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Without any row we don\'t need any consolidation.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+    
+    if( count( $rows ) < 1 )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Rows are #0. Is it ok?';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Without any row we don\'t need any consolidation.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+    
+    return false;
+  }
+
+
+
 
 
 
@@ -224,6 +931,7 @@ class tx_browser_pi1_localisation
     //
     // Get the field names for sys_language_content and for l10n_parent
 
+    $arr_localise = array( );
     $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
     $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
     // Get the field names for sys_language_content and for l10n_parent
@@ -234,7 +942,7 @@ class tx_browser_pi1_localisation
     // Do we have a localised table?
 
     $bool_tableIsLocalised = false;
-    if ($arr_localise['id_field'] && $arr_localise['pid_field'])
+    if( $arr_localise['id_field'] && $arr_localise[ 'pid_field' ] )
     {
       $bool_tableIsLocalised = true;
     }
@@ -270,6 +978,7 @@ class tx_browser_pi1_localisation
     //
     // Do we have translated fields in case of a not localised table?
 
+    $arr_tables = array( );
     if (!$bool_tableIsLocalised and !$bool_dontLocalise)
     {
       $bool_fieldIsLocalised = false;
@@ -288,7 +997,8 @@ class tx_browser_pi1_localisation
             {
               t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'.'.$str_field.'\' is translated in '.$str_field_lang_ol.'.', $this->pObj->extKey, 0);
             }
-            $arr_lang_ol[] = $table.'.'.$str_field_lang_ol;
+            // 130611
+            //$arr_lang_ol[] = $table.'.'.$str_field_lang_ol;
             $this->pObj->arr_realTables_arrFields[$table][]   = $str_field_lang_ol;
             $this->pObj->arrConsolidate['addedTableFields'][] = $table.'.'.$str_field_lang_ol;
             $arr_tables['woAlias'][]                          = $table.'.'.$str_field_lang_ol;
@@ -334,6 +1044,7 @@ class tx_browser_pi1_localisation
     // because it is possible that one filter is a field from a localised table and another filter isn't a
     // field from a localised table.
 
+    $arr_andSelect = array( );
     $arr_andSelect['woAlias'] = false;  // Default
     // Without Alias. I.e.: tx_bzdstaffdirectory_groups.sys_language_uid, tx_bzdstaffdirectory_groups.l18n_parent
 //BUGFIX 091112
@@ -379,7 +1090,7 @@ class tx_browser_pi1_localisation
     // Case is PI1_SELECTED_LANGUAGE_ONLY
 
     // Extend the SELECT query if we have fields for localisation or overlay
-    if (is_array($arr_tables))
+    if( ! empty( $arr_tables ) )
     {
       $arr_andSelect['woAlias']     = implode(', ', $arr_tables['woAlias']);
       $arr_andSelect['filter']      = implode(', ', $arr_tables['filter']);
@@ -1360,8 +2071,10 @@ class tx_browser_pi1_localisation
       //
       // Get label and flag of the default language out of the page TSconfig
 
-    $pid            = $GLOBALS['TSFE']->id;
-    $page_TSconfig  = t3lib_BEfunc :: getPagesTSconfig( $pid, $rootLine='', $returnPartArray=0 );
+    $pid              = $GLOBALS['TSFE']->id;
+    $rootLine         = '';
+    $returnPartArray  = 0;
+    $page_TSconfig  = t3lib_BEfunc :: getPagesTSconfig( $pid, $rootLine, $returnPartArray );
     $title          = $page_TSconfig['mod.']['SHARED.']['defaultLanguageLabel'];
       // Take the name without extension. I.e de.gif will become de
     list($flag)     = explode( '.', $page_TSconfig['mod.']['SHARED.']['defaultLanguageFlag'] );

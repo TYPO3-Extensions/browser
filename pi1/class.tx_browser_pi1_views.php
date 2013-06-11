@@ -391,7 +391,7 @@ class tx_browser_pi1_views
       //
       // Consolidate Localisation
 
-    $rows = $this->pObj->objLocalise3x->consolidate_rows($rows, $this->pObj->localTable);
+    $rows = $this->pObj->objLocalise->consolidate_rows($rows, $this->pObj->localTable);
     $this->pObj->rows = $rows;
       // Consolidate Localisation
 
