@@ -1745,7 +1745,7 @@ class tx_browser_pi1_map
     {
         // Get mapMarkers, lats and lons
       $arr_result = $this->renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped );
-$this->pObj->dev_var_dump( $row, $arr_result );
+$this->pObj->dev_var_dump( $row, $arr_result['data']['mapMarkers'] );
       $mapMarkers = array_merge( $mapMarkers, $arr_result['data']['mapMarkers'] );
       $lats       = array_merge( $lats, $arr_result['data']['lats'] );
       $lons       = array_merge( $lons, $arr_result['data']['lons'] );
@@ -1753,6 +1753,7 @@ $this->pObj->dev_var_dump( $row, $arr_result );
         // Get mapMarkers, lats and lons
     }
       // LOOP row
+$this->pObj->dev_var_dump( $mapMarkers );
 
       // DRS
     switch( true )
