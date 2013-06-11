@@ -1458,7 +1458,7 @@ $this->pObj->dev_var_dump( $rows );
       // DIE  : $arr_localise[ 'id_field' ] is empty
     if( empty( $arr_localise[ 'id_field' ] ) )
     {
-      $prompt = '$arr_localise[ id_field ] is empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
+      $prompt = $table . ': $arr_localise[ id_field ] is empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
       die( $prompt );
     }
       // DIE  : $arr_localise[ 'id_field' ] is empty
