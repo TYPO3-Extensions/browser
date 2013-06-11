@@ -1025,135 +1025,116 @@ class tx_browser_pi1_localisation_3x
       // 5. Remove the default records from $rows, if they have a translation.
     $rows = $this->consolidate_rows05removeDefault( $arrUidsKeyDefault, $rows, $table );
 
-
-    // 6. Set the default language record uid
-    // Should we set it?
+      // 6. Set the default language record uid
     $rows = $this->consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table );
 
-//    $bool_defaultLanguageLink = $this->conf_localisation['realURL.']['defaultLanguageLink'];
-//    if ($bool_defaultLanguageLink)
+      // 7. Language Overlay
+$this->pObj->dev_var_dump( $rows );
+    $rows = $this->consolidate_rows07languageOverlay( $rows, $table );
+$this->pObj->dev_var_dump( $rows );
+//    $arr_lang_ol        = false;
+//    $conf_tca           = $this->conf_localisation['TCA.'];
+//    $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
+//    if ($this->pObj->b_drs_localisation)
 //    {
-//      if (is_array($arrUidsLocalisedDefault))
+//      t3lib_div::devlog('[INFO/LOCALISATION] Fields with the appendix '.$str_field_lang_ol.' will be used for language overlaying.', $this->pObj->extKey, 0);
+//      t3lib_div::devlog('[HELP/LOCALISATION] If you want to use another appendix please configure:<br />'.
+//        $this->conf_localisation_path.'.TCA.field.appendix.', $this->pObj->extKey, 1);
+//    }
+//    $str_devider        = $str_field.$conf_tca['value.']['devider'];
+//    $bool_langPrefix    = $str_field.$conf_tca['value.']['langPrefix'];
+//    if ($this->pObj->b_drs_localisation)
+//    {
+//      if ($bool_langPrefix)
 //      {
-//        $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-//        foreach((array) $arrUidsLocalisedDefault[$table.'.uid'] as $uid_localiseRecord => $row_localise)
-//        {
-//          foreach((array) $row_localise['keys_in_rows'] as $key_in_rows)
-//          {
-//            //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localise[$langPidField]);
-//            $rows[$key_in_rows][$table.'.uid'] = $row_localise[$langPidField];
-//          }
-//        }
+//        t3lib_div::devlog('[INFO/LOCALISATION] Overlay values need the language prefix. I.e. en, de, fr.', $this->pObj->extKey, 0);
+//        t3lib_div::devlog('[HELP/LOCALISATION] If you want to use overlay values without this prefixes please configure:<br />'.
+//          $this->conf_localisation_path.'.TCA.value.langPrefix.', $this->pObj->extKey, 1);
+//      }
+//      if (!$bool_langPrefix)
+//      {
+//        t3lib_div::devlog('[INFO/LOCALISATION] Overlay values don\'t need any language prefix like en, de, fr.', $this->pObj->extKey, 0);
+//        t3lib_div::devlog('[HELP/LOCALISATION] If you want to use overlay values with this prefixes please configure:<br />'.
+//          $this->conf_localisation_path.'.TCA.value.langPrefix.', $this->pObj->extKey, 1);
 //      }
 //    }
-//    // Should we set it?
-//    // 6. Set the default language record uid
-
-    // 7. Language Overlay
-    // Do we have lang_ol fields?
-    $arr_lang_ol        = false;
-    $conf_tca           = $this->conf_localisation['TCA.'];
-    $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
-    if ($this->pObj->b_drs_localisation)
-    {
-      t3lib_div::devlog('[INFO/LOCALISATION] Fields with the appendix '.$str_field_lang_ol.' will be used for language overlaying.', $this->pObj->extKey, 0);
-      t3lib_div::devlog('[HELP/LOCALISATION] If you want to use another appendix please configure:<br />'.
-        $this->conf_localisation_path.'.TCA.field.appendix.', $this->pObj->extKey, 1);
-    }
-    $str_devider        = $str_field.$conf_tca['value.']['devider'];
-    $bool_langPrefix    = $str_field.$conf_tca['value.']['langPrefix'];
-    if ($this->pObj->b_drs_localisation)
-    {
-      if ($bool_langPrefix)
-      {
-        t3lib_div::devlog('[INFO/LOCALISATION] Overlay values need the language prefix. I.e. en, de, fr.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/LOCALISATION] If you want to use overlay values without this prefixes please configure:<br />'.
-          $this->conf_localisation_path.'.TCA.value.langPrefix.', $this->pObj->extKey, 1);
-      }
-      if (!$bool_langPrefix)
-      {
-        t3lib_div::devlog('[INFO/LOCALISATION] Overlay values don\'t need any language prefix like en, de, fr.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/LOCALISATION] If you want to use overlay values with this prefixes please configure:<br />'.
-          $this->conf_localisation_path.'.TCA.value.langPrefix.', $this->pObj->extKey, 1);
-      }
-    }
-
-    reset($rows);
-    $firstKey = key($rows);
-    $int_count = 0;
-
-    // Check first row for lang_ol fields
-    foreach ($rows[$firstKey] as $tableField_ol => $value)
-    {
-      list($table, $field_ol) = explode('.', $tableField_ol);
-      $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
-      $field_appendix = substr($field_ol, $int_field_len);
-      $field          = substr($field_ol, 0, $int_field_len);
-      if ($field_appendix == $str_field_lang_ol)
-      {
-        $arr_lang_ol[$int_count]['default'] = $table.'.'.$field;
-        $arr_lang_ol[$int_count]['overlay'] = $tableField_ol;
-        $int_count ++;
-      }
-    }
-    // Check first row for lang_ol fields
-
-    // Process language overlay, if there are lang_ol fields
-    if (is_array($arr_lang_ol))
-    {
-      $lang_prefix = $GLOBALS['TSFE']->lang; // Value i.e.: de
-//var_dump('localisation 1153', $lang_prefix);
-      // Loop through all SQL result rows
-      foreach ($rows as $row => $elements)
-      {
-//var_dump('localisation 1157', $elements);
-        // Loop through all lang_ol fields
-        foreach ($arr_lang_ol as $key => $row_lang_ol)
-        {
-          $str_overlay = $elements[$row_lang_ol['overlay']]; // Get the value. I.e: en:Lead Story|fr:Accroche
-          // lang_ol has a value
-          if ($str_overlay != '')
-          {
-            $str_phrase_ol = false;
-            $arr_overlay = explode($str_devider, trim($str_overlay));
-//var_dump('localisation 1166', $arr_overlay);
-
-            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
-            if ($bool_langPrefix)
-            {
-              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
-              foreach ($arr_overlay as $str_phrase)
-              {
-                if ($lang_prefix.':' == substr($str_phrase, 0, strlen($lang_prefix.':')))
-                {
-                  $str_phrase_ol = substr($str_phrase, strlen($lang_prefix.':'));
-                }
-              }
-              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
-            }
-            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
-
-            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
-            if (!$bool_langPrefix)
-            {
-              // Take the phrase out of the $arr_overlay with the key language-id minus one
-              $str_phrase_ol = $arr_overlay[$this->lang_id - 1];
-            }
-            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
-
-            if ($str_phrase_ol)
-            {
-              $rows[$row][$row_lang_ol['default']] = $str_phrase_ol;
-            }
-          }
-          // lang_ol has a value
-        }
-        // Loop through all lang_ol fields
-      }
-      // Loop through all SQL result rows
-    }
-    // Process language overlay, if there are lang_ol fields
-    // 7. Language Overlay
+//
+//    reset($rows);
+//    $firstKey = key($rows);
+//    $int_count = 0;
+//
+//    // Check first row for lang_ol fields
+//    foreach ($rows[$firstKey] as $tableField_ol => $value)
+//    {
+//      list($table, $field_ol) = explode('.', $tableField_ol);
+//      $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
+//      $field_appendix = substr($field_ol, $int_field_len);
+//      $field          = substr($field_ol, 0, $int_field_len);
+//      if ($field_appendix == $str_field_lang_ol)
+//      {
+//        $arr_lang_ol[$int_count]['default'] = $table.'.'.$field;
+//        $arr_lang_ol[$int_count]['overlay'] = $tableField_ol;
+//        $int_count ++;
+//      }
+//    }
+//    // Check first row for lang_ol fields
+//
+//    // Process language overlay, if there are lang_ol fields
+//    if (is_array($arr_lang_ol))
+//    {
+//      $lang_prefix = $GLOBALS['TSFE']->lang; // Value i.e.: de
+////var_dump('localisation 1153', $lang_prefix);
+//      // Loop through all SQL result rows
+//      foreach ($rows as $row => $elements)
+//      {
+////var_dump('localisation 1157', $elements);
+//        // Loop through all lang_ol fields
+//        foreach ($arr_lang_ol as $key => $row_lang_ol)
+//        {
+//          $str_overlay = $elements[$row_lang_ol['overlay']]; // Get the value. I.e: en:Lead Story|fr:Accroche
+//          // lang_ol has a value
+//          if ($str_overlay != '')
+//          {
+//            $str_phrase_ol = false;
+//            $arr_overlay = explode($str_devider, trim($str_overlay));
+////var_dump('localisation 1166', $arr_overlay);
+//
+//            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
+//            if ($bool_langPrefix)
+//            {
+//              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+//              foreach ($arr_overlay as $str_phrase)
+//              {
+//                if ($lang_prefix.':' == substr($str_phrase, 0, strlen($lang_prefix.':')))
+//                {
+//                  $str_phrase_ol = substr($str_phrase, strlen($lang_prefix.':'));
+//                }
+//              }
+//              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+//            }
+//            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
+//
+//            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
+//            if (!$bool_langPrefix)
+//            {
+//              // Take the phrase out of the $arr_overlay with the key language-id minus one
+//              $str_phrase_ol = $arr_overlay[$this->lang_id - 1];
+//            }
+//            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
+//
+//            if ($str_phrase_ol)
+//            {
+//              $rows[$row][$row_lang_ol['default']] = $str_phrase_ol;
+//            }
+//          }
+//          // lang_ol has a value
+//        }
+//        // Loop through all lang_ol fields
+//      }
+//      // Loop through all SQL result rows
+//    }
+//    // Process language overlay, if there are lang_ol fields
+//    // 7. Language Overlay
 
 
       // Just for development
@@ -1610,13 +1591,137 @@ class tx_browser_pi1_localisation_3x
 
     foreach( ( array ) $arrUidsLocalisedDefault[ $table . '.uid' ] as $row_localise )
     {
-$this->pObj->dev_var_dump( $row_localise );
       foreach( ( array ) $row_localise[ 'keys_in_rows' ] as $key_in_rows )
       {
         $rows[ $key_in_rows ][ $table . '.uid' ] = $row_localise[ $langPidField ];
       }
     }
-$this->pObj->dev_var_dump( $rows );
+    return $rows;
+  }
+
+/**
+ * consolidate_rows07languageOverlay( )  : Language Overlay
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  public function consolidate_rows07languageOverlay( $rows, $table )
+  {
+    // Do we have lang_ol fields?
+    $arr_lang_ol        = false;
+    $conf_tca           = $this->conf_localisation[ 'TCA.' ];
+    $str_field_lang_ol  = $conf_tca[ 'field.' ][ 'appendix' ];
+    $str_devider        = $conf_tca['value.']['devider'];
+    $bool_langPrefix    = $conf_tca['value.']['langPrefix'];
+
+      // DRS
+    if( $this->pObj->b_drs_localisation )
+    {
+      $prompt = 'Fields with the appendix ' . $str_field_lang_ol . ' will be used for language overlaying.';
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'If you want to use another appendix please configure: ' 
+              . $this->conf_localisation_path . '.TCA.field.appendix.';
+      t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      if( $bool_langPrefix )
+      {
+        $prompt = 'Overlay values need the language prefix. I.e. en, de, fr.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want to use overlay values without this prefixes please configure: ' 
+                . $this->conf_localisation_path . '.TCA.value.langPrefix.';
+        t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+      if( ! $bool_langPrefix )
+      {
+        $prompt = 'Overlay values don\'t need any language prefix like en, de, fr.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want to use overlay values with this prefixes please configure: '
+                . $this->conf_localisation_path . '.TCA.value.langPrefix.';
+        t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+    }
+      // DRS
+
+    $arr_lang_ol  = array( );
+    reset($rows);
+    $firstKey     = key($rows);
+    $int_count    = 0;
+
+      // Check first row for lang_ol fields
+    foreach( $rows[ $firstKey ] as $tableField_ol => $value )
+    {
+      list( $table, $field_ol ) = explode( '.' , $tableField_ol );
+      $int_field_len  = strlen( $field_ol ) - strlen( $str_field_lang_ol );
+      $field_appendix = substr( $field_ol, $int_field_len );
+      $field          = substr( $field_ol, 0, $int_field_len );
+      if( $field_appendix == $str_field_lang_ol )
+      {
+        $arr_lang_ol[ $int_count ][ 'default' ] = $table . '.' . $field;
+        $arr_lang_ol[ $int_count ][ 'overlay' ] = $tableField_ol;
+        $int_count ++;
+      }
+    }
+      // Check first row for lang_ol fields
+
+    // Process language overlay, if there are lang_ol fields
+    if( empty( $arr_lang_ol ) )
+    {
+      return $rows;
+    }
+    
+      // I.e.: $lang_prefix = 'de'
+    $lang_prefix = $GLOBALS['TSFE']->lang; 
+      // FOREACH  : rows
+    foreach( $rows as $row => $elements )
+    {
+        // Loop through all lang_ol fields
+      foreach( $arr_lang_ol as $row_lang_ol )
+      {
+          // I.e: $str_overlay = 'en:Lead Story|fr:Accroche'
+        $str_overlay = $elements[ $row_lang_ol[ 'overlay' ] ];
+          // CONTINUE : lang_ol hasn't any value
+        if( empty( $str_overlay ) )
+        {
+          continue;
+        }
+          // CONTINUE : lang_ol hasn't any value
+
+        $str_phrase_ol  = false;
+        $arr_overlay    = explode( $str_devider, trim( $str_overlay ) );
+
+        switch( $bool_langPrefix )
+        {
+          case( true ):
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+            foreach( $arr_overlay as $str_phrase )
+            {
+              if( $lang_prefix . ':' == substr( $str_phrase, 0, strlen( $lang_prefix . ':' ) ) )
+              {
+                $str_phrase_ol = substr( $str_phrase, strlen( $lang_prefix . ':' ) );
+              }
+            }
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+            break;
+          case( false ):
+          default:
+            $str_phrase_ol = $arr_overlay[ $this->lang_id - 1 ];
+            break;
+        }
+
+        if( empty( $str_phrase_ol ) )
+        {
+          continue;
+        }
+
+        $rows[ $row ][ $row_lang_ol[ 'default' ] ] = $str_phrase_ol;
+      }
+        // Loop through all lang_ol fields
+    }
+      // FOREACH  : rows
+    
     return $rows;
   }
   
