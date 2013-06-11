@@ -157,7 +157,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Init the browser localisation object
 
     require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation_3x.php' );
-    $this->objLocalise3x = new tx_browser_pi1_localisation ($this );
+    $this->objLocalise = new tx_browser_pi1_localisation ($this );
     require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_zz.php' );
     $this->objZz = new tx_browser_pi1_zz ($this );
       // Init the browser localisation object
@@ -237,7 +237,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // Get configured languages
 
-    $llRows = $this->objLocalise3x->sql_getLanguages( );
+    $llRows = $this->objLocalise->sql_getLanguages( );
       // Get configured languages
 
 
@@ -306,7 +306,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //      // Remove 'L' from linkVars
 //    $str_linkVarsWoL                          = $this->helper_linkVarsWoL( );
       // Save the language id for the reset below
-    $lang_id                                  = $this->objLocalise3x->lang_id;
+    $lang_id                                  = $this->objLocalise->lang_id;
       // Set and get localisation configuration
 
 
@@ -322,10 +322,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
         // Get the localised uid
         // Don't substitute non localised records with default language
-      $this->objLocalise3x->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+      //$this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+      $this->objLocalise->setLocalisationMode( PI1_SELECTED_LANGUAGE_ONLY );
         // Set current language
-      $this->objLocalise3x->lang_id               = intval( $llRows[$flag]['uid'] );
-      $llUid = $this->objLocalise3x->get_localisedUid( $table, $uid );
+      $this->objLocalise->lang_id               = intval( $llRows[$flag]['uid'] );
+      $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
         // Get the localised uid
 
         // CONTINUE there isn't any localised record
@@ -393,8 +394,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // Reset some variables, which are changed above
 
-    $this->objLocalise3x->int_localisation_mode = null;
-    $this->objLocalise3x->lang_id               = $lang_id;
+    //$this->objLocalise->int_localisation_mode = null;
+    $this->objLocalise->setLocalisationMode( null );
+    $this->objLocalise->lang_id               = $lang_id;
     $GLOBALS['TSFE']->linkVars                = $str_linkVars;
       // Reset some variables, which are changed above
 
@@ -693,7 +695,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // #44858, 130207, dwildt, 4-
 //        // dwildt, 111110, +
 //        // Get configured languages
-//      $llRows = $this->objLocalise3x->sql_getLanguages( );
+//      $llRows = $this->objLocalise->sql_getLanguages( );
 //        // dwildt, 111110, +
 
         // LOOP: files
