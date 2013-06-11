@@ -1237,10 +1237,10 @@ $this->pObj->dev_var_dump( $arr_tables );
     $bool_tableIsLocalised = false;
     switch( true )
     {
-      case( in_array( $table, $this->pObj->arr_realTables_localised[ ] ) ):
+      case( in_array( $table, $this->pObj->arr_realTables_localised ) ):
         $bool_tableIsLocalised = true;
         break;
-      case( in_array( $table, $this->pObj->arr_realTables_notLocalised[ ] ) ):
+      case( in_array( $table, $this->pObj->arr_realTables_notLocalised ) ):
       default:
         $bool_tableIsLocalised = false;
         break;
