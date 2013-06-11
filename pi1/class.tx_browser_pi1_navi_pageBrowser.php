@@ -335,7 +335,7 @@ class tx_browser_pi1_navi_pageBrowser
       // #38611, 120703, dwildt+
       // SWITCH $int_localisation_mode
     $curr_int_localisation_mode = null;
-    switch( $this->pObj->objLocalise->int_localisation_mode )
+    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -348,9 +348,10 @@ class tx_browser_pi1_navi_pageBrowser
           t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // Store current localisation mode
-        $curr_int_localisation_mode = $this->pObj->objLocalise->int_localisation_mode;
+        $curr_int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
           // Set all to default language
-        $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+        //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+        $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
         break;
       default:
           // DIE
@@ -392,7 +393,8 @@ class tx_browser_pi1_navi_pageBrowser
         $prompt = 'Localisation mode is reseted';
         t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+      //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+      $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
     }
       // SWITCH $int_localisation_mode
       // #38611, 120703, dwildt+

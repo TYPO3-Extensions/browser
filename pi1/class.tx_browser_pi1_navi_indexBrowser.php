@@ -352,7 +352,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
+      $this->int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
       $this->pObj->objLocalise->init_typoscript( );
     }
 
@@ -475,7 +475,8 @@ class tx_browser_pi1_navi_indexBrowser
         $curr_int_localisation_mode     = $this->int_localisation_mode;
           // Set all to default language
         $this->int_localisation_mode    = PI1_DEFAULT_LANGUAGE;
-        $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+        //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+        $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
         $this->bool_LLconsolidationMode = true;
           // Set all to default language
 
@@ -486,7 +487,8 @@ class tx_browser_pi1_navi_indexBrowser
             // Restore former localisation mode
           $this->bool_LLconsolidationMode = false;
           $this->int_localisation_mode    = $curr_int_localisation_mode;
-          $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+          //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+          $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
             // Restore former localisation mode
             // RETURN : Array with error prompt in case of an error
           return $arr_return;
@@ -497,7 +499,8 @@ class tx_browser_pi1_navi_indexBrowser
           // Restore former localisation mode
         $this->bool_LLconsolidationMode = false;
         $this->int_localisation_mode    = $curr_int_localisation_mode;
-        $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+        //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+        $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
           // Restore former localisation mode
           // RETURN : Array with error prompt in case of an error
         return $arr_return;
@@ -2469,7 +2472,8 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
       // Store current localisation mode
     $curr_int_localisation_mode = $this->int_localisation_mode;
       // Set localisation mode to default language
-    $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+    //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+    $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
 
     // Configure the query
     $select   = $table . ".uid";
@@ -2480,8 +2484,8 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
     $limit    = null;
 
       // Reset localisation mode to current language mode
-    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-
+    //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+    $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
       // Execute the query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
                   (
@@ -2558,8 +2562,8 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
       // Store current localisation mode
     $curr_int_localisation_mode = $this->int_localisation_mode;
       // Set localisation mode to translated language
-    $this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-
+    //$this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+    $this->pObj->objLocalise->setLocalisationMode( PI1_SELECTED_LANGUAGE_ONLY );
       // Get where for localisation
     $whereLL = $this->pObj->objLocalise->localisationFields_where( $table );
     if( empty ( $whereLL ) )
@@ -2573,8 +2577,9 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
       // Get where for localisation
 
       // Reset localisation mode to current language mode
-    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-
+    //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+    $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
+    
       // Configure the query
     $select   = $table . ".uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );

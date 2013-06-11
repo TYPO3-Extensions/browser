@@ -505,7 +505,7 @@ class tx_browser_pi1_viewlist
   private function init_localisation( )
   {
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->localisationConfig( ) )
+    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -548,14 +548,15 @@ class tx_browser_pi1_viewlist
           }
           break;
       }
+      
+      unset( $languageField );
+      unset( $transOrigPointerField );
+
     }
       // Loop through all used tables
 
-      $this->pObj->arr_realTables_localised     = array_unique( $this->pObj->arr_realTables_localised );
-      $this->pObj->arr_realTables_notLocalised  = array_unique( $this->pObj->arr_realTables_notLocalised );
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised );
-      // Build the SELECT statement
-      // Add localisation fields
+    $this->pObj->arr_realTables_localised     = array_unique( $this->pObj->arr_realTables_localised );
+    $this->pObj->arr_realTables_notLocalised  = array_unique( $this->pObj->arr_realTables_notLocalised );
   }
 
 
@@ -1166,13 +1167,14 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
         t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
         // Store current localisation mode
-      $curr_int_localisation_mode = $this->pObj->objLocalise->int_localisation_mode;
+      $curr_int_localisation_mode = $this->pObj->objLocalise->getLocalisationMode( );
         // Set all to default language
-      $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+      //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+      $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
     }
       // 120704, freemedia case, dwildt
 
-    switch( $this->pObj->objLocalise->int_localisation_mode )
+    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1196,7 +1198,8 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
         $prompt = 'Localisation mode is reseted';
         t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+      //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+      $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
     }
       // 120704, freemedia dwildt
     
@@ -1367,7 +1370,7 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
     $arr_return = array( );
 
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->int_localisation_mode )
+    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1599,7 +1602,7 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
       // #38612, 120703, dwildt+
     
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->int_localisation_mode )
+    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1906,7 +1909,7 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
   private function sql_selectLocalised( $select )
   {
       // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->int_localisation_mode )
+    switch( $this->pObj->objLocalise->getLocalisationMode( ) )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):

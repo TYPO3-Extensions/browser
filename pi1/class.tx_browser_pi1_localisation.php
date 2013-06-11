@@ -47,7 +47,7 @@
  *  512:     function localisationSingle_where($table)
  *
  *              SECTION: Configuring Localisation
- *  650:     private function localisationConfig()
+ *  650:     private function getLocalisationMode( )
  *
  *              SECTION: Consolidation
  *  774:     function consolidate_filter($rows)
@@ -95,11 +95,11 @@ class tx_browser_pi1_localisation
   var $arr_localisedTables        = null;
     // [Array] $arr_localisedTableFields[$table]['id_field']
   var $arr_localisedTableFields   = null;
-    // [Integer] See defines in the contructor. Set by localisationConfig().
-  var $int_localisation_mode      = null;
-    // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by localisationConfig().
+    // [Integer] See defines in the contructor. Set by getLocalisationMode( ).
+  private $int_localisation_mode      = null;
+    // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by getLocalisationMode( ).
   var $lang_id                    = null;
-    // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by localisationConfig().
+    // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by getLocalisationMode( ).
   var $overlay_mode               = null;
     // [Array] The current TypoScript configuration array local or global: advanced.localisation
   var $conf_localisation          = false;
@@ -134,7 +134,7 @@ class tx_browser_pi1_localisation
     define('PI1_DEFAULT_LANGUAGE_ONLY',         2);
     define('PI1_SELECTED_OR_DEFAULT_LANGUAGE',  3);
     define('PI1_SELECTED_LANGUAGE_ONLY',        4);
-    // See method localisationConfig()
+    // See method getLocalisationMode( )
     // See class.tx_browser_pi1_views.php: Workaround filter and localisation - Bugfix #9024
 
   }
@@ -199,7 +199,7 @@ class tx_browser_pi1_localisation
     $bool_dontLocalise = false;
     if(!isset($this->int_localisation_mode))
     {
-      $this->int_localisation_mode = $this->localisationConfig();
+      $this->int_localisation_mode = $this->getLocalisationMode( );
     }
     if($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
     {
@@ -431,7 +431,7 @@ class tx_browser_pi1_localisation
     $arr_localise = $this->propper_locArray($arr_localise, $table);
 
     // Get the localisation configuration
-    $this->int_localisation_mode = $this->localisationConfig();
+    $this->int_localisation_mode = $this->getLocalisationMode( );
 
 
 
@@ -602,7 +602,7 @@ class tx_browser_pi1_localisation
 
     if ($this->int_localisation_mode === false)
     {
-      $this->int_localisation_mode = $this->localisationConfig();
+      $this->int_localisation_mode = $this->getLocalisationMode( );
     }
     // Get the localisation configuration
 
@@ -696,18 +696,22 @@ class tx_browser_pi1_localisation
 
 
 
-   /**
- * Get the localisation configuration out of TypoScript config. Set the class vars $lang_id and
- * $overlay_mode. Returns one of the constants:
- * PI1_ANY_LANGUAGE, PI1_DEFAULT_LANGUAGE_ONLY, PI1_DEFAULT_LANGUAGE, PI1_SELECTED_LANGUAGE_ONLY, PI1_SELECTED_OR_DEFAULT_LANGUAGE
+/**
+ * getLocalisationMode( ) : Get the localisation configuration out of TypoScript config. 
+ *                          Set the class vars $lang_id and $overlay_mode. Returns one of the constants:
+ *                          * PI1_ANY_LANGUAGE
+ *                          * PI1_DEFAULT_LANGUAGE_ONLY
+ *                          * PI1_DEFAULT_LANGUAGE
+ *                          * PI1_SELECTED_LANGUAGE_ONLY
+ *                          * PI1_SELECTED_OR_DEFAULT_LANGUAGE
  *
  * Constants were defined in the constructor.
  *
  * @return	integer		See description above
- * @version 3.9.13
- * @since 2.0.0
+ * @version   4.5.7
+ * @since     2.0.0
  */
-  public function localisationConfig( )
+  public function getLocalisationMode( )
   {
       ////////////////////////////////////////////////////////////////////////////////
       //
@@ -833,6 +837,34 @@ class tx_browser_pi1_localisation
     return PI1_SELECTED_OR_DEFAULT_LANGUAGE;
       // RETURN display selected or default language
   }
+
+/**
+ * setLocalisationMode( ) : 
+ *
+ * @param     integer   $mode : 
+ * @return    void
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  public function setLocalisationMode( $mode )
+  {
+    switch( $mode )
+    {
+      case( PI1_ANY_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_SELECTED_LANGUAGE_ONLY ):
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // Follow the workflow
+        break;
+      default;
+        $prompt = 'Wrong value for localisation mode at ' . __METHOD__ . ' line(' . __LINE__ . ')';
+        die( $prompt );
+        break;
+    }
+    
+    $this->int_localisation_mode = $mode;
+  }
   
   
   
@@ -871,7 +903,7 @@ class tx_browser_pi1_localisation
       //
       // Init localisation
 
-    $this->localisationConfig( );
+    $this->getLocalisationMode( );
       // Init localisation
 
 
