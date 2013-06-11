@@ -795,7 +795,7 @@ class tx_browser_pi1_sql_auto
       case('single'):
         // Add the uid of the choosen record
         //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
-        $whereClause .= $this->pObj->objLocalise3x->localisationSingle_where($this->pObj->localTable);
+        $whereClause .= $this->pObj->objLocalise->localisationSingle_where($this->pObj->localTable);
         break;
       case('list'):
         // Add the search clause, if there is a search (sword)

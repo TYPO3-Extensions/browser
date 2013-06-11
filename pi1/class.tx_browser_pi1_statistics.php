@@ -497,7 +497,7 @@ class tx_browser_pi1_statistics
       // The current table hasn't any field for counting hits
 
       // Get the uid of the localised record, if there is one
-    $uid = $this->pObj->objLocalise3x->get_localisedUid( $table, $uid );
+    $uid = $this->pObj->objLocalise->get_localisedUid( $table, $uid );
 
       // Build the query
     $query = '' .
