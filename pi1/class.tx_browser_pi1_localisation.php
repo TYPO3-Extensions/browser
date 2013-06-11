@@ -56,7 +56,7 @@
  *              SECTION: Little Helpers
  * 1592:     public function get_localisedUid( $table, $uid )
  * 1670:     function init_typoscript()
- * 1735:     private function is_tableLocalised( $table )
+ * 1735:     private function init_tableLocalisation( $table )
  * 1846:     function zz_propperLocArray($arr_langFields, $table)
  *
  *              SECTION: SQL
@@ -83,6 +83,8 @@ class tx_browser_pi1_localisation
   var $conf_view  = false;
     // [String] TypoScript path to the current view. I.e. views.single.1
   var $conf_path  = false;
+    // [Object] parent object
+  public $pObj = null;
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
@@ -99,6 +101,8 @@ class tx_browser_pi1_localisation
   private $int_localisation_mode  = null;
     // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by getLocalisationMode( ).
   var $lang_id                    = null;
+    // ...
+  var $lang_mode                  = null;
     // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by getLocalisationMode( ).
   var $overlay_mode               = null;
     // [Array] The current TypoScript configuration array local or global: advanced.localisation
@@ -108,7 +112,7 @@ class tx_browser_pi1_localisation
     // [Array] l10n_mode of tableFields
   var $arr_l10n_mode              = null;
     // [Array] localised status of a tableField (true or false)
-  var $arr_localisedTableField                = null;
+  var $arr_localisedTableField    = null;
     // Variables set by this class
   
 
@@ -196,7 +200,7 @@ class tx_browser_pi1_localisation
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Just for development
-    $this->zzDevPromptRows( $promptForDev, $rows );
+    $this->zz_devPromptRows( $promptForDev, $rows );
 
       // 2. Get uids of records with default language and localised records
     $arrResult                = $this->consolidate_rows02getUids( $rows, $table );
@@ -221,7 +225,7 @@ class tx_browser_pi1_localisation
     $rows = $this->consolidate_rows07languageOverlay( $rows, $table );
 
       // Just for development
-    $this->zzDevPromptRows( $promptForDev, $rows );
+    $this->zz_devPromptRows( $promptForDev, $rows );
 
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
@@ -848,28 +852,411 @@ $this->pObj->dev_var_dump( $rows );
     return false;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+  
   /***********************************************
   *
-  * SQL query parts
+  * Get methods
   *
   **********************************************/
 
+/**
+ * getLocalisationMode( ) : Get the localisation configuration out of TypoScript config. 
+ *                          Set the class vars $lang_id and $overlay_mode. Returns one of the constants:
+ *                          * PI1_ANY_LANGUAGE
+ *                          * PI1_DEFAULT_LANGUAGE_ONLY
+ *                          * PI1_DEFAULT_LANGUAGE
+ *                          * PI1_SELECTED_LANGUAGE_ONLY
+ *                          * PI1_SELECTED_OR_DEFAULT_LANGUAGE
+ *
+ * Constants were defined in the constructor.
+ *
+ * @return	integer		See description above
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  public function getLocalisationMode( )
+  {
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN $this->int_localisation_mode is set before
+
+    if( ! ( $this->int_localisation_mode === null ) )
+    {
+      return $this->int_localisation_mode;
+    }
+      // RETURN $this->int_localisation_mode is set before
 
 
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get localisation configuration
+
+    $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
+    $this->lang_mode    = $GLOBALS['TSFE']->sys_language_mode;
+    $this->overlay_mode = $GLOBALS['TSFE']->sys_language_contentOL;
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_localisation )
+    {
+      $prompt = 'config.sys_language_uid = ' . $this->lang_id;
+      t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'config.sys_language_mode = ' . $this->lang_mode;
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'config.sys_language_overlay = ' . $this->overlay_mode;
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS - Development Reporting System
+      // Get localisation configuration
+
+    
+    
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN current language is default language
+
+    if( $this->lang_id <= 0 )
+    {
+        // DRS
+      if ( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Mode is PI1_DEFAULT_LANGUAGE';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+        // Display only records with sys_language_uid = 0 or -1
+      $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+      return PI1_DEFAULT_LANGUAGE;
+    }
+      // RETURN current language is default language
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Set default sys_language_mode
+      
+      // Possible values TYPO3 4.6
+      //  * content_fallback
+      //  * content_fallback; 1,0
+      //  * strict
+      //  * ignore
+
+      // SWITCH lang_mode
+    switch( $this->lang_mode )
+    {
+      case( 'content_fallback' ):
+        break;
+      default:
+          // DRS
+        if ( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'Sorry: current sys_language_mode "' . $this->lang_mode . '" isn\'t supported by the TYPO3 Browser.';
+          t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+          $prompt = 'sys_language_mode is set to "content_fallback".';
+          t3lib_div::devlog( '[OK/LOCALISATION] ' . $prompt, $this->pObj->extKey, -1 );
+        }
+          // DRS
+        $this->lang_mode = 'content_fallback';
+        break;
+    }
+      // SWITCH lang_mode
+      // Set default sys_language_mode
+
+    
+    
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN display selected language only
+
+    if( $this->overlay_mode == 'hideNonTranslated' )
+    {
+        // DRS
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Mode is PI1_SELECTED_LANGUAGE_ONLY';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+      $this->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+      return PI1_SELECTED_LANGUAGE_ONLY;
+    }
+      // RETURN display selected language only
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN display selected or default language
+
+      // DRS
+    if( $this->pObj->b_drs_localisation )
+    {
+      $prompt = 'Mode is PI1_SELECTED_OR_DEFAULT_LANGUAGE';
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+    $this->int_localisation_mode = PI1_SELECTED_OR_DEFAULT_LANGUAGE;
+    return PI1_SELECTED_OR_DEFAULT_LANGUAGE;
+      // RETURN display selected or default language
+  }
+
+ /**
+  * get_localisedUid( ): Method returns the uid of the localised record.
+  *                      The method checks some conditions:
+  *                      * It returns the given uid, if current language is the default language
+  *                      * It returns the given uid, if the current table isn't localised
+  *                      The method returns a localised uid in case of $this->int_localisation_mode is
+  *                      * PI1_SELECTED_LANGUAGE_ONLY or
+  *                      * PI1_SELECTED_OR_DEFAULT_LANGUAGE
+  *
+  * @param	string		$table : name of the cirrent table
+  * @param	integer		$uid   : current uid
+  * @return	void
+  * @version 3.9.3
+  * @since 3.9.3
+  */
+  public function get_localisedUid( $table, $uid )
+  {
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Init localisation
+
+    $this->getLocalisationMode( );
+      // Init localisation
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN conditions
+
+      // RETURN: Current language is the default language
+    if( $this->int_localisation_mode == PI1_DEFAULT_LANGUAGE )
+    {
+      return $uid;
+    }
+      // RETURN: Current language is the default language
+
+      // RETURN: Current table isn't localised
+    if( $this->init_tableLocalisation( $table ) == false )
+    {
+      return $uid;
+    }
+      // RETURN: Current table isn't localised
+      // RETURN conditions
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get the localised uid
+
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_SELECTED_LANGUAGE_ONLY ):
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        $uid = $this->sql_localisedUid( $table, $uid );
+        break;
+      default:
+          // Do nothing
+        if( $this->pObj->b_drs_warn )
+        {
+          $prompt_01 = ' $this->int_localisation_mode has an undefined value: \'' . $this->int_localisation_mode . '\'.';
+          $prompt_02 = 'Current table.uid (' . $table . '.' . $uid . ') won\'t be localised!';
+          t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01, $this->pObj->extKey, 2);
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt_02, $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Get the localised uid
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the localised uid
+
+    return $uid;
+      // RETURN the localised uid
+  }
+
+  
+  
+  /***********************************************
+  *
+  * Init
+  *
+  **********************************************/
+
+/**
+ * init_tableLocalisation( ):  Method checks the configuration of the given table in ext_tables.php.
+ *                        It returns true, if the table is localised.
+ *                        Table must have the fields
+ *                        * languageField
+ *                        * transOrigPointerField
+ *                        There is a warning in the DRS, if this field is missing:
+ *                        * transOrigDiffSourceField
+ *                        Method allocates values to the class variables
+ *                        * $arr_localisedTables;
+ *                        * $arr_localisedTableFields
+ *                        and the global variables
+ *                        * $this->pObj->arr_realTables_localised
+ *                        * $this->pObj->arr_realTables_notLocalised
+ *
+ * @param	string		name of the current table
+ * @return	boolean		True, if table is localised, false if not.
+ * @version 3.9.13
+ * @since 3.9.3
+ */
+  private function init_tableLocalisation( $table )
+  {
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: table.field is checked before
+
+    if( isset( $this->arr_localisedTables[$table] ) )
+    {
+      return $this->arr_localisedTables[$table];
+    }
+      // RETURN: table.field is checked before
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Load the TCA, if we don't have an table.columns array
+
+    $this->pObj->objZz->loadTCA($table);
+      // Load the TCA, if we don't have an table.columns array
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Is table localised?
+
+    switch( true )
+    {
+      case( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) ):
+          // RETURN table isn't localised
+        $this->arr_localisedTables[$table]          = false;
+        $this->pObj->arr_realTables_notLocalised[]  = $table;
+        if ($this->pObj->b_drs_localisation)
+        {
+          $prompt = 'Field languageField is missing. ' . $table . ' isn\'t localised.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        return $this->arr_localisedTables[$table];
+        break;
+          // RETURN table isn't localised
+      case( ! isset( $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ) ):
+          // RETURN table isn't localised
+        $this->arr_localisedTables[$table]          = false;
+        $this->pObj->arr_realTables_notLocalised[]  = $table;
+        if ($this->pObj->b_drs_localisation)
+        {
+          $prompt = 'Field transOrigPointerField is missing. ' . $table . ' isn\'t localised.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        return $this->arr_localisedTables[$table];
+        break;
+          // RETURN table isn't localised
+      case( ! isset( $GLOBALS['TCA'][$table]['ctrl']['transOrigDiffSourceField'] ) ):
+          // Table will handled like a localised table
+        $this->arr_localisedTables[$table]      = true;
+        $this->pObj->arr_realTables_localised[] = $table;
+        if ($this->pObj->b_drs_localisation)
+        {
+          $prompt_01 = 'Field transOrigDiffSourceField is missing. Maybe ' . $table . ' isn\'t proper localised.';
+          $prompt_02 = 'But ' . $table . ' will handled like a localised table.';
+          t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01, $this->pObj->extKey, 2);
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt_02, $this->pObj->extKey, 0);
+        }
+        break;
+          // Table will handled like a localised table
+      default:
+          // Table is localised
+        $this->arr_localisedTables[$table]      = true;
+        $this->pObj->arr_realTables_localised[] = $table;
+          // Table is localised
+    }
+      // Is table localised?
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Set the field names for sys_language_content and for l10n_parent
+
+    $this->arr_localisedTableFields[$table]['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $this->arr_localisedTableFields[$table]['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+      // Set the field names for sys_language_content and for l10n_parent
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN is table localised?
+
+    return $this->arr_localisedTables[$table];
+      // RETURN is table localised?
+
+  }
+
+ /**
+  * init_typoscript( ): Load the local or global TypoScript configuration array from advanced.localisation
+  *
+  * @return	void
+  * @version  3.9.13
+  * @since    2.0.0
+  */
+  function init_typoscript( )
+  {
+      // Short var
+    $viewWiDot = $this->view.'.';
+
+      // Try to fetch the local configuration
+    $this->conf_localisation      = $this->conf['views.'][$viewWiDot][$this->mode . '.']['advanced.']['localisation.'];
+    $this->conf_localisation_path = 'views.' . $viewWiDot . $this->mode . '.advanced.localisation';
+      // Try to fetch the local configuration
+
+      // RETURN: local TypoScript configuration is loaded
+    if( is_array( $this->conf_localisation ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = $this->conf_localisation_path .' is configured.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return;
+    }
+      // RETURN: local TypoScript configuration is loaded
+
+      // RETURN: global TypoScript configuration is loaded
+    $this->conf_localisation      = $this->conf['advanced.']['localisation.'];
+    $this->conf_localisation_path = 'advanced.localisation';
+      // DRS
+    if( $this->pObj->b_drs_localisation )
+    {
+      $prompt = $this->conf_localisation_path . ' isn\'t configured. We take the global array.';
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+    return;
+      // RETURN: global TypoScript configuration is loaded
+  }
+
+  
+  
+  /***********************************************
+  *
+  * Localisation fields
+  *
+  **********************************************/
 
 /**
  * localisationFields_select( ) : Returns different SELECT statements with the localisation or overlay fields from the current table.
@@ -900,45 +1287,8 @@ $this->pObj->dev_var_dump( $rows );
 
       // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
-
+    
     return $arr_andSelect;
-  }
-
-/**
- * localisationFields_selectDontLocalise( ) : 
- *
- * @return	boolean
- * @version     4.5.7
- * @since       4.5.7
- */
-  private function localisationFields_selectDontLocalise( )
-  {
-    $bool_dontLocalise = false;
-
-    if( $this->int_localisation_mode === null )
-    {
-      $this->int_localisation_mode = $this->getLocalisationMode( );
-    }
-    
-    switch( $this->int_localisation_mode  )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-        $bool_dontLocalise = true;
-        if( $this->pObj->b_drs_localisation )
-        {
-          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!', $this->pObj->extKey, 0);
-        }
-        break;
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $bool_dontLocalise = true;
-        if( $this->pObj->b_drs_localisation )
-        {
-          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!', $this->pObj->extKey, 0);
-        }
-        break;
-    }
-    
-    return $bool_dontLocalise;
   }
 
 /**
@@ -1033,15 +1383,18 @@ $this->pObj->dev_var_dump( $rows );
   {
     $arrReturn = array( );
     
-      // Short variables
+      // Get the field names for sys_language_content and for l10n_parent
     $arr_localise = array( );
     $arr_localise['id_field']   = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
     $arr_localise['pid_field']  = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
+      // Get the field names for sys_language_content and for l10n_parent
+      // Clean up the array
+    $arr_localise = $this->zz_propperLocArray( $arr_localise, $table );
 
       // Do we need translated/localised records?
-    $bool_dontLocalise = $this->localisationFields_selectDontLocalise( );
+    $bool_dontLocalise = $this->zz_dontLocalise( );
       // Do we have a localised table?
-    $bool_tableIsLocalised = $this->localisationFields_selectTableIsLocalised( $table );
+    $bool_tableIsLocalised = $this->zz_tableIsLocalised( $table );
 
       // RETURN : if there isn't any need for language override
     switch( true )
@@ -1087,6 +1440,14 @@ $this->pObj->dev_var_dump( $rows );
     }
       // RETURN : table isn't any element of $this->pObj->arr_realTables_arrFields
 
+      // DIE  : $arr_localise[ 'id_field' ] is empty
+    if( empty( $arr_localise[ 'id_field' ] ) )
+    {
+      $prompt = '$arr_localise[ id_field ] is empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
+      die( $prompt );
+    }
+      // DIE  : $arr_localise[ 'id_field' ] is empty
+
       // Loop through the array with all used tableFields
     foreach( $this->pObj->arr_realTables_arrFields[ $table ] as $field )
     {
@@ -1127,74 +1488,6 @@ $this->pObj->dev_var_dump( $rows );
       // Loop through the array with all used tableFields
     
     return $arrReturn;
-  }
-  
-/**
- * localisationFields_selectTableIsLocalised( ) : Do we have a localised table?
- *
- * @param	string		$table: Name of the table in the TYPO3 database / in TCA
- * @return	array		$arr_andSelect with elements woAlias, filter, wiAlias and addedFields
- * @version 3.9.3
- * @since 2.0.0
- */
-//  private function localisationFields_selectTableIsLocalised( $arr_localise, $table, $bool_dontLocalise )
-  private function localisationFields_selectTableIsLocalised( $table )
-  {
-//    $bool_tableIsLocalised = false;
-//
-//    if( $arr_localise['id_field'] && $arr_localise[ 'pid_field' ] )
-//    {
-//      $bool_tableIsLocalised = true;
-//    }
-//    
-//    if( $bool_tableIsLocalised and $bool_dontLocalise )
-//    {
-//      $bool_tableIsLocalised = false;
-//      if ($this->pObj->b_drs_localisation)
-//      {
-//        t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' is localised. But we ignore it!', $this->pObj->extKey, 0);
-//      }
-//    }
-//    
-//    if( $bool_tableIsLocalised )
-//    {
-//      $this->pObj->arr_realTables_localised[ ] = $table;
-//      if ($this->pObj->b_drs_localisation)
-//      {
-//        t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localised.', $this->pObj->extKey, 0);
-//      }
-//    }
-//    if( ! $bool_tableIsLocalised )
-//    {
-//      $this->pObj->arr_realTables_notLocalised[ ] = $table;
-//      if ($this->pObj->b_drs_localisation)
-//      {
-//        t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localised.', $this->pObj->extKey, 0);
-//        t3lib_div::devlog('[INFO/LOCALISATION] Localisation isn\'t needed.', $this->pObj->extKey, 0);
-//      }
-//    }
-    
-    if( empty( $this->pObj->arr_realTables_localised ) )
-    {
-      $prompt = '$this->pObj->arr_realTables_localised are empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
-      die( $prompt );
-    }
-    
-    $bool_tableIsLocalised = false;
-    switch( true )
-    {
-      case( in_array( $table, $this->pObj->arr_realTables_localised ) ):
-        $bool_tableIsLocalised = true;
-        break;
-      case( in_array( $table, $this->pObj->arr_realTables_notLocalised ) ):
-      default:
-        $bool_tableIsLocalised = false;
-        break;
-    }
-    
-    unset( $table );
-    
-    return $bool_tableIsLocalised;
   }
 
 
@@ -1475,170 +1768,13 @@ $this->pObj->dev_var_dump( $rows );
     return $str_andWhere;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+  
   /***********************************************
   *
-  * Configuring Localisation
+  * Set methods
   *
   **********************************************/
-
-
-
-
-/**
- * getLocalisationMode( ) : Get the localisation configuration out of TypoScript config. 
- *                          Set the class vars $lang_id and $overlay_mode. Returns one of the constants:
- *                          * PI1_ANY_LANGUAGE
- *                          * PI1_DEFAULT_LANGUAGE_ONLY
- *                          * PI1_DEFAULT_LANGUAGE
- *                          * PI1_SELECTED_LANGUAGE_ONLY
- *                          * PI1_SELECTED_OR_DEFAULT_LANGUAGE
- *
- * Constants were defined in the constructor.
- *
- * @return	integer		See description above
- * @version   4.5.7
- * @since     2.0.0
- */
-  public function getLocalisationMode( )
-  {
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN $this->int_localisation_mode is set before
-
-    if( ! ( $this->int_localisation_mode === null ) )
-    {
-      return $this->int_localisation_mode;
-    }
-      // RETURN $this->int_localisation_mode is set before
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Get localisation configuration
-
-    $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
-    $this->lang_mode    = $GLOBALS['TSFE']->sys_language_mode;
-    $this->overlay_mode = $GLOBALS['TSFE']->sys_language_contentOL;
-
-      // DRS - Development Reporting System
-    if( $this->pObj->b_drs_localisation )
-    {
-      $prompt = 'config.sys_language_uid = ' . $this->lang_id;
-      t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompt = 'config.sys_language_mode = ' . $this->lang_mode;
-      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompt = 'config.sys_language_overlay = ' . $this->overlay_mode;
-      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS - Development Reporting System
-      // Get localisation configuration
-
-    
-    
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN current language is default language
-
-    if( $this->lang_id <= 0 )
-    {
-        // DRS
-      if ( $this->pObj->b_drs_localisation )
-      {
-        $prompt = 'Mode is PI1_DEFAULT_LANGUAGE';
-        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS
-        // Display only records with sys_language_uid = 0 or -1
-      $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-      return PI1_DEFAULT_LANGUAGE;
-    }
-      // RETURN current language is default language
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Set default sys_language_mode
-      
-      // Possible values TYPO3 4.6
-      //  * content_fallback
-      //  * content_fallback; 1,0
-      //  * strict
-      //  * ignore
-
-      // SWITCH lang_mode
-    switch( $this->lang_mode )
-    {
-      case( 'content_fallback' ):
-        break;
-      default:
-          // DRS
-        if ( $this->pObj->b_drs_warn )
-        {
-          $prompt = 'Sorry: current sys_language_mode "' . $this->lang_mode . '" isn\'t supported by the TYPO3 Browser.';
-          t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'sys_language_mode is set to "content_fallback".';
-          t3lib_div::devlog( '[OK/LOCALISATION] ' . $prompt, $this->pObj->extKey, -1 );
-        }
-          // DRS
-        $this->lang_mode = 'content_fallback';
-        break;
-    }
-      // SWITCH lang_mode
-      // Set default sys_language_mode
-
-    
-    
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN display selected language only
-
-    if( $this->overlay_mode == 'hideNonTranslated' )
-    {
-        // DRS
-      if( $this->pObj->b_drs_localisation )
-      {
-        $prompt = 'Mode is PI1_SELECTED_LANGUAGE_ONLY';
-        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS
-      $this->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-      return PI1_SELECTED_LANGUAGE_ONLY;
-    }
-      // RETURN display selected language only
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN display selected or default language
-
-      // DRS
-    if( $this->pObj->b_drs_localisation )
-    {
-      $prompt = 'Mode is PI1_SELECTED_OR_DEFAULT_LANGUAGE';
-      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-    $this->int_localisation_mode = PI1_SELECTED_OR_DEFAULT_LANGUAGE;
-    return PI1_SELECTED_OR_DEFAULT_LANGUAGE;
-      // RETURN display selected or default language
-  }
 
 /**
  * setLocalisationMode( ) : 
@@ -1667,347 +1803,6 @@ $this->pObj->dev_var_dump( $rows );
     
     $this->int_localisation_mode = $mode;
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  /***********************************************
-  *
-  * Little Helpers
-  *
-  **********************************************/
-
-
-
- /**
-  * get_localisedUid( ): Method returns the uid of the localised record.
-  *                      The method checks some conditions:
-  *                      * It returns the given uid, if current language is the default language
-  *                      * It returns the given uid, if the current table isn't localised
-  *                      The method returns a localised uid in case of $this->int_localisation_mode is
-  *                      * PI1_SELECTED_LANGUAGE_ONLY or
-  *                      * PI1_SELECTED_OR_DEFAULT_LANGUAGE
-  *
-  * @param	string		$table : name of the cirrent table
-  * @param	integer		$uid   : current uid
-  * @return	void
-  * @version 3.9.3
-  * @since 3.9.3
-  */
-  public function get_localisedUid( $table, $uid )
-  {
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Init localisation
-
-    $this->getLocalisationMode( );
-      // Init localisation
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN conditions
-
-      // RETURN: Current language is the default language
-    if( $this->int_localisation_mode == PI1_DEFAULT_LANGUAGE )
-    {
-      return $uid;
-    }
-      // RETURN: Current language is the default language
-
-      // RETURN: Current table isn't localised
-    if( $this->is_tableLocalised( $table ) == false )
-    {
-      return $uid;
-    }
-      // RETURN: Current table isn't localised
-      // RETURN conditions
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Get the localised uid
-
-    switch( $this->int_localisation_mode )
-    {
-      case( PI1_SELECTED_LANGUAGE_ONLY ):
-      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        $uid = $this->sql_localisedUid( $table, $uid );
-        break;
-      default:
-          // Do nothing
-        if( $this->pObj->b_drs_warn )
-        {
-          $prompt_01 = ' $this->int_localisation_mode has an undefined value: \'' . $this->int_localisation_mode . '\'.';
-          $prompt_02 = 'Current table.uid (' . $table . '.' . $uid . ') won\'t be localised!';
-          t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01, $this->pObj->extKey, 2);
-          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt_02, $this->pObj->extKey, 0);
-        }
-        break;
-    }
-      // Get the localised uid
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN the localised uid
-
-    return $uid;
-      // RETURN the localised uid
-  }
-
-
-
-
-
-
-
-
-
- /**
-  * init_typoscript( ): Load the local or global TypoScript configuration array from advanced.localisation
-  *
-  * @return	void
-  * @version  3.9.13
-  * @since    2.0.0
-  */
-  function init_typoscript( )
-  {
-      // Short var
-    $viewWiDot = $this->view.'.';
-
-      // Try to fetch the local configuration
-    $this->conf_localisation      = $this->conf['views.'][$viewWiDot][$this->mode . '.']['advanced.']['localisation.'];
-    $this->conf_localisation_path = 'views.' . $viewWiDot . $this->mode . '.advanced.localisation';
-      // Try to fetch the local configuration
-
-      // RETURN: local TypoScript configuration is loaded
-    if( is_array( $this->conf_localisation ) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_localisation )
-      {
-        $prompt = $this->conf_localisation_path .' is configured.';
-        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS
-      return;
-    }
-      // RETURN: local TypoScript configuration is loaded
-
-      // RETURN: global TypoScript configuration is loaded
-    $this->conf_localisation      = $this->conf['advanced.']['localisation.'];
-    $this->conf_localisation_path = 'advanced.localisation';
-      // DRS
-    if( $this->pObj->b_drs_localisation )
-    {
-      $prompt = $this->conf_localisation_path . ' isn\'t configured. We take the global array.';
-      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-    return;
-      // RETURN: global TypoScript configuration is loaded
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * is_tableLocalised( ):  Method checks the configuration of the given table in ext_tables.php.
- *                        It returns true, if the table is localised.
- *                        Table must have the fields
- *                        * languageField
- *                        * transOrigPointerField
- *                        There is a warning in the DRS, if this field is missing:
- *                        * transOrigDiffSourceField
- *                        Method allocates values to the class variables
- *                        * $arr_localisedTables;
- *                        * $arr_localisedTableFields
- *                        and the global variables
- *                        * $this->pObj->arr_realTables_localised
- *                        * $this->pObj->arr_realTables_notLocalised
- *
- * @param	string		name of the current table
- * @return	boolean		True, if table is localised, false if not.
- * @version 3.9.13
- * @since 3.9.3
- */
-  private function is_tableLocalised( $table )
-  {
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN: table.field is checked before
-
-    if( isset( $this->arr_localisedTables[$table] ) )
-    {
-      return $this->arr_localisedTables[$table];
-    }
-      // RETURN: table.field is checked before
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Load the TCA, if we don't have an table.columns array
-
-    $this->pObj->objZz->loadTCA($table);
-      // Load the TCA, if we don't have an table.columns array
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Is table localised?
-
-    switch( true )
-    {
-      case( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) ):
-          // RETURN table isn't localised
-        $this->arr_localisedTables[$table]          = false;
-        $this->pObj->arr_realTables_notLocalised[]  = $table;
-        if ($this->pObj->b_drs_localisation)
-        {
-          $prompt = 'Field languageField is missing. ' . $table . ' isn\'t localised.';
-          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
-        }
-        return $this->arr_localisedTables[$table];
-        break;
-          // RETURN table isn't localised
-      case( ! isset( $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ) ):
-          // RETURN table isn't localised
-        $this->arr_localisedTables[$table]          = false;
-        $this->pObj->arr_realTables_notLocalised[]  = $table;
-        if ($this->pObj->b_drs_localisation)
-        {
-          $prompt = 'Field transOrigPointerField is missing. ' . $table . ' isn\'t localised.';
-          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
-        }
-        return $this->arr_localisedTables[$table];
-        break;
-          // RETURN table isn't localised
-      case( ! isset( $GLOBALS['TCA'][$table]['ctrl']['transOrigDiffSourceField'] ) ):
-          // Table will handled like a localised table
-        $this->arr_localisedTables[$table]      = true;
-        $this->pObj->arr_realTables_localised[] = $table;
-        if ($this->pObj->b_drs_localisation)
-        {
-          $prompt_01 = 'Field transOrigDiffSourceField is missing. Maybe ' . $table . ' isn\'t proper localised.';
-          $prompt_02 = 'But ' . $table . ' will handled like a localised table.';
-          t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01, $this->pObj->extKey, 2);
-          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt_02, $this->pObj->extKey, 0);
-        }
-        break;
-          // Table will handled like a localised table
-      default:
-          // Table is localised
-        $this->arr_localisedTables[$table]      = true;
-        $this->pObj->arr_realTables_localised[] = $table;
-          // Table is localised
-    }
-      // Is table localised?
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Set the field names for sys_language_content and for l10n_parent
-
-    $this->arr_localisedTableFields[$table]['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-    $this->arr_localisedTableFields[$table]['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
-      // Set the field names for sys_language_content and for l10n_parent
-
-
-
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN is table localised?
-
-    return $this->arr_localisedTables[$table];
-      // RETURN is table localised?
-
-  }
-
-
-
-
-
-
-
-
-
-/**
- * zz_propperLocArray( )  : Make the array propper for localisation fields.
- *                        Empty elements will removed. Field names become a table prefix.
- *
- * @param	array		$arr_langFields: Array with the field names of localisation fields
- * @param	string		$table: Name of the table in the TYPO3 database / in TCA
- * @return	array		$arr_langFields: Cleaned up array
- * 
- * @version 4.5.7
- * @since   3.x
- */
-  private function zz_propperLocArray( $arr_langFields, $table )
-  {
-      // Return, if we don't have an array
-    if( ! is_array( $arr_langFields ) )
-    {
-      return false;
-    }
-      // Return, if we don't have an array
-
-      // Remove empty elements
-    foreach( ( array ) $arr_langFields as $key => $field )
-    {
-      if( ! $field )
-      {
-        unset( $arr_langFields[ $key ] );
-      }
-    }
-      // Remove empty elements
-
-      // Return, if we don't have an array
-    if( ! is_array( $arr_langFields ) )
-    {
-      return false;
-    }
-      // Return, if we don't have an array
-
-      // Add the table. We like the table.field syntax.
-    foreach( ( array ) $arr_langFields as $key => $field )
-    {
-      $arr_langFields[ $key ] = $table . '.' . $field;
-    }
-      // Add the table. We like the table.field syntax.
-
-    if( is_array( $arr_langFields ) )
-    {
-      if( count( $arr_langFields ) == 0 )
-      {
-        unset( $arr_langFields );
-        $arr_langFields = false;
-      }
-    }
-    return $arr_langFields;
-  }
-
-
-
-
-
-
 
 
 
@@ -2016,9 +1811,6 @@ $this->pObj->dev_var_dump( $rows );
   * SQL
   *
   **********************************************/
-
-
-
 
  /**
   * sql_getLanguages( ): Get the rows of languages out of the table sys_language.
@@ -2506,54 +2298,87 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN the localised uid
   }
 
-
-
- /**
-  * zz_tablefieldIsLocalised( ): Returns whether a tableField is localised
+  
+  
+ /***********************************************
   *
-  * @param	string    $tableField : table and field in table.field-syntax
-  * @return	boolean   true or false
-  * @version 3.9.13
-  * @since   3.9.13
-  */
-  public function zz_tablefieldIsLocalised( $tableField )
+  * ZZ - Helper methods
+  *
+  **********************************************/
+ 
+/**
+ * zz_devPromptRows( )  : Just for development
+ *
+ * @param	array	$rows     : SQL result rows
+ * @param	string	$maxRows  : number of rows for prompting
+ * @return	void
+ * @internal    #46062
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+  private function zz_devPromptRows( $promptForDev, $rows, $maxRows=10 )
   {
-      // RETURN : l10n_mode 
-    if( isset( $this->arr_localisedTableField[$tableField] ) )
+    if( ! $promptForDev )
     {
-      return $this->arr_localisedTableField[$tableField];
-    }
-      // RETURN : l10n_mode 
-    
-    $l10n_mode = $this->zz_getL10n_mode( $tableField );
-    switch( $l10n_mode )
-    {
-      case( 'exclude' ):
-        $this->arr_localisedTableField[$tableField] = false;
-        break;
-      case( 'mergeIfNotBlank' ):
-        break;
-      case( 'noCopy' ):
-      case( 'prefixLangTitle' ):
-      case( false ):
-      case( null ):
-        $this->arr_localisedTableField[$tableField] = true;
-        break;
-      default:
-        $prompt = 'Sorry, this error shouldn\'t occured: l10n_mode is undefined: ' . 
-                  $l10n_mode . '<br />
-                  <br />
-                  Browser - TYPO3 without PHP<br />
-                  method: ' . __METHOD__ . '<br />
-                  line: ' . __LINE__ ;
-        die( $prompt );
-        break;
+      return;
     }
 
-    return $this->arr_localisedTableField[$tableField];
+    $rows_prompt  = array( );
+    $int_count    = 0;
+    foreach( $rows as $key => $row )
+    {
+      if( $int_count >= $maxRows )
+      {
+        break;
+      }
+      $rows_prompt[ $key ] = $row;
+      $int_count++;
+    }
+
+    $this->pObj->dev_var_dump( $rows_prompt );
   }
 
+/**
+ * zz_dontLocalise( ) : Returns true, if rows should not localised
+ *
+ * @return	boolean
+ * @version     4.5.7
+ * @since       4.5.7
+ */
+  private function zz_dontLocalise( )
+  {
+    $bool_dontLocalise = false;
 
+      // Set localisation mode
+    if( $this->int_localisation_mode === null )
+    {
+      $this->int_localisation_mode = $this->getLocalisationMode( );
+    }
+      // Set localisation mode
+    
+      // Set $bool_dontLocalise
+    switch( $this->int_localisation_mode  )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        $bool_dontLocalise = true;
+        if( $this->pObj->b_drs_localisation )
+        {
+          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!', $this->pObj->extKey, 0);
+        }
+        break;
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $bool_dontLocalise = true;
+        if( $this->pObj->b_drs_localisation )
+        {
+          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Set $bool_dontLocalise
+    
+    return $bool_dontLocalise;
+  }
 
  /**
   * zz_getL10n_mode( ): Returns the l10n_mode of the given tableField
@@ -2611,8 +2436,6 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN : l10n_mode 
     return $l10n_mode;
   }
-  
-
 
  /**
   * zz_promptLLdie( ): Prompts a localisation error and dies
@@ -2700,43 +2523,145 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * zzDevPromptRows( )  : Just for development
+ * zz_propperLocArray( )  : Make the array propper for localisation fields.
+ *                        Empty elements will removed. Field names become a table prefix.
  *
- * @param	array	$rows     : SQL result rows
- * @param	string	$maxRows  : number of rows for prompting
- * @return	void
- * @internal    #46062
+ * @param	array		$arr_langFields: Array with the field names of localisation fields
+ * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+ * @return	array		$arr_langFields: Cleaned up array
  * 
- * @version   4.5.7
- * @since     4.5.7
+ * @version 4.5.7
+ * @since   3.x
  */
-  private function zzDevPromptRows( $promptForDev, $rows, $maxRows=10 )
+  private function zz_propperLocArray( $arr_langFields, $table )
   {
-    if( ! $promptForDev )
+      // Return, if we don't have an array
+    if( ! is_array( $arr_langFields ) )
     {
-      return;
+      return false;
     }
+      // Return, if we don't have an array
 
-    $rows_prompt  = array( );
-    $int_count    = 0;
-    foreach( $rows as $key => $row )
+      // Remove empty elements
+    foreach( ( array ) $arr_langFields as $key => $field )
     {
-      if( $int_count >= $maxRows )
+      if( ! $field )
       {
-        break;
+        unset( $arr_langFields[ $key ] );
       }
-      $rows_prompt[ $key ] = $row;
-      $int_count++;
     }
+      // Remove empty elements
 
-    $this->pObj->dev_var_dump( $rows_prompt );
+      // Return, if we don't have an array
+    if( ! is_array( $arr_langFields ) )
+    {
+      return false;
+    }
+      // Return, if we don't have an array
+
+      // Add the table. We like the table.field syntax.
+    foreach( ( array ) $arr_langFields as $key => $field )
+    {
+      $arr_langFields[ $key ] = $table . '.' . $field;
+    }
+      // Add the table. We like the table.field syntax.
+
+    if( is_array( $arr_langFields ) )
+    {
+      if( count( $arr_langFields ) == 0 )
+      {
+        unset( $arr_langFields );
+        $arr_langFields = false;
+      }
+    }
+    return $arr_langFields;
   }
 
+ /**
+  * zz_tablefieldIsLocalised( ) : Returns false, if the l10n_mode of the current field is
+  *                               * exclude
+  *                               Returns true, if the l10n_mode of the current field is 
+  *                               * noCopy
+  *                               * prefixLangTitle
+  *                               * empty
+  *
+  * @param	string    $tableField : table and field in table.field-syntax
+  * @return	boolean   true or false
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  public function zz_tablefieldIsLocalised( $tableField )
+  {
+      // RETURN : l10n_mode 
+    if( isset( $this->arr_localisedTableField[ $tableField ] ) )
+    {
+      return $this->arr_localisedTableField[ $tableField ];
+    }
+      // RETURN : l10n_mode 
+    
+    $l10n_mode = $this->zz_getL10n_mode( $tableField );
+    switch( $l10n_mode )
+    {
+      case( 'exclude' ):
+        $this->arr_localisedTableField[ $tableField ] = false;
+        break;
+      case( 'mergeIfNotBlank' ):
+        break;
+      case( 'noCopy' ):
+      case( 'prefixLangTitle' ):
+      case( false ):
+      case( null ):
+        $this->arr_localisedTableField[ $tableField ] = true;
+        break;
+      default:
+        $prompt = 'Sorry, this error shouldn\'t occured: l10n_mode is undefined: ' . 
+                  $l10n_mode . '<br />
+                  <br />
+                  Browser - TYPO3 without PHP<br />
+                  method: ' . __METHOD__ . '<br />
+                  line: ' . __LINE__ ;
+        die( $prompt );
+        break;
+    }
 
-
-
-
-
+    return $this->arr_localisedTableField[ $tableField ];
+  }
+  
+/**
+ * zz_tableIsLocalised( ) : Returns true, if the current table is localised
+ *
+ * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+ * @return	array		$arr_andSelect with elements woAlias, filter, wiAlias and addedFields
+ * @version 3.9.3
+ * @since 2.0.0
+ */
+//  private function zz_tableIsLocalised( $arr_localise, $table, $bool_dontLocalise )
+  private function zz_tableIsLocalised( $table )
+  {
+      // DIE  : $this->pObj->arr_realTables_localised is empty
+    if( empty( $this->pObj->arr_realTables_localised ) )
+    {
+      $prompt = '$this->pObj->arr_realTables_localised are empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
+      die( $prompt );
+    }
+      // DIE  : $this->pObj->arr_realTables_localised is empty
+    
+    $bool_tableIsLocalised = false;
+    switch( true )
+    {
+      case( in_array( $table, $this->pObj->arr_realTables_localised ) ):
+        $bool_tableIsLocalised = true;
+        break;
+      case( in_array( $table, $this->pObj->arr_realTables_notLocalised ) ):
+      default:
+        $bool_tableIsLocalised = false;
+        break;
+    }
+    
+    unset( $table );
+    
+    return $bool_tableIsLocalised;
+  }
 
 
 
