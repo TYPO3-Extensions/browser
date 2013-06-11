@@ -1017,12 +1017,12 @@ class tx_browser_pi1_localisation_3x
       // 2. Get uids of records with default language and localised records
 
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-    $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $arrUidsLocalisedDefault, $rows );
+$this->pObj->dev_var_dump( $rows );
+    $rows = $this->consolidate_rows03HandleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows );
+$this->pObj->dev_var_dump( $rows );
 
       // 4. In case of a non localised table: Copy values from default to current language record
-$this->pObj->dev_var_dump( $rows );
-    $rows = $this->consolidate_rows04CopyDefaultToLocalised( $rows );
-$this->pObj->dev_var_dump( $rows );
+    $rows = $this->consolidate_rows04HandleTableTranslated( $rows );
 
 //    if(is_array($this->pObj->arr_realTables_notLocalised))
 //    {
@@ -1393,7 +1393,7 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows03HandleExcludeAndMergeifnotblank( )  : 
+ * consolidate_rows03HandleTableLocalised( )  : 
  *
  * @param       array   $arrUidsLocalisedDefault : 
  * @param	array	$rows   : SQL result rows
@@ -1402,14 +1402,14 @@ $this->pObj->dev_var_dump( $rows );
  * @version   4.5.7
  * @since     4.5.7
  */
-  private function consolidate_rows03HandleExcludeAndMergeifnotblank( $arrUidsLocalisedDefault, $rows )
+  private function consolidate_rows03HandleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows )
   {
       // RETURN : no localised records
     if( ! is_array( $arrUidsLocalisedDefault ) )
     {
       if( $this->pObj->b_drs_localisation )
       {
-        $prompt = 'There isn\'t any öocalised record.';
+        $prompt = 'There isn\'t any localised record.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'l10n_mode exlude and mergeIfNotBlank won\'t handled.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
@@ -1504,6 +1504,8 @@ $this->pObj->dev_var_dump( $rows );
                 break;
               
             }
+            
+            unset( $str_l10n_mode );
           }
             // Loop through the array with the l10n_mode fields
         }
@@ -1517,7 +1519,7 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows04CopyDefaultToLocalised( )  : In case of a non localised table: Copy values from default to current language record
+ * consolidate_rows04HandleTableTranslated( )  : In case of a non localised table: Copy values from default to current language record
  *
  * @param	array	$rows   : SQL result rows
  * @return	array	$rows   : Consolidated rows
@@ -1525,7 +1527,7 @@ $this->pObj->dev_var_dump( $rows );
  * @version   4.5.7
  * @since     4.5.7
  */
-  private function consolidate_rows04CopyDefaultToLocalised( $rows )
+  private function consolidate_rows04HandleTableTranslated( $rows )
   {
       // RETURN : All tables are localised
     if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
