@@ -238,7 +238,7 @@ class tx_browser_pi1_localisation
  */
   private function consolidate_rows01noLocalisation( )
   {
-    $this->int_localisation_mode = $this->localisationConfig( );
+    $this->int_localisation_mode = $this->getLocalisationMode( );
     
     if( $this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE )
     {
