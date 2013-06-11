@@ -1972,8 +1972,9 @@ class tx_browser_pi1_viewlist
                                   $arr_result['addedFields']
                                 );
       }
+$this->pObj->dev_var_dump( $arr_result );
+      unset( $arr_result );
     }
-    unset( $arr_result );
       // Loop through all used tables
 
       // Build the SELECT statement

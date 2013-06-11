@@ -983,7 +983,6 @@ class tx_browser_pi1_localisation
     {
       $bool_fieldIsLocalised = false;
       $conf_tca = $this->conf_localisation['TCA.'];
-//var_dump('localisation 229', $conf_tca, $table, $this->pObj->arr_realTables_arrFields[$table]);
       // Loop through the array with all used tableFields
       if(is_array($this->pObj->arr_realTables_arrFields[$table]))
       {
