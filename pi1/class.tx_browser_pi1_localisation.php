@@ -64,24 +64,24 @@
  * 1294:     public function localisationFields_select( $table )
  * 1317:     private function localisationFields_selectGetAndSelect( $table, $arr_tables )
  * 1397:     private function localisationFields_selectGetFieldsForLanguageOverlay( $table )
- * 1530:     function localisationFields_where( $table )
- * 1682:     function localisationSingle_where($table)
+ * 1521:     function localisationFields_where( $table )
+ * 1629:     function localisationSingle_where($table)
  *
  *              SECTION: Set methods
- * 1802:     public function setLocalisationMode( $mode )
+ * 1749:     public function setLocalisationMode( $mode )
  *
  *              SECTION: SQL
- * 1842:     public function sql_getLanguages( )
- * 2051:     private function sql_localisedUid( $table, $uid )
+ * 1789:     public function sql_getLanguages( )
+ * 1998:     private function sql_localisedUid( $table, $uid )
  *
  *              SECTION: ZZ - Helper methods
- * 2335:     private function zz_devPromptRows( $promptForDev, $rows, $maxRows=10 )
- * 2364:     private function zz_dontLocalise( )
- * 2406:     private function zz_getL10n_mode( $tableField )
- * 2464:     public function zz_promptLLdie( $method, $line )
- * 2550:     private function zz_propperLocArray( $arr_langFields, $table )
- * 2607:     public function zz_tablefieldIsLocalised( $tableField )
- * 2653:     private function zz_tableIsLocalised( $table )
+ * 2282:     private function zz_devPromptRows( $promptForDev, $rows, $maxRows=10 )
+ * 2311:     private function zz_dontLocalise( )
+ * 2353:     private function zz_getL10n_mode( $tableField )
+ * 2411:     public function zz_promptLLdie( $method, $line )
+ * 2497:     private function zz_propperLocArray( $arr_langFields, $table )
+ * 2554:     public function zz_tablefieldIsLocalised( $tableField )
+ * 2600:     private function zz_tableIsLocalised( $table )
  *
  * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
