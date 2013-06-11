@@ -38,32 +38,52 @@
  *
  *
  *
- *   70: class tx_browser_pi1_localisation
- *  124:     function __construct($parentObj)
- *
- *              SECTION: SQL query parts
- *  180:     function localisationFields_select($table)
- *  414:     function localisationFields_where($table)
- *  512:     function localisationSingle_where($table)
- *
- *              SECTION: Configuring Localisation
- *  650:     private function getLocalisationMode( )
+ *   90: class tx_browser_pi1_localisation
+ *  152:     function __construct($parentObj)
  *
  *              SECTION: Consolidation
- *  774:     function consolidate_filter($rows)
- *  946:     function consolidate_rows($rows, $table)
+ *  184:     public function consolidate_rows( $rows, $table )
+ *  263:     private function consolidate_rows01noLocalisation( )
+ *  291:     private function consolidate_rows02getUids( $rows, $table )
+ *  336:     private function consolidate_rows03handleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows )
+ *  460:     private function consolidate_rows04handleTableTranslated( $rows )
+ *  632:     private function consolidate_rows05removeDefault( $arrUidsKeyDefault, $rows, $table )
+ *  673:     private function consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table )
+ *  715:     public function consolidate_rows07languageOverlay( $rows, $table )
+ *  839:     private function consolidate_rowsNoRow( $rows )
  *
- *              SECTION: Little Helpers
- * 1592:     public function get_localisedUid( $table, $uid )
- * 1670:     function init_typoscript()
- * 1735:     private function init_tableLocalisation( $table )
- * 1846:     function zz_propperLocArray($arr_langFields, $table)
+ *              SECTION: Get methods
+ *  892:     public function getLocalisationMode( )
+ * 1034:     public function get_localisedUid( $table, $uid )
+ *
+ *              SECTION: Init
+ * 1127:     private function init_tableLocalisation( $table )
+ * 1229:     function init_typoscript( )
+ *
+ *              SECTION: Localisation fields
+ * 1294:     public function localisationFields_select( $table )
+ * 1317:     private function localisationFields_selectGetAndSelect( $table, $arr_tables )
+ * 1397:     private function localisationFields_selectGetFieldsForLanguageOverlay( $table )
+ * 1530:     function localisationFields_where( $table )
+ * 1682:     function localisationSingle_where($table)
+ *
+ *              SECTION: Set methods
+ * 1802:     public function setLocalisationMode( $mode )
  *
  *              SECTION: SQL
- * 1935:     public function sql_getLanguages( )
- * 2157:     private function sql_localisedUid( $table, $uid )
+ * 1842:     public function sql_getLanguages( )
+ * 2051:     private function sql_localisedUid( $table, $uid )
  *
- * TOTAL FUNCTIONS: 13
+ *              SECTION: ZZ - Helper methods
+ * 2335:     private function zz_devPromptRows( $promptForDev, $rows, $maxRows=10 )
+ * 2364:     private function zz_dontLocalise( )
+ * 2406:     private function zz_getL10n_mode( $tableField )
+ * 2464:     public function zz_promptLLdie( $method, $line )
+ * 2550:     private function zz_propperLocArray( $arr_langFields, $table )
+ * 2607:     public function zz_tablefieldIsLocalised( $tableField )
+ * 2653:     private function zz_tableIsLocalised( $table )
+ *
+ * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -114,7 +134,7 @@ class tx_browser_pi1_localisation
     // [Array] localised status of a tableField (true or false)
   var $arr_localisedTableField    = null;
     // Variables set by this class
-  
+
 
 
 
@@ -155,10 +175,9 @@ class tx_browser_pi1_localisation
  * consolidate_rows( )  : Consolidate the SQL-Result: The non current language records will be deleted.
  *                        Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
  *
- * @param	array	$rows   : SQL result rows
- * @param	string	$table  : The current table name
- * @return	array	$rows   : Consolidated rows
- * 
+ * @param	array		$rows   : SQL result rows
+ * @param	string		$table  : The current table name
+ * @return	array		$rows   : Consolidated rows
  * @version   4.5.7
  * @since     2.0.0
  */
@@ -166,7 +185,7 @@ class tx_browser_pi1_localisation
   {
 //$this->pObj->dev_var_dump( $rows );
       // For development only, IP must allowed in the extension manager!
-    $promptForDev = false; 
+    $promptForDev = false;
 
       // RETURN : there is no row
     if( $this->consolidate_rowsNoRow( $rows ) )
@@ -238,14 +257,13 @@ $this->pObj->dev_var_dump( $rows );
  * consolidate_rows01noLocalisation( )  : Returns true, if current language is the default language
  *
  * @return	boolean
- * 
  * @version   4.5.7
  * @since     4.5.7
  */
   private function consolidate_rows01noLocalisation( )
   {
     $this->int_localisation_mode = $this->getLocalisationMode( );
-    
+
     if( $this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE )
     {
       if( $this->pObj->b_drs_localisation )
@@ -257,24 +275,23 @@ $this->pObj->dev_var_dump( $rows );
       }
       return true;
     }
-    
+
     return false;
   }
 
 /**
- * consolidate_rows02getUids( )  : 
+ * consolidate_rows02getUids( )  :
  *
- * @param	array	$rows   : SQL result rows
- * @param	string	$table  : The current table name
- * @return	array	$arr_localise
- * 
+ * @param	array		$rows   : SQL result rows
+ * @param	string		$table  : The current table name
+ * @return	array		$arr_localise
  * @version   4.5.7
  * @since     2.0.0
  */
   private function consolidate_rows02getUids( $rows, $table )
   {
     $arrReturn = array( );
-    
+
     $tableUid     = $table . '.uid';
       // I.e: l18n_parent
     $langPidField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField'  ];
@@ -285,7 +302,7 @@ $this->pObj->dev_var_dump( $rows );
       $int_languagePid  = $row[ $table . '.' . $langPidField ];
       $int_sys_language = $row[ $table . '.' . $langField    ];
       $recordUid        = $row[ $tableUid ];
-      
+
       switch( true )
       {
         case( $int_sys_language > 0 ):
@@ -296,9 +313,9 @@ $this->pObj->dev_var_dump( $rows );
         case( $int_sys_language <= 0 ):
         default:
           $arrReturn[ 'default' ][ $tableUid ][ $recordUid ][ 'keys_in_rows' ][ ] = $key;
-          break;          
+          break;
       }
-      
+
       unset( $int_sys_language );
     }
 //$this->pObj->dev_var_dump( $arrReturn );
@@ -307,12 +324,12 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows03handleTableLocalised( )  : 
+ * consolidate_rows03handleTableLocalised( )  :
  *
- * @param       array   $arrUidsLocalisedDefault : 
- * @param	array	$rows   : SQL result rows
- * @return	array	$rows   : Consolidated rows
- * 
+ * @param	array		$arrUidsLocalisedDefault :
+ * @param	array		$rows   : SQL result rows
+ * @param	[type]		$rows: ...
+ * @return	array		$rows   : Consolidated rows
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -331,7 +348,7 @@ $this->pObj->dev_var_dump( $rows );
       return $rows;
     }
       // RETURN : no localised records
-    
+
       // Set variables
     $arr_l10n_mode  = array( );
     reset( $rows );
@@ -344,7 +361,7 @@ $this->pObj->dev_var_dump( $rows );
     {
       list( $tableL10n, $field ) = explode( '.', $tableField );
       $l10n_mode  = $GLOBALS[ 'TCA' ][ $tableL10n ][ 'columns' ][ $field ][ 'l10n_mode' ];
-        
+
       switch( true )
       {
         case( $l10n_mode == 'exclude' ):
@@ -359,7 +376,7 @@ $this->pObj->dev_var_dump( $rows );
             // Do nothing;
           break;
       }
-      
+
       unset( $l10n_mode );
     }
       // Loop through the first row for getting the l10n_mode for each field
@@ -416,9 +433,9 @@ $this->pObj->dev_var_dump( $rows );
               default:
                   // Do nothing;
                 break;
-              
+
             }
-            
+
             unset( $str_l10n_mode );
           }
             // Loop through the array with the l10n_mode fields
@@ -428,16 +445,15 @@ $this->pObj->dev_var_dump( $rows );
         // Loop through the records with localisation information
     }
       // Loop through the array with localisation information
-    
+
     return $rows;
   }
 
 /**
  * consolidate_rows04handleTableTranslated( )  : In case of a non localised table: Copy values from default to current language record
  *
- * @param	array	$rows   : SQL result rows
- * @return	array	$rows   : Consolidated rows
- * 
+ * @param	array		$rows   : SQL result rows
+ * @return	array		$rows   : Consolidated rows
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -572,7 +588,7 @@ $this->pObj->dev_var_dump( $rows );
 
       // Set lang overlay values in current language record
       // I.e: l18n_parent
-    $langPidField = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'transOrigPointerField' ]; 
+    $langPidField = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'transOrigPointerField' ];
     $int_count    = 0;
     foreach( ( array ) $rows as $key => $row )
     {
@@ -599,17 +615,17 @@ $this->pObj->dev_var_dump( $rows );
     unset( $arr_default_lang_ol );
     unset( $arr_lang_ol );
 
-  
+
     return $rows;
   }
 
 /**
  * consolidate_rows05removeDefault( )  : Remove the default records from $rows, if they have a translation.
  *
- * @param	array	$rows   : SQL result rows
- * @param	string	$table  : The current table name
- * @return	array	$rows   : Consolidated rows
- * 
+ * @param	array		$rows   : SQL result rows
+ * @param	string		$table  : The current table name
+ * @param	[type]		$table: ...
+ * @return	array		$rows   : Consolidated rows
  * @version   4.5.7
  * @since     2.0.0
  */
@@ -623,7 +639,7 @@ $this->pObj->dev_var_dump( $rows );
       // I.e: $langPidField = 'l18n_parent'
     $tableUid     = $table . '.uid';
     $langPidField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
-    
+
     foreach( ( array ) $rows as $row )
     {
       $int_languagePid = $row[ $table . '.' . $langPidField ];
@@ -640,17 +656,17 @@ $this->pObj->dev_var_dump( $rows );
         unset( $rows[ $row_default ] );
       }
     }
-    
+
     return $rows;
   }
 
 /**
  * consolidate_rows06setDefaultUid( )  : Set the default language record uid
  *
- * @param	array	$rows   : SQL result rows
- * @param	string	$table  : The current table name
- * @return	array	$rows   : Consolidated rows
- * 
+ * @param	array		$rows   : SQL result rows
+ * @param	string		$table  : The current table name
+ * @param	[type]		$table: ...
+ * @return	array		$rows   : Consolidated rows
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -674,7 +690,7 @@ $this->pObj->dev_var_dump( $rows );
       return $rows;
     }
       // RETURN ; There isn't any localised record
-    
+
     $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
 
     foreach( ( array ) $arrUidsLocalisedDefault[ $table . '.uid' ] as $row_localise )
@@ -690,10 +706,9 @@ $this->pObj->dev_var_dump( $rows );
 /**
  * consolidate_rows07languageOverlay( )  : Language Overlay
  *
- * @param	array	$rows   : SQL result rows
- * @param	string	$table  : The current table name
- * @return	array	$rows   : Consolidated rows
- * 
+ * @param	array		$rows   : SQL result rows
+ * @param	string		$table  : The current table name
+ * @return	array		$rows   : Consolidated rows
  * @version   4.5.7
  * @since     2.0.0
  */
@@ -711,14 +726,14 @@ $this->pObj->dev_var_dump( $rows );
     {
       $prompt = 'Fields with the appendix ' . $str_field_lang_ol . ' will be used for language overlaying.';
       t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompt = 'If you want to use another appendix please configure: ' 
+      $prompt = 'If you want to use another appendix please configure: '
               . $this->conf_localisation_path . '.TCA.field.appendix.';
       t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
       if( $bool_langPrefix )
       {
         $prompt = 'Overlay values need the language prefix. I.e. en, de, fr.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'If you want to use overlay values without this prefixes please configure: ' 
+        $prompt = 'If you want to use overlay values without this prefixes please configure: '
                 . $this->conf_localisation_path . '.TCA.value.langPrefix.';
         t3lib_div::devlog( '[HELP/LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
       }
@@ -759,9 +774,9 @@ $this->pObj->dev_var_dump( $rows );
     {
       return $rows;
     }
-    
+
       // I.e.: $lang_prefix = 'de'
-    $lang_prefix = $GLOBALS['TSFE']->lang; 
+    $lang_prefix = $GLOBALS['TSFE']->lang;
       // FOREACH  : rows
     foreach( $rows as $row => $elements )
     {
@@ -809,16 +824,15 @@ $this->pObj->dev_var_dump( $rows );
         // Loop through all lang_ol fields
     }
       // FOREACH  : rows
-    
+
     return $rows;
   }
-  
+
 /**
  * consolidate_rowsNoRow( )  : Returns true, if there isn't any row
  *
- * @param	array	$rows   : SQL result rows
- * @return	boolean         : Returns true, if there isn't any row
- * 
+ * @param	array		$rows   : SQL result rows
+ * @return	boolean		: Returns true, if there isn't any row
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -836,7 +850,7 @@ $this->pObj->dev_var_dump( $rows );
       }
       return true;
     }
-    
+
     if( count( $rows ) < 1 )
     {
       if( $this->pObj->b_drs_localisation )
@@ -848,12 +862,12 @@ $this->pObj->dev_var_dump( $rows );
       }
       return true;
     }
-    
+
     return false;
   }
 
-  
-  
+
+
   /***********************************************
   *
   * Get methods
@@ -861,7 +875,7 @@ $this->pObj->dev_var_dump( $rows );
   **********************************************/
 
 /**
- * getLocalisationMode( ) : Get the localisation configuration out of TypoScript config. 
+ * getLocalisationMode( ) : Get the localisation configuration out of TypoScript config.
  *                          Set the class vars $lang_id and $overlay_mode. Returns one of the constants:
  *                          * PI1_ANY_LANGUAGE
  *                          * PI1_DEFAULT_LANGUAGE_ONLY
@@ -910,8 +924,8 @@ $this->pObj->dev_var_dump( $rows );
       // DRS - Development Reporting System
       // Get localisation configuration
 
-    
-    
+
+
       ////////////////////////////////////////////////////////////////////////////////
       //
       // RETURN current language is default language
@@ -936,7 +950,7 @@ $this->pObj->dev_var_dump( $rows );
       ////////////////////////////////////////////////////////////////////////////////
       //
       // Set default sys_language_mode
-      
+
       // Possible values TYPO3 4.6
       //  * content_fallback
       //  * content_fallback; 1,0
@@ -964,8 +978,8 @@ $this->pObj->dev_var_dump( $rows );
       // SWITCH lang_mode
       // Set default sys_language_mode
 
-    
-    
+
+
       ////////////////////////////////////////////////////////////////////////////////
       //
       // RETURN display selected language only
@@ -1082,8 +1096,8 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN the localised uid
   }
 
-  
-  
+
+
   /***********************************************
   *
   * Init
@@ -1250,8 +1264,8 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN: global TypoScript configuration is loaded
   }
 
-  
-  
+
+
   /***********************************************
   *
   * Localisation fields
@@ -1282,12 +1296,12 @@ $this->pObj->dev_var_dump( $rows );
       // Load the TCA, if we don't have an table.columns array
     $this->pObj->objZz->loadTCA( $table );
 
-      // Get array with elements woAlias, filter, wiAlias and addedFields 
+      // Get array with elements woAlias, filter, wiAlias and addedFields
     $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
 
       // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
-    
+
     return $arr_andSelect;
   }
 
@@ -1295,6 +1309,7 @@ $this->pObj->dev_var_dump( $rows );
  * localisationFields_selectGetAndSelect( ) :
  *
  * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+ * @param	[type]		$arr_tables: ...
  * @return	array		$arr_andSelect with elements woAlias, filter, wiAlias and addedFields
  * @version   4.5.7
  * @since     4.5.7
@@ -1372,7 +1387,7 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * localisationFields_selectGetFieldsForLanguageOverlay( ) : 
+ * localisationFields_selectGetFieldsForLanguageOverlay( ) :
  *
  * @param	string		$table      : Name of the table in the TYPO3 database / in TCA
  * @return	array		$arrReturn  : with elements woAlias, filter, wiAlias and addedFields
@@ -1382,7 +1397,7 @@ $this->pObj->dev_var_dump( $rows );
   private function localisationFields_selectGetFieldsForLanguageOverlay( $table )
   {
     $arrReturn = array( );
-    
+
       // Get the field names for sys_language_content and for l10n_parent
     $arr_localise = array( );
     $arr_localise['id_field']   = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField'          ];
@@ -1420,7 +1435,7 @@ $this->pObj->dev_var_dump( $rows );
 
     unset( $bool_tableIsLocalised );
     unset( $bool_dontLocalise );
-    
+
     $conf_tca = $this->conf_localisation[ 'TCA.' ];
 
       // RETURN : table isn't any element of $this->pObj->arr_realTables_arrFields
@@ -1486,7 +1501,7 @@ $this->pObj->dev_var_dump( $rows );
         // DRS
     }
       // Loop through the array with all used tableFields
-    
+
     return $arrReturn;
   }
 
@@ -1500,7 +1515,7 @@ $this->pObj->dev_var_dump( $rows );
 
 
  /**
-  * localisationFields_where( ):  Returns an AND WHERE statement with the localisation 
+  * localisationFields_where( ):  Returns an AND WHERE statement with the localisation
   *                               fields from the current table,
   *                               Result depends on the localisation mode and on TCA.
   *
@@ -1768,8 +1783,8 @@ $this->pObj->dev_var_dump( $rows );
     return $str_andWhere;
   }
 
-  
-  
+
+
   /***********************************************
   *
   * Set methods
@@ -1777,10 +1792,10 @@ $this->pObj->dev_var_dump( $rows );
   **********************************************/
 
 /**
- * setLocalisationMode( ) : 
+ * setLocalisationMode( ) :
  *
- * @param     integer   $mode : 
- * @return    void
+ * @param	integer		$mode :
+ * @return	void
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -1800,7 +1815,7 @@ $this->pObj->dev_var_dump( $rows );
         die( $prompt );
         break;
     }
-    
+
     $this->int_localisation_mode = $mode;
   }
 
@@ -2298,22 +2313,22 @@ $this->pObj->dev_var_dump( $rows );
       // RETURN the localised uid
   }
 
-  
-  
+
+
  /***********************************************
   *
   * ZZ - Helper methods
   *
   **********************************************/
- 
+
 /**
  * zz_devPromptRows( )  : Just for development
  *
- * @param	array	$rows     : SQL result rows
- * @param	string	$maxRows  : number of rows for prompting
+ * @param	array		$rows     : SQL result rows
+ * @param	string		$maxRows  : number of rows for prompting
+ * @param	[type]		$maxRows: ...
  * @return	void
  * @internal    #46062
- * 
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -2356,7 +2371,7 @@ $this->pObj->dev_var_dump( $rows );
       $this->int_localisation_mode = $this->getLocalisationMode( );
     }
       // Set localisation mode
-    
+
       // Set $bool_dontLocalise
     switch( $this->int_localisation_mode  )
     {
@@ -2376,35 +2391,35 @@ $this->pObj->dev_var_dump( $rows );
         break;
     }
       // Set $bool_dontLocalise
-    
+
     return $bool_dontLocalise;
   }
 
  /**
   * zz_getL10n_mode( ): Returns the l10n_mode of the given tableField
   *
-  * @param	string	$tableField : table and field in table.field-syntax
-  * @return	string  $l10n_mode  : l10n_mode of the tableField
+  * @param	string		$tableField : table and field in table.field-syntax
+  * @return	string		$l10n_mode  : l10n_mode of the tableField
   * @version 3.9.13
   * @since   3.9.13
   */
   private function zz_getL10n_mode( $tableField )
   {
-      // RETURN : l10n_mode 
+      // RETURN : l10n_mode
     if( isset( $this->arr_l10n_mode[$tableField] ) )
     {
       return $this->arr_l10n_mode[$tableField];
     }
-      // RETURN : l10n_mode 
-    
+      // RETURN : l10n_mode
+
       // Devide tableField
     list( $table, $field ) = explode( '.', $tableField );
-    
+
       // Load the TCA
     $this->pObj->objZz->loadTCA( $table );
 
 //$this->pObj->dev_var_dump( $field, $GLOBALS['TCA'][$table]['columns'] );
-    
+
     if( ! isset( $GLOBALS['TCA'][$table]['columns'][$field] ) )
     {
       $l10n_mode = false;
@@ -2432,8 +2447,8 @@ $this->pObj->dev_var_dump( $rows );
       $l10n_mode = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
     }
     $this->arr_l10n_mode[$tableField] = $l10n_mode;
-    
-      // RETURN : l10n_mode 
+
+      // RETURN : l10n_mode
     return $l10n_mode;
   }
 
@@ -2529,7 +2544,6 @@ $this->pObj->dev_var_dump( $rows );
  * @param	array		$arr_langFields: Array with the field names of localisation fields
  * @param	string		$table: Name of the table in the TYPO3 database / in TCA
  * @return	array		$arr_langFields: Cleaned up array
- * 
  * @version 4.5.7
  * @since   3.x
  */
@@ -2580,25 +2594,25 @@ $this->pObj->dev_var_dump( $rows );
  /**
   * zz_tablefieldIsLocalised( ) : Returns false, if the l10n_mode of the current field is
   *                               * exclude
-  *                               Returns true, if the l10n_mode of the current field is 
+  *                               Returns true, if the l10n_mode of the current field is
   *                               * noCopy
   *                               * prefixLangTitle
   *                               * empty
   *
-  * @param	string    $tableField : table and field in table.field-syntax
-  * @return	boolean   true or false
+  * @param	string		$tableField : table and field in table.field-syntax
+  * @return	boolean		true or false
   * @version 3.9.13
   * @since   3.9.13
   */
   public function zz_tablefieldIsLocalised( $tableField )
   {
-      // RETURN : l10n_mode 
+      // RETURN : l10n_mode
     if( isset( $this->arr_localisedTableField[ $tableField ] ) )
     {
       return $this->arr_localisedTableField[ $tableField ];
     }
-      // RETURN : l10n_mode 
-    
+      // RETURN : l10n_mode
+
     $l10n_mode = $this->zz_getL10n_mode( $tableField );
     switch( $l10n_mode )
     {
@@ -2614,7 +2628,7 @@ $this->pObj->dev_var_dump( $rows );
         $this->arr_localisedTableField[ $tableField ] = true;
         break;
       default:
-        $prompt = 'Sorry, this error shouldn\'t occured: l10n_mode is undefined: ' . 
+        $prompt = 'Sorry, this error shouldn\'t occured: l10n_mode is undefined: ' .
                   $l10n_mode . '<br />
                   <br />
                   Browser - TYPO3 without PHP<br />
@@ -2626,7 +2640,7 @@ $this->pObj->dev_var_dump( $rows );
 
     return $this->arr_localisedTableField[ $tableField ];
   }
-  
+
 /**
  * zz_tableIsLocalised( ) : Returns true, if the current table is localised
  *
@@ -2645,7 +2659,7 @@ $this->pObj->dev_var_dump( $rows );
       die( $prompt );
     }
       // DIE  : $this->pObj->arr_realTables_localised is empty
-    
+
     $bool_tableIsLocalised = false;
     switch( true )
     {
@@ -2657,9 +2671,9 @@ $this->pObj->dev_var_dump( $rows );
         $bool_tableIsLocalised = false;
         break;
     }
-    
+
     unset( $table );
-    
+
     return $bool_tableIsLocalised;
   }
 
