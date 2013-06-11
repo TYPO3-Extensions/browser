@@ -1533,8 +1533,6 @@ class tx_browser_pi1_localisation_3x
   {
     $arr_lang_ol = array( );
 
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arr_realTables_notLocalised );
-      
       // RETURN : All tables are localised
     if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
@@ -1561,7 +1559,7 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
       }
     }
       // Check first row for lang_ol fields
-$this->pObj->dev_var_dump( $rows, $arr_lang_ol );
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_notLocalised, $arr_lang_ol );
 
     // Get default lang overlay values
     $arr_default_lang_ol  = false;

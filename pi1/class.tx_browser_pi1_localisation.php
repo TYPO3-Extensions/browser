@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.1.25
+* @version 4.5.7
 * @since 2.0.0
 */
 
