@@ -995,7 +995,7 @@ class tx_browser_pi1_localisation_3x
       // 8. Return $rows
 
       // 1. RETURN : current language is the default
-    if( $this->consolidate_rows01NoLocalisation( ) )
+    if( $this->consolidate_rows01noLocalisation( ) )
     {
       return $rows;
     }
@@ -1017,170 +1017,38 @@ class tx_browser_pi1_localisation_3x
       // 2. Get uids of records with default language and localised records
 
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
-$this->pObj->dev_var_dump( $rows );
-    $rows = $this->consolidate_rows03HandleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows );
-$this->pObj->dev_var_dump( $rows );
+    $rows = $this->consolidate_rows03handleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows );
 
       // 4. In case of a non localised table: Copy values from default to current language record
-    $rows = $this->consolidate_rows04HandleTableTranslated( $rows );
+    $rows = $this->consolidate_rows04handleTableTranslated( $rows );
 
-//    if(is_array($this->pObj->arr_realTables_notLocalised))
+
+
+$this->pObj->dev_var_dump( $rows );
+      // 5. Remove the default records from $rows, if they have a translation.
+    $rows = $this->consolidate_rows05RemoveDefault( $rows );
+$this->pObj->dev_var_dump( $rows );
+//    if(is_array($arrUidsKeyDefault))
 //    {
-//      $arr_lang_ol        = false;
-//      $conf_tca           = $this->conf_localisation['TCA.'];
-//      $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
-//
-//      reset($rows);
-//      $firstKey = key($rows);
-//
-//      // Check first row for lang_ol fields
-//      foreach( array_keys ( $rows[$firstKey] ) as $tableField_ol )
+//      $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+//      foreach ($rows as $row => $elements)
 //      {
-//        list($table_ol, $field_ol) = explode('.', $tableField_ol);
-//        if(in_array($table_ol, $this->pObj->arr_realTables_notLocalised))
+//        $int_languagePid = $elements[$table.'.'.$langPidField];
+//        // If the record has an element with the key l18n_parent i.e.
+//        if (in_array($int_languagePid, array_keys($arrUidsKeyDefault[$table.'.uid'])))
 //        {
-//          $arr_lang_ol[] = $tableField_ol;
-//        }
-////        $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
-////        $field_appendix = substr($field_ol, $int_field_len);
-////        $field          = substr($field_ol, 0, $int_field_len);
-////        if ($field_appendix == $str_field_lang_ol)
-////        {
-////          $arr_lang_ol[] = $table2.'.'.$field;
-////          $arr_lang_ol[] = $tableField_ol;
-////        }
-//      }
-//    }
-//    // Check first row for lang_ol fields
-//
-//    // Get default lang overlay values
-//    $arr_default_lang_ol  = false;
-//    $int_count            = 0;
-//    if(is_array($arr_lang_ol))
-//    {
-//      $localTable       = $this->pObj->localTable;
-//      $uid_localTable   = $localTable.'.uid';
-//      $sys_language_uid = $GLOBALS['TCA'][$localTable]['ctrl']['languageField'];  // I.e. tx_wine_main.sys_language_uid
-//
-//      $arr_default_lang_ol = false;
-//      foreach((array) $rows as $row => $elements)
-//      {
-//        // Default language record
-//        if($elements[$localTable.'.'.$sys_language_uid] <= 0)
-//        {
-//          foreach((array) $arr_lang_ol as $key => $field_lang_ol)
+//          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
+//          foreach((array) $arrUidsKeyDefault[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
 //          {
-//            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['field_lang_ol'] = $field_lang_ol;
-//            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['value']         = $elements[$field_lang_ol];
-//            $int_count++;
+//            //var_dump($table.'.uid: '.$int_languagePid.': '.$row_default);
+//            unset($rows[$row_default]);
 //          }
+//          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
 //        }
-//        // Default language record
+//        // If the record has an element with the key l18n_parent i.e.
 //      }
 //    }
-//    // Get default lang overlay values
-//
-////var_dump('localisation 1108', $arr_default_lang_ol);
-////string(17) "localisation 1108"
-////array(3) {
-////  [1]=>
-////  array(5) {
-////    [0]=>
-////    array(2) {
-////      ["field_lang_ol"]=>
-////      string(28) "tx_wine_region.title_lang_ol"
-////      ["value"]=>
-////      string(0) ""
-////    }
-////    [1]=>
-////    array(2) {
-////      ["field_lang_ol"]=>
-////      string(28) "tx_wine_winery.title_lang_ol"
-////      ["value"]=>
-////      string(0) ""
-////    }
-////    [2]=>
-////    array(2) {
-////      ["field_lang_ol"]=>
-////      string(27) "tx_wine_style.title_lang_ol"
-////      ["value"]=>
-////      string(32) "de:Rotwein (jung)|es:Tinto Joven"
-////    }
-////    [3]=>
-////    array(2) {
-////      ["field_lang_ol"]=>
-////      string(30) "tx_wine_varietal.title_lang_ol"
-////      ["value"]=>
-////      string(33) "de:Garnacha 100%|es:Garnacha 100%"
-////    }
-////    [4]=>
-////    array(2) {
-////      ["field_lang_ol"]=>
-////      string(34) "tx_wine_drinkability.title_lang_ol"
-////      ["value"]=>
-////      string(72) "de:Sofort und die nächsten 3-4 Jahre|es:Ahora y los próximos 3-4 años"
-////    }
-////  [7]=>
-////  ...
-////  [2]=>
-////  ...
-////}
-//
-//    // Set lang overlay values in current language record
-//    if(is_array($arr_default_lang_ol))
-//    {
-//      $langPidField = $GLOBALS['TCA'][$localTable]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-//      $int_count    = 0;
-//  //var_dump('localisation 1135', $rows);
-//      foreach((array) $rows as $row => $elements)
-//      {
-//  //var_dump('localisation 1137', $elements);
-//        // Current language record
-//        if($elements[$localTable.'.'.$sys_language_uid] > 0)
-//        {
-//          // Get parent language uid
-//          $uid_l10n_parent = $elements[$localTable.'.'.$langPidField];
-//  //var_dump('localisation 1142', $arr_default_lang_ol[$uid_l10n_parent]);
-//          foreach((array) $arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
-//          {
-//            $field_lang_ol              = $arr_field_value['field_lang_ol'];
-//            $value_lang_ol              = $arr_field_value['value'];
-//            $rows[$row][$field_lang_ol] = $value_lang_ol;
-//          }
-//        }
-//        // Current language record
-//      }
-//    }
-//    // Set lang overlay values in current language record
-////var_dump('localisation 1153', $rows);
-//
-//    unset($arr_default_lang_ol);
-//    unset($arr_lang_ol);
-//    // 4. In case of a non localised table: Copy values from default to current language record
-
-
-    // 5. Remove the default records from $rows, if they have a translation.
-    if(is_array($arrUidsKeyDefault))
-    {
-      $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-      foreach ($rows as $row => $elements)
-      {
-        $int_languagePid = $elements[$table.'.'.$langPidField];
-        // If the record has an element with the key l18n_parent i.e.
-        if (in_array($int_languagePid, array_keys($arrUidsKeyDefault[$table.'.uid'])))
-        {
-          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
-          foreach((array) $arrUidsKeyDefault[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
-          {
-            //var_dump($table.'.uid: '.$int_languagePid.': '.$row_default);
-            unset($rows[$row_default]);
-          }
-          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
-        }
-        // If the record has an element with the key l18n_parent i.e.
-      }
-    }
-    // 5. Remove the default records from $rows, if they have a translation.
+//    // 5. Remove the default records from $rows, if they have a translation.
 
 
     // 6. Set the default language record uid
@@ -1321,14 +1189,14 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows01NoLocalisation( )  : Returns true, if current language is the default language
+ * consolidate_rows01noLocalisation( )  : Returns true, if current language is the default language
  *
  * @return	boolean
  * 
  * @version   4.5.7
  * @since     4.5.7
  */
-  private function consolidate_rows01NoLocalisation( )
+  private function consolidate_rows01noLocalisation( )
   {
     $this->int_localisation_mode = $this->localisationConfig( );
     
@@ -1393,7 +1261,7 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows03HandleTableLocalised( )  : 
+ * consolidate_rows03handleTableLocalised( )  : 
  *
  * @param       array   $arrUidsLocalisedDefault : 
  * @param	array	$rows   : SQL result rows
@@ -1402,7 +1270,7 @@ $this->pObj->dev_var_dump( $rows );
  * @version   4.5.7
  * @since     4.5.7
  */
-  private function consolidate_rows03HandleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows )
+  private function consolidate_rows03handleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows )
   {
       // RETURN : no localised records
     if( ! is_array( $arrUidsLocalisedDefault ) )
@@ -1519,7 +1387,7 @@ $this->pObj->dev_var_dump( $rows );
   }
 
 /**
- * consolidate_rows04HandleTableTranslated( )  : In case of a non localised table: Copy values from default to current language record
+ * consolidate_rows04handleTableTranslated( )  : In case of a non localised table: Copy values from default to current language record
  *
  * @param	array	$rows   : SQL result rows
  * @return	array	$rows   : Consolidated rows
@@ -1527,7 +1395,7 @@ $this->pObj->dev_var_dump( $rows );
  * @version   4.5.7
  * @since     4.5.7
  */
-  private function consolidate_rows04HandleTableTranslated( $rows )
+  private function consolidate_rows04handleTableTranslated( $rows )
   {
       // RETURN : All tables are localised
     if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
@@ -1686,6 +1554,47 @@ $this->pObj->dev_var_dump( $rows );
     unset( $arr_lang_ol );
 
   
+    return $rows;
+  }
+
+/**
+ * consolidate_rows05RemoveDefault( )  : Remove the default records from $rows, if they have a translation.
+ *
+ * @param	array	$rows   : SQL result rows
+ * @param	string	$table  : The current table name
+ * @return	array	$rows   : Consolidated rows
+ * 
+ * @version   4.5.7
+ * @since     2.0.0
+ */
+  public function consolidate_rows05RemoveDefault( $arrUidsKeyDefault, $rows, $table )
+  {
+    if( empty ( $arrUidsKeyDefault ) )
+    {
+      return $rows;
+    }
+
+      // I.e: $langPidField = 'l18n_parent'
+    $tableUid     = $table . '.uid';
+    $langPidField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
+    
+    foreach( ( array ) $rows as $row )
+    {
+      $int_languagePid = $row[ $table . '.' . $langPidField ];
+
+        // CONTINUE : record is without l18n_parent
+      if( ! in_array( $int_languagePid, array_keys( $arrUidsKeyDefault[ $tableUid ] ) ) )
+      {
+        continue;
+      }
+        // CONTINUE : record is without l18n_parent
+
+      foreach( ( array ) $arrUidsKeyDefault[ $tableUid ][ $int_languagePid ][ 'keys_in_rows' ] as $row_default )
+      {
+        unset( $rows[ $row_default ] );
+      }
+    }
+    
     return $rows;
   }
   
