@@ -1882,7 +1882,7 @@ class tx_browser_pi1_map
       }
       $markerUid = $catValues[ 'markerUid' ];
         // Get markerTable and markerUid
-$this->pObj->dev_var_dump( $row );
+$this->pObj->dev_var_dump( $row, $catValues );
 
         // Set mapMarker
       $mapMarker  = array
