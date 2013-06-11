@@ -425,7 +425,7 @@ $this->pObj->dev_var_dump( $categoryLabels );
     {
       $this->arrCategories['icons']   = $catIcons;
     }
-//$this->pObj->dev_var_dump( $this->arrCategories );
+$this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
   }
 
