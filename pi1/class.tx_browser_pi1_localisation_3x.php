@@ -1658,7 +1658,7 @@ $this->pObj->dev_var_dump( $rows );
       // I.e: l18n_parent
     $langPidField = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'transOrigPointerField' ]; 
     $int_count    = 0;
-    foreach( ( array ) $rows as $row )
+    foreach( ( array ) $rows as $key => $row )
     {
         // CONTINUE : current row is the default language
       if( $row[ $localTable . '.' . $sys_language_uid ] <= 0 )
@@ -1670,7 +1670,7 @@ $this->pObj->dev_var_dump( $rows );
         // Get parent language uid
       $uid_l10n_parent = $row[ $localTable . '.' . $langPidField ];
         // Current language record
-      foreach( ( array ) $arr_default_lang_ol[ $uid_l10n_parent ] as $key => $arr_field_value )
+      foreach( ( array ) $arr_default_lang_ol[ $uid_l10n_parent ] as $arr_field_value )
       {
         $field_lang_ol                  = $arr_field_value[ 'field_lang_ol' ];
         $value_lang_ol                  = $arr_field_value[ 'value' ];
