@@ -1881,6 +1881,11 @@ class tx_browser_pi1_map
           break;
       }
       $markerUid = $catValues[ 'markerUid' ];
+        // 130612, dwildt, 4+
+      if( empty ( $markerUid ) )
+      {
+        $markerUid = 'uid';
+      }
         // Get markerTable and markerUid
 $this->pObj->dev_var_dump( $row, $catValues );
 
