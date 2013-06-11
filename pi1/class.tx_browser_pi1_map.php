@@ -364,9 +364,7 @@ class tx_browser_pi1_map
       // Get categories from the rows
 
       // Remove non unique category labels
-$this->pObj->dev_var_dump( $categoryLabels );
     $categoryLabels = array_unique( $categoryLabels );
-$this->pObj->dev_var_dump( $categoryLabels );
 
       // Order the category labels
     $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
@@ -425,7 +423,7 @@ $this->pObj->dev_var_dump( $categoryLabels );
     {
       $this->arrCategories['icons']   = $catIcons;
     }
-$this->pObj->dev_var_dump( $this->arrCategories );
+//$this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
   }
 
@@ -1604,6 +1602,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       // Substitute marker HTML
     $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate )
                   + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
+$this->pObj->dev_var_dump( $markerArray );
     $mapTemplate  = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
       // Substitute marker HTML
 
