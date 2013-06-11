@@ -1013,154 +1013,150 @@ class tx_browser_pi1_localisation_3x
     $arrResult                = $this->consolidate_rows02getUids( $rows, $table );
     $arrUidsKeyDefault        = $arrResult[ 'default'   ];
     $arrUidsLocalisedDefault  = $arrResult[ 'localised' ];
-//$this->pObj->dev_var_dump( $arrResult, $rows );
     unset( $arrResult );
       // 2. Get uids of records with default language and localised records
 
-//$this->pObj->dev_var_dump( $rows );
-
-
       // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
     $rows = $this->consolidate_rows03HandleExcludeAndMergeifnotblank( $arrUidsLocalisedDefault, $rows );
-//$this->pObj->dev_var_dump( $rows );
 
+      // 4. In case of a non localised table: Copy values from default to current language record
+$this->pObj->dev_var_dump( $rows );
+    $rows = $this->consolidate_rows04CopyDefaultToLocalised( $rows );
+$this->pObj->dev_var_dump( $rows );
 
-    // 4. In case of a non localised table: Copy values from default to current language record
-    $rows2 = $this->consolidate_rows04CopyDefaultToLocalised( $rows );
-
-    if(is_array($this->pObj->arr_realTables_notLocalised))
-    {
-      $arr_lang_ol        = false;
-      $conf_tca           = $this->conf_localisation['TCA.'];
-      $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
-
-      reset($rows);
-      $firstKey = key($rows);
-
-      // Check first row for lang_ol fields
-      foreach( array_keys ( $rows[$firstKey] ) as $tableField_ol )
-      {
-        list($table_ol, $field_ol) = explode('.', $tableField_ol);
-        if(in_array($table_ol, $this->pObj->arr_realTables_notLocalised))
-        {
-          $arr_lang_ol[] = $tableField_ol;
-        }
-//        $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
-//        $field_appendix = substr($field_ol, $int_field_len);
-//        $field          = substr($field_ol, 0, $int_field_len);
-//        if ($field_appendix == $str_field_lang_ol)
+//    if(is_array($this->pObj->arr_realTables_notLocalised))
+//    {
+//      $arr_lang_ol        = false;
+//      $conf_tca           = $this->conf_localisation['TCA.'];
+//      $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
+//
+//      reset($rows);
+//      $firstKey = key($rows);
+//
+//      // Check first row for lang_ol fields
+//      foreach( array_keys ( $rows[$firstKey] ) as $tableField_ol )
+//      {
+//        list($table_ol, $field_ol) = explode('.', $tableField_ol);
+//        if(in_array($table_ol, $this->pObj->arr_realTables_notLocalised))
 //        {
-//          $arr_lang_ol[] = $table2.'.'.$field;
 //          $arr_lang_ol[] = $tableField_ol;
 //        }
-      }
-    }
-    // Check first row for lang_ol fields
-
-    // Get default lang overlay values
-    $arr_default_lang_ol  = false;
-    $int_count            = 0;
-    if(is_array($arr_lang_ol))
-    {
-      $localTable       = $this->pObj->localTable;
-      $uid_localTable   = $localTable.'.uid';
-      $sys_language_uid = $GLOBALS['TCA'][$localTable]['ctrl']['languageField'];  // I.e. tx_wine_main.sys_language_uid
-
-      $arr_default_lang_ol = false;
-      foreach((array) $rows as $row => $elements)
-      {
-        // Default language record
-        if($elements[$localTable.'.'.$sys_language_uid] <= 0)
-        {
-          foreach((array) $arr_lang_ol as $key => $field_lang_ol)
-          {
-            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['field_lang_ol'] = $field_lang_ol;
-            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['value']         = $elements[$field_lang_ol];
-            $int_count++;
-          }
-        }
-        // Default language record
-      }
-    }
-    // Get default lang overlay values
-
-//var_dump('localisation 1108', $arr_default_lang_ol);
-//string(17) "localisation 1108"
-//array(3) {
-//  [1]=>
-//  array(5) {
-//    [0]=>
-//    array(2) {
-//      ["field_lang_ol"]=>
-//      string(28) "tx_wine_region.title_lang_ol"
-//      ["value"]=>
-//      string(0) ""
+////        $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
+////        $field_appendix = substr($field_ol, $int_field_len);
+////        $field          = substr($field_ol, 0, $int_field_len);
+////        if ($field_appendix == $str_field_lang_ol)
+////        {
+////          $arr_lang_ol[] = $table2.'.'.$field;
+////          $arr_lang_ol[] = $tableField_ol;
+////        }
+//      }
 //    }
-//    [1]=>
-//    array(2) {
-//      ["field_lang_ol"]=>
-//      string(28) "tx_wine_winery.title_lang_ol"
-//      ["value"]=>
-//      string(0) ""
+//    // Check first row for lang_ol fields
+//
+//    // Get default lang overlay values
+//    $arr_default_lang_ol  = false;
+//    $int_count            = 0;
+//    if(is_array($arr_lang_ol))
+//    {
+//      $localTable       = $this->pObj->localTable;
+//      $uid_localTable   = $localTable.'.uid';
+//      $sys_language_uid = $GLOBALS['TCA'][$localTable]['ctrl']['languageField'];  // I.e. tx_wine_main.sys_language_uid
+//
+//      $arr_default_lang_ol = false;
+//      foreach((array) $rows as $row => $elements)
+//      {
+//        // Default language record
+//        if($elements[$localTable.'.'.$sys_language_uid] <= 0)
+//        {
+//          foreach((array) $arr_lang_ol as $key => $field_lang_ol)
+//          {
+//            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['field_lang_ol'] = $field_lang_ol;
+//            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['value']         = $elements[$field_lang_ol];
+//            $int_count++;
+//          }
+//        }
+//        // Default language record
+//      }
 //    }
-//    [2]=>
-//    array(2) {
-//      ["field_lang_ol"]=>
-//      string(27) "tx_wine_style.title_lang_ol"
-//      ["value"]=>
-//      string(32) "de:Rotwein (jung)|es:Tinto Joven"
+//    // Get default lang overlay values
+//
+////var_dump('localisation 1108', $arr_default_lang_ol);
+////string(17) "localisation 1108"
+////array(3) {
+////  [1]=>
+////  array(5) {
+////    [0]=>
+////    array(2) {
+////      ["field_lang_ol"]=>
+////      string(28) "tx_wine_region.title_lang_ol"
+////      ["value"]=>
+////      string(0) ""
+////    }
+////    [1]=>
+////    array(2) {
+////      ["field_lang_ol"]=>
+////      string(28) "tx_wine_winery.title_lang_ol"
+////      ["value"]=>
+////      string(0) ""
+////    }
+////    [2]=>
+////    array(2) {
+////      ["field_lang_ol"]=>
+////      string(27) "tx_wine_style.title_lang_ol"
+////      ["value"]=>
+////      string(32) "de:Rotwein (jung)|es:Tinto Joven"
+////    }
+////    [3]=>
+////    array(2) {
+////      ["field_lang_ol"]=>
+////      string(30) "tx_wine_varietal.title_lang_ol"
+////      ["value"]=>
+////      string(33) "de:Garnacha 100%|es:Garnacha 100%"
+////    }
+////    [4]=>
+////    array(2) {
+////      ["field_lang_ol"]=>
+////      string(34) "tx_wine_drinkability.title_lang_ol"
+////      ["value"]=>
+////      string(72) "de:Sofort und die nächsten 3-4 Jahre|es:Ahora y los próximos 3-4 años"
+////    }
+////  [7]=>
+////  ...
+////  [2]=>
+////  ...
+////}
+//
+//    // Set lang overlay values in current language record
+//    if(is_array($arr_default_lang_ol))
+//    {
+//      $langPidField = $GLOBALS['TCA'][$localTable]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+//      $int_count    = 0;
+//  //var_dump('localisation 1135', $rows);
+//      foreach((array) $rows as $row => $elements)
+//      {
+//  //var_dump('localisation 1137', $elements);
+//        // Current language record
+//        if($elements[$localTable.'.'.$sys_language_uid] > 0)
+//        {
+//          // Get parent language uid
+//          $uid_l10n_parent = $elements[$localTable.'.'.$langPidField];
+//  //var_dump('localisation 1142', $arr_default_lang_ol[$uid_l10n_parent]);
+//          foreach((array) $arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
+//          {
+//            $field_lang_ol              = $arr_field_value['field_lang_ol'];
+//            $value_lang_ol              = $arr_field_value['value'];
+//            $rows[$row][$field_lang_ol] = $value_lang_ol;
+//          }
+//        }
+//        // Current language record
+//      }
 //    }
-//    [3]=>
-//    array(2) {
-//      ["field_lang_ol"]=>
-//      string(30) "tx_wine_varietal.title_lang_ol"
-//      ["value"]=>
-//      string(33) "de:Garnacha 100%|es:Garnacha 100%"
-//    }
-//    [4]=>
-//    array(2) {
-//      ["field_lang_ol"]=>
-//      string(34) "tx_wine_drinkability.title_lang_ol"
-//      ["value"]=>
-//      string(72) "de:Sofort und die nächsten 3-4 Jahre|es:Ahora y los próximos 3-4 años"
-//    }
-//  [7]=>
-//  ...
-//  [2]=>
-//  ...
-//}
-
-    // Set lang overlay values in current language record
-    if(is_array($arr_default_lang_ol))
-    {
-      $langPidField = $GLOBALS['TCA'][$localTable]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-      $int_count    = 0;
-  //var_dump('localisation 1135', $rows);
-      foreach((array) $rows as $row => $elements)
-      {
-  //var_dump('localisation 1137', $elements);
-        // Current language record
-        if($elements[$localTable.'.'.$sys_language_uid] > 0)
-        {
-          // Get parent language uid
-          $uid_l10n_parent = $elements[$localTable.'.'.$langPidField];
-  //var_dump('localisation 1142', $arr_default_lang_ol[$uid_l10n_parent]);
-          foreach((array) $arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
-          {
-            $field_lang_ol              = $arr_field_value['field_lang_ol'];
-            $value_lang_ol              = $arr_field_value['value'];
-            $rows[$row][$field_lang_ol] = $value_lang_ol;
-          }
-        }
-        // Current language record
-      }
-    }
-    // Set lang overlay values in current language record
-//var_dump('localisation 1153', $rows);
-
-    unset($arr_default_lang_ol);
-    unset($arr_lang_ol);
-    // 4. In case of a non localised table: Copy values from default to current language record
+//    // Set lang overlay values in current language record
+////var_dump('localisation 1153', $rows);
+//
+//    unset($arr_default_lang_ol);
+//    unset($arr_lang_ol);
+//    // 4. In case of a non localised table: Copy values from default to current language record
 
 
     // 5. Remove the default records from $rows, if they have a translation.
@@ -1558,7 +1554,6 @@ class tx_browser_pi1_localisation_3x
       }
     }
       // Check first row for lang_ol fields
-$this->pObj->dev_var_dump( $arr_lang_ol );
 
       // RETURN : there isn't any not localised table
     if( empty ($arr_lang_ol) )
@@ -1598,7 +1593,6 @@ $this->pObj->dev_var_dump( $arr_lang_ol );
       // Default language record
     }
       // Get default lang overlay values
-$this->pObj->dev_var_dump( $arr_default_lang_ol );
 
 //var_dump('localisation 1108', $arr_default_lang_ol);
 //string(17) "localisation 1108"
@@ -1646,37 +1640,51 @@ $this->pObj->dev_var_dump( $arr_default_lang_ol );
 //  ...
 //}
 
-    // Set lang overlay values in current language record
-    if(is_array($arr_default_lang_ol))
+      // RETURN : ...
+    if( empty ( $arr_default_lang_ol ) )
     {
-      $langPidField = $GLOBALS['TCA'][$localTable]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-      $int_count    = 0;
-  //var_dump('localisation 1135', $rows);
-      foreach((array) $rows as $row => $elements)
+      if( $this->pObj->b_drs_localisation )
       {
-  //var_dump('localisation 1137', $elements);
-        // Current language record
-        if($elements[$localTable.'.'.$sys_language_uid] > 0)
-        {
-          // Get parent language uid
-          $uid_l10n_parent = $elements[$localTable.'.'.$langPidField];
-  //var_dump('localisation 1142', $arr_default_lang_ol[$uid_l10n_parent]);
-          foreach((array) $arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
-          {
-            $field_lang_ol              = $arr_field_value['field_lang_ol'];
-            $value_lang_ol              = $arr_field_value['value'];
-            $rows[$row][$field_lang_ol] = $value_lang_ol;
-          }
-        }
-        // Current language record
+        $prompt = '$arr_default_lang_ol is empty.';
+        t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'This is strange.!';
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
       }
+      return $rows;
     }
-    // Set lang overlay values in current language record
-//var_dump('localisation 1153', $rows);
+      // RETURN : ...
 
-    unset($arr_default_lang_ol);
-    unset($arr_lang_ol);
-    // 4. In case of a non localised table: Copy values from default to current language record
+      // Set lang overlay values in current language record
+      // I.e: l18n_parent
+    $langPidField = $GLOBALS[ 'TCA' ][ $localTable ][ 'ctrl' ][ 'transOrigPointerField' ]; 
+    $int_count    = 0;
+    foreach( ( array ) $rows as $row )
+    {
+        // CONTINUE : current row is the default language
+      if( $row[ $localTable . '.' . $sys_language_uid ] <= 0 )
+      {
+        continue;
+      }
+        // CONTINUE : current row is the default language
+
+        // Get parent language uid
+      $uid_l10n_parent = $row[ $localTable . '.' . $langPidField ];
+        // Current language record
+      foreach( ( array ) $arr_default_lang_ol[ $uid_l10n_parent ] as $key => $arr_field_value )
+      {
+        $field_lang_ol                  = $arr_field_value[ 'field_lang_ol' ];
+        $value_lang_ol                  = $arr_field_value[ 'value' ];
+        $rows[ $key ][ $field_lang_ol ] = $value_lang_ol;
+      }
+        // Current language record
+    }
+      // Set lang overlay values in current language record
+
+    unset( $arr_default_lang_ol );
+    unset( $arr_lang_ol );
+
+  
+    return $rows;
   }
   
 /**
