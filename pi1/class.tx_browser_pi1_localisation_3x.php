@@ -1028,9 +1028,7 @@ class tx_browser_pi1_localisation_3x
 
     // 6. Set the default language record uid
     // Should we set it?
-$this->pObj->dev_var_dump( $rows );
     $rows = $this->consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table );
-$this->pObj->dev_var_dump( $rows );
 
 //    $bool_defaultLanguageLink = $this->conf_localisation['realURL.']['defaultLanguageLink'];
 //    if ($bool_defaultLanguageLink)
@@ -1589,15 +1587,21 @@ $this->pObj->dev_var_dump( $rows );
  */
   private function consolidate_rows06setDefaultUid( $arrUidsLocalisedDefault, $rows, $table )
   {
+      // RETURN : Don't set the default uid
     if( ! $this->conf_localisation['realURL.']['defaultLanguageLink'] )
     {
+$this->pObj->dev_var_dump( $rows );
       return $rows;
     }
+      // RETURN : Don't set the default uid
 
+      // RETURN ; There isn't any localised record
     if( empty( $arrUidsLocalisedDefault ) )
     {
+$this->pObj->dev_var_dump( $rows );
       return $rows;
     }
+      // RETURN ; There isn't any localised record
     
     $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
 
@@ -1608,6 +1612,8 @@ $this->pObj->dev_var_dump( $rows );
         $rows[ $key_in_rows ][ $table . '.uid' ] = $row_localise[ $langPidField ];
       }
     }
+$this->pObj->dev_var_dump( $rows );
+    return $rows;
   }
   
 /**
