@@ -2618,6 +2618,7 @@ $this->pObj->dev_var_dump( $rows );
         $bool_tableIsLocalised = false;
         break;
     }
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_localised, $this->pObj->arr_realTables_notLocalised, $bool_tableIsLocalised );
 
     unset( $table );
 
