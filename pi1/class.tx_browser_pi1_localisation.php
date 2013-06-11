@@ -224,6 +224,7 @@ class tx_browser_pi1_localisation
 
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
+$this->pObj->dev_var_dump( $rows );
       // 8. Return $rows
     return $rows;
   }
