@@ -273,10 +273,10 @@ class tx_browser_pi1_viewlist
     }
       // DRS
 
-      // Consolidate localisation
-    $rows = $this->rows_consolidateLL( $rows );
       // Consolidate children
     $rows = $this->rows_consolidateChildren( $rows );
+      // Consolidate localisation
+    $rows = $this->rows_consolidateLL( $rows );
     $this->pObj->rows = $rows;
 
       // Implement the hook rows_filter_values
