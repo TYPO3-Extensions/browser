@@ -1300,7 +1300,6 @@ $this->pObj->dev_var_dump( $rows );
 
       // Get array with elements woAlias, filter, wiAlias and addedFields
     $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
-$this->pObj->dev_var_dump( $arr_tables );
 
       // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
@@ -1414,15 +1413,25 @@ $this->pObj->dev_var_dump( $arr_andSelect );
       // Do we have a localised table?
     $bool_tableIsLocalised = $this->zz_tableIsLocalised( $table );
 
-      // RETURN : if there isn't any need for language override
+      // RETURN : if there isn't any need for language overlay
     switch( true )
     {
-      case( ! $bool_tableIsLocalised ): // Table isn't localised
+      case( $bool_tableIsLocalised ): // Table is localised
+          // DRS
+        if ($this->pObj->b_drs_localisation)
+        {
+          $prompt = $table . ' is localised. Language overlay isn\'t possible.';
+          t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // DRS
+          // RETURN : no language overlay
+        return false;
+        break;
       case( ! $bool_dontLocalise ):     // AND Localisation shouldn't not handled
           // DRS
         if ($this->pObj->b_drs_localisation)
         {
-          $prompt = $table . ': there isn\'t any need for language override.';
+          $prompt = 'Localisation is disabled. ' . $table . ' won\'t handled for language overlay.';
           t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // DRS
@@ -1434,7 +1443,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
           // Get fields for translation / language overlay
         break;
     }
-      // RETURN : if there isn't any need for language override
+      // RETURN : if there isn't any need for language overlay
 
     unset( $bool_tableIsLocalised );
     unset( $bool_dontLocalise );
@@ -1449,7 +1458,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
       {
         $prompt = $table . ' isn\'t any element of $this->pObj->arr_realTables_arrFields.';
         t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = $table . ': there isn\'t any need for language override.';
+        $prompt = $table . ': there isn\'t any need for language overlay.';
         t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
         // DRS
