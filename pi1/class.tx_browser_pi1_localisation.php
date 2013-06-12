@@ -1303,7 +1303,7 @@ $this->pObj->dev_var_dump( $rows );
 
       // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
-
+$this->pObj->dev_var_dump( $arr_andSelect );
     return $arr_andSelect;
   }
 
