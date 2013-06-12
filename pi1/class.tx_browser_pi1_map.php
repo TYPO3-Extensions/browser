@@ -658,7 +658,7 @@ class tx_browser_pi1_map
  */
   public function get_map( $template )
   {
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows );
     $this->rowsBackup( );
     
       // init the map
@@ -1887,7 +1887,7 @@ class tx_browser_pi1_map
         $markerUid = 'uid';
       }
         // Get markerTable and markerUid
-$this->pObj->dev_var_dump( $row, $catValues );
+//$this->pObj->dev_var_dump( $row, $catValues );
 
         // Set mapMarker
       $mapMarker  = array
