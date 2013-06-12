@@ -253,7 +253,6 @@ class tx_browser_pi1_viewlist
     else
     {
       $res = $arr_return['limited']['data']['res'];
-//$this->pObj->dev_var_dump( $res );
       $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
     }
       //  #38612, 120703, dwildt+
@@ -264,7 +263,6 @@ class tx_browser_pi1_viewlist
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
-//var_dump( __METHOD__, __LINE__, $rows );    
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -274,6 +272,7 @@ class tx_browser_pi1_viewlist
       // DRS
 
       // Consolidate localisation
+$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateLL( $rows );
       // Consolidate children
     $rows = $this->rows_consolidateChildren( $rows );
