@@ -1468,6 +1468,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
     }
       // RETURN : table isn't any element of $this->pObj->arr_realTables_arrFields
 
+      // 130612, dwildt, 7-
 //      // DIE  : $arr_localise[ 'id_field' ] is empty
 //    if( empty( $arr_localise[ 'id_field' ] ) )
 //    {
@@ -1502,7 +1503,8 @@ $this->pObj->dev_var_dump( $arr_andSelect );
 
       $arrReturn[ 'woAlias'  ][ ]  = $tableFieldOverlay;
       $arrReturn[ 'filter'   ][ ]  = $tableFieldOverlay . " AS `table." . $field_lang_ol . "`";
-      $arrReturn[ 'filter'   ][ ]  = "'" . intval( $this->lang_id ) . "' AS `table." . $arr_localise[ 'id_field' ] . "`, ".
+      // 130612, dwildt, 1-
+      //$arrReturn[ 'filter'   ][ ]  = "'" . intval( $this->lang_id ) . "' AS `table." . $arr_localise[ 'id_field' ] . "`, ".
       $arrReturn[ 'wiAlias'  ][ ]  = $tableFieldOverlay . " AS `" . $tableFieldOverlay . "`";
 
         // DRS
