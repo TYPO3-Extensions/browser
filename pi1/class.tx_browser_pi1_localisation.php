@@ -1300,6 +1300,7 @@ $this->pObj->dev_var_dump( $rows );
 
       // Get array with elements woAlias, filter, wiAlias and addedFields
     $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
+$this->pObj->dev_var_dump( $arr_tables );
 
       // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
