@@ -516,11 +516,11 @@ $this->pObj->dev_var_dump( $arr_lang_ol );
         // Default language record
       if( $row[ $localTable . '.' . $sys_language_uid ] <= 0 )
       {
-        foreach( ( array ) $arr_lang_ol as $field_lang_ol )
+        foreach( ( array ) $arr_lang_ol as $tableField_ol )
         {
           $uidLocal = $row[ $uid_localTable ];
-          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'field_lang_ol' ] = $field_lang_ol;
-          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'value' ]         = $row[ $field_lang_ol ];
+          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'tableField_ol' ] = $tableField_ol;
+          $arr_default_lang_ol[ $uidLocal ][ $int_count ][ 'value' ]         = $row[ $tableField_ol ];
           $int_count++;
         }
       }
@@ -535,35 +535,35 @@ $this->pObj->dev_var_dump( $arr_lang_ol );
 //  array(5) {
 //    [0]=>
 //    array(2) {
-//      ["field_lang_ol"]=>
+//      ["tableField_ol"]=>
 //      string(28) "tx_wine_region.title_lang_ol"
 //      ["value"]=>
 //      string(0) ""
 //    }
 //    [1]=>
 //    array(2) {
-//      ["field_lang_ol"]=>
+//      ["tableField_ol"]=>
 //      string(28) "tx_wine_winery.title_lang_ol"
 //      ["value"]=>
 //      string(0) ""
 //    }
 //    [2]=>
 //    array(2) {
-//      ["field_lang_ol"]=>
+//      ["tableField_ol"]=>
 //      string(27) "tx_wine_style.title_lang_ol"
 //      ["value"]=>
 //      string(32) "de:Rotwein (jung)|es:Tinto Joven"
 //    }
 //    [3]=>
 //    array(2) {
-//      ["field_lang_ol"]=>
+//      ["tableField_ol"]=>
 //      string(30) "tx_wine_varietal.title_lang_ol"
 //      ["value"]=>
 //      string(33) "de:Garnacha 100%|es:Garnacha 100%"
 //    }
 //    [4]=>
 //    array(2) {
-//      ["field_lang_ol"]=>
+//      ["tableField_ol"]=>
 //      string(34) "tx_wine_drinkability.title_lang_ol"
 //      ["value"]=>
 //      string(72) "de:Sofort und die nächsten 3-4 Jahre|es:Ahora y los próximos 3-4 años"
@@ -606,9 +606,9 @@ $this->pObj->dev_var_dump( $arr_lang_ol );
         // Current language record
       foreach( ( array ) $arr_default_lang_ol[ $uid_l10n_parent ] as $arr_field_value )
       {
-        $field_lang_ol                  = $arr_field_value[ 'field_lang_ol' ];
+        $tableField_ol                  = $arr_field_value[ 'tableField_ol' ];
         $value_lang_ol                  = $arr_field_value[ 'value' ];
-        $rows[ $key ][ $field_lang_ol ] = $value_lang_ol;
+        $rows[ $key ][ $tableField_ol ] = $value_lang_ol;
       }
         // Current language record
     }
