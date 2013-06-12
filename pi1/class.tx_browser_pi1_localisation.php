@@ -487,9 +487,10 @@ $this->pObj->dev_var_dump( $rows );
       }
     }
       // Check first row for lang_ol fields
+$this->pObj->dev_var_dump( $arr_lang_ol );
 
       // RETURN : there isn't any not localised table
-    if( empty ($arr_lang_ol) )
+    if( empty( $arr_lang_ol ) )
     {
       if( $this->pObj->b_drs_localisation )
       {
