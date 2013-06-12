@@ -459,6 +459,7 @@ class tx_browser_pi1_localisation
  */
   private function consolidate_rows04handleTableTranslated( $rows )
   {
+$this->pObj->dev_var_dump( $rows );
       // RETURN : All tables are localised
     if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
@@ -615,6 +616,7 @@ class tx_browser_pi1_localisation
     unset( $arr_default_lang_ol );
     unset( $arr_lang_ol );
 
+$this->pObj->dev_var_dump( $rows );
 
     return $rows;
   }
