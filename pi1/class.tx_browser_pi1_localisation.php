@@ -1419,7 +1419,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
     {
       case( $bool_tableIsLocalised ): // Table is localised
           // DRS
-        if ($this->pObj->b_drs_localisation)
+        if( $this->pObj->b_drs_localisation )
         {
           $prompt = $table . ' is localised. Language overlay isn\'t possible.';
           t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
@@ -1430,9 +1430,9 @@ $this->pObj->dev_var_dump( $arr_andSelect );
         break;
       case( $currLanguageIsDefault ):     // AND Localisation shouldn't not handled
           // DRS
-        if ($this->pObj->b_drs_localisation)
+        if ( $this->pObj->b_drs_localisation )
         {
-          $prompt = 'Localisation is disabled. ' . $table . ' won\'t handled for language overlay.';
+          $prompt = 'Current language is the default language. ' . $table . ' won\'t handled for language overlay.';
           t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // DRS
@@ -1514,6 +1514,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
         // DRS
     }
       // Loop through the array with all used tableFields
+$this->pObj->dev_var_dump( $arrReturn );
 
     return $arrReturn;
   }
