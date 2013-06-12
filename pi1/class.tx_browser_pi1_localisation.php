@@ -1468,13 +1468,13 @@ $this->pObj->dev_var_dump( $arr_andSelect );
     }
       // RETURN : table isn't any element of $this->pObj->arr_realTables_arrFields
 
-      // DIE  : $arr_localise[ 'id_field' ] is empty
-    if( empty( $arr_localise[ 'id_field' ] ) )
-    {
-      $prompt = $table . ': $arr_localise[ id_field ] is empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
-      die( $prompt );
-    }
-      // DIE  : $arr_localise[ 'id_field' ] is empty
+//      // DIE  : $arr_localise[ 'id_field' ] is empty
+//    if( empty( $arr_localise[ 'id_field' ] ) )
+//    {
+//      $prompt = $table . ': $arr_localise[ id_field ] is empty at ' . __METHOD__ . ' line(' . __LINE__ . ')';
+//      die( $prompt );
+//    }
+//      // DIE  : $arr_localise[ 'id_field' ] is empty
 
       // Loop through the array with all used tableFields
     foreach( $this->pObj->arr_realTables_arrFields[ $table ] as $field )
