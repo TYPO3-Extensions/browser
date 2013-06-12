@@ -76,7 +76,7 @@
  *
  *              SECTION: ZZ - Helper methods
  * 2282:     private function zz_devPromptRows( $promptForDev, $rows, $maxRows=10 )
- * 2311:     private function zz_dontLocalise( )
+ * 2311:     private function zz_currLanguageIsDefault( )
  * 2353:     private function zz_getL10n_mode( $tableField )
  * 2411:     public function zz_promptLLdie( $method, $line )
  * 2497:     private function zz_propperLocArray( $arr_langFields, $table )
@@ -1300,6 +1300,7 @@ $this->pObj->dev_var_dump( $rows );
 
       // Get array with elements woAlias, filter, wiAlias and addedFields
     $arr_tables = $this->localisationFields_selectGetFieldsForLanguageOverlay( $table );
+$this->pObj->dev_var_dump( $arr_tables );
 
       // Get the andSelect: localisation fields and language overlay fields are added
     $arr_andSelect = $this->localisationFields_selectGetAndSelect( $table, $arr_tables );
@@ -1409,7 +1410,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
     $arr_localise = $this->zz_propperLocArray( $arr_localise, $table );
 
       // Do we need translated/localised records?
-    $bool_dontLocalise = $this->zz_dontLocalise( );
+    $currLanguageIsDefault = $this->zz_currLanguageIsDefault( );
       // Do we have a localised table?
     $bool_tableIsLocalised = $this->zz_tableIsLocalised( $table );
 
@@ -1427,7 +1428,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
           // RETURN : no language overlay
         return false;
         break;
-      case( $bool_dontLocalise ):     // AND Localisation shouldn't not handled
+      case( $currLanguageIsDefault ):     // AND Localisation shouldn't not handled
           // DRS
         if ($this->pObj->b_drs_localisation)
         {
@@ -1446,7 +1447,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
       // RETURN : if there isn't any need for language overlay
 
     unset( $bool_tableIsLocalised );
-    unset( $bool_dontLocalise );
+    unset( $currLanguageIsDefault );
 
     $conf_tca = $this->conf_localisation[ 'TCA.' ];
 
@@ -2281,6 +2282,47 @@ $this->pObj->dev_var_dump( $arr_andSelect );
   **********************************************/
 
 /**
+ * zz_currLanguageIsDefault( ) : Returns true, if rows should not localised
+ *
+ * @return	boolean
+ * @version     4.5.7
+ * @since       4.5.7
+ */
+  private function zz_currLanguageIsDefault( )
+  {
+    $currLanguageIsDefault = false;
+
+      // Set localisation mode
+    if( $this->int_localisation_mode === null )
+    {
+      $this->int_localisation_mode = $this->get_localisationMode( );
+    }
+      // Set localisation mode
+
+      // Set $currLanguageIsDefault
+    switch( $this->int_localisation_mode  )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        $currLanguageIsDefault = true;
+        if( $this->pObj->b_drs_localisation )
+        {
+          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!', $this->pObj->extKey, 0);
+        }
+        break;
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $currLanguageIsDefault = true;
+        if( $this->pObj->b_drs_localisation )
+        {
+          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Set $currLanguageIsDefault
+
+    return $currLanguageIsDefault;
+  }
+
+/**
  * zz_devPromptRows( )  : Just for development
  *
  * @param	array		$rows     : SQL result rows
@@ -2311,47 +2353,6 @@ $this->pObj->dev_var_dump( $arr_andSelect );
     }
 
     $this->pObj->dev_var_dump( $rows_prompt );
-  }
-
-/**
- * zz_dontLocalise( ) : Returns true, if rows should not localised
- *
- * @return	boolean
- * @version     4.5.7
- * @since       4.5.7
- */
-  private function zz_dontLocalise( )
-  {
-    $bool_dontLocalise = false;
-
-      // Set localisation mode
-    if( $this->int_localisation_mode === null )
-    {
-      $this->int_localisation_mode = $this->get_localisationMode( );
-    }
-      // Set localisation mode
-
-      // Set $bool_dontLocalise
-    switch( $this->int_localisation_mode  )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-        $bool_dontLocalise = true;
-        if( $this->pObj->b_drs_localisation )
-        {
-          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!', $this->pObj->extKey, 0);
-        }
-        break;
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $bool_dontLocalise = true;
-        if( $this->pObj->b_drs_localisation )
-        {
-          t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!', $this->pObj->extKey, 0);
-        }
-        break;
-    }
-      // Set $bool_dontLocalise
-
-    return $bool_dontLocalise;
   }
 
  /**
