@@ -1516,7 +1516,6 @@ $this->pObj->dev_var_dump( $arr_andSelect );
         // DRS
     }
       // Loop through the array with all used tableFields
-$this->pObj->dev_var_dump( $arrReturn );
 
     return $arrReturn;
   }
