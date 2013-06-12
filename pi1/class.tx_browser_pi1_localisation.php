@@ -1427,7 +1427,7 @@ $this->pObj->dev_var_dump( $arr_andSelect );
           // RETURN : no language overlay
         return false;
         break;
-      case( ! $bool_dontLocalise ):     // AND Localisation shouldn't not handled
+      case( $bool_dontLocalise ):     // AND Localisation shouldn't not handled
           // DRS
         if ($this->pObj->b_drs_localisation)
         {
