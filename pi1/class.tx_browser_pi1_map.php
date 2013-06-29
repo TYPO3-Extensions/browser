@@ -2219,7 +2219,7 @@ $this->pObj->dev_var_dump( $mapMarker );
     return $arr_return;
   }
 
-  /**
+/**
  * renderMapMarkerPointsToJsonData( ):
  *
  * @param	array
@@ -2238,7 +2238,8 @@ $this->pObj->dev_var_dump( $mapMarker );
       ),
       'desc'    => $mapMarker['desc'],
       'url'     => $mapMarker['url'],
-      'number'  => $mapMarker['number']
+      'number'  => $mapMarker['number'],
+      'route'   => $this->renderMapMarkerPointsToJsonDataRoute( $mapMarker )
     );
 
       // Remove elements, if their value is empty
@@ -2250,9 +2251,50 @@ $this->pObj->dev_var_dump( $mapMarker );
     {
       unset( $arrData['number'] );
     }
+    if( empty ( $arrData['route'] ) )
+    {
+      unset( $arrData['route'] );
+    }
       // Remove elements, if their value is empty
     
     return $arrData;
+  }
+
+/**
+ * renderMapMarkerPointsToJsonDataRoute( ):
+ *
+ * @param	array
+ * @return	string
+ * @version 4.5.8
+ * @since   4.5.8
+ */
+  private function renderMapMarkerPointsToJsonDataRoute( $mapMarker )
+  {
+    $route = null;
+    
+    switch( $mapMarker['type'] )
+    {
+      case( 'category' ):
+        $route = null;
+        break;
+      case( 'route' ):
+        $route = $mapMarker['cat'];
+        break;
+      default:
+          // DIE  : $value is empty
+        $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+                . 'The value of the map marker type is undefined:' . PHP_EOL
+                . '<p style="color:red;font-weight:bold;">' . $mapMarker['type'] . '</p>' . PHP_EOL
+                . '<br />' . PHP_EOL
+                . 'Sorry for the trouble.<br />' . PHP_EOL
+                . 'Browser - TYPO3 without PHP'
+                ;
+        die( $prompt );
+          // DIE  : $value is empty
+        break;
+    }
+    
+    return $route;
   }
 
   /**
