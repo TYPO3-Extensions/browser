@@ -1394,7 +1394,7 @@ $this->pObj->dev_var_dump( $rows );
  *
  * @param	string		$table      : Name of the table in the TYPO3 database / in TCA
  * @return	array		$arrReturn  : with elements woAlias, filter, wiAlias and addedFields
- * @version   4.5.7
+ * @version   4.5.8
  * @since     4.5.7
  */
   private function localisationFields_selectGetFieldsForLanguageOverlay( $table )
@@ -1411,28 +1411,26 @@ $this->pObj->dev_var_dump( $rows );
 
       // Do we need translated/localised records?
     $currLanguageIsDefault = $this->zz_currLanguageIsDefault( );
-      // Do we have a localised table?
-    $bool_tableIsLocalised = $this->zz_tableIsLocalised( $table );
 
       // RETURN : if there isn't any need for language overlay
     switch( true )
     {
-      case( $bool_tableIsLocalised ): // Table is localised
+      case( $currLanguageIsDefault ):     // AND Localisation shouldn't not handled
           // DRS
-        if( $this->pObj->b_drs_localisation )
+        if ( $this->pObj->b_drs_localisation )
         {
-          $prompt = $table . ' is localised. Language overlay isn\'t possible.';
+          $prompt = 'Current language is the default language. ' . $table . ' won\'t handled for language overlay.';
           t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // DRS
           // RETURN : no language overlay
         return false;
         break;
-      case( $currLanguageIsDefault ):     // AND Localisation shouldn't not handled
+      case( $this->zz_tableIsLocalised( $table ) ): // Table is localised
           // DRS
-        if ( $this->pObj->b_drs_localisation )
+        if( $this->pObj->b_drs_localisation )
         {
-          $prompt = 'Current language is the default language. ' . $table . ' won\'t handled for language overlay.';
+          $prompt = $table . ' is localised. Language overlay isn\'t possible.';
           t3lib_div::devlog(' [INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // DRS
@@ -1446,7 +1444,6 @@ $this->pObj->dev_var_dump( $rows );
     }
       // RETURN : if there isn't any need for language overlay
 
-    unset( $bool_tableIsLocalised );
     unset( $currLanguageIsDefault );
 
     $conf_tca = $this->conf_localisation[ 'TCA.' ];
