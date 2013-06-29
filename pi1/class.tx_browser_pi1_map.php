@@ -2281,7 +2281,7 @@ $this->pObj->dev_var_dump( $mapMarker );
         $route = null;
         break;
       case( 'route' ):
-        $route = $mapMarker['cat'];
+        $route = $mapMarker[ 'routeLabel' ];
         break;
       default:
           // DIE  : $value is empty
