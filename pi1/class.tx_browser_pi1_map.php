@@ -3082,10 +3082,10 @@ $this->pObj->dev_var_dump( $mapMarker );
       }
     }
       // FOREACH  : obligate fields
-$this->pObj->dev_var_dump( $elements );
 
     $row[ 'markerTable' ] = $tablePath;
 
+$this->pObj->dev_var_dump( $row );
     return $row;
   }
 

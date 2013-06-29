@@ -685,7 +685,7 @@ plugin.tx_browser_pi1 {
                 // obligate, optional
               local =
               local {
-                  // lat, lon, ...
+                  // lat, lon, title
                 obligate =
                 obligate {
                     // path, marker
@@ -700,8 +700,14 @@ plugin.tx_browser_pi1 {
                     path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.path}
                     marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.lon.marker}
                   }
+                    // path, marker
+                  routeLabel =
+                  routeLabel {
+                    path    = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.path}
+                    marker  = {$plugin.tx_browser_pi1.map.path.mapper.fields.local.title.marker}
+                  }
                 }
-                  // Extendable array: title, ...
+                  // Extendable array: 0: title, 1: uid, ...
                 optional =
                 optional {
                     // title: path, marker
