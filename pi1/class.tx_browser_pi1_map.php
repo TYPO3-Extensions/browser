@@ -1873,11 +1873,13 @@ class tx_browser_pi1_map
       switch( true )
       {
         case( $row[ 'markerTable' ] ):
-          $markerTable = $row[ 'markerTable' ];
+          $markerTable  = $row[ 'markerTable' ];
+          $type         = 'routeMarker';
           break;
         case( $catValues[ 'markerTable' ] ):
         default:
-          $markerTable = $catValues[ 'markerTable' ];
+          $markerTable      = $catValues[ 'markerTable' ];
+          $type         = 'categoryMarker';
           break;
       }
       $markerUid = $catValues[ 'markerUid' ];
@@ -1903,7 +1905,8 @@ class tx_browser_pi1_map
                       'iconOffsetX' => $iconOffsetX,
                       'iconOffsetY' => $iconOffsetY,
                       'markerUid'   => $markerUid,
-                      'markerTable' => $markerTable
+                      'markerTable' => $markerTable,
+                      'type'        => $type
                     );
 $this->pObj->dev_var_dump( $mapMarker );
 //$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
