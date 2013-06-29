@@ -3077,7 +3077,7 @@ $this->pObj->dev_var_dump( $mapMarker );
           }
           break;
         default:
-            // Do nothing
+          $row[ $key ] = $elements[ $pathTableField ];
           break;
       }
     }
