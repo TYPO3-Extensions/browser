@@ -730,7 +730,7 @@ class tx_browser_pi1_map
     $paths = $arr_result['paths'];
     unset( $arr_result );
     
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
@@ -1905,6 +1905,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
                       'markerUid'   => $markerUid,
                       'markerTable' => $markerTable
                     );
+$this->pObj->dev_var_dump( $mapMarker );
 //$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 //list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
 //      $mapMarker2 = array
