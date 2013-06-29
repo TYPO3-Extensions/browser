@@ -1874,11 +1874,13 @@ class tx_browser_pi1_map
       {
         case( $row[ 'markerTable' ] ):
           $markerTable  = $row[ 'markerTable' ];
+          $routeLabel   = $row[ 'routeLabel' ];
           $type         = 'route';
           break;
         case( $catValues[ 'markerTable' ] ):
         default:
-          $markerTable      = $catValues[ 'markerTable' ];
+          $markerTable  = $catValues[ 'markerTable' ];
+          $routeLabel   = null;
           $type         = 'category';
           break;
       }
@@ -1906,6 +1908,7 @@ class tx_browser_pi1_map
                       'iconOffsetY' => $iconOffsetY,
                       'markerUid'   => $markerUid,
                       'markerTable' => $markerTable,
+                      'routeLabel'  => $routeLabel,
                       'type'        => $type
                     );
 $this->pObj->dev_var_dump( $mapMarker );
