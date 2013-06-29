@@ -1874,12 +1874,12 @@ class tx_browser_pi1_map
       {
         case( $row[ 'markerTable' ] ):
           $markerTable  = $row[ 'markerTable' ];
-          $type         = 'routeMarker';
+          $type         = 'route';
           break;
         case( $catValues[ 'markerTable' ] ):
         default:
           $markerTable      = $catValues[ 'markerTable' ];
-          $type         = 'categoryMarker';
+          $type         = 'category';
           break;
       }
       $markerUid = $catValues[ 'markerUid' ];
