@@ -658,7 +658,6 @@ class tx_browser_pi1_map
  */
   public function get_map( $template )
   {
-$this->pObj->dev_var_dump( $this->pObj->rows );
     $this->rowsBackup( );
     
       // init the map
@@ -711,6 +710,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     }
       // DRS
 
+$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
     $arr_result = $this->renderMapRoute( );
 //$this->pObj->dev_var_dump( $arr_result );
     switch( true )
@@ -755,7 +755,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // RETURN the template
     $this->rowsReset( );
-//    $this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
     return $template;
   }
 
