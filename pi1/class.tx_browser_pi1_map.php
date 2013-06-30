@@ -710,7 +710,7 @@ class tx_browser_pi1_map
     }
       // DRS
 
-$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
+//$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
     $arr_result = $this->renderMapRoute( );
 //$this->pObj->dev_var_dump( $arr_result );
     switch( true )
@@ -755,7 +755,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
 
       // RETURN the template
     $this->rowsReset( );
-$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
+//$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
     return $template;
   }
 
@@ -2860,7 +2860,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
                 . '<p style="color:red;font-weight:bold;">' . $table . $field . ' is empty.</p>' . PHP_EOL
                 . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
                 . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.tables.' . $table . $field . '</p>' . PHP_EOL
-                . 'Please use the TypoScript Editor<br />' . PHP_EOL
+                . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
                 . '<br />' . PHP_EOL
                 . 'Sorry for the trouble.<br />' . PHP_EOL
                 . 'Browser - TYPO3 without PHP'
@@ -3464,8 +3464,17 @@ $this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
       // die: no relation
     if( empty ( $relations ) )
     {
-      $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                'rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!';
+      $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+              . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
+              . PHP_EOL
+              . 'This error can happens, if you are using more than one Browser plugin within the same page.<br />' . PHP_EOL
+              . 'You have to take care about, the map configuration of each view. See Constant Editor: BrowserMaps - Controlling > List of views.<br />' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled.csvViews</p>' . PHP_EOL
+              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Sorry for the trouble.<br />' . PHP_EOL
+              . 'Browser - TYPO3 without PHP'
+              ;
       die( $prompt );
     }
       // die: no relation
@@ -3745,7 +3754,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
               . 'Your path records must contain geodata! Please check your path records.<br />' . PHP_EOL
               . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
-              . 'Please use the TypoScript Editor<br />' . PHP_EOL
+              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
@@ -3782,7 +3791,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
               . '<p style="color:red;font-weight:bold;">coordinates are empty.</p>' . PHP_EOL
               . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
-              . 'Please use the TypoScript Editor<br />' . PHP_EOL
+              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
