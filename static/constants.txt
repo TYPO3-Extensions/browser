@@ -196,7 +196,7 @@ plugin.tx_browser_pi1 {
   map.path.categoryIcon = uploads/media/ 
   # cat=BrowserMaps - Controlling*//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on:
   map.popup.behaviour = hover
-  # cat=BrowserMaps - Controlling/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  # cat=BrowserMaps - Controlling*/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.controlling.links = Click me!
 
   # cat=BrowserMaps - Database Marker*//101;           type=string;    label= table.field with record uid*: *Obligate! Example: tx_org_headquarters.uid
@@ -221,7 +221,7 @@ plugin.tx_browser_pi1 {
   map.marker.field.categoryOffsetX = 
   # cat=BrowserMaps - Database Marker*//111;           type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
   map.marker.field.categoryOffsetY = 
-  # cat=BrowserMaps - Database Marker/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  # cat=BrowserMaps - Database Marker*/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.marker.database.links = Click me!
 
   # cat=BrowserMaps - Database Path//201;             type=string;    label= table.field with the path title: Example: tx_route_path.title
@@ -279,8 +279,8 @@ plugin.tx_browser_pi1 {
   map.path.mapper.fields.cat.iconOffsetY.path = 
   # cat=BrowserMaps - Database Path Mapper*//408;      type=string;    label= icons-offset-y of marker cat table: Example: icons_offset_y
   map.path.mapper.fields.cat.iconOffsetY.marker = 
-  # cat=BrowserMaps - Database Path/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  map.path.database.links = Click me!
+  # cat=BrowserMaps - Database Path Mapper/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  map.path.mapper.database.links = Click me!
 
   # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added to the modules, LayerSwitcher to the controllers. There will be an alert in the frontend in case of a bug.
   map.debugging.feAlert = 0
