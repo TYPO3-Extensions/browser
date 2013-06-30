@@ -7,6 +7,8 @@
             Effected files:
             * res/js/map/api/1.3.06       (new)
             * static/setup.txt
+  Bugfix
+  * #i0012: Maps is using a SQL query of another view in case of multiple plugins
 
 4.5.7
   13-06-07

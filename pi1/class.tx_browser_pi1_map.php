@@ -658,7 +658,7 @@ class tx_browser_pi1_map
  */
   public function get_map( $template )
   {
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows );
     $this->rowsBackup( );
     
       // init the map
@@ -706,7 +706,7 @@ class tx_browser_pi1_map
                 'in your TypoScript configuration of the current page.';
       t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2);
       $prompt = 'The map module causes some conflicts with AJAX. PLease disable AJAX in the ' .
-                'plugin/flecform of the browser.';
+                'plugin/flexform of the browser.';
       t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2);
     }
       // DRS
@@ -3440,7 +3440,7 @@ class tx_browser_pi1_map
     $rowCounter = 0;
     
       // LOOP rows
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
     foreach( $this->pObj->rows as $elements )
     {

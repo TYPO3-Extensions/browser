@@ -68,15 +68,15 @@ class tx_browser_pi1_sql_init
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
     // [Array] The current TypoScript configuration array
-  var $conf       = false;
+  public $conf       = false;
     // [Integer] The current mode (from modeselector)
-  var $mode       = false;
+  public $mode       = false;
     // [String] 'list' or 'single': The current view
-  var $view       = false;
+  public $view       = false;
     // [Array] The TypoScript configuration array of the current view
-  var $conf_view  = false;
+  public $conf_view  = false;
     // [String] TypoScript path to the current view. I.e. views.single.1
-  var $conf_path  = false;
+  public $conf_path  = false;
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
@@ -331,6 +331,7 @@ class tx_browser_pi1_sql_init
     $mode       = $this->piVar_mode;
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
+    $viewWiDot  = $this->view . '.';
 //$this->pObj->dev_var_dump( $this->conf, $this->conf_view );
 
 
