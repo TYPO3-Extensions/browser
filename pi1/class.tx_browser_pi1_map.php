@@ -163,8 +163,6 @@ class tx_browser_pi1_map
   function __construct( $pObj )
   {
     $this->pObj = $pObj;
-    $this->mode = $pObj->piVar_mode;
-    $this->view = $pObj->view;
   }
 
 
@@ -1086,6 +1084,8 @@ class tx_browser_pi1_map
   {
       // Set the global var $enabled
     $this->enabledCsvViews = $this->confMap['enabled.']['csvViews'];
+    $this->mode = $pObj->piVar_mode;
+    $this->view = $pObj->view;
 $this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view );
 
 return;
