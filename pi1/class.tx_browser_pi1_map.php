@@ -941,11 +941,11 @@ class tx_browser_pi1_map
       // RETURN: $enabled isn't null
 
       // Get TypoScript configuration for the current view
-    $conf             = $this->pObj->conf;
-    $mode             = $this->pObj->piVar_mode;
-    $view             = $this->pObj->view;
-    $viewWiDot        = $view . '.';
-    $this->conf_path  = $viewWiDot . $mode;
+    $this->conf       = $this->pObj->conf;
+    $this->mode       = $this->pObj->piVar_mode;
+    $this->view       = $this->pObj->view;
+    $viewWiDot        = $this->view . '.';
+    $this->conf_path  = $viewWiDot . $this->mode;
     $this->conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Get TypoScript configuration for the current view
 
@@ -1084,9 +1084,8 @@ class tx_browser_pi1_map
   {
       // Set the global var $enabled
     $this->enabledCsvViews = $this->confMap['enabled.']['csvViews'];
-    $this->mode = $this->pObj->piVar_mode;
-    $this->view = $this->pObj->view;
-$this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view );
+    $arrViewUids = array_keys( $this->conf[ $this->view . '.' ]);
+$this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view, $arrViewUids );
 
 return;
       // Evaluate the global var $enabled
