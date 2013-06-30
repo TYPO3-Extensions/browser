@@ -53,8 +53,8 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_ttcv_prompt_value">A TypoScript Object TT_CONTAINER_VALUE hasn't any value in value. See devlog for more information.</label>
       <label index="error_typoscript_h1">Typoscript Error</label>
       <label index="error_typoscript_is_missing"><![CDATA[
-          Sorry, the TypoScript Template is missing<br />
-          Please include the Static Template Browser.<br />
+          Sorry, the TypoScript Template is missing.<br />
+          Please include the Static "Template Browser".<br />
           Sorry for the trouble.<br />
           <br />
           TYPO3 without PHP.<br />
@@ -143,6 +143,14 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_ttcv_prompt_recursion"><![CDATA[Die Begrenzung der Recursions-Kontrolle ist überschritten. Falls es sich dabei um keinen Fehler handeln sollte, erhöhe bitte den Wert in recursionGuard. Hast Du vergessen, dass static template einzubinden?]]></label>
       <label index="error_ttcv_prompt_value">Ein TypoScript Object TT_CONTAINER_VALUE hat keinen Wert in value. Weitere Hinweise siehe devlog.</label>
       <label index="error_typoscript_h1">Typoscript Fehler</label>
+      <label index="error_typoscript_is_missing"><![CDATA[
+          Sorry, das TypoScript-Template fehlt.<br />
+          Bitte binde das Include Static Template "Browser" ein.<br />
+          Entschuldige bitte die Umst&auml;nde.<br />
+          <br />
+          TYPO3 without PHP.<br />
+        ]]>
+      </label>
       <label index="error_typoscript_joins"><![CDATA[Wenn Du eine SQL-Abfrage manuell definierst, musst Du die TypoScript-Werte für select, from und andWhere sowie die Arrays joins und aliases angeben. Weitere Informationen findest Du im DRS und in der Dokumentation.]]></label>
       <label index="error_typoscript_no_listview">Sorry, es ist keine Listenansicht konfiguriert.<![CDATA[<br />]]>
         * Hast Du vergessen, das Static Template des TYPO3 Browsers einzubinden?<![CDATA[<br />]]>
