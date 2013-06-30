@@ -1,6 +1,7 @@
 4.5.8
   13-06-29
-  Improvement
+  Improvements
+  * #i0011: Error prompt, if TypoScript is missing
   * #i0010: oxMap Route Categories
             1.3.05 ->1.3.06
             Effected files:

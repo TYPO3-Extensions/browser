@@ -416,7 +416,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * @param    string        $content: The content of the PlugIn
  * @param    array        $conf: The PlugIn Configuration
  * @return    string        The content that should be displayed on the website
- * @version 4.5.7
+ * @version 4.5.8
  * @since   0.0.1
  */
   public function main( $content, $conf )
@@ -440,8 +440,14 @@ class tx_browser_pi1 extends tslib_pibase {
 //    $this->init_accessByIP( );
       // 130530, dwildt, -
 
-      // 130530, dwildt, 1+
-    $this->init( $conf );
+    if( ! $this->init( $conf ) )
+    {
+        // #i0011, 130530, dwildt, +
+      $prompt = '<h1 style="color:red;">' . $this->pi_getLL( 'error_typoscript_h1' ) . '</h1>' . PHP_EOL .
+                '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_typoscript_is_missing' ) . '</p>';
+      return $this->objWrapper->wrapInBaseIdClass( $prompt );
+        // #i0011, 130530, dwildt, +
+    }
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -1597,6 +1603,14 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   private function init( $conf )
   {
+      // RETURN false: There isn't any TypoScript template
+      // #i0011, 130530, dwildt, +
+    if( ! isset( $conf[ 'version' ] ) )
+    {
+      return false;
+    }
+      // RETURN false: There isn't any TypoScript template
+      
       // Globalise TypoScript configuration
     $this->conf = $conf;
    
@@ -1623,6 +1637,8 @@ class tx_browser_pi1 extends tslib_pibase {
     
       // Init current IP
     $this->init_accessByIP( );
+    
+    return true;
   }
 
   /**

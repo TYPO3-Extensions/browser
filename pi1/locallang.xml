@@ -52,6 +52,14 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_ttcv_prompt_recursion">The limit of the recursionguard is overrun. If it isn't an error, please increase the recursionGuard. Did you miss to include the browser template in the page template?</label>
       <label index="error_ttcv_prompt_value">A TypoScript Object TT_CONTAINER_VALUE hasn't any value in value. See devlog for more information.</label>
       <label index="error_typoscript_h1">Typoscript Error</label>
+      <label index="error_typoscript_is_missing"><![CDATA[
+          Sorry, the TypoScript Template is missing<br />
+          Please include the Static Template Browser.<br />
+          Sorry for the trouble.<br />
+          <br />
+          TYPO3 without PHP.<br />
+        ]]>
+      </label>
       <label index="error_typoscript_joins">If you define a SQL query manually, you have to define the TypoScript values select, from, andWhere and the arrays joins and aliases. There are further information in the DRS and the manual.</label>
       <label index="error_typoscript_no_listview">Sorry, there isn't any view list configured.<![CDATA[<br />]]>
         * Did you forget to include the static template of the TYPO3 Browser?<![CDATA[<br />]]>
