@@ -1084,6 +1084,18 @@ class tx_browser_pi1_map
   {
       // Set the global var $enabled
     $this->enabledCsvViews = $this->confMap['enabled.']['csvViews'];
+    if( empty( $this->enabledCsvViews ) )
+    {
+      $this->enabled = 'disabled';
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'Map is disabled by workflow.';
+        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+        $prompt = 'Current view ' . $this->view . ' isn\'t any element in enabled.csvViews.';
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+      }
+      return;
+    }
     $arrViewUids = array_keys( $this->conf[ 'views.' ][ $this->view . '.' ] );
 $this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view, 'views.' . $this->view . '.', $arrViewUids );
 
