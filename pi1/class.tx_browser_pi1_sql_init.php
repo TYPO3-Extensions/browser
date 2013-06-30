@@ -331,6 +331,7 @@ class tx_browser_pi1_sql_init
     $mode       = $this->piVar_mode;
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
+$this->pObj->dev_var_dump( $this->conf_view );
 
 
 
@@ -352,7 +353,7 @@ class tx_browser_pi1_sql_init
     {
       if( $this->pObj->b_drs_error )
       {
-        $prompt = 'views.'.$viewWiDot.$mode.' hasn\'t any select fields.';
+        $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any select fields.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
         $prompt = 'Did you included the static template from this extensions?';
         t3lib_div::devLog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
