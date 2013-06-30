@@ -1084,7 +1084,7 @@ class tx_browser_pi1_map
   {
       // Set the global var $enabled
     $this->enabledCsvViews = $this->confMap['enabled.']['csvViews'];
-    $arrViewUids = array_keys( $this->conf[ $this->view . '.' ]);
+    $arrViewUids = array_keys( $this->conf[ 'views.' ][ $this->view . '.' ] );
 $this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view, $arrViewUids );
 
 return;
