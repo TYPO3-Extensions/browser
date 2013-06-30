@@ -1603,14 +1603,6 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   private function init( $conf )
   {
-      // RETURN false: There isn't any TypoScript template
-      // #i0011, 130530, dwildt, +
-    if( ! isset( $conf[ 'version' ] ) )
-    {
-      return false;
-    }
-      // RETURN false: There isn't any TypoScript template
-      
       // Globalise TypoScript configuration
     $this->conf = $conf;
    
@@ -1620,6 +1612,14 @@ class tx_browser_pi1 extends tslib_pibase {
       // Init localisation
     $this->pi_loadLL( );
     
+      // RETURN false: There isn't any TypoScript template
+      // #i0011, 130530, dwildt, +
+    if( ! isset( $conf[ 'version' ] ) )
+    {
+      return false;
+    }
+      // RETURN false: There isn't any TypoScript template
+      
       // Set the global $bool_typo3_43
     $this->init_typo3version( );
     
