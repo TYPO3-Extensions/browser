@@ -445,7 +445,7 @@ class tx_browser_pi1 extends tslib_pibase {
         // #i0011, 130530, dwildt, +
       $prompt = '<h1 style="color:red;">' . $this->pi_getLL( 'error_typoscript_h1' ) . '</h1>' . PHP_EOL .
                 '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_typoscript_is_missing' ) . '</p>';
-      return $this->pi_wrapInBaseClass( $extKey );
+      return $this->pi_wrapInBaseClass( $prompt );
         // #i0011, 130530, dwildt, +
     }
 
