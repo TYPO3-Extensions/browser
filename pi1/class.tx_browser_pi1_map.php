@@ -118,8 +118,12 @@ class tx_browser_pi1_map
   private $conf_path    = null;
     // [ARRAY] TypoScript configuration array of the current view
   private $conf_view    = null;
+    // [INTEGER] UID of the current view
+  private $mode    = null;
     // [INTEGER] Id of the single view
   private $singlePid    = null;
+    // [STRING] Type of the current view: list or single
+  private $view    = null;
 
 
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
@@ -156,9 +160,11 @@ class tx_browser_pi1_map
  * @param	object		The parent object
  * @return	void
  */
-  function __construct($pObj)
+  function __construct( $pObj )
   {
     $this->pObj = $pObj;
+    $this->mode = $pObj->piVar_mode;
+    $this->view = $pObj->view;
   }
 
 
@@ -1015,6 +1021,74 @@ class tx_browser_pi1_map
       // Set the global var $enabled
     $this->enabled = $this->confMap['enabled'];
 
+      // Evaluate the global var $enabled
+      // #47632, 130508, dwildt, 13+
+    switch( true )
+    {
+      case( empty( $this->enabled ) ):
+      case( $this->enabled == 1 ):
+      case( $this->enabled == 'disabled'):
+      case( $this->enabled == 'Map'):
+      case( $this->enabled == 'Map +Routes'):
+          // Follow the workflow
+        break;
+      default:
+        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
+                  'TypoScript property map.enabled is "' . $this->enabled . '".';
+        die( $prompt );
+    }
+      // #47632, 130508, dwildt, 13+
+      // Evaluate the global var $enabled
+    
+      // Handle enabled views
+    $this->initVarEnabledViews( );
+
+      // DRS - Development Reporting System
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_map )
+    {
+      return false;
+    }
+      // RETURN : DRS is disabled
+      // DRS is enabled
+    switch( $this->enabled )
+    {
+        // #47632, 130508, dwildt
+      case( 1 ):
+      case( 'Map' ):
+        $prompt = 'Map is enabled.';
+        break;
+      case( 'Map +Routes' ):
+        $prompt = 'Map +Routes is enabled.';
+        break;
+      default:
+        $prompt = 'Map is disabled.';
+        break;
+    }
+    t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+      // DRS is enabled
+      // DRS - Development Reporting System
+
+      // RETURN false!
+    return false;
+  }
+
+/**
+ * initVarEnabledViews( ) :
+ *
+ * @return	
+ * @version 4.5.8
+ * @since   4.5.
+ * 
+ * @internal  #i0012
+ */
+  private function initVarEnabledViews(  )
+  {
+      // Set the global var $enabled
+    $this->enabledCsvViews = $this->confMap['enabled.']['csvViews'];
+$this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view );
+
+return;
       // Evaluate the global var $enabled
       // #47632, 130508, dwildt, 13+
     switch( true )
@@ -3464,11 +3538,12 @@ class tx_browser_pi1_map
       // die: no relation
     if( empty ( $relations ) )
     {
+        // #i0012, 130701, dwildt
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
               . PHP_EOL
               . 'This error can happens, if you are using more than one Browser plugin within the same page.<br />' . PHP_EOL
-              . 'You have to take care about, the map configuration of each view. See Constant Editor: BrowserMaps - Controlling > List of views.<br />' . PHP_EOL
+              . 'You have to take care about of the map configuration of each view. See Constant Editor: BrowserMaps - Controlling > List of views.<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled.csvViews</p>' . PHP_EOL
               . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
               . '<br />' . PHP_EOL
