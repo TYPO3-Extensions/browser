@@ -331,7 +331,7 @@ class tx_browser_pi1_sql_init
     $mode       = $this->piVar_mode;
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
-$this->pObj->dev_var_dump( $this->conf_view );
+$this->pObj->dev_var_dump( $this->conf, $this->conf_view );
 
 
 
