@@ -3440,6 +3440,8 @@ class tx_browser_pi1_map
     $rowCounter = 0;
     
       // LOOP rows
+$this->pObj->dev_var_dump( $this->pObj->rows );
+
     foreach( $this->pObj->rows as $elements )
     {
         // LOOP elements
