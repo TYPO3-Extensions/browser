@@ -1911,7 +1911,7 @@ class tx_browser_pi1_map
                       'routeLabel'  => $routeLabel,
                       'type'        => $type
                     );
-$this->pObj->dev_var_dump( $mapMarker );
+//$this->pObj->dev_var_dump( $mapMarker );
 //$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 //list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
 //      $mapMarker2 = array
