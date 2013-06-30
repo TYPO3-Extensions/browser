@@ -57,7 +57,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
           Please include the Static "Template Browser".<br />
           Sorry for the trouble.<br />
           <br />
-          TYPO3 without PHP.<br />
+          Browser - TYPO3 without PHP
         ]]>
       </label>
       <label index="error_typoscript_joins">If you define a SQL query manually, you have to define the TypoScript values select, from, andWhere and the arrays joins and aliases. There are further information in the DRS and the manual.</label>
@@ -148,7 +148,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
           Bitte binde das Include Static Template "Browser" ein.<br />
           Entschuldige bitte die Umst&auml;nde.<br />
           <br />
-          TYPO3 without PHP.<br />
+          Browser - TYPO3 without PHP
         ]]>
       </label>
       <label index="error_typoscript_joins"><![CDATA[Wenn Du eine SQL-Abfrage manuell definierst, musst Du die TypoScript-Werte für select, from und andWhere sowie die Arrays joins und aliases angeben. Weitere Informationen findest Du im DRS und in der Dokumentation.]]></label>
