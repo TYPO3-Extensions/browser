@@ -459,7 +459,7 @@ class tx_browser_pi1_localisation
  */
   private function consolidate_rows04handleTableTranslated( $rows )
   {
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
       // RETURN : All tables are localised
     if( ! is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
@@ -487,7 +487,7 @@ $this->pObj->dev_var_dump( $rows );
       }
     }
       // Check first row for lang_ol fields
-$this->pObj->dev_var_dump( $arr_lang_ol );
+//$this->pObj->dev_var_dump( $arr_lang_ol );
 
       // RETURN : there isn't any not localised table
     if( empty( $arr_lang_ol ) )
@@ -617,7 +617,7 @@ $this->pObj->dev_var_dump( $arr_lang_ol );
     unset( $arr_default_lang_ol );
     unset( $arr_lang_ol );
 
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
 
     return $rows;
   }

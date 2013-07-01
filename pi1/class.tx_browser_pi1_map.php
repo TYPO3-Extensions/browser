@@ -3531,7 +3531,7 @@ class tx_browser_pi1_map
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
               . PHP_EOL
-              . 'This error can happens, if you are using more than one Browser plugin within the same page.<br />' . PHP_EOL
+              . 'This error can happen, if you are using more than one Browser plugin within the same page.<br />' . PHP_EOL
               . 'You have to take care about of the map configuration of each view. See Constant Editor: BrowserMaps - Controlling > List of views.<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled.csvViews</p>' . PHP_EOL
               . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
