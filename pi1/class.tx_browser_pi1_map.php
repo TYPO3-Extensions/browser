@@ -1039,6 +1039,7 @@ class tx_browser_pi1_map
       // Evaluate the global var $enabled
     
       // SWITCH : map status
+    $promptAfterEnabledViews = null;
     switch( $this->enabled )
     {
         // #47632, 130508, dwildt
@@ -1046,10 +1047,18 @@ class tx_browser_pi1_map
       case( 'Map' ):
         $prompt = 'Map is enabled.';
         $this->initVarEnabledViews( );
+        if( ! $this->enabled || ( $this->enabled == 'disabled' ) )
+        {
+          $promptAfterEnabledViews = 'Map is set to disabled, because view isn\'t an element of enabled views!';
+        }
         break;
       case( 'Map +Routes' ):
         $prompt = 'Map +Routes is enabled.';
         $this->initVarEnabledViews( );
+        if( ! $this->enabled || ( $this->enabled == 'disabled' ) )
+        {
+          $promptAfterEnabledViews = 'Map is set to disabled, because view isn\'t an element of enabled views!';
+        }
         break;
       default:
         $prompt = 'Map is disabled.';
@@ -1065,7 +1074,11 @@ class tx_browser_pi1_map
       // RETURN : DRS is disabled
       
       // DRS - Development Reporting System
-    t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+    t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    if( $promptAfterEnabledViews )
+    {
+      t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+    }
 
       // RETURN false!
     return false;
