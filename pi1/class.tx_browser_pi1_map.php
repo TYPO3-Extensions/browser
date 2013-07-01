@@ -708,7 +708,7 @@ class tx_browser_pi1_map
                 'please remove config.xhtml_cleaning and/or page.config.xhtml_cleaning ' .
                 'in your TypoScript configuration of the current page.';
       t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2);
-      $prompt = 'The map module causes some conflicts with AJAX. PLease disable AJAX in the ' .
+      $prompt = 'The map module causes some conflicts with AJAX. Please disable AJAX in the ' .
                 'plugin/flexform of the browser.';
       t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2);
     }
@@ -1038,15 +1038,7 @@ class tx_browser_pi1_map
       // #47632, 130508, dwildt, 13+
       // Evaluate the global var $enabled
     
-
-      // DRS - Development Reporting System
-      // RETURN : DRS is disabled
-    if( ! $this->pObj->b_drs_map )
-    {
-      return false;
-    }
-      // RETURN : DRS is disabled
-      // DRS is enabled
+      // SWITCH : map status
     switch( $this->enabled )
     {
         // #47632, 130508, dwildt
@@ -1063,9 +1055,17 @@ class tx_browser_pi1_map
         $prompt = 'Map is disabled.';
         break;
     }
-    t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-      // DRS is enabled
+      // SWITCH : map status
+
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_map )
+    {
+      return false;
+    }
+      // RETURN : DRS is disabled
+      
       // DRS - Development Reporting System
+    t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
 
       // RETURN false!
     return false;
