@@ -4243,7 +4243,7 @@ $this->pObj->dev_var_dump( $this->view );
   public function set_typeNum( )
   {
       // init the map
-    $this->init( );
+    $this->initVarTypeNum( );
   }
 
 
