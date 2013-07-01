@@ -2384,7 +2384,7 @@ class tx_browser_pi1_flexform {
  * @return    void
  * @version 3.6.2
  */
-  private function sheet_templating()
+  public function sheet_templating()
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
