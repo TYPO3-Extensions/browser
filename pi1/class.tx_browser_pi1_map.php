@@ -2757,7 +2757,7 @@ class tx_browser_pi1_map
       // RETURN : current item isn't the url
 
       // RETURN : DRS is disabled
-    if( ! $this->pObj->b_drs_map )
+    if( ! $this->pObj->b_drs_warn )
     {
       return $this->numberOfBrowserPlugins;
     }
