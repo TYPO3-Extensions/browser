@@ -1,7 +1,7 @@
 4.5.8
   13-06-29
   Improvements
-  * #i0011: Error prompt, if TypoScript is missing
+  * #i0013: Different controlling of the URL for a marker or for a path
   * #i0010: oxMap Route Categories
             1.3.05 ->1.3.06
             Effected files:
@@ -9,6 +9,7 @@
             * static/setup.txt
   Bugfix
   * #i0012: Maps is using a SQL query of another view in case of multiple plugins
+  * #i0011: Error prompt, if TypoScript is missing
 
 4.5.7
   13-06-07
