@@ -440,7 +440,6 @@ class tx_browser_pi1 extends tslib_pibase {
 //    $this->init_accessByIP( );
       // 130530, dwildt, -
 
-$this->dev_var_dump( $this->piVars );
     if( ! $this->init( $conf ) )
     {
         // #i0011, 130530, dwildt, +
@@ -632,6 +631,7 @@ $this->dev_var_dump( $this->piVars );
       //
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
+$this->dev_var_dump( $this->piVars );
     $this->objFlexform->main( );
     $conf = $this->conf;
       // Get Configuration out of the Plugin (Flexform) but [Templating]
@@ -1611,7 +1611,6 @@ $this->dev_var_dump( $this->view );
  */
   private function init( $conf )
   {
-$this->dev_var_dump( $this->piVars );
       // Globalise TypoScript configuration
     $this->conf = $conf;
    
