@@ -1108,6 +1108,13 @@ class tx_browser_pi1_map
     }
       // RETURN : TypoScript version is smaller than 4.5.8
 
+      // RETURN : there is #1 browser plugins only
+    if( $this->pObj->objFlexform->get_numberOfBrowserPlugins( ) <= 1 )
+    {
+      return;
+    }
+      // RETURN : there is #1 browser plugins only
+
       // Set the global var $enabled
     $enabledCsvViews  = $this->confMap['enabled.']['csvViews'];
     $arrViewUids      = $this->pObj->objZz->getCSVasArray( $enabledCsvViews );
