@@ -1917,6 +1917,7 @@ class tx_browser_pi1_map
         // Get the description
         
         // Get the url
+$this->pObj->dev_var_dump( $this->pObj->cObj->data );
       $url    = $this->renderMapMarkerVariablesSystemItem( 'url' );
         // Get the number
       $number = $this->renderMapMarkerVariablesSystemItem( 'number' );
