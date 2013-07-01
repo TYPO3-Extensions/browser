@@ -948,7 +948,7 @@ class tx_browser_pi1_map
     $this->conf_path  = $viewWiDot . $this->mode;
     $this->conf_view  = $this->conf['views.'][$viewWiDot][$this->mode . '.'];
       // Get TypoScript configuration for the current view
-
+$this->pObj->dev_var_dump( $this->view );
       // Set the global var $confMap
     $this->initVarConfMap( );
 
