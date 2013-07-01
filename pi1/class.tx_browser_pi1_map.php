@@ -1919,7 +1919,7 @@ class tx_browser_pi1_map
         // Get the url
 ////$lastItem = count( $this->pObj->cObj->data ) - 1;      
 ////$this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data );
       $url    = $this->renderMapMarkerVariablesSystemItem( 'url' );
         // Get the number
       $number = $this->renderMapMarkerVariablesSystemItem( 'number' );
