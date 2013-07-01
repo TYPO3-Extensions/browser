@@ -343,7 +343,7 @@ plugin.tx_browser_pi1 {
     }
 
     map {
-        // [BOOLEAN] 0 (default), 1
+        // [STRING] disabled,Map,Map +Routes 
       enabled  = {$plugin.tx_browser_pi1.map.enabled}
       enabled {
           // [STRING] List of uids of the views, which should rendered with a map
