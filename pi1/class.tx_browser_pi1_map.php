@@ -2732,8 +2732,70 @@ class tx_browser_pi1_map
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+
+    $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
+
     return $value;
   }
+
+/**
+ * renderMapMarkerVariablesSystemItemUrl( ):
+ *
+ * @param	string		$map_template: ...
+ * @return	string
+ * @internal    #i0014
+ * @version 4.5.8
+ * @since   4.5.8
+ */
+  private function renderMapMarkerVariablesSystemItemUrl( $item, $value )
+  {
+      // RETURN : current item isn't the url
+    if( $item != 'url' )
+    {
+      return;
+    }
+      // RETURN : current item isn't the url
+
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_map )
+    {
+      return $this->numberOfBrowserPlugins;
+    }
+      // RETURN : DRS is disabled
+      
+      // RETURN : there is #1 browser plugins only
+    if( $this->pObj->objFlexform->get_numberOfBrowserPlugins( ) <= 1 )
+    {
+      return;
+    }
+      // RETURN : there is #1 browser plugins only
+
+      // DRS 
+    $pos = strpos( $value, 'tx_browser_pi1[plugin]' );
+
+    switch( true )
+    {
+      case( $pos === false ):
+        $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
+        t3lib_div :: devlog( '[WARN/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Current link doesn\'t contain the parameter tx_browser_pi1[plugin]: ' . $value;
+        t3lib_div :: devlog( '[ERROR/FLEXFORM] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'In case of realUrl link can be proper. This depends on your realUrl configuration.';
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
+        break;
+      case( ! ( $pos === false ) ):
+      default:
+        $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'Current link contains the parameter tx_browser_pi1[plugin]: ' . $value;
+        t3lib_div :: devlog( '[OK/FLEXFORM] ' . $prompt, $this->pObj->extKey, -1 );
+        break;
+    }
+      // DRS 
+
+    unset( $pos );
+    return;
+}
 
 
 

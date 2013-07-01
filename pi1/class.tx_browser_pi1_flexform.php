@@ -337,13 +337,13 @@ class tx_browser_pi1_flexform {
  *
  * @return    void
  * 
- * @access  private
+ * @access  public
  * @internal  #i0014
  *
  * @version   4.5.8
  * @since     4.5.8
  */
-  private function get_numberOfBrowserPlugins( ) 
+  public function get_numberOfBrowserPlugins( ) 
   {
     if( ! $this->numberOfBrowserPlugins === null )
     {
@@ -425,7 +425,8 @@ class tx_browser_pi1_flexform {
       case( $this->numberOfBrowserPlugins > 1):
         $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
         t3lib_div :: devlog( '[WARN/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
-        $prompt = 'Take care of a proper TypoScript: If you are using the TYPOLINK object, you must respect tx_browser_pi1[plugin]!';
+        $prompt = 'Take care of a proper TypoScript: ' 
+                . 'If you are using the TYPOLINK object, you must respect the parameter tx_browser_pi1[plugin]!';
         t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
         break;
       case( $this->numberOfBrowserPlugins == 1):
