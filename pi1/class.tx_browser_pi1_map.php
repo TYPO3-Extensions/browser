@@ -1095,7 +1095,7 @@ $this->pObj->dev_var_dump( $this->view );
  */
   private function initVarEnabledViews(  )
   {
-$this->pObj->dev_var_dump( $this->pObj->typoscriptVersion );
+$this->pObj->dev_var_dump( $this->pObj->conf['version'], $this->pObj->typoscriptVersion );
       // RETURN : TypoScript version is smaller than 4.5.8
     switch( true )
     {
