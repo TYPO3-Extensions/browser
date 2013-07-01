@@ -1038,8 +1038,6 @@ class tx_browser_pi1_map
       // #47632, 130508, dwildt, 13+
       // Evaluate the global var $enabled
     
-      // Handle enabled views
-    $this->initVarEnabledViews( );
 
       // DRS - Development Reporting System
       // RETURN : DRS is disabled
@@ -1055,9 +1053,11 @@ class tx_browser_pi1_map
       case( 1 ):
       case( 'Map' ):
         $prompt = 'Map is enabled.';
+        $this->initVarEnabledViews( );
         break;
       case( 'Map +Routes' ):
         $prompt = 'Map +Routes is enabled.';
+        $this->initVarEnabledViews( );
         break;
       default:
         $prompt = 'Map is disabled.';
@@ -1083,70 +1083,49 @@ class tx_browser_pi1_map
   private function initVarEnabledViews(  )
   {
       // Set the global var $enabled
-    $this->enabledCsvViews = $this->confMap['enabled.']['csvViews'];
-    if( empty( $this->enabledCsvViews ) )
+    $enabledCsvViews  = $this->confMap['enabled.']['csvViews'];
+    $arrViewUids      = $this->objZz->getCSVasArray( $this->conf[ 'views.' ][ $this->view . '.' ] );
+
+      // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views 
+    switch( true )
     {
-      $this->enabled = 'disabled';
-      if( $this->pObj->b_drs_map )
-      {
+      case( empty( $enabledCsvViews ) ):
+      case( ! in_array( $this->view, $arrViewUids ) ):
+        $this->enabled = 'disabled';
+        break;
+      default:
+          // Do nothing
+        break;
+    }
+      // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views 
+
+      // RETURN : no DRS
+    if( ! $this->pObj->b_drs_map )
+    {
+      return;
+    }
+      // RETURN : no DRS
+    
+      // DRS
+    switch( true )
+    {
+      case( $this->enabled == 'disabled' ):
         $prompt = 'Map is disabled by workflow.';
         t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         $prompt = 'Current view ' . $this->view . ' isn\'t any element in enabled.csvViews.';
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
-      }
-      return;
-    }
-    $arrViewUids = array_keys( $this->conf[ 'views.' ][ $this->view . '.' ] );
-$this->pObj->dev_var_dump( $this->enabledCsvViews, $this->mode, $this->view, 'views.' . $this->view . '.', $arrViewUids );
-
-return;
-      // Evaluate the global var $enabled
-      // #47632, 130508, dwildt, 13+
-    switch( true )
-    {
-      case( empty( $this->enabled ) ):
-      case( $this->enabled == 1 ):
-      case( $this->enabled == 'disabled'):
-      case( $this->enabled == 'Map'):
-      case( $this->enabled == 'Map +Routes'):
-          // Follow the workflow
         break;
       default:
-        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                  'TypoScript property map.enabled is "' . $this->enabled . '".';
-        die( $prompt );
+        $prompt = 'Current view ' . $this->view . ' is an element in enabled.csvViews.';
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+        break;
     }
-      // #47632, 130508, dwildt, 13+
-      // Evaluate the global var $enabled
+      // DRS
+    
+    unset( $enabledCsvViews );
+    unset( $arrViewUids );
 
-      // DRS - Development Reporting System
-      // RETURN : DRS is disabled
-    if( ! $this->pObj->b_drs_map )
-    {
-      return false;
-    }
-      // RETURN : DRS is disabled
-      // DRS is enabled
-    switch( $this->enabled )
-    {
-        // #47632, 130508, dwildt
-      case( 1 ):
-      case( 'Map' ):
-        $prompt = 'Map is enabled.';
-        break;
-      case( 'Map +Routes' ):
-        $prompt = 'Map +Routes is enabled.';
-        break;
-      default:
-        $prompt = 'Map is disabled.';
-        break;
-    }
-    t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
-      // DRS is enabled
-      // DRS - Development Reporting System
-
-      // RETURN false!
-    return false;
+//$this->pObj->dev_var_dump( $enabledCsvViews, $this->mode, $this->view, 'views.' . $this->view . '.', $arrViewUids );
   }
 
 /**
