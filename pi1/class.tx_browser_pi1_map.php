@@ -1084,7 +1084,7 @@ class tx_browser_pi1_map
   {
       // Set the global var $enabled
     $enabledCsvViews  = $this->confMap['enabled.']['csvViews'];
-    $arrViewUids      = $this->pObj->objZz->getCSVasArray( $this->conf[ 'views.' ][ $this->view . '.' ] );
+    $arrViewUids      = $this->pObj->objZz->getCSVasArray( $enabledCsvViews );
 
       // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views 
     switch( true )
@@ -1125,7 +1125,6 @@ class tx_browser_pi1_map
     unset( $enabledCsvViews );
     unset( $arrViewUids );
 
-//$this->pObj->dev_var_dump( $enabledCsvViews, $this->mode, $this->view, 'views.' . $this->view . '.', $arrViewUids );
   }
 
 /**
