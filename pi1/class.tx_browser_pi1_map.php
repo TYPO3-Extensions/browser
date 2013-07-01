@@ -2771,14 +2771,15 @@ class tx_browser_pi1_map
       // RETURN : there is #1 browser plugins only
 
       // DRS 
-    $pos = strpos( $value, 'tx_browser_pi1[plugin]' );
+    $urldecode = urldecode( $value );
+    $pos = strpos( $urldecode, 'tx_browser_pi1[plugin]' );
 
     switch( true )
     {
       case( $pos === false ):
         $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
         t3lib_div :: devlog( '[WARN/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
-        $prompt = 'Current link doesn\'t contain the parameter tx_browser_pi1[plugin]: ' . $value;
+        $prompt = 'Current link doesn\'t contain the parameter tx_browser_pi1[plugin]: ' . $urldecode;
         t3lib_div :: devlog( '[ERROR/FLEXFORM] ' . $prompt, $this->pObj->extKey, 3 );
         $prompt = 'In case of realUrl link can be proper. This depends on your realUrl configuration.';
         t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
@@ -2787,7 +2788,7 @@ class tx_browser_pi1_map
       default:
         $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
         t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'Current link contains the parameter tx_browser_pi1[plugin]: ' . $value;
+        $prompt = 'Current link contains the parameter tx_browser_pi1[plugin]: ' . $urldecode;
         t3lib_div :: devlog( '[OK/FLEXFORM] ' . $prompt, $this->pObj->extKey, -1 );
         break;
     }
