@@ -440,6 +440,7 @@ class tx_browser_pi1 extends tslib_pibase {
 //    $this->init_accessByIP( );
       // 130530, dwildt, -
 
+$this->dev_var_dump( $this->piVars );
     if( ! $this->init( $conf ) )
     {
         // #i0011, 130530, dwildt, +
@@ -448,6 +449,7 @@ class tx_browser_pi1 extends tslib_pibase {
       return $this->pi_wrapInBaseClass( $prompt );
         // #i0011, 130530, dwildt, +
     }
+$this->dev_var_dump( $this->piVars );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
