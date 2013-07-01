@@ -1917,8 +1917,9 @@ class tx_browser_pi1_map
         // Get the description
         
         // Get the url
-$lastItem = count( $this->pObj->cObj->data ) - 1;      
-$this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
+////$lastItem = count( $this->pObj->cObj->data ) - 1;      
+////$this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
       $url    = $this->renderMapMarkerVariablesSystemItem( 'url' );
         // Get the number
       $number = $this->renderMapMarkerVariablesSystemItem( 'number' );
@@ -3144,20 +3145,20 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
             $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
           }
           break;
-        case( $key == 'routeLabel' ):
-            // #i0013, 130701, dwildt, +
-          switch( true )
-          {
-            case( isset ( $elements[ 'markerTable' ] ) ):
-              $row[ 'type' ] = 'route';
-              break;
-            case( ! isset ( $elements[ 'markerTable' ] ) ):
-            default:
-              $row[ 'type' ] = 'category';
-              break;
-          }
-            // #i0013, 130701, dwildt, +
-          break;
+//        case( $key == 'routeLabel' ):
+//            // #i0013, 130701, dwildt, +
+//          switch( true )
+//          {
+//            case( isset ( $elements[ 'markerTable' ] ) ):
+//              $row[ 'type' ] = 'route';
+//              break;
+//            case( ! isset ( $elements[ 'markerTable' ] ) ):
+//            default:
+//              $row[ 'type' ] = 'category';
+//              break;
+//          }
+//            // #i0013, 130701, dwildt, +
+//          break;
         default:
           $row[ $key ] = $elements[ $pathTableField ];
           break;
@@ -3166,6 +3167,8 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
       // FOREACH  : obligate fields
     
     $row[ 'markerTable' ] = $tablePath;
+      // #i0013, 130701, dwildt, +
+    $row[ 'type' ] = 'route';
 
 //$this->pObj->dev_var_dump( $row );
     return $row;
