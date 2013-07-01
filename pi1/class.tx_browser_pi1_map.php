@@ -1089,12 +1089,25 @@ $this->pObj->dev_var_dump( $this->view );
  *
  * @return	
  * @version 4.5.8
- * @since   4.5.
+ * @since   4.5.8
  * 
  * @internal  #i0012
  */
   private function initVarEnabledViews(  )
   {
+      // RETURN : TypoScript version is smaller than 4.5.8
+    switch( true )
+    {
+      case( $this->pObj->typoscriptVersion <= 4005007 ):
+        return;
+        break;
+      case( $this->pObj->typoscriptVersion <= 4005008 ):
+      default:
+          // follow the workflow
+        break;
+    }
+      // RETURN : TypoScript version is smaller than 4.5.8
+
       // Set the global var $enabled
     $enabledCsvViews  = $this->confMap['enabled.']['csvViews'];
     $arrViewUids      = $this->pObj->objZz->getCSVasArray( $enabledCsvViews );
