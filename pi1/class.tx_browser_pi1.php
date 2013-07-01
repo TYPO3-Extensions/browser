@@ -641,6 +641,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Prepaire piVars
 
       // Allocates values to $this->piVars, $this->pi_isOnlyFields and $this->views
+$this->dev_var_dump( $this->piVars['showUid'] );
     $this->objZz->prepairePiVars( );
       // Prepaire piVars
 
