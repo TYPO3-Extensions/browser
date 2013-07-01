@@ -669,6 +669,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Get the typeNum II/II
 
       // #32654, 120212, dwildt+
+$this->dev_var_dump( $this->view );
     $this->objMap->set_typeNum( );
       // Get the typeNum II/II
 
