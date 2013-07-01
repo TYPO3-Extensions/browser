@@ -114,6 +114,14 @@ class tx_browser_pi1_flexform {
   var $bool_linkToSingle_wi_piVar_sort = false;
   // [boolean] Should the URL to a single view contain the parameter sort?
 
+  
+    // [INTEGER] number of the browser plugins of the current page
+  private $numberOfBrowserPlugins = null;
+    // [INTEGER] number of the list views of the current page
+  private $numberOfListViews = null;
+    // [INTEGER] number of the list views of the current page
+  private $numberOfSingleViews = null;
+  
   //[sheet/extend]
     // Uid in tt_content of the Browser Calender User Interface
   var $sheet_extend_cal_ui            = null;
@@ -318,6 +326,121 @@ class tx_browser_pi1_flexform {
 
 
 
+  /***********************************************
+   *
+   * get methods
+   *
+   **********************************************/
+
+/**
+ * get_numberOfBrowserPlugins( )  : Get the amount of the browser plugins of the current page
+ *
+ * @return    void
+ * 
+ * @access  private
+ * @internal  #i0014
+ *
+ * @version   4.5.8
+ * @since     4.5.8
+ */
+  private function get_numberOfBrowserPlugins( ) 
+  {
+    if( ! $this->numberOfBrowserPlugins === null )
+    {
+      return $this->numberOfBrowserPlugins;
+    }
+
+      // Get the field names for sys_language_content and for l10n_parent
+    $str_langField  = $GLOBALS['TCA']['tt_content']['ctrl']['languageField'];
+    $str_langPid    = $GLOBALS['TCA']['tt_content']['ctrl']['transOrigPointerField'];
+      // Get the field names for sys_language_content and for l10n_parent
+
+      // Build and execute the SQL query
+    $pid = $this->pObj->cObj->data['pid'];
+
+    $select_fields  = "uid, header, " . $str_langField . ", " . $str_langPid;
+    $from_table     = "tt_content";
+    $where_enable   = $this->pObj->cObj->enableFields($from_table);
+    $where_locale   = $this->pObj->objLocalise->localisationFields_where($from_table);
+    if (!$where_locale) {
+      $where_locale = 1;
+    }
+    $where_clause   = "pid = " . $pid . " " 
+                    . "AND CType = 'list' "
+                    . "AND list_type = '" . $this->pObj->extKey . "_pi1' " . $where_enable . " " 
+                    . "AND " . $where_locale;
+
+      // For Development
+    if (1 == 0) {
+        // 121025, dwildt, 1-
+      //$query = $GLOBALS['TYPO3_DB']->SELECTquery($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '');
+        // 121025, dwildt, 1+
+      $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause );
+      t3lib_div :: devlog('[INFO/SQL] ' . $query, $this->pObj->extKey, 0);
+    }
+      // For Development
+
+      // 121025, dwildt, 1-
+    //$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '', $uidIndexField = '');
+      // 121025, dwildt, 1+
+    $rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows( $select_fields, $from_table, $where_clause );
+    // Build and execute the SQL query
+
+
+      // Consolidate the Rows in case of Localisation
+    $arr_rm_langParents = false;
+    if (count($rows) > 1) {
+      foreach ((array) $rows as $row => $elements) {
+        // We have a localised record
+        if ($elements[$str_langPid] > 0) {
+          $arr_rm_langParents[] = $elements[$str_langPid];
+        }
+        // We have a localised record
+      }
+    }
+    if( is_array( $arr_rm_langParents ) )
+    {
+      foreach ((array) $rows as $row => $elements) {
+        // Remove the default language record
+        if (in_array($elements['uid'], $arr_rm_langParents)) {
+          unset ($rows[$row]);
+        }
+        // Remove the default language record
+      }
+    }
+      // Consolidate the Rows in case of Localisation
+    
+    $this->numberOfBrowserPlugins = count( $rows );
+    
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_flexform )
+    {
+      return $this->numberOfBrowserPlugins;
+    }
+      // RETURN : DRS is disabled
+    
+      // DRS 
+    switch( true )
+    {
+      case( $this->numberOfBrowserPlugins > 1):
+        $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
+        t3lib_div :: devlog( '[WARN/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Take care of a proper TypoScript: If you are using the TYPOLINK object, you must respect tx_browser_pi1[plugin]!';
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
+        break;
+      case( $this->numberOfBrowserPlugins == 1):
+      default:
+        $prompt = 'There is only one Browser plugin on the current page.';
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
+        break;
+    }
+      // DRS 
+
+    return $this->numberOfBrowserPlugins;
+
+  }
+
+
 
 
 
@@ -333,85 +456,18 @@ class tx_browser_pi1_flexform {
 
 
 /**
- * Changes the piVars array, if there is more than one plugin on the current page.
+ * prepare_piVars( )  : Changes the piVars array, if there is more than one plugin on the current page.
  * If there is, the piVars[plugin] with the uid of the current plugin is added to the piVars.
  * If the visitor of the page hasn't selected the current plugin, all piVars will be removed.
  *
  * @return    void
+ * 
+ * @access  private
  *
- * @version   4.1.25
+ * @version   4.5.8
  * @since     2.x 
  */
   private function prepare_piVars() {
-
-    //$numberOfBrowserPlugins = $this->zz_setNumberOfBrowserPlugins( );
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get the field names for sys_language_content and for l10n_parent
-
-    $str_langField  = $GLOBALS['TCA']['tt_content']['ctrl']['languageField'];
-    $str_langPid    = $GLOBALS['TCA']['tt_content']['ctrl']['transOrigPointerField'];
-    // Get the field names for sys_language_content and for l10n_parent
-
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Build and execute the SQL query
-
-    $pid = $this->pObj->cObj->data['pid'];
-
-    $select_fields  = "uid, header, " . $str_langField . ", " . $str_langPid;
-    $from_table     = "tt_content";
-    $where_enable   = $this->pObj->cObj->enableFields($from_table);
-    $where_locale   = $this->pObj->objLocalise->localisationFields_where($from_table);
-    if (!$where_locale) {
-      $where_locale = 1;
-    }
-    $where_clause   = "pid = " . $pid . " " 
-                    . "AND CType = 'list' "
-                    . "AND list_type = '" . $this->pObj->extKey . "_pi1' " . $where_enable . " " 
-                    . "AND " . $where_locale;
-
-    // For Development
-    if (1 == 0) {
-        // 121025, dwildt, 1-
-      //$query = $GLOBALS['TYPO3_DB']->SELECTquery($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '');
-        // 121025, dwildt, 1+
-      $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause );
-      t3lib_div :: devlog('[INFO/SQL] ' . $query, $this->pObj->extKey, 0);
-    }
-    // For Development
-
-      // 121025, dwildt, 1-
-    //$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '', $uidIndexField = '');
-      // 121025, dwildt, 1+
-    $rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows( $select_fields, $from_table, $where_clause );
-    // Build and execute the SQL query
-
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Consolidate the Rows in case of Localisation
-
-    $arr_rm_langParents = false;
-    if (count($rows) > 1) {
-      foreach ((array) $rows as $row => $elements) {
-        // We have a localised record
-        if ($elements[$str_langPid] > 0) {
-          $arr_rm_langParents[] = $elements[$str_langPid];
-        }
-        // We have a localised record
-      }
-    }
-    if (is_array($arr_rm_langParents)) {
-      foreach ((array) $rows as $row => $elements) {
-        // Remove the default language record
-        if (in_array($elements['uid'], $arr_rm_langParents)) {
-          unset ($rows[$row]);
-        }
-        // Remove the default language record
-      }
-    }
-    //var_dump($rows);
-    // Consolidate the Rows in case of Localisation
 
       // #40959 4.1.10, 120916, dwildt, +
       // field piVarsPlugin
@@ -462,7 +518,9 @@ class tx_browser_pi1_flexform {
     //
     // RETURN, if we have one plugin on the page only
 
-    if( count( $rows ) <= 1 && ! $bool_addPiVarsPlugin )
+      // #i0014, 130702, dwildt, 1+
+    $numberOfBrowserPlugins = $this->get_numberOfBrowserPlugins( );
+    if( $numberOfBrowserPlugins <= 1 && ! $bool_addPiVarsPlugin )
     {
         // #40959 4.1.10, 120916, dwildt, +
         // DRS
@@ -2384,7 +2442,7 @@ class tx_browser_pi1_flexform {
  * @return    void
  * @version 3.6.2
  */
-  public function sheet_templating()
+  public function sheet_templating( )
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];

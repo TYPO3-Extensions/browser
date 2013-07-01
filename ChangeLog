@@ -1,6 +1,7 @@
 4.5.8
   13-06-29
   Improvements
+  * #i0014: DRS: Warning in case of several plugins
   * #i0013: Different controlling of the URL for a marker or for a path
             mapLinkToSingle
   * #i0010: oxMap Route Categories
