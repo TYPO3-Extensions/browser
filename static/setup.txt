@@ -864,7 +864,7 @@ plugin.tx_browser_pi1 {
                         }
                       }
                       field = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
-                      wrap  = ,&tx_browser_pi1[showUid]=|
+                      wrap  = ,&tx_browser_pi1[{$plugin.tx_browser_pi1.map.aliases.showUid.marker}]=|
                     }
                   }
                 }
@@ -932,7 +932,7 @@ plugin.tx_browser_pi1 {
                         }
                       }
                       field = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
-                      wrap  = ,&tx_browser_pi1[showUid]=|
+                      wrap  = ,&tx_browser_pi1[{$plugin.tx_browser_pi1.map.aliases.showUid.path}]=|
                     }
                   }
                 }
