@@ -1609,6 +1609,7 @@ $this->dev_var_dump( $this->view );
  */
   private function init( $conf )
   {
+$this->dev_var_dump( $this->piVars );
       // Globalise TypoScript configuration
     $this->conf = $conf;
    
