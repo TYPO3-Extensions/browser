@@ -272,7 +272,8 @@ class tx_browser_pi1_flexform {
       //
       // Init Language
 
-    if (!$this->pObj->lang) {
+    if (!$this->pObj->lang)
+    {
       $this->pObj->objZz->initLang();
     }
       // Init Language
@@ -341,14 +342,15 @@ class tx_browser_pi1_flexform {
  * @version   4.1.25
  * @since     2.x 
  */
-  function prepare_piVars() {
+  private function prepare_piVars() {
 
+    //$numberOfBrowserPlugins = $this->zz_setNumberOfBrowserPlugins( );
     //////////////////////////////////////////////////////////////////////
     //
     // Get the field names for sys_language_content and for l10n_parent
 
-    $str_langField = $GLOBALS['TCA']['tt_content']['ctrl']['languageField'];
-    $str_langPid = $GLOBALS['TCA']['tt_content']['ctrl']['transOrigPointerField'];
+    $str_langField  = $GLOBALS['TCA']['tt_content']['ctrl']['languageField'];
+    $str_langPid    = $GLOBALS['TCA']['tt_content']['ctrl']['transOrigPointerField'];
     // Get the field names for sys_language_content and for l10n_parent
 
     //////////////////////////////////////////////////////////////////////
@@ -357,17 +359,17 @@ class tx_browser_pi1_flexform {
 
     $pid = $this->pObj->cObj->data['pid'];
 
-    $select_fields = "uid, header, " . $str_langField . ", " . $str_langPid;
-    $from_table = "tt_content";
-    $where_enable = $this->pObj->cObj->enableFields($from_table);
-    $where_locale = $this->pObj->objLocalise->localisationFields_where($from_table);
+    $select_fields  = "uid, header, " . $str_langField . ", " . $str_langPid;
+    $from_table     = "tt_content";
+    $where_enable   = $this->pObj->cObj->enableFields($from_table);
+    $where_locale   = $this->pObj->objLocalise->localisationFields_where($from_table);
     if (!$where_locale) {
       $where_locale = 1;
     }
-    $where_clause = "pid = " . $pid . " " .
-    "AND CType = 'list' " .
-    "AND list_type = '" . $this->pObj->extKey . "_pi1' " . $where_enable . " " .
-    "AND " . $where_locale;
+    $where_clause   = "pid = " . $pid . " " 
+                    . "AND CType = 'list' "
+                    . "AND list_type = '" . $this->pObj->extKey . "_pi1' " . $where_enable . " " 
+                    . "AND " . $where_locale;
 
     // For Development
     if (1 == 0) {
@@ -401,11 +403,11 @@ class tx_browser_pi1_flexform {
     }
     if (is_array($arr_rm_langParents)) {
       foreach ((array) $rows as $row => $elements) {
-        // Rempve the default language record
+        // Remove the default language record
         if (in_array($elements['uid'], $arr_rm_langParents)) {
           unset ($rows[$row]);
         }
-        // Rempve the default language record
+        // Remove the default language record
       }
     }
     //var_dump($rows);
@@ -526,7 +528,8 @@ class tx_browser_pi1_flexform {
     // We have more than one plugin on the page
 
     // DRS - Development Reporting System
-    if ($this->pObj->b_drs_flexform) {
+    if( $this->pObj->b_drs_flexform ) 
+    {
       t3lib_div :: devlog('[INFO/FLEXFORM] There is more than one plugin on the page.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
@@ -608,7 +611,7 @@ class tx_browser_pi1_flexform {
  *
  * @return    void
  */
-  function prepare_mode() {
+  public function prepare_mode() {
 
     //////////////////////////////////////
     //
@@ -663,7 +666,7 @@ class tx_browser_pi1_flexform {
  * @version   4.1.25
  * @since     2.x
  */
-  function sheet_sDEF_views() {
+  private function sheet_sDEF_views() {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
 
     //////////////////////////////////////////////////////////////////////
@@ -994,7 +997,7 @@ class tx_browser_pi1_flexform {
  *
  * @return    void
  */
-  function sheet_advanced() {
+  private function sheet_advanced() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
 
@@ -1151,7 +1154,7 @@ class tx_browser_pi1_flexform {
  * @version 4.0.0
  * @since   4.0.0
  */
-  function sheet_evaluate( )
+  private function sheet_evaluate( )
   {
     $sheet          = 'evaluate';
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -1210,7 +1213,7 @@ class tx_browser_pi1_flexform {
  * @version 4.0.0
  * @since   4.0.0
  */
-  function sheet_extend( )
+  private function sheet_extend( )
   {
 
     $sheet          = 'extend';
@@ -1291,7 +1294,7 @@ class tx_browser_pi1_flexform {
  * @version 3.7.0
  * @since 3.5.0
  */
-  function sheet_javascript() {
+  private function sheet_javascript() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $sheet = 'javascript';
@@ -1612,7 +1615,7 @@ class tx_browser_pi1_flexform {
  * @since 2.x.x
  * @version 3.4.4
  */
-  function sheet_sDEF( )
+  private function sheet_sDEF( )
   {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $modeWiDot = (int) $this->mode . '.';
@@ -2253,7 +2256,7 @@ class tx_browser_pi1_flexform {
  *
  * @return    void
  */
-  function sheet_socialmedia() {
+  private function sheet_socialmedia() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
 
@@ -2316,7 +2319,7 @@ class tx_browser_pi1_flexform {
  * @since   3.0.1
  * @version 3.4.4
  */
-  function sheet_tca( )
+  private function sheet_tca( )
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -2381,7 +2384,7 @@ class tx_browser_pi1_flexform {
  * @return    void
  * @version 3.6.2
  */
-  function sheet_templating()
+  private function sheet_templating()
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -2676,7 +2679,7 @@ class tx_browser_pi1_flexform {
  * @version 4.5.7
  * @since   2.x
  */
-  function sheet_viewList( )
+  private function sheet_viewList( )
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -3589,7 +3592,7 @@ class tx_browser_pi1_flexform {
  * @version 4.1.25
  * @since 3.7.0
  */
-  function sheet_viewSingle()
+  private function sheet_viewSingle()
   {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     
