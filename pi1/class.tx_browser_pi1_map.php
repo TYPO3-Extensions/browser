@@ -1090,7 +1090,7 @@ class tx_browser_pi1_map
     switch( true )
     {
       case( empty( $enabledCsvViews ) ):
-      case( ! in_array( $this->view, $arrViewUids ) ):
+      case( ! in_array( $this->mode, $arrViewUids ) ):
         $this->enabled = 'disabled';
         break;
       default:
@@ -1112,11 +1112,11 @@ class tx_browser_pi1_map
       case( $this->enabled == 'disabled' ):
         $prompt = 'Map is disabled by workflow.';
         t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
-        $prompt = 'Current view ' . $this->view . ' isn\'t any element in enabled.csvViews.';
+        $prompt = 'Current view ' . $this->mode . ' isn\'t any element in enabled.csvViews.';
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         break;
       default:
-        $prompt = 'Current view ' . $this->view . ' is an element in enabled.csvViews.';
+        $prompt = 'Current view ' . $this->mode . ' is an element in enabled.csvViews.';
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
         break;
     }
