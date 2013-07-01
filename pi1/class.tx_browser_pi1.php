@@ -448,7 +448,6 @@ class tx_browser_pi1 extends tslib_pibase {
       return $this->pi_wrapInBaseClass( $prompt );
         // #i0011, 130530, dwildt, +
     }
-$this->dev_var_dump( $this->piVars );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -672,7 +671,6 @@ $this->dev_var_dump( $this->piVars );
       // Get the typeNum II/II
 
       // #32654, 120212, dwildt+
-$this->dev_var_dump( $this->view );
     $this->objMap->set_typeNum( );
       // Get the typeNum II/II
 
@@ -889,8 +887,6 @@ $this->dev_var_dump( $this->view );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel,  'before processing the view' );
-
-$this->dev_var_dump( $this->view );
 
       // SWITCH view
     switch( $this->view )
@@ -1227,7 +1223,6 @@ $this->dev_var_dump( $this->view );
       // Get the map
 
       // #32654, 111219, dwildt
-$this->dev_var_dump( $this->view );
     $str_template_completed = $this->objMap->get_map( $str_template_completed );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;

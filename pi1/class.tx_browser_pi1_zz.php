@@ -356,7 +356,6 @@
       //
       // Catch the view type LIST or SINGLE
 
-$this->pObj->dev_var_dump( $this->pObj->piVars['showUid'] );
     switch($this->pObj->piVars['showUid'])
     {
       case(true):
@@ -368,7 +367,6 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['showUid'] );
         $this->pObj->view = 'list';
         break;
     }
-$this->pObj->dev_var_dump( $this->pObj->view );
       // Catch the view type LIST or SINGLE
 
 
