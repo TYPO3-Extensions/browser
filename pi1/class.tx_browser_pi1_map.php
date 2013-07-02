@@ -3644,6 +3644,7 @@ class tx_browser_pi1_map
       // die: no relation
     if( empty ( $relations ) )
     {
+$this->pObj->dev_Var_dump( $this->pObj->cObj->data );      
         // #i0012, 130701, dwildt
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
