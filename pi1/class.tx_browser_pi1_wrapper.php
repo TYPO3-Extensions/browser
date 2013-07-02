@@ -1112,7 +1112,10 @@ class tx_browser_pi1_wrapper
       // #43108, 130222, dwildt, 9+
     switch( true )
     {
-      case( $this->typo3Version < 6000000 ):
+        // #49495, 130702, dwildt, 1-
+      //case( $this->typo3Version < 6000000 ):
+        // #49495, 130702, dwildt, 1+
+      case( $this->pObj->typo3Version < 6000000 ):
         $imageNum = t3lib_div::intInRange( $imageNum, 0, 100 );
         break;
       default:

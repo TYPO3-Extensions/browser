@@ -1677,7 +1677,8 @@
  * @param	string		$str_params: URL parameter string like &tx_browser_pi1[showUid]=12&&tx_browser_pi1[cat]=1
  * @return	string		$cHash_md5: md5 value like d218cfedf9
  * 
- * @version   4.5.0 
+ * @version   4.5.8 
+ * @since     2.x
  */
   function get_cHash( $str_params )
   {
@@ -1686,7 +1687,10 @@
       // #43108, 130222, dwildt, 9+
     switch( true )
     {
-      case( $this->typo3Version < 6000000 ):
+        // #49495, 130702, dwildt, 1-
+      //case( $this->typo3Version < 6000000 ):
+        // #49495, 130702, dwildt, 1+
+      case( $this->pObj->typo3Version < 6000000 ):
         $cHash_array  = t3lib_div::cHashParams( $str_params );
         break;
       default:
