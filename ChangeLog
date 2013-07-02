@@ -11,7 +11,7 @@
             * static/setup.txt
   Bugfix
   * #49495: Unporoper methods for TYPO3 >= 6.x
-  * #i0012: Maps is using a SQL query of another view in case of multiple plugins
+  * #i0012: DRS prompt, if Map +Routes is enabled by Constant Editor but a Browser plugin doesn't have a proper SQL query 
   * #i0011: Error prompt, if TypoScript is missing
 
 4.5.7

@@ -3645,7 +3645,6 @@ class tx_browser_pi1_map
       // die: no relation
     if( empty ( $relations ) )
     {
-//$this->pObj->dev_Var_dump( $this->pObj->cObj->data );      
         // #i0012, 130701, dwildt
       $browserPlugin = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
