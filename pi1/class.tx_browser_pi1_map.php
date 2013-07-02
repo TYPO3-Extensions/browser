@@ -3646,13 +3646,14 @@ class tx_browser_pi1_map
     {
 $this->pObj->dev_Var_dump( $this->pObj->cObj->data );      
         // #i0012, 130701, dwildt
+      $browserPlugin = $this->pObj->cObj->data['header'] . ' with uid ' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
-              . PHP_EOL
-              . 'This error can happen, if you are using more than one Browser plugin within the same page.<br />' . PHP_EOL
-              . 'You have to take care about of the map configuration of each view. See Constant Editor: BrowserMaps - Controlling > List of views.<br />' . PHP_EOL
-              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled.csvViews</p>' . PHP_EOL
-              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Please disable BrowserMap for this plugin. See<br />' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled</p>' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
