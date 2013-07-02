@@ -1095,6 +1095,8 @@ class tx_browser_pi1_map
  */
   private function initVarEnabledViews(  )
   {
+    return;
+
       // RETURN : TypoScript version is smaller than 4.5.8
     switch( true )
     {
