@@ -345,10 +345,6 @@ plugin.tx_browser_pi1 {
     map {
         // [STRING] disabled,Map,Map +Routes 
       enabled  = {$plugin.tx_browser_pi1.map.enabled}
-      enabled {
-          // [STRING] List of uids of the views, which should rendered with a map
-        csvViews  = {$plugin.tx_browser_pi1.map.enabled.csvViews}
-      }
         // [STRING] GoogleMaps or Open Street Map
       provider  = {$plugin.tx_browser_pi1.map.provider}
       template {

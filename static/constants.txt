@@ -181,8 +181,6 @@ plugin.tx_browser_pi1 {
   map.enabled = disabled
   # cat=BrowserMaps - Controlling*//102;             type=options[GoogleMaps,Open Street Map];  label= Map Provider: GoogleMaps or OpenStreetMap. Please take care of the licences! Copyright must be visible!
   map.provider = Open Street Map
-  # cat=BrowserMaps - Controlling*//103;             type=string;    label= List of views*: Obligate! Comma separated list of  uids of the views, which should rendered with a map. Example: 409, 44354   
-  map.enabled.csvViews = 
   # cat=BrowserMaps - Controlling*//104;             type=int+;      label= Map height: Height of the map (in pixel)
   map.height = 400
   # cat=BrowserMaps - Controlling*//105;             type=int+;      label= Map width: Width of the map (in pixel)

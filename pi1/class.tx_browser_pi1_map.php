@@ -1095,6 +1095,7 @@ class tx_browser_pi1_map
  */
   private function initVarEnabledViews(  )
   {
+      // 130703, dwildt, 1+
     return;
 
       // RETURN : TypoScript version is smaller than 4.5.8
@@ -3644,9 +3645,9 @@ class tx_browser_pi1_map
       // die: no relation
     if( empty ( $relations ) )
     {
-$this->pObj->dev_Var_dump( $this->pObj->cObj->data );      
+//$this->pObj->dev_Var_dump( $this->pObj->cObj->data );      
         // #i0012, 130701, dwildt
-      $browserPlugin = $this->pObj->cObj->data['header'] . ' with uid ' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
+      $browserPlugin = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
               . '<br />' . PHP_EOL
@@ -3654,6 +3655,8 @@ $this->pObj->dev_Var_dump( $this->pObj->cObj->data );
               . '<br />' . PHP_EOL
               . 'Please disable BrowserMap for this plugin. See<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled</p>' . PHP_EOL
+              . 'or<br />' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.views.[list|single].[viewId].navigation.map.enabled</p>' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
