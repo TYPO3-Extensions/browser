@@ -2295,14 +2295,19 @@ $this->pObj->dev_var_dump( $markers );
       $catTitle = $marker['cat'];
       $dataKey  = $marker['markerTable'] . '_' . $marker['markerUid'];
 
-        // Get icon and data
+        // icon
       $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
-      $data = $this->renderMapMarkerPointsToJsonData( $marker );
-
-        // Set icon and data
       $series[ $catTitle ][ 'icon' ] = $icon;
-      //$series[ $catTitle ][ 'data' ][ $dataKey . ':' . $markerDataKey ] = $data;
+
+        // data
+      $data = $this->renderMapMarkerPointsToJsonData( $marker );
       $series[ $catTitle ][ 'data' ][ $dataKey ] = $data;
+
+        // route
+      if( $marker['type'] == "route" )
+      {
+        $series[ $catTitle ][ 'route' ] = $marker['routeLabel'];
+      }
   
         // Set coordinates
       $coordinates[] = $marker['lon'] . ',' . $marker['lat'];
