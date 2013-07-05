@@ -3650,7 +3650,9 @@ class tx_browser_pi1_map
     if( empty ( $relations ) )
     {
         // #i0012, 130701, dwildt
-      $browserPlugin = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
+      $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
+      $view           = $this->view;
+      $mode           = $this->mode;
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
               . '<br />' . PHP_EOL
@@ -3659,7 +3661,7 @@ class tx_browser_pi1_map
               . 'Please disable BrowserMap for this plugin. See<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled</p>' . PHP_EOL
               . 'or<br />' . PHP_EOL
-              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.views.[list|single].[viewId].navigation.map.enabled</p>' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.views.[' . $view . '].[' . $mode . '].navigation.map.enabled</p>' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'

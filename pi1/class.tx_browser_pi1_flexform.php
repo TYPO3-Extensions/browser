@@ -428,7 +428,7 @@ class tx_browser_pi1_flexform {
         $prompt = 'Take care of a proper TypoScript: ' 
                 . 'If you are using the TYPOLINK object, you must respect the parameter tx_browser_pi1[plugin]!';
         t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
-        $prompt = 'Maybe you get mor helpful prompts in the list view (if this isn\'t the list view)';
+        $prompt = 'Maybe you get more helpful prompts in the list view (if this isn\'t the list view)';
         t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
         break;
       case( $this->numberOfBrowserPlugins == 1):
