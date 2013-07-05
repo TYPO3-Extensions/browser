@@ -3652,7 +3652,7 @@ class tx_browser_pi1_map
         // #i0012, 130701, dwildt
       $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
       $view           = $this->view;
-      $mode           = $this->mode;
+      $mode           = $this->pObj->piVar_mode;
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">Rows doesn\'t contain any elements with a key with the prefix ' . $prefixMarker . '!</p>' . PHP_EOL
               . '<br />' . PHP_EOL
