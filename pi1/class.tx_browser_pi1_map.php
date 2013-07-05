@@ -323,7 +323,7 @@ class tx_browser_pi1_map
       {
         case( ! $fieldForLabel ):
             // DRS
-          if( $this->pObj->b_drs_map )
+          if( $this->pObj->b_drs_warn )
           {
             $prompt = 'table.field with the category is empty';
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
@@ -336,7 +336,7 @@ class tx_browser_pi1_map
           break;
         case( ! isset( $row[ $fieldForLabel ] ) ):
             // DRS
-          if( $this->pObj->b_drs_map )
+          if( $this->pObj->b_drs_warn )
           {
             $prompt = 'current rows doesn\'t contain the field "' . $fieldForLabel . '"';
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
@@ -387,7 +387,7 @@ class tx_browser_pi1_map
         sort( $categoryLabels, SORT_LOCALE_STRING );
         break;
       default:
-        if( $this->pObj->b_drs_map )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'configuration.categories.orderBy has an unproper value: "' . $orderBy . '"';
           t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
@@ -497,7 +497,7 @@ class tx_browser_pi1_map
         continue;
       }
 
-      if( $this->pObj->b_drs_map )
+      if( $this->pObj->b_drs_map || $this->pObj->b_drs_warn )
       {
         if( $value === null )
         {
@@ -538,7 +538,7 @@ class tx_browser_pi1_map
       $cObj_name  = $this->confMap['marker.']['addToCData.']['system.'][$marker];
       $cObj_conf  = $this->confMap['marker.']['addToCData.']['system.'][$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-      if( $this->pObj->b_drs_map )
+      if( $this->pObj->b_drs_map || $this->pObj->b_drs_warn )
       {
         if( empty ( $content ) )
         {
@@ -722,7 +722,7 @@ class tx_browser_pi1_map
       switch( true )
       {
         case( empty( $arr_result['marker'] ) ):
-          if( $this->pObj->b_drs_map )
+          if( $this->pObj->b_drs_warn )
           {
             $prompt = 'There isn\'t any marker row!';
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
@@ -750,7 +750,7 @@ class tx_browser_pi1_map
       switch( true )
       {
         case( empty( $paths ) ):
-          if( $this->pObj->b_drs_map )
+          if( $this->pObj->b_drs_warn )
           {
             $prompt = 'JSON array for the variable routes is empty!';
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
@@ -869,7 +869,7 @@ class tx_browser_pi1_map
       //
       // DRS - Development Reporting System
 
-    if( $this->pObj->b_drs_map )
+    if( $this->pObj->b_drs_warn )
     {
       $prompt_01 = 'The HTML template doesn\'t contain any marker ' . $str_mapMarker . '.';
       $prompt_02 = 'Marker ' . $str_mapMarker . ' will added before the last div-tag automatically.';
@@ -1073,7 +1073,7 @@ class tx_browser_pi1_map
       // SWITCH : map status
 
       // RETURN : DRS is disabled
-    if( ! $this->pObj->b_drs_map )
+    if( ! ( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
     {
       return false;
     }
@@ -1142,7 +1142,7 @@ class tx_browser_pi1_map
       // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views 
 
       // RETURN : no DRS
-    if( ! $this->pObj->b_drs_map )
+    if( ! ( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
     {
       return;
     }
@@ -1921,7 +1921,7 @@ class tx_browser_pi1_map
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-$this->pObj->dev_var_dump( $row, $catValues, $arrLabels );
+//$this->pObj->dev_var_dump( $row, $catValues, $arrLabels );
 
       // FOREACH category title
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
@@ -1932,16 +1932,26 @@ $this->pObj->dev_var_dump( $row, $catValues, $arrLabels );
         // Get the longitude and latitude
       $lon = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
       $lat = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
-$this->pObj->dev_var_dump( $lat, $lon );
+//$this->pObj->dev_var_dump( $lat, $lon );
         // SWITCH logitude and latitude
       switch( true )
       {
         case( $lon . $lat == '' ):
             // CONTINUE: longitude and latitude are empty
+          if( $this->pObj->b_drs_warn )
+          {
+            $prompt = 'lon and lat are empty. Record won\'t handled!';
+            t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+          }
           continue 2;
           break;
         case( $dontHandle00 && $lon == 0 && $lat == 0 ):
             // CONTINUE: longitude and latitude are 0 and 0,0 shouldn't handled
+          if( $this->pObj->b_drs_warn )
+          {
+            $prompt = 'lon and lat are 0. And 0 should not handled. Record won\'t handled!';
+            t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+          }
           continue 2;
           break;
       }
@@ -2002,7 +2012,7 @@ $this->pObj->dev_var_dump( $lat, $lon );
         $markerUid = 'uid';
       }
         // Get markerTable and markerUid
-$this->pObj->dev_var_dump( $row, $catValues );
+//$this->pObj->dev_var_dump( $row, $catValues );
 
         // Set mapMarker
       $mapMarker  = array
@@ -2523,7 +2533,7 @@ $this->pObj->dev_var_dump( $mapMarker );
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       if( empty ( $content ) )
       {
-        if( $this->pObj->b_drs_map )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'marker.html.' . $tsProperty . '.' . $marker . ' is empty. Probably this is an error!';
           t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3);
@@ -2627,7 +2637,7 @@ $this->pObj->dev_var_dump( $mapMarker );
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       if( empty ( $content ) )
       {
-        if( $this->pObj->b_drs_map )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'marker.snippets.jss.dynamic.' . $marker . ' is empty. Probably this is an error!';
           t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3);
@@ -2678,7 +2688,7 @@ $this->pObj->dev_var_dump( $mapMarker );
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       if( empty ( $content ) )
       {
-        if( $this->pObj->b_drs_map )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'marker.variables.dynamic.' . $marker . ' is empty. Probably this is an error!';
           t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3);
@@ -2788,7 +2798,7 @@ $this->pObj->dev_var_dump( $mapMarker );
       // RETURN : there is #1 browser plugins only
 
       // RETURN : DRS is disabled
-    if( ! $this->pObj->b_drs_warn )
+    if( ! ( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
     {
       return $numberOfBrowserPlugins;
     }
@@ -3390,7 +3400,7 @@ $this->pObj->dev_var_dump( $mapMarker );
       if( ! isset( $elements[ $pathTableField ] ) )
       {
           // DRS
-        if( $this->pObj->b_drs_map )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'navigation.map.configuration.route.markerMapper.fields.cat.' . $key . '.* is configured,'
                   . 'but the current row doesn\'t contain the element ' . $pathTableField . '.';
