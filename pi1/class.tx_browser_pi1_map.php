@@ -1846,11 +1846,12 @@ class tx_browser_pi1_map
     $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
       // LOOP row
-$this->pObj->dev_var_dump( $this->pObj->rows );    
+//$this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
         // Get mapMarkers, lats and lons
       $arr_result = $this->renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped );
+$this->pObj->dev_var_dump( $arr_result );    
       $mapMarkers = array_merge( $mapMarkers, $arr_result['data']['mapMarkers'] );
       $lats       = array_merge( $lats, $arr_result['data']['lats'] );
       $lons       = array_merge( $lons, $arr_result['data']['lons'] );
