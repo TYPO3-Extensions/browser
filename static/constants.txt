@@ -194,7 +194,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling*//204;             type=string;    label= Map +Routes modules: Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.routes.default     = 'OSM.Base,OSM.Filter,OSM.Route'
   # cat=BrowserMaps - Controlling*//205;             type=string;    label= Map modules (debugging): Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
-  map.modules.default   = 'Error,OSM.Base,OSM.Filter'
+  map.modules.debugging   = 'Error,OSM.Base,OSM.Filter'
   # cat=BrowserMaps - Controlling*//206;             type=string;    label= Map +Routes modules (debugging): Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.routes.debugging   = 'Error,OSM.Base,OSM.Filter,OSM.Route'
   # cat=BrowserMaps - Controlling*//207;             type=string;    label= CSS file: Path to the CSS file. Example: fileadmin/my_openstreetmap/css/style.css
