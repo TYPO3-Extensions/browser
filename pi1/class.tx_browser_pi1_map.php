@@ -715,7 +715,7 @@ class tx_browser_pi1_map
       // DRS
 
 //$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
-    if( $this->enabled != 'Map +Routes' )
+    if( $this->enabled == 'Map +Routes' )
     {
       $arr_result = $this->renderMapRoute( );
   //$this->pObj->dev_var_dump( $arr_result );
@@ -745,7 +745,7 @@ class tx_browser_pi1_map
       // render the map
     $template = $this->renderMap( $template );
 
-    if( $this->enabled != 'Map +Routes' )
+    if( $this->enabled == 'Map +Routes' )
     {
       switch( true )
       {
