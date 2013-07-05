@@ -1921,7 +1921,7 @@ class tx_browser_pi1_map
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-$this->pObj->dev_var_dump( $row, $catValues );
+$this->pObj->dev_var_dump( $row, $catValues, $arrLabels );
 
       // FOREACH category title
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
