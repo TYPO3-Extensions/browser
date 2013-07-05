@@ -1851,7 +1851,7 @@ class tx_browser_pi1_map
     {
         // Get mapMarkers, lats and lons
       $arr_result = $this->renderMapMarkerPointsPoint( $row, $arrLabels, $arrCategoriesFlipped );
-$this->pObj->dev_var_dump( $arr_result );    
+//$this->pObj->dev_var_dump( $arr_result );    
       $mapMarkers = array_merge( $mapMarkers, $arr_result['data']['mapMarkers'] );
       $lats       = array_merge( $lats, $arr_result['data']['lats'] );
       $lons       = array_merge( $lons, $arr_result['data']['lons'] );
@@ -2001,7 +2001,7 @@ $this->pObj->dev_var_dump( $arr_result );
         $markerUid = 'uid';
       }
         // Get markerTable and markerUid
-//$this->pObj->dev_var_dump( $row, $catValues );
+$this->pObj->dev_var_dump( $row, $catValues );
 
         // Set mapMarker
       $mapMarker  = array
@@ -2021,7 +2021,7 @@ $this->pObj->dev_var_dump( $arr_result );
                       'routeLabel'  => $routeLabel,
                       'type'        => $type
                     );
-//$this->pObj->dev_var_dump( $mapMarker );
+$this->pObj->dev_var_dump( $mapMarker );
 //$rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 //list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
 //      $mapMarker2 = array
