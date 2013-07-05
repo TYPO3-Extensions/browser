@@ -191,11 +191,11 @@ plugin.tx_browser_pi1 {
   map.controls.debugging  = 'Navigation,PanZoom,LayerSwitcher' 
   # cat=BrowserMaps - Controlling*//203;             type=string;    label= Map modules: Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.default     = 'OSM.Base,OSM.Filter'
-  # cat=BrowserMaps - Controlling*//204;             type=string;    label= Map +Routes modules: Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
+  # cat=BrowserMaps - Controlling*//204;             type=string;    label= Map +Routes modules: Comma seperated list of map modules (quoted). OSM.Routes must be the first element! Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.routes.default     = 'OSM.Route,OSM.Base,OSM.Filter
   # cat=BrowserMaps - Controlling*//205;             type=string;    label= Map modules (debugging): Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.debugging   = 'Error,OSM.Base,OSM.Filter'
-  # cat=BrowserMaps - Controlling*//206;             type=string;    label= Map +Routes modules (debugging): Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
+  # cat=BrowserMaps - Controlling*//206;             type=string;    label= Map +Routes modules (debugging): Comma seperated list of map modules (quoted). OSM.Routes must be the first element! Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.routes.debugging   = 'Error,OSM.Route,OSM.Base,OSM.Filter'
   # cat=BrowserMaps - Controlling*//207;             type=string;    label= CSS file: Path to the CSS file. Example: fileadmin/my_openstreetmap/css/style.css
   map.openLayers.css      = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/theme/default/style.css
