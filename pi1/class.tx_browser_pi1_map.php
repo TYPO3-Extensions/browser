@@ -3661,7 +3661,7 @@ class tx_browser_pi1_map
               . 'Please disable BrowserMap for this plugin. See<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled</p>' . PHP_EOL
               . 'or<br />' . PHP_EOL
-              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.views.[' . $view . '].[' . $mode . '].navigation.map.enabled</p>' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.views.' . $view . '.' . $mode . '.navigation.map.enabled</p>' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
