@@ -2770,20 +2770,21 @@ class tx_browser_pi1_map
     }
       // RETURN : current item isn't the url
 
-      // RETURN : DRS is disabled
-    if( ! $this->pObj->b_drs_warn )
-    {
-      return $this->numberOfBrowserPlugins;
-    }
-      // RETURN : DRS is disabled
-      
       // RETURN : there is #1 browser plugins only
-    if( $this->pObj->objFlexform->get_numberOfBrowserPlugins( ) <= 1 )
+    $numberOfBrowserPlugins = $this->pObj->objFlexform->get_numberOfBrowserPlugins( );
+    if( $numberOfBrowserPlugins <= 1 )
     {
       return;
     }
       // RETURN : there is #1 browser plugins only
 
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_warn )
+    {
+      return $numberOfBrowserPlugins;
+    }
+      // RETURN : DRS is disabled
+      
       // DRS 
     $urldecode = urldecode( $value );
     $pos = strpos( $urldecode, 'tx_browser_pi1[plugin]' );
@@ -2791,7 +2792,7 @@ class tx_browser_pi1_map
     switch( true )
     {
       case( $pos === false ):
-        $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
+        $prompt = 'There are #' . $numberOfBrowserPlugins. ' Browser plugins on the current page.';
         t3lib_div :: devlog( '[WARN/FLEXFORM] ' . $prompt, $this->pObj->extKey, 2 );
         $prompt = 'Current link doesn\'t contain the parameter tx_browser_pi1[plugin]: ' . $urldecode;
         t3lib_div :: devlog( '[ERROR/FLEXFORM] ' . $prompt, $this->pObj->extKey, 3 );
@@ -2800,7 +2801,7 @@ class tx_browser_pi1_map
         break;
       case( ! ( $pos === false ) ):
       default:
-        $prompt = 'There are #' . $this->numberOfBrowserPlugins. ' Browser plugins on the current page.';
+        $prompt = 'There are #' . $numberOfBrowserPlugins. ' Browser plugins on the current page.';
         t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'Current link contains the parameter tx_browser_pi1[plugin]: ' . $urldecode;
         t3lib_div :: devlog( '[OK/FLEXFORM] ' . $prompt, $this->pObj->extKey, -1 );
