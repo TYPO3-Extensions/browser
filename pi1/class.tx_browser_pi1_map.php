@@ -2261,7 +2261,8 @@ class tx_browser_pi1_map
     {
       $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
                 '$markerUid is empty.';
-      die( $prompt );
+      //die( $prompt );
+      echo( $prompt );
     }
       // DIE  : if $markerUid is empty
       // DIE  : if $markerTable is empty
