@@ -506,6 +506,12 @@ class tx_browser_pi1_sql_manual
       // Extend WHERE clause in case of an andWhere value
     if( $conf_view['andWhere'] )
     {
+        // #i0016, 130706, dwildt, 4+
+      if( $conf_view['andWhere.'] )
+      {
+        $conf_view['andWhere'] = $this->pObj->cObj->cObjGetSingle(  $conf_view['andWhere'], $conf_view['andWhere.'] );
+      }
+        // #i0016, 130706, dwildt, 4+
       $str_where  = $str_where
                   . " AND " . $conf_view['andWhere']
                   ;

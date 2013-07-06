@@ -10,6 +10,7 @@
             * res/js/map/api/1.3.06       (new)
             * static/setup.txt
   Bugfix
+  * #i0016: andWhere isn't a COA
   * #i0015: oxMap Route Marker
             1.3.06 ->1.3.07
             Effected files:
