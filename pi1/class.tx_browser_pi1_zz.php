@@ -248,6 +248,7 @@
       // Do we have an alias for showUid?
       // #9599
 
+    $str_alias_showUid = null;
     if(!isset($this->pObj->piVars['showUid']))
     {
       $str_alias_showUid = $conf['views.']['list.'][$mode.'.']['showUid'];
@@ -316,10 +317,12 @@
             It is unset!', $this->pObj->extKey, 2);
         }
         unset($this->pObj->piVars['showUid']);
-        if( isset( $this->pObj->piVars[$str_alias_showUid] ) )
+          // #i0017, 130706, dwildt, 4+
+        if( $str_alias_showUid != null )
         {
           unset( $this->pObj->piVars[$str_alias_showUid] );
         }
+          // #i0017, 130706, dwildt, 4+
         $typolink['parameter']  = $GLOBALS['TSFE']->id;
         $typolink['returnLast'] = 'url';
         $this->pObj->piVars['drs'] = 'unproperUid';
