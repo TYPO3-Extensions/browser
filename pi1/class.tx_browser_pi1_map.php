@@ -3686,7 +3686,7 @@ class tx_browser_pi1_map
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
               ;
-      die( $prompt );
+      echo( $prompt );
     }
       // die: no relation
 
