@@ -316,6 +316,10 @@
             It is unset!', $this->pObj->extKey, 2);
         }
         unset($this->pObj->piVars['showUid']);
+        if( isset( $this->pObj->piVars[$str_alias_showUid] ) )
+        {
+          unset( $this->pObj->piVars[$str_alias_showUid] );
+        }
         $typolink['parameter']  = $GLOBALS['TSFE']->id;
         $typolink['returnLast'] = 'url';
         $this->pObj->piVars['drs'] = 'unproperUid';
