@@ -17,6 +17,50 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_h1">Error</label>
       <label index="error_filterh1">Filter Configuration Error</label>
       <label index="error_filter_prompt"><![CDATA[The configuration of the filter  has an error. Please use the DRS - the Development Reporting System. The DRS will display the error and the solution probably.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_maproutes_marker_relation_h1">Path with a relation error</label>
+      <label index="error_maproutes_marker_relation_missing"><![CDATA[
+<p>
+  One path is without any relation to a marker.
+</p>
+<p>
+  Please check your paths and the relations to the marker.
+</p>
+<p>
+  Without a proper relation you won't get any proper result in the map.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: $tsPath%
+</p>
+<p>
+  Sorry for the trouble.<br />
+  Browser - TYPO3 without PHP.
+</p>
+]]></label>
+      <label index="error_maproutes_path_relation_h1">Path with a relation error</label>
+      <label index="error_maproutes_path_relation_missing"><![CDATA[
+<p>
+  One path is without any relation to a path cat category.
+</p>
+<p>
+  Please check your paths and the relations to path categories.
+</p>
+<p>
+  Without a proper relation you won't get any proper result in the map.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: $tsPath%
+</p>
+<p>
+  Sorry for the trouble.<br />
+  Browser - TYPO3 without PHP.
+</p>
+]]></label>
       <label index="error_readlog_h1">Error</label>
       <label index="error_readlog_prompt">There is an error. Please activate the logging mode of this extension (browser) and take a look in the log of cc_devlog!</label>
       <label index="error_relation_h1">Relation Building: Error</label>
