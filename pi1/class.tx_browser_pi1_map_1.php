@@ -3269,6 +3269,23 @@ class tx_browser_pi1_map
         case( $key == 'lon' ):
           if( empty( $elements[ $pathTableField ] ) )
           {
+            $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
+            $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+                    . '<p style="color:red;font-weight:bold;">Route doesn\'t contain neither latitude nor longitude for the category icon!</p>' . PHP_EOL
+                    . '<br />' . PHP_EOL
+                    . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
+                    . '<br />' . PHP_EOL
+                    . 'You can do this<br />' . PHP_EOL
+                    . '<ul>' . PHP_EOL
+                    . '<li>' . PHP_EOL
+                    . 'Please take care of proper route data: Add the latitude and the longitude of the category icon.' . PHP_EOL
+                    . '</li>' . PHP_EOL
+                    . '</ul>' . PHP_EOL
+                    . '<br />' . PHP_EOL
+                    . 'Sorry for the trouble.<br />' . PHP_EOL
+                    . 'Browser - TYPO3 without PHP'
+                    ;
+            die( $prompt );
             $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
           }
           break;
@@ -3970,8 +3987,12 @@ class tx_browser_pi1_map
       // DIE  : $strLonLat is empty
     if( empty ( $strLonLat) )
     {
+      $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">there isn\'t any geodata.</p>' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
               . 'Your path records must contain geodata! Please check your path records.<br />' . PHP_EOL
               . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
