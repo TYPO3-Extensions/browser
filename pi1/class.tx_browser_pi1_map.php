@@ -3008,7 +3008,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
                     'pathCat' => $arrPathCat,
                     'marker'  => $arrMarker
                   );
-$this->pObj->dev_var_dump( $arrReturn );
+//$this->pObj->dev_var_dump( $arrReturn );
     
     return $arrReturn;
   }
@@ -4199,7 +4199,7 @@ $this->pObj->dev_var_dump( $arrReturn );
       // #i0009, 130610, dwildt, 1+
     $arrPathCat = $arrResult['pathCat'];
     $arrMarker  = $arrResult['marker'];
-$this->pObj->dev_var_dump( $arrResult );
+//$this->pObj->dev_var_dump( $arrResult );
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
       // Get the array with categories and marker
@@ -4226,7 +4226,7 @@ $this->pObj->dev_var_dump( $arrResult );
     }
       // LOOP path marker
 
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
@@ -4491,7 +4491,8 @@ $this->pObj->dev_var_dump( $marker );
  */
   private function zz_properFormLabel( $label )
   {
-    $label = str_replace( ' ', '_', $label );
+    $label = urldecode( $label );
+    //$label = str_replace( ' ', '_', $label );
     return $label;
   }
 
