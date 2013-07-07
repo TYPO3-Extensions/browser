@@ -4217,7 +4217,7 @@ class tx_browser_pi1_map
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
-    //$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
+$this->pObj->dev_var_dump( $rowsRelation, $tablePath, $tableCat );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tablePath']     = $tablePath;
