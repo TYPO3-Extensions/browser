@@ -3148,7 +3148,7 @@ class tx_browser_pi1_map
           + $this->renderMapRouteMarkerByPathRowLocal( $elements )
           + $this->renderMapRouteMarkerByPathRowCat( $elements )
           ;
-//$this->pObj->dev_var_dump( $row );
+$this->pObj->dev_var_dump( $row );
 
     return $row;
   }
