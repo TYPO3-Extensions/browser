@@ -39,6 +39,25 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   Browser - TYPO3 without PHP.
 </p>
 ]]></label>
+      <label index="error_maproutes_geodata_empty_h1">Geodata are missing</label>
+      <label index="error_maproutes_geodata_empty_prompt"><![CDATA[
+<p>
+  One path is without geo data.
+</p>
+<p>
+  Please check your paths and their geo data.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: %tsPath%
+</p>
+<p>
+  Sorry for the trouble.<br />
+  Browser - TYPO3 without PHP.
+</p>
+]]></label>
       <label index="error_maproutes_path_relation_h1">Path with a relation error</label>
       <label index="error_maproutes_path_relation_missing"><![CDATA[
 <p>
@@ -158,10 +177,10 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_maproutes_marker_relation_h1">Pfad mit Relations-Fehler</label>
       <label index="error_maproutes_marker_relation_missing"><![CDATA[
 <p>
-  Einem Pfad fehlt eine Relation zu einer Markierung.
+  Einem Pfad fehlt eine Markierung.
 </p>
 <p>
-  Ein Pfad muss aber mindestens eine Markierung zugeordnet sein, sonst kommt es zu Fehlern in der Karte.
+  Ein Pfad muss aber mindestens einer Markierung zugeordnet sein, sonst kommt es zu Fehlern in der Karte.
 </p>
 <p>
   Pr&uuml;fe bitte die Zurodnung von Markierungen zu Deinen Pfaden.
@@ -177,7 +196,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Browser - TYPO3 ohne PHP.
 </p>
 ]]></label>
-      <label index="error_maproutes_marker_relation_h1">Pfad mit Relations-Fehler</label>
+      <label index="error_maproutes_path_relation_h1">Pfad mit Relations-Fehler</label>
       <label index="error_maproutes_path_relation_missing"><![CDATA[
 <p>
   Einem Pfad fehlt eine Kategorie.

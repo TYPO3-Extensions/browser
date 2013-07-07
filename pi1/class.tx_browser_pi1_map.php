@@ -3695,7 +3695,7 @@ class tx_browser_pi1_map
   }
 
 /**
- * renderMapRouteRelationsEval( ) : This method will die, if 
+ * renderMapRouteRelationsEval( ) : This method will prompt, if 
  *                                  * a path hasn't any relation to a path category 
  *                                  * a path hasn't any relation to a marker
  *
@@ -3745,8 +3745,7 @@ class tx_browser_pi1_map
       default:
         $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
                   'prefixMarker must be MARKER or PATH';
-        die( $prompt );
-      
+        die( $prompt );      
     }
     
     $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
@@ -4015,6 +4014,87 @@ class tx_browser_pi1_map
   private function renderMapRoutePathsJsonFeaturesCoordinates( $strLonLat, $pointAsArray=true )
   {
       // DIE  : $strLonLat is empty
+    $this->renderMapRoutePathsJsonFeaturesCoordinatesEval( $strLonLat );
+    
+    $coordinates = explode( PHP_EOL, $strLonLat );
+    foreach( $coordinates as $key => $coordinate )
+    {
+      $coordinate           = trim( $coordinate );
+      list( $lon, $lat )    = explode( ',', $coordinate ); 
+      switch( $pointAsArray )
+      {
+        case( false ):
+          $coordinates[ $key ]  = ( double ) trim( $lon ) . ',' . ( double ) trim( $lat );
+          break;
+        case( true ):
+        default:
+          $coordinates[ $key ]  = array
+                                  (
+                                    ( double ) trim( $lon ),
+                                    ( double ) trim( $lat )
+                                  );
+          break;
+      }
+    }
+    
+      // DIE  : $coordinates are empty
+    if( empty( $coordinates ) )
+    {
+      $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+              . '<p style="color:red;font-weight:bold;">coordinates are empty.</p>' . PHP_EOL
+              . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
+              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
+              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Sorry for the trouble.<br />' . PHP_EOL
+              . 'Browser - TYPO3 without PHP'
+              ;
+      die( $prompt );
+    }
+      // DIE  : $coordinates are empty
+
+    return $coordinates;
+  }
+
+/**
+ * renderMapRoutePathsJsonFeaturesCoordinatesEval( ) :
+ *
+ * @param       string    $strLonLat    : list of points (lon, lat), seperated by line feeds
+ * @param       boolean   $pointAsArray : true: return point as an array. false: return point as a CSV list
+ * @return	array
+ * @version 4.5.7
+ * @since   4.5.7
+ */
+  private function renderMapRoutePathsJsonFeaturesCoordinatesEval( $strLonLat )
+  {
+    if( ! empty ( $strLonLat) )
+    {
+      return;
+    }
+
+    $pluginPid    = $this->pObj->cObj->data['pid'];
+    $pluginUid    = $this->pObj->cObj->data['uid'];
+    $pluginTitle  = $this->pObj->cObj->data['header'];
+    $mode         = $this->mode;
+    $view         = $this->pObj->view;
+    $viewWiDot    = $view.'.';
+    $tsPath       = 'plugin.tx_browser_pi1.views.' . $viewWiDot . $mode;
+
+    $prompt = '<h1 style="color:red;">' 
+            . $this->pObj->pi_getLL( 'error_maproutes_geodata_empty_h1' ) 
+            . '</h1>'
+            . '<p style="color:red;font-weight:bold;">' 
+            . $this->pObj->pi_getLL( 'error_maproutes_geodata_empty_prompt' ) 
+            . '</p>';
+    
+    $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
+    $prompt = str_replace( '%pluginUid%',   $pluginUid,   $prompt );
+    $prompt = str_replace( '%pluginTitle%', $pluginTitle, $prompt );
+    $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
+
+      // die: no relation
+    echo( $prompt );
+
     if( empty ( $strLonLat) )
     {
       $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
