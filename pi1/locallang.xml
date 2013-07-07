@@ -202,7 +202,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Pr&uuml;fe bitte die Pfade auf vollst&auml;ndige Geodaten.
 </p>
 <p>
-  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+  Browser-Plugin: %pluginTitle% mit der UID #%pluginUid% auf der Seite mit der ID #%pluginPid%
 </p>
 <p>
   TypoScript: %tsPath%
@@ -221,7 +221,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Pr&uuml;fe bitte die Pfade auf L&auml;ngengrad und/oder Breitengrad des Kategorie-Symbols.
 </p>
 <p>
-  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+  Browser-Plugin: %pluginTitle% mit der UID #%pluginUid% auf der Seite mit der ID #%pluginPid%
 </p>
 <p>
   TypoScript: %tsPath%
