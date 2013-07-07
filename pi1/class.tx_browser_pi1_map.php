@@ -2984,16 +2984,18 @@ class tx_browser_pi1_map
     
     foreach( $arrMarkerCatUid as $key => $uid )
     {
-      $strMarkerCatTitle = $arrMarkerCatTitle[ $key ];
+      $strMarkerCatTitle    = $arrMarkerCatTitle[ $key ];
 //      $strMarkerCatTitle = str_replace( ' ', null, $strMarkerCatTitle );
-      $strMarkerCatTitle = $this->zz_properFormLabel( $strMarkerCatTitle );
+      $strMarkerCatTitle    = $this->zz_properFormLabel( $strMarkerCatTitle );
       $arrMarkerCat[ $uid ] = $strMarkerCatTitle . ':' . $tableMarker;
     }
     
       // #i0009, 130610, dwildt, 4+
     foreach( $arrPathCatUid as $key => $uid )
     {
-      $arrPathCat[ $pathUid ] = $arrPathCatTitle[ $key ] . ':' . $tablePath;
+      $strPathCatTitle        = $arrPathCatTitle[ $key ];
+      $strPathCatTitle        = $this->zz_properFormLabel( $strPathCatTitle );
+      $arrPathCat[ $pathUid ] = $strPathCatTitle . ':' . $tablePath;
     }
     
     foreach( $arrMarkerUid as $key => $uid )
@@ -3112,7 +3114,7 @@ class tx_browser_pi1_map
 
       // Merge a marker for each path
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
