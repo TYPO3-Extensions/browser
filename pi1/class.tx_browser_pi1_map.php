@@ -4491,6 +4491,7 @@ $this->pObj->dev_var_dump( $marker );
   private function zz_properFormLabel( $label )
   {
     $label = str_replace( ' ', '_', $label );
+    return $label;
   }
 
 
