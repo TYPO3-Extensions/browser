@@ -538,14 +538,17 @@ class tx_browser_pi1_map
       $cObj_name  = $this->confMap['marker.']['addToCData.']['system.'][$marker];
       $cObj_conf  = $this->confMap['marker.']['addToCData.']['system.'][$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-      if( $this->pObj->b_drs_map || $this->pObj->b_drs_warn )
+      if( empty ( $content ) )
       {
-        if( empty ( $content ) )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'marker.addToCData.' . $marker . ' is empty. Probably this is an error!';
           t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
         }
-        else
+      }
+      else
+      {
+        if( $this->pObj->b_drs_map )
         {
           $prompt = 'Added to cObject[' . $marker . ']: ' . $content;
           t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
