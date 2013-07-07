@@ -3673,6 +3673,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $rowCounter++;
     }
       // LOOP rows
+$this->pObj->dev_var_dump( $prefixMarker, $relations );
     
       // die: no relation
     if( empty ( $relations ) )
