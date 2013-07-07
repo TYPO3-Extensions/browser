@@ -4161,6 +4161,7 @@ $this->pObj->dev_var_dump( $rowsRelation );
 
       // Get the PATH relations (each element with a prefix PATH - see example above)
     $relations  = $this->renderMapRouteRelations( 'PATH' );
+$this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
