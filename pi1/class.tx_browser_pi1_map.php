@@ -3148,7 +3148,7 @@ class tx_browser_pi1_map
           + $this->renderMapRouteMarkerByPathRowLocal( $elements )
           + $this->renderMapRouteMarkerByPathRowCat( $elements )
           ;
-$this->pObj->dev_var_dump( $row );
+//$this->pObj->dev_var_dump( $row );
 
     return $row;
   }
@@ -4223,6 +4223,7 @@ $this->pObj->dev_var_dump( $rowsRelation );
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
+$this->pObj->dev_var_dump( $rowsRelation );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tablePath']     = $tablePath;
