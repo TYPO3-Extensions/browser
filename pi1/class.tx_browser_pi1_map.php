@@ -3557,7 +3557,7 @@ class tx_browser_pi1_map
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteRelations( 'MARKER' );
-$this->pObj->dev_var_dump( $relations );
+//$this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
@@ -3616,7 +3616,7 @@ $this->pObj->dev_var_dump( $relations );
       //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
-$this->pObj->dev_var_dump( $rowsRelation );
+//$this->pObj->dev_var_dump( $rowsRelation );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableMarkerCat;
     $arrReturn['tableMarker']   = $tableMarker;
@@ -4191,7 +4191,7 @@ $this->pObj->dev_var_dump( $rowsRelation );
 
       // Get the PATH relations (each element with a prefix PATH - see example above)
     $relations  = $this->renderMapRouteRelations( 'PATH' );
-$this->pObj->dev_var_dump( $relations );
+//$this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
@@ -4254,7 +4254,7 @@ $this->pObj->dev_var_dump( $relations );
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tablePath.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
-$this->pObj->dev_var_dump( $rowsRelation );
+//$this->pObj->dev_var_dump( $rowsRelation );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableCat;
     $arrReturn['tablePath']     = $tablePath;
