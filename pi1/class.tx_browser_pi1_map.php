@@ -3655,8 +3655,6 @@ $this->pObj->dev_var_dump( $rowsRelation );
       // LOOP rows
 $this->pObj->dev_var_dump( $this->pObj->rows );
 
-    $uidField = $this->confMap['configuration.']['categories.']['fields.']['marker.']['uid'];
-
     foreach( $this->pObj->rows as $row )
     {
         // LOOP row
@@ -3668,8 +3666,12 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
             // CONTINUE : element hasn't any prefix MARKER
           continue;
         }
-        //$relations[$rowCounter][$key] = $value;
-        $relations[ $row[ $uidField ] ][ $key ] = $value;
+        if( $value == null )
+        {
+            // CONTINUE : there isn't any value
+          continue;
+        }
+        $relations[$rowCounter][$key] = $value;
         break;
       }
         // LOOP row
