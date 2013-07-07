@@ -4221,7 +4221,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
     }
       // LOOP path marker
 
-//$this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
     return $marker;
   }
 
