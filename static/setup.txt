@@ -786,7 +786,6 @@ plugin.tx_browser_pi1 {
               geodata       = {$plugin.tx_browser_pi1.map.path.table.path.geodata}
               color         = {$plugin.tx_browser_pi1.map.path.table.path.color}
               lineWidth     = {$plugin.tx_browser_pi1.map.path.table.path.lineWidth}
-              iconposition  = {$plugin.tx_browser_pi1.map.path.table.path.iconposition}
             }
               // title
             pathCategory = 
