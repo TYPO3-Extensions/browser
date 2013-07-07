@@ -214,7 +214,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
         // 4.1.17, 120927, dwildt
         // replace the category marker
       //$labelValueWoSpc = str_replace( ' ', null, $labelValue );
-      $labelValueWoSpc = $this->zz_properFormLabel( $label );
+      $labelValueWoSpc = $this->zz_properFormLabel( $labelValue );
       $input = str_replace( '###CAT_WO_SPC###', $labelValueWoSpc, $input );
         // 4.1.17, 120927, dwildt
 
