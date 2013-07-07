@@ -32,7 +32,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
 </p>
 <p>
-  TypoScript: $tsPath%
+  TypoScript: %tsPath%
 </p>
 <p>
   Sorry for the trouble.<br />
@@ -54,7 +54,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
 </p>
 <p>
-  TypoScript: $tsPath%
+  TypoScript: %tsPath%
 </p>
 <p>
   Sorry for the trouble.<br />
