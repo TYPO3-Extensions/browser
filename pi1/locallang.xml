@@ -42,7 +42,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   The category of one path is without longitude or latitude.
 </p>
 <p>
-  Please check your paths and their longitudes and latitudes.
+  Please check your paths and their category longitudes and latitudes.
 </p>
 <p>
   Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
@@ -193,6 +193,44 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_h1">Fehler</label>
       <label index="error_filter_h1">Fehler mit der Filter-Konfiguration</label>
       <label index="error_filter_prompt"><![CDATA[Die Filter sind falsch konfiguriert. Benutze das DRS - Development Reporting System. Das DRS beschreibt den Fehler und wird versuchen eine Lösung anzubieten.]]></label>
+      <label index="error_maproutes_geodata_empty_h1">Geodaten fehlen</label>
+      <label index="error_maproutes_geodata_empty_prompt"><![CDATA[
+<p>
+  Bei einem Pfad fehlen Geodaten.
+</p>
+<p>
+  Pr&uuml;fe bitte die Pfade auf vollst&auml;ndige Geodaten.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: %tsPath%
+</p>
+<p>
+  Sorry wegen der &Uuml;mst&auml;nde.<br />
+  Browser - TYPO3 ohne PHP.
+</p>
+]]></label>
+      <label index="error_maproutes_lonLat_empty_h1">L&auml;ngengrad und/oder Breitengrad fehlen</label>
+      <label index="error_maproutes_lonLat_empty_prompt"><![CDATA[
+<p>
+  Bei einem Pfad fehlen L&auml;ngengrad und/oder Breitengrad f&uuml;r das Kategorie-Symbol.
+</p>
+<p>
+  Pr&uuml;fe bitte die Pfade auf L&auml;ngengrad und/oder Breitengrad des Kategorie-Symbols.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: %tsPath%
+</p>
+<p>
+  Sorry wegen der &Uuml;mst&auml;nde.<br />
+  Browser - TYPO3 ohne PHP.
+</p>
+]]></label>
       <label index="error_maproutes_marker_relation_h1">Pfad mit Relations-Fehler</label>
       <label index="error_maproutes_marker_relation_missing"><![CDATA[
 <p>
