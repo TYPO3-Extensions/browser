@@ -3285,7 +3285,27 @@ class tx_browser_pi1_map
                     . 'Sorry for the trouble.<br />' . PHP_EOL
                     . 'Browser - TYPO3 without PHP'
                     ;
-            die( $prompt );
+            $pluginPid    = $this->pObj->cObj->data['pid'];
+            $pluginUid    = $this->pObj->cObj->data['uid'];
+            $pluginTitle  = $this->pObj->cObj->data['header'];
+            $mode         = $this->mode;
+            $view         = $this->pObj->view;
+            $viewWiDot    = $view.'.';
+            $tsPath       = 'plugin.tx_browser_pi1.views.' . $viewWiDot . $mode;
+
+            $prompt = '<h1 style="color:red;">' 
+                    . $this->pObj->pi_getLL( 'error_maproutes_lonLat_empty_h1' ) 
+                    . '</h1>'
+                    . $this->pObj->pi_getLL( 'error_maproutes_lonLat_empty_prompt' ) 
+                    . '<p>' . PHP_EOL
+                    . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+                    . '</p>';
+
+            $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
+            $prompt = str_replace( '%pluginUid%',   $pluginUid,   $prompt );
+            $prompt = str_replace( '%pluginTitle%', $pluginTitle, $prompt );
+            $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
+            echo( $prompt );
             $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
           }
           break;

@@ -17,16 +17,13 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_h1">Error</label>
       <label index="error_filterh1">Filter Configuration Error</label>
       <label index="error_filter_prompt"><![CDATA[The configuration of the filter  has an error. Please use the DRS - the Development Reporting System. The DRS will display the error and the solution probably.<br /><br />Browser - TYPO3 without PHP]]></label>
-      <label index="error_maproutes_marker_relation_h1">Path with a relation error</label>
-      <label index="error_maproutes_marker_relation_missing"><![CDATA[
+      <label index="error_maproutes_geodata_empty_h1">Geodata are missing</label>
+      <label index="error_maproutes_geodata_empty_prompt"><![CDATA[
 <p>
-  One path is without any relation to a marker.
+  One path is without geo data.
 </p>
 <p>
-  Please check your paths and the relations to the marker.
-</p>
-<p>
-  Without a proper relation you won't get any proper result in the map.
+  Please check your paths and their geo data.
 </p>
 <p>
   Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
@@ -39,13 +36,35 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   Browser - TYPO3 without PHP.
 </p>
 ]]></label>
-      <label index="error_maproutes_geodata_empty_h1">Geodata are missing</label>
-      <label index="error_maproutes_geodata_empty_prompt"><![CDATA[
+      <label index="error_maproutes_lonLat_empty_h1">Longitude or latitude are missing</label>
+      <label index="error_maproutes_lonLat_empty_prompt"><![CDATA[
 <p>
-  One path is without geo data.
+  The category of one path is without longitude or latitude.
 </p>
 <p>
-  Please check your paths and their geo data.
+  Please check your paths and their longitudes and latitudes.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: %tsPath%
+</p>
+<p>
+  Sorry for the trouble.<br />
+  Browser - TYPO3 without PHP.
+</p>
+]]></label>
+      <label index="error_maproutes_marker_relation_h1">Path with a relation error</label>
+      <label index="error_maproutes_marker_relation_missing"><![CDATA[
+<p>
+  One path is without any relation to a marker.
+</p>
+<p>
+  Please check your paths and the relations to the marker.
+</p>
+<p>
+  Without a proper relation you won't get any proper result in the map.
 </p>
 <p>
   Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
