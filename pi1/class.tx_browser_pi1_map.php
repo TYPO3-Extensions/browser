@@ -3679,10 +3679,20 @@ class tx_browser_pi1_map
               . '<br />' . PHP_EOL
               . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
               . '<br />' . PHP_EOL
-              . 'Please disable BrowserMap for this plugin. See<br />' . PHP_EOL
+              . 'You can do this<br />' . PHP_EOL
+              . '<ul>' . PHP_EOL
+              . '<li>' . PHP_EOL
+              . 'Please disable Map +Routes for this plugin. See<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.enabled</p>' . PHP_EOL
               . 'or<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.views.' . $view . '.' . $mode . '.navigation.map.enabled</p>' . PHP_EOL
+              . '</li>' . PHP_EOL
+              . '<li>' . PHP_EOL
+              . 'Please check your paths<br />' . PHP_EOL
+              . 'Each path needs one path category exactly.<br />' . PHP_EOL
+              . 'Each path needs one marker at least.<br />' . PHP_EOL
+              . '</li>' . PHP_EOL
+              . '</ul>' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
               . 'Browser - TYPO3 without PHP'
