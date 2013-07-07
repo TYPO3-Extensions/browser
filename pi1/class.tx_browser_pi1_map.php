@@ -4187,8 +4187,11 @@ class tx_browser_pi1_map
             foreach( $arrTablePathCat as $tablePathCatChildren )
             {
               list( $pathUid, $catUid ) = explode( '.', $tablePathCatChildren );
-              $rowsRelation[ $pathUid ][ ]  = $catUid;
-              $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+              if( $pathUid != null )
+              {
+                $rowsRelation[ $pathUid ][ ]  = $catUid;
+                $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+              }
             }
               // LOOP children
             break;
@@ -4197,8 +4200,11 @@ class tx_browser_pi1_map
           case( count( $arrTablePathCat ) == 1 ):
           default:
             list( $pathUid, $catUid ) = explode( '.', $tablePathCat );
-            $rowsRelation[ $pathUid ][ ]  = $catUid;
-            $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            if( $pathUid != null )
+            {
+              $rowsRelation[ $pathUid ][ ]  = $catUid;
+              $rowsRelation[ $pathUid ]     = array_unique( $rowsRelation[ $pathUid ] );
+            }
             break;            
             // CASE : no children
         }
