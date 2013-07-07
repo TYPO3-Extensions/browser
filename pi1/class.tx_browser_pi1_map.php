@@ -4492,7 +4492,7 @@ class tx_browser_pi1_map
   private function zz_properFormLabel( $label )
   {
     $label = urlencode( $label );
-    //$label = str_replace( ' ', '_', $label );
+    $label = str_replace( '%', 'prcnt', $label );
     return $label;
   }
 
