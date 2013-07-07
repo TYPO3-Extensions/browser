@@ -4493,8 +4493,9 @@ class tx_browser_pi1_map
  */
   private function zz_properFormLabel( $label )
   {
-    $label = str_replace( ' ', '_', $label );
-    $label = str_replace( '%', 'prcnt', $label );
+    // $label = str_replace( ' ', '_', $label );
+    $label = urldecode( $label );
+    //$label = str_replace( '%', 'prcnt', $label );
     return $label;
   }
 
