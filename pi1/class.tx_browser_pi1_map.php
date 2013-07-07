@@ -854,10 +854,10 @@ class tx_browser_pi1_map
     $pos = strpos( $template, $str_mapMarker );
     if( ! ( $pos === false ) )
     {
-      if( $this->pObj->b_drs_warn )
+      if( $this->pObj->b_drs_map )
       {
         $prompt = 'The HTML template contains the marker ' . $str_mapMarker . '.';
-        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
       return $template;
     }
