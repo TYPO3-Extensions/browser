@@ -1978,7 +1978,8 @@ $this->pObj->dev_var_dump( $this->arrCategories );
         // Get the longitude and latitude
 
         // Get the category label
-      $catTitleWoSpc  = str_replace( ' ', null, $catTitle );
+      //$catTitleWoSpc  = str_replace( ' ', null, $catTitle );
+      $catTitleWoSpc = $this->zz_properFormLabel( $catTitle );
 
         // Get the description
       $description  = $this->renderMapMarkerVariablesSystemItem( 'description' );
