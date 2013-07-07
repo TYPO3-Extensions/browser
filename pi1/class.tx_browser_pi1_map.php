@@ -1092,10 +1092,16 @@ class tx_browser_pi1_map
       // RETURN : DRS is disabled
       
       // DRS - Development Reporting System
-    t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    if( $this->pObj->b_drs_map )
+    {
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+    }
     if( $promptAfterEnabledViews )
     {
-      t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $promptAfterEnabledViews , $this->pObj->extKey, 2 );
+      if( $this->pObj->b_drs_warn )
+      {
+        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $promptAfterEnabledViews , $this->pObj->extKey, 2 );
+      }
     }
 
       // RETURN false!
