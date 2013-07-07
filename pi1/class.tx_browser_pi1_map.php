@@ -3557,6 +3557,7 @@ class tx_browser_pi1_map
 
       // Get the MARKER relations (each element with a prefix MARKER - see example above)
     $relations  = $this->renderMapRouteRelations( 'MARKER' );
+$this->pObj->dev_var_dump( $relations );
 
       // Get the key of a relation
     $relationKey = key( $relations[0] );
