@@ -4194,7 +4194,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       // #i0009, 130610, dwildt, 1+
     $arrPathCat = $arrResult['pathCat'];
     $arrMarker  = $arrResult['marker'];
-//$this->pObj->dev_var_dump( $arrResult );
+$this->pObj->dev_var_dump( $arrResult );
     unset( $arrResult );
     //$this->pObj->dev_var_dump( $arrCat, $arrMarker );
       // Get the array with categories and marker
