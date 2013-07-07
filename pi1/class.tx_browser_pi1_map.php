@@ -3698,6 +3698,9 @@ class tx_browser_pi1_map
               . '</li>' . PHP_EOL
               . '</ul>' . PHP_EOL
               . '</li>' . PHP_EOL
+              . '<li>' . PHP_EOL
+              . 'Please enable the DRS. Maybe it will prompt errors in the devlog (TYPO3 backend <br />' . PHP_EOL
+              . '</li>' . PHP_EOL
               . '</ul>' . PHP_EOL
               . '<br />' . PHP_EOL
               . 'Sorry for the trouble.<br />' . PHP_EOL
