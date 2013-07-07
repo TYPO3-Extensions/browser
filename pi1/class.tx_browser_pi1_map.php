@@ -3689,8 +3689,14 @@ class tx_browser_pi1_map
               . '</li>' . PHP_EOL
               . '<li>' . PHP_EOL
               . 'Please check your paths<br />' . PHP_EOL
+              . '<ul>' . PHP_EOL
+              . '<li>' . PHP_EOL
               . 'Each path needs one path category exactly.<br />' . PHP_EOL
+              . '<li>' . PHP_EOL
+              . '</li>' . PHP_EOL
               . 'Each path needs one marker at least.<br />' . PHP_EOL
+              . '</li>' . PHP_EOL
+              . '</ul>' . PHP_EOL
               . '</li>' . PHP_EOL
               . '</ul>' . PHP_EOL
               . '<br />' . PHP_EOL
