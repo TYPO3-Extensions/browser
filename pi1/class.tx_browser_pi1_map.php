@@ -3003,7 +3003,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
                     'pathCat' => $arrPathCat,
                     'marker'  => $arrMarker
                   );
-//$this->pObj->dev_var_dump( $arrReturn );
+$this->pObj->dev_var_dump( $arrReturn );
     
     return $arrReturn;
   }
