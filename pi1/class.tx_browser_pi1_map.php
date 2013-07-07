@@ -3270,8 +3270,6 @@ class tx_browser_pi1_map
           if( empty( $elements[ $pathTableField ] ) )
           {
             $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
-            $view           = $this->view;
-            $mode           = $this->mode;
             $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
                     . '<p style="color:red;font-weight:bold;">Route doesn\'t contain neither latitude nor longitude for the category icon!</p>' . PHP_EOL
                     . '<br />' . PHP_EOL
@@ -3989,8 +3987,12 @@ class tx_browser_pi1_map
       // DIE  : $strLonLat is empty
     if( empty ( $strLonLat) )
     {
+      $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
       $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '<p style="color:red;font-weight:bold;">there isn\'t any geodata.</p>' . PHP_EOL
+              . '<br />' . PHP_EOL
+              . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
+              . '<br />' . PHP_EOL
               . 'Your path records must contain geodata! Please check your path records.<br />' . PHP_EOL
               . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
               . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
