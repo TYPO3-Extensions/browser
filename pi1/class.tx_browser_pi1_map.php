@@ -3718,7 +3718,7 @@ $this->pObj->dev_var_dump( $rowsRelation );
 
     $pluginPid    = $this->pObj->cObj->data['pid'];
     $pluginUid    = $this->pObj->cObj->data['uid'];
-    $pluginTitle  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
+    $pluginTitle  = $this->pObj->cObj->data['header'];
     $mode         = $this->mode;
     $view         = $this->pObj->view;
     $viewWiDot    = $view.'.';
