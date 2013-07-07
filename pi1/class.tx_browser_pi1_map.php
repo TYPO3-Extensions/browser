@@ -202,7 +202,7 @@ class tx_browser_pi1_map
     $tab = '                    ';
 
       // FOREACH category label
-$this->pObj->dev_var_dump( $this->arrCategories );
+//$this->pObj->dev_var_dump( $this->arrCategories );
     foreach( $this->arrCategories['labels'] as $labelKey => $labelValue )
     {
         // Get the draft for an input field
@@ -4491,7 +4491,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
  */
   private function zz_properFormLabel( $label )
   {
-    $label = urldecode( $label );
+    $label = urlencode( $label );
     //$label = str_replace( ' ', '_', $label );
     return $label;
   }
