@@ -497,14 +497,24 @@ class tx_browser_pi1_map
         continue;
       }
 
-      if( $this->pObj->b_drs_map || $this->pObj->b_drs_warn )
+      $this->pObj->cObj->data[ $key ] = $value;
+
+      if( ! ( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
       {
-        if( $value === null )
+        continue;
+      }
+      
+      if( $value === null )
+      {
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = $key . ' is null. Maybe this is an error!';
           t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         }
-        else
+      }
+      else
+      {
+        if( $this->pObj->b_drs_map )
         {
           $prompt = 'Added to cObject[' . $key . ']: ' . $value;
           t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
@@ -512,7 +522,6 @@ class tx_browser_pi1_map
           t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
         }
       }
-      $this->pObj->cObj->data[ $key ] = $value;
     }
   }
 
@@ -3306,7 +3315,7 @@ class tx_browser_pi1_map
             $prompt = str_replace( '%pluginTitle%', $pluginTitle, $prompt );
             $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
             echo( $prompt );
-            $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
+            //$row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
           }
           break;
         default:
