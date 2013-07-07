@@ -854,10 +854,10 @@ class tx_browser_pi1_map
     $pos = strpos( $template, $str_mapMarker );
     if( ! ( $pos === false ) )
     {
-      if( $this->pObj->b_drs_map )
+      if( $this->pObj->b_drs_warn )
       {
         $prompt = 'The HTML template contains the marker ' . $str_mapMarker . '.';
-        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
       }
       return $template;
     }
@@ -3699,7 +3699,7 @@ class tx_browser_pi1_map
               . '</ul>' . PHP_EOL
               . '</li>' . PHP_EOL
               . '<li>' . PHP_EOL
-              . 'Please enable the DRS. Maybe it will prompt errors in the devlog (TYPO3 backend <br />' . PHP_EOL
+              . 'Please enable the DRS. Maybe it will prompt errors in the devlog (TYPO3 backend). <br />' . PHP_EOL
               . '</li>' . PHP_EOL
               . '</ul>' . PHP_EOL
               . '<br />' . PHP_EOL
