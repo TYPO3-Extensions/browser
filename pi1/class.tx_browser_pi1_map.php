@@ -202,7 +202,7 @@ class tx_browser_pi1_map
     $tab = '                    ';
 
       // FOREACH category label
-//$this->pObj->dev_var_dump( $this->arrCategories );
+$this->pObj->dev_var_dump( $this->arrCategories );
     foreach( $this->arrCategories['labels'] as $labelKey => $labelValue )
     {
         // Get the draft for an input field
