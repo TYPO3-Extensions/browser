@@ -2982,7 +2982,9 @@ $this->pObj->dev_var_dump( $this->arrCategories );
     
     foreach( $arrMarkerCatUid as $key => $uid )
     {
-      $arrMarkerCat[ $uid ] = $arrMarkerCatTitle[ $key ] . ':' . $tableMarker;
+      $strMarkerCatTitle = $arrMarkerCatTitle[ $key ];
+      $strMarkerCatTitle = str_replace( ' ', null, $strMarkerCatTitle );
+      $arrMarkerCat[ $uid ] = $strMarkerCatTitle . ':' . $tableMarker;
     }
     
       // #i0009, 130610, dwildt, 4+
