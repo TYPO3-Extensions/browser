@@ -2984,7 +2984,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
     foreach( $arrMarkerCatUid as $key => $uid )
     {
       $strMarkerCatTitle = $arrMarkerCatTitle[ $key ];
-      $strMarkerCatTitle = str_replace( ' ', null, $strMarkerCatTitle );
+//      $strMarkerCatTitle = str_replace( ' ', null, $strMarkerCatTitle );
       $strMarkerCatTitle = $this->zz_properFormLabel( $strMarkerCatTitle );
       $arrMarkerCat[ $uid ] = $strMarkerCatTitle . ':' . $tableMarker;
     }
