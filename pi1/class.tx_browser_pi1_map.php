@@ -3653,12 +3653,12 @@ $this->pObj->dev_var_dump( $rowsRelation );
     $rowCounter = 0;
     
       // LOOP rows
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows );
 
-    foreach( $this->pObj->rows as $elements )
+    foreach( $this->pObj->rows as $row )
     {
-        // LOOP elements
-      foreach( $elements as $key => $value )
+        // LOOP row
+      foreach( $row as $key => $value )
       {
         list( $prefix ) = explode( ':', $key );
         if( ! ( $prefix == $prefixMarker ) )
@@ -3669,7 +3669,7 @@ $this->pObj->dev_var_dump( $rowsRelation );
         $relations[$rowCounter][$key] = $value;
         break;
       }
-        // LOOP elements
+        // LOOP row
       $rowCounter++;
     }
       // LOOP rows
