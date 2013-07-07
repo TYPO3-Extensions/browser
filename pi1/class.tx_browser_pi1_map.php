@@ -213,7 +213,8 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       $input = str_replace( '###CAT###', $labelValue, $input );
         // 4.1.17, 120927, dwildt
         // replace the category marker
-      $labelValueWoSpc = str_replace( ' ', null, $labelValue );
+      //$labelValueWoSpc = str_replace( ' ', null, $labelValue );
+      $labelValueWoSpc = $this->zz_properFormLabel( $label );
       $input = str_replace( '###CAT_WO_SPC###', $labelValueWoSpc, $input );
         // 4.1.17, 120927, dwildt
 
@@ -2984,6 +2985,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
     {
       $strMarkerCatTitle = $arrMarkerCatTitle[ $key ];
       $strMarkerCatTitle = str_replace( ' ', null, $strMarkerCatTitle );
+      $strMarkerCatTitle = $this->zz_properFormLabel( $strMarkerCatTitle );
       $arrMarkerCat[ $uid ] = $strMarkerCatTitle . ':' . $tableMarker;
     }
     
@@ -4478,6 +4480,18 @@ $this->pObj->dev_var_dump( $marker );
     $this->initVarTypeNum( );
   }
 
+/**
+ * zz_properFormLabel( ) : 
+ *
+ * @param       string    $label  : 
+ * @return	string    $label  : 
+ * @version 4.5.8
+ * @since   4.5.8
+ */
+  private function zz_properFormLabel( $label )
+  {
+    $label = str_replace( '_', null, $label );
+  }
 
 
 }
