@@ -3730,16 +3730,18 @@ class tx_browser_pi1_map
         $prompt = '<h1 style="color:red;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_marker_relation_h1' ) 
                 . '</h1>'
-                . '<p style="color:red;font-weight:bold;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_marker_relation_missing' ) 
+                . '<p>' . PHP_EOL
+                . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
                 . '</p>';
         break;
       case( 'PATH' ):
         $prompt = '<h1 style="color:red;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_path_relation_h1' ) 
                 . '</h1>'
-                . '<p style="color:red;font-weight:bold;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_path_relation_missing' ) 
+                . '<p>' . PHP_EOL
+                . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
                 . '</p>';
         break;
       default:
@@ -4083,8 +4085,9 @@ class tx_browser_pi1_map
     $prompt = '<h1 style="color:red;">' 
             . $this->pObj->pi_getLL( 'error_maproutes_geodata_empty_h1' ) 
             . '</h1>'
-            . '<p style="color:red;font-weight:bold;">' 
             . $this->pObj->pi_getLL( 'error_maproutes_geodata_empty_prompt' ) 
+            . '<p>' . PHP_EOL
+            . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
             . '</p>';
     
     $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
@@ -4095,65 +4098,6 @@ class tx_browser_pi1_map
       // die: no relation
     echo( $prompt );
 
-    if( empty ( $strLonLat) )
-    {
-      $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
-      $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
-              . '<p style="color:red;font-weight:bold;">there isn\'t any geodata.</p>' . PHP_EOL
-              . '<br />' . PHP_EOL
-              . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
-              . '<br />' . PHP_EOL
-              . 'Your path records must contain geodata! Please check your path records.<br />' . PHP_EOL
-              . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
-              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
-              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
-              . '<br />' . PHP_EOL
-              . 'Sorry for the trouble.<br />' . PHP_EOL
-              . 'Browser - TYPO3 without PHP'
-              ;
-      //die( $prompt );
-      echo( $prompt );
-    }
-      // DIE  : $strLonLat is empty
-    
-    $coordinates = explode( PHP_EOL, $strLonLat );
-    foreach( $coordinates as $key => $coordinate )
-    {
-      $coordinate           = trim( $coordinate );
-      list( $lon, $lat )    = explode( ',', $coordinate ); 
-      switch( $pointAsArray )
-      {
-        case( false ):
-          $coordinates[ $key ]  = ( double ) trim( $lon ) . ',' . ( double ) trim( $lat );
-          break;
-        case( true ):
-        default:
-          $coordinates[ $key ]  = array
-                                  (
-                                    ( double ) trim( $lon ),
-                                    ( double ) trim( $lat )
-                                  );
-          break;
-      }
-    }
-    
-      // DIE  : $coordinates are empty
-    if( empty( $coordinates ) )
-    {
-      $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
-              . '<p style="color:red;font-weight:bold;">coordinates are empty.</p>' . PHP_EOL
-              . 'Please take care off a proper TypoScript configuration at<br />' . PHP_EOL
-              . '<p style="font-weight:bold;">plugin.tx_browser_pi1.navigation.map.configuration.route.*</p>' . PHP_EOL
-              . 'Please use the TypoScript Constant Editor<br />' . PHP_EOL
-              . '<br />' . PHP_EOL
-              . 'Sorry for the trouble.<br />' . PHP_EOL
-              . 'Browser - TYPO3 without PHP'
-              ;
-      die( $prompt );
-    }
-      // DIE  : $coordinates are empty
-
-    return $coordinates;
   }
 
 /**
