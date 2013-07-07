@@ -212,7 +212,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Browser - TYPO3 ohne PHP.
 </p>
 ]]></label>
-      <label index="error_maproutes_lonLat_empty_h1">L&auml;ngengrad und/oder Breitengrad fehlen</label>
+      <label index="error_maproutes_lonLat_empty_h1"><![CDATA[L&auml;ngengrad und/oder Breitengrad fehlen]]></label>
       <label index="error_maproutes_lonLat_empty_prompt"><![CDATA[
 <p>
   Bei einem Pfad fehlen L&auml;ngengrad und/oder Breitengrad f&uuml;r das Kategorie-Symbol.
