@@ -3269,23 +3269,28 @@ class tx_browser_pi1_map
         case( $key == 'lon' ):
           if( empty( $elements[ $pathTableField ] ) )
           {
+            $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
+            $view           = $this->view;
+            $mode           = $this->mode;
+            $prompt = 'Unproper result in ' . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+                    . '<p style="color:red;font-weight:bold;">Route doesn\'t contain neither latitude nor longitude for the category icon!</p>' . PHP_EOL
+                    . '<br />' . PHP_EOL
+                    . 'Browser Plugin: ' . $browserPlugin . '<br />' . PHP_EOL
+                    . '<br />' . PHP_EOL
+                    . 'You can do this<br />' . PHP_EOL
+                    . '<ul>' . PHP_EOL
+                    . '<li>' . PHP_EOL
+                    . 'Please take care of proper route data: Add the latitude and the longitude of the category icon.' . PHP_EOL
+                    . '</li>' . PHP_EOL
+                    . '</ul>' . PHP_EOL
+                    . '<br />' . PHP_EOL
+                    . 'Sorry for the trouble.<br />' . PHP_EOL
+                    . 'Browser - TYPO3 without PHP'
+                    ;
+            die( $prompt );
             $row[ $markerTableField ] = $this->renderMapRouteMarkerGeodata( $key, $elements );
           }
           break;
-//        case( $key == 'routeLabel' ):
-//            // #i0013, 130701, dwildt, +
-//          switch( true )
-//          {
-//            case( isset ( $elements[ 'markerTable' ] ) ):
-//              $row[ 'type' ] = 'route';
-//              break;
-//            case( ! isset ( $elements[ 'markerTable' ] ) ):
-//            default:
-//              $row[ 'type' ] = 'category';
-//              break;
-//          }
-//            // #i0013, 130701, dwildt, +
-//          break;
         default:
           $row[ $key ] = $elements[ $pathTableField ];
           break;
