@@ -3615,7 +3615,7 @@ $this->pObj->dev_var_dump( $row );
       //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       //  tableMarker.uid => array ( tableCat.uid, tableCat.uid, tableCat.uid ),
       // )
-    //$this->pObj->dev_var_dump( $rowsRelation );
+$this->pObj->dev_var_dump( $rowsRelation );
     $arrReturn['rowsRelation']  = $rowsRelation;
     $arrReturn['tableCat']      = $tableMarkerCat;
     $arrReturn['tableMarker']   = $tableMarker;
