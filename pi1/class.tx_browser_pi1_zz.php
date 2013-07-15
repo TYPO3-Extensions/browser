@@ -1706,7 +1706,6 @@
           // #49495, 130716, dwildt, 1-
 //        $cHash_array  = t3lib_cacheHash( $str_params );
           // #49495, 130716, dwildt, 3+
-        t3lib_div::logDeprecatedFunction( );
         $cacheHash  = t3lib_div::makeInstance( 't3lib_cacheHash' );
         $cHash_md5  = $cacheHash->calculateCacheHash( $str_params );
         break;
