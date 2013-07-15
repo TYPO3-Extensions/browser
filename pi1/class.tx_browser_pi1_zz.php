@@ -1699,21 +1699,18 @@
         // #49495, 130702, dwildt, 1+
       case( $this->pObj->typo3Version < 6000000 ):
         $cHash_array  = t3lib_div::cHashParams( $str_params );
-          // #49495, 130716, dwildt, 1+
-        $cHash_md5    = t3lib_div::shortMD5( serialize( $cHash_array ) );
         break;
       default:
           // #49495, 130716, dwildt, 1-
 //        $cHash_array  = t3lib_cacheHash( $str_params );
           // #49495, 130716, dwildt, 3+
-        $cacheHash  = t3lib_div::makeInstance( 't3lib_cacheHash' );
-        $cHash_md5  = $cacheHash->calculateCacheHash( $str_params );
+        $cacheHash    = t3lib_div::makeInstance( 't3lib_cacheHash' );
+        $cHash_array  = $cacheHash->getRelevantParameters( $str_params );
         break;
     }
       // #43108, 130222, dwildt, 9+
 
-      // #49495, 130716, dwildt, 1-
-//    $cHash_md5    = t3lib_div::shortMD5( serialize( $cHash_array ) );
+    $cHash_md5    = t3lib_div::shortMD5( serialize( $cHash_array ) );
 
     return $cHash_md5;
   }
