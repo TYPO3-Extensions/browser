@@ -54,7 +54,7 @@
  *  693:     function set_arrSegment()
  *  759:     public function addCssFiles()
  *  809:     public function addJssFiles()
- * 1063:     public function addFile($path, $ie_condition, $name, $keyPathTs, $str_type, $bool_inline )
+ * 1063:     public function addCssFile($path, $ie_condition, $name, $keyPathTs, $str_type, $inline )
  *
  *              SECTION: Dynamic methods
  * 1245:     function dyn_method_load_all_modes( )
@@ -142,7 +142,7 @@ class tx_browser_pi1_javascript
  * @since 4.1.21
  * @version 3.5.0
  */
-  function class_onchange($obj_ts, $arr_ts, $number_of_items)
+  public function class_onchange( $obj_ts, $arr_ts, $number_of_items )
   {
       // #9659, 101016, dwildt
 
@@ -380,140 +380,6 @@ class tx_browser_pi1_javascript
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
- * wrap_ajax_div(): Wrap the template in a div AJAX tag, if segement[cObj] is set
- *
- * @param	string		$template: The current content of the template
- * @return	string		$template unchanged or wrapped in div ajax tag
- * @since 3.5.0
- * @version 3.5.0
- */
-  function wrap_ajax_div($template)
-  {
-    // #9659, 101016, dwildt
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // RETURN template: segment[cObj] is empty
-
-    if (!$this->pObj->segment['cObj'])
-    {
-      return $template;
-    }
-      // RETURN template: segment[cObj] is empty
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Generate the AJAX class
-
-    $str_ajax_class = 'ajax';
-    if ($this->pObj->objFlexform->bool_ajax_single)
-    {
-       $str_ajax_class .= ' ajax_single';
-    }
-    if ($this->pObj->objFlexform->str_ajax_list_transition != 'none')
-    {
-       $str_ajax_class .= ' ajaxlt'.$this->pObj->objFlexform->str_ajax_list_transition;
-    }
-    if ($this->pObj->objFlexform->str_ajax_single_transition != 'none')
-    {
-       $str_ajax_class .= ' ajaxst'.$this->pObj->objFlexform->str_ajax_single_transition;
-    }
-    // #9659, 101013 fsander
-    if ($this->pObj->objFlexform->str_ajax_list_on_single != 'listAndSingle')
-    {
-       $str_ajax_class .= ' ajaxlos'.$this->pObj->objFlexform->str_ajax_list_on_single;
-    }
-    // #9659, 101016, dwildt
-    // #9659, 101017 fsander
-    if ($this->pObj->bool_debugJSS)
-    {
-       $str_ajax_class .= ' debugjss';
-    }
-    // #9659, 101017 fsander
-    $str_ajax_class .= ' dynamicFilters';
-      // Generate the AJAX class
-//:TODO:
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Wrap the template
-
-    // #9659, 101013, dwildt
-    $lang = $this->pObj->lang->lang;
-    if($lang == 'default')
-    {
-      $lang = 'en';
-    }
-    $arr_wrap = array( );
-    $arr_wrap[0] = '<div class="'.$str_ajax_class.'" lang="'.$lang.'">';
-    $arr_wrap[1] = '</div> <!-- /ajax -->';
-
-    $template = '
-      '.$arr_wrap[0].'
-        '.$template.'
-      '.$arr_wrap[1]."\n";
-      // Wrap the template
-
-    // #9659, 101013 fsander
-      // DRS - Develoment Reporting System
-    if ($this->pObj->b_drs_javascript)
-    {
-      t3lib_div::devlog('[INFO/JSS] AJAX: template is wrapped with: '.$arr_wrap[0].'|'.$arr_wrap[1], $this->pObj->extKey, 0);
-    }
-      // DRS - Develoment Reporting System
-
-    return $template;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /***********************************************
     *
     * Files
@@ -527,12 +393,11 @@ class tx_browser_pi1_javascript
  *                load file from the browser ressources
  *
  * @return	boolean		True: success. False: error.
- * @since 4.4.0
- * @version 3.6.5
+ * @version 4.5.10
+ * @since   3.6.5
  */
-  function load_jQuery( )
+  public function load_jQuery( )
   {
-      // #44306, 130104, dwildt, 6+
       // RETURN : method is called before
     if( ! ( $this->jqueryIsLoaded === null ) )
     {
@@ -544,53 +409,52 @@ class tx_browser_pi1_javascript
       return $this->jqueryIsLoaded;
     }
       // RETURN : method is called before
-      // #44306, 130104, dwildt, 6+
     
       // Set default
     $this->jqueryIsLoaded = false;
 
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name = 'jQuery';
-    if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
+
+      // #50069, 130716, dwildt, -
+//    if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
+//    {
+//        // #44306, 130104, dwildt, 6+
+//      $this->jqueryIsLoaded = true;
+//      if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+//      {
+//        $prompt = 'RETURN true: additionalHeaderData contains ' . $this->pObj->extKey . '_' . $name;
+//        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+//      }
+//      return true;
+//    }
+      // #50069, 130716, dwildt, -
+
+      // #50069, 130716, dwildt, +
+    switch( true )
     {
-        // #44306, 130104, dwildt, 6+
-      $this->jqueryIsLoaded = true;
+      case( isset( $GLOBALS[ 'TSFE' ]->additionalHeaderData[ $this->pObj->extKey . '_' . $name] ) ):
+        $this->jqueryIsLoaded = true;
+        break;
+      case( isset( $GLOBALS[ 'TSFE' ]->additionalFooterData[ $this->pObj->extKey . '_' . $name] ) ):
+        $this->jqueryIsLoaded = true;
+        break;
+    }
+      // RETURN : true, jQuery is loaded
+    if( $this->jqueryIsLoaded )
+    {
+        // DRS
       if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
       {
         $prompt = 'RETURN true: additionalHeaderData contains ' . $this->pObj->extKey . '_' . $name;
         t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
       }
+        // DRS
       return true;
     }
-
-      // #44299, 130104, dwildt, -
-//      // checks if t3jquery is loaded
-//    if (t3lib_extMgm::isLoaded('t3jquery'))
-//    {
-//      require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
-//    }
-//    if (!t3lib_extMgm::isLoaded('t3jquery'))
-//    {
-//      if ( $this->pObj->b_drs_javascript )
-//      {
-//        t3lib_div::devlog('[INFO/JSS] Extension t3jquery isn\'t loaded.', $this->pObj->extKey, 0);
-//        t3lib_div::devlog('[INFO/JSS] We try to get another jQuery source.', $this->pObj->extKey, 0);
-//        t3lib_div::devlog('[HELP/JSS] Change it? Load \'t3jquery\'', $this->pObj->extKey, 1);
-//      }
-//    }
-//      // if t3jquery is loaded and the custom library had been created
-//    if (T3JQUERY === true)
-//    {
-//      tx_t3jquery::addJqJS();
-//      if ( $this->pObj->b_drs_javascript )
-//      {
-//        t3lib_div::devlog('[INFO/JSS] Success: tx_t3jquery::addJqJS()', $this->pObj->extKey, 0);
-//      }
-//      return true;
-//    }
-      // #44299, 130104, dwildt, -
-
-      // #44299, 130104, dwildt, 6+
+      // RETURN : true, jQuery is loaded
+      // #50069, 130716, dwildt, +
+    
       // RETURN true  : t3jquery is loaded
     if( $this->load_t3jquery( ) )
     {
@@ -604,7 +468,6 @@ class tx_browser_pi1_javascript
       return true;
     }
       // RETURN true  : t3jquery is loaded
-      // #44299, 130104, dwildt, 6+
     
     
     $path = $this->pObj->conf['javascript.']['jquery.']['library'];
@@ -640,7 +503,13 @@ class tx_browser_pi1_javascript
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name         = 'jQuery';
     $path_tsConf  = 'javascript.jquery.file';
-    $bool_success = $this->addJssFileToHead($path, $name, $path_tsConf);
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['library.']['marker.'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['library.']['inline'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['library.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+      // #50069, 130716, dwildt, 1-
+//    $bool_success = $this->addJssFileToHead( $path, $name, $path_tsConf );
     
       // DRS
     switch( true )
@@ -759,106 +628,11 @@ class tx_browser_pi1_javascript
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * addJssFileToHead(): Add a JavaScript file to the HTML head
- *
- * @param	string		$path: Path to the Javascript
- * @param	string		$name: For the key of additionalHeaderData
- * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
- * @return	boolean		True: success. False: error.
- * @version 4.4.0
- * @since 3.5.0
- */
-  function addJssFileToHead( $path, $name, $keyPathTs )
-  {
-    if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
-    {
-        // #44306, 130104, dwildt, 1+
-      $this->load_jQuery( );
-      return true;
-    }
-
-    if ( ! empty( $path ) )
-    {
-      if( substr( $path, 0, 4 ) == 'EXT:' )
-      {
-          // relative path to the JssFile as measured from the PATH_site (frontend)
-          // #32220, uherrmann, 111202
-        $matches = array( );
-        preg_match( '%^EXT:([a-z0-9_]*)/(.*)$%', $path, $matches );
-        $path = t3lib_extMgm::siteRelPath($matches[1]) . $matches[2];
-          // /#32220
-      }
-      $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
-        '  <script src="'.$path.'" type="text/javascript"></script>';
-      if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
-      {
-        t3lib_div::devlog('[INFO/FLEXFORM+JSS] file is included: '.$path, $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/FLEXFORM+JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
-      }
-        // #44306, 130104, dwildt, 1+
-      $this->load_jQuery( );
-      return true;
-    }
-
-      // #13429, dwildt, 110519
-      // RETURN, there isn't any file for embedding
-    if( empty( $this->pObj->objFlexform->str_browser_libraries ) )
-    {
-      if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
-      {
-        t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|browser_libraries is empty.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/FLEXFORM+JSS] Script isn\'t included. ', $this->pObj->extKey, 0);
-      }
-        // #44306, 130104, dwildt, 1+
-      $this->load_jQuery( );
-      return true;
-    }
-      // RETURN, there isn't any file for embedding
-      // #13429, dwildt, 110519
-
-    if ( $this->pObj->b_drs_error )
-    {
-      t3lib_div::devlog('[ERROR/JSS] script can not be included: '.$path, $this->pObj->extKey, 3);
-      t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
-    }
-    return false;
-  }
-
-
-
-
-
-
-
-
-
     /***********************************************
     *
     * Helper
     *
     **********************************************/
-
-
-
-
-
-
-
-
 
 /**
  * set_arrSegment(): Catch the segments to output for AJAX
@@ -867,7 +641,7 @@ class tx_browser_pi1_javascript
  * @since 3.5.0
  * @version 3.5.0
  */
-  function set_arrSegment()
+  public function set_arrSegment( )
   {
       // #9659, 101010 fsander
       // initialize all views
@@ -927,323 +701,19 @@ class tx_browser_pi1_javascript
 
 
 /**
- * addCssFiles(): Add all needed CSS files to the HTML head
- *
- * @return	void
- * @version 3.7.0
- * @since 3.7.0
- */
-  public function addCssFiles()
-  {
-      //////////////////////////////////////////////////////////////////////
-      //
-      // css_browser
-
-    if ($this->pObj->objFlexform->bool_css_browser)
-    {
-      $name         = 'css_browser';
-      $path         = $this->pObj->conf['template.']['css.']['browser'];
-      $bool_inline  = $this->pObj->conf['template.']['css.']['browser.']['inline'];
-      $path_tsConf  = 'template.css.browser';
-
-      $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
-    }
-      // css_browser
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // css_jquery_ui
-
-    if ($this->pObj->objFlexform->bool_css_jqui)
-    {
-      $name         = 'css_jquery_ui';
-      $path         = $this->pObj->conf['template.']['css.']['jquery_ui'];
-      $bool_inline  = $this->pObj->conf['template.']['css.']['jquery_ui.']['inline'];
-      $path_tsConf  = 'template.css.jquery_ui';
-
-      $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
-    }
-      // css_jquery_ui
-  }
-
-
-
-
-
-
-
-
-
-/**
- * addJssFiles(): Add all needed JavaScript files to the HTML head
- *
- * @return	void
- * @version 3.9.6
- * @since 3.7.0
- */
-  public function addJssFiles()
-  {
-      //////////////////////////////////////////////////////////////////////
-      //
-      // jquery_ui
-
-    if ($this->pObj->objFlexform->bool_jquery_ui)
-    {
-      $name         = 'jquery_ui_library';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['ui'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['ui.']['inline'];
-      $path_tsConf  = 'javascript.jquery.ui.typoscript.library';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-    }
-      // jquery_ui
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // jquery_plugins_t3browser
-
-    if ($this->pObj->objFlexform->bool_jquery_plugins_t3browser)
-    {
-      $name         = 'jquery_plugins_t3browser_plugin';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.t3browser.plugin';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-      $name         = 'jquery_plugins_t3browser_library';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-      $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
-      $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['marker.'];
-      foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
-      {
-        if(substr($key_conf_marker, -1, 1) == '.')
-        {
-            // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
-          $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
-          $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
-          $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
-                                    (
-                                      $conf_marker[$str_marker],
-                                      $conf_marker[$str_marker . '.']
-                                    );
-          $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
-        }
-      }
-      $load_all_modes = $this->dyn_method_load_all_modes( );
-      $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
-      $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
-      $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
-      $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
-
-        // Include localised file, if current language isn't English
-      if( $GLOBALS['TSFE']->lang != 'en' )
-      {
-        $name         = 'jquery_plugins_t3browser_localisation';
-        $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'];
-        $path         = str_replace('###LANG###', $GLOBALS['TSFE']->lang, $path);
-        $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['inline'];
-        $path_tsConf  = 'javascript.jquery.plugins.t3browser.localisation';
-        $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-      }
-        // Include localised file, if current language isn't English
-
-    }
-      // jquery_plugins_t3browser
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // AJAX (modul I) is enabled
-
-      // dwildt, 111018: 31077
-    //if ($this->objFlexform->bool_ajax_enabled)
-    if ($this->pObj->objFlexform->bool_ajax_enabled)
-    {
-        // name has to correspondend with similar code in tx_browser_pi1_template.php
-      $name         = 'ajaxLL';
-      $path         = $this->pObj->conf['javascript.']['ajax.']['fileLL'];
-      $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['inline'];
-      $path_tsConf  = 'javascript.ajax.fileLL';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-        // name has to correspondend with similar code in tx_browser_pi1_template.php
-      $name         = 'ajax';
-      $path         = $this->pObj->conf['javascript.']['ajax.']['file'];
-      $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['file.']['inline'];
-      $path_tsConf  = 'javascript.ajax.file';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-    }
-      // AJAX (modul I) is enabled
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // +Browser Calendar is loaded
-
-    if ($this->pObj->objCal->is_loaded)
-    {
-      $arr_conf_pi5_jss = $this->pObj->conf['javascript.']['jquery.']['pi5.'];
-
-      foreach( (array) $arr_conf_pi5_jss as $key_extension => $arr_properties)
-      {
-          // Take keys with a dot (i.e. 10.) only
-        if( strpos ( $key_extension , '.' ) === false )
-        {
-          continue;
-        }
-          // 130104, dwildt, 1-
-        // foreach( $arr_properties as $key_property => $value_property )
-          // 130104, dwildt, 1-
-        foreach( array_keys( $arr_properties ) as $key_property )
-        {
-            // Take keys with a dot (i.e. 10.) only
-          if( strpos ( $key_property , '.' ) === false )
-          {
-            continue;
-          }
-          $name         = 'jquery_' . rtrim( $key_extension, '.' ) . '_' . rtrim( $key_property, '.' );
-          $path         = $arr_properties[rtrim( $key_property, '.' )];
-          $bool_inline  = $arr_properties[$key_property]['inline'];
-          $path_tsConf  = 'javascript.jquery.pi5.' . $key_extension . rtrim( $key_property, '.' );
-          $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-          $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
-  //        $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
-  //        $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
-            // :TODO: move markerArray to class.tx_browser_pi1.php
-          $markerArray = $this->pObj->objCal->markerArray;
-          $inline_jss  = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
-        }
-      }
-    }
-      // +Browser Calendar is loaded
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // jquery_plugins_jstree
-
-      // There are tables with a treeparentfield
-      // #41776, dwildt, 1-
-    //if ( count( $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) >= 1 )
-      // #41776, dwildt, 1+
-    if ( ! empty( $this->pObj->objFltr4x->arr_tablesWiTreeparentfield ) )
-    {
-      $name         = 'jquery_plugins_jstree_plugin';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.jstree.plugin';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-      $name         = 'jquery_plugins_jstree_plugins_cookie';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.jstree.plugins.cookie';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-      $name         = 'jquery_plugins_jstree_library';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.jstree.library';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-      $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
-      $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['marker.'];
-      foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
-      {
-        if(substr($key_conf_marker, -1, 1) == '.')
-        {
-            // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
-          $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
-          $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
-          $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
-                                    (
-                                      $conf_marker[$str_marker],
-                                      $conf_marker[$str_marker . '.']
-                                    );
-          $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
-        }
-      }
-      $load_all_modes = $this->dyn_method_load_all_modes( );
-      $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
-      $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
-      $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
-      $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
-
-    }
-      // There are tables with a treeparentfield
-      // jquery_plugins_jstree
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // jquery_cleanup
-
-    $name         = 'jquery_cleanup';
-    $path         = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library'];
-    $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['inline'];
-    $path_tsConf  = 'javascript.jquery.cleanup.library';
-    $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-
-    $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
-    $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['marker.'];
-    foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
-    {
-      if(substr($key_conf_marker, -1, 1) == '.')
-      {
-          // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
-        $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
-        $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
-        $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
-                                  (
-                                    $conf_marker[$str_marker],
-                                    $conf_marker[$str_marker . '.']
-                                  );
-        $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
-      }
-    }
-    $load_all_modes = $this->dyn_method_load_all_modes( );
-    $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
-    $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
-    $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
-      // jquery_cleanup
-  }
-
-
-
-
-
-
-
-
-
-
-/**
- * addJssFileToHead(): Add a JavaScript file the the HTML head
+ * addCssFile(): 
  *
  * @param	string		$path:          Path to the Javascript or CSS
  * @param	string		$ie_condition:  Optional condition for Internet Explorer
  * @param	string		$name:          For the key of additionalHeaderData
  * @param	string		$keyPathTs:     The TypoScript element path to $path for the DRS
  * @param	string		$str_type:      css or jss
- * @param	boolean		$bool_inline:   true: include css/jss inline. false: include it as a file
+ * @param	boolean		$inline:   true: include css/jss inline. false: include it as a file
  * @return	boolean		True: success. False: error.
  * @since 3.7.0
  * @version 3.7.0
  */
-  public function addFile($path, $ie_condition, $name, $keyPathTs, $str_type, $bool_inline )
+  private function addCssFile($path, $ie_condition, $name, $keyPathTs, $str_type, $inline )
   {
       // RETURN file is loaded
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
@@ -1256,84 +726,89 @@ class tx_browser_pi1_javascript
     }
       // RETURN file is loaded
 
-
-
-      // RETURN path is empty
-    if( empty( $path ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        t3lib_div::devlog('[WARN/JSS] file can not be included. Path is empty. Maybe it is ok.', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[HELP/JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
-      }
-      return false;
-    }
-      // RETURN path is empty
-
-
-
-    $arr_parsed_url = parse_url($path);
-
-      // URL or EXT:...
-    if(isset($arr_parsed_url['scheme']))
-    {
-      if($arr_parsed_url['scheme'] == 'EXT')
-      {
-        unset($arr_parsed_url['scheme']);
-      }
-    }
-      // URL or EXT:...
-
-      // link to a file
-    $bool_file_exists = true;
-    if( ! isset( $arr_parsed_url['scheme'] ) )
-    {
-        // absolute path
-        // 130104, dwildt, 1-
-//      $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
-        // 130104, dwildt, 3+
-      $onlyRelative       = 1;
-      $relToTYPO3_mainDir = 0;
-      $absPath  = t3lib_div::getFileAbsFileName($path, $onlyRelative, $relToTYPO3_mainDir );
-      if ( ! file_exists( $absPath ) )
-      {
-        $bool_file_exists = false;
-      }
-        // #32220, uherrmann, 111202, 4-
-//        // absolute path ./. root path
-//      $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
+      // #50069, 130716, dwildt, -
+//      // RETURN path is empty
+//    if( empty( $path ) )
+//    {
+//      if ($this->pObj->b_drs_warn)
+//      {
+//        t3lib_div::devlog('[WARN/JSS] file can not be included. Path is empty. Maybe it is ok.', $this->pObj->extKey, 2);
+//        t3lib_div::devlog('[HELP/JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
+//      }
+//      return false;
+//    }
+//      // RETURN path is empty
+//
+//
+//    $arr_parsed_url = parse_url( $path );
+//
+//      // URL or EXT:...
+//    if(isset($arr_parsed_url['scheme']))
+//    {
+//      if($arr_parsed_url['scheme'] == 'EXT')
+//      {
+//        unset($arr_parsed_url['scheme']);
+//      }
+//    }
+//      // URL or EXT:...
+//
+//      // link to a file
+//    $bool_file_exists = true;
+//    if( ! isset( $arr_parsed_url['scheme'] ) )
+//    {
+//        // absolute path
+//        // 130104, dwildt, 1-
+////      $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
+//        // 130104, dwildt, 3+
+//      $onlyRelative       = 1;
+//      $relToTYPO3_mainDir = 0;
+//      $absPath  = t3lib_div::getFileAbsFileName($path, $onlyRelative, $relToTYPO3_mainDir );
+//      if ( ! file_exists( $absPath ) )
+//      {
+//        $bool_file_exists = false;
+//      }
+//        // #32220, uherrmann, 111202, 4-
+////        // absolute path ./. root path
+////      $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
+////        // relative path
+////      $path     = substr($absPath, strlen($rootPath.'/'));
+//        // #32220, uherrmann, 111202, 2+
 //        // relative path
-//      $path     = substr($absPath, strlen($rootPath.'/'));
-        // #32220, uherrmann, 111202, 2+
-        // relative path
-      $path = preg_replace('%' . PATH_site . '%', '', $absPath);
-    }
-      // link to a file
+//      $path = preg_replace('%' . PATH_site . '%', '', $absPath);
+//    }
+//      // link to a file
+//
+//
+//
+//    if( ! $bool_file_exists )
+//    {
+//      if ( $this->pObj->b_drs_error )
+//      {
+//        t3lib_div::devlog('[ERROR/JSS] script can not be included. File doesn\'t exist: '.$path, $this->pObj->extKey, 3);
+//        t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
+//      }
+//      return false;
+//    }
+      // #50069, 130716, dwildt, -
 
-
-
-    if( ! $bool_file_exists )
+      // #50069, 130716, dwildt, 5+
+    $absPath = $this->getPathAbsolute( $path );
+    if( $absPath == false )
     {
-      if ( $this->pObj->b_drs_error )
-      {
-        t3lib_div::devlog('[ERROR/JSS] script can not be included. File doesn\'t exist: '.$path, $this->pObj->extKey, 3);
-        t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
-      }
       return false;
     }
-
-
+      // #50069, 130716, dwildt, 5+
 
       // marker array
     $markerArray = array();
-    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($markerArray);
-    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($markerArray);
+    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $markerArray );
+    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars( $markerArray );
 
       // switch: css || jss
     switch($str_type)
     {
       case('css'):
-        if($bool_inline)
+        if($inline)
         {
           $inline_css =
 '  <style type="text/css">
@@ -1342,32 +817,36 @@ class tx_browser_pi1_javascript
           $inline_css = $this->pObj->cObj->substituteMarkerArray($inline_css, $markerArray);
           $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_css;
         }
-        if(!$bool_inline)
+        if(!$inline)
         {
           $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
             '  <link rel="stylesheet" type="text/css" href="' . $path . '" media="all" />';
         }
         break;
-      case( 'jss' ):
-          // #44306, 130104, dwildt, 1+
-        $this->load_jQuery( );
-        if( $bool_inline )
-        {
-          $inline_jss =
-'  <script type="text/javascript">
-  <!--
-' . implode ( '', file( $absPath ) ) . '
-  //-->
-  </script>';
-          $inline_jss = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
-        }
-        if( ! $bool_inline )
-        {
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
-            '  <script src="'.$path.'" type="text/javascript"></script>';
-        }
-        break;
+          // #50069, 130716, dwildt, -
+//      case( 'jss' ):
+//          // #44306, 130104, dwildt, 1+
+//        $this->load_jQuery( );
+//        
+//        $script = $this->getTagScript( $inline, $absPath, $path );
+//        if( $inline )
+//        {
+//          $inline_jss =
+//'  <script type="text/javascript">
+//  <!--
+//' . implode ( '', file( $absPath ) ) . '
+//  //-->
+//  </script>';
+//          $inline_jss = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
+//          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+//        }
+//        if( ! $inline )
+//        {
+//          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+//            '  <script src="'.$path.'" type="text/javascript"></script>';
+//        }
+//        break;
+          // #50069, 130716, dwildt, -
       default:
         $prompt = '
           <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
@@ -1409,6 +888,853 @@ class tx_browser_pi1_javascript
 
   }
 
+/**
+ * addCssFiles(): Add all needed CSS files to the HTML head
+ *
+ * @return	void
+ * @version 4.5.10
+ * @since 3.7.0
+ */
+  public function addCssFiles()
+  {
+      //////////////////////////////////////////////////////////////////////
+      //
+      // css_browser
+
+    if ($this->pObj->objFlexform->bool_css_browser)
+    {
+      $name         = 'css_browser';
+      $path         = $this->pObj->conf['template.']['css.']['browser'];
+        // #50069, dwildt, 1+
+      $bool_footer  = false;
+      $inline  = $this->pObj->conf['template.']['css.']['browser.']['inline'];
+      $path_tsConf  = 'template.css.browser';
+
+      $this->addCssFile( $path, false, $name, $path_tsConf, 'css', $inline );
+    }
+      // css_browser
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // css_jquery_ui
+
+    if ($this->pObj->objFlexform->bool_css_jqui)
+    {
+      $name         = 'css_jquery_ui';
+      $path         = $this->pObj->conf['template.']['css.']['jquery_ui'];
+        // #50069, dwildt, 1+
+      $bool_footer  = false;
+      $inline       = $this->pObj->conf['template.']['css.']['jquery_ui.']['inline'];
+      $path_tsConf  = 'template.css.jquery_ui';
+
+      $this->addCssFile( $path, false, $name, $path_tsConf, 'css', $inline );
+    }
+      // css_jquery_ui
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * addJssFiles(): Add all needed JavaScript files to the HTML head
+ *
+ * @return	void
+ * @version 4.5.10
+ * @since 3.7.0
+ */
+  public function addJssFiles()
+  {
+    $this->addJssFilesJqueryUiLibrary( );
+    $this->addJssFilesJqueryPluginsT3Browser( );
+    $this->addJssFilesJssAjaxModuleI( );
+    $this->addJssFilesJqueryPluginsT3BrowserCalendar( );
+    $this->addJssFilesJqueryPluginsJsTree( );
+    $this->addJssFilesJqueryCleanUp( );
+  }
+
+/**
+ * addJssFilesJqueryCleanUp( )
+ *
+ * @return	void
+ * @version     4.5.10
+ * @since       4.5.10
+ */
+  public function addJssFilesJqueryCleanUp( )
+  {
+    $name         = 'jquery_cleanup';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['inline'];
+    $path_tsConf  = 'javascript.jquery.cleanup.library';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+      // #50069, 130716, dwildt, -
+//    $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+//    $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['marker.'];
+//    foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
+//    {
+//      if(substr($key_conf_marker, -1, 1) == '.')
+//      {
+//          // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
+//        $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+//        $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
+//        $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
+//                                  (
+//                                    $conf_marker[$str_marker],
+//                                    $conf_marker[$str_marker . '.']
+//                                  );
+//        $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
+//      }
+//    }
+//    $load_all_modes = $this->dyn_method_load_all_modes( );
+//    $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
+//    $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
+//    $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+      // #50069, 130716, dwildt, -
+  }
+
+/**
+ * addJssFilesJqueryPluginsJsTree( )
+ *
+ * @return	void
+ * @version   4.5.10
+ * @since     4.5.10
+ */
+  public function addJssFilesJqueryPluginsJsTree( )
+  {
+      // There isn't any table with a treeparentfield
+    if ( empty( $this->pObj->objFltr4x->arr_tablesWiTreeparentfield ) )
+    {
+      return;
+    }
+      // There isn't any table with a treeparentfield
+    
+      // There are tables with a treeparentfield
+
+    $name         = 'jquery_plugins_jstree_plugin';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['inline'];
+    $path_tsConf  = 'javascript.jquery.plugins.jstree.plugin';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+    $name         = 'jquery_plugins_jstree_plugins_cookie';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie.']['inline'];
+    $path_tsConf  = 'javascript.jquery.plugins.jstree.plugins.cookie';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+    $name         = 'jquery_plugins_jstree_library';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['inline'];
+    $path_tsConf  = 'javascript.jquery.plugins.jstree.library';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+      // #50069, 130716, dwildt, -
+//    $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+//    $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['marker.'];
+//    foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
+//    {
+//      if(substr($key_conf_marker, -1, 1) == '.')
+//      {
+//          // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
+//        $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+//        $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
+//        $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
+//                                  (
+//                                    $conf_marker[$str_marker],
+//                                    $conf_marker[$str_marker . '.']
+//                                  );
+//        $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
+//      }
+//    }
+//    $load_all_modes = $this->dyn_method_load_all_modes( );
+//    $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
+//    $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
+//    $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
+//    $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+      // #50069, 130716, dwildt, -
+
+      // There are tables with a treeparentfield
+      // jquery_plugins_jstree
+  }
+  
+/**
+ * addJssFilesJqueryPluginsT3Browser( )
+ *
+ * @return	void
+ * @version     4.5.10
+ * @since       4.5.10
+ */
+  public function addJssFilesJqueryPluginsT3Browser( )
+  {
+    if( ! $this->pObj->objFlexform->bool_jquery_plugins_t3browser )
+    {
+      return;
+    }
+    
+    $name         = 'jquery_plugins_t3browser_plugin';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['inline'];
+    $path_tsConf  = 'javascript.jquery.plugins.t3browser.plugin';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+    $name         = 'jquery_plugins_t3browser_library';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library'];
+    $inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
+    $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+      // #50069, 130716, dwildt, -
+//    $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+//    $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['marker.'];
+//    foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
+//    {
+//      if(substr($key_conf_marker, -1, 1) == '.')
+//      {
+//          // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
+//        $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+//        $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
+//        $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
+//                                  (
+//                                    $conf_marker[$str_marker],
+//                                    $conf_marker[$str_marker . '.']
+//                                  );
+//        $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
+//      }
+//    }
+//    $load_all_modes = $this->dyn_method_load_all_modes( );
+//    $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
+//    $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
+//    $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
+//    $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+      // #50069, 130716, dwildt, -
+
+      // Include localised file, if current language isn't English
+    if( $GLOBALS['TSFE']->lang != 'en' )
+    {
+      $name         = 'jquery_plugins_t3browser_localisation';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'];
+      $path         = str_replace('###LANG###', $GLOBALS['TSFE']->lang, $path);
+      $inline       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['inline'];
+      $path_tsConf  = 'javascript.jquery.plugins.t3browser.localisation';
+        // #50069, 130716, dwildt, 4+
+      $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['marker.'];
+      $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['footer'];
+      $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+      unset( $bool_success );
+        // #50069, 130716, dwildt, 1-
+      //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+    }
+      // Include localised file, if current language isn't English
+
+  }
+
+/**
+ * addJssFilesJqueryPluginsT3BrowserCalendar( )
+ *
+ * @return	void
+ * @version   4.5.10
+ * @since     4.5.10
+ */
+  public function addJssFilesJqueryPluginsT3BrowserCalendar( )
+  {
+      // +Browser Calendar isn't loaded
+    if( ! $this->pObj->objCal->is_loaded )
+    {
+      return;
+    }
+      // +Browser Calendar isn't loaded
+    
+
+      // +Browser Calendar is loaded
+    
+    $arr_conf_pi5_jss = $this->pObj->conf['javascript.']['jquery.']['pi5.'];
+
+    foreach( (array) $arr_conf_pi5_jss as $key_extension => $arr_properties)
+    {
+        // Take keys with a dot (i.e. 10.) only
+      if( strpos ( $key_extension , '.' ) === false )
+      {
+        continue;
+      }
+        // 130104, dwildt, 1-
+      // foreach( $arr_properties as $key_property => $value_property )
+        // 130104, dwildt, 1-
+      foreach( array_keys( $arr_properties ) as $key_property )
+      {
+          // Take keys with a dot (i.e. 10.) only
+        if( strpos ( $key_property , '.' ) === false )
+        {
+          continue;
+        }
+        $name         = 'jquery_' . rtrim( $key_extension, '.' ) . '_' . rtrim( $key_property, '.' );
+        $path         = $arr_properties[rtrim( $key_property, '.' )];
+        $inline       = $arr_properties[$key_property]['inline'];
+        $path_tsConf  = 'javascript.jquery.pi5.' . $key_extension . rtrim( $key_property, '.' );
+          // #50069, 130716, dwildt, 4+
+        $marker       = $this->pObj->objCal->markerArray;
+        $footer       = $arr_properties[$key_property]['footer'];
+        $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+        unset( $bool_success );
+          // #50069, 130716, dwildt, 1-
+        //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+        // #50069, 130716, dwildt, -
+//        $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+////        $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
+////        $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
+//          // :TODO: move markerArray to class.tx_browser_pi1.php
+//        $markerArray = $this->pObj->objCal->markerArray;
+//        $inline_jss  = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
+//        $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+        // #50069, 130716, dwildt, -
+      }
+    }
+    // +Browser Calendar is loaded
+  }
+  
+/**
+ * addJssFilesJqueryUiLibrary( )
+ *
+ * @return	void
+ * @version   4.5.10
+ * @since     4.5.10
+ */
+  private function addJssFilesJqueryUiLibrary( )
+  {
+    if( ! $this->pObj->objFlexform->bool_jquery_ui )
+    {
+      return;
+    }
+
+    $name         = 'jquery_ui_library';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['ui'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['ui.']['inline'];
+    $path_tsConf  = 'javascript.jquery.ui.typoscript.library';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['library.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['library.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+  }
+  
+/**
+ * addJssFilesJssAjaxModuleI( )
+ *
+ * @return	void
+ * @version     4.5.10
+ * @since       4.5.10
+ */
+  public function addJssFilesJssAjaxModuleI( )
+  {
+      // AJAX (modul I) is disabled
+    if( ! $this->pObj->objFlexform->bool_ajax_enabled )
+    {
+      return;
+    }
+      // AJAX (modul I) is disabled
+    
+      // AJAX (modul I) is enabled
+      // name has to correspondend with similar code in tx_browser_pi1_template.php
+    $name         = 'ajaxLL';
+    $path         = $this->pObj->conf['javascript.']['ajax.']['fileLL'];
+    $inline       = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['inline'];
+    $path_tsConf  = 'javascript.ajax.fileLL';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+
+      // name has to correspondend with similar code in tx_browser_pi1_template.php
+    $name         = 'ajax';
+    $path         = $this->pObj->conf['javascript.']['ajax.']['file'];
+    $inline       = $this->pObj->conf['javascript.']['ajax.']['file.']['inline'];
+    $path_tsConf  = 'javascript.ajax.file';
+      // #50069, 130716, dwildt, 4+
+    $marker       = $this->pObj->conf['javascript.']['ajax.']['file.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['ajax.']['file.']['footer'];
+    $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+    unset( $bool_success );
+      // #50069, 130716, dwildt, 1-
+    //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
+    // AJAX (modul I) is enabled
+  }
+
+
+/**
+ * addJssFilePromptError(): Add a JavaScript file to the HTML head
+ *
+ * @param	string		$path: Path to the Javascript
+ * @param	string		$name: For the key of additionalHeaderData
+ * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
+ * @param	boolean		$inline       : Add JSS script inline
+ * @return	boolean		True: success. False: error.
+ * @version   4.5.10
+ * @since     4.5.10
+ */
+  private function addJssFilePromptError( $path, $keyPathTs )
+  {
+    if( empty( $this->pObj->objFlexform->str_browser_libraries ) )
+    {
+        // DRS
+      if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'Flexform Javascript|browser_libraries is empty.';
+        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'Script isn\'t included.';
+        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+        // #44306, 130104, dwildt, 1+
+      $this->load_jQuery( );
+      return true;
+    }
+      // RETURN, there isn't any file for embedding
+      // #13429, dwildt, 110519
+
+      // DRS
+    if ( $this->pObj->b_drs_error )
+    {
+      $prompt = 'Script can not be included: ' . $path;
+      t3lib_div::devlog( '[ERROR/JSS] ' . $prompt, $this->pObj->extKey, 3 );
+      $prompt = 'Solve it? Configure: \''.$keyPathTs.'\'';
+      t3lib_div::devlog( '[HELP/JSS] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+      // DRS
+
+    return false;
+  }
+
+/**
+ * addJssFileTo(): Add a JavaScript file to header or footer section
+ *
+ * @param	string		$path         : Path to the Javascript
+ * @param	string		$name         : For the key of additionalHeaderData
+ * @param	string		$keyPathTs    : The TypoScript element path to $path for the DRS
+ * @param	boolean		$footer       : Add JSS script to the footer section
+ * @param	boolean		$inline       : Add JSS script inline
+ * @param	array		$marker       : marker array
+ * @return	boolean		True: success. False: error.
+ * 
+ * @internal    #50069
+ * @version     4.5.10
+ * @since       4.5.10
+ */
+  public function addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker )
+  {
+    $bool_success = false; 
+    
+      // #50069, 130716, dwildt, + 
+      // Get absolute path
+    $absPath = $this->getPathAbsolute( $path );
+      // RETURN : there is an error with the absolute path
+    if( empty( $absPath ) )
+    {
+      return false;
+    }
+      // RETURN : there is an error with the absolute path
+      // #50069, 130716, dwildt, + 
+
+      // #50069, 130716, dwildt, 5+ 
+      // Get relative path without 'EXT:'
+    $path = $this->getPathRelative( $path );
+      // RETURN : there is an error with the relative path
+    if( empty( $path ) )
+    {
+      return $this->addJssFilePromptError( );
+    }
+      // RETURN : there is an error with the relative path
+
+    switch( true )
+    {
+      case( $footer === false ):
+        $bool_success = $this->addJssFileToHead( $path, $absPath, $name, $path_tsConf, $inline, $marker );
+        break;
+      case( $footer == true ):
+      default:
+        $bool_success = $this->addJssFileToFooter( $path, $absPath, $name, $path_tsConf, $inline, $marker );
+        break;
+    }
+    
+    unset( $footer );
+
+    return $bool_success;
+  }
+
+/**
+ * addJssFileToHead(): Add a JavaScript file to the HTML head
+ *
+ * @param	string		$path         : relative path to the Javascript
+ * @param	string		$path         : absolute path to the Javascript
+ * @param	string		$name         : For the key of additionalHeaderData
+ * @param	string		$keyPathTs    : The TypoScript element path to $path for the DRS
+ * @param	boolean		$inline       : Add JSS script inline
+ * @param	array		$marker       : marker array
+ * @return	boolean		True: success. False: error.
+ * @version 4.5.10
+ * @since 3.5.0
+ */
+  private function addJssFileToHead( $path, $absPath, $name, $keyPathTs, $inline, $marker )
+  {
+      // RETURN : script is included
+    if( isset( $GLOBALS[ 'TSFE' ]->additionalHeaderData[ $this->pObj->extKey . '_' . $name ] ) )
+    {
+        // #44306, 130104, dwildt, 1+
+      $this->load_jQuery( );
+      return true;
+    }
+      // RETURN : script is included
+
+      // #50069, 130716, dwildt, 3+ 
+    $script = $this->getTagScript( $inline, $absPath, $path, $marker );
+    $key    = $this->pObj->extKey . '_' . $name;
+    $GLOBALS[ 'TSFE' ]->additionalHeaderData[ $key ] = $script;
+
+      // DRS
+    if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+    {
+      $prompt = 'file is placed in the header section: ' . $path;
+      t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'Change the path? Configure: \'' . $keyPathTs . '\'';
+      t3lib_div::devlog( '[HELP/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 1 );
+      $prompt = 'Change the section for all JSS files? Take the Constant Editor: [Browser - JAVASCRIPT]';
+      t3lib_div::devlog( '[HELP/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+      // DRS
+
+      // #44306, 130104, dwildt, 1+
+    $this->load_jQuery( );
+    return true;
+  }
+
+  
+/**
+ * addJssFileToFooter(): Add a JavaScript file at the bottom of the page (the footer section)
+ *
+ * @param	string		$path         : relative path to the Javascript
+ * @param	string		$path         : absolute path to the Javascript
+ * @param	string		$name         : For the key of additionalHeaderData
+ * @param	string		$keyPathTs    : The TypoScript element path to $path for the DRS
+ * @param	boolean		$inline       : Add JSS script inline
+ * @param	array		$marker       : marker array
+ * @return	boolean		True: success. False: error.
+ * 
+ * @internal    #50069
+ * @version     4.5.10
+ * @since       4.5.10
+ */
+  private function addJssFileToFooter( $path, $name, $keyPathTs, $inline, $marker )
+  {
+    if( isset( $GLOBALS[ 'TSFE' ]->additionalFooterData[ $this->pObj->extKey . '_' . $name ] ) )
+    {
+        // #44306, 130104, dwildt, 1+
+      $this->load_jQuery( );
+      return true;
+    }
+
+
+      // #50069, 130716, dwildt, 3+ 
+    $script = $this->getTagScript( $inline, $absPath, $path, $marker );
+    $key    = $this->pObj->extKey . '_' . $name;
+    $GLOBALS[ 'TSFE' ]->additionalFooterData[ $key ] = $script;
+
+      // DRS
+    if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+    {
+      $prompt = 'file is placed in the footer section: ' . $path;
+      t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'Change the path? Configure: \'' . $keyPathTs . '\'';
+      t3lib_div::devlog( '[HELP/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 1 );
+      $prompt = 'Change the section for all JSS files? Take the Constant Editor: [Browser - JAVASCRIPT]';
+      t3lib_div::devlog( '[HELP/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+      // DRS
+
+      // #44306, 130104, dwildt, 1+
+    $this->load_jQuery( );
+    return true;
+  }
+
+
+/**
+ * getPathAbsolute( ): Returns the absolute path of the given path
+ *
+ * @param	string		$path : relative or absolute path to Javascript or CSS
+ * @return	string		$path : absolute path or false in case of an error
+ * 
+ * @internal    #50069
+ * @since       4.5.10
+ * @version     4.5.10
+ */
+  private function getPathAbsolute( $path )
+  {
+      // RETURN path is empty
+    if( empty( $path ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'file can not be included. Path is empty. Maybe it is ok.';
+        t3lib_div::devlog( '[WARN/JSS] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Change it? Configure: \'' . $keyPathTs . '\'';
+        t3lib_div::devlog( '[HELP/JSS] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+      return false;
+    }
+      // RETURN path is empty
+
+      // URL or EXT:...
+    $arr_parsed_url = parse_url( $path );
+    if( isset( $arr_parsed_url[ 'scheme' ] ) )
+    {
+      if( $arr_parsed_url[ 'scheme' ] == 'EXT' )
+      {
+        unset( $arr_parsed_url[ 'scheme' ] );
+      }
+    }
+      // URL or EXT:...
+
+      // link to a file
+    $bool_file_exists = true;
+    if( ! isset( $arr_parsed_url['scheme'] ) )
+    {
+      $onlyRelative       = 1;
+      $relToTYPO3_mainDir = 0;
+      $absPath  = t3lib_div::getFileAbsFileName($path, $onlyRelative, $relToTYPO3_mainDir );
+      if ( ! file_exists( $absPath ) )
+      {
+        $bool_file_exists = false;
+      }
+        // relative path
+      $path = preg_replace('%' . PATH_site . '%', '', $absPath);
+    }
+      // link to a file
+
+
+      // RETURN : false, file does not exist
+    if( ! $bool_file_exists )
+    {
+        // DRS
+      if ( $this->pObj->b_drs_error )
+      {
+        $prompt = 'Script can not be included. File doesn\'t exist: ' . $path;
+        t3lib_div::devlog( '[ERROR/JSS] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'Solve it? Configure: \''.$keyPathTs.'\'';
+        t3lib_div::devlog( '[HELP/JSS] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+      return false;
+    }
+      // RETURN : false, file does not exist
+    
+    return $path;
+  }
+
+/**
+ * getPathRelative( ): Returns the relative path. Prefix 'EXT:' will handled
+ *
+ * @param	string		$path : relative path with or without prefix 'EXT:'
+ * @return	string		$path : relative path without prefix 'EXT:'
+ * 
+ * @internal    #50069
+ * @since       4.5.10
+ * @version     4.5.10
+ */
+  private function getPathRelative( $path )
+  { 
+      // RETURN : path hasn't any prefix EXT:
+    if( substr( $path, 0, 4 ) != 'EXT:' )
+    {
+      return $path;
+    }
+      // RETURN : path hasn't any prefix EXT:
+    
+      // relative path to the JssFile as measured from the PATH_site (frontend)
+      // #32220, uherrmann, 111202
+    $matches  = array( );
+    preg_match( '%^EXT:([a-z0-9_]*)/(.*)$%', $path, $matches );
+    $path     = t3lib_extMgm::siteRelPath( $matches[ 1 ] ) . $matches[ 2 ];
+      // /#32220
+
+    return $path;
+  }
+
+/**
+ * getTagScript( ): Returns a script tag
+ *
+ * @param	boolean		$inline       : include the javascript inline
+ * @param	string		$absPath      : absPath to the Javascript
+ * @param	string		$path         : path to the Javascript
+ * @param	array		$marker       : marker array
+ * @return	string		$script       : The script tag
+ * 
+ * @internal  #50069
+ * @since     4.5.10
+ * @version   4.5.10
+ */
+  private function getTagScript( $inline, $absPath, $path, $marker )
+  {
+    $script = null;
+    
+    switch( $inline )
+    {
+      case( true ):
+        $script = $this->getTagScriptInline( $absPath, $marker );
+        break;
+      case( false ):
+      default:
+        $script = $this->getTagScriptSrc( $path );
+        break;
+    }
+    
+    return $script;
+  }
+
+/**
+ * getTagScriptInline( ): Returns a script tag
+ *
+ * @param	string		$absPath      : absPath to the Javascript
+ * @param	array		$marker       : marker array
+ * @return	string		$script       : The script tag
+ * 
+ * @internal  #50069
+ * @since     4.5.10
+ * @version   4.5.10
+ */
+  private function getTagScriptInline( $absPath, $marker )
+  {
+    $script = '
+  <script type="text/javascript">
+  <!--
+' . implode ( null , file( $absPath ) ) . '
+  //-->
+  </script>
+';
+
+    $script = $this->getTagScriptInlineMarker( $script, $marker );
+    
+    return $script;
+  }
+
+/**
+ * getTagScriptInlineMarker( ): 
+ *
+ * @param	array		$marker       : marker array
+ * @return	string		$script       : The script tag
+ * 
+ * @internal  #50069
+ * @since     4.5.10
+ * @version   4.5.10
+ */
+  private function getTagScriptInlineMarker( $script, $marker )
+  {
+    if( ! is_array( $marker ) )
+    {
+      unset( $marker );
+      $marker = array( );
+    }
+    
+    foreach( array_keys( ( array ) $marker ) as $key )
+    {
+      if( substr( $key, -1, 1 ) != '.' )
+      {
+        continue;
+      }
+        // I.e. $key is 'title.', but we like the marker name without any dot
+      $keyWoDot         = substr( $key, 0, strlen( $key ) -1 );
+      $hashKey          = '###' . strtoupper( $keyWoDot ) . '###';
+      $coa              = $marker[ $keyWoDot ];
+      $conf             = $marker[ $key ];
+      $marker[$hashKey] = $this->pObj->cObj->cObjGetSingle( $coa, $conf );
+    }
+    
+    $marker[ '###MODE###' ]           = $this->pObj->piVar_mode;
+    $marker[ '###VIEW###' ]           = $this->pObj->view;
+    $load_all_modes                   = $this->dyn_method_load_all_modes( );
+    $marker[ '###LOAD_ALL_MODES###' ] = $load_all_modes;
+
+    $marker = $this->pObj->objMarker->extend_marker_wi_cObjData( $marker );
+    $marker = $this->pObj->objMarker->extend_marker_wi_pivars( $marker );
+    
+    $script = $this->pObj->cObj->substituteMarkerArray( $script, $marker );
+
+    return $script;
+  }
+
+/**
+ * getTagScriptSrc( ): Returns a script tag
+ *
+ * @param	string		$path         : path to the Javascript
+ * @return	string		$script       : The script tag
+ * 
+ * @internal  #50069
+ * @since     4.5.10
+ * @version   4.5.10
+ */
+  private function getTagScriptSrc( $path )
+  {
+    $script = '
+  <script src="' . $path . '" type="text/javascript"></script>
+';
+
+    return $script;
+  }
+
+
+
+
+
+
+
+
 
 
 
@@ -1438,7 +1764,7 @@ class tx_browser_pi1_javascript
  * @since 3.9.3
  * @version 3.9.6
  */
-  function dyn_method_load_all_modes( )
+  private function dyn_method_load_all_modes( )
   {
     $conf       = $this->pObj->conf;
     $view       = $this->pObj->view;
@@ -1526,6 +1852,99 @@ class tx_browser_pi1_javascript
     }
 
     return $js_complete;
+  }
+
+  
+  
+/**
+ * wrap_ajax_div(): Wrap the template in a div AJAX tag, if segement[cObj] is set
+ *
+ * @param	string		$template: The current content of the template
+ * @return	string		$template unchanged or wrapped in div ajax tag
+ * @since 3.5.0
+ * @version 3.5.0
+ */
+  public function wrap_ajax_div( $template )
+  {
+    // #9659, 101016, dwildt
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN template: segment[cObj] is empty
+
+    if (!$this->pObj->segment['cObj'])
+    {
+      return $template;
+    }
+      // RETURN template: segment[cObj] is empty
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Generate the AJAX class
+
+    $str_ajax_class = 'ajax';
+    if ($this->pObj->objFlexform->bool_ajax_single)
+    {
+       $str_ajax_class .= ' ajax_single';
+    }
+    if ($this->pObj->objFlexform->str_ajax_list_transition != 'none')
+    {
+       $str_ajax_class .= ' ajaxlt'.$this->pObj->objFlexform->str_ajax_list_transition;
+    }
+    if ($this->pObj->objFlexform->str_ajax_single_transition != 'none')
+    {
+       $str_ajax_class .= ' ajaxst'.$this->pObj->objFlexform->str_ajax_single_transition;
+    }
+    // #9659, 101013 fsander
+    if ($this->pObj->objFlexform->str_ajax_list_on_single != 'listAndSingle')
+    {
+       $str_ajax_class .= ' ajaxlos'.$this->pObj->objFlexform->str_ajax_list_on_single;
+    }
+    // #9659, 101016, dwildt
+    // #9659, 101017 fsander
+    if ($this->pObj->bool_debugJSS)
+    {
+       $str_ajax_class .= ' debugjss';
+    }
+    // #9659, 101017 fsander
+    $str_ajax_class .= ' dynamicFilters';
+      // Generate the AJAX class
+//:TODO:
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Wrap the template
+
+    // #9659, 101013, dwildt
+    $lang = $this->pObj->lang->lang;
+    if($lang == 'default')
+    {
+      $lang = 'en';
+    }
+    $arr_wrap = array( );
+    $arr_wrap[0] = '<div class="'.$str_ajax_class.'" lang="'.$lang.'">';
+    $arr_wrap[1] = '</div> <!-- /ajax -->';
+
+    $template = '
+      '.$arr_wrap[0].'
+        '.$template.'
+      '.$arr_wrap[1]."\n";
+      // Wrap the template
+
+    // #9659, 101013 fsander
+      // DRS - Develoment Reporting System
+    if ($this->pObj->b_drs_javascript)
+    {
+      t3lib_div::devlog('[INFO/JSS] AJAX: template is wrapped with: '.$arr_wrap[0].'|'.$arr_wrap[1], $this->pObj->extKey, 0);
+    }
+      // DRS - Develoment Reporting System
+
+    return $template;
   }
 
 
