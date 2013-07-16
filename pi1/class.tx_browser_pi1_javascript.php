@@ -1622,8 +1622,6 @@ class tx_browser_pi1_javascript
  */
   private function getTagScript( $inline, $absPath, $path, $marker )
   {
-$this->pObj->dev_var_dump( $inline, $absPath, $path, $marker );
-    
     $script = null;
     
     switch( $inline )
@@ -1658,8 +1656,7 @@ $this->pObj->dev_var_dump( $inline, $absPath, $path, $marker );
   <!--
 ' . implode ( null , file( $absPath ) ) . '
   //-->
-  </script>
-';
+  </script>';
 
     $script = $this->getTagScriptInlineMarker( $script, $marker );
     
@@ -1724,8 +1721,7 @@ $this->pObj->dev_var_dump( $inline, $absPath, $path, $marker );
   private function getTagScriptSrc( $path )
   {
     $script = '
-  <script src="' . $path . '" type="text/javascript"></script>
-';
+  <script src="' . $path . '" type="text/javascript"></script>';
 
     return $script;
   }
