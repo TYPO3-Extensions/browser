@@ -1371,16 +1371,6 @@ class tx_browser_pi1_javascript
   {
     $bool_success = false; 
     
-      // #50069, 130716, dwildt, 5+ 
-      // Get relative path without 'EXT:'
-    $path = $this->getPathRelative( $path );
-      // RETURN : there is an error with the relative path
-    if( empty( $path ) )
-    {
-      return $this->addJssFilePromptError( );
-    }
-      // RETURN : there is an error with the relative path
-
       // #50069, 130716, dwildt, + 
       // Get absolute path
     $absPath = $this->getPathAbsolute( $path );
@@ -1391,6 +1381,16 @@ class tx_browser_pi1_javascript
     }
       // RETURN : there is an error with the absolute path
       // #50069, 130716, dwildt, + 
+
+      // #50069, 130716, dwildt, 5+ 
+      // Get relative path without 'EXT:'
+    $path = $this->getPathRelative( $path );
+      // RETURN : there is an error with the relative path
+    if( empty( $path ) )
+    {
+      return $this->addJssFilePromptError( );
+    }
+      // RETURN : there is an error with the relative path
 
     switch( true )
     {
@@ -1534,6 +1534,7 @@ $this->pObj->dev_var_dump( $path );
 
       // URL or EXT:...
     $arr_parsed_url = parse_url( $path );
+$this->pObj->dev_var_dump( $arr_parsed_url );
     if( isset( $arr_parsed_url[ 'scheme' ] ) )
     {
       if( $arr_parsed_url[ 'scheme' ] == 'EXT' )
@@ -1549,7 +1550,7 @@ $this->pObj->dev_var_dump( $path );
     {
       $onlyRelative       = 1;
       $relToTYPO3_mainDir = 0;
-      $absPath  = t3lib_div::getFileAbsFileName($path, $onlyRelative, $relToTYPO3_mainDir );
+      $absPath  = t3lib_div::getFileAbsFileName( $path, $onlyRelative, $relToTYPO3_mainDir );
       if ( ! file_exists( $absPath ) )
       {
         $bool_file_exists = false;
