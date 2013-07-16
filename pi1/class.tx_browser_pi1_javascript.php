@@ -1371,6 +1371,16 @@ class tx_browser_pi1_javascript
   {
     $bool_success = false; 
     
+      // #50069, 130716, dwildt, 5+ 
+      // Get relative path without 'EXT:'
+    $path = $this->getPathRelative( $path );
+      // RETURN : there is an error with the relative path
+    if( empty( $path ) )
+    {
+      return $this->addJssFilePromptError( );
+    }
+      // RETURN : there is an error with the relative path
+
       // #50069, 130716, dwildt, + 
       // Get absolute path
     $absPath = $this->getPathAbsolute( $path );
@@ -1381,16 +1391,6 @@ class tx_browser_pi1_javascript
     }
       // RETURN : there is an error with the absolute path
       // #50069, 130716, dwildt, + 
-
-      // #50069, 130716, dwildt, 5+ 
-      // Get relative path without 'EXT:'
-    $path = $this->getPathRelative( $path );
-      // RETURN : there is an error with the relative path
-    if( empty( $path ) )
-    {
-      return $this->addJssFilePromptError( );
-    }
-      // RETURN : there is an error with the relative path
 
     switch( true )
     {
