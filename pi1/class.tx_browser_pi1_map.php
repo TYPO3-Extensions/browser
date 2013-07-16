@@ -751,14 +751,16 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $paths = $arr_result['paths'];
       unset( $arr_result );
     }
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows );
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
+$this->pObj->dev_var_dump( $this->pObj->rows );
 
 
       // render the map
     $template = $this->renderMap( $template );
+$this->pObj->dev_var_dump( $this->pObj->rows );
 
     if( $this->enabled == 'Map +Routes' )
     {
@@ -780,7 +782,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // RETURN the template
     $this->rowsReset( );
-//$this->pObj->dev_var_dump( $this->pObj->rows[ 0 ] );
+$this->pObj->dev_var_dump( $this->pObj->rows );
     return $template;
   }
 
