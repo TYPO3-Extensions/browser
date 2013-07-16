@@ -676,6 +676,7 @@ $this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
  */
   public function get_map( $template )
   {
+$this->pObj->dev_var_dump( array_keys( $row ) );
     $this->rowsBackup( );
     
       // init the map
