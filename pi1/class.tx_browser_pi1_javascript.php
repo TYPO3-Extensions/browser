@@ -1515,6 +1515,7 @@ class tx_browser_pi1_javascript
  */
   private function getPathAbsolute( $path )
   {
+$this->pObj->dev_var_dump( $path );
       // RETURN path is empty
     if( empty( $path ) )
     {
@@ -1575,6 +1576,7 @@ class tx_browser_pi1_javascript
     }
       // RETURN : false, file does not exist
     
+$this->pObj->dev_var_dump( $path );
     return $path;
   }
 
