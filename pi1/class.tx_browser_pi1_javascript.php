@@ -1108,6 +1108,7 @@ class tx_browser_pi1_javascript
     $path_tsConf  = 'javascript.jquery.plugins.t3browser.plugin';
       // #50069, 130716, dwildt, 4+
     $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['marker.'];
+$this->pObj->dev_var_dump( $marker );
     $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['footer'];
     $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
     unset( $bool_success );
@@ -1651,8 +1652,8 @@ class tx_browser_pi1_javascript
  */
   private function getTagScriptInline( $absPath, $marker )
   {
-    $script = '
-  <script type="text/javascript">
+    $script = 
+'  <script type="text/javascript">
   <!--
 ' . implode ( null , file( $absPath ) ) . '
   //-->
@@ -1720,8 +1721,7 @@ class tx_browser_pi1_javascript
  */
   private function getTagScriptSrc( $path )
   {
-    $script = '
-  <script src="' . $path . '" type="text/javascript"></script>';
+    $script = '  <script src="' . $path . '" type="text/javascript"></script>';
 
     return $script;
   }
