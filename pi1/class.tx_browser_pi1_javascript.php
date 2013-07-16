@@ -1515,7 +1515,6 @@ class tx_browser_pi1_javascript
  */
   private function getPathAbsolute( $path )
   {
-$this->pObj->dev_var_dump( $path );
       // RETURN path is empty
     if( empty( $path ) )
     {
@@ -1534,7 +1533,6 @@ $this->pObj->dev_var_dump( $path );
 
       // URL or EXT:...
     $arr_parsed_url = parse_url( $path );
-$this->pObj->dev_var_dump( $arr_parsed_url );
     if( isset( $arr_parsed_url[ 'scheme' ] ) )
     {
       if( $arr_parsed_url[ 'scheme' ] == 'EXT' )
@@ -1551,13 +1549,13 @@ $this->pObj->dev_var_dump( $arr_parsed_url );
       $onlyRelative       = 1;
       $relToTYPO3_mainDir = 0;
       $absPath  = t3lib_div::getFileAbsFileName( $path, $onlyRelative, $relToTYPO3_mainDir );
-$this->pObj->dev_var_dump( $absPath );
       if ( ! file_exists( $absPath ) )
       {
         $bool_file_exists = false;
       }
         // relative path
-      $path = preg_replace('%' . PATH_site . '%', '', $absPath);
+      $path = preg_replace('%' . PATH_site . '%', null, $absPath);
+$this->pObj->dev_var_dump( $absPath,$path );
     }
       // link to a file
 
