@@ -1412,7 +1412,7 @@ class tx_browser_pi1_javascript
  * addJssFileToHead(): Add a JavaScript file to the HTML head
  *
  * @param	string		$path         : relative path to the Javascript
- * @param	string		$path         : absolute path to the Javascript
+ * @param	string		$absPath      : absolute path to the Javascript
  * @param	string		$name         : For the key of additionalHeaderData
  * @param	string		$keyPathTs    : The TypoScript element path to $path for the DRS
  * @param	boolean		$inline       : Add JSS script inline
@@ -1459,7 +1459,7 @@ class tx_browser_pi1_javascript
  * addJssFileToFooter(): Add a JavaScript file at the bottom of the page (the footer section)
  *
  * @param	string		$path         : relative path to the Javascript
- * @param	string		$path         : absolute path to the Javascript
+ * @param	string		$absPath      : absolute path to the Javascript
  * @param	string		$name         : For the key of additionalHeaderData
  * @param	string		$keyPathTs    : The TypoScript element path to $path for the DRS
  * @param	boolean		$inline       : Add JSS script inline
@@ -1470,7 +1470,7 @@ class tx_browser_pi1_javascript
  * @version     4.5.10
  * @since       4.5.10
  */
-  private function addJssFileToFooter( $path, $name, $keyPathTs, $inline, $marker )
+  private function addJssFileToFooter( $path, $absPath, $name, $keyPathTs, $inline, $marker )
   {
     if( isset( $GLOBALS[ 'TSFE' ]->additionalFooterData[ $this->pObj->extKey . '_' . $name ] ) )
     {
@@ -1555,7 +1555,6 @@ class tx_browser_pi1_javascript
       }
         // relative path
       $path = preg_replace('%' . PATH_site . '%', null, $absPath);
-$this->pObj->dev_var_dump( $absPath,$path );
     }
       // link to a file
 
@@ -1576,7 +1575,6 @@ $this->pObj->dev_var_dump( $absPath,$path );
     }
       // RETURN : false, file does not exist
     
-$this->pObj->dev_var_dump( $path );
     return $path;
   }
 
