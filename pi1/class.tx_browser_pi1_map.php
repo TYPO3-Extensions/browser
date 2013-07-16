@@ -676,7 +676,7 @@ $this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
  */
   public function get_map( $template )
   {
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     $this->rowsBackup( );
     
       // init the map
@@ -751,16 +751,16 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $paths = $arr_result['paths'];
       unset( $arr_result );
     }
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
 
       // render the map
     $template = $this->renderMap( $template );
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
     if( $this->enabled == 'Map +Routes' )
     {
@@ -782,7 +782,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
       // RETURN the template
     $this->rowsReset( );
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     return $template;
   }
 
