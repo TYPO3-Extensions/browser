@@ -1551,6 +1551,7 @@ $this->pObj->dev_var_dump( $arr_parsed_url );
       $onlyRelative       = 1;
       $relToTYPO3_mainDir = 0;
       $absPath  = t3lib_div::getFileAbsFileName( $path, $onlyRelative, $relToTYPO3_mainDir );
+$this->pObj->dev_var_dump( $absPath );
       if ( ! file_exists( $absPath ) )
       {
         $bool_file_exists = false;
