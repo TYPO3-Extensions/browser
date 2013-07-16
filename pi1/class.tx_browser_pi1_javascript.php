@@ -1108,7 +1108,6 @@ class tx_browser_pi1_javascript
     $path_tsConf  = 'javascript.jquery.plugins.t3browser.plugin';
       // #50069, 130716, dwildt, 4+
     $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['marker.'];
-$this->pObj->dev_var_dump( $marker );
     $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['footer'];
     $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
     unset( $bool_success );
@@ -1117,11 +1116,11 @@ $this->pObj->dev_var_dump( $marker );
 
     $name         = 'jquery_plugins_t3browser_library';
     $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library'];
-    $inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
+    $inline       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
     $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
       // #50069, 130716, dwildt, 4+
-    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['marker.'];
-    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['footer'];
+    $marker       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['marker.'];
+    $footer       = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['footer'];
     $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
     unset( $bool_success );
       // #50069, 130716, dwildt, 1-
