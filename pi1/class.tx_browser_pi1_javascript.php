@@ -27,7 +27,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version  4.4.0
+* @version  4.5.10
 * @since    3.5.0
 *
 * @package    TYPO3
@@ -1622,6 +1622,8 @@ class tx_browser_pi1_javascript
  */
   private function getTagScript( $inline, $absPath, $path, $marker )
   {
+$this->pObj->dev_var_dump( $inline, $absPath, $path, $marker );
+    
     $script = null;
     
     switch( $inline )
