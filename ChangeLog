@@ -1,3 +1,13 @@
+4.5.10
+  13-07-16
+  Feature 
+  * #50069: Placement controlling of JSS scripts
+            Effected files:
+            * pi1/class.tx_browser_pi1_javascript.php
+            * static
+              * constants.txt
+              * setup.txt
+
 4.5.9
   13-07-16
   Bugfix
