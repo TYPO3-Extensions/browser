@@ -2539,7 +2539,7 @@ class tx_browser_pi1_template
         $marker       = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['marker.'];
         $inline       = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['inline'];
         $footer       = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['footer'];
-        $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+        $bool_success = $this->pObj->objJss->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
           // #50069, 130716, dwildt, 1-
         //$bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
           // name has to correspondend with similar code in tx_browser_pi1.php
@@ -2550,7 +2550,7 @@ class tx_browser_pi1_template
         $marker       = $this->pObj->conf['javascript.']['ajax.']['file.']['marker.'];
         $inline       = $this->pObj->conf['javascript.']['ajax.']['file.']['inline'];
         $footer       = $this->pObj->conf['javascript.']['ajax.']['file.']['footer'];
-        $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+        $bool_success = $this->pObj->objJss->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
           // #50069, 130716, dwildt, 1-
         //$bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
       }
@@ -2563,7 +2563,7 @@ class tx_browser_pi1_template
       $marker       = $this->pObj->conf['javascript.']['general.']['file.']['marker.'];
       $inline       = $this->pObj->conf['javascript.']['general.']['file.']['inline'];
       $footer       = $this->pObj->conf['javascript.']['general.']['file.']['footer'];
-      $bool_success = $this->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
+      $bool_success = $this->pObj->objJss->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
           // #50069, 130716, dwildt, 1-
       //$bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
         // Adding Browser General JSS file
