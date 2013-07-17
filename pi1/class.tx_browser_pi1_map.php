@@ -563,7 +563,7 @@ class tx_browser_pi1_map
         {
           $prompt = 'Added to cObject[' . $marker . ']: ' . $content;
           t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
-          $prompt = 'You can use the content in TypoScript with: field = ' . $marker;
+          $prompt = 'You can use the content in TypoScript with: field = ' . $marker . ' (in BrowserMaps context only!)';
           t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
         }
       }
