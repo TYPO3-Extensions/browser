@@ -1993,6 +1993,9 @@ class tx_browser_pi1_map
                       . 'of the TypoScript property marker.mapMarker.description!'
                       ;
       }
+
+        // #i0019, 130717, dwildt, 1+
+      $description = str_replace( $this->catDevider, $this->pObj->objTyposcript->str_sqlDeviderDisplay, $description );
         // #i0018, 130717, dwildt, 6+
       //$description = str_replace( '"', null, $description );
       //$description = str_replace( '"', "&quot;", $description );
@@ -3545,7 +3548,6 @@ class tx_browser_pi1_map
             case( isset( $rowsLocal[ $localUid ][ $catTableField ] ) ):
               $rowsLocal[ $localUid ][ $catTableField ] = $rowsLocal[ $localUid ][ $catTableField ]
                                                         . $this->catDevider
-                                                        //. $this->pObj->objTyposcript->str_sqlDeviderDisplay
                                                         . $catValue
                                                         ;
               break;
