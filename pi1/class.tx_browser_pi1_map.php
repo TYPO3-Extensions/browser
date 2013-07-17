@@ -2808,6 +2808,7 @@ $this->pObj->dev_var_dump( $catIconMap );
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+$this->pObj->dev_var_dump( $coa_name, $coa_conf, $value );
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
