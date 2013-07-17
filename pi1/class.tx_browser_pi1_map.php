@@ -3544,8 +3544,8 @@ class tx_browser_pi1_map
               // CASE: with category field
             case( isset( $rowsLocal[ $localUid ][ $catTableField ] ) ):
               $rowsLocal[ $localUid ][ $catTableField ] = $rowsLocal[ $localUid ][ $catTableField ]
-                                                        //. $this->catDevider
-                                                        . $this->pObj->objTyposcript->str_sqlDeviderDisplay
+                                                        . $this->catDevider
+                                                        //. $this->pObj->objTyposcript->str_sqlDeviderDisplay
                                                         . $catValue
                                                         ;
               break;
