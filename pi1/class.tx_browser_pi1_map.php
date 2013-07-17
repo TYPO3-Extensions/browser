@@ -2794,7 +2794,7 @@ class tx_browser_pi1_map
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
       // #i0018, 130717, dwildt, 1+
-    $value = urlencode( $value );
+    $value = htmlentities( $value );
 
     return $value;
   }
