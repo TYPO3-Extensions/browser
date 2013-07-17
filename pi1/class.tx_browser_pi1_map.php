@@ -1993,6 +1993,7 @@ class tx_browser_pi1_map
                       . 'of the TypoScript property marker.mapMarker.description!'
                       ;
       }
+$this->pObj->dev_var_dump( $description );
         // #i0018, 130717, dwildt, 1+
       //$description = str_replace( '"', "'", $description );
       //$description = str_replace( "'", '&#039;', $description );
