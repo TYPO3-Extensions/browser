@@ -2371,7 +2371,7 @@ class tx_browser_pi1_map
         // #i0018, 130717, dwildt, 1+
     $jsonData = json_encode( $series );
     //$jsonData = json_encode( $series, JSON_HEX_QUOT );
-//$this->pObj->dev_var_dump( $series, $jsonData );
+$this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
     if( $this->pObj->b_drs_map )
