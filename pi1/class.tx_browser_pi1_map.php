@@ -1994,7 +1994,9 @@ class tx_browser_pi1_map
                       ;
       }
         // #i0018, 130717, dwildt, 1+
-      $description = htmlentities( $description );
+      //$description = str_replace( '"', "'", $description );
+      //$description = htmlentities( $description );
+      $description = htmlspecialchars( $description );
 
       
         // Get the description
