@@ -1993,6 +1993,10 @@ class tx_browser_pi1_map
                       . 'of the TypoScript property marker.mapMarker.description!'
                       ;
       }
+        // #i0018, 130717, dwildt, 1+
+      $description = htmlentities( $description );
+
+      
         // Get the description
         
         // Get the url
@@ -2792,9 +2796,6 @@ class tx_browser_pi1_map
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
-
-      // #i0018, 130717, dwildt, 1+
-    $value = htmlentities( $value );
 
     return $value;
   }
