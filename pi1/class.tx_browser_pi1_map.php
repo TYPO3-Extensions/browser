@@ -2782,7 +2782,7 @@ class tx_browser_pi1_map
  *
  * @param	string		$map_template: ...
  * @return	string
- * @version 4.1.4
+ * @version 4.5.11
  * @since   4.1.0
  */
   private function renderMapMarkerVariablesSystemItem( $item )
@@ -2792,6 +2792,9 @@ class tx_browser_pi1_map
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
+
+      // #i0018, 130717, dwildt, 1+
+    $value = urlencode( $value );
 
     return $value;
   }

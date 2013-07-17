@@ -3,6 +3,9 @@
   Improvements
   * #i0017: BrowserMaps Constant Editor
             plugin.tx_browser_pi1.map.marker.position.* moves to plugin.tx_browser_pi1.map.icon.listNum.*
+  Bugfix
+  * #i0018: htmlentities in BrowserMaps popup
+
 4.5.10
   13-07-16
   Feature 
