@@ -314,9 +314,9 @@ plugin.tx_browser_pi1 {
   map.html.links = Click me!
 
   # cat=BrowserMaps - Icons//108;           type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.marker.position.categoryIconLegend = 0 
+  map.icon.listNum.categoryIconLegend = 0 
   # cat=BrowserMaps - Icons//109;           type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.marker.position.categoryIconMap = 0 
+  map.icon.listNum.categoryIconMap = 0 
   # cat=BrowserMaps - Icons//110;           type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
   # cat=BrowserMaps - Icons/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.marker.database.links = Click me!

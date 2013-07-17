@@ -1,3 +1,8 @@
+4.5.11
+  13-07-17
+  Improvements
+  * #i0017: BrowserMaps Constant Editor
+            plugin.tx_browser_pi1.map.marker.position.* moves to plugin.tx_browser_pi1.map.icon.listNum.*
 4.5.10
   13-07-16
   Feature 
