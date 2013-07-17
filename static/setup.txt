@@ -924,11 +924,11 @@ plugin.tx_browser_pi1 {
                       if {
                         isTrue {
                           field = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
-                          //field = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.path}.uid
+                          field = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.path}.uid
                         }
                       }
                       field = {$plugin.tx_browser_pi1.map.marker.field.linktoSingle}
-                      //field = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.path}.uid
+                      field = {$plugin.tx_browser_pi1.map.path.mapper.tables.local.path}.uid
                       wrap  = ,&tx_browser_pi1[{$plugin.tx_browser_pi1.map.aliases.showUid.path}]=|
                     }
                   }
