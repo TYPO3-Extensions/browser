@@ -2366,7 +2366,7 @@ class tx_browser_pi1_map
       // FOREACH marker
 
         // #i0018, 130717, dwildt, 1+
-    $jsonData = json_encode( $series );
+    //$jsonData = json_encode( $series );
     $jsonData = json_encode( $series, JSON_HEX_QUOT );
 
       // DRS
