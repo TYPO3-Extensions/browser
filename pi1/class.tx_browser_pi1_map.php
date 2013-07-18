@@ -2024,8 +2024,8 @@ class tx_browser_pi1_map
       if( empty ( $description ) )
       {
         $description  = 'Content is empty!<br />' . PHP_EOL 
-                      . 'Please take care of a proper configuration<br />' . PHP_EOL 
-                      . 'of the TypoScript property marker.mapMarker.description!'
+                      . 'Please take care of a proper configuration '
+                      . 'of the TypoScript property <strong>marker.mapMarker.description<strong>!'
                       ;
       }
 
@@ -2848,7 +2848,7 @@ class tx_browser_pi1_map
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-$this->pObj->dev_var_dump( $coa_name, $coa_conf, $value );
+//$this->pObj->dev_var_dump( $coa_name, $coa_conf, $value );
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
