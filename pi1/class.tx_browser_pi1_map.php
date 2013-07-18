@@ -2025,22 +2025,12 @@ class tx_browser_pi1_map
       {
         $description  = 'Content is empty!<br />' . PHP_EOL 
                       . 'Please take care of a proper configuration '
-                      . 'of the TypoScript property <strong>marker.mapMarker.description<strong>!'
+                      . 'of the TypoScript property marker.mapMarker.description!'
                       ;
       }
 
         // #i0019, 130717, dwildt, 1+
       $description = str_replace( $this->catDevider, $this->pObj->objTyposcript->str_sqlDeviderDisplay, $description );
-        // #i0018, 130717, dwildt, 6+
-      //$description = str_replace( '"', '%quot%', $description );
-      //$description = str_replace( '"', null, $description );
-      //$description = str_replace( '"', "&quot;", $description );
-      //$description = str_replace( '"', "'", $description );
-      //$description = str_replace( "'", '&#039;', $description );
-      //$description = htmlentities( $description );
-//$description = htmlspecialchars( $description );
-//$this->pObj->dev_var_dump( $description );
-        // #i0018, 130717, dwildt, 6+
 
       
         // Get the description
@@ -2848,7 +2838,10 @@ class tx_browser_pi1_map
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-//$this->pObj->dev_var_dump( $coa_name, $coa_conf, $value );
+if( $item == 'description' )
+{
+  $this->pObj->dev_var_dump( $this->pObj->cObj->data, $coa_name, $coa_conf, $value );
+}
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
