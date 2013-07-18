@@ -1,8 +1,9 @@
 4.5.11
   13-07-17
   Improvements
-  * #i0019: cat devider
-  * #i0017: BrowserMaps Constant Editor
+  * #i0020: BrowserMaps: route row to cObj
+  * #i0019: BrowserMaps: cat devider
+  * #i0017: BrowserMaps: Constant Editor
             plugin.tx_browser_pi1.map.marker.position.* moves to plugin.tx_browser_pi1.map.icon.listNum.*
   Bugfix
   * #i0018: htmlentities in BrowserMaps popup

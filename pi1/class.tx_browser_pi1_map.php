@@ -2840,7 +2840,8 @@ class tx_browser_pi1_map
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 if( $item == 'description' )
 {
-  $this->pObj->dev_var_dump( $this->pObj->cObj->data, $coa_name, $coa_conf, $value );
+  //$this->pObj->dev_var_dump( $this->pObj->cObj->data, $coa_name, $coa_conf, $value );
+  $this->pObj->dev_var_dump( $this->pObj->cObj->data, $value );
 }
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
@@ -2948,6 +2949,10 @@ if( $item == 'description' )
     
       // Init
     $this->renderMapRouteInit( );
+
+      // #i0020, 130718, deildt
+$this->pObj->dev_var_dump( $this->pObj->rows, $this->pObj->cObj->data );
+    $this->cObjDataAddRow( $this->pObj->rows );
 
       // Get paths
     $paths  = $this->renderMapRoutePaths( );
@@ -4289,10 +4294,10 @@ if( $item == 'description' )
   }
 
 /**
- * renderMapRoutePathCatRelations( ) : Get relations path -> categrories
- *                                  rowsRelation array will look like:
- *                                  * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
- *                                  * tablePath.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
+ * renderMapRoutePathCatRelations( )  : Get relations path -> categrories
+ *                                      rowsRelation array will look like:
+ *                                      * 7 => array( 4, 10, 7 ), 5 => array( 10, 8 )
+ *                                      * tablePath.uid = array ( tableCat.uid, tableCat.uid, tableCat.uid )
  *
  * @return	array   $arrReturn : with Elements rowsRelation, tableCat, tablePath
  * @version 4.5.7
