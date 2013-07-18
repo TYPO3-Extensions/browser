@@ -3177,7 +3177,7 @@ class tx_browser_pi1_map
       // Merge a marker for each path
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
 
-    $marker = $this->renderMapRouteMarkerAddPaths( $rowsPathWiCat );
+    $marker = $this->renderMapRouteMarkerAddPaths( $marker, $rowsPathWiCat );
 
       // DRS
     if( $this->pObj->b_drs_map )
