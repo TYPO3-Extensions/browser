@@ -1904,7 +1904,7 @@ class tx_browser_pi1_map
     $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
       // LOOP row
-$this->pObj->dev_var_dump( $this->pObj->rows );    
+//$this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
         // Get mapMarkers, lats and lons
@@ -2839,11 +2839,6 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-//if( $item == 'description' )
-//{
-//  //$this->pObj->dev_var_dump( $this->pObj->cObj->data, $coa_name, $coa_conf, $value );
-//  $this->pObj->dev_var_dump( $this->pObj->cObj->data, $value );
-//}
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
@@ -2965,7 +2960,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $arrReturn['jsonRoutes']  = $jsonData;
       // #i0020, 130718, dwildt, 1+
     $arrReturn['rows']   = $rowsPathWiCat;
-$this->pObj->dev_var_dump( $arrReturn );    
+//$this->pObj->dev_var_dump( $arrReturn );    
     
     return $arrReturn;
   }
@@ -3182,9 +3177,7 @@ $this->pObj->dev_var_dump( $arrReturn );
       // Merge a marker for each path
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
 
-//    $marker = $this->renderMapRouteMarkerAddPaths( $rowsPathWiCat );
-
-$this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
+    $marker = $this->renderMapRouteMarkerAddPaths( $rowsPathWiCat );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -3194,6 +3187,42 @@ $this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
     }
       // DRS
     
+    return $marker;
+  }
+
+/**
+ * renderMapRouteMarkerAddPaths( ):
+ *
+ * @param       array     $marker         : 
+ * @param       array     $rowsPathWiCat  : 
+ * @return	array     $marker         : Marker array
+ * 
+ * @version 4.5.11
+ * @since   4.5.7
+ * 
+ * @internal    #47630
+ */
+  private function renderMapRouteMarkerAddPaths( $marker, $rowsPathWiCat )
+  {
+    $tablePath      = $this->confMap['path.']['mapper.']['tables.']['local.']['path'];
+    $tableMarker    = $this->confMap['path.']['mapper.']['tables.']['local.']['marker'];
+    $tablePathUid   = $tablePath    . '.uid';
+    $tableMarkerUid = $tableMarker  . '.uid';
+
+    foreach( $marker as $key => $arrMarker )
+    {
+      if( $arrMarker[ 'type' ] != 'route' )
+      {
+        continue;
+      }
+      $pathUid = $arrMarker[ $tableMarkerUid ];
+      if( ! isset( $rowsPathWiCat[ $pathUid ] ) )
+      {
+        $marker[ $key ] = array_merge( $marker[ $key ], $rowsPathWiCat[ $pathUid ] );
+      }
+    }
+$this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
+
     return $marker;
   }
 
@@ -3641,7 +3670,7 @@ $this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
     }
       // DRS
 
-$this->pObj->dev_var_dump( $rowsLocal );
+//$this->pObj->dev_var_dump( $rowsLocal );
     return $rowsLocal;
   }
 
