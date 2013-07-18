@@ -3573,7 +3573,6 @@ $this->pObj->dev_var_dump( $marker );
     $rowsLocal  = $this->renderMapRouteMarkerGetRowsByTable( $tableLocal );
       // Get category rows
     $rowsCat    = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
-$this->pObj->dev_var_dump( $rowsLocal, $rowsCat );    
 
       // LOOP relations
     foreach( $rowsRelation as $localUid => $catUids )
@@ -3635,6 +3634,7 @@ $this->pObj->dev_var_dump( $rowsLocal, $rowsCat );
     }
       // DRS
 
+$this->pObj->dev_var_dump( $rowsLocal, $rowsCat );    
     return $rowsLocal;
   }
 
