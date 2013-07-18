@@ -3204,8 +3204,8 @@ class tx_browser_pi1_map
  */
   private function renderMapRouteMarkerAddPaths( $marker, $rowsPathWiCat )
   {
-    $tablePath      = $this->confMap['path.']['mapper.']['tables.']['local.']['path'];
-    $tableMarker    = $this->confMap['path.']['mapper.']['tables.']['local.']['marker'];
+    $tablePath      = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.']['path'];
+    $tableMarker    = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.']['marker'];
     $tablePathUid   = $tablePath    . '.uid';
     $tableMarkerUid = $tableMarker  . '.uid';
 
