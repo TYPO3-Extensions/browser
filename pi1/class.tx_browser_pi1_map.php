@@ -3218,8 +3218,9 @@ class tx_browser_pi1_map
       $pathUid = $arrMarker[ $tableMarkerUid ];
       if( ! isset( $rowsPathWiCat[ $pathUid ] ) )
       {
-        $marker[ $key ] = array_merge( $marker[ $key ], $rowsPathWiCat[ $pathUid ] );
+        continue;
       }
+      $marker[ $key ] = array_merge( $marker[ $key ], $rowsPathWiCat[ $pathUid ] );
     }
 $this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
 
