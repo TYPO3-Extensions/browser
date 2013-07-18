@@ -1245,7 +1245,41 @@ class tx_browser_pi1_map
     return;
   }
 
+  
 
+  /***********************************************
+  *
+  * JSON
+  *
+  **********************************************/
+
+/**
+ * json_encode_wi_single_quotes( )  : Returns a JSON array with keys and values, 
+ *                                    which are wrapped by single (!) quotes.
+ *                                    REQUIREMENT
+ *                                    All values must handled with htmlspecialcahrs( )
+ *
+ * @param	array           $phpArray : php array with data for JSON.
+ * @return	string		$jsonData : JSON array
+ * 
+ * @internal  #i0018 
+ * @version 4.5.11
+ * @since   4.5.11
+ */
+  private function json_encode_wi_single_quotes( $phpArray )
+  {
+      // Moves php array to a JSON array
+    $jsonData = json_encode( $phpArray );
+      // Replace all double quotes with single quotes
+    $jsonData = str_replace( '"', "'", $jsonData );
+      // Decode HTML special chars
+    $jsonData = htmlspecialchars_decode( $jsonData );
+$this->pObj->dev_var_dump( $phpArray, $jsonData );
+
+    return $jsonData;
+  }
+
+  
 
   /***********************************************
   *
@@ -2003,7 +2037,7 @@ class tx_browser_pi1_map
       //$description = str_replace( '"', "'", $description );
       //$description = str_replace( "'", '&#039;', $description );
       //$description = htmlentities( $description );
-      $description = htmlspecialchars( $description );
+//$description = htmlspecialchars( $description );
 //$this->pObj->dev_var_dump( $description );
         // #i0018, 130717, dwildt, 6+
 
@@ -2373,14 +2407,10 @@ class tx_browser_pi1_map
     }
       // FOREACH marker
 
-    $jsonData = json_encode( $series );
-        // #i0018, 130717, dwildt, 1+
-    //$jsonData = addslashes( $jsonData );
-    //$jsonData = json_encode( $series, JSON_HEX_QUOT );
-    $jsonData = str_replace( '"', "'", $jsonData );
-    //$jsonData = str_replace( '%quot%', '"', $jsonData );
-    $jsonData = htmlspecialchars_decode( $jsonData );
-$this->pObj->dev_var_dump( $series, $jsonData );
+      // #i0018, 130717, dwildt, 1-
+    //$jsonData = json_encode( $series );
+      // #i0018, 130717, dwildt, 1+
+    $jsonData= $this->json_encode_wi_single_quotes( $series );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -2400,7 +2430,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
  *
  * @param	array
  * @return	string		$jsonData
- * @version 4.5.7
+ * @version 4.5.11
  * @since   4.5.7
  */
   private function renderMapMarkerPointsToJsonData( $mapMarker )
@@ -2412,9 +2442,11 @@ $this->pObj->dev_var_dump( $series, $jsonData );
         $mapMarker['lon'], 
         $mapMarker['lat'] 
       ),
-      'desc'    => $mapMarker['desc'],
+        // #i0018, 130718, dwildt, +htmlspecialchars( )
+      'desc'    => htmlspecialchars( $mapMarker['desc'] ),
       'url'     => $mapMarker['url'],
-      'number'  => $mapMarker['number'],
+        // #i0018, 130718, dwildt, +htmlspecialchars( )
+      'number'  => htmlspecialchars( $mapMarker['number'] ),
       'route'   => $this->renderMapMarkerPointsToJsonDataRoute( $mapMarker )
     );
 
@@ -2441,7 +2473,7 @@ $this->pObj->dev_var_dump( $series, $jsonData );
  *
  * @param	array
  * @return	string
- * @version 4.5.8
+ * @version 4.5.11
  * @since   4.5.8
  */
   private function renderMapMarkerPointsToJsonDataRoute( $mapMarker )
@@ -2454,7 +2486,8 @@ $this->pObj->dev_var_dump( $series, $jsonData );
         $route = null;
         break;
       case( 'route' ):
-        $route = $mapMarker[ 'routeLabel' ];
+          // #i0018, 130718, dwildt, +htmlspecialchars( )
+        $route = htmlspecialchars( $mapMarker[ 'routeLabel' ] );
         break;
       default:
           // DIE  : $value is empty
@@ -2478,13 +2511,14 @@ $this->pObj->dev_var_dump( $series, $jsonData );
  *
  * @param	array
  * @return	string		$jsonData
- * @version 4.5.7
+ * @version 4.5.11
  * @since   4.5.7
  */
   private function renderMapMarkerPointsToJsonIcon( $series, $mapMarker, $catIcons )
   {
-    $arrIcon         = array( );
-    $catTitle  = $mapMarker['cat'];
+    $arrIcon  = array( );
+      // #i0018, 130718, dwildt, +htmlspecialchars( )
+    $catTitle = htmlspecialchars( $mapMarker['cat'] );
     
       // RETURN  : json icon array is set
     if( isset( $series[ $catTitle ][ 'icon' ] ) )
