@@ -2377,7 +2377,8 @@ class tx_browser_pi1_map
         // #i0018, 130717, dwildt, 1+
     //$jsonData = addslashes( $jsonData );
     //$jsonData = json_encode( $series, JSON_HEX_QUOT );
-    $jsonData = str_replace( '%quot%', '\"', $jsonData );
+    $jsonData = str_replace( '"', "'", $jsonData );
+    $jsonData = str_replace( '%quot%', '"', $jsonData );
 $this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
