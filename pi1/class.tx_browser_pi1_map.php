@@ -3216,6 +3216,7 @@ class tx_browser_pi1_map
         continue;
       }
       $pathUid = $arrMarker[ $tableMarkerUid ];
+$this->pObj->dev_var_dump( $tableMarkerUid, $pathUid );
       if( ! isset( $rowsPathWiCat[ $pathUid ] ) )
       {
         continue;
