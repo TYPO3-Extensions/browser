@@ -749,7 +749,7 @@ class tx_browser_pi1_map
           $this->pObj->rows = $arr_result['marker'];
           break;
       }
-      $paths = $arr_result['paths'];
+      $jsonRoutes = $arr_result['jsonRoutes'];
       unset( $arr_result );
     }
 //$this->pObj->dev_var_dump( $this->pObj->rows );
@@ -767,16 +767,16 @@ class tx_browser_pi1_map
     {
       switch( true )
       {
-        case( empty( $paths ) ):
+        case( empty( $jsonRoutes ) ):
           if( $this->pObj->b_drs_warn )
           {
             $prompt = 'JSON array for the variable routes is empty!';
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
           }
           break;
-        case( ! empty( $paths ) ):
+        case( ! empty( $jsonRoutes ) ):
         default:
-          $template = str_replace( "'###ROUTES###'", $paths, $template );
+          $template = str_replace( "'###ROUTES###'", $jsonRoutes, $template );
           break;
       }
     }
@@ -2959,10 +2959,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
 
       // Get marker
-    $marker = $this->renderMapRouteMarker( );
+    $marker = $this->renderMapRouteMarker( $rowsPathWiCat );
     
     $arrReturn['marker'] = $marker;
-    $arrReturn['paths']  = $jsonData;
+    $arrReturn['jsonRoutes']  = $jsonData;
       // #i0020, 130718, dwildt, 1+
     $arrReturn['rows']   = $rowsPathWiCat;
 $this->pObj->dev_var_dump( $arrReturn );    
@@ -3158,13 +3158,15 @@ $this->pObj->dev_var_dump( $arrReturn );
 /**
  * renderMapRouteMarker( ):
  *
+ * @param       array     $rowsPathWiCat  : 
  * @return	array     $marker : Marker array
- * @version 4.5.7
+ * 
+ * @version 4.5.11
  * @since   4.5.7
  * 
  * @internal    #47630
  */
-  private function renderMapRouteMarker( )
+  private function renderMapRouteMarker( $rowsPathWiCat )
   {
 
       // Get relations marker -> categrories
@@ -3176,11 +3178,13 @@ $this->pObj->dev_var_dump( $arrReturn );
     unset( $arrResult );
     
     $marker = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
-$this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
-//$this->pObj->dev_var_dump( $marker );
+
+//    $marker = $this->renderMapRouteMarkerAddPaths( $rowsPathWiCat );
+
+$this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
