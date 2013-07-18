@@ -1903,7 +1903,7 @@ class tx_browser_pi1_map
     $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
       // LOOP row
-//$this->pObj->dev_var_dump( $this->pObj->rows );    
+$this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
         // Get mapMarkers, lats and lons
@@ -2838,11 +2838,11 @@ class tx_browser_pi1_map
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-if( $item == 'description' )
-{
-  //$this->pObj->dev_var_dump( $this->pObj->cObj->data, $coa_name, $coa_conf, $value );
-  $this->pObj->dev_var_dump( $this->pObj->cObj->data, $value );
-}
+//if( $item == 'description' )
+//{
+//  //$this->pObj->dev_var_dump( $this->pObj->cObj->data, $coa_name, $coa_conf, $value );
+//  $this->pObj->dev_var_dump( $this->pObj->cObj->data, $value );
+//}
 
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
@@ -2950,9 +2950,9 @@ if( $item == 'description' )
       // Init
     $this->renderMapRouteInit( );
 
-      // #i0020, 130718, deildt
-$this->pObj->dev_var_dump( $this->pObj->rows, $this->pObj->cObj->data );
-    $this->cObjDataAddRow( $this->pObj->rows );
+//      // #i0020, 130718, deildt
+//$this->pObj->dev_var_dump( $this->pObj->rows, $this->pObj->cObj->data );
+//    $this->cObjDataAddRow( $this->pObj->rows );
 
       // Get paths
     $paths  = $this->renderMapRoutePaths( );
