@@ -747,7 +747,7 @@ class tx_browser_pi1_map
         default:
       // #i0020, 130718, dwildt
 //          $this->pObj->rows = $arr_result['marker'];
-          $this->pObj->rows = $arr_result['marker'] . $arr_result['paths'];
+          $this->pObj->rows = $arr_result['marker'] + $arr_result['paths'];
           break;
       }
       $paths = $arr_result['paths'];
