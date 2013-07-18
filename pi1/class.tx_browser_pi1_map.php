@@ -3213,6 +3213,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       $key    = $rowOut[ $tableMarker . '.uid' ];
       $marker[ $key ] = $rowOut;
     }
+$this->pObj->dev_var_dump( $marker );    
     return $marker;
   }
 
