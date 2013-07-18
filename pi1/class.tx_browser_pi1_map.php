@@ -2374,7 +2374,7 @@ class tx_browser_pi1_map
 
     $jsonData = json_encode( $series );
         // #i0018, 130717, dwildt, 1+
-    $jsonData = addslashes( $jsonData );
+    //$jsonData = addslashes( $jsonData );
     //$jsonData = json_encode( $series, JSON_HEX_QUOT );
 $this->pObj->dev_var_dump( $series, $jsonData );
 
