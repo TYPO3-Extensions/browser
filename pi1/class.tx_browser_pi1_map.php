@@ -3207,10 +3207,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $tableMarker  = $confMapper['tables.']['local.']['marker'];
       // short variables
 
-    foreach( $this->pObj->rows as $row )
+    foreach( $this->pObj->rows as $rowIn )
     {
-      $rowOut = $this->renderMapRouteMarkerByPathRow( $row );
-      $key    = $rowOut[ $tableMarker . '.uid' ];
+      $rowOut         = $this->renderMapRouteMarkerByPathRow( $rowIn );
+      $key            = $rowOut[ $tableMarker . '.uid' ];
       $marker[ $key ] = $rowOut;
     }
 $this->pObj->dev_var_dump( $marker );    
@@ -4002,6 +4002,7 @@ $this->pObj->dev_var_dump( $marker );
     
       // Get relations marker -> categrories
     $arrResult    = $this->renderMapRoutePathCatRelations( );
+$this->pObj->dev_var_dump( $arrResult );    
     $rowsRelation = $arrResult['rowsRelation'];
     $tablePath    = $arrResult['tablePath'];
     $tableCat     = $arrResult['tableCat'];
