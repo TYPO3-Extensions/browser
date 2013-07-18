@@ -2923,12 +2923,12 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
  * renderMapRoute( ):
  *
  * @return	array
- * @version 4.5.6
+ * @version 4.5.11
  * @since   4.5.6
  */
   private function renderMapRoute( )
   {
-    $arr_return = array
+    $arrReturn  = array
                   (
                       'error'  => false
                     , 'prompt' => null
@@ -2944,26 +2944,30 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
         // DRS
-      return $arr_return;
+      return $arrReturn;
     }
       // RETURN : Map +Routes is disabled
     
       // Init
     $this->renderMapRouteInit( );
 
-      // #i0020, 130718, dwildt
-//$this->pObj->dev_var_dump( $this->pObj->rows, $this->pObj->cObj->data );
-//    $this->cObjDataAddRow( $this->pObj->rows );
-
       // Get paths
-    $paths  = $this->renderMapRoutePaths( );
+      // #i0020, 130718, dwildt
+    $arrResult      = $this->renderMapRoutePaths( );
+    $rowsPathWiCat  = $arrResult['rowsPathWiCat'];
+    $jsonData       = $arrResult['jsonData'];
+
 
       // Get marker
     $marker = $this->renderMapRouteMarker( );
     
-    $arr_return['marker'] = $marker;
-    $arr_return['paths']  = $paths;
-    return $arr_return;
+    $arrReturn['marker'] = $marker;
+    $arrReturn['paths']  = $jsonData;
+      // #i0020, 130718, dwildt, 1+
+    $arrReturn['rows']   = $rowsPathWiCat;
+$this->pObj->dev_var_dump( $arrReturn );    
+    
+    return $arrReturn;
   }
 
 /**
@@ -3213,7 +3217,6 @@ $this->pObj->dev_var_dump( $marker );
       $key            = $rowOut[ $tableMarker . '.uid' ];
       $marker[ $key ] = $rowOut;
     }
-$this->pObj->dev_var_dump( $marker );    
     return $marker;
   }
 
@@ -3994,11 +3997,12 @@ $this->pObj->dev_var_dump( $rowsLocal );
  * renderMapRoutePaths( ):
  *
  * @return	array
- * @version 4.5.7
+ * @version 4.5.11
  * @since   4.5.7
  */
   private function renderMapRoutePaths( )
   {
+    $arrReturn  = array( );
     $jsonData   = array( );
     
       // Get relations marker -> categrories
@@ -4011,11 +4015,18 @@ $this->pObj->dev_var_dump( $rowsLocal );
     
       // Get rows with categories 
     $rowsPathWiCat  = $this->renderMapRouteTableWiCat( $tablePath, $tableCat, $rowsRelation );
-$this->pObj->dev_var_dump( $rowsPathWiCat );    
       // Get json from rows
     $jsonData       = $this->renderMapRoutePathsJson( $rowsPathWiCat );
-    
-    return $jsonData;
+
+      // #i0020, 130718, dwildt, 1-
+    //return $jsonData;
+      
+      // #i0020, 130718, dwildt, 3+
+    $arrReturn['rowsPathWiCat'] = $rowsPathWiCat;
+    $arrReturn['jsonData']      = $jsonData;
+
+    return $arrReturn;
+      // #i0020, 130718, dwildt, 3+
   }
 
 /**
