@@ -745,7 +745,9 @@ class tx_browser_pi1_map
           break;
         case( ! empty( $arr_result['marker'] ) ):
         default:
-          $this->pObj->rows = $arr_result['marker'];
+      // #i0020, 130718, dwildt
+//          $this->pObj->rows = $arr_result['marker'];
+          $this->pObj->rows = $arr_result['marker'] . $arr_result['paths'];
           break;
       }
       $paths = $arr_result['paths'];
@@ -2950,7 +2952,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       // Init
     $this->renderMapRouteInit( );
 
-//      // #i0020, 130718, deildt
+      // #i0020, 130718, dwildt
 //$this->pObj->dev_var_dump( $this->pObj->rows, $this->pObj->cObj->data );
 //    $this->cObjDataAddRow( $this->pObj->rows );
 
