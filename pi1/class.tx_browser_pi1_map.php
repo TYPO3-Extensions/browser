@@ -4003,7 +4003,6 @@ $this->pObj->dev_var_dump( $rowsLocal );
     
       // Get relations marker -> categrories
     $arrResult    = $this->renderMapRoutePathCatRelations( );
-$this->pObj->dev_var_dump( $arrResult );    
     $rowsRelation = $arrResult['rowsRelation'];
     $tablePath    = $arrResult['tablePath'];
     $tableCat     = $arrResult['tableCat'];
@@ -4012,6 +4011,7 @@ $this->pObj->dev_var_dump( $arrResult );
     
       // Get rows with categories 
     $rowsPathWiCat  = $this->renderMapRouteTableWiCat( $tablePath, $tableCat, $rowsRelation );
+$this->pObj->dev_var_dump( $rowsPathWiCat );    
       // Get json from rows
     $jsonData       = $this->renderMapRoutePathsJson( $rowsPathWiCat );
     
