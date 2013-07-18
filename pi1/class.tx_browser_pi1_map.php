@@ -3573,6 +3573,7 @@ $this->pObj->dev_var_dump( $marker );
     $rowsLocal  = $this->renderMapRouteMarkerGetRowsByTable( $tableLocal );
       // Get category rows
     $rowsCat    = $this->renderMapRouteMarkerGetRowsByTable( $tableCat );
+$this->pObj->dev_var_dump( $rowsLocal, $rowsCat );    
 
       // LOOP relations
     foreach( $rowsRelation as $localUid => $catUids )
@@ -4011,7 +4012,7 @@ $this->pObj->dev_var_dump( $arrResult );
     
       // Get rows with categories 
     $rowsPathWiCat  = $this->renderMapRouteTableWiCat( $tablePath, $tableCat, $rowsRelation );
-      // Get json0 from rows
+      // Get json from rows
     $jsonData       = $this->renderMapRoutePathsJson( $rowsPathWiCat );
     
     return $jsonData;
