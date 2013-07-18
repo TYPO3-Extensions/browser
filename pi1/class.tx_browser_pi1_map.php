@@ -3197,10 +3197,11 @@ class tx_browser_pi1_map
  * @param       array     $rowsPathWiCat  : 
  * @return	array     $marker         : Marker array
  * 
+ * @internal    #i0020
+ * 
  * @version 4.5.11
  * @since   4.5.7
  * 
- * @internal    #47630
  */
   private function renderMapRouteMarkerAddPaths( $marker, $rowsPathWiCat )
   {
@@ -3216,14 +3217,14 @@ class tx_browser_pi1_map
         continue;
       }
       $pathUid = $arrMarker[ $tableMarkerUid ];
-$this->pObj->dev_var_dump( $tableMarkerUid, $pathUid );
+//$this->pObj->dev_var_dump( $tableMarkerUid, $pathUid );
       if( ! isset( $rowsPathWiCat[ $pathUid ] ) )
       {
         continue;
       }
       $marker[ $key ] = array_merge( $marker[ $key ], $rowsPathWiCat[ $pathUid ] );
     }
-$this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
+//$this->pObj->dev_var_dump( $rowsPathWiCat, $marker );
 
     return $marker;
   }
