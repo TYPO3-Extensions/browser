@@ -1997,6 +1997,7 @@ class tx_browser_pi1_map
         // #i0019, 130717, dwildt, 1+
       $description = str_replace( $this->catDevider, $this->pObj->objTyposcript->str_sqlDeviderDisplay, $description );
         // #i0018, 130717, dwildt, 6+
+      $description = str_replace( '"', '%quot%', $description );
       //$description = str_replace( '"', null, $description );
       //$description = str_replace( '"', "&quot;", $description );
       //$description = str_replace( '"', "'", $description );
@@ -2376,6 +2377,7 @@ class tx_browser_pi1_map
         // #i0018, 130717, dwildt, 1+
     //$jsonData = addslashes( $jsonData );
     //$jsonData = json_encode( $series, JSON_HEX_QUOT );
+    $jsonData = str_replace( '%quot%', '\"', $jsonData );
 $this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
