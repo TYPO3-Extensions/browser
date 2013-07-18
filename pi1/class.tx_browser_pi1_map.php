@@ -745,9 +745,8 @@ class tx_browser_pi1_map
           break;
         case( ! empty( $arr_result['marker'] ) ):
         default:
-      // #i0020, 130718, dwildt
-//          $this->pObj->rows = $arr_result['marker'];
-          $this->pObj->rows = $arr_result['marker'] + $arr_result['paths'];
+// #i0020, 130718, dwildt
+          $this->pObj->rows = $arr_result['marker'];
           break;
       }
       $paths = $arr_result['paths'];
