@@ -3172,11 +3172,11 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     unset( $arrResult );
     
     $marker = $this->renderMapRouteTableWiCat( $tableMarker, $tableCat, $rowsRelation );
-//$this->pObj->dev_var_dump( $marker );
+$this->pObj->dev_var_dump( $marker );
 
       // Merge a marker for each path
     $marker = array_merge( $marker, $this->renderMapRouteMarkerByPath( ) );
-$this->pObj->dev_var_dump( $marker );
+//$this->pObj->dev_var_dump( $marker );
 
       // DRS
     if( $this->pObj->b_drs_map )
@@ -3634,7 +3634,7 @@ $this->pObj->dev_var_dump( $marker );
     }
       // DRS
 
-//$this->pObj->dev_var_dump( $rowsLocal, $rowsCat );    
+$this->pObj->dev_var_dump( $rowsLocal );
     return $rowsLocal;
   }
 
