@@ -1997,13 +1997,13 @@ class tx_browser_pi1_map
         // #i0019, 130717, dwildt, 1+
       $description = str_replace( $this->catDevider, $this->pObj->objTyposcript->str_sqlDeviderDisplay, $description );
         // #i0018, 130717, dwildt, 6+
-      $description = str_replace( '"', '%quot%', $description );
+      //$description = str_replace( '"', '%quot%', $description );
       //$description = str_replace( '"', null, $description );
       //$description = str_replace( '"', "&quot;", $description );
       //$description = str_replace( '"', "'", $description );
       //$description = str_replace( "'", '&#039;', $description );
       //$description = htmlentities( $description );
-      //$description = htmlspecialchars( $description );
+      $description = htmlspecialchars( $description );
 //$this->pObj->dev_var_dump( $description );
         // #i0018, 130717, dwildt, 6+
 
@@ -2378,7 +2378,8 @@ class tx_browser_pi1_map
     //$jsonData = addslashes( $jsonData );
     //$jsonData = json_encode( $series, JSON_HEX_QUOT );
     $jsonData = str_replace( '"', "'", $jsonData );
-    $jsonData = str_replace( '%quot%', '"', $jsonData );
+    //$jsonData = str_replace( '%quot%', '"', $jsonData );
+    $jsonData = htmlspecialchars_decode( $jsonData );
 $this->pObj->dev_var_dump( $series, $jsonData );
 
       // DRS
