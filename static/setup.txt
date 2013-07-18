@@ -3132,7 +3132,7 @@ plugin.tx_browser_pi1 {
             }
             value = In detail &raquo;
             lang {
-              de = Mehr Informationen &raquo;
+              de = Details &raquo;
               en = In detail &raquo;
             }
             typolink {
