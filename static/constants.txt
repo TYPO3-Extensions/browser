@@ -197,7 +197,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling*//203;             type=string;    label= Map modules: Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.default     = 'OSM.Base,OSM.Filter'
   # cat=BrowserMaps - Controlling*//204;             type=string;    label= Map +Routes modules: Comma seperated list of map modules (quoted). OSM.Routes must be the first element! Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
-  map.modules.routes.default     = 'OSM.Route,OSM.Base,OSM.Filter
+  map.modules.routes.default     = 'OSM.Route,OSM.Base,OSM.Filter'
   # cat=BrowserMaps - Controlling*//205;             type=string;    label= Map modules (debugging): Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.modules.debugging   = 'Error,OSM.Base,OSM.Filter'
   # cat=BrowserMaps - Controlling*//206;             type=string;    label= Map +Routes modules (debugging): Comma seperated list of map modules (quoted). OSM.Routes must be the first element! Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
