@@ -1274,7 +1274,7 @@ class tx_browser_pi1_map
     $jsonData = str_replace( '"', "'", $jsonData );
       // Decode HTML special chars
     $jsonData = htmlspecialchars_decode( $jsonData );
-$this->pObj->dev_var_dump( $phpArray, $jsonData );
+//$this->pObj->dev_var_dump( $phpArray, $jsonData );
 
     return $jsonData;
   }
