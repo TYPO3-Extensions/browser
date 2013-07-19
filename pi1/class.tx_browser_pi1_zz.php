@@ -2612,7 +2612,10 @@ $this->pObj->dev_var_dump( $str_value, $str_type );
     {
       if( ini_get( 'magic_quotes_sybase' ) )
       {
-        $str_value = str_replace("''", "'", $str_value);
+        $str_value = str_replace( "''", "'", $str_value );
+          // #50195, 130719, dwildt, 2+
+          // http://www.php.net/manual/de/function.stripslashes.php
+        $str_value = str_replace( '\\', null, $str_value );
 $this->pObj->dev_var_dump( $str_value );
       }
       else
@@ -2631,7 +2634,23 @@ $this->pObj->dev_var_dump( $str_value );
 
      // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/function.mysql-real-escape-string.html
 
-    $str_value = mysql_real_escape_string( $str_value );
+      // #50195, 130719, dwildt, 1-
+    //$str_value = mysql_real_escape_string( $str_value );
+      // #50195, 130719, dwildt, 1+
+    $str_value_out = mysql_real_escape_string( $str_value );
+    if( ! $str_value_out )
+    {
+      $str_value = str_replace( '\\', null, $str_value );
+      $str_value = str_replace( '"', null, $str_value );
+      $str_value = str_replace( "'", null, $str_value );
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
+        t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'This signs are removed in the given piVar: \\, ", \' manually.';
+        t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
+      }
+    }
       // mysql_real_escape_string
 $this->pObj->dev_var_dump( $str_value );
 
@@ -2716,10 +2735,10 @@ $this->pObj->dev_var_dump( $str_value );
 
     if($str_value_in != $str_value)
     {
-      if ($this->pObj->b_drs_warn)
+      if( $this->pObj->b_drs_warn )
       {
         $prompt = 'piVar is moved from \'' . $str_value_in . '\' to \'' . $str_value . '\'';
-        t3lib_div::devlog('[WARN/Security] ' . $prompt, $this->pObj->extKey, 3);
+        t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
       }
     }
 

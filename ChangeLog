@@ -7,6 +7,8 @@
   * #i0017: BrowserMaps: Constant Editor
             plugin.tx_browser_pi1.map.marker.position.* moves to plugin.tx_browser_pi1.map.icon.listNum.*
   Bugfix
+  * #50195: mysql_real_escape_string: Bug in case of no MySQL connection
+
   * #i0018: htmlentities in BrowserMaps popup
 
 4.5.10
