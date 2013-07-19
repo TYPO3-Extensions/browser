@@ -2648,8 +2648,8 @@
         {
           $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
           t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
-          $prompt = 'This signs are removed in the given piVar: \\, ", \' manually.';
-          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'This signs are removed in the given piVar: \\, ", \' manually. Maybe this is a security risk.';
+          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 2 );
         }
         break;
       case( true ):
