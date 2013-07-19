@@ -2619,19 +2619,20 @@ $this->pObj->dev_var_dump( $str_value );
 
       // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/security.database.sql-injection.html
 
-    if (get_magic_quotes_gpc())
+    if( get_magic_quotes_gpc( ) )
     {
-      if (ini_get('magic_quotes_sybase'))
+      if( ini_get( 'magic_quotes_sybase' ) )
       {
         $str_value = str_replace("''", "'", $str_value);
+$this->pObj->dev_var_dump( $str_value );
       }
       else
       {
         $str_value = stripslashes($str_value);
+$this->pObj->dev_var_dump( $str_value );
       }
     }
       // Get Magic Quotes
-$this->pObj->dev_var_dump( $str_value );
 
 
 
