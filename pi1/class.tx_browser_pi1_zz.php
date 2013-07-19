@@ -2595,7 +2595,7 @@
   function secure_piVar( $str_value, $str_type )
   {
 
-$this->pObj->dev_var_dump( $str_value, $str_type );
+//$this->pObj->dev_var_dump( $str_value, $str_type );
     $str_value_in         = $str_value;
     $conf_sword           = $this->arr_advanced_securitySword;
     $csv_swordAddSlashes  = $conf_sword['addSlashes.']['csvChars'];
@@ -2616,12 +2616,12 @@ $this->pObj->dev_var_dump( $str_value, $str_type );
           // #50195, 130719, dwildt, 2+
           // http://www.php.net/manual/de/function.stripslashes.php
         $str_value = str_replace( '\\', null, $str_value );
-$this->pObj->dev_var_dump( $str_value );
+//$this->pObj->dev_var_dump( $str_value );
       }
       else
       {
         $str_value = stripslashes( $str_value );
-$this->pObj->dev_var_dump( $str_value );
+//$this->pObj->dev_var_dump( $str_value );
       }
     }
       // Get Magic Quotes
@@ -2636,23 +2636,30 @@ $this->pObj->dev_var_dump( $str_value );
 
       // #50195, 130719, dwildt, 1-
     //$str_value = mysql_real_escape_string( $str_value );
-      // #50195, 130719, dwildt, 1+
+      // #50195, 130719, dwildt, +
     $str_value_out = mysql_real_escape_string( $str_value );
-    if( ! $str_value_out )
+    switch( $str_value_out )
     {
-      $str_value = str_replace( '\\', null, $str_value );
-      $str_value = str_replace( '"', null, $str_value );
-      $str_value = str_replace( "'", null, $str_value );
-      if( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
-        t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
-        $prompt = 'This signs are removed in the given piVar: \\, ", \' manually.';
-        t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
-      }
+      case( false ):
+        $str_value = str_replace( '\\', null, $str_value );
+        $str_value = str_replace( '"', null, $str_value );
+        $str_value = str_replace( "'", null, $str_value );
+        if( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
+          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'This signs are removed in the given piVar: \\, ", \' manually.';
+          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
+        }
+        break;
+      case( true ):
+      default:
+        $str_value = $str_value_out;
+        break;
     }
+      // #50195, 130719, dwildt, +
       // mysql_real_escape_string
-$this->pObj->dev_var_dump( $str_value );
+//$this->pObj->dev_var_dump( $str_value );
 
 
 
@@ -2686,7 +2693,7 @@ $this->pObj->dev_var_dump( $str_value );
       }
     }
       // Check Boolean
-$this->pObj->dev_var_dump( $str_value );
+//$this->pObj->dev_var_dump( $str_value );
 
       // Check Integer
     if (strtolower($str_type) == 'integer')
@@ -2696,7 +2703,7 @@ $this->pObj->dev_var_dump( $str_value );
       $bool_ok      = true;
     }
       // Check Integer
-$this->pObj->dev_var_dump( $str_value );
+//$this->pObj->dev_var_dump( $str_value );
 
       // Check String
     if (strtolower($str_type) == 'string')
@@ -2721,7 +2728,7 @@ $this->pObj->dev_var_dump( $str_value );
       $bool_ok      = true;
     }
       // Check Sword
-$this->pObj->dev_var_dump( $str_value );
+//$this->pObj->dev_var_dump( $str_value );
 
     if (!$bool_defined)
     {
