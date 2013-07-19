@@ -2592,9 +2592,10 @@
  * @param	string		$str_type: Type for evaluation like string, integer or boolean
  * @return	string		piVar value
  */
-  function secure_piVar($str_value, $str_type)
+  function secure_piVar( $str_value, $str_type )
   {
 
+$this->pObj->dev_var_dump( $str_value, $str_type );
     $str_value_in         = $str_value;
     $conf_sword           = $this->arr_advanced_securitySword;
     $csv_swordAddSlashes  = $conf_sword['addSlashes.']['csvChars'];
@@ -2618,6 +2619,7 @@
       }
     }
       // Get Magic Quotes
+$this->pObj->dev_var_dump( $str_value );
 
 
 
@@ -2629,6 +2631,7 @@
 
     $str_value = mysql_real_escape_string($str_value);
       // mysql_real_escape_string
+$this->pObj->dev_var_dump( $str_value );
 
 
 
@@ -2662,6 +2665,7 @@
       }
     }
       // Check Boolean
+$this->pObj->dev_var_dump( $str_value );
 
       // Check Integer
     if (strtolower($str_type) == 'integer')
@@ -2671,6 +2675,7 @@
       $bool_ok      = true;
     }
       // Check Integer
+$this->pObj->dev_var_dump( $str_value );
 
       // Check String
     if (strtolower($str_type) == 'string')
@@ -2695,6 +2700,7 @@
       $bool_ok      = true;
     }
       // Check Sword
+$this->pObj->dev_var_dump( $str_value );
 
     if (!$bool_defined)
     {
@@ -2711,7 +2717,7 @@
       if ($this->pObj->b_drs_warn)
       {
         $prompt = 'piVar is moved from \'' . $str_value_in . '\' to \'' . $str_value . '\'';
-        t3lib_div::devlog('[WARN/Security] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog('[WARN/Security] ' . $prompt, $this->pObj->extKey, 3);
       }
     }
 
