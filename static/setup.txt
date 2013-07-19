@@ -984,11 +984,14 @@ plugin.tx_browser_pi1 {
               map_css {
                 value (
                   <style type="text/css">
+                    .tx-browser-pi1 a.oxMap-markerLink {
+                      cursor:pointer;
+                    }
                     .tx-browser-pi1 .mapview {
                       margin-top:1em;
                     }
                     .tx-browser-pi1 .mapview-content {
-                      padding:1em;
+                      padding: 1em 0;
                     }
                     .tx-browser-pi1 .mapview-content form {
                       padding-bottom:1em;
@@ -5148,13 +5151,6 @@ plugin.tx_browser_pi1 {
     .tx-browser-pi1 .ui-tabs-list {
       padding:0.2em;
     }
-    .tx-browser-pi1 .mapview-content {
-      padding: 1em 0 !important;
-    }
-    .tx-browser-pi1 a.oxMap-markerLink {
-      cursor:pointer;
-    }
-
     /* #9659 */
     .returntolist {
       cursor: pointer;
