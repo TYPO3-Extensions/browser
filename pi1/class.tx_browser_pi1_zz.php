@@ -2601,6 +2601,18 @@ $this->pObj->dev_var_dump( $str_value, $str_type );
     $csv_swordAddSlashes  = $conf_sword['addSlashes.']['csvChars'];
 
 
+      // Check Integer
+    if (strtolower($str_type) == 'integer')
+    {
+      $bool_defined = true;
+      $str_value    = intval($str_value);
+      $bool_ok      = true;
+    }
+      // Check Integer
+$this->pObj->dev_var_dump( $str_value );
+
+      
+
       ////////////////////////////////////
       //
       // Get Magic Quotes
