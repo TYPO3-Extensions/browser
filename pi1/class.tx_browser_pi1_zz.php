@@ -2601,17 +2601,6 @@ $this->pObj->dev_var_dump( $str_value, $str_type );
     $csv_swordAddSlashes  = $conf_sword['addSlashes.']['csvChars'];
 
 
-      // Check Integer
-    if (strtolower($str_type) == 'integer')
-    {
-      $bool_defined = true;
-      $str_value    = intval($str_value);
-      $bool_ok      = true;
-    }
-      // Check Integer
-$this->pObj->dev_var_dump( $str_value );
-
-      
 
       ////////////////////////////////////
       //
@@ -2628,7 +2617,7 @@ $this->pObj->dev_var_dump( $str_value );
       }
       else
       {
-        $str_value = stripslashes($str_value);
+        $str_value = stripslashes( $str_value );
 $this->pObj->dev_var_dump( $str_value );
       }
     }
@@ -2642,7 +2631,7 @@ $this->pObj->dev_var_dump( $str_value );
 
      // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/function.mysql-real-escape-string.html
 
-    $str_value = mysql_real_escape_string($str_value);
+    $str_value = mysql_real_escape_string( $str_value );
       // mysql_real_escape_string
 $this->pObj->dev_var_dump( $str_value );
 
