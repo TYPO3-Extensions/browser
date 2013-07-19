@@ -1,6 +1,7 @@
 4.5.11
   13-07-17
   Improvements
+  * #i0021: BrowserMaps: CSS .tx-browser-pi1 .mapview-content: padding: 1em; moves to padding: 1em 0;
   * #i0020: BrowserMaps: route row to cObj
   * #i0019: BrowserMaps: cat devider
   * #i0017: BrowserMaps: Constant Editor
