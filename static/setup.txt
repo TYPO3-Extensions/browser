@@ -5152,7 +5152,7 @@ plugin.tx_browser_pi1 {
       padding: 1em 0 !important;
     }
     .tx-browser-pi1 a.oxMap-markerLink {
-      cursor:pointer;;
+      cursor:pointer;
     }
 
     /* #9659 */
