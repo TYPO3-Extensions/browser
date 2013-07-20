@@ -488,7 +488,9 @@ class tx_browser_pi1_typoscript
 
     $arr_localTable['uid'] = $str_localTable.'.'.$arr_localTable['uid'];
     $arr_localTable['pid'] = $str_localTable.'.'.$arr_localTable['pid'];
-    $arr_localTable = $this->pObj->objSqlFun_3x->replace_tablealias($arr_localTable);
+  // #50214, 130720, dwildt, 1+
+$this->pObj->dev_var_dump( $arr_localTable );
+    $arr_localTable = $this->pObj->objSqlFun_3x->replace_tablealias( $arr_localTable );
 
     return $arr_localTable;
 
