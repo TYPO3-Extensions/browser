@@ -2309,7 +2309,7 @@ class tx_browser_pi1_backend
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
-$this->pObj-dev_var_dump( $this->locallang[ $arr_jquery_ui['label'] ] );
+var_dump( __METHOD__, __LINE__, $this->locallang[ $arr_jquery_ui['label'] ] );
         // 120515, dwildt, 9+
       switch( true )
       {
