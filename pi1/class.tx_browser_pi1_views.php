@@ -891,7 +891,10 @@ class tx_browser_pi1_views
         // Get key=value pair
 
         // Key is part of the URL
-      if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
+        // #50214, 130720, dwildt, 1-
+      // if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
+        // #50214, 130720, dwildt, 1+
+      if( in_array( $paramKey, array_keys ( ( array ) $arr_GPparam ) ) )
       {
           // SWITCH conditions
         switch( true )
@@ -940,7 +943,10 @@ class tx_browser_pi1_views
       }
         // Key is part of the URL
         // Key isn't part of the URL
-      if( ! ( in_array( $paramKey, array_keys ( $arr_GPparam ) ) ) )
+        // #50214, 130720, dwildt, 1-
+      //if( ! ( in_array( $paramKey, array_keys ( $arr_GPparam ) ) ) )
+        // #50214, 130720, dwildt, 1+
+      if( ! ( in_array( $paramKey, array_keys ( ( array ) $arr_GPparam ) ) ) )
       {
         if ( $this->pObj->b_drs_templating )
         {
@@ -995,7 +1001,10 @@ class tx_browser_pi1_views
         // Get key=value pair
 
         // Key is part of the URL
-      if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
+        // #50214, 130720, dwildt, 1-
+      //if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
+        // #50214, 130720, dwildt, 1+
+      if( in_array( $paramKey, array_keys ( ( array ) $arr_GPparam ) ) )
       {
           // SWITCH conditions
         switch( true )
