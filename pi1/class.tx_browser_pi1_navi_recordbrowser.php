@@ -141,41 +141,8 @@ class tx_browser_pi1_navi_recordbrowser
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-    $markerArray['###RECORD_BROWSER###']  = null;
-
-
-      /////////////////////////////////////
-      //
-      // RETURN record browser isn't enabled
-
-    if(!($this->pObj->conf['navigation.']['record_browser'] == 1))
-    {
-      if ($this->pObj->b_drs_templating)
-      {
-        $value = $this->pObj->conf['navigation.']['record_browser'];
-        t3lib_div::devlog('[INFO/TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
-          'Record browser won\'t be handled (best performance).', $this->pObj->extKey, 0);
-      }
-      $str_content = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
-        // Prompt the expired time to devlog
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-      return $str_content;
-    }
-      // RETURN record browser isn't enabled
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set the global $this->pObj->uids_of_all_rows
-
-    $this->pObj->objSession->cacheOfListView( );
-      // Set the global $this->pObj->uids_of_all_rows
-
-
       // #50222, 130720, dwildt
-    if( ! $this->recordbrowser_requirements( ) )
+    if( ! $this->recordbrowser_init( ) )
     {
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
@@ -187,6 +154,7 @@ class tx_browser_pi1_navi_recordbrowser
       //
       // Render the record browser
 
+    $markerArray = array( );
     $markerArray['###RECORD_BROWSER###']  = $this->recordbrowser_rendering( );
     $str_content                          = $this->pObj->cObj->substituteMarkerArray( $str_content, $markerArray );
       // Render the record browser
@@ -479,12 +447,6 @@ class tx_browser_pi1_navi_recordbrowser
     $singlePid      = (int) $this->pObj->piVars['showUid'];
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
-
-//      // #50222, 130720, dwildt
-//    if( ! $this->recordbrowser_requirements( ) )
-//    {
-//      return null;
-//    }
 
     $conf_record_browser = $this->conf['navigation.']['record_browser.'];
 
@@ -780,7 +742,7 @@ class tx_browser_pi1_navi_recordbrowser
 
 
  /**
-  * recordbrowser_requirements( ): Returns true, if requirements are matched
+  * recordbrowser_init( ): Returns true, if requirements are matched
   *
   * @return	boolean   
   * 
@@ -788,40 +750,107 @@ class tx_browser_pi1_navi_recordbrowser
   * @version  4.5.11
   * @since    4.5.11
   */
-  private function recordbrowser_requirements( )
+  private function recordbrowser_init( )
   {
-    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
-    $tt_content_uid = $this->pObj->cObj->data['uid'];
-
-      // RETURN false : record_browser should not be displayed
-    if( ! $this->conf['navigation.']['record_browser'] )
+      // RETURN false : Record Browser should not used
+    if( ! $this->recordbrowser_initUseMe( ) )
     {
-      if( $this->pObj->b_drs_templating )
-      {
-        $prompt = 'record browser should not displayed: RETURN';
-        t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-      }
       return false;
     }
-      // RETURN false : record_browser should not be displayed
+      // RETURN false : Record Browser should not used
+    
+      // Set session data
+    $this->recordbrowser_initSession( );
 
+      // RETURN false : Record Browser should not used
+    if( ! $this->recordbrowser_initUseMeWoResult( ) )
+    {
+      return false;
+    }
+      // RETURN false : Record Browser should not used
+    
+      // RETURN true: requirements are matched
+    return true;
+  }
+
+  /**
+  * recordbrowser_initSession( )
+  *
+  * @return	void
+  * 
+  * @internal #50222
+  * @version  4.5.11
+  * @since    4.5.11
+  */
+  private function recordbrowser_initSession( )
+  {
+      // Set the global $this->pObj->uids_of_all_rows
+    $this->pObj->objSession->cacheOfListView( );
+  }
+
+ /**
+  * recordbrowser_initUseMe( ): Returns true, if requirements are matched
+  *
+  * @return	boolean   
+  * 
+  * @internal #50222
+  * @version  4.5.11
+  * @since    4.5.11
+  */
+  private function recordbrowser_initUseMe( )
+  {
+      // RETURN true  : record browser is enabled
+    if( $this->pObj->conf['navigation.']['record_browser'] )
+    {
+      return true;
+    }
+      // RETURN true  : record browser is enabled
+    
+      // DRS
+    if( $this->pObj->b_drs_templating )
+    {
+      $prompt = 'navigation.record_browser is false. '
+              . 'Record browser won\'t be handled (best performance).';
+      t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // RETURN false : record browser is disabled
+    return false;
+  }
+
+ /**
+  * recordbrowser_initUseMeWoResult( ): Returns true, if requirements are matched
+  *
+  * @return	boolean   
+  * 
+  * @internal #50222
+  * @version  4.5.11
+  * @since    4.5.11
+  */
+  private function recordbrowser_initUseMeWoResult( )
+  {
       // Display record browser without any result?
     $displayWithoutResult = $this->conf['navigation.']['record_browser.']['display.']['withoutResult'];
 
-      // RETURN true: record_browser should displayed in case of no result
+      // RETURN true: record_browser should displayed in case of any result
     if( $displayWithoutResult )
     {
       return true;
     }
-      // RETURN true: record_browser should displayed in case of no result
+      // RETURN true: record_browser should displayed in case of any result
       
-      // RETURN true: there is a list of records
+      // Set local variables
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
+    $tt_content_uid = $this->pObj->cObj->data['uid'];
+
+      // RETURN true: there is a result (a list of records)
     if( ! empty( $this->pObj->uids_of_all_rows[ $tt_content_uid ][ 'cache' ][ $lang ][ 'mode-' . $this->mode ][ 'uids_of_all_rows' ] ) )
     {
       return true;
     }
-      // RETURN true: there is a list of records
-
+      // RETURN true: there is a result (a list of records)
+    
       // DRS
     if( $this->pObj->b_drs_templating )
     {
@@ -831,7 +860,7 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // DRS
 
-      // RETURN false: there is one record only
+      // RETURN false: there isn't any result (no list of records)
     return false;
   }
 
