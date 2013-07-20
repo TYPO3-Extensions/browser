@@ -2313,7 +2313,7 @@ class tx_browser_pi1_backend
         // 120515, dwildt, 9+
       switch( true )
       {
-        // #49495, 130702, dwildt, 1-
+        // #i0022, 130720, dwildt
         case( $this->typo3Version < 4006000 ):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
 //var_dump( __METHOD__, __LINE__, $jquery_ui_label );
@@ -2560,6 +2560,8 @@ class tx_browser_pi1_backend
  *                      This method is independent from
  *                        * t3lib_div::int_from_ver (upto 4.7)
  *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
+ * 
+ * @internal  #i0022
  *
  * @return    void
  * @version 4.5.11

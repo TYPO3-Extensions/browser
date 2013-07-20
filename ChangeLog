@@ -25,7 +25,9 @@
               * class.tx_browser_pi1_views.php line 943: in_array() expects parameter 2 to be array, null given
               * class.tx_browser_pi1_views.php line 998: in_array() expects parameter 2 to be array, null given   
   * #50195: mysql_real_escape_string: Bug in case of no MySQL connection
-
+  * #i0022: jQuery UI labels in the flexform
+            Effected files:
+            * pi1/class.tx_browser_pi1_backend.php
   * #i0018: htmlentities in BrowserMaps popup
 
 4.5.10
