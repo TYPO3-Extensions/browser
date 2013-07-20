@@ -5099,50 +5099,44 @@ plugin.tx_browser_pi1 {
       /* 111218, 3.9.6, dwildt-*/
       /*height:1.4em;*/
     }
-    .tx-browser-pi1 div.azSelector,
-    .tx-browser-pi1 div.indexBrowser,
-    .tx-browser-pi1 div.recordBrowser {
-      /* 111218, 3.9.6, dwildt+*/
-      height:2em;
-    }
     .tx-browser-pi1 ul.azSelector,
-    .tx-browser-pi1 ul.recordBrowser,
+    .tx-browser-pi1 ul.indexBrowser,
     .tx-browser-pi1 ul.modeSelector,
-    .tx-browser-pi1 ul.indexBrowser {
+    .tx-browser-pi1 ul.recordBrowser {
       max-width: 100%;
       margin: 0;
       padding: 0;
       font-size:1em;
-      height:1em;
+      height:1.6em;
       background:#EEE;
     }
     * html .tx-browser-pi1 ul.azSelector,
-    * html .tx-browser-pi1 ul.recordBrowser,
+    * html .tx-browser-pi1 ul.indexBrowser,
     * html .tx-browser-pi1 ul.modeSelector,
-    * html .tx-browser-pi1 ul.indexBrowser {
+    * html .tx-browser-pi1 ul.recordBrowser {
       width: 100%;
     }
     .tx-browser-pi1 ul.azSelector li,
-    .tx-browser-pi1 ul.recordBrowser li,
+    .tx-browser-pi1 ul.indexBrowser li,
     .tx-browser-pi1 ul.modeSelector li,
-    .tx-browser-pi1 ul.indexBrowser li {
+    .tx-browser-pi1 ul.recordBrowser li {
       display: block;
       margin: 0;
-      padding: 0;
+      padding: 0 .2em;
       float: left;
       border-right:1px solid grey;
     }
     .tx-browser-pi1 ul.azSelector li.last,
-    .tx-browser-pi1 ul.recordBrowser li.last,
+    .tx-browser-pi1 ul.indexBrowser li.last,
     .tx-browser-pi1 ul.modeSelector li.last,
-    .tx-browser-pi1 ul.indexBrowser li.last {
+    .tx-browser-pi1 ul.recordBrowser li.last {
       border-right:0;
     }
     .tx-browser-pi1 ul.azSelector li.selected,
-    .tx-browser-pi1 ul.recordBrowser li.selected,
+    .tx-browser-pi1 ul.indexBrowser li.selected,
     .tx-browser-pi1 ul.modeSelector li.selected,
-    .tx-browser-pi1 ul.indexBrowser li.selected {
-      background:yellow;
+    .tx-browser-pi1 ul.recordBrowser li.selected {
+      background:darkorange;
     }
     .tx-browser-pi1 .ui-tabs ul li {
       font-size:0.75em;
