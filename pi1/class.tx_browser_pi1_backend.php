@@ -2309,17 +2309,12 @@ class tx_browser_pi1_backend
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
-var_dump( __METHOD__, __LINE__, $this->locallang[ $arr_jquery_ui['label'] ] );
+//var_dump( __METHOD__, __LINE__, $this->locallang[ $arr_jquery_ui['label'] ] );
         // 120515, dwildt, 9+
       switch( true )
       {
-          // #43108, 130222, dwildt, 1-
-//        case( t3lib_div::int_from_ver( TYPO3_version ) < 4006000):
-          // #43108, 130222, dwildt, 1+
         // #49495, 130702, dwildt, 1-
-        //case( $this->typo3Version < 6000000 ):
-          // #49495, 130702, dwildt, 1+
-        case( $this->pObj->typo3Version < 4006000 ):
+        case( $this->typo3Version < 4006000 ):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
           break;
         default:
@@ -2553,6 +2548,67 @@ var_dump( __METHOD__, __LINE__, $this->locallang[ $arr_jquery_ui['label'] ] );
     $this->obj_TypoScript->generateConfig();
 
     return false;
+  }
+
+/**
+ * init_typo3version( ): Get the current TYPO3 version, move it to an integer
+ *                      and set the global $bool_typo3_43
+ *                      This method is independent from
+ *                        * t3lib_div::int_from_ver (upto 4.7)
+ *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
+ *
+ * @return    void
+ * @version 4.5.11
+ * @since   4.5.11
+ */
+  private function init_typo3version( )
+  {
+      // #43108, 121212, dwildt, +
+      // RETURN : typo3Version is set
+    if( $this->typo3Version !== null )
+    {
+      return;
+    }
+      // RETURN : typo3Version is set
+    
+      // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+    list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+    $version = ( ( int ) $main ) * 1000000;
+    $version = $version + ( ( int ) $sub ) * 1000;
+    $version = $version + ( ( int ) $bugfix ) * 1;
+    $this->typo3Version = $version;
+      // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+    if( $this->typo3Version < 3000000 ) 
+    {
+      $prompt = '<h1>ERROR</h1>
+        <h2>Unproper TYPO3 version</h2>
+        <ul>
+          <li>
+            TYPO3 version is smaller than 3.0.0
+          </li>
+          <li>
+            constant TYPO3_version: ' . TYPO3_version . '
+          </li>
+          <li>
+            integer $this->typo3Version: ' . ( int ) $this->typo3Version . '
+          </li>
+        </ul>
+          ';
+      die ( $prompt );
+    }
+
+      // Set the global $bool_typo3_43
+    if( $this->typo3Version >= 4003000 )
+    {
+      $this->bool_typo3_43 = true;
+    }
+    if( $this->typo3Version < 4003000 )
+    {
+      $this->bool_typo3_43 = false;
+    }
+      // Set the global $bool_typo3_43
+      // #43108, 121212, dwildt, +    
   }
 
 
