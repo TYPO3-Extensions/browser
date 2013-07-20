@@ -2303,7 +2303,7 @@ class tx_browser_pi1_backend
       // TypoScript configuration for jquery_ui
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
 
-var_dump( __METHOD__, __LINE__, $this->typo3Version );
+//var_dump( __METHOD__, __LINE__, $this->typo3Version );
       // Loop: jquery_ui
     foreach( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
@@ -2314,13 +2314,13 @@ var_dump( __METHOD__, __LINE__, $this->typo3Version );
       switch( true )
       {
         // #49495, 130702, dwildt, 1-
-        case( $this->typo3Version < 4006000 ):
+        case( $this->typo3Version < 6000000 ):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
-var_dump( __METHOD__, __LINE__, $jquery_ui_label );
+//var_dump( __METHOD__, __LINE__, $jquery_ui_label );
           break;
         default:
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ][ 0 ][ 'target' ];
-var_dump( __METHOD__, __LINE__, $jquery_ui_label );
+//var_dump( __METHOD__, __LINE__, $jquery_ui_label );
           break;
       }
       $jquery_ui_icon = $arr_jquery_ui['icon'];
