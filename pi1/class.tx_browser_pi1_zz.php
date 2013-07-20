@@ -1937,7 +1937,7 @@
     $tableField     = $this->pObj->objSqlFun_3x->get_sql_alias_behind($tableField);
     $arrColumns[0]  = $tableField;
   // #50214, 130720, dwildt, 1+
-$this->pObj->dev_var_dump( $this->pObj->arrLinkToSingle );
+$this->pObj->dev_var_dump( $arrColumns );
     $arrColumns     = $this->pObj->objSqlFun_3x->replace_tablealias($arrColumns);
     $tableField     = $arrColumns[0];
 
