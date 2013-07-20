@@ -8,6 +8,10 @@
             plugin.tx_browser_pi1.map.marker.position.* moves to plugin.tx_browser_pi1.map.icon.listNum.*
   Bugfix
   * #50222: Record Browser is broken
+            * CSS: record-browser is moved to indexBrowser
+            Effected files:
+            * static
+              * setup.txt
   * #50214: Fix core error prompts
             * pi1
               * class.tx_browser_pi1_filter_4x.php line 1320: strpos() expects parameter 1 to be string, array given
