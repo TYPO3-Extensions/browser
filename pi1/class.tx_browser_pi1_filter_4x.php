@@ -1317,6 +1317,8 @@ class tx_browser_pi1_filter_4x {
 
         // #47089, 120410, dwildt
         // CONTINUE : select clause contains the current tableUid
+// #50214, 130720, dwildt      
+$this->pObj->dev_var_dump( $this->pObj->conf_sql );
       $pos = strpos( $this->pObj->conf_sql, $tableUid );
       if( ! ( $pos === false ) )
       {
