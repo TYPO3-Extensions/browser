@@ -1475,7 +1475,7 @@ plugin.tx_browser_pi1 {
           wrap_all {
               // [STRING] empty (default): empty value will allocated while runtime with the rendered buttons.
             value =
-            wrap  = <ul id="indexBrowser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
+            wrap  = <ul id="c###TT_CONTENT.UID###-indexBrowser" class="indexBrowser ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
           }
             // The devider between of two buttons
           devider = TEXT
