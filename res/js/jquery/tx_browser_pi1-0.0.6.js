@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (c) 2011-2012 Dirk Wildt
+ * Copyright (c) 2011-2013 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
  * Version 0.0.6
@@ -23,7 +23,7 @@ $( document ).ready( function( )
     // Record browser
 
     // User has clicked the record browser
-  $( ".c###TT_CONTENT.UID###-record-browser" ).live(
+  $( ".c###TT_CONTENT.UID###-recordBrowser" ).live(
     'click',
     function( e ) {
         // Don't execute the click
