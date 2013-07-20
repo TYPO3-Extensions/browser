@@ -2314,7 +2314,7 @@ class tx_browser_pi1_backend
       switch( true )
       {
         // #49495, 130702, dwildt, 1-
-        case( $this->typo3Version < 6000000 ):
+        case( $this->typo3Version < 4006000 ):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
 //var_dump( __METHOD__, __LINE__, $jquery_ui_label );
           break;
