@@ -2309,16 +2309,17 @@ class tx_browser_pi1_backend
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
-//var_dump( __METHOD__, __LINE__, $this->locallang[ $arr_jquery_ui['label'] ] );
         // 120515, dwildt, 9+
       switch( true )
       {
         // #49495, 130702, dwildt, 1-
-        case( $this->typo3Version < 6000000 ):
+        case( $this->typo3Version < 4006000 ):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
+var_dump( __METHOD__, __LINE__, $jquery_ui_label );
           break;
         default:
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ][ 0 ][ 'target' ];
+var_dump( __METHOD__, __LINE__, $jquery_ui_label );
           break;
       }
       $jquery_ui_icon = $arr_jquery_ui['icon'];
