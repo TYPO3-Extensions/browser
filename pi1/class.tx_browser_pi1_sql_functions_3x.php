@@ -1056,7 +1056,7 @@ class tx_browser_pi1_sql_functions_3x
  * @param	array		$arr_aliastableField: Array with local table values
  * @return	array		$arr_aliastableField with replaced table aliases.
  */
-    function replace_tablealias($arr_aliastableField)
+    public function replace_tablealias( $arr_aliastableField )
     {
         // 120507, dwildt
       static $firstLoop = true;
@@ -1086,6 +1086,10 @@ class tx_browser_pi1_sql_functions_3x
         // RETURN, if we don't have any alias array
 
         // #50214, 130720, dwildt, 1+
+      if( isset ( $arr_aliastableField[ 0 ] ) )
+      {
+        $arr_aliastableField = $arr_aliastableField[ 0 ];
+      }
 $this->pObj->dev_var_dump( $arr_aliastableField );
       foreach ($arr_aliastableField as $key_field => $str_tablefield)
       {
