@@ -1085,6 +1085,8 @@ class tx_browser_pi1_sql_functions_3x
       }
         // RETURN, if we don't have any alias array
 
+        // #50214, 130720, dwildt, 1+
+$this->pObj->dev_var_dump( $arr_aliastableField );
       foreach ($arr_aliastableField as $key_field => $str_tablefield)
       {
         $arr_tablefield                   = explode ('.', trim( $str_tablefield ) );
