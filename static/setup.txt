@@ -5107,7 +5107,7 @@ plugin.tx_browser_pi1 {
       margin: 0;
       padding: 0;
       font-size:1em;
-      height:1.6em;
+      height:1.4em;
       background:#EEE;
     }
     * html .tx-browser-pi1 ul.azSelector,
