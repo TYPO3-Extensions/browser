@@ -688,6 +688,7 @@ class tx_browser_pi1_navi_recordbrowser
       // Wrapper configuration
     $wrap_all_name = $conf_record_browser['buttons.']['current.']['wrap_all'];
     $wrap_all_conf = $conf_record_browser['buttons.']['current.']['wrap_all.'];
+    $wrap_all_conf = $this->pObj->objMarker->substitute_marker( $wrap_all_conf, $marker );
     if( empty( $wrap_all_conf[ 'value' ] ) )
     {
       $wrap_all_conf[ 'value' ] = $record_browser;
@@ -695,7 +696,6 @@ class tx_browser_pi1_navi_recordbrowser
 
       // Wrap record browser
     $record_browser = $this->pObj->cObj->cObjGetSingle( $wrap_all_name, $wrap_all_conf );
-    $record_browser = $this->pObj->objMarker->substitute_marker( $record_browser, $marker );
       // Set the record browser
 
 
