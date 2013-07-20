@@ -1086,7 +1086,7 @@ class tx_browser_pi1_sql_functions_3x
         // RETURN, if we don't have any alias array
 
         // #50214, 130720, dwildt, 1+
-      if( isset ( $arr_aliastableField[ 0 ] ) )
+      if( is_array ( $arr_aliastableField[ 0 ] ) )
       {
         $arr_aliastableField = $arr_aliastableField[ 0 ];
       }
