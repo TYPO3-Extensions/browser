@@ -137,6 +137,10 @@ class tx_browser_pi1_navi_recordbrowser
   */
   public function recordbrowser_get($str_content)
   {
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+
     $markerArray['###RECORD_BROWSER###']  = null;
 
 
@@ -153,6 +157,9 @@ class tx_browser_pi1_navi_recordbrowser
           'Record browser won\'t be handled (best performance).', $this->pObj->extKey, 0);
       }
       $str_content = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $str_content;
     }
       // RETURN record browser isn't enabled
@@ -167,6 +174,14 @@ class tx_browser_pi1_navi_recordbrowser
       // Set the global $this->pObj->uids_of_all_rows
 
 
+      // #50222, 130720, dwildt
+    if( ! $this->recordbrowser_requirements( ) )
+    {
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+      return null;
+    }
 
       //////////////////////////////////////////////////////////////////////////
       //
@@ -177,26 +192,9 @@ class tx_browser_pi1_navi_recordbrowser
       // Render the record browser
 
 
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After ' . __METHOD__ . ': ' . ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
     return $str_content;
   }
@@ -432,30 +430,14 @@ class tx_browser_pi1_navi_recordbrowser
   *                             * Single view is called without calling the list view before
   *
   * @return	void
-  * @version  4.1.8
+  * @version  4.5.11
   * @since    3.7.0
   */
   public function recordbrowser_callListView()
   {
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] Before ' . __METHOD__ . ': '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Store current values
     $curr_rows        = $this->pObj->rows;
@@ -473,25 +455,9 @@ class tx_browser_pi1_navi_recordbrowser
     $this->pObj->rows = $curr_rows;
     $this->pObj->view = $curr_view;
 
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After ' . __METHOD__ . ': '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
   }
 
 
@@ -514,11 +480,11 @@ class tx_browser_pi1_navi_recordbrowser
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
 
-      // #50222, 130720, dwildt
-    if( ! $this->recordbrowser_requirements( ) )
-    {
-      return null;
-    }
+//      // #50222, 130720, dwildt
+//    if( ! $this->recordbrowser_requirements( ) )
+//    {
+//      return null;
+//    }
 
     $conf_record_browser = $this->conf['navigation.']['record_browser.'];
 
