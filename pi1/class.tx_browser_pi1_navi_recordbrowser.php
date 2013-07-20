@@ -130,24 +130,29 @@ class tx_browser_pi1_navi_recordbrowser
   * recordbrowser_get:  Rplace the marker ###RECORD_BROWSER### with the rendered record browser
   *                     * Feature: #27041
   *
-  * @param	string		$str_content: current content
-  * @return	string		$str_content: content with rendered marker ###RECORD_BROWSER###
-  * @version 3.7.0
+  * @param	string		$content: current content
+  * @return	string		$content: content with rendered marker ###RECORD_BROWSER###
+  * @version 4.5.11
   * @since 3.7.0
   */
-  public function recordbrowser_get($str_content)
+  public function recordbrowser_get( $content )
   {
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
+    $markerArray = array( );
+    $markerArray['###RECORD_BROWSER###'] = null;
+
       // #50222, 130720, dwildt
     if( ! $this->recordbrowser_init( ) )
     {
+      $content = $this->pObj->cObj->substituteMarkerArray( $content, $markerArray );
+      
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-      return null;
+      return $content;
     }
 
       //////////////////////////////////////////////////////////////////////////
@@ -156,7 +161,7 @@ class tx_browser_pi1_navi_recordbrowser
 
     $markerArray = array( );
     $markerArray['###RECORD_BROWSER###']  = $this->recordbrowser_rendering( );
-    $str_content                          = $this->pObj->cObj->substituteMarkerArray( $str_content, $markerArray );
+    $content                          = $this->pObj->cObj->substituteMarkerArray( $content, $markerArray );
       // Render the record browser
 
 
@@ -164,7 +169,7 @@ class tx_browser_pi1_navi_recordbrowser
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-    return $str_content;
+    return $content;
   }
 
 
