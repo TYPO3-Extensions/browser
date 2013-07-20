@@ -1087,6 +1087,8 @@ class tx_browser_pi1_sql_functions_3x
 
         // #50214, 130720, dwildt, 5+
         // WORKAROUND: a method delivers an unproper array 
+  // #50214, 130720, dwildt, 1+
+$this->pObj->dev_var_dump( $arr_aliastableField[ 0 ] );
       if( is_array ( $arr_aliastableField[ 0 ] ) )
       {
         $arr_aliastableField = $arr_aliastableField[ 0 ];

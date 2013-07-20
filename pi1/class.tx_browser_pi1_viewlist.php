@@ -2489,8 +2489,6 @@ class tx_browser_pi1_viewlist
       {
         $this->pObj->arrLinkToSingle[$i_key] = $this->pObj->objSqlFun_3x->get_sql_alias_before( $str_tablefield );
       }
-//  // #50214, 130720, dwildt, 1+
-//$this->pObj->dev_var_dump( $this->pObj->arrLinkToSingle );
       $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun_3x->replace_tablealias( $this->pObj->arrLinkToSingle );
     }
       // Replace aliases in case of aliases

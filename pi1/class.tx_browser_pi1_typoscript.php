@@ -1025,11 +1025,13 @@ class tx_browser_pi1_typoscript
 
     $arrCsv     = explode( ',', $str_queryPart );
     $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias( $arrCsv );
-    $arrTmp[0]  = $arrCsv;
-  // #50214, 130720, dwildt, 1+
-$this->pObj->dev_var_dump( $arrTmp );
-    $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias( $arrTmp );
-    $arrCsv     = $arrTmp[0];
+
+      // #50214, 130720, dwildt, 3-
+//    $arrTmp[0]  = $arrCsv;
+//    $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias( $arrTmp );
+//    $arrCsv     = $arrTmp[0];
+      // #50214, 130720, dwildt, 1+
+    $arrCsv  = $this->pObj->objSqlFun_3x->replace_tablealias( $arrCsv );
     
       // LOOP each query part
     foreach( ( array ) $arrCsv as $tableField )
