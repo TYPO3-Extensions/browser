@@ -599,11 +599,9 @@ class tx_browser_pi1_navi_recordbrowser
 
         // Set and replace markers
       $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
-$this->pObj->dev_var_dump( $button_conf );
 
         // Set button
       $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
-$this->pObj->dev_var_dump( $button );
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
