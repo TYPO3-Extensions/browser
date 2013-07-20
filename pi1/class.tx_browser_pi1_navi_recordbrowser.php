@@ -440,7 +440,7 @@ class tx_browser_pi1_navi_recordbrowser
   * @version  4.5.11
   * @since    3.7.0
   */
-  private function recordbrowser_rendering()
+  private function recordbrowser_rendering( )
   {
     $record_browser = null;
     $arr_buttons    = array();
@@ -688,13 +688,14 @@ class tx_browser_pi1_navi_recordbrowser
       // Wrapper configuration
     $wrap_all_name = $conf_record_browser['buttons.']['current.']['wrap_all'];
     $wrap_all_conf = $conf_record_browser['buttons.']['current.']['wrap_all.'];
-    if(empty($wrap_all_conf['value']))
+    if( empty( $wrap_all_conf[ 'value' ] ) )
     {
-      $wrap_all_conf['value'] = $record_browser;
+      $wrap_all_conf[ 'value' ] = $record_browser;
     }
 
       // Wrap record browser
-    $record_browser = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
+    $record_browser = $this->pObj->cObj->cObjGetSingle( $wrap_all_name, $wrap_all_conf );
+    $record_browser = $this->pObj->objMarker->substitute_marker( $record_browser, $marker );
       // Set the record browser
 
 
