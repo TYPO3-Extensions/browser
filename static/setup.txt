@@ -1475,7 +1475,7 @@ plugin.tx_browser_pi1 {
           wrap_all {
               // [STRING] empty (default): empty value will allocated while runtime with the rendered buttons.
             value =
-            wrap  = <ul id="c###TT_CONTENT.UID###-indexBrowser" class="indexBrowser ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
+            wrap  = <ul id="c###TT_CONTENT.UID###-recordBrowser" class="recordBrowser ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
           }
             // The devider between of two buttons
           devider = TEXT
@@ -1490,7 +1490,7 @@ plugin.tx_browser_pi1 {
             value = &lt;&lt;
             noTrimWrap  = |<li class="ui-state-default ui-corner-all"> | </li>|
             typolink {
-              parameter = {page:uid} - c###TT_CONTENT.UID###-indexBrowser ###RECORD_POSITION###/###RECORD_SUM###
+              parameter = {page:uid} - c###TT_CONTENT.UID###-recordBrowser ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
                 insertData = 1
               }
@@ -1514,7 +1514,7 @@ plugin.tx_browser_pi1 {
               parameter = {page:uid}
               additionalParams = &L={GP:L}###PIVARS_FOR_LISTVIEW###
             }
-            //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-indexBrowser"> | </li>|
+            //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-recordBrowser"> | </li>|
           }
             // Next button of the record browser
           next < .first
@@ -5093,19 +5093,22 @@ plugin.tx_browser_pi1 {
   _CSS_DEFAULT_STYLE (
     .tx-browser-pi1 div.azSelector,
     .tx-browser-pi1 div.indexBrowser,
-    .tx-browser-pi1 div.modeSelector {
+    .tx-browser-pi1 div.modeSelector,
+    .tx-browser-pi1 div.indexBrowser {
       padding:.4em 0;
       /* 111218, 3.9.6, dwildt-*/
       /*height:1.4em;*/
     }
     .tx-browser-pi1 div.azSelector,
+    .tx-browser-pi1 div.indexBrowser,
     .tx-browser-pi1 div.indexBrowser {
       /* 111218, 3.9.6, dwildt+*/
       height:2em;
     }
     .tx-browser-pi1 ul.azSelector,
     .tx-browser-pi1 ul.indexBrowser,
-    .tx-browser-pi1 ul.modeSelector {
+    .tx-browser-pi1 ul.modeSelector,
+    .tx-browser-pi1 ul.indexBrowser {
       max-width: 100%;
       margin: 0;
       padding: 0;
@@ -5115,12 +5118,14 @@ plugin.tx_browser_pi1 {
     }
     * html .tx-browser-pi1 ul.azSelector,
     * html .tx-browser-pi1 ul.indexBrowser,
-    * html .tx-browser-pi1 ul.modeSelector {
+    * html .tx-browser-pi1 ul.modeSelector,
+    * html .tx-browser-pi1 ul.indexBrowser {
       width: 100%;
     }
     .tx-browser-pi1 ul.azSelector li,
     .tx-browser-pi1 ul.indexBrowser li,
-    .tx-browser-pi1 ul.modeSelector li {
+    .tx-browser-pi1 ul.modeSelector li,
+    .tx-browser-pi1 ul.indexBrowser li {
       display: block;
       margin: 0;
       padding: 0;
@@ -5129,12 +5134,14 @@ plugin.tx_browser_pi1 {
     }
     .tx-browser-pi1 ul.azSelector li.last,
     .tx-browser-pi1 ul.indexBrowser li.last,
-    .tx-browser-pi1 ul.modeSelector li.last {
+    .tx-browser-pi1 ul.modeSelector li.last,
+    .tx-browser-pi1 ul.indexBrowser li.last {
       border-right:0;
     }
     .tx-browser-pi1 ul.azSelector li.selected,
     .tx-browser-pi1 ul.indexBrowser li.selected,
-    .tx-browser-pi1 ul.modeSelector li.selected {
+    .tx-browser-pi1 ul.modeSelector li.selected,
+    .tx-browser-pi1 ul.indexBrowser li.selected {
       background:yellow;
     }
     .tx-browser-pi1 .ui-tabs ul li {

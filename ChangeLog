@@ -8,7 +8,8 @@
             plugin.tx_browser_pi1.map.marker.position.* moves to plugin.tx_browser_pi1.map.icon.listNum.*
   Bugfix
   * #50222: Record Browser is broken
-            * CSS: record-browser is moved to indexBrowser
+            * CSS: #record-browser is moved to .indexBrowser
+            * HTML: record-browser id contains uid of the current plugin
             Effected files:
             * static
               * setup.txt
