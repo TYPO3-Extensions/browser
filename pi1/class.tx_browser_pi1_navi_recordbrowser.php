@@ -172,8 +172,8 @@ class tx_browser_pi1_navi_recordbrowser
       //
       // Render the record browser
 
-    $markerArray['###RECORD_BROWSER###']  = $this->recordbrowser_rendering();
-    $str_content                          = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
+    $markerArray['###RECORD_BROWSER###']  = $this->recordbrowser_rendering( );
+    $str_content                          = $this->pObj->cObj->substituteMarkerArray( $str_content, $markerArray );
       // Render the record browser
 
 
@@ -500,7 +500,7 @@ class tx_browser_pi1_navi_recordbrowser
   * recordbrowser_rendering: Render the record browser (HTML code)
   *
   * @return	string		$record_browser: HTML code
-  * @version  4.1.8
+  * @version  4.5.11
   * @since    3.7.0
   */
   private function recordbrowser_rendering()
@@ -514,53 +514,13 @@ class tx_browser_pi1_navi_recordbrowser
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
 
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // RETURN record_browser should not be displayed
-
-    $bool_record_browser = $this->conf['navigation.']['record_browser'];
-    if( ! $bool_record_browser )
+      // #50222, 130720, dwildt
+    if( ! $this->recordbrowser_requirements( ) )
     {
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/TEMPLATING] record browser should not displayed: RETURN',  $this->pObj->extKey, 0);
-      }
-      return $record_browser;
+      return null;
     }
-      // RETURN record_browser should not be displayed
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Get record_browser configuration
 
     $conf_record_browser = $this->conf['navigation.']['record_browser.'];
-      // Get record_browser configuration
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // RETURN record_browser should not be displayed in case of no result
-
-    $bool_display_without_result = $conf_record_browser['display.']['withoutResult'];
-    if(!$bool_display_without_result)
-    {
-      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']))
-      {
-        if ($this->pObj->b_drs_templating)
-        {
-          t3lib_div::devlog('[INFO/TEMPLATING] uids_of_all_rows is empty. ' .
-            'record browser should not displayed in case of an empty result: RETURN',  $this->pObj->extKey, 0);
-        }
-        return $record_browser;
-      }
-    }
-      // RETURN record_browser should not be displayed in case of no result
-
 
 
       //////////////////////////////////////////////////////////////////////
@@ -851,6 +811,63 @@ class tx_browser_pi1_navi_recordbrowser
     return $button;
   }
 
+
+
+ /**
+  * recordbrowser_requirements( ): Returns true, if requirements are matched
+  *
+  * @return	boolean   
+  * 
+  * @internal #50222
+  * @version  4.5.11
+  * @since    4.5.11
+  */
+  private function recordbrowser_requirements( )
+  {
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
+    $tt_content_uid = $this->pObj->cObj->data['uid'];
+
+      // RETURN false : record_browser should not be displayed
+    if( ! $this->conf['navigation.']['record_browser'] )
+    {
+      if( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'record browser should not displayed: RETURN';
+        t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      }
+      return false;
+    }
+      // RETURN false : record_browser should not be displayed
+
+      // Display record browser without any result?
+    $displayWithoutResult = $this->conf['navigation.']['record_browser.']['display.']['withoutResult'];
+
+      // RETURN true: record_browser should displayed in case of no result
+    if( $displayWithoutResult )
+    {
+      return true;
+    }
+      // RETURN true: record_browser should displayed in case of no result
+      
+      // RETURN true: there is a list of records
+    if( ! empty( $this->pObj->uids_of_all_rows[ $tt_content_uid ][ 'cache' ][ $lang ][ 'mode-' . $this->mode ][ 'uids_of_all_rows' ] ) )
+    {
+      return true;
+    }
+      // RETURN true: there is a list of records
+
+      // DRS
+    if( $this->pObj->b_drs_templating )
+    {
+      $prompt = 'uids_of_all_rows is empty. ' 
+              . 'Record browser should not displayed in case of an empty result: RETURN';
+      t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // RETURN false: there is one record only
+    return false;
+  }
 
 
  /**
