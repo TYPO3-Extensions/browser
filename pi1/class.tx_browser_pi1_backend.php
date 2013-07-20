@@ -2303,6 +2303,7 @@ class tx_browser_pi1_backend
       // TypoScript configuration for jquery_ui
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
 
+var_dump( __METHOD__, __LINE__, $this->typo3Version );
       // Loop: jquery_ui
     foreach( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
@@ -2417,6 +2418,8 @@ var_dump( __METHOD__, __LINE__, $jquery_ui_label );
     require_once(PATH_t3lib.'class.t3lib_page.php');
     require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
     require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
+    
+    $this->init_typo3version( );
 
       // Init page id and the page object
     $this->init_pageUid($arr_pluginConf);
