@@ -1475,7 +1475,7 @@ plugin.tx_browser_pi1 {
           wrap_all {
               // [STRING] empty (default): empty value will allocated while runtime with the rendered buttons.
             value =
-            wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
+            wrap  = <ul id="indexBrowser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
           }
             // The devider between of two buttons
           devider = TEXT
@@ -1490,7 +1490,7 @@ plugin.tx_browser_pi1 {
             value = &lt;&lt;
             noTrimWrap  = |<li class="ui-state-default ui-corner-all"> | </li>|
             typolink {
-              parameter = {page:uid} - c###TT_CONTENT.UID###-record-browser ###RECORD_POSITION###/###RECORD_SUM###
+              parameter = {page:uid} - c###TT_CONTENT.UID###-indexBrowser ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
                 insertData = 1
               }
@@ -1514,7 +1514,7 @@ plugin.tx_browser_pi1 {
               parameter = {page:uid}
               additionalParams = &L={GP:L}###PIVARS_FOR_LISTVIEW###
             }
-            //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
+            //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-indexBrowser"> | </li>|
           }
             // Next button of the record browser
           next < .first
