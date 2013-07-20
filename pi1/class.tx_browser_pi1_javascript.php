@@ -799,6 +799,14 @@ class tx_browser_pi1_javascript
     }
       // #50069, 130716, dwildt, 5+
 
+      // #50069, 130716, dwildt, 5+
+    $path = $this->getPathRelative( $path );
+    if( $path == false )
+    {
+      return false;
+    }
+      // #50069, 130716, dwildt, 5+
+
       // marker array
     $markerArray = array();
     $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $markerArray );
