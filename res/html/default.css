@@ -1,8 +1,8 @@
-#record-browser {
+#recordBrowser {
   margin-left: 0;
   padding-bottom: 1em;
 }
-#record-browser li {
+#recordBrowser li {
   cursor: pointer;
   float: left;
   list-style: none;

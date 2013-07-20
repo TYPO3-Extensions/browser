@@ -27,7 +27,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version  4.5.10
+* @version  4.5.11
 * @since    3.5.0
 *
 * @package    TYPO3
@@ -710,7 +710,7 @@ class tx_browser_pi1_javascript
  * @param	string		$str_type:      css or jss
  * @param	boolean		$inline:   true: include css/jss inline. false: include it as a file
  * @return	boolean		True: success. False: error.
- * @since 3.7.0
+ * @since   4.5.11
  * @version 3.7.0
  */
   private function addCssFile($path, $ie_condition, $name, $keyPathTs, $str_type, $inline )
@@ -799,13 +799,13 @@ class tx_browser_pi1_javascript
     }
       // #50069, 130716, dwildt, 5+
 
-      // #50069, 130716, dwildt, 5+
+      // #50222, 130720, dwildt, 5+
     $path = $this->getPathRelative( $path );
     if( $path == false )
     {
       return false;
     }
-      // #50069, 130716, dwildt, 5+
+      // #50222, 130720, dwildt, 5+
 
       // marker array
     $markerArray = array();

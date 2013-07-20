@@ -12,8 +12,11 @@
             * HTML: id of ul contains uid of the current plugin
             * tx_browser_pi1-0.0.5.js is moved to tx_browser_pi1-0.0.6.js
             Effected files:
-            * static
-              * setup.txt
+            * pi1
+              * class.tx_browser_pi1_javascript.php
+              * class.tx_browser_pi1_navi_recordbrowser.php
+            * res/html/default.css
+            * static/setup.txt
   * #50214: Fix core error prompts
             * pi1
               * class.tx_browser_pi1_filter_4x.php line 1320: strpos() expects parameter 1 to be string, array given
