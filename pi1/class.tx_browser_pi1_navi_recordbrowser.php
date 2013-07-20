@@ -137,8 +137,6 @@ class tx_browser_pi1_navi_recordbrowser
   */
   public function recordbrowser_get( $content )
   {
-$this->pObj->dev_var_dump( $content );
-    
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
@@ -150,8 +148,6 @@ $this->pObj->dev_var_dump( $content );
     if( ! $this->recordbrowser_init( ) )
     {
       $content = $this->pObj->cObj->substituteMarkerArray( $content, $markerArray );
-$this->pObj->dev_var_dump( $content );
-      
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
@@ -164,7 +160,6 @@ $this->pObj->dev_var_dump( $content );
 
     $markerArray['###RECORD_BROWSER###']  = $this->recordbrowser_rendering( );
     $content                              = $this->pObj->cObj->substituteMarkerArray( $content, $markerArray );
-$this->pObj->dev_var_dump( $content );
       // Render the record browser
 
 
