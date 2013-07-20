@@ -5122,7 +5122,7 @@ plugin.tx_browser_pi1 {
     .tx-browser-pi1 ul.recordBrowser li {
       display: block;
       margin: 0;
-      padding: 0 .2em;
+      padding: 0 .4em;
       float: left;
       border-right:1px solid grey;
     }
