@@ -562,9 +562,15 @@ class tx_browser_pi1_backend
       // 4.1.7, dwildt, 5+
 
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
-    $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
+    $arr_xml  = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
-    $ajaxI = $arr_xml['data']['javascript']['lDEF']['mode']['vDEF'];
+    $ajaxI    = $arr_xml['data']['javascript']['lDEF']['mode']['vDEF'];
+    
+      // 130724, dwildt, 4+
+    if( empty ( $ajaxI ) )
+    {
+      $ajaxI = disabled;
+    }
 
     //var_dump(__METHOD__, __LINE__, '$ajaxI', $ajaxI);
     switch ($ajaxI)

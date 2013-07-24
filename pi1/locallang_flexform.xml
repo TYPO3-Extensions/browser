@@ -438,7 +438,7 @@
       <label index="sheet_evaluate.plugin.info.updateAssistent">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, kannst Du das DRS - das Development Reporting System - zur Fehleranaylse benutzen. Du bekommst einen Bericht unter anderem mit allen erzeugten SQL-Abfragen. Du aktivierts das DRS im Extension Manager.</label>
       <label index="sheet_evaluate.plugin.info.tutorialAndForum">Wenn Du eine Frage zum Browser hast, wirf einen Blick in das Online-Handbuch <![CDATA[<a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>]]>. Wenn Du interaktive Hilfe ben<![CDATA[&ouml;]]>tigst, ver<![CDATA[&ouml;]]>ffentliche Dein Anliegen im <![CDATA[<a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>]]>. Beitr<![CDATA[&auml;]]>ge in Englisch und Deutsch sind willkommen.</label>
       <label index="sheet_evaluate.plugin.ok">Gl<![CDATA[&uuml;]]>ckwunsch! Deine Konfiguration ist gechecked. Es scheint alles in Ordnung zu sein!</label>
-      <label index="sheet_evaluate.plugin.warn.fixThisBug">Warnung: Du musst den fehler beheben! Nur dann pr<![CDATA[&uuml;]]>ft der Plugin-Check weitere Fehler.</label>
+      <label index="sheet_evaluate.plugin.warn.fixThisBug">Warnung: Du musst den Fehler beheben! Nur dann pr<![CDATA[&uuml;]]>ft der Plugin-Check weitere Fehler.</label>
       <label index="sheet_extend">Erweitern!</label>
       <label index="sheet_extend.cal_field_end">Kalender 4. Schritt: Feld Termin Ende</label>
       <label index="sheet_extend.cal_field_end.error">Voraussetzung nicht erf<![CDATA[&uuml;]]>llt: es ist kein Feld verf<![CDATA[&uuml;]]>gbar.</label>
