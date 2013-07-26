@@ -1402,7 +1402,7 @@ class tx_browser_pi1_javascript
 
     switch( true )
     {
-      case( $footer === false ):
+      case( $footer == false ):
         $bool_success = $this->addJssFileToHead( $path, $absPath, $name, $path_tsConf, $inline, $marker );
         break;
       case( $footer == true ):
