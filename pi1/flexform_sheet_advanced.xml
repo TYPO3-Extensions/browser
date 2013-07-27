@@ -30,7 +30,7 @@
       </performance_select>
       <performanceTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial</label>
           <displayCond>FIELD:performance_select:=:configured</displayCond>
           <config>
@@ -47,7 +47,7 @@
       </performanceTutorial>
       <performance_costs>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs</label>
           <displayCond>FIELD:performance_select:=:configured</displayCond>
           <config>
@@ -87,7 +87,7 @@
       </realUrl_select>
       <realUrlTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrlTutorial</label>
           <displayCond>FIELD:realUrl_select:=:configured</displayCond>
           <config>
@@ -104,7 +104,7 @@
       </realUrlTutorial>
       <realUrl>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl</label>
           <displayCond>FIELD:realUrl_select:=:configured</displayCond>
           <config>
@@ -138,7 +138,7 @@
       </realUrl>
       <realUrl_checkpoint>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_checkpoint</label>
           <displayCond>FIELD:realUrl_select:=:configured</displayCond>
           <config>

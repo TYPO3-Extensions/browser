@@ -8,7 +8,7 @@
     <el>
       <title>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.title</label>
           <config>
             <type>input</type>
@@ -19,7 +19,7 @@
       </title>
       <titleWrap>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.titleWrap</label>
           <config>
             <type>input</type>
@@ -30,7 +30,7 @@
       </titleWrap>
       <grouptitleWrap>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.grouptitleWrap</label>
           <config>
             <type>input</type>
@@ -41,7 +41,7 @@
       </grouptitleWrap>
       <limitOffset>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.limitOffset</label>
           <config>
             <type>input</type>
@@ -58,7 +58,7 @@
       </limitOffset>
       <limit>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.limit</label>
           <config>
             <type>input</type>
@@ -75,7 +75,7 @@
       </limit>
       <navigation>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.navigation</label>
           <config>
             <type>check</type>
@@ -96,7 +96,7 @@
       </navigation>
       <records>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.records</label>
           <config>
             <type>check</type>
@@ -113,7 +113,7 @@
       </records>
       <emptyValues>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.emptyValues</label>
           <config>
             <type>check</type>
@@ -152,7 +152,7 @@
       </search>
       <searchTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.searchTutorial</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
@@ -169,7 +169,7 @@
       </searchTutorial>
       <searchForm>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.search.form</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
@@ -199,7 +199,7 @@
       </searchForm>
       <check_wiColoredSwordsSingle_330>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.search.form.check_wiColoredSwordsSingle.label</label>
           <config>
@@ -236,7 +236,7 @@
       </searchWildcards>
       <searchWildcardChar>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.search.wildcards.char</label>
           <config>
@@ -327,7 +327,7 @@
       </rotateviews>
       <simulateSingleUid>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.simulateSingleUid</label>
           <config>
             <type>input</type>

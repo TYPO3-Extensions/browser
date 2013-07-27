@@ -41,7 +41,7 @@
       </views>
       <viewsTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
@@ -66,7 +66,7 @@
       </viewsTutorial>
       <viewsHandleFromTemplateOnly>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsHandleFromTemplateOnly</label>
           <onChange>reload</onChange>
           <displayCond>FIELD:views:=:selected</displayCond>
@@ -85,7 +85,7 @@
       </viewsHandleFromTemplateOnly>
       <viewsList>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsList</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
@@ -103,7 +103,7 @@
       </viewsList>
       <viewsSinglePid>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsSinglePid</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
@@ -119,7 +119,7 @@
       </viewsSinglePid>
       <viewsListPid>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsListPid</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
@@ -205,7 +205,7 @@
       </controlling.enabled>
       <controlling.adjustment.display_if_in_list>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.adjustment.display_if_in_list</label>
           <displayCond>FIELD:controlling.enabled:=:yes</displayCond>
           <config>
@@ -218,7 +218,7 @@
       </controlling.adjustment.display_if_in_list>
       <controlling.adjustment.hide_if_in_list>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.adjustment.hide_if_in_list</label>
           <displayCond>FIELD:controlling.enabled:=:yes</displayCond>
           <config>
@@ -253,7 +253,7 @@
       </relations_select>
       <relationsTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relationsTutorial</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
@@ -270,7 +270,7 @@
       </relationsTutorial>
       <relations>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
@@ -301,7 +301,7 @@
       </relations>
       <joins>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
@@ -324,7 +324,7 @@
       </joins>
       <root>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.root</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
@@ -362,7 +362,7 @@
       </session>
       <session.type>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type</label>
           <displayCond>FIELD:session:=:1</displayCond>
           <config>
@@ -441,7 +441,7 @@
       </statistics.enabled>
       <statistics.adjustment.timeout>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.timeout</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
@@ -455,7 +455,7 @@
       </statistics.adjustment.timeout>
       <statistics.adjustment.dontAccountIPsOfCsvList>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
@@ -468,7 +468,7 @@
       </statistics.adjustment.dontAccountIPsOfCsvList>
       <statistics.adjustment.debugging>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
@@ -495,7 +495,7 @@
       </statistics.adjustment.debugging>
       <statistics.adjustment.fields.hits>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.hits</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
@@ -508,7 +508,7 @@
       </statistics.adjustment.fields.hits>
       <statistics.adjustment.fields.visits>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.visits</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
@@ -521,7 +521,7 @@
       </statistics.adjustment.fields.visits>
       <statistics.adjustment.fields.downloads>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.downloads</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
@@ -534,7 +534,7 @@
       </statistics.adjustment.fields.downloads>
       <statistics.adjustment.fields.downloadsByVisits>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.downloadsByVisits</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>

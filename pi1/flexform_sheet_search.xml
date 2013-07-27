@@ -30,7 +30,7 @@
       </search>
       <searchTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_search.searchTutorial</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
@@ -47,7 +47,7 @@
       </searchTutorial>
       <searchForm>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_search.search.form</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
@@ -77,7 +77,7 @@
       </searchForm>
       <check_wiColoredSwordsSingle_330>
         <TCEforms>
-          <exclude>1</exclude>                        
+          <exclude>0</exclude>                        
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_search.search.form.check_wiColoredSwordsSingle.label</label>
           <config>
@@ -114,7 +114,7 @@
       </searchWildcards>
       <searchWildcardChar>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_search.search.wildcards.char</label>
           <config>
@@ -150,7 +150,7 @@
       </filter>
       <filterTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_search.filterTutorial</label>
           <displayCond>FIELD:filter:=:adjusted</displayCond>
           <config>
@@ -167,7 +167,7 @@
       </filterTutorial>
       <filterItems>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_search.filter.items</label>
           <displayCond>FIELD:filter:=:adjusted</displayCond>
           <config>

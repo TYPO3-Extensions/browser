@@ -8,7 +8,7 @@
     <el>
       <tutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tutorial</label>
           <config>
             <type>check</type>
@@ -50,7 +50,7 @@
       </enabled>
       <tablefieldSite_list>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldSite_list</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template</displayCond>
           <config>
@@ -62,7 +62,7 @@
       </tablefieldSite_list>
       <tablefieldTitle_list>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldTitle_list</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
           <config>
@@ -74,7 +74,7 @@
       </tablefieldTitle_list>
       <bookmarks_list>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.bookmarks_list</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
           <config>
@@ -93,7 +93,7 @@
       </bookmarks_list>
       <tablefieldSite_single>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldSite_single</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template</displayCond>
           <config>
@@ -105,7 +105,7 @@
       </tablefieldSite_single>
       <tablefieldTitle_single>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldTitle_single</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
           <config>
@@ -117,7 +117,7 @@
       </tablefieldTitle_single>
       <bookmarks_single>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.bookmarks_single</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
           <config>
@@ -136,7 +136,7 @@
       </bookmarks_single>
       <missingBookmark>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.missingBookmark</label>
           <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
           <config>

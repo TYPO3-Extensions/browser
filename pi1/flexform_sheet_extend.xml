@@ -8,7 +8,7 @@
     <el>
       <cal_ui>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_ui</label>
           <config>
             <type>user</type>
@@ -18,7 +18,7 @@
       </cal_ui>
       <cal_view>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view</label>
           <config>
             <type>user</type>
@@ -28,7 +28,7 @@
       </cal_view>
       <cal_field_start>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_start</label>
           <config>
             <type>user</type>
@@ -38,7 +38,7 @@
       </cal_field_start>
       <cal_field_end>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_end</label>
           <config>
             <type>user</type>

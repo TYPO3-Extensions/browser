@@ -8,7 +8,7 @@
     <el>
       <display_listview>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.display_listview</label>
           <config>
             <type>select</type>
@@ -34,7 +34,7 @@
       </display_listview>
       <record_browser>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser</label>
           <onChange>reload</onChange>
           <config>
@@ -61,7 +61,7 @@
       </record_browser>
       <record_browser.tutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.tutorial</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
@@ -78,7 +78,7 @@
       </record_browser.tutorial>
       <record_browser.display.withoutResult>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.withoutResult</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
@@ -105,7 +105,7 @@
       </record_browser.display.withoutResult>
       <record_browser.display.buttonsWithoutLink>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.buttonsWithoutLink</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
@@ -132,7 +132,7 @@
       </record_browser.display.buttonsWithoutLink>
       <record_browser.display.firstAndLastButton>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.firstAndLastButton</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
@@ -159,7 +159,7 @@
       </record_browser.display.firstAndLastButton>
       <record_browser.labeling>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>

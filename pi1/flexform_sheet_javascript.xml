@@ -38,7 +38,7 @@
       </jquery_library>
       <jquery_library_own>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library_own</label>
           <displayCond>FIELD:jquery_library:IN:configured</displayCond>
           <config>
@@ -124,7 +124,7 @@
       </jquery_plugins.t3browser>
       <jquery_plugins.t3browser.own.plugin>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.plugin</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
@@ -141,7 +141,7 @@
       </jquery_plugins.t3browser.own.plugin>
       <jquery_plugins.t3browser.own.library>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.library</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
@@ -196,7 +196,7 @@
       </browser_libraries>
       <browser_libraries_general>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_general</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
@@ -209,7 +209,7 @@
       </browser_libraries_general>
       <browser_libraries_ajax>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_ajax</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
@@ -222,7 +222,7 @@
       </browser_libraries_ajax>
       <browser_libraries_ajaxLL>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_ajaxLL</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
@@ -261,7 +261,7 @@
       </mode>
       <ajaxTutorial>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxTutorial</label>
           <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
           <config>
@@ -278,7 +278,7 @@
       </ajaxTutorial>
       <ajaxChecklist>
         <TCEforms>
-          <exclude>1</exclude>
+          <exclude>0</exclude>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxChecklist</label>
           <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
           <config>
