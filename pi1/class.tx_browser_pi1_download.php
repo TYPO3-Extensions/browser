@@ -541,9 +541,16 @@ class tx_browser_pi1_download
       $prompt_01 =  'There isn\'t any file. Key is \'' . $this->key . '\'.';
       if ($this->pObj->b_drs_error)
       {
-        t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 3 );
       }
-      return $prompt_01;
+      $prompt_02 =  'This error can happen, if the current download record contains a thumbnail but no document!';
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 3 );
+      }
+      return    $prompt_01 . '<br />' . PHP_EOL
+              . $prompt_02
+              ;
     }
       // RETURN: There is no file whith the current key
 
