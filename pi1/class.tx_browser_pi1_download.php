@@ -543,7 +543,7 @@ class tx_browser_pi1_download
       {
         t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 3 );
       }
-      $prompt_02 =  'This error can happen, if the current download record contains a thumbnail but no document!';
+      $prompt_02 =  'This error can happen, if the current download record contains a thumbnail but no document.';
       if ($this->pObj->b_drs_error)
       {
         t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 3 );
