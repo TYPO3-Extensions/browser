@@ -1,3 +1,10 @@
+4.5.12
+  13-07-31
+  Improvements
+  * #i0024: alias for showUid is controlled by the Constant Editor
+            NEW constant: plugin.tx_browser_pi1.navigation.showUid
+            Replaced Constant: plugin.tx_browser_pi1.recordBrowser.uidName > plugin.tx_browser_pi1.navigation.showUid
+
 4.5.11
   13-07-17
   Improvements

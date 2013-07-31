@@ -137,9 +137,9 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Localisation/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   localisation.links = Click me!
 
-  # cat=Browser - Navigation//101;       type=string;  label= Record Browser: uid name (default: showUid)
-  recordBrowser.uidName = showUid
-  # cat=Browser - Navigation/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  # cat=Browser - Navigation//101;            type=string;  label= showUid: Alias for the parameter showUid. Alias simplifies the configuration of realUrl. I.e: staffUid.
+  navigation.showUid = showUid
+  # cat=Browser - Navigation/others/999;      type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   navigation.links = Click me!
 
   # cat=Browser - Page Objects//100;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
