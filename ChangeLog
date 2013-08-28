@@ -1,3 +1,18 @@
+4.5.13
+  13-08-28
+  Features
+  * #51477: BrowserMaps: mobile navigation
+            Effected files:
+            * res/js/map
+              * oxMap.Render_1.3.08.js
+              * api/1.3.08/*
+                * oxMap.OSM.js            ( changed )
+              * lib/OpenLayers_2.13       ( new )
+            * static/setup.txt
+  * #51478: BrowserMaps: automatic rendering of latitude and longitude
+  Bugfix
+  * #51464: Whitespace in PHP file breaks XML (RSS) output
+
 4.5.12
   13-07-31
   Improvements
@@ -98,6 +113,7 @@
               * pi1/class.tx_browser_pi1_map.php
               * static/setup.txt
   * #47630: Backend Routes
+  * #47628: BrowserMaps Route Integration: Integration GeoJSON
   * #46062: BrowserMaps: Localisation of the form labels
   * #33336: Export: filter are respected
   * #i0007: TypoScript version
