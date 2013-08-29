@@ -269,7 +269,7 @@ class tx_browser_tcemainprocdm
 //    $lat = $geodata[ 'lat' ];
 //    $lon = $geodata[ 'lon' ];
 //    unset( $geodata );
-    list( $lat, $lon ) = geoupdateGoogleAPI( $address ); 
+    list( $lat, $lon ) = $this->geoupdateGoogleAPI( $address ); 
 
       // RETURN : lan or lot is null
     switch( true )
