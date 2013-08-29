@@ -288,8 +288,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // RETURN false : init is unproper
 
       // RETURN false : geoupdate is unproper
-    $geoupdate = $this->geoupdate( );
-    if( ! $geoupdate )
+    if( ! $this->geoupdate( ) )
     {
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
@@ -339,7 +338,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // RETURN : requirements aren't matched
     if( ! $this->geoupdateRequired( ) )
     {
-      return true;
+      return false;
     }
       // RETURN : requirements aren't matched
 
@@ -347,7 +346,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     // Durchlaufe alle Datensätze der angegebenen Tabelle
     //    Wenn Breiten- oder Längengrad leer, prüfe ob Adresse vorhanden.
     //      Wenn Adresse vorhanden, aktualisiere Breiten- und Längengrad
-    return false;
+    return true;
   }
 
 /**
