@@ -424,6 +424,8 @@ class tx_browser_tcemainprocdm
     
     $prompt = 'OK: address is "' . $address . '"';
     $this->log( $prompt );
+    $prompt = var_export( $arrAddress, true );
+    $this->log( $prompt, 1 );
 
     return $address;
   }
