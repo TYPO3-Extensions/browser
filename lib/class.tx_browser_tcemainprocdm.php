@@ -260,6 +260,9 @@ class tx_browser_tcemainprocdm
 
   private function geoupdateHandleData( &$fieldArray ) 
   {
+      // Get geodata field labels
+    $geodata = $this->geoupdateGoogleAPI( $address ); 
+
       // Get address
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray );
     if( empty( $address ) )
@@ -281,7 +284,6 @@ class tx_browser_tcemainprocdm
     $this->log( $prompt, 1 );
     
       // Get geodata
-    $geodata = $this->geoupdateGoogleAPI( $address ); 
     $lat = $geodata[ 'lat' ];
     $lon = $geodata[ 'lon' ];
     unset( $geodata );
