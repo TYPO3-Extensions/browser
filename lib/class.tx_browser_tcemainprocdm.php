@@ -260,8 +260,8 @@ class tx_browser_tcemainprocdm
 
   private function geoupdateHandleData( &$fieldArray ) 
   {
-      // Get geodata field labels
-    $geodata = $this->geoupdateGoogleAPI( $address ); 
+      // get lables for geodata
+    $geodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
 
       // Get address
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray );
@@ -284,10 +284,9 @@ class tx_browser_tcemainprocdm
     $this->log( $prompt, 1 );
     
       // Get geodata
-    $lat = $geodata[ 'lat' ];
-    $lon = $geodata[ 'lon' ];
-    unset( $geodata );
-//    list( $lat, $lon ) = $this->geoupdateGoogleAPI( $address ); 
+    $latLon = $this->geoupdateGoogleAPI( $address ); 
+    $lat = $latLon[ 'lat' ];
+    $lon = $latLon[ 'lon' ];
 
       // RETURN : lan or lot is null
     switch( true )
@@ -307,9 +306,6 @@ class tx_browser_tcemainprocdm
         break;
     }
       // RETURN : lan or lot is null
-
-      // get lables for geodata
-    $geodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
 
       // update geodata
     $fieldArray[ $geodata[ 'lat' ] ] = $lat;
