@@ -162,6 +162,9 @@ class tx_browser_tcemainprocdm
       return;
     }
 
+    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+    $this->log( $prompt, 1 );
+
     return;
   }
 
