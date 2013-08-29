@@ -342,11 +342,29 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
       // RETURN : requirements aren't matched
 
-    //    Tabelle konfiguriert?
+    $rows = $this->geoupdateGet( );
+    if( ! $this->geoupdateSet( $rows ) )
+    {
+      return false;
+    }
     // Durchlaufe alle Datensätze der angegebenen Tabelle
     //    Wenn Breiten- oder Längengrad leer, prüfe ob Adresse vorhanden.
     //      Wenn Adresse vorhanden, aktualisiere Breiten- und Längengrad
     return true;
+  }
+
+  /**
+ * geoupdateGet( ) : 
+ *
+ * @return	array   $rows
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateGet( )
+  {
+    $rows = true;
+    return $rows;
   }
 
 /**
@@ -456,6 +474,21 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // E-mail to admin
 
     return false;
+  }
+
+/**
+ * geoupdateSet( ) : 
+ *
+ * @param       array   $rows
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateSet( $rows )
+  {
+    unset( $rows );
+    return true;
   }
 
 
