@@ -269,7 +269,7 @@ class tx_browser_tcemainprocdm
     }
     
       // Get geodata
-    $geodata = geoupdateGoogleAPI( $address ); 
+    $geodata = $this->geoupdateGoogleAPI( $address ); 
     $lat = $geodata[ 'lat' ];
     $lon = $geodata[ 'lon' ];
     unset( $geodata );
