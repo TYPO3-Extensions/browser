@@ -937,6 +937,13 @@ class tx_browser_tcemainprocdm
   public function sqlSelect( $select_fields )
   {
     $result = null;
+    
+      // RETURN : select fields are empty
+    if( empty( $select_fields ) )
+    {
+      return null;
+    }
+      // RETURN : select fields are empty
 
       // Set the query
     $from_table     = $this->processTable;
@@ -972,8 +979,6 @@ class tx_browser_tcemainprocdm
     $error  = $GLOBALS['TYPO3_DB']->sql_error( );
     if( ! empty( $error ) )
     {
-      t3lib_div::devlog('[ERROR/SQL] '. $query,  $this->extKey, 3);
-      t3lib_div::devlog('[ERROR/SQL] '. $error,  $this->extKey, 3);
       $prompt = 'ERROR: Unproper SQL query';
       $this->log( $prompt, 1 );
       $prompt = 'query: ' . $query;
