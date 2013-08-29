@@ -266,7 +266,7 @@ class tx_browser_tcemainprocdm
       $fieldArray[ $geodata[ 'lon' ] ] = null;
 
         // logging
-      $prompt = 'Address is empty ';
+      $prompt = 'OK: Address is empty ';
       $this->log( $prompt );
       $prompt = 'OK: latitude and longitude are removed!';
       $this->log( $prompt );
@@ -274,6 +274,8 @@ class tx_browser_tcemainprocdm
 
       return;
     }
+    $prompt = 'Address is "' . $address . '"';
+    $this->log( $prompt, 1 );
     
       // Get geodata
     $geodata = $this->geoupdateGoogleAPI( $address ); 
@@ -420,7 +422,7 @@ class tx_browser_tcemainprocdm
      // 'Amphitheatre Parkway 1600, Mountain View, CA';
     $address = implode( ', ', $arrAddress );
     
-    $prompt = 'OK: address is ' . $address;
+    $prompt = 'OK: address is "' . $address . '"';
     $this->log( $prompt );
 
     return $address;
