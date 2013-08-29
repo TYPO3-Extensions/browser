@@ -152,6 +152,7 @@
             height="90" 
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
       ]]></label>
+      <label index="promptGeodataUpdate">latitude and longitude are updated!</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
@@ -299,6 +300,7 @@
             height="90" 
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
       ]]></label>
+      <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert!</label>
     </languageKey>
   </data>
 </T3locallang>
