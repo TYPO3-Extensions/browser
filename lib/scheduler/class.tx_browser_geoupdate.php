@@ -308,7 +308,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $body     = 'Task is done with success.' . PHP_EOL
               . PHP_EOL
               . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+              . __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body, 'update' );
       // E-mail to admin
 
@@ -384,9 +384,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         $subject  = 'TYPO3 Browser: Geoupdate is disabled';
         $body     = $prompt . PHP_EOL
                   . PHP_EOL
-                  . $this->browser_table . PHP_EOL
                   . PHP_EOL
-                  . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+                  . __METHOD__ . ' (' . __LINE__ . ')';
         $this->drsMailToAdmin( $subject, $body, 'warn' );
           // E-mail to admin
         return false;
@@ -406,9 +405,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         $subject  = 'TYPO3 Browser: Geoupdate is disabled';
         $body     = $prompt . PHP_EOL
                   . PHP_EOL
-                  . $this->browser_table . PHP_EOL
                   . PHP_EOL
-                  . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+                  . __METHOD__ . ' (' . __LINE__ . ')';
         $this->drsMailToAdmin( $subject, $body, 'error' );
           // E-mail to admin
         return false;
@@ -453,7 +451,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $body     = $prompt . PHP_EOL
               . PHP_EOL
               . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+              . __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
       // E-mail to admin
 
@@ -998,7 +996,7 @@ table     : ' . $this->browser_table;
     $subject  = 'Failed';
     $body     = 'Sorry, but PHP ini property allow_url_fopen is disabled.' . PHP_EOL
               . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
+              . __METHOD__ . ' (' . __LINE__ . ')'
               ;
     $this->drsMailToAdmin( $subject, $body );
       // Send e-mail to admin
@@ -1056,7 +1054,7 @@ table     : ' . $this->browser_table;
 //    $subject  = 'Failed';
 //    $body     = 'Sorry, but ' . PHP_OS . ' isn\'t supported.' . PHP_EOL
 //              . PHP_EOL
-//              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
+//              . __METHOD__ . ' (' . __LINE__ . ')'
 //              ;
 //    $this->drsMailToAdmin( $subject, $body );
 //      // e-mail to admin
