@@ -574,13 +574,22 @@ class tx_browser_tcemainprocdm
       {
         $arrLocation[ 'zip' ] = $fieldArray[ $labels[ 'locationZip' ] ];
       }
+      if( empty( $arrLocation[ 'zip' ] ) )
+      {
+        unset( $arrLocation[ 'zip' ] );
+      }
     }
+
     if( isset( $labels[ 'locationCity' ] ) )
     {
       $arrLocation[ 'city' ] = $sqlResult[ $labels[ 'locationCity' ] ];
       if( isset( $fieldArray[ $labels[ 'locationCity' ] ] ) )
       {
         $arrLocation[ 'city' ] = $fieldArray[ $labels[ 'locationCity' ] ];
+      }
+      if( empty( $arrLocation[ 'city' ] ) )
+      {
+        unset( $arrLocation[ 'city' ] );
       }
     }
     
@@ -615,6 +624,10 @@ class tx_browser_tcemainprocdm
       {
         $arrStreet[ 'name' ] = $fieldArray[ $labels[ 'streetName' ] ];
       }
+      if( empty( $arrStreet[ 'name' ] ) )
+      {
+        unset( $arrStreet[ 'name' ] );
+      }
     }
     if( isset( $labels[ 'streetNumber' ] ) )
     {
@@ -622,6 +635,10 @@ class tx_browser_tcemainprocdm
       if( isset( $fieldArray[ $labels[ 'streetNumber' ] ] ) )
       {
         $arrStreet[ 'number' ] = $fieldArray[ $labels[ 'streetNumber' ] ];
+      }
+      if( empty( $arrStreet[ 'number' ] ) )
+      {
+        unset( $arrStreet[ 'number' ] );
       }
     }
     
