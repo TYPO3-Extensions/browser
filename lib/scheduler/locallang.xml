@@ -10,8 +10,8 @@
       <label index="label.importMode.ever">At each call</label>
       <label index="label.importMode.never">Never (doesn't make sense)</label>
       <label index="label.importMode.update">Only, if the XML file was updated (recommended)</label>
-      <label index="label.importTask.name">Browser XML Import</label>
-      <label index="label.importTask.description">Browser imports the current event programm from an XML feed. Enable this job, if Browser should execute this job continuously.</label>
+      <label index="label.importTask.name">Browser - TYPO3 without PHP - XML Import</label>
+      <label index="label.importTask.description">The Browser imports the current event programm from an XML feed. Enable this job, if Browser should execute this job continuously.</label>
       <label index="label.importUrl">URL of the xml file</label>
       <label index="label.browserAdminEmail">E-mail of the Browser admin</label>
       <label index="label.reportMode">Send an e-mail</label>
@@ -23,8 +23,8 @@
       <label index="label.testMode">Test mode</label>
       <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
       <label index="label.testMode.enabled">Enabled (browser admin will get the report "Which will happen")</label>
-      <label index="label.testTask.name">Browser Test</label>
-      <label index="label.testTask.description">Browser tests the sending of an e-mail to the browser admin. It is a service for development only.</label>
+      <label index="label.testTask.name">Browser - TYPO3 without PHP - Test</label>
+      <label index="label.testTask.description">The Browser tests the sending of an e-mail to the admin. It is a service for development only.</label>
       <label index="msg.enterFrequency">Frequency:  frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
       <label index="msg.enterImportUrl">URL of the xml file: Please take care of a proper URL for the XML file.</label>
       <label index="msg.enterBrowserAdminEmail">E-mail: Please enter the e-mail adress of the Browser  admin.</label>
@@ -50,8 +50,8 @@
       <label index="label.importMode.ever">Bei jedem Aufruf</label>
       <label index="label.importMode.never">Nie (sinnlos)</label>
       <label index="label.importMode.update">Nur, wenn sich die XML-Datei geändert hat (empfohlen)</label>
-      <label index="label.importTask.name">Browser XML-Import</label>
-      <label index="label.importTask.description">Browser importiert das Jahresprogramm von einem XML-Feed. Aktiviere diesen Job, wenn Browser den Import regelmäßig erledigen soll.</label>
+      <label index="label.importTask.name">Browser - TYPO3 ohne PHP - XML-Import</label>
+      <label index="label.importTask.description">Der Browser importiert das Jahresprogramm von einem XML-Feed. Aktiviere diesen Job, wenn Browser den Import regelmäßig erledigen soll.</label>
       <label index="label.importUrl">URL der XML-Datei</label>
       <label index="label.browserAdminEmail">E-Mail des Browser-Administrators</label>
       <label index="label.reportMode">Mail senden</label>
@@ -60,8 +60,8 @@
       <label index="label.reportMode.update">Wenn die Datenbank aktualisiert wurde (empfohlen)</label>
       <label index="label.reportMode.warn">Nur im Fehlerfall</label>
       <label index="label.sysfolderUid">Id des Browser-Ordners</label>
-      <label index="label.testTask.name">Browser Test</label>
-      <label index="label.testTask.description">Browser testet den Mail-Versand an den Browser Administrator. Der Test dient allein der Entwicklung von TYPO3-Browser.</label>
+      <label index="label.testTask.name">Browser - TYPO3 ohne PHP - Test</label>
+      <label index="label.testTask.description">Der Browser testet den Mail-Versand an den Administrator. Der Test hilft Entwicklern, den TYPO3-Browser weiter zu entwickeln.</label>
       <label index="msg.enterFrequency">Häufigkeit: Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
       <label index="msg.enterImportUrl">URL der XML-Datei: Gib bitte eine korrekte Adresse an.</label>
       <label index="msg.enterBrowserAdminEmail">E-Mail: Bitte gib die Mail-Adresse des Browser Administrators an.</label>
