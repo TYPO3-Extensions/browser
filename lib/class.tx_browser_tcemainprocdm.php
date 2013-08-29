@@ -263,6 +263,10 @@ class tx_browser_tcemainprocdm
   {
       // Get address
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray );
+    if( empty( $address ) )
+    {
+      return;
+    }
     
       // Get geodata
 //    $geodata = geoupdateGoogleAPI( $address ); 
@@ -332,9 +336,8 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : false, an address field is touched at least
     
-    $error  = 1;
     $prompt = 'OK: Address data are untouched.';
-    $this->log( $prompt, $error );
+    $this->log( $prompt );
     return true;
   }
 
