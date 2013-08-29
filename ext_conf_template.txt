@@ -15,7 +15,7 @@ drs_mode = Don't log anything
   # cat=Debugging/others;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_03=0
 
-  # cat=Scheduler/dev/101;        type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the Org +ESAB. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
+  # cat=Scheduler/dev/101;        type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the Browser. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
 showSampleTasks = 0
   # cat=Scheduler/others;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_04=0

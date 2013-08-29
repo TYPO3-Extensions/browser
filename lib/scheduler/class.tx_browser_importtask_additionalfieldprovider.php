@@ -73,7 +73,7 @@
 class tx_browser_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
 {
 
-  public $msgPrefix = 'Org +ESAB Import';
+  public $msgPrefix = 'Browser Import';
 
   private $defaultImportUrl = 'http://my-domain.com/my.xml';
 
