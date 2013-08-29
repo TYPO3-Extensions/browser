@@ -72,7 +72,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
 
   public $msgPrefix = 'Browser Import';
 
-  private $defaultTable = 'http://my-domain.com/my.xml';
+  private $defaultTable = 'tx_mytable';
 
 
 
@@ -154,17 +154,17 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
       // IF : field is empty, initialize extra field value
 
       // Write the code for the field
-    $fieldID      = 'browser_testMode';
-    $fieldValue   = $taskInfo['browser_testMode'];
+    $fieldID        = 'browser_testMode';
+    $fieldValue     = $taskInfo['browser_testMode'];
     $labelDisabled  = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.testMode.disabled' );
-    $labelEnabled    = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.testMode.enabled' );
+    $labelEnabled   = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.testMode.enabled' );
     $selected               = array( );
     $selected['enabled']       = null;
     $selected['disabled']     = null;
     $selected[$fieldValue]  = ' selected="selected"';
 
     $fieldCode    = '
-                      <select name="tx_scheduler[browser_testMode]" id="' . $fieldID . '" size="1" style="width:300px;">
+                      <select name="tx_scheduler[browser_testMode]" id="' . $fieldID . '" size="1" style="width:40em;">
                         <option value="disabled"' . $selected['disabled'] . '>' . $labelDisabled  . '</option>
                         <option value="enabled"'  . $selected['enabled']  . '>' . $labelEnabled    . '</option>
                       </select>
@@ -354,7 +354,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
     $selected[$fieldValue]  = ' selected="selected"';
 
     $fieldCode    = '
-                      <select name="tx_scheduler[browser_reportMode]" id="' . $fieldID . '" size="1" style="width:300px;">
+                      <select name="tx_scheduler[browser_reportMode]" id="' . $fieldID . '" size="1" style="width:40em;">
                         <option value="update"' . $selected['update'] . '>' . $labelUpdate  . '</option>
                         <option value="ever"'   . $selected['ever']   . '>' . $labelEver    . '</option>
                         <option value="never"'  . $selected['never']  . '>' . $labelNever   . '</option>
