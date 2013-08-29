@@ -162,8 +162,8 @@ class tx_browser_tcemainprocdm
       return;
     }
 
-    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
-    $this->log( $prompt, 1 );
+//    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+//    $this->log( $prompt, 1 );
 
     return;
   }
@@ -280,8 +280,6 @@ class tx_browser_tcemainprocdm
 
       return;
     }
-    $prompt = 'Address is "' . $address . '"';
-    $this->log( $prompt, 1 );
     
       // Get geodata
     $latLon = $this->geoupdateGoogleAPI( $address ); 
@@ -423,10 +421,19 @@ class tx_browser_tcemainprocdm
      // 'Amphitheatre Parkway 1600, Mountain View, CA';
     $address = implode( ', ', $arrAddress );
     
-    $prompt = 'OK: address is "' . $address . '"';
+      // Logging
+    switch( $address )
+    {
+      case( false ):
+        $prompt = 'OK: address is empty.';
+        break;
+      case( true ):
+      default:
+        $prompt = 'OK: address is "' . $address . '"';
+        break;
+    }
     $this->log( $prompt );
-    $prompt = var_export( $arrAddress, true );
-    $this->log( $prompt, 1 );
+      // Logging
 
     return $address;
   }
@@ -596,9 +603,6 @@ class tx_browser_tcemainprocdm
     
     $location = implode( ' ', $arrLocation );
 
-    $prompt = var_export( $arrLocation, true );
-    $this->log( $prompt, 1 );
-    
     return $location;
   }
 
@@ -962,8 +966,6 @@ class tx_browser_tcemainprocdm
                                       $orderBy,
                                       $limit
                                     );
-    $prompt = 'query: ' . $query;
-    $this->log( $prompt, 1 );
       // Set the query
 
       // Execute the query
