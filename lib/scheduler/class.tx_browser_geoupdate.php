@@ -54,7 +54,6 @@
  *  704:     public function getTestMode( )
  *  717:     public function getTable( )
  *  730:     public function getReportMode( )
- *  743:     public function getSysfolderUid( )
  *
  *              SECTION: Initials
  *  764:     private function init( )
@@ -63,13 +62,7 @@
  *  870:     private function initRequirementsAdminmail( )
  *  898:     private function initRequirementsAllowUrlFopen( )
  *  937:     private function initRequirementsOs( )
- *  989:     private function initRegistryInstance( )
  * 1002:     private function initTimetracking( )
- *
- *              SECTION: Registry
- * 1026:     public function registryGet( $key )
- * 1051:     private function registryKey( $key )
- * 1094:     public function registrySet( $key, $value )
  *
  *              SECTION: Set public
  * 1130:     public function setAdminmail( $value )
@@ -223,21 +216,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     private $browser_reportMode;
 
   /**
-    * Report mode: ever, never, update, warn
-    *
-    * @var uid
-    */
-    private $browser_sysfolderUid;
-
-
-  /**
-    * registry object
-    *
-    * @var object
-    */
-    private $registry;
-
-  /**
     * t3lib_timeTrack object
     *
     * @var object
@@ -309,14 +287,14 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
       // RETURN false : init is unproper
 
-      // RETURN false : content is unproper
-    $xml = $this->getContent( );
-    if( ! $xml )
+      // RETURN false : geoupdate is unproper
+    $geoupdate = $this->geoupdate( );
+    if( ! $geoupdate )
     {
         // DRS
       if( $this->drsModeError )
       {
-        $prompt = 'Failure in getContent( ):';
+        $prompt = 'Failure in geoupdate( ):';
         t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
       }
         // DRS
@@ -325,85 +303,46 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
       // RETURN false : content is unproper
 
-      // RETURN true : content is up to date
-    if( $this->get->getContentIsUpToDate( ) )
+      // DRS
+    if( $this->drsModeInfo )
     {
-        // DRS
-      if( $this->drsModeInfo )
-      {
-        $prompt = 'Success. No update. Content is up to date.';
-        t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, -1 );
-      }
-        // DRS
-      $subject  = 'Success (no update)';
-      $body     = 'Content is up to date. ' . PHP_EOL
-                . 'XML file is not imported.' . PHP_EOL
-                . PHP_EOL
-                . $this->browser_table . PHP_EOL
-                . PHP_EOL
-                . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-      $this->drsMailToAdmin( $subject, $body );
-
-      $this->timeTracking_log( $debugTrailLevel, 'END' );
-      return true;
+      $prompt = 'Success geoupdate.';
+      t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, -1 );
     }
-      // RETURN true : content is up to date
-
-    $md5 = md5( var_export( $xml, true ) );
-
-      // RETURN false : content is unproper
-    $content = $this->convertContent( $xml );
-    if( ! $content )
-    {
-        // DRS
-      if( $this->drsModeError )
-      {
-        $prompt = 'Failure in convertContent( ):';
-        t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
-      }
-        // DRS
-      $this->timeTracking_log( $debugTrailLevel, 'END' );
-      return false;
-    }
-      // RETURN false : content is unproper
-
-      // RETURN false : database could not updated
-    if( ! $this->updateDatabase( $content ) )
-    {
-        // DRS
-      if( $this->drsModeError )
-      {
-        $prompt = 'Failure in updateDatabase( ):';
-        t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
-      }
-        // DRS
-      return false;
-    }
-      // RETURN false : database could not updated
-
-      // Set registry
-    $key    = 'md5LastContent';
-    $value  = $md5;
-    $this->registrySet( $key, $value );
-      // Set registry
-
-    $subject  = 'Success';
-    $body     = 'Content is impoprted from ' . PHP_EOL
+      // DRS
+    $subject  = 'Success geoupdate';
+    $body     = 'geoupdate' . PHP_EOL
+              . PHP_EOL
               . $this->browser_table . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
 
-      // DRS
-    if( $this->drsModeInfo )
-    {
-      $prompt = 'Success.';
-      t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, -1 );
-    }
-      // DRS
+    $this->timeTracking_log( $debugTrailLevel, 'END' );
+
     return true;
   }
 
+
+
+  /***********************************************
+   *
+   * Geo Update
+   *
+   **********************************************/
+
+  /**
+ * geoupdate( ) : 
+ *
+ * @return	boolean   Information to display
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function geoupdate( )
+  {
+    return false;
+  }
 
 
   /***********************************************
@@ -621,9 +560,7 @@ start:      ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']
 end:        ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . '
 interval:   ' . $interval . '
 multiple:   ' . ( $multiple ? 'yes' : 'no' ) . '
-cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' ) . '
-Sysfolder:  ' . $this->browser_sysfolderUid
-              ;
+cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
 
       // Prepare mailer and send the mail
     try
@@ -661,62 +598,6 @@ Sysfolder:  ' . $this->browser_sysfolderUid
       }
     }
       // DRS
-  }
-
-
-
-  /***********************************************
-   *
-   * Get private
-   *
-   **********************************************/
-
-/**
- * getContent( )  :
- *
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function getContent( )
-  {
-      // Initiate the get class
-    $this->getContentInstance( );
-
-      // RETURN true : proper content
-    $xml = $this->get->main( );
-    if( $xml )
-    {
-      return $xml;
-    }
-      // RETURN true : proper content
-
-    $subject  = 'Failed';
-    $body     = 'Unporper XML' . PHP_EOL
-              . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
-
-    return false;
-  }
-
-/**
- * getContentInstance( )  :
- *
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function getContentInstance( )
-  {
-    $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
-
-    require_once( $path2lib . 'class.tx_browser_get.php' );
-
-    $this->get        = t3lib_div::makeInstance( 'tx_browser_get' );
-    $this->get->setPobj( $this );
   }
 
 
@@ -779,19 +660,6 @@ Sysfolder:  ' . $this->browser_sysfolderUid
     return $this->browser_reportMode;
   }
 
-/**
- * getAdminmail( ):
- *
- * @return	void
- * @access public
- * @version       0.0.1
- * @since         0.0.1
- */
-  public function getSysfolderUid( )
-  {
-    return $this->browser_sysfolderUid;
-  }
-
 
 
   /***********************************************
@@ -822,8 +690,6 @@ Sysfolder:  ' . $this->browser_sysfolderUid
       $success = false;
       return $success;
     }
-
-    $this->initRegistryInstance( );
 
     $this->initTimetracking( );
 
@@ -1039,128 +905,11 @@ Sysfolder:  ' . $this->browser_sysfolderUid
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function initRegistryInstance( )
-  {
-    $this->registry = t3lib_div::makeInstance('t3lib_Registry');
-  }
-
-  /**
- * initTimetracking( ) :
- *
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
   private function initTimetracking( )
   {
     $this->timeTracking_init( );
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
-  }
-
-
-
-  /***********************************************
-   *
-   * Registry
-   *
-   **********************************************/
-
-/**
- * registryGet( ):
- *
- * @param	[type]		$$key: ...
- * @return	void
- * @access public
- * @version       0.0.1
- * @since         0.0.1
- */
-  public function registryGet( $key )
-  {
-      // RETURN null  : key is unproper
-    if( ! $this->registryKey( $key ) )
-    {
-      return null;
-    }
-      // RETURN null  : key is unproper
-
-      // Get value from registry
-    $namespace = 'tx_' . $this->extKey;
-    $value = $this->registry->get( $namespace, $key );
-
-    return $value;
-  }
-
-/**
- * registryKey( ):
- *
- * @param	[type]		$$key: ...
- * @return	void
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function registryKey( $key )
-  {
-    switch( $key )
-    {
-      case( 'md5LastContent' ):
-        return true;
-        break;
-      default:
-          // Follow the workflow
-        break;
-
-    }
-
-      // DRS
-    if( $this->drsModeError )
-    {
-      $prompt = 'Key for registry is undefined. Key is ' . $key;
-      t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
-    }
-      // DRS
-
-      // Send e-mail to admin
-    $subject  = 'Failed';
-    $body     = 'Sorry, but key for registry is undefined. Key is ' . $key . PHP_EOL
-              . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
-              ;
-    $this->drsMailToAdmin( $subject, $body );
-      // Send e-mail to admin
-
-    return false;
-  }
-
-/**
- * registrySet( ):
- *
- * @param	[type]		$$key: ...
- * @param	[type]		$value: ...
- * @return	void
- * @access public
- * @version       0.0.1
- * @since         0.0.1
- */
-  public function registrySet( $key, $value )
-  {
-      // RETURN null  : key is unproper
-    if( ! $this->registryKey( $key ) )
-    {
-      return null;
-    }
-      // RETURN null  : key is unproper
-
-    if( empty( $value ) )
-    {
-      // Do nothing
-    }
-
-      // Update registry
-    $namespace = 'tx_' . $this->extKey;
-    $this->registry->set( $namespace, $key, $value );
   }
 
 
