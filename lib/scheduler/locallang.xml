@@ -51,7 +51,7 @@
       <label index="label.importMode.never">Nie (sinnlos)</label>
       <label index="label.importMode.update">Nur, wenn sich die XML-Datei geändert hat (empfohlen)</label>
       <label index="label.geoupdate.name">Browser - TYPO3 ohne PHP: Geoupdate</label>
-      <label index="label.geoupdate.description">Der Browser fügt Adress-Datensätzen den Breiten- und Längengrad hinzu. Breiten- und Längengrad müssen leer sein. Die Arbeit ist zum Beispiel dann sinnvoll, wenn Adressdatensätze ohne Breiten- und Längengrad aus Dritt-Systemen importiert worden sind.</label>
+      <label index="label.geoupdate.description">Der Browser fügt Adress-Datensätzen den Breiten- und Längengrad hinzu. Breiten- und Längengrad müssen leer sein. Die Arbeit ist zum Beispiel dann sinnvoll, wenn Adressdatensätze aus Dritt-Systemen importiert worden sind und keine Angabe zum Breiten- und Längengrad enthalten.</label>
       <label index="label.importUrl">URL der XML-Datei</label>
       <label index="label.browserAdminEmail">E-Mail des Browser-Administrators</label>
       <label index="label.reportMode">Mail senden</label>
