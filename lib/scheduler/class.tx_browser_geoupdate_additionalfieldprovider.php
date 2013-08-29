@@ -31,30 +31,27 @@
  *
  *              SECTION: Bulding the form
  *  106:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  137:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
- *  210:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
+ *  137:     private function getFieldTestMode( array &$taskInfo, $task, $parentObject )
+ *  210:     private function getFieldTable( array &$taskInfo, $task, $parentObject )
  *  268:     private function getFieldBrowserAdminEmail( array &$taskInfo, $task, $parentObject )
  *  326:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
- *  402:     private function getFieldSysfolderUid( array &$taskInfo, $task, $parentObject )
  *
  *              SECTION: Saving
  *  460:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  479:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
- *  495:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
+ *  479:     private function saveFieldTestMode( array $submittedData, tx_scheduler_Task $task )
+ *  495:     private function saveFieldTable( array $submittedData, tx_scheduler_Task $task )
  *  511:     private function saveFieldBrowserAdminEmail( array $submittedData, tx_scheduler_Task $task )
  *  526:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
- *  542:     private function saveFieldSysfolderUid( array $submittedData, tx_scheduler_Task $task )
  *
  *              SECTION: Validating
  *  565:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
  *  626:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  651:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  691:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  651:     private function validateFieldTestMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  691:     private function validateFieldTable( array &$submittedData, tx_scheduler_Module $parentObject )
  *  721:     private function validateFieldBrowserAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
  *  747:     public function validateOS( tx_scheduler_Module $parentObject )
  *  778:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
  *  822:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
- *  853:     private function validateFieldSysfolderUid( array &$submittedData, tx_scheduler_Module $parentObject )
  *
  * TOTAL FUNCTIONS: 21
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -75,7 +72,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
 
   public $msgPrefix = 'Browser Import';
 
-  private $defaultImportUrl = 'http://my-domain.com/my.xml';
+  private $defaultTable = 'http://my-domain.com/my.xml';
 
 
 
@@ -108,16 +105,15 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
     $additionalFields = array( )
                       + $this->getFieldBrowserAdminEmail( $taskInfo, $task, $parentObject )
                       + $this->getFieldReportMode( $taskInfo, $task, $parentObject )
-                      + $this->getFieldSysfolderUid( $taskInfo, $task, $parentObject )
-                      + $this->getFieldImportUrl( $taskInfo, $task, $parentObject )
-                      + $this->getFieldImportMode( $taskInfo, $task, $parentObject )
+                      + $this->getFieldTable( $taskInfo, $task, $parentObject )
+                      + $this->getFieldTestMode( $taskInfo, $task, $parentObject )
                       ;
 
     return $additionalFields;
   }
 
   /**
- * getFieldImportMode( )  : This method is used to define new fields for adding or editing a task
+ * getFieldTestMode( )  : This method is used to define new fields for adding or editing a task
  *                                           In this case, it adds an email field
  *
  *                    The array is multidimensional, keyed to the task class name and each field's id
@@ -134,53 +130,50 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
+  private function getFieldTestMode( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['browser_importMode'] ) )
+    if( empty( $taskInfo['browser_testMode'] ) )
     {
       if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set to
-        $taskInfo['browser_importMode'] = 'update';
+        $taskInfo['browser_testMode'] = 'disabled';
       }
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['browser_importMode'] = $task->getImportMode( );
+        $taskInfo['browser_testMode'] = $task->getTestMode( );
       }
       else
       {
           // Otherwise set an empty value, as it will not be used anyway
-        $taskInfo['browser_importMode'] = '';
+        $taskInfo['browser_testMode'] = '';
       }
     }
       // IF : field is empty, initialize extra field value
 
       // Write the code for the field
-    $fieldID      = 'browser_importMode';
-    $fieldValue   = $taskInfo['browser_importMode'];
-    $labelUpdate  = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.importMode.update' );
-    $labelEver    = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.importMode.ever' );
-    $labelNever   = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.importMode.never' );
+    $fieldID      = 'browser_testMode';
+    $fieldValue   = $taskInfo['browser_testMode'];
+    $labelDisabled  = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.testMode.disabled' );
+    $labelEnabled    = $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.testMode.enabled' );
     $selected               = array( );
-    $selected['ever']       = null;
-    $selected['never']      = null;
-    $selected['update']     = null;
+    $selected['enabled']       = null;
+    $selected['disabled']     = null;
     $selected[$fieldValue]  = ' selected="selected"';
 
     $fieldCode    = '
-                      <select name="tx_scheduler[browser_importMode]" id="' . $fieldID . '" size="1" style="width:300px;">
-                        <option value="update"' . $selected['import'] . '>' . $labelUpdate  . '</option>
-                        <option value="ever"'   . $selected['ever']   . '>' . $labelEver    . '</option>
-                        <option value="never"'  . $selected['never']  . '>' . $labelNever   . '</option>
+                      <select name="tx_scheduler[browser_testMode]" id="' . $fieldID . '" size="1" style="width:300px;">
+                        <option value="disabled"' . $selected['disabled'] . '>' . $labelDisabled  . '</option>
+                        <option value="enabled"'  . $selected['enabled']  . '>' . $labelEnabled    . '</option>
                       </select>
                     ';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
       'code'     => $fieldCode,
-      'label'    => 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.importMode',
+      'label'    => 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.testMode',
       'cshKey'   => '_MOD_tools_txschedulerM1',
       'cshLabel' => $fieldID
     );
@@ -190,7 +183,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
- * getFieldImportUrl( )  : This method is used to define new fields for adding or editing a task
+ * getFieldTable( )  : This method is used to define new fields for adding or editing a task
  *                                           In this case, it adds an email field
  *
  *                    The array is multidimensional, keyed to the task class name and each field's id
@@ -207,38 +200,38 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
+  private function getFieldTable( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['browser_importUrl'] ) )
+    if( empty( $taskInfo['browser_table'] ) )
     {
       if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set to ..
-        $taskInfo['browser_importUrl'] = $this->defaultImportUrl;
+        $taskInfo['browser_table'] = $this->defaultTable;
       }
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['browser_importUrl'] = $task->getImportUrl( );
+        $taskInfo['browser_table'] = $task->getTable( );
       }
       else
       {
           // Otherwise set an empty value, as it will not be used anyway
-        $taskInfo['browser_importUrl'] = '';
+        $taskInfo['browser_table'] = '';
       }
     }
       // IF : field is empty, initialize extra field value
 
       // Write the code for the field
-    $fieldID    = 'browser_importUrl';
-    $fieldValue = htmlspecialchars( $taskInfo['browser_importUrl'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[browser_importUrl]" id="' . $fieldID . '" value="' . $fieldValue . '" size="80" maxlength="255"/>';
+    $fieldID    = 'browser_table';
+    $fieldValue = htmlspecialchars( $taskInfo['browser_table'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[browser_table]" id="' . $fieldID . '" value="' . $fieldValue . '" size="80" maxlength="255"/>';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
       'code'     => $fieldCode,
-      'label'    => 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.importUrl',
+      'label'    => 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.table',
       'cshKey'   => '_MOD_tools_txschedulerM1',
       'cshLabel' => $fieldID
     );
@@ -381,64 +374,6 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
     return $additionalFields;
   }
 
-  /**
- * getFieldSysfolderUid( )  : This method is used to define new fields for adding or editing a task
- *                                           In this case, it adds an email field
- *
- *                    The array is multidimensional, keyed to the task class name and each field's id
- *                    For each field it provides an associative sub-array with the following:
- *                        ['code']        => The HTML code for the field
- *                        ['label']        => The label of the field (possibly localized)
- *                        ['cshKey']        => The CSH key for the field
- *                        ['cshLabel']    => The code of the CSH label
- *
- * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
- * @param	object		$task When editing, reference to the current task object. Null when adding.
- * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
- * @return	array		Array containing all the information pertaining to the additional fields
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function getFieldSysfolderUid( array &$taskInfo, $task, $parentObject )
-  {
-      // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['browser_sysfolderUid'] ) )
-    {
-      if( $parentObject->CMD == 'add' )
-      {
-          // In case of new task and if field is empty, set it to ...
-        $taskInfo['browser_sysfolderUid'] = null;
-      }
-      elseif( $parentObject->CMD == 'edit' )
-      {
-          // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['browser_sysfolderUid'] = $task->getSysfolderUid( );
-      }
-      else
-      {
-          // Otherwise set an empty value, as it will not be used anyway
-        $taskInfo['browser_sysfolderUid'] = null;
-      }
-    }
-      // IF : field is empty, initialize extra field value
-
-      // Write the code for the field
-    $fieldID    = 'browser_sysfolderUid';
-    $fieldValue = htmlspecialchars( $taskInfo['browser_sysfolderUid'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[browser_sysfolderUid]" id="' . $fieldID . '" value="' . $fieldValue . '" size="5" />';
-    $additionalFields = array( );
-    $additionalFields[$fieldID] = array
-    (
-      'code'     => $fieldCode,
-      'label'    => 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.sysfolderUid',
-      'cshKey'   => '_MOD_tools_txschedulerM1',
-      'cshLabel' => $fieldID
-    );
-      // Write the code for the field
-
-    return $additionalFields;
-  }
-
 
 
   /***********************************************
@@ -459,15 +394,14 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  */
   public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
   {
-    $this->saveFieldImportMode( $submittedData, $task );
-    $this->saveFieldImportUrl( $submittedData, $task );
+    $this->saveFieldTestMode( $submittedData, $task );
+    $this->saveFieldTable( $submittedData, $task );
     $this->saveFieldBrowserAdminEmail( $submittedData, $task );
     $this->saveFieldReportMode( $submittedData, $task );
-    $this->saveFieldSysfolderUid( $submittedData, $task );
   }
 
   /**
- * saveFieldImportMode( ) : This method is used to save any additional input into the current task object
+ * saveFieldTestMode( ) : This method is used to save any additional input into the current task object
  *                           if the task class matches
  *
  * @param	array		$submittedData Array containing the data submitted by the user
@@ -476,14 +410,14 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
+  private function saveFieldTestMode( array $submittedData, tx_scheduler_Task $task )
   {
-//    $task->browser_reportMode = $submittedData['browser_importMode'];
-    $task->setImportMode( $submittedData['browser_importMode'] );
+//    $task->browser_reportMode = $submittedData['browser_testMode'];
+    $task->setTestMode( $submittedData['browser_testMode'] );
   }
 
   /**
- * saveFieldImportUrl( ) : This method is used to save any additional input into the current task object
+ * saveFieldTable( ) : This method is used to save any additional input into the current task object
  *                           if the task class matches
  *
  * @param	array		$submittedData Array containing the data submitted by the user
@@ -492,10 +426,10 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
+  private function saveFieldTable( array $submittedData, tx_scheduler_Task $task )
   {
-    //$task->browser_importUrl = $submittedData['browser_importUrl'];
-    $task->setImportUrl( $submittedData['browser_importUrl'] );
+    //$task->browser_table = $submittedData['browser_table'];
+    $task->setTable( $submittedData['browser_table'] );
   }
 
   /**
@@ -527,21 +461,6 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
   {
 //    $task->browser_reportMode = $submittedData['browser_reportMode'];
     $task->setReportMode( $submittedData['browser_reportMode'] );
-  }
-
-  /**
- * saveFieldSysfolderUid( ) : This method is used to save any additional input into the current task object
- *                           if the task class matches
- *
- * @param	array		$submittedData Array containing the data submitted by the user
- * @param	tx_scheduler_Task		$task Reference to the current task object
- * @return	void
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function saveFieldSysfolderUid( array $submittedData, tx_scheduler_Task $task )
-  {
-    $task->setSysfolderUid( $submittedData['browser_sysfolderUid'] );
   }
 
 
@@ -580,12 +499,12 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
       $bool_isValidatingSuccessful = false;
     }
 
-    if( ! $this->validateFieldImportMode( $submittedData, $parentObject ) )
+    if( ! $this->validateFieldTestMode( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
     }
 
-    if( ! $this->validateFieldImportUrl( $submittedData, $parentObject ) )
+    if( ! $this->validateFieldTable( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
     }
@@ -601,11 +520,6 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
     }
 
     if( ! $this->validateFieldStart( $submittedData, $parentObject ) )
-    {
-      $bool_isValidatingSuccessful = false;
-    }
-
-    if( ! $this->validateFieldSysfolderUid( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
     }
@@ -639,7 +553,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
- * validateFieldImportMode( )  : This method checks any additional data that is relevant to the specific task
+ * validateFieldTestMode( )  : This method checks any additional data that is relevant to the specific task
  *                                     If the task class is not relevant, the method is expected to return TRUE
  *
  * @param	array		$submittedData Reference to the array containing the data submitted by the user
@@ -648,28 +562,24 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+  private function validateFieldTestMode( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
       // Messages depending on mode
-    switch( $submittedData['browser_importMode'] )
+    switch( $submittedData['browser_testMode'] )
     {
-      case( 'ever' ):
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.importMode.ever' );;
+      case( 'enabled' ):
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.testMode.enabled' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
-      case( 'never' ):
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.importMode.never' );;
-        $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
-        break;
-      case( 'update' ):
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.importMode.update' );;
+      case( 'disabled' ):
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.testMode.disabled' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       default:
         $bool_isValidatingSuccessful = false;
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.importMode.undefined' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.testMode.undefined' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
         break;
     }
@@ -679,7 +589,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
- * validateFieldImportUrl( )  : This method checks any additional data that is relevant to the specific task
+ * validateFieldTable( )  : This method checks any additional data that is relevant to the specific task
  *                                     If the task class is not relevant, the method is expected to return TRUE
  *
  * @param	array		$submittedData Reference to the array containing the data submitted by the user
@@ -688,15 +598,15 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
+  private function validateFieldTable( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
     switch( true )
     {
-      case( empty( $submittedData['browser_importUrl'] ) ):
-      case( $submittedData['browser_importUrl'] == $this->defaultImportUrl ):
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.enterImportUrl' );
+      case( empty( $submittedData['browser_table'] ) ):
+      case( $submittedData['browser_table'] == $this->defaultTable ):
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.enterTable' );
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
         $bool_isValidatingSuccessful = false;
         break;
@@ -837,32 +747,6 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
               . ': '
               . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.enterStart' )
               ;
-      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-      $bool_isValidatingSuccessful = false;
-    }
-
-    return $bool_isValidatingSuccessful;
-  }
-
-  /**
- * validateFieldSysfolderUid( )  : This method checks any additional data that is relevant to the specific task
- *                                     If the task class is not relevant, the method is expected to return TRUE
- *
- * @param	array		$submittedData Reference to the array containing the data submitted by the user
- * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
- * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function validateFieldSysfolderUid( array &$submittedData, tx_scheduler_Module $parentObject )
-  {
-    $bool_isValidatingSuccessful = true;
-
-    $submittedData['browser_sysfolderUid'] = ( int ) $submittedData['browser_sysfolderUid'];
-
-    if( $submittedData['browser_sysfolderUid'] < 1 )
-    {
-      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.enterSysfolderUid' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     }
