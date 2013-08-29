@@ -51,8 +51,8 @@
  *
  *              SECTION: Get public
  *  691:     public function getAdminmail( )
- *  704:     public function getImportMode( )
- *  717:     public function getImportUrl( )
+ *  704:     public function getTestMode( )
+ *  717:     public function getTable( )
  *  730:     public function getReportMode( )
  *  743:     public function getSysfolderUid( )
  *
@@ -73,10 +73,9 @@
  *
  *              SECTION: Set public
  * 1130:     public function setAdminmail( $value )
- * 1144:     public function setImportMode( $value )
- * 1158:     public function setImportUrl( $value )
+ * 1144:     public function setTestMode( $value )
+ * 1158:     public function setTable( $value )
  * 1172:     public function setReportMode( $value )
- * 1186:     public function setSysfolderUid( $value )
  *
  *              SECTION: Time tracking
  * 1208:     private function timeTracking_init( )
@@ -207,14 +206,14 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     *
     * @var string
     */
-    private $browser_importMode;
+    private $browser_testMode;
 
   /**
     * Import URL
     *
     * @var string
     */
-    private $browser_importUrl;
+    private $browser_table;
 
   /**
     * Report mode: ever, never, update, warn
@@ -340,7 +339,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       $body     = 'Content is up to date. ' . PHP_EOL
                 . 'XML file is not imported.' . PHP_EOL
                 . PHP_EOL
-                . $this->browser_importUrl . PHP_EOL
+                . $this->browser_table . PHP_EOL
                 . PHP_EOL
                 . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
       $this->drsMailToAdmin( $subject, $body );
@@ -390,7 +389,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
     $subject  = 'Success';
     $body     = 'Content is impoprted from ' . PHP_EOL
-              . $this->browser_importUrl . PHP_EOL
+              . $this->browser_table . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
@@ -738,29 +737,29 @@ Sysfolder:  ' . $this->browser_sysfolderUid
   }
 
 /**
- * getImportMode( ):
+ * getTestMode( ):
  *
  * @return	void
  * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function getImportMode( )
+  public function getTestMode( )
   {
-    return $this->browser_importMode;
+    return $this->browser_testMode;
   }
 
 /**
- * getImportUrl( ):
+ * getTable( ):
  *
  * @return	void
  * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function getImportUrl( )
+  public function getTable( )
   {
-    return $this->browser_importUrl;
+    return $this->browser_table;
   }
 
 /**
@@ -1183,7 +1182,7 @@ Sysfolder:  ' . $this->browser_sysfolderUid
   }
 
 /**
- * setImportMode( ):
+ * setTestMode( ):
  *
  * @param	[type]		$$value: ...
  * @return	void
@@ -1191,13 +1190,13 @@ Sysfolder:  ' . $this->browser_sysfolderUid
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function setImportMode( $value )
+  public function setTestMode( $value )
   {
-    $this->browser_importMode = $value;
+    $this->browser_testMode = $value;
   }
 
 /**
- * setImportUrl( ):
+ * setTable( ):
  *
  * @param	[type]		$$value: ...
  * @return	void
@@ -1205,9 +1204,9 @@ Sysfolder:  ' . $this->browser_sysfolderUid
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function setImportUrl( $value )
+  public function setTable( $value )
   {
-    $this->browser_importUrl = $value;
+    $this->browser_table = $value;
   }
 
 /**
@@ -1222,20 +1221,6 @@ Sysfolder:  ' . $this->browser_sysfolderUid
   public function setReportMode( $value )
   {
     $this->browser_reportMode = $value;
-  }
-
-/**
- * setSysfolderUid( ):
- *
- * @param	[type]		$$value: ...
- * @return	void
- * @access public
- * @version       0.0.1
- * @since         0.0.1
- */
-  public function setSysfolderUid( $value )
-  {
-    $this->browser_sysfolderUid = $value;
   }
 
 
