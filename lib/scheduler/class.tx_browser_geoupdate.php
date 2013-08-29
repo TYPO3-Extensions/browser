@@ -304,7 +304,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // DRS
 
       // E-mail to admin
-    $subject  = 'TYPO3-Browser Geoupdate: success';
+    $subject  = 'Success!';
     $body     = 'Task is done with success.' . PHP_EOL
               . PHP_EOL
               . PHP_EOL
@@ -716,7 +716,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
       // Get call method
 
-    $subject  = 'Browser: '
+    $subject  = 'TYPO3-Browser Geoupdate: '
               . $subject
               ;
 
@@ -753,7 +753,7 @@ table     : ' . $this->browser_table;
       $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
       $mailer->setFrom( array( $this->browser_browserAdminEmail => 'Browser' ) );
       $mailer->setReplyTo( array( $this->browser_browserAdminEmail => 'Browser' ) );
-      $mailer->setSubject( 'Browser: ' . $subject );
+      $mailer->setSubject( $subject );
       $mailer->setBody( $body );
       $mailer->setTo( $this->browser_browserAdminEmail );
 
