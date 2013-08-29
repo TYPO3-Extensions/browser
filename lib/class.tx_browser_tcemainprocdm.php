@@ -261,6 +261,17 @@ class tx_browser_tcemainprocdm
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray );
     if( empty( $address ) )
     {
+        // update geodata
+      $fieldArray[ $geodata[ 'lat' ] ] = null;
+      $fieldArray[ $geodata[ 'lon' ] ] = null;
+
+        // logging
+      $prompt = 'Address is empty ';
+      $this->log( $prompt );
+      $prompt = 'OK: latitude and longitude are removed!';
+      $this->log( $prompt );
+        // logging
+
       return;
     }
     
@@ -325,7 +336,7 @@ class tx_browser_tcemainprocdm
       // RETURN : false, an address field is touched at least
     foreach( $labels as $label )
     {
-      if( ! empty( $fieldArray[ $label ] ) )
+      if( isset ( $fieldArray[ $label ] ) )
       {
         return false;
       }
