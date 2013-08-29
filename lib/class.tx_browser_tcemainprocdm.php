@@ -586,6 +586,9 @@ class tx_browser_tcemainprocdm
     
     $location = implode( ' ', $arrLocation );
 
+    $prompt = var_export( $arrLocation, true );
+    $this->log( $prompt, 1 );
+    
     return $location;
   }
 
