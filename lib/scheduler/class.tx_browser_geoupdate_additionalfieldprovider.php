@@ -164,7 +164,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
     $selected[$fieldValue]  = ' selected="selected"';
 
     $fieldCode    = '
-                      <select name="tx_scheduler[browser_testMode]" id="' . $fieldID . '" size="1" style="width:40em;">
+                      <select name="tx_scheduler[browser_testMode]" id="' . $fieldID . '" size="1" style="width:33em;">
                         <option value="disabled"' . $selected['disabled'] . '>' . $labelDisabled  . '</option>
                         <option value="enabled"'  . $selected['enabled']  . '>' . $labelEnabled    . '</option>
                       </select>
@@ -354,7 +354,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
     $selected[$fieldValue]  = ' selected="selected"';
 
     $fieldCode    = '
-                      <select name="tx_scheduler[browser_reportMode]" id="' . $fieldID . '" size="1" style="width:40em;">
+                      <select name="tx_scheduler[browser_reportMode]" id="' . $fieldID . '" size="1" style="width:33em;">
                         <option value="update"' . $selected['update'] . '>' . $labelUpdate  . '</option>
                         <option value="ever"'   . $selected['ever']   . '>' . $labelEver    . '</option>
                         <option value="never"'  . $selected['never']  . '>' . $labelNever   . '</option>
