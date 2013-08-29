@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>database</type>
+    <description>Language labels for database tables/fields belonging to extension 'browser'</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="label.importMode">Database Update</label>
+      <label index="label.importMode.ever">At each call</label>
+      <label index="label.importMode.never">Never (doesn't make sense)</label>
+      <label index="label.importMode.update">Only, if the XML file was updated (recommended)</label>
+      <label index="label.importTask.name">Browser XML Import</label>
+      <label index="label.importTask.description">Browser imports the current event programm from an XML feed. Enable this job, if Browser should execute this job continuously.</label>
+      <label index="label.importUrl">URL of the xml file</label>
+      <label index="label.browserAdminEmail">E-mail of the Browser admin</label>
+      <label index="label.reportMode">Send an e-mail</label>
+      <label index="label.reportMode.ever">At each call</label>
+      <label index="label.reportMode.never">Never</label>
+      <label index="label.reportMode.update">If database is updated (recommended)</label>
+      <label index="label.reportMode.warn">In case of errors only</label>
+      <label index="label.sysfolderUid">Id of Browser folder</label>
+      <label index="label.testMode">Test mode</label>
+      <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
+      <label index="label.testMode.enabled">Enabled (browser admin will get the report "Which will happen")</label>
+      <label index="label.testTask.name">Browser Test</label>
+      <label index="label.testTask.description">Browser tests the sending of an e-mail to the browser admin. It is a service for development only.</label>
+      <label index="msg.enterFrequency">Frequency:  frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
+      <label index="msg.enterImportUrl">URL of the xml file: Please take care of a proper URL for the XML file.</label>
+      <label index="msg.enterBrowserAdminEmail">E-mail: Please enter the e-mail adress of the Browser  admin.</label>
+      <label index="msg.enterStart">Start: Start must be one hour later than now at least. This is a security requirement. If you like to run Browser Quota earlier, please run it manually.</label>
+      <label index="msg.enterSysfolderUid">Id of Browser folder: Please take care of a proper uid of the folder, which contains Browser records.</label>
+      <label index="msg.importMode.ever">Database Update: each time, when this job is running.</label>
+      <label index="msg.importMode.never">Database Update: never</label>
+      <label index="msg.importMode.update">Database Update: Update only, if the XML file was updated. Best performance.</label>
+      <label index="msg.importMode.undefined">Database Update: value is undefined!</label>
+      <label index="msg.osIsNotSupported"><![CDATA[
+        Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Browser.<br />
+        If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>
+      ]]></label>
+      <label index="msg.reportMode.ever">Send an e-mail: each time, when this job is running.</label>
+      <label index="msg.reportMode.never">Send an e-mail: never. This is dangerous!</label>
+      <label index="msg.reportMode.update">Send an e-mail: only if TYPO3 database is updated.</label>
+      <label index="msg.reportMode.warn">Send an e-mail: only in case of errors.</label>
+      <label index="msg.reportMode.undefined">Send an e-mail: value is undefined!</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="label.copy">Kopie</label>
+      <label index="label.importMode">Datenbank aktualisieren</label>
+      <label index="label.importMode.ever">Bei jedem Aufruf</label>
+      <label index="label.importMode.never">Nie (sinnlos)</label>
+      <label index="label.importMode.update">Nur, wenn sich die XML-Datei geändert hat (empfohlen)</label>
+      <label index="label.importTask.name">Browser XML-Import</label>
+      <label index="label.importTask.description">Browser importiert das Jahresprogramm von einem XML-Feed. Aktiviere diesen Job, wenn Browser den Import regelmäßig erledigen soll.</label>
+      <label index="label.importUrl">URL der XML-Datei</label>
+      <label index="label.browserAdminEmail">E-Mail des Browser-Administrators</label>
+      <label index="label.reportMode">Mail senden</label>
+      <label index="label.reportMode.ever">Bei jedem Aufruf</label>
+      <label index="label.reportMode.never">Nie</label>
+      <label index="label.reportMode.update">Wenn die Datenbank aktualisiert wurde (empfohlen)</label>
+      <label index="label.reportMode.warn">Nur im Fehlerfall</label>
+      <label index="label.sysfolderUid">Id des Browser-Ordners</label>
+      <label index="label.testTask.name">Browser Test</label>
+      <label index="label.testTask.description">Browser testet den Mail-Versand an den Browser Administrator. Der Test dient allein der Entwicklung von TYPO3-Browser.</label>
+      <label index="msg.enterFrequency">Häufigkeit: Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
+      <label index="msg.enterImportUrl">URL der XML-Datei: Gib bitte eine korrekte Adresse an.</label>
+      <label index="msg.enterBrowserAdminEmail">E-Mail: Bitte gib die Mail-Adresse des Browser Administrators an.</label>
+      <label index="msg.enterStart">Start: Die Start-Zeit muss eine mindestens Stunde in der Zukunft liegen. Das ist eine Vorsichtsmaßnahme. Wenn dieser Job eher gestartet werden soll, starte ihn manuell.</label>
+      <label index="msg.enterSysfolderUid">Id des Browser-Ordners: Bitte gebe die korrekte Id des Ordners an, der die Browser-Datensätze enthält.</label>
+      <label index="msg.importMode.ever">Datenbank aktualisieren: jedes Mal, wenn dieser Job läuft.</label>
+      <label index="msg.importMode.never">Datenbank aktualisieren: nie. Das macht keinen Sinn!</label>
+      <label index="msg.importMode.update">Datenbank aktualisieren: wenn sich die XML-Datei geändert hat. Beste Performance.</label>
+      <label index="msg.importMode.undefined">Datenbank aktualisieren: undefinierter Wert!</label>
+      <label index="msg.osIsNotSupported"><![CDATA[
+        Sorry, aber das Betriebssystem "###PHP_OS###" wird von TYPO3 Browser nicht unterstützt.<br />
+        Wenn Du Unterstützung brauchst, kannst Du Dich an <a href="http://wildt.at.die-netzmacher.de/" target="_blank">Dirk Wildt, die Netzmacher</a> wenden.
+      ]]></label>
+      <label index="msg.reportMode.ever">Mail senden: jedesmal, wenn dieser Job läuft.</label>
+      <label index="msg.reportMode.never">Mail senden: nie. Das ist gefährlich!</label>
+      <label index="msg.reportMode.update">Mail senden: wenn die Datenbank aktualisiert wurde.</label>
+      <label index="msg.reportMode.warn">Mail senden: nur im Fall von Fehlern</label>
+      <label index="msg.reportMode.undefined">Mail senden: undefinierter Wert!</label>
+    </languageKey>
+  </data>
+</T3locallang>

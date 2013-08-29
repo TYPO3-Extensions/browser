@@ -10,10 +10,15 @@ LLstatic = English
   # cat=BE Language/others;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_02=0
 
-  # cat=Debugging/dev;            type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+  # cat=Debugging/dev/101;        type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
   # cat=Debugging/others;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_03=0
+
+  # cat=Scheduler/dev/101;        type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the Org +ESAB. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
+showSampleTasks = 0
+  # cat=Scheduler/others;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+external_links_04=0
 
   # cat=Update Wizard/enable;     type=options[I checked it,I didn't (frontend label is visible)]; label= Did you checked the Update?: Please confirm, that you have checked the update. The frontend label will disappear.
 checked_3.9.14 = I didn't (frontend label is visible)
@@ -26,4 +31,4 @@ currentIP = 0
   # cat=Update Wizard/enable;     type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report. Example: 127.0.0.1, 127.0.0.2, 83.123.4.85
 updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
   # cat=Update Wizard/others;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
-external_links_04=0
+external_links_05=0

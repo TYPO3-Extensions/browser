@@ -12,6 +12,18 @@
               * lib/OpenLayers_2.13       ( new )
             * static/setup.txt
   * #51478: BrowserMaps: automatic rendering of latitude and longitude
+            Effected files:
+            * ext_autoload.php                                              ( new )
+            * ext_conf_template.txt
+            * ext_localconf.php
+            * lib
+              * class.tx_browser_tcemainprocdm.php
+              * scheduler                                                   ( new )
+                * class.tx_browser_importtask.php
+                * class.tx_browser_importtask_additionalfieldprovider.php
+                * class.tx_browser_testtask.php
+                * class.tx_browser_testtask_additionalfieldprovider.php
+                * locallang.xml
   Bugfix
   * #51464: Whitespace in PHP file breaks XML (RSS) output
 
