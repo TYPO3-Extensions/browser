@@ -113,19 +113,15 @@ class tx_browser_tcemainprocdm
     $this->processId      = $id;
     $this->pObj           = $reference;
 
-      
-    switch( true )
+      // #51478, 130829, dwildt
+    if( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['geoupdate'] ) )
     {
-        // #51478, 130829, dwildt
-      case( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['geoupdate'] ) ):
-        $this->geoupdate( $fieldArray, $reference );
-          // follow cases below
-      case( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) ):
-        $this->route( &$fieldArray, &$reference );
-          // follow cases below
-      default:
-          // follow the workflow
-        break;
+      $this->geoupdate( $fieldArray, $reference );
+    }
+      
+    if( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) )
+    {
+      $this->route( &$fieldArray, &$reference );
     }
     
     return;
