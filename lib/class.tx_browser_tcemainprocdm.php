@@ -274,14 +274,8 @@ class tx_browser_tcemainprocdm
         // logging
       $prompt = 'OK: Address is empty ';
       $this->log( $prompt );
-      $prompt = 'OK: latitude and longitude are removed!';
-      $this->log( $prompt );
       $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
-      $this->log( $prompt, -1 );
-      $this->log( $prompt, 0 );
       $this->log( $prompt, 1 );
-      $this->log( $prompt, 2 );
-      $this->log( $prompt, 3 );
         // logging
 
       return;
@@ -316,18 +310,12 @@ class tx_browser_tcemainprocdm
     $fieldArray[ $geodata[ 'lon' ] ] = $lon;
 
       // logging
-    $prompt = 'OK: latitude and longitude are updated!';
     $this->log( $prompt );
+    $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
+    $this->log( $prompt, 1 );
     $prompt = 'Address: ' . $address;
     $this->log( $prompt );
     $prompt = 'latitude: ' . $lat . '; longigute: ' . $lon;
-    $this->log( $prompt );
-    $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
-    $this->log( $prompt, -1 );
-    $this->log( $prompt, 0 );
-    $this->log( $prompt, 1 );
-    $this->log( $prompt, 2 );
-    $this->log( $prompt, 3 );
     
       // logging
 
