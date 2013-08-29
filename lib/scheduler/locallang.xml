@@ -20,11 +20,10 @@
       <label index="label.testMode.enabled">Enabled (latitudes and logitudes will not touched)</label>
       <label index="label.testTask.name">Browser - TYPO3 without PHP - Test</label>
       <label index="label.testTask.description">The Browser tests the sending of an e-mail to the admin. It is a service for development only.</label>
-      <label index="msg.enterFrequency">Frequency:  frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
-      <label index="msg.enterImportUrl">URL of the xml file: Please take care of a proper URL for the XML file.</label>
       <label index="msg.enterBrowserAdminEmail">E-mail: Please enter the e-mail adress of the Browser  admin.</label>
+      <label index="msg.enterFrequency">Frequency:  frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
       <label index="msg.enterStart">Start: Start must be one hour later than now at least. This is a security requirement. If you like to run Browser Quota earlier, please run it manually.</label>
-      <label index="msg.enterSysfolderUid">Id of Browser folder: Please take care of a proper uid of the folder, which contains Browser records.</label>
+      <label index="msg.enterTable">Table: Please take care of a proper table name.</label>
       <label index="msg.testMode.disabled">Test mode: disabled (empty latitude and longitude will overriden).</label>
       <label index="msg.testMode.enabled">Test mode: enabled (no latitude and no longitude will touched).</label>
       <label index="msg.testMode.undefined">Test mode: value is undefined!</label>
@@ -54,11 +53,10 @@
       <label index="label.testMode.enabled">Ein (Breiten- und Längengrade werden nicht geändert)</label>
       <label index="label.testTask.name">Browser - TYPO3 ohne PHP - Test</label>
       <label index="label.testTask.description">Der Browser testet den Mail-Versand an den Administrator. Der Test hilft Entwicklern, den TYPO3-Browser weiter zu entwickeln.</label>
-      <label index="msg.enterFrequency">Häufigkeit: Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
-      <label index="msg.enterImportUrl">URL der XML-Datei: Gib bitte eine korrekte Adresse an.</label>
       <label index="msg.enterBrowserAdminEmail">E-Mail: Bitte gib die Mail-Adresse des Browser Administrators an.</label>
+      <label index="msg.enterFrequency">Häufigkeit: Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
       <label index="msg.enterStart">Start: Die Start-Zeit muss eine mindestens Stunde in der Zukunft liegen. Das ist eine Vorsichtsmaßnahme. Wenn dieser Job eher gestartet werden soll, starte ihn manuell.</label>
-      <label index="msg.enterSysfolderUid">Id des Browser-Ordners: Bitte gebe die korrekte Id des Ordners an, der die Browser-Datensätze enthält.</label>
+      <label index="msg.enterTable">Tabelle: Gib bitte eine korrekte Tabelle an.</label>
       <label index="msg.testMode.disabled">Test-Modus: ausgeschaltet (leere Breiten- und Längengrade werden überschrieben)</label>
       <label index="msg.testMode.enbaled">Test-Modus: eingeschaltet (Breiten- und Längengrade werden nicht geändert)</label>
       <label index="msg.testMode.undefined">Test-Modus: undefinierter Wert!</label>
