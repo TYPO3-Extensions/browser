@@ -425,6 +425,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $browserAdminEmail  = 'Admin'
                         . ': '
                         . $this->browser_browserAdminEmail
+                        . ', Table '
+                        . $this->browser_table
                         ;
     return $browserAdminEmail;
   }
