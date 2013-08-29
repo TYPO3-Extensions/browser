@@ -449,10 +449,9 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // DRS
 
       // E-mail to admin
-    $subject  = 'ERROR: TYPO3 Browser Geoupdate';
+    $subject  = 'ERROR!';
     $body     = $prompt . PHP_EOL
               . PHP_EOL
-              . $this->browser_table . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
