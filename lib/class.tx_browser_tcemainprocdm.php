@@ -269,11 +269,11 @@ class tx_browser_tcemainprocdm
     }
     
       // Get geodata
-//    $geodata = geoupdateGoogleAPI( $address ); 
-//    $lat = $geodata[ 'lat' ];
-//    $lon = $geodata[ 'lon' ];
-//    unset( $geodata );
-    list( $lat, $lon ) = $this->geoupdateGoogleAPI( $address ); 
+    $geodata = geoupdateGoogleAPI( $address ); 
+    $lat = $geodata[ 'lat' ];
+    $lon = $geodata[ 'lon' ];
+    unset( $geodata );
+//    list( $lat, $lon ) = $this->geoupdateGoogleAPI( $address ); 
 
       // RETURN : lan or lot is null
     switch( true )
@@ -413,9 +413,8 @@ class tx_browser_tcemainprocdm
      // 'Amphitheatre Parkway 1600, Mountain View, CA';
     $address = implode( ', ', $arrAddress );
     
-    $error  = 1;
     $prompt = 'OK: address is ' . $address;
-    $this->log( $prompt, $error );
+    $this->log( $prompt );
 
     return $address;
   }
