@@ -91,8 +91,8 @@
  * @author        Dirk Wildt (http://wildt.at.die-netzmacher.de/)
  * @package        TYPO3
  * @subpackage    browser
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
 class tx_browser_Geoupdate extends tx_scheduler_Task {
 
@@ -271,8 +271,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  *
  * @return	boolean
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function execute( )
   {
@@ -291,13 +291,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $geoupdate = $this->geoupdate( );
     if( ! $geoupdate )
     {
-        // DRS
-      if( $this->drsModeError )
-      {
-        $prompt = 'Failure in geoupdate( ):';
-        t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
-      }
-        // DRS
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
     }
@@ -306,17 +299,19 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // DRS
     if( $this->drsModeInfo )
     {
-      $prompt = 'Success geoupdate.';
+      $prompt = 'Success!';
       t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, -1 );
     }
       // DRS
-    $subject  = 'Success geoupdate';
-    $body     = 'geoupdate' . PHP_EOL
+
+      // E-mail to admin
+    $subject  = 'TYPO3-Browser Geoupdate: success';
+    $body     = 'Task is done with success.' . PHP_EOL
               . PHP_EOL
-              . $this->browser_table . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body, 'update' );
+      // E-mail to admin
 
     $this->timeTracking_log( $debugTrailLevel, 'END' );
 
@@ -336,11 +331,134 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  *
  * @return	boolean   Information to display
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function geoupdate( )
   {
+      // RETURN : requirements aren't matched
+    if( ! $this->geoupdateRequired( ) )
+    {
+      return true;
+    }
+      // RETURN : requirements aren't matched
+
+    //    Tabelle konfiguriert?
+    // Durchlaufe alle Datensätze der angegebenen Tabelle
+    //    Wenn Breiten- oder Längengrad leer, prüfe ob Adresse vorhanden.
+    //      Wenn Adresse vorhanden, aktualisiere Breiten- und Längengrad
+    return false;
+  }
+
+/**
+ * geoupdateRequired( )
+ *
+ * @return	boolean         true if requierements matched, false if not.
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateRequired( ) 
+  {
+    if( ! $this->geoupdateRequiredTable( ) )
+    {
+      return false;
+    }
+    
+    $address  = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
+    $geodata  = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
+    $update   = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['update'];
+    
+    switch( true )
+    {
+      case( ! $update ):
+        $prompt = 'WARN: $GLOBALS[TCA][' . $this->browser_table . '][ctrl][tx_browser][geoupdate][update] is set to false. '
+                . 'Geodata won\'t updated.'
+                ;
+          // DRS
+        if( $this->drsModeInfo )
+        {
+          t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 2 );
+        }
+          // E-mail to admin
+        $subject  = 'TYPO3 Browser: Geoupdate is disabled';
+        $body     = $prompt . PHP_EOL
+                  . PHP_EOL
+                  . $this->browser_table . PHP_EOL
+                  . PHP_EOL
+                  . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+        $this->drsMailToAdmin( $subject, $body, 'warn' );
+          // E-mail to admin
+        return false;
+        break;
+      case( empty( $address ) ):
+      case( empty( $geodata ) ):
+        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->browser_table . '][ctrl][tx_browser][geoupdate] is set, '
+                . 'but the element [address] and/or [geodata] isn\'t configured! '
+                . 'Please take care off a proper TCA configuration!'
+                ;
+          // DRS
+        if( $this->drsModeInfo )
+        {
+          t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
+        }
+          // E-mail to admin
+        $subject  = 'TYPO3 Browser: Geoupdate is disabled';
+        $body     = $prompt . PHP_EOL
+                  . PHP_EOL
+                  . $this->browser_table . PHP_EOL
+                  . PHP_EOL
+                  . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+        $this->drsMailToAdmin( $subject, $body, 'error' );
+          // E-mail to admin
+        return false;
+        break;
+    }
+    
+    unset( $address );
+    unset( $geodata );
+    unset( $update  );
+    
+    return true;
+  }
+
+/**
+ * geoupdateRequiredTable( )
+ *
+ * @return	boolean         true if requierements matched, false if not.
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateRequiredTable( ) 
+  {
+    if( isset( $GLOBALS[ 'TCA' ][ $this->browser_table ] ) )
+    {
+      return true;
+    }
+    
+      // Prompt
+    $prompt = 'ERROR: $GLOBALS[TCA][' . $this->browser_table . '] isn\'t set.';
+
+      // DRS
+    if( $this->drsModeInfo )
+    {
+      t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+
+      // E-mail to admin
+    $subject  = 'ERROR: TYPO3 Browser Geoupdate';
+    $body     = $prompt . PHP_EOL
+              . PHP_EOL
+              . $this->browser_table . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->drsMailToAdmin( $subject, $body );
+      // E-mail to admin
+
     return false;
   }
 
@@ -356,8 +474,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  *
  * @return	string		Information to display
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function getAdditionalInformation( )
   {
@@ -386,8 +504,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  * @param	[type]		$$xml: ...
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function convertContent( $xml )
   {
@@ -403,8 +521,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  * @param	[type]		$$success: ...
  * @return	void
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function convertContentDrsMail( $success )
   {
@@ -427,8 +545,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function convertContentInstance( )
   {
@@ -456,8 +574,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  * @param	integer		$level      : integer
  * @return	array		$arr_return : with elements class, method, line and prompt
  * @access private
- * @version 0.0.1
- * @since   0.0.1
+ * @version 4.5.13
+ * @since   4.5.13
  */
   private function drsDebugTrail( $level = 1 )
   {
@@ -500,12 +618,13 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  *
  * @param	string		$subject     : ...
  * @param	string		$body        : ...
+ * @param	string		$status      : error, warn, info, ok, update
  * @return	array		$arr_return  : with elements class, method, line and prompt
  * @access public
- * @version 0.0.1
- * @since   0.0.1
+ * @version 4.5.13
+ * @since   4.5.13
  */
-  public function drsMailToAdmin( $subject='Information', $body=null )
+  public function drsMailToAdmin( $subject='Information', $body=null, $status='error' )
   {
     switch( true )
     {
@@ -520,6 +639,71 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         return;
         break;
     }
+    
+    switch( $status )
+    {
+      case( 'error' ):
+        // Follow the workflow
+        break;
+      case( 'warn' ):
+        switch( $this->browser_reportMode )
+        {
+          case( 'ever' ):
+          case( 'warn' ):
+            // Follow the workflow
+            break;
+          case( 'never' ):
+          case( 'update' ):
+          default:
+            return;
+            break;
+        }
+        break;
+      case( 'info' ):
+        switch( $this->browser_reportMode )
+        {
+          case( 'ever' ):
+            // Follow the workflow
+            break;
+          case( 'warn' ):
+          case( 'never' ):
+          case( 'update' ):
+          default:
+            return;
+            break;
+        }
+        break;
+      case( 'ok' ):
+        switch( $this->browser_reportMode )
+        {
+          case( 'ever' ):
+            // Follow the workflow
+            break;
+          case( 'warn' ):
+          case( 'never' ):
+          case( 'update' ):
+          default:
+            return;
+            break;
+        }
+        break;
+      case( 'update' ):
+        switch( $this->browser_reportMode )
+        {
+          case( 'ever' ):
+          case( 'warn' ):
+          case( 'update' ):
+            // Follow the workflow
+            break;
+          case( 'never' ):
+          default:
+            return;
+            break;
+        }
+        break;
+    }
+    
+    
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
     {
@@ -551,16 +735,17 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
 Browser
 - - - - - - - - - - - - - - - -
-Task-Id:    ' . $this->taskUid . '
-Sitename:   ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . '
-Site:       ' . $site . '
-Called by:  ' . $calledBy . '
-tstamp:     ' . date( 'Y-m-d H:i:s' ) . ' [' . time( ) . ']
-start:      ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']
-end:        ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . '
-interval:   ' . $interval . '
-multiple:   ' . ( $multiple ? 'yes' : 'no' ) . '
-cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
+Task-Id   : ' . $this->taskUid . '
+Sitename  : ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . '
+Site      : ' . $site . '
+Called by : ' . $calledBy . '
+tstamp    : ' . date( 'Y-m-d H:i:s' ) . ' [' . time( ) . ']
+start     : ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']
+end       : ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . '
+interval  : ' . $interval . '
+multiple  : ' . ( $multiple ? 'yes' : 'no' ) . '
+cronCmd   : ' . ( $cronCmd ? $cronCmd : 'not used' ) . '
+table     : ' . $this->browser_table;
 
       // Prepare mailer and send the mail
     try
@@ -613,8 +798,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function getAdminmail( )
   {
@@ -626,8 +811,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function getTestMode( )
   {
@@ -639,8 +824,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function getTable( )
   {
@@ -652,8 +837,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function getReportMode( )
   {
@@ -673,8 +858,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function init( )
   {
@@ -700,47 +885,31 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * initDRS( )  : Init the DRS - Development Reporting System
  *
  * @return	void
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function initDRS( )
   {
 
-    if( $this->extConf['debuggingDrs'] == 'Disabled' )
+    if( $this->extConf['drs_mode'] != 'Scheduler: Geoupdate' )
     {
       return;
     }
 
-    $this->drsModeAll   = true;
-    $this->drsModeError = true;
-    $this->drsModeWarn  = true;
-    $this->drsModeInfo  = true;
-
-    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['debuggingDrs'];
+    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['drs_mode'];
     t3lib_div::devlog( '[tx_browser_Geoupdate] ' . $prompt, $this->extKey, 0 );
 
-    switch( $this->extConf['debuggingDrs'] )
-    {
-      case( 'Enabled (for debugging only!)' ):
-        $this->drsModeConvert     = true;
-        $this->drsModeGeoupdate  = true;
-        $this->drsModePerformance = true;
-        $this->drsModeSql         = true;
-        $this->drsModeUpdate      = true;
-        $this->drsModeXml         = true;
-        break;
-      default:
-          // :TODO: Error msg per email to admin
-        $this->drsModeConvert     = true;
-        $this->drsModeGeoupdate  = true;
-        $this->drsModePerformance = true;
-        $this->drsModeSql         = true;
-        $this->drsModeUpdate      = true;
-        $this->drsModeXml         = true;
-        $prompt = 'DRS mode isn\'t defined.';
-        t3lib_div::devlog( '[tx_browser_Geoupdate] ' . $prompt, $this->extKey, 3 );
-        break;
-    }
+    $this->drsModeAll         = true;
+    $this->drsModeError       = true;
+    $this->drsModeWarn        = true;
+    $this->drsModeInfo        = true;
+
+    $this->drsModeConvert     = true;
+    $this->drsModeGeoupdate   = true;
+    $this->drsModePerformance = true;
+    $this->drsModeSql         = true;
+    $this->drsModeUpdate      = true;
+    $this->drsModeXml         = true;
   }
 
 /**
@@ -748,8 +917,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function initRequirements( )
   {
@@ -777,8 +946,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function initRequirementsAdminmail( )
   {
@@ -805,8 +974,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function initRequirementsAllowUrlFopen( )
   {
@@ -844,8 +1013,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.2
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function initRequirementsOs( )
   {
@@ -902,8 +1071,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function initTimetracking( )
   {
@@ -926,8 +1095,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	[type]		$$value: ...
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function setAdminmail( $value )
   {
@@ -940,8 +1109,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	[type]		$$value: ...
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function setTestMode( $value )
   {
@@ -954,8 +1123,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	[type]		$$value: ...
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function setTable( $value )
   {
@@ -968,8 +1137,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	[type]		$$value: ...
  * @return	void
  * @access public
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   public function setReportMode( $value )
   {
@@ -990,8 +1159,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	void
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function timeTracking_init( )
   {
@@ -1012,8 +1181,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	string		$line             : current line in calling method
  * @param	string		$prompt           : The prompt for devlog.
  * @return	void
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function timeTracking_log( $debugTrailLevel, $prompt )
   {
@@ -1064,8 +1233,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	string		$prompt: The prompt for devlog.
  * @return	void
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function timeTracking_prompt( $debugTrailLevel, $prompt )
   {
@@ -1102,8 +1271,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	array		$content  :
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function updateDatabase( $content )
   {
@@ -1121,8 +1290,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  * @param	[type]		$$success: ...
  * @return	void
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function updateDatabaseDrsMail( $success )
   {
@@ -1145,8 +1314,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' );
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
- * @since         0.0.1
+ * @version       4.5.13
+ * @since         4.5.13
  */
   private function updateDatabaseInstance( )
   {
