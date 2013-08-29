@@ -961,6 +961,8 @@ class tx_browser_tcemainprocdm
                                       $orderBy,
                                       $limit
                                     );
+    $prompt = 'query: ' . $query;
+    $this->log( $prompt, 1 );
       // Set the query
 
       // Execute the query
