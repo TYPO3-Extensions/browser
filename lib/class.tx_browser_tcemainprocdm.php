@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.5.7
+* @version 4.5.13
 * @since 4.5.7
 */
 
@@ -71,6 +71,10 @@ class tx_browser_tcemainprocdm
   
     // [Object] parent object
   private $pObj       = null;
+  
+    // [String] Geo API URL
+  private $googleApiUrl  = 'http://maps.googleapis.com/maps/api/geocode/json?address=%address%&sensor=false';
+
 
 
 
@@ -90,7 +94,7 @@ class tx_browser_tcemainprocdm
  * @param	object		$reference  : parent object - reference!
  * @return	void
  * 
- * @version   4.5.7
+ * @version   4.5.13
  * @since     4.5.7
  */
 
@@ -112,6 +116,10 @@ class tx_browser_tcemainprocdm
       
     switch( true )
     {
+        // #51478, 130829, dwildt
+      case( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['geoupdate'] ) ):
+        $this->geoupdate( $fieldArray, $reference );
+          // follow cases below
       case( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) ):
         $this->route( &$fieldArray, &$reference );
           // follow cases below
@@ -122,6 +130,537 @@ class tx_browser_tcemainprocdm
     
     return;
   }
+
+
+
+  /***********************************************
+  *
+  * Geo Update
+  *
+  **********************************************/
+
+/**
+ * geoupdate( )
+ *
+ * @param	array		$fieldArray : Array of modified fields
+ * @return	void
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdate( &$fieldArray ) 
+  {
+      // RETURN : requirements aren't matched
+    if( ! $this->geoupdateRequired( ) )
+    {
+      $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+      $this->log( $prompt );
+      return;
+    }
+      // RETURN : requirements aren't matched
+
+    $arrResult = $this->geoupdateHandleData( $fieldArray );
+    if( $arrResult['error'] )
+    {
+      return;
+    }
+
+    return;
+  }
+
+/**
+ * geoupdateGoogleAPI( )
+ *
+ * @param	string		$address    : Address
+ * @return	array           $geodata    : lon, lat
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateGoogleAPI( $address ) 
+  {
+      // Set URL
+    $urlAddress = urlencode( $address );
+    $googleApiUrl  = str_replace( '%address%', $urlAddress, $this->googleApiUrl );
+    
+      // Get geodata from Google API
+    $json   = file_get_contents( $googleApiUrl );
+    $data   = json_decode( $json );
+    $lat    = $data->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
+    $lon    = $data->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+    $status = $data->{'status'};
+      // Get geodata from Google API
+
+      // Log the status message
+    switch( true )
+    {
+      case( $status == 'OK' ):
+        $prompt = 'Google API status is: OK';
+        $this->log( $prompt );
+        break;
+      case( $status == 'ZERO_RESULTS' ):
+        $prompt = 'Google API status is: ZERO_RESULTS';
+        $this->log( $prompt );
+        $prompt = 'This means: Query was proper, but Google API doesn\'t know the given address.';
+        $this->log( $prompt );
+        $prompt = 'Address: ' . $address;
+        $this->log( $prompt );
+        break;
+      case( $status == 'OVER_QUERY_LIMIT' ):
+        $prompt = 'Google API status is: OVER_QUERY_LIMIT';
+        $this->log( $prompt );
+        $prompt = 'This means: Query was proper, but your website overrun the limit of allowed or contracted Google requests.';
+        $this->log( $prompt );
+        break;
+      case( $status == 'REQUEST_DENIED' ):
+        $error  = 1;
+        $prompt = 'ERROR: Google API status is: REQUEST_DENIED';
+        $this->log( $prompt, $error );
+        $prompt = 'This means: Query was unproper. Probably because of a wrong sensor parameter';
+        $this->log( $prompt );
+        $prompt = $googleApiUrl;
+        $this->log( $prompt );
+        break;
+      case( $status == 'INVALID_REQUEST' ):
+        $error  = 1;
+        $prompt = 'ERROR: Google API status is: INVALID_REQUEST';
+        $this->log( $prompt, $error );
+        $prompt = 'This means: Query was unproper. Probably because of a missing address';
+        $this->log( $prompt );
+        $prompt = $googleApiUrl;
+        $this->log( $prompt );
+        break;
+      default:
+        $error  = 1;
+        $prompt = 'ERROR: Google API status is undefined: ' . $status;
+        $this->log( $prompt, $error );
+        break;
+    }
+      // Log the status message
+
+      //  RETURN  : geodata 
+    $geodata  = array
+                (
+                  'lat' => $lat,
+                  'lon' => $lon,
+                );
+    return $geodata;
+  }
+
+/**
+ * geoupdateHandleData( )
+ *
+ * @param	array		$fieldArray : Array of modified fields
+ * @return	void
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleData( &$fieldArray ) 
+  {
+      // Get address
+    $address = $this->geoupdateHandleDataGetAddress( $fieldArray );
+    
+      // Get geodata
+//    $geodata = geoupdateGoogleAPI( $address ); 
+//    $lat = $geodata[ 'lat' ];
+//    $lon = $geodata[ 'lon' ];
+//    unset( $geodata );
+    list( $lat, $lon ) = geoupdateGoogleAPI( $address ); 
+
+      // RETURN : lan or lot is null
+    switch( true )
+    {
+      case( $lat == null ):
+      case( $lon == null ):
+        $error  = 1;
+        $prompt = 'ERROR: Returned latitude and/or longitude is null!';
+        $this->log( $prompt, $error );
+        $error  = 0;
+        $prompt = 'address: ' . $address;
+        $this->log( $prompt, $error );
+        return;
+        break;
+      default:
+          // follow the workflow
+        break;
+    }
+      // RETURN : lan or lot is null
+
+      // get lables for geodata
+    $geodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
+
+      // update geodata
+    $fieldArray[ $geodata[ 'lat' ] ] = $lat;
+    $fieldArray[ $geodata[ 'lon' ] ] = $lon;
+
+      // logging
+    $prompt = 'OK: latitude and longitude are updated!';
+    $this->log( $prompt );
+    $prompt = 'Address: ' . $address;
+    $this->log( $prompt );
+    $prompt = 'latitude: ' . $lat . '; longigute: ' . $lon;
+    $this->log( $prompt );
+      // logging
+
+    return;
+  }
+
+/**
+ * geoupdateAddressIsUntouched( )
+ *
+ * @param	array		$labels     : Address field labels
+ * @param	array		$fieldArray : Array of modified fields
+ * @return	boolean         $untouched  : true, if address data are untouched
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateAddressIsUntouched( $labels, $fieldArray ) 
+  {
+      // RETURN : false, an address field is touched at least
+    foreach( $labels as $label )
+    {
+      if( ! empty( $fieldArray[ $label ] ) )
+      {
+        return false;
+      }
+    }
+      // RETURN : false, an address field is touched at least
+    
+    $error  = 1;
+    $prompt = 'OK: Address data are untouched.';
+    $this->log( $prompt, $error );
+    return true;
+  }
+
+/**
+ * geoupdateHandleDataGetAddress( )
+ *
+ * @param	array		$fieldArray : Array of modified fields
+ * @return	string          $address    : Address
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddress( $fieldArray ) 
+  {
+    $address    = null;
+    $arrAddress = array( );
+
+      // Labels of the address fields
+    $labels = $this->geoupdateHandleDataGetAddressLabels( );
+    
+      // RETURN : no address field is touched
+    if( $this->geoupdateAddressIsUntouched( $labels, $fieldArray ) )
+    {
+      return;
+    }
+      // RETURN : no address field is touched
+      
+      // Get former address data
+    $select_fields = implode( ', ', $labels );
+    $sqlResult = $this->sqlSelect( $select_fields );
+      
+      // Set street
+    $street = $this->geoupdateHandleDataGetAddressStreet( $fieldArray, $labels, $sqlResult );
+    if( $street )
+    {
+      $arrAddress[ 'street' ] = $street;
+    }
+      // Set street
+    
+      // Set location
+    $location = $this->geoupdateHandleDataGetAddressLocation( $fieldArray, $labels, $sqlResult );
+    if( $location )
+    {
+      $arrAddress[ 'location' ] = $location;
+    }
+      // Set location
+
+      // Set areaLevel2
+    $areaLevel2 = $this->geoupdateHandleDataGetAddressAreaLevel2( $fieldArray, $labels, $sqlResult );
+    if( $areaLevel2 )
+    {
+      $arrAddress[ 'areaLevel2' ] = $areaLevel2;
+    }
+      // Set areaLevel2
+
+      // Set areaLevel1
+    $areaLevel1 = $this->geoupdateHandleDataGetAddressAreaLevel1( $fieldArray, $labels, $sqlResult );
+    if( $areaLevel1 )
+    {
+      $arrAddress[ 'areaLevel1' ] = $areaLevel1;
+    }
+      // Set areaLevel1
+
+      // Set country
+    $country = $this->geoupdateHandleDataGetAddressCountry( $fieldArray, $labels, $sqlResult );
+    if( $country )
+    {
+      $arrAddress[ 'country' ] = $country;
+    }
+      // Set country
+
+     // 'Amphitheatre Parkway 1600, Mountain View, CA';
+    $address = implode( ', ', $arrAddress );
+    
+    $error  = 1;
+    $prompt = 'OK: address is ' . $address;
+    $this->log( $prompt, $error );
+
+    return $address;
+  }
+
+/**
+ * geoupdateHandleDataGetAddressAreaLevel1( )
+ *
+ * @param	array		$fieldArray   : Array of modified fields
+ * @param	array		$labels       : Labels of the fields
+ * @param	array		$sqlResult    : Array of former field values (from database)
+ * @return	string          $country       : AreaLevel1
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddressAreaLevel1( $fieldArray, $labels, $sqlResult ) 
+  {
+    $areaLevel1 = null;
+
+    if( isset( $labels[ 'areaLevel1' ] ) )
+    {
+      $areaLevel1 = $sqlResult[ $labels[ 'areaLevel1' ] ];
+      if( isset( $fieldArray[ $labels[ 'areaLevel1' ] ] ) )
+      {
+        $areaLevel1 = $fieldArray[ $labels[ 'areaLevel1' ] ];
+      }
+    }
+    
+    return $areaLevel1;
+  }
+
+/**
+ * geoupdateHandleDataGetAddressAreaLevel2( )
+ *
+ * @param	array		$fieldArray   : Array of modified fields
+ * @param	array		$labels       : Labels of the fields
+ * @param	array		$sqlResult    : Array of former field values (from database)
+ * @return	string          $country       : AreaLevel2
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddressAreaLevel2( $fieldArray, $labels, $sqlResult ) 
+  {
+    $areaLevel2 = null;
+
+    if( isset( $labels[ 'areaLevel2' ] ) )
+    {
+      $areaLevel2 = $sqlResult[ $labels[ 'areaLevel2' ] ];
+      if( isset( $fieldArray[ $labels[ 'areaLevel2' ] ] ) )
+      {
+        $areaLevel2 = $fieldArray[ $labels[ 'areaLevel2' ] ];
+      }
+    }
+    
+    return $areaLevel2;
+  }
+
+/**
+ * geoupdateHandleDataGetAddressCountry( )
+ *
+ * @param	array		$fieldArray   : Array of modified fields
+ * @param	array		$labels       : Labels of the fields
+ * @param	array		$sqlResult    : Array of former field values (from database)
+ * @return	string          $country       : Country
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddressCountry( $fieldArray, $labels, $sqlResult ) 
+  {
+    $country = null;
+
+    if( isset( $labels[ 'country' ] ) )
+    {
+      $country = $sqlResult[ $labels[ 'country' ] ];
+      if( isset( $fieldArray[ $labels[ 'country' ] ] ) )
+      {
+        $country = $fieldArray[ $labels[ 'country' ] ];
+      }
+    }
+    
+    return $country;
+  }
+
+/**
+ * geoupdateHandleDataGetAddressLabels( )
+ *
+ * @return	array          $labels    : Labels
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddressLabels( ) 
+  {
+      // Get field labels
+    $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
+    
+      // Labels of the address fields
+    $labels = array( );
+    $labels[ 'areaLevel1' ]   = $tcaCtrlAddress[ 'areaLevel1' ]; 
+    $labels[ 'areaLevel2' ]   = $tcaCtrlAddress[ 'areaLevel2' ]; 
+    $labels[ 'country' ]      = $tcaCtrlAddress[ 'country' ]; 
+    $labels[ 'locationZip' ]  = $tcaCtrlAddress[ 'location' ][ 'zip' ]; 
+    $labels[ 'locationCity' ] = $tcaCtrlAddress[ 'location' ][ 'city' ]; 
+    $labels[ 'streetName' ]   = $tcaCtrlAddress[ 'street' ][ 'name' ]; 
+    $labels[ 'streetNumber' ] = $tcaCtrlAddress[ 'street' ][ 'number' ]; 
+    
+      // Remove empty labels
+    foreach( $labels as $key => $label )
+    {
+      if( empty ( $label ) )
+      {
+        unset( $labels[ $key ] );
+      }
+    }
+      // Remove empty labels
+
+    return $labels;
+  }
+
+/**
+ * geoupdateHandleDataGetAddressLocation( )
+ *
+ * @param	array		$fieldArray   : Array of modified fields
+ * @param	array		$labels       : Labels of the fields
+ * @param	array		$sqlResult    : Array of former field values (from database)
+ * @return	string          $location       : Location
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddressLocation( $fieldArray, $labels, $sqlResult ) 
+  {
+      // Get location
+    $arrLocation  = array( );
+    if( isset( $labels[ 'locationZip' ] ) )
+    {
+      $arrLocation[ 'zip' ] = $sqlResult[ $labels[ 'locationZip' ] ];
+      if( isset( $fieldArray[ $labels[ 'locationZip' ] ] ) )
+      {
+        $arrLocation[ 'zip' ] = $fieldArray[ $labels[ 'locationZip' ] ];
+      }
+    }
+    if( isset( $labels[ 'locationCity' ] ) )
+    {
+      $arrLocation[ 'city' ] = $sqlResult[ $labels[ 'locationCity' ] ];
+      if( isset( $fieldArray[ $labels[ 'locationCity' ] ] ) )
+      {
+        $arrLocation[ 'city' ] = $fieldArray[ $labels[ 'locationCity' ] ];
+      }
+    }
+    
+    $location = implode( ' ', $arrLocation );
+
+    return $location;
+  }
+
+/**
+ * geoupdateHandleDataGetAddressStreet( )
+ *
+ * @param	array		$fieldArray   : Array of modified fields
+ * @param	array		$labels  : Labels of the fields
+ * @param	array		$sqlResult    : Array of former field values (from database)
+ * @return	string          $street       : Street
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateHandleDataGetAddressStreet( $fieldArray, $labels, $sqlResult ) 
+  {
+      // Get street
+    $arrStreet  = array( );
+    if( isset( $labels[ 'streetName' ] ) )
+    {
+      $arrStreet[ 'name' ] = $sqlResult[ $labels[ 'streetName' ] ];
+      if( isset( $fieldArray[ $labels[ 'streetName' ] ] ) )
+      {
+        $arrStreet[ 'name' ] = $fieldArray[ $labels[ 'streetName' ] ];
+      }
+    }
+    if( isset( $labels[ 'streetNumber' ] ) )
+    {
+      $arrStreet[ 'number' ] = $sqlResult[ $labels[ 'streetNumber' ] ];
+      if( isset( $fieldArray[ $labels[ 'streetNumber' ] ] ) )
+      {
+        $arrStreet[ 'number' ] = $fieldArray[ $labels[ 'streetNumber' ] ];
+      }
+    }
+    
+    $street = implode( ' ', $arrStreet );
+
+    return $street;
+  }
+
+/**
+ * geoupdateRequired( )
+ *
+ * @return	boolean         $requirementsMatched  : true if requierements matched, false if not.
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateRequired( ) 
+  {
+    $requirementsMatched = true; 
+    
+    $address  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
+    $geodata  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
+    $update   = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['update'];
+    
+    switch( true )
+    {
+      case( ! $update ):
+        $prompt = 'OK: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate][update] is set to false. '
+                . 'Geodata won\'t updated.'
+                ;
+        $this->log( $prompt );    
+        $requirementsMatched = false; 
+        return $requirementsMatched;
+        break;
+      case( empty( $address ) ):
+      case( empty( $geodata ) ):
+        $error  = 1;
+        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate] is set, '
+                . 'but the element [address] and/or [geodata] isn\'t configured! '
+                . 'Please take care off a proper TCA configuration!'
+                ;
+        $this->log( $prompt, $error );
+        $requirementsMatched = false; 
+        return $requirementsMatched;
+        break;
+    }
+    
+    unset( $address );
+    unset( $geodata );
+    unset( $update  );
+    
+    return $requirementsMatched;
+  }
+
 
 
 
@@ -219,21 +758,20 @@ class tx_browser_tcemainprocdm
  * routeGpxHandleData( )
  *
  * @param	array		$fieldArray : Array of modified fields
- * @param	object		$reference  : reference to parent object
  * @return	void
  * 
  * @version   4.5.7
  * @since     4.5.7
  */
 
-  private function routeGpxHandleData( &$fieldArray, &$reference ) 
+  private function routeGpxHandleData( &$fieldArray ) 
   {
       // Get field labels
     $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ];
     $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'geodata' ];
     
       // Update TCA array of the current table
-    if (!is_array($GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ]))
+    if( ! is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ] ) )
     {
       t3lib_div::loadTCA( $this->processTable );
     }
@@ -241,7 +779,8 @@ class tx_browser_tcemainprocdm
     
       // Get field configuration
     $confGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGpxfile ][ 'config' ];
-    $confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
+    // 130829, dwildt, 1-
+    //$confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
     
       // Get the absoulte path of the uploaded file
     $uploadfolder = $confGpxfile[ 'uploadfolder' ];
@@ -272,6 +811,9 @@ class tx_browser_tcemainprocdm
     }
     
     $strGeodata = implode( PHP_EOL, ( array ) $arrTrackpoints );
+    
+    unset( $arrTrackpoint );
+    unset( $arrTrackpoints );
     
     if( empty( $strGeodata ) )
     {
@@ -339,6 +881,91 @@ class tx_browser_tcemainprocdm
     unset( $fieldGeodata );
     
     return $requirementsMatched;
+  }
+
+  
+  
+  /***********************************************
+   *
+   * SQL
+   *
+   **********************************************/
+
+ /**
+  * sqlSelect( ):  The method select the values of the given table and select and
+  *                 returns the values as a marker array
+  *
+  * @param	string		$select_fields:  fields for the SQL select
+  * @return	array		$result       :  Array with field-value pairs
+  * @access public
+  * @version  4.5.17
+  * @since    4.5.17
+  */
+  public function sqlSelect( $select_fields )
+  {
+    $result = null;
+
+      // Set the query
+    $from_table     = $this->processTable;
+    $where_clause   = 'uid = ' . $this->processId;
+    $groupBy        = null;
+    $orderBy        = null;
+    $limit          = null;
+
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Set the query
+
+      // Execute the query
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute the query
+
+      // RETURN : ERROR
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( ! empty( $error ) )
+    {
+      t3lib_div::devlog('[ERROR/SQL] '. $query,  $this->extKey, 3);
+      t3lib_div::devlog('[ERROR/SQL] '. $error,  $this->extKey, 3);
+      $prompt = 'ERROR: Unproper SQL query';
+      $this->log( $prompt, 1 );
+      $prompt = 'query: ' . $query;
+      $this->log( $prompt );
+      $prompt = 'prompt: ' . $error;
+      $this->log( $prompt );
+      
+      return;
+    }
+      // RETURN : ERROR
+
+      // Fetch first row only
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+      // Set the result array
+    foreach( $row as $key => $value )
+    {
+      $result[ $key ] = $value;
+    }
+      // Set the result array
+
+      // RETURN the result array
+    return $result;
   }
 
 }

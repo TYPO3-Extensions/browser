@@ -1,3 +1,5 @@
+  * #51494: Index-Browser: make SQL command LATIN1 configurable
+
 4.5.13
   13-08-28
   Features
@@ -185,6 +187,7 @@
                   * constants.txt
                   * setup.txt
                 * ext_tables.php
+  * #43397: filter CSV export
   Bugfix
   * #48613: Unproper URL for icons in Backend-Module
   * #47700: SQL functions 3.x: orderBy evaluation is unproper in case of aliases
@@ -491,7 +494,7 @@
             * pi1/class.tx_browser_pi1_backend.php
             * static/setup.txt
   Bugfixes
-  * #44125: SQL statements: brackets without slash
+  * #44125/#5052: SQL statements: brackets without slash
             Thanks to tomcat (Kuschmann) for reporting the fix on typo3-browser-forum.de
             Effected files:
             * pi1/class.tx_browser_pi1_navi_indexBrowser.php
