@@ -226,7 +226,7 @@ class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_Addit
       // Write the code for the field
     $fieldID    = 'browser_table';
     $fieldValue = htmlspecialchars( $taskInfo['browser_table'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[browser_table]" id="' . $fieldID . '" value="' . $fieldValue . '" size="80" maxlength="255"/>';
+    $fieldCode  = '<input type="text" name="tx_scheduler[browser_table]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" maxlength="255"/>';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
