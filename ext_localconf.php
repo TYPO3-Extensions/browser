@@ -43,12 +43,12 @@ if( ! empty ( $extConf['showSampleTasks'] ) )
   );
 }
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_browser_ImportTask'] = array
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_browser_Geoupdate'] = array
 (
   'extension'        => $_EXTKEY,
-  'title'            => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.importTask.name',
-  'description'      => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.importTask.description',
-  'additionalFields' => 'tx_browser_ImportTask_AdditionalFieldProvider'
+  'title'            => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.geoupdate.name',
+  'description'      => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.geoupdate.description',
+  'additionalFields' => 'tx_browser_Geoupdate_AdditionalFieldProvider'
 );
 // SC_OPTIONS
 

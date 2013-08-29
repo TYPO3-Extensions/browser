@@ -10,8 +10,8 @@
       <label index="label.importMode.ever">At each call</label>
       <label index="label.importMode.never">Never (doesn't make sense)</label>
       <label index="label.importMode.update">Only, if the XML file was updated (recommended)</label>
-      <label index="label.importTask.name">Browser - TYPO3 without PHP - XML Import</label>
-      <label index="label.importTask.description">The Browser imports the current event programm from an XML feed. Enable this job, if Browser should execute this job continuously.</label>
+      <label index="label.geoupdate.name">Browser - TYPO3 without PHP: geoupdate</label>
+      <label index="label.geoupdate.description">The Browser adds the latitude and the longitude to address records. Latitude and longitude must be empty. This job makes sense for example, if the address records are imported from another database, but without latitude and longitude.</label>
       <label index="label.importUrl">URL of the xml file</label>
       <label index="label.browserAdminEmail">E-mail of the Browser admin</label>
       <label index="label.reportMode">Send an e-mail</label>
@@ -50,8 +50,8 @@
       <label index="label.importMode.ever">Bei jedem Aufruf</label>
       <label index="label.importMode.never">Nie (sinnlos)</label>
       <label index="label.importMode.update">Nur, wenn sich die XML-Datei geändert hat (empfohlen)</label>
-      <label index="label.importTask.name">Browser - TYPO3 ohne PHP - XML-Import</label>
-      <label index="label.importTask.description">Der Browser importiert das Jahresprogramm von einem XML-Feed. Aktiviere diesen Job, wenn Browser den Import regelmäßig erledigen soll.</label>
+      <label index="label.geoupdate.name">Browser - TYPO3 ohne PHP: Geoupdate</label>
+      <label index="label.geoupdate.description">Der Browser fügt Adress-Datensätzen den Breiten- und Längengrad hinzu. Breiten- und Längengrad müssen leer sein. Die Arbeit ist zum Beispiel dann sinnvoll, wenn Adressdatensätze ohne Breiten- und Längengrad aus Dritt-Systemen importiert worden sind.</label>
       <label index="label.importUrl">URL der XML-Datei</label>
       <label index="label.browserAdminEmail">E-Mail des Browser-Administrators</label>
       <label index="label.reportMode">Mail senden</label>
