@@ -212,14 +212,18 @@ class tx_browser_tcemainprocdm
     switch( true )
     {
       case( $status == 'OK' ):
-          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiOK');
-        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-          // Prompt to the current record
+//          // Prompt to the current record
+//        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiOK');
+//        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+//          // Prompt to the current record
         $prompt = 'Google API status is: OK';
         $this->log( $prompt );
         break;
       case( $status == 'ZERO_RESULTS' ):
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiZERO_RESULTS');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
         $prompt = 'Google API status is: ZERO_RESULTS';
         $this->log( $prompt );
         $prompt = 'This means: Query was proper, but Google API doesn\'t know the given address.';
@@ -228,12 +232,20 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt );
         break;
       case( $status == 'OVER_QUERY_LIMIT' ):
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiOVER_QUERY_LIMIT');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
         $prompt = 'Google API status is: OVER_QUERY_LIMIT';
         $this->log( $prompt );
         $prompt = 'This means: Query was proper, but your website overrun the limit of allowed or contracted Google requests.';
         $this->log( $prompt );
         break;
       case( $status == 'REQUEST_DENIED' ):
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiREQUEST_DENIED');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
         $error  = 1;
         $prompt = 'ERROR: Google API status is: REQUEST_DENIED';
         $this->log( $prompt, $error );
@@ -243,6 +255,10 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt );
         break;
       case( $status == 'INVALID_REQUEST' ):
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiINVALID_REQUEST');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
         $error  = 1;
         $prompt = 'ERROR: Google API status is: INVALID_REQUEST';
         $this->log( $prompt, $error );
@@ -252,6 +268,10 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt );
         break;
       default:
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiUNDEFINED');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
         $error  = 1;
         $prompt = 'ERROR: Google API status is undefined: ' . $status;
         $this->log( $prompt, $error );
@@ -300,6 +320,11 @@ class tx_browser_tcemainprocdm
         // update geodata
       $fieldArray[ $geodata[ 'lat' ] ] = null;
       $fieldArray[ $geodata[ 'lon' ] ] = null;
+
+        // Prompt to the current record
+      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataRemoved');
+      $this->geoupdateSetPrompt( $prompt, $fieldArray );
+        // Prompt to the current record
 
         // logging
       $prompt = 'OK: Address is empty ';
