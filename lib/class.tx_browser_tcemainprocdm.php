@@ -187,14 +187,14 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateGoogleAPI( )
  *
- * @param	string		$address    : Address
+ * @param	array		$fieldArray : Array of modified fields * @param	string		$address    : Address
  * @return	array           $geodata    : lon, lat
  * 
  * @version   4.5.13
  * @since     4.5.13
  */
 
-  private function geoupdateGoogleAPI( $address ) 
+  private function geoupdateGoogleAPI( &$fieldArray, $address ) 
   {
       // Set URL
     $urlAddress = urlencode( $address );
@@ -212,6 +212,10 @@ class tx_browser_tcemainprocdm
     switch( true )
     {
       case( $status == 'OK' ):
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiOK');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
         $prompt = 'Google API status is: OK';
         $this->log( $prompt );
         break;
@@ -308,7 +312,7 @@ class tx_browser_tcemainprocdm
     }
     
       // Get geodata
-    $latLon = $this->geoupdateGoogleAPI( $address ); 
+    $latLon = $this->geoupdateGoogleAPI( $fieldArray, $address ); 
     $lat = $latLon[ 'lat' ];
     $lon = $latLon[ 'lon' ];
 
@@ -335,8 +339,10 @@ class tx_browser_tcemainprocdm
     $fieldArray[ $geodata[ 'lat' ] ] = $lat;
     $fieldArray[ $geodata[ 'lon' ] ] = $lon;
 
+      // Prompt to the current record
     $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
     $this->geoupdateSetPrompt( $prompt, $fieldArray );
+      // Prompt to the current record
 
       // logging
     $this->log( $prompt );
@@ -777,7 +783,7 @@ class tx_browser_tcemainprocdm
     }
     
     $date     = date('Y-m-d H:i:s');
-    $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserTitle'). ':';
+    $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
     $prompt   = '* ' . $date . $browser . PHP_EOL 
               . '  ' . $prompt . PHP_EOL
               . $promptFromRow

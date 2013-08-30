@@ -8,7 +8,7 @@
     <languageKey index="default" type="array">
       <label index="befilter_from">from</label>
       <label index="befilter_to">to</label>
-      <label index="promptBrowserTitle">Geoupdate by the Browser - TYPO3 without PHP</label>
+      <label index="promptBrowserPhrase">Browser - TYPO3 without PHP</label>
       <label index="promptCheckUpdateHeader">Update wizard</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         You don't need the update wizard
@@ -153,12 +153,13 @@
             height="90" 
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
       ]]></label>
+      <label index="promptGeodataGoogleapiOK">Google API status: OK</label>
       <label index="promptGeodataUpdate">latitude and longitude are updated!</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
       <label index="befilter_to">bis</label>
-      <label index="promptBrowserTitle">Geoupdate des Browsers - TYPO3 ohne PHP</label>
+      <label index="promptBrowserPhrase">Browsers - TYPO3 ohne PHP</label>
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         Du brauchst keinen Update-Test durchzuf&uuml;hren,
@@ -302,6 +303,7 @@
             height="90" 
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
       ]]></label>
+      <label index="promptGeodataGoogleapiOK">Google-API-Status: OK</label>
       <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert!</label>
     </languageKey>
   </data>
