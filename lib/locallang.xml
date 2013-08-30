@@ -8,6 +8,7 @@
     <languageKey index="default" type="array">
       <label index="befilter_from">from</label>
       <label index="befilter_to">to</label>
+      <label index="promptBrowserTitle">Geoupdate by the Browser - TYPO3 without PHP</label>
       <label index="promptCheckUpdateHeader">Update wizard</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         You don't need the update wizard
@@ -157,6 +158,7 @@
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
       <label index="befilter_to">bis</label>
+      <label index="promptBrowserTitle">Geoupdate des Browsers - TYPO3 ohne PHP</label>
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         Du brauchst keinen Update-Test durchzuf&uuml;hren,

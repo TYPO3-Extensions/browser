@@ -335,6 +335,9 @@ class tx_browser_tcemainprocdm
     $fieldArray[ $geodata[ 'lat' ] ] = $lat;
     $fieldArray[ $geodata[ 'lon' ] ] = $lon;
 
+    $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
+    $this->geoupdateSetPrompt( $prompt, $fieldArray );
+
       // logging
     $this->log( $prompt );
     $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
@@ -617,9 +620,12 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : false, an address field is touched at least
     
+//    $prompt = 'OK: Address data are untouched.';
+//    $this->geoupdateSetPrompt( $prompt, $fieldArray );
+
     $prompt = 'OK: Address data are untouched.';
-    $this->geoupdateSetPrompt( $prompt, $fieldArray );
     $this->log( $prompt );
+    
     return true;
   }
 
@@ -770,10 +776,12 @@ class tx_browser_tcemainprocdm
       $promptFromRow = $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ];
     }
     
-    $prompt = '* ' . date('Y-m-d H:i:s') . ' - Geoupdate by the Browser - TYPO3 without PHP:' . PHP_EOL 
-            . '  ' . $prompt . PHP_EOL
-            . $promptFromRow
-            ;
+    $date     = date('Y-m-d H:i:s');
+    $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserTitle'). ':';
+    $prompt   = '* ' . $date . $browser . PHP_EOL 
+              . '  ' . $prompt . PHP_EOL
+              . $promptFromRow
+              ;
 
     $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] = $prompt;
   }
