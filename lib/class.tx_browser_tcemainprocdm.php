@@ -750,6 +750,11 @@ class tx_browser_tcemainprocdm
 
   private function geoupdateSetLabels( ) 
   {
+    if( $this->geoupdatelabels !== null )
+    {
+      return;
+    }
+    
     $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
     
     $labels = array( 
@@ -794,6 +799,8 @@ class tx_browser_tcemainprocdm
 
   private function geoupdateSetPrompt( $prompt, &$fieldArray ) 
   {
+    $this->geoupdateSetLabels( );
+
       // RETURN : no record field for prompting configured
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
     {
