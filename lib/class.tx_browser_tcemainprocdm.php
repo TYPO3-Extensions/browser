@@ -800,7 +800,7 @@ class tx_browser_tcemainprocdm
             + $this->geoupdatelabels[ 'api' ] 
             ;
 
-    $select_fields  = implode( $labels );
+    $select_fields  = implode( ', ', $labels );
 
       // RETURN : select fields are empty
     if( empty( $select_fields ) )
