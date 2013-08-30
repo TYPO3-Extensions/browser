@@ -1001,15 +1001,8 @@ class tx_browser_tcemainprocdm
       // Free the SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
-      // Set the result array
-    foreach( $row as $key => $value )
-    {
-      $result[ $key ] = $value;
-    }
-      // Set the result array
-
-      // RETURN the result array
-    return $result;
+      // RETURN the row
+    return $row;
   }
 
 }

@@ -363,7 +363,133 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateGet( )
   {
-    $rows = true;
+      // Labels of the address fields
+    $labels = $this->geoupdateGetLabels( );
+    
+      // Get former address data
+    $select_fields  = implode( ', ', $labels );
+    $rows           = $this->geoupdateGetRows( $select_fields );
+
+    return $rows;
+  }
+
+/**
+ * geoupdateGetLabels( )
+ *
+ * @return	array          $labels    : Labels
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateGetLabels( ) 
+  {
+      // Get field labels
+    $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
+    $tcaCtrlGeodata = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
+    
+      // Labels of the address fields
+    $labels = array( );
+    $labels[ 'areaLevel1' ]   = $tcaCtrlAddress[ 'areaLevel1' ]; 
+    $labels[ 'areaLevel2' ]   = $tcaCtrlAddress[ 'areaLevel2' ]; 
+    $labels[ 'country' ]      = $tcaCtrlAddress[ 'country' ]; 
+    $labels[ 'lat' ]          = $tcaCtrlGeodata[ 'lat' ]; 
+    $labels[ 'locationZip' ]  = $tcaCtrlAddress[ 'location' ][ 'zip' ]; 
+    $labels[ 'locationCity' ] = $tcaCtrlAddress[ 'location' ][ 'city' ]; 
+    $labels[ 'lon' ]          = $tcaCtrlGeodata[ 'lon' ]; 
+    $labels[ 'streetName' ]   = $tcaCtrlAddress[ 'street' ][ 'name' ]; 
+    $labels[ 'streetNumber' ] = $tcaCtrlAddress[ 'street' ][ 'number' ]; 
+    
+      // Remove empty labels
+    foreach( $labels as $key => $label )
+    {
+      if( empty ( $label ) )
+      {
+        unset( $labels[ $key ] );
+      }
+    }
+      // Remove empty labels
+
+    return $labels;
+  }
+
+ /**
+  * geoupdateGetRows( ):  The method select the values of the given table and select and
+  *                 returns the values as a marker array
+  *
+  * @param	string		$select_fields:  fields for the SQL select
+  * @return	array		$result       :  Array with field-value pairs
+  * @access public
+  * @version  4.5.17
+  * @since    4.5.17
+  */
+  public function geoupdateGetRows( $select_fields )
+  {
+    $rows = array( );
+    
+      // RETURN : select fields are empty
+    if( empty( $select_fields ) )
+    {
+      return null;
+    }
+      // RETURN : select fields are empty
+
+      // Set the query
+    $select_fields  = 'uid, ' . $select_fields;
+    $from_table     = $this->browser_table;
+    $groupBy        = null;
+    $orderBy        = null;
+    $limit          = null;
+
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Set the query
+
+      // Execute the query
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute the query
+
+      // RETURN : ERROR
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( ! empty( $error ) )
+    {
+      $prompt = 'ERROR: Unproper SQL query';
+      $this->log( $prompt, 1 );
+      $prompt = 'query: ' . $query;
+      $this->log( $prompt );
+      $prompt = 'prompt: ' . $error;
+      $this->log( $prompt );
+      
+      return;
+    }
+      // RETURN : ERROR
+
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows[ $row[ 'uid' ] ] = $row;
+    }
+
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+      // RETURN the result array
+    $prompt = var_export( $rows, false );
+    $this->log( $prompt );
     return $rows;
   }
 
