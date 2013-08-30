@@ -154,7 +154,7 @@ class tx_browser_tcemainprocdm
   private function geoupdate( &$fieldArray ) 
   {
       // RETURN : requirements aren't matched
-    if( ! $this->geoupdateRequired( ) )
+    if( ! $this->geoupdateRequired( $fieldArray ) )
     {
       $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
       $this->log( $prompt );
@@ -696,7 +696,7 @@ class tx_browser_tcemainprocdm
  * @since     4.5.13
  */
 
-  private function geoupdateRequired( ) 
+  private function geoupdateRequired( &$fieldArray ) 
   {
     $requirementsMatched = true; 
     
@@ -707,6 +707,11 @@ class tx_browser_tcemainprocdm
     switch( true )
     {
       case( ! $update ):
+          // Prompt to the current record
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataDisabledByExttablesphp');
+        $this->geoupdateSetPrompt( $prompt, $fieldArray );
+          // Prompt to the current record
+
         $prompt = 'OK: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate][update] is set to false. '
                 . 'Geodata won\'t updated.'
                 ;
