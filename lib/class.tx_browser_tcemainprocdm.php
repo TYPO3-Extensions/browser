@@ -767,7 +767,7 @@ class tx_browser_tcemainprocdm
       $promptFromRow = $fieldArray[ $this->geoupdatelabels[ 'apiPrompt' ] ];
     }
     
-    $prompt = '* ' . date('Y-m-d h:i:s') . ' - Geoupdate by the Browser - TYPO3 without PHP:' . PHP_EOL 
+    $prompt = '* ' . date('Y-m-d H:i:s') . ' - Geoupdate by the Browser - TYPO3 without PHP:' . PHP_EOL 
             . '  ' . $prompt . PHP_EOL
             . $promptFromRow
             ;
