@@ -310,6 +310,7 @@
             height="90" 
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
       ]]></label>
+      <label index="promptGeodataDisabledByExttablesphp">Geoupdate ist in der Datei ext_tables.php deaktiviert.</label>
       <label index="promptGeodataGoogleapiOK">Google-API-Status: OK</label>
       <label index="promptGeodataGoogleapiOVER_QUERY_LIMIT">Google-API-Status 'OVER_QUERY_LIMIT': Die Zahl erlaubter Anfragen wurde überschritten. Näheres erfährst Du in den Lizenzbedingungen der Google-API.</label>
       <label index="promptGeodataGoogleapiINVALID_REQUEST">Google-API-Status 'INVALID_REQUEST': Es wurde an die Google-API eine ungültige Anfrage gesendet. Näheres erfährst Du unter Modulleiste > Adminwerkzeuge > Protokoll.</label>
