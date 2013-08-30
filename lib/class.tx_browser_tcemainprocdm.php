@@ -724,11 +724,14 @@ class tx_browser_tcemainprocdm
     );
        
       // Remove empty labels
-    foreach( $labels as $key => $label )
+    foreach( $labels as $groupKey => $group )
     {
-      if( empty ( $label ) )
+      foreach( $group as $labelKey => $label )
       {
-        unset( $labels[ $key ] );
+        if( empty ( $label ) )
+        {
+          unset( $labels[$groupKey][ $labelKey ] );
+        }
       }
     }
       // Remove empty labels
