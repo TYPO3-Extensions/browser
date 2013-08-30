@@ -469,11 +469,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     if( ! empty( $error ) )
     {
       $prompt = 'ERROR: Unproper SQL query';
-      $this->log( $prompt, 1 );
+      //$this->log( $prompt, 1 );
       $prompt = 'query: ' . $query;
-      $this->log( $prompt );
+      //$this->log( $prompt );
       $prompt = 'prompt: ' . $error;
-      $this->log( $prompt );
+      //$this->log( $prompt );
       
       return;
     }
@@ -489,7 +489,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
       // RETURN the result array
     $prompt = var_export( $rows, true );
-    $this->log( $prompt );
+          t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 2 );
+    //$this->log( $prompt );
     return $rows;
   }
 
