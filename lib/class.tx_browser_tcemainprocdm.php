@@ -364,7 +364,7 @@ class tx_browser_tcemainprocdm
     $arrAddress = array( );
 
       // Set street
-    $street = $this->geoupdateHandleDataGetAddressStreet( $fieldArray, $this->geoupdatelabels, $row );
+    $street = $this->geoupdateHandleDataGetAddressStreet( $fieldArray, $row );
     if( $street )
     {
       $arrAddress[ 'street' ] = $street;
@@ -372,7 +372,7 @@ class tx_browser_tcemainprocdm
       // Set street
     
       // Set location
-    $location = $this->geoupdateHandleDataGetAddressLocation( $fieldArray, $this->geoupdatelabels, $row );
+    $location = $this->geoupdateHandleDataGetAddressLocation( $fieldArray, $row );
     if( $location )
     {
       $arrAddress[ 'location' ] = $location;
@@ -380,7 +380,7 @@ class tx_browser_tcemainprocdm
       // Set location
 
       // Set areaLevel2
-    $areaLevel2 = $this->geoupdateHandleDataGetAddressAreaLevel2( $fieldArray, $this->geoupdatelabels, $row );
+    $areaLevel2 = $this->geoupdateHandleDataGetAddressAreaLevel2( $fieldArray, $row );
     if( $areaLevel2 )
     {
       $arrAddress[ 'areaLevel2' ] = $areaLevel2;
@@ -388,7 +388,7 @@ class tx_browser_tcemainprocdm
       // Set areaLevel2
 
       // Set areaLevel1
-    $areaLevel1 = $this->geoupdateHandleDataGetAddressAreaLevel1( $fieldArray, $this->geoupdatelabels, $row );
+    $areaLevel1 = $this->geoupdateHandleDataGetAddressAreaLevel1( $fieldArray, $row );
     if( $areaLevel1 )
     {
       $arrAddress[ 'areaLevel1' ] = $areaLevel1;
@@ -396,7 +396,7 @@ class tx_browser_tcemainprocdm
       // Set areaLevel1
 
       // Set country
-    $country = $this->geoupdateHandleDataGetAddressCountry( $fieldArray, $this->geoupdatelabels, $row );
+    $country = $this->geoupdateHandleDataGetAddressCountry( $fieldArray, $row );
     if( $country )
     {
       $arrAddress[ 'country' ] = $country;
@@ -438,12 +438,12 @@ class tx_browser_tcemainprocdm
   {
     $areaLevel1 = null;
 
-    if( isset( $this->geoupdatelabels[ 'areaLevel1' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ) )
     {
-      $areaLevel1 = $row[ $this->geoupdatelabels[ 'areaLevel1' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'areaLevel1' ] ] ) )
+      $areaLevel1 = $row[ $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ] ) )
       {
-        $areaLevel1 = $fieldArray[ $this->geoupdatelabels[ 'areaLevel1' ] ];
+        $areaLevel1 = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ];
       }
     }
     
@@ -465,12 +465,12 @@ class tx_browser_tcemainprocdm
   {
     $areaLevel2 = null;
 
-    if( isset( $this->geoupdatelabels[ 'areaLevel2' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ) )
     {
-      $areaLevel2 = $row[ $this->geoupdatelabels[ 'areaLevel2' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'areaLevel2' ] ] ) )
+      $areaLevel2 = $row[ $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ] ) )
       {
-        $areaLevel2 = $fieldArray[ $this->geoupdatelabels[ 'areaLevel2' ] ];
+        $areaLevel2 = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ];
       }
     }
     
@@ -492,12 +492,12 @@ class tx_browser_tcemainprocdm
   {
     $country = null;
 
-    if( isset( $this->geoupdatelabels[ 'country' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'country' ] ) )
     {
-      $country = $row[ $this->geoupdatelabels[ 'country' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'country' ] ] ) )
+      $country = $row[ $this->geoupdatelabels[ 'address' ][ 'country' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'country' ] ] ) )
       {
-        $country = $fieldArray[ $this->geoupdatelabels[ 'country' ] ];
+        $country = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'country' ] ];
       }
     }
     
@@ -519,12 +519,12 @@ class tx_browser_tcemainprocdm
   {
       // Get location
     $arrLocation  = array( );
-    if( isset( $this->geoupdatelabels[ 'locationZip' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'locationZip' ] ) )
     {
-      $arrLocation[ 'zip' ] = $row[ $this->geoupdatelabels[ 'locationZip' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'locationZip' ] ] ) )
+      $arrLocation[ 'zip' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'locationZip' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'locationZip' ] ] ) )
       {
-        $arrLocation[ 'zip' ] = $fieldArray[ $this->geoupdatelabels[ 'locationZip' ] ];
+        $arrLocation[ 'zip' ] = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'locationZip' ] ];
       }
       if( empty( $arrLocation[ 'zip' ] ) )
       {
@@ -532,12 +532,12 @@ class tx_browser_tcemainprocdm
       }
     }
 
-    if( isset( $this->geoupdatelabels[ 'locationCity' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'locationCity' ] ) )
     {
-      $arrLocation[ 'city' ] = $row[ $this->geoupdatelabels[ 'locationCity' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'locationCity' ] ] ) )
+      $arrLocation[ 'city' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'locationCity' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'locationCity' ] ] ) )
       {
-        $arrLocation[ 'city' ] = $fieldArray[ $this->geoupdatelabels[ 'locationCity' ] ];
+        $arrLocation[ 'city' ] = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'locationCity' ] ];
       }
       if( empty( $arrLocation[ 'city' ] ) )
       {
@@ -565,24 +565,24 @@ class tx_browser_tcemainprocdm
   {
       // Get street
     $arrStreet  = array( );
-    if( isset( $this->geoupdatelabels[ 'streetName' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'streetName' ] ) )
     {
-      $arrStreet[ 'name' ] = $row[ $this->geoupdatelabels[ 'streetName' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'streetName' ] ] ) )
+      $arrStreet[ 'name' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'streetName' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'streetName' ] ] ) )
       {
-        $arrStreet[ 'name' ] = $fieldArray[ $this->geoupdatelabels[ 'streetName' ] ];
+        $arrStreet[ 'name' ] = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'streetName' ] ];
       }
       if( empty( $arrStreet[ 'name' ] ) )
       {
         unset( $arrStreet[ 'name' ] );
       }
     }
-    if( isset( $this->geoupdatelabels[ 'streetNumber' ] ) )
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'streetNumber' ] ) )
     {
-      $arrStreet[ 'number' ] = $row[ $this->geoupdatelabels[ 'streetNumber' ] ];
-      if( isset( $fieldArray[ $this->geoupdatelabels[ 'streetNumber' ] ] ) )
+      $arrStreet[ 'number' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'streetNumber' ] ];
+      if( isset( $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'streetNumber' ] ] ) )
       {
-        $arrStreet[ 'number' ] = $fieldArray[ $this->geoupdatelabels[ 'streetNumber' ] ];
+        $arrStreet[ 'number' ] = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'streetNumber' ] ];
       }
       if( empty( $arrStreet[ 'number' ] ) )
       {
@@ -608,7 +608,7 @@ class tx_browser_tcemainprocdm
   private function geoupdateIsAddressUntouched( &$fieldArray ) 
   {
       // RETURN : false, an address field is touched at least
-    foreach( $this->geoupdatelabels as $label )
+    foreach( $this->geoupdatelabels[ 'address' ] as $label )
     {
       if( isset ( $fieldArray[ $label ] ) )
       {
@@ -635,19 +635,19 @@ class tx_browser_tcemainprocdm
 
   private function geoupdateIsForbidden( &$fieldArray ) 
   {
-      // RETURN : false, an address field is touched at least
-    foreach( $this->geoupdatelabels as $label )
-    {
-      if( isset ( $fieldArray[ $label ] ) )
-      {
-        return false;
-      }
-    }
-      // RETURN : false, an address field is touched at least
-    
-    $prompt = 'OK: Address data are untouched.';
-    $this->log( $prompt );
-    return true;
+//      // RETURN : false, an address field is touched at least
+//    foreach( $this->geoupdatelabels as $label )
+//    {
+//      if( isset ( $fieldArray[ $label ] ) )
+//      {
+//        return false;
+//      }
+//    }
+//      // RETURN : false, an address field is touched at least
+//    
+//    $prompt = 'OK: Address data are untouched.';
+//    $this->log( $prompt );
+//    return true;
   }
 
 /**
@@ -709,18 +709,18 @@ class tx_browser_tcemainprocdm
   private function geoupdateSetLabels( ) 
   {
     $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
-    $tcaCtrlApi     = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['api'];
     
     $labels = array( 
-      'apiPrompt'    => $tcaCtrlApi[ 'prompt' ],
-      'apiForbidden' => $tcaCtrlApi[ 'forbidden' ],
-      'areaLevel1'   => $tcaCtrlAddress[ 'areaLevel1' ],
-      'areaLevel2'   => $tcaCtrlAddress[ 'areaLevel2' ],
-      'country'      => $tcaCtrlAddress[ 'country' ],
-      'locationZip'  => $tcaCtrlAddress[ 'location' ][ 'zip' ],
-      'locationCity' => $tcaCtrlAddress[ 'location' ][ 'city' ],
-      'streetName'   => $tcaCtrlAddress[ 'street' ][ 'name' ],
-      'streetNumber' => $tcaCtrlAddress[ 'street' ][ 'number' ],
+      'address' => array( 
+        'areaLevel1'   => $tcaCtrlAddress[ 'areaLevel1' ],
+        'areaLevel2'   => $tcaCtrlAddress[ 'areaLevel2' ],
+        'country'      => $tcaCtrlAddress[ 'country' ],
+        'locationZip'  => $tcaCtrlAddress[ 'location' ][ 'zip' ],
+        'locationCity' => $tcaCtrlAddress[ 'location' ][ 'city' ],
+        'streetName'   => $tcaCtrlAddress[ 'street' ][ 'name' ],
+        'streetNumber' => $tcaCtrlAddress[ 'street' ][ 'number' ]
+      ),
+      'api' => $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['api']
     );
        
       // Remove empty labels
@@ -750,7 +750,7 @@ class tx_browser_tcemainprocdm
   private function geoupdateSetPrompt( $prompt, &$fieldArray ) 
   {
       // RETURN : no record field for prompting configured
-    if( ! isset( $this->geoupdatelabels[ 'apiPrompt' ] ) )
+    if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
     {
       $prompt = 'WARN: Geoupdate can\'t prompt to the record, because there is no prompt field configured.';
       $this->log( $prompt, 1 );
@@ -761,10 +761,10 @@ class tx_browser_tcemainprocdm
       // Get former address data
     $row = $this->geoupdateSetRow( );
     
-    $promptFromRow = $row[ $this->geoupdatelabels[ 'apiPrompt' ] ];
-    if( isset ( $fieldArray[ $this->geoupdatelabels[ 'apiPrompt' ] ] ) )
+    $promptFromRow = $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ];
+    if( isset ( $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] ) )
     {
-      $promptFromRow = $fieldArray[ $this->geoupdatelabels[ 'apiPrompt' ] ];
+      $promptFromRow = $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ];
     }
     
     $prompt = '* ' . date('Y-m-d H:i:s') . ' - Geoupdate by the Browser - TYPO3 without PHP:' . PHP_EOL 
@@ -772,7 +772,7 @@ class tx_browser_tcemainprocdm
             . $promptFromRow
             ;
 
-    $fieldArray[ $this->geoupdatelabels[ 'apiPrompt' ] ] = $prompt;
+    $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] = $prompt;
   }
   
  /**
@@ -793,7 +793,9 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : row is set before
 
-    $select_fields = implode( ', ', $this->geoupdatelabels );
+    $select_fields  = implode( ', ', $this->geoupdatelabels[ 'address' ] )
+                    . implode( ', ', $this->geoupdatelabels[ 'api' ] )
+                    ;
 
       // RETURN : select fields are empty
     if( empty( $select_fields ) )
