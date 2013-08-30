@@ -796,9 +796,11 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : row is set before
 
-    $select_fields  = implode( ', ', $this->geoupdatelabels[ 'address' ] )
-                    . implode( ', ', $this->geoupdatelabels[ 'api' ] )
-                    ;
+    $labels = $this->geoupdatelabels[ 'address' ]
+            + $this->geoupdatelabels[ 'api' ] 
+            ;
+
+    $select_fields  = implode( $labels );
 
       // RETURN : select fields are empty
     if( empty( $select_fields ) )
