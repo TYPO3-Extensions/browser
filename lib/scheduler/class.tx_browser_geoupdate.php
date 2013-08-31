@@ -516,7 +516,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // RETURN : select fields are empty
 
       // Set the query
-    $from_table     = $this->processTable;
+    $from_table     = $this->browser_table;
     //$where_clause   = 'uid = ' . $this->processId;
     $where_clause   = null;
     $groupBy        = null;
