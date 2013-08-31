@@ -726,9 +726,223 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         continue;
       }
       $this->geoupdateUpdateRowUpdate( $row );
+      break;
     }
     
     return true;
+  }
+
+/**
+ * geoupdateUpdateGetAddress( )
+ *
+ * @return	string          $address    : Address
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateGetAddress( $row ) 
+  {
+    $address    = null;
+    $arrAddress = array( );
+
+      // Set street
+    $street = $this->geoupdateUpdateGetAddressStreet( $row );
+    if( $street )
+    {
+      $arrAddress[ 'street' ] = $street;
+    }
+      // Set street
+    
+      // Set location
+    $location = $this->geoupdateUpdateGetAddressLocation( $row );
+    if( $location )
+    {
+      $arrAddress[ 'location' ] = $location;
+    }
+      // Set location
+
+      // Set areaLevel2
+    $areaLevel2 = $this->geoupdateUpdateGetAddressAreaLevel2( $row );
+    if( $areaLevel2 )
+    {
+      $arrAddress[ 'areaLevel2' ] = $areaLevel2;
+    }
+      // Set areaLevel2
+
+      // Set areaLevel1
+    $areaLevel1 = $this->geoupdateUpdateGetAddressAreaLevel1( $row );
+    if( $areaLevel1 )
+    {
+      $arrAddress[ 'areaLevel1' ] = $areaLevel1;
+    }
+      // Set areaLevel1
+
+      // Set country
+    $country = $this->geoupdateUpdateGetAddressCountry( $row );
+    if( $country )
+    {
+      $arrAddress[ 'country' ] = $country;
+    }
+      // Set country
+
+     // 'Amphitheatre Parkway 1600, Mountain View, CA';
+    $address = implode( ', ', $arrAddress );
+    
+      // Logging
+    switch( $address )
+    {
+      case( false ):
+        $prompt = 'OK: address is empty.';
+        break;
+      case( true ):
+      default:
+        $prompt = 'OK: address is "' . $address . '"';
+        break;
+    }
+    $this->log( $prompt );
+      // Logging
+
+    return $address;
+  }
+
+/**
+ * geoupdateUpdateGetAddressAreaLevel1( )
+ *
+ * @param	array		$row    : Array of former field values (from database)
+ * @return	string          $country       : AreaLevel1
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateGetAddressAreaLevel1( $row )
+  {
+    $areaLevel1 = null;
+
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ) )
+    {
+      $areaLevel1 = $row[ $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ];
+    }
+    
+    return $areaLevel1;
+  }
+
+/**
+ * geoupdateUpdateGetAddressAreaLevel2( )
+ *
+ * @param	array		$row    : Array of former field values (from database)
+ * @return	string          $country       : AreaLevel2
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateGetAddressAreaLevel2( $row )
+  {
+    $areaLevel2 = null;
+
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ) )
+    {
+      $areaLevel2 = $row[ $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ];
+    }
+    
+    return $areaLevel2;
+  }
+
+/**
+ * geoupdateUpdateGetAddressCountry( )
+ *
+ * @param	array		$row    : Array of former field values (from database)
+ * @return	string          $country       : Country
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateGetAddressCountry( $row )
+  {
+    $country = null;
+
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'country' ] ) )
+    {
+      $country = $row[ $this->geoupdatelabels[ 'address' ][ 'country' ] ];
+    }
+    
+    return $country;
+  }
+
+/**
+ * geoupdateUpdateGetAddressLocation( )
+ *
+ * @param	array		$row    : Array of former field values (from database)
+ * @return	string          $location       : Location
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateGetAddressLocation( $row )
+  {
+      // Get location
+    $arrLocation  = array( );
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'locationZip' ] ) )
+    {
+      $arrLocation[ 'zip' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'locationZip' ] ];
+      if( empty( $arrLocation[ 'zip' ] ) )
+      {
+        unset( $arrLocation[ 'zip' ] );
+      }
+    }
+
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'locationCity' ] ) )
+    {
+      $arrLocation[ 'city' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'locationCity' ] ];
+      if( empty( $arrLocation[ 'city' ] ) )
+      {
+        unset( $arrLocation[ 'city' ] );
+      }
+    }
+    
+    $location = implode( ' ', $arrLocation );
+
+    return $location;
+  }
+
+/**
+ * geoupdateUpdateGetAddressStreet( )
+ *
+ * @param	array		$row    : Array of former field values (from database)
+ * @return	string          $street       : Street
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateGetAddressStreet( $row )
+  {
+      // Get street
+    $arrStreet  = array( );
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'streetName' ] ) )
+    {
+      $arrStreet[ 'name' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'streetName' ] ];
+      if( empty( $arrStreet[ 'name' ] ) )
+      {
+        unset( $arrStreet[ 'name' ] );
+      }
+    }
+    if( isset( $this->geoupdatelabels[ 'address' ][ 'streetNumber' ] ) )
+    {
+      $arrStreet[ 'number' ] = $row[ $this->geoupdatelabels[ 'address' ][ 'streetNumber' ] ];
+      if( empty( $arrStreet[ 'number' ] ) )
+      {
+        unset( $arrStreet[ 'number' ] );
+      }
+    }
+    
+    $street = implode( ' ', $arrStreet );
+
+    return $street;
   }
 
 /**
@@ -892,6 +1106,68 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
   }
 
 /**
+ * geoupdateUpdateRowUpdateDataReset( ) : 
+ *
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowUpdateDataReset( )
+  {
+    unset( $this->geoupdateUpdateValues );
+    
+    $this->geoupdateUpdateValues = array( );
+
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowUpdateDataSet( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowUpdateDataSet( $row )
+  {
+      // Require map library
+    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
+      // Create object
+    $objGoogleApi = new tx_browser_googleApi( );
+    
+    $address = $this->geoupdateUpdateGetAddress( $row );
+    
+      // Get data from API
+    $result = $objGoogleApi->main( $address, $this );
+    
+      // Prompt to current record
+    if( isset( $result[ 'status'] ) )
+    {
+      $prompt = 'ERROR: ' . $result[ 'status' ];
+        // Prompt to the current record
+      $this->geoupdateUpdateSetPrompts( $prompt );
+        // prompt to syslog
+      $this->log( $prompt, 1, $row[ 'uid' ] );
+      
+        // Statistic
+      $this->geoupdateStatistic[ 'errors' ] = $this->geoupdateStatistic[ 'errors' ]
+                                            + 1
+                                            ;
+
+      return false;
+    }
+      // Prompt to current record
+
+    $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] = $result[ 'geodata' ][ 'lat' ];
+    $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] = $result[ 'geodata' ][ 'lon' ];
+    
+    return true;
+  }
+
+/**
  * geoupdateUpdateRowUpdateDataUpdate( ) : 
  *
  * @param       array   $row
@@ -910,11 +1186,12 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $prompt = $prompt 
             . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
             ;
+    $prompt = $GLOBALS['TYPO3_DB']->quoteStr( $prompt, $this->browser_table );
     
     $updateFields = array( 
-      $this->geoupdatelabels[ 'geodata' ][ 'lat' ]  . ' = ' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ],
-      $this->geoupdatelabels[ 'geodata' ][ 'lon' ]  . ' = ' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ],
-      $this->geoupdatelabels[ 'api' ][ 'prompt' ]   . ' = ' . $prompt
+      $this->geoupdatelabels[ 'geodata' ][ 'lat' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] . '"',
+      $this->geoupdatelabels[ 'geodata' ][ 'lon' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] . '"',
+      $this->geoupdatelabels[ 'api' ][ 'prompt' ]   . ' = "' . $prompt . '"'
     );
     
     $set  = implode( ', ', $updateFields );
@@ -970,66 +1247,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $this->geoupdateStatistic[ 'updated' ]  = $this->geoupdateStatistic[ 'updated' ]
                                             + 1
                                             ;
-    return true;
-  }
-
-/**
- * geoupdateUpdateRowUpdateDataSet( ) : 
- *
- * @param       array   $row
- * @return	boolean   true in case of success
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function geoupdateUpdateRowUpdateDataSet( $row )
-  {
-      // Require map library
-    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
-      // Create object
-    $objGoogleApi = new tx_browser_googleApi( );
-    
-      // Get data from API
-    $result = $objGoogleApi->main( $address, $this );
-    
-      // Prompt to current record
-    if( isset( $result[ 'status'] ) )
-    {
-      $prompt = 'ERROR: ' . $result[ 'status' ];
-        // Prompt to the current record
-      $this->geoupdateUpdateSetPrompts( $prompt );
-        // prompt to syslog
-      $this->log( $prompt, 1, $row[ 'uid' ] );
-      
-        // Statistic
-      $this->geoupdateStatistic[ 'errors' ] = $this->geoupdateStatistic[ 'errors' ]
-                                            + 1
-                                            ;
-
-      return false;
-    }
-      // Prompt to current record
-
-    $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] = $result[ 'geodata' ][ 'lat' ];
-    $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] = $result[ 'geodata' ][ 'lon' ];
-    
-    return true;
-  }
-
-/**
- * geoupdateUpdateRowUpdateDataReset( ) : 
- *
- * @return	boolean   true in case of success
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function geoupdateUpdateRowUpdateDataReset( )
-  {
-    unset( $this->geoupdateUpdateValues );
-    
-    $this->geoupdateUpdateValues = array( );
-
     return true;
   }
 
