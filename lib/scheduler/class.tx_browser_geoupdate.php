@@ -1012,17 +1012,17 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
     if( ! $this->geoupdateUpdateRowRequiredPermission( $row ) )
     {
-      continue;
+      false;
     }
 
     if( ! $this->geoupdateUpdateRowRequiredGeodata( $row ) )
     {
-      continue;
+      false;
     }
 
     if( ! $this->geoupdateUpdateRowRequiredAddress( $row ) )
     {
-      continue;
+      false;
     }
 
     return true;
