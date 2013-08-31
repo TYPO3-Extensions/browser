@@ -840,7 +840,7 @@ rows
         continue;
       }
       $this->geoupdateUpdateRowUpdate( $row );
-      break;
+      //break;  // For development only: Update one row at maximum
     }
     
     return true;
