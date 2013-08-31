@@ -569,9 +569,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // Free the SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
-      // RETURN the result array
-    $prompt = '[tx_browser_Geoupdate]: ' . var_export( $this->geoupdaterows, true );
-    $this->log( $prompt );
+//    $prompt = '[tx_browser_Geoupdate]: ' . var_export( $this->geoupdaterows, true );
+//    $this->log( $prompt );
     
     return true;
   }
@@ -1178,7 +1177,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateUpdateRowUpdateDataUpdate( $row )
   {
-    $prompt = implode( PHP_EOL, $this->geoupdateUpdateValues[ 'prompts' ] );
+    $prompt = implode( PHP_EOL, ( array ) $this->geoupdateUpdateValues[ 'prompts' ] );
     if( $prompt )
     {
       $prompt = $prompt . PHP_EOL;
@@ -1200,7 +1199,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // Build the query
     $query = '' .
       'UPDATE ' . $this->browser_table . ' ' .
-      'SET    ' . $set . 
+      'SET    ' . $set . ' ' .
       'WHERE  uid = ' . $uid ;
 
 
@@ -1267,8 +1266,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // RETURN : no record field for prompting configured
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
     {
-//      $prompt = 'WARN: Geoupdate can\'t prompt to the record, because there is no prompt field configured.';
-//      $this->log( $prompt, 1 );
+      $prompt = 'WARN: Geoupdate can\'t prompt to the record, because there is no prompt field configured.';
+      $this->log( $prompt, 1 );
       return;
     }
       // RETURN : no record field for prompting configured
