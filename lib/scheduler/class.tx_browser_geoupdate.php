@@ -248,7 +248,14 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     *
     * @var array
     */
-    private $geoupdateStatistic = null;
+    private $geoupdateStatisticData = null;
+    
+   /**
+    * Statistic data
+    *
+    * @var string
+    */
+    private $geoupdateStatisticEmail = null;
     
    /**
     * t3lib_timeTrack object
@@ -339,11 +346,28 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // DRS
 
       // E-mail to admin
-    $subject  = 'Success!';
-    $body     = 'Task is done with success.' . PHP_EOL
-              . PHP_EOL
-              . PHP_EOL
-              . __METHOD__ . ' (' . __LINE__ . ')';
+    switch( $this->browser_testMode )
+    {
+      case( 'enabled' ):
+        $subject  = 'Success [TEST MODE]!';
+        break;
+      case( 'disabled' ):
+        $subject  = 'Success!';
+        break;
+      default:
+        $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
+        $this->log( $prompt, 2 );
+        die( $prompt );
+        break;
+    }
+    $body = 'Task is done with success.' . PHP_EOL
+          . PHP_EOL
+          . 'Statistic: ' . PHP_EOL
+          . PHP_EOL
+          . $this->geoupdateStatisticEmail . PHP_EOL
+          . PHP_EOL
+          . PHP_EOL
+          . __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body, 'update' );
       // E-mail to admin
 
@@ -384,11 +408,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
     if( ! $this->geoupdateUpdate( ) )
     {
-      $this->geoupdateStatistic( );
+      $this->geoupdateStatisticData( );
       return false;
     }
 
-    $this->geoupdateStatistic( );
+    $this->geoupdateStatisticData( );
     return true;
   }
 
@@ -553,12 +577,21 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $error  = $GLOBALS['TYPO3_DB']->sql_error( );
     if( ! empty( $error ) )
     {
-      $prompt = 'ERROR: Unproper SQL query';
-      $this->log( $prompt, 2 );
-      $prompt = 'query: ' . $query;
-      $this->log( $prompt, 1 );
-      $prompt = 'prompt: ' . $error;
-      $this->log( $prompt, 1 );
+      $prompt_01 = 'ERROR: Unproper SQL query';
+      $this->log( $prompt_01, 2 );
+      $prompt_02 = 'query: ' . $query;
+      $this->log( $prompt_02, 1 );
+      $prompt_03 = 'error: ' . $error;
+      $this->log( $prompt_03, 1 );
+        // E-mail to admin
+      $subject  = 'Failed!';
+      $body     = $prompt_01 . PHP_EOL
+                . $prompt_02 . PHP_EOL
+                . $prompt_03 . PHP_EOL
+                . PHP_EOL
+                . PHP_EOL
+                . __METHOD__ . ' (' . __LINE__ . ')';
+      $this->drsMailToAdmin( $subject, $body, 'error' );
       
       return false;
     }
@@ -618,7 +651,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
           t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 2 );
         }
           // E-mail to admin
-        $subject  = 'TYPO3 Browser: Geoupdate is disabled';
+        $subject  = 'Disabled';
         $body     = $prompt . PHP_EOL
                   . PHP_EOL
                   . PHP_EOL
@@ -639,7 +672,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
           t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 3 );
         }
           // E-mail to admin
-        $subject  = 'TYPO3 Browser: Geoupdate is disabled';
+        $subject  = 'Failed!';
         $body     = $prompt . PHP_EOL
                   . PHP_EOL
                   . PHP_EOL
@@ -684,7 +717,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // DRS
 
       // E-mail to admin
-    $subject  = 'ERROR!';
+    $subject  = 'Failed';
     $body     = $prompt . PHP_EOL
               . PHP_EOL
               . PHP_EOL
@@ -713,31 +746,31 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateStatistic( )
   {
-    $this->geoupdateStatistic[ 'rows' ] = $this->geoupdateStatistic[ 'addressEmpty' ]
-                                        + $this->geoupdateStatistic[ 'forbidden' ]
-                                        + $this->geoupdateStatistic[ 'geodataNotEmpty' ]
-                                        + $this->geoupdateStatistic[ 'errors' ]
-                                        + $this->geoupdateStatistic[ 'updatedTest' ]
-                                        + $this->geoupdateStatistic[ 'updated' ]
-                                        ;
+    $this->geoupdateStatisticData[ 'rows' ] = $this->geoupdateStatisticData[ 'addressEmpty' ]
+                                            + $this->geoupdateStatisticData[ 'forbidden' ]
+                                            + $this->geoupdateStatisticData[ 'geodataNotEmpty' ]
+                                            + $this->geoupdateStatisticData[ 'errors' ]
+                                            + $this->geoupdateStatisticData[ 'updatedTest' ]
+                                            + $this->geoupdateStatisticData[ 'updated' ]
+                                            ;
     
-    $prompt = 'Statistic: handled rows #' . $this->geoupdateStatistic[ 'rows' ];
+    $prompt = 'Statistic: handled rows #' . $this->geoupdateStatisticData[ 'rows' ];
     $this->log( $prompt );
-    $prompt = 'Statistic: rows with an empty address #' . $this->geoupdateStatistic[ 'addressEmpty' ];
+    $prompt = 'Statistic: rows with an empty address #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
     $this->log( $prompt );
-    $prompt = 'Statistic: rows with no permission for update #' . $this->geoupdateStatistic[ 'forbidden' ];
+    $prompt = 'Statistic: rows with no permission for update #' . $this->geoupdateStatisticData[ 'forbidden' ];
     $this->log( $prompt );
-    $prompt = 'Statistic: rows with geo data #' . $this->geoupdateStatistic[ 'geodataNotEmpty' ];
+    $prompt = 'Statistic: rows with geo data #' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ];
     $this->log( $prompt );
-    $prompt = 'Statistic: errors #' . $this->geoupdateStatistic[ 'errors' ];
+    $prompt = 'Statistic: errors #' . $this->geoupdateStatisticData[ 'errors' ];
     $this->log( $prompt );
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
-        $prompt = 'Statistic: not updates rows because of test mode #' . $this->geoupdateStatistic[ 'updatedTest' ];
+        $prompt = 'Statistic: not updates rows because of test mode #' . $this->geoupdateStatisticData[ 'updatedTest' ];
         break;
       case( 'disabled' ):
-        $prompt = 'Statistic: updates rows #' . $this->geoupdateStatistic[ 'updated' ];
+        $prompt = 'Statistic: updates rows #' . $this->geoupdateStatisticData[ 'updated' ];
         break;
       default:
         $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
@@ -746,7 +779,31 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         break;
     }
     $this->log( $prompt );
-
+    
+    switch( $this->browser_testMode )
+    {
+      case( 'enabled' ):
+        $updated = '+ which would updated [TEST MODE] #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
+        break;
+      case( 'disabled' ):
+        $updated = '+ which are updated               #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
+        break;
+      default:
+        $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
+        $this->log( $prompt, 2 );
+        die( $prompt );
+        break;
+    }
+    $this->geoupdateStatisticEmail = '' .
+'  rows
+  with empty address              #' . $this->geoupdateStatisticData[ 'addressEmpty' ] . '
++ with not empty geodata          #' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ] . '
++ without update permission       #' . $this->geoupdateStatisticData[ 'forbidden' ] . '
++ with errors                     #' . $this->geoupdateStatisticData[ 'errors' ] . '
+' . $updated . '
+# which are handled               #' . $this->geoupdateStatisticData[ 'rows' ] . '
+';
+    
   }
 
 
@@ -767,7 +824,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateUpdate( )
   {
-    $this->geoupdateStatistic = array( 
+    $this->geoupdateStatisticData = array( 
       'addressEmpty'    => 0,
       'errors'          => 0,
       'forbidden'       => 0,
@@ -1060,7 +1117,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $prompt = 'NO UPDATE: Adress fields don\'t contain any data.';
     $this->log( $prompt, 0, $row[ 'uid' ] );
 
-    $this->geoupdateStatistic[ 'addressEmpty' ] = $this->geoupdateStatistic[ 'addressEmpty' ]
+    $this->geoupdateStatisticData[ 'addressEmpty' ] = $this->geoupdateStatisticData[ 'addressEmpty' ]
                                                 + 1
                                                 ;
 
@@ -1101,7 +1158,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       $prompt = 'NO UPDATE: latitude and/or longitude contain content';
       $this->log( $prompt, 0, $row[ 'uid' ] );
         // Statistic
-      $this->geoupdateStatistic[ 'geodataNotEmpty' ]  = $this->geoupdateStatistic[ 'geodataNotEmpty' ]
+      $this->geoupdateStatisticData[ 'geodataNotEmpty' ]  = $this->geoupdateStatisticData[ 'geodataNotEmpty' ]
                                                       + 1
                                                       ;
       return false;
@@ -1137,7 +1194,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       $prompt = 'NO UPDATE: Record forbids an update';
       $this->log( $prompt, 0, $row[ 'uid' ] );
 
-      $this->geoupdateStatistic[ 'forbidden' ]  = $this->geoupdateStatistic[ 'forbidden' ]
+      $this->geoupdateStatisticData[ 'forbidden' ]  = $this->geoupdateStatisticData[ 'forbidden' ]
                                                 + 1
                                                 ;
       return false;
@@ -1221,7 +1278,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       $this->log( $prompt, 1, $row[ 'uid' ] );
       
         // Statistic
-      $this->geoupdateStatistic[ 'errors' ] = $this->geoupdateStatistic[ 'errors' ]
+      $this->geoupdateStatisticData[ 'errors' ] = $this->geoupdateStatisticData[ 'errors' ]
                                             + 1
                                             ;
 
@@ -1255,7 +1312,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $date           = date('Y-m-d H:i:s');
     $browser        = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptBrowserPhrase'). ':';
     $updatePrompt   = '* ' . $date . $browser . PHP_EOL 
-                    . '  [SCHEDULER] OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptGeodataUpdate')
+                    . '  OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptGeodataUpdate')
                     . $prompt . PHP_EOL
                     . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
                     ;
@@ -1281,7 +1338,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
-        $this->geoupdateStatistic[ 'updatedTest' ]  = $this->geoupdateStatistic[ 'updatedTest' ]
+        $this->geoupdateStatisticData[ 'updatedTest' ]  = $this->geoupdateStatisticData[ 'updatedTest' ]
                                                     + 1
                                                     ;
         $prompt = 'TESTMODE query: ' . $query;
@@ -1311,7 +1368,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       $prompt = 'prompt: ' . $error;
       $this->log( $prompt, 1 );
       
-      $this->geoupdateStatistic[ 'errors' ] = $this->geoupdateStatistic[ 'errors' ]
+      $this->geoupdateStatisticData[ 'errors' ] = $this->geoupdateStatisticData[ 'errors' ]
                                             + 1
                                             ;
       return false;
@@ -1321,7 +1378,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $this->log( $prompt, 0, $uid );
 
       // Statistic
-    $this->geoupdateStatistic[ 'updated' ]  = $this->geoupdateStatistic[ 'updated' ]
+    $this->geoupdateStatisticData[ 'updated' ]  = $this->geoupdateStatisticData[ 'updated' ]
                                             + 1
                                             ;
     return true;
@@ -1387,74 +1444,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
                         . $this->browser_testMode
                         ;
     return $browserAdminEmail;
-  }
-
-
-
-  /***********************************************
-   *
-   * Converting
-   *
-   **********************************************/
-
-/**
- * convertContent( )  :
- *
- * @param	[type]		$$xml: ...
- * @return	boolean
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function convertContent( $xml )
-  {
-    $this->convertContentInstance( );
-    $content = $this->convert->main( $xml );
-
-    return $content;
-  }
-
-/**
- * convertContentDrsMail( )  :
- *
- * @param	[type]		$$success: ...
- * @return	void
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function convertContentDrsMail( $success )
-  {
-    switch( $success )
-    {
-      case( false ):
-        $subject  = 'Failed';
-        break;
-      case( true ):
-      default:
-        $subject  = 'Success';
-        break;
-    }
-    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
-  }
-
-/**
- * convertContentInstance( )  :
- *
- * @return	boolean
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function convertContentInstance( )
-  {
-    $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
-
-    require_once( $path2lib . 'class.tx_browser_convert.php' );
-
-    $this->convert = t3lib_div::makeInstance( 'tx_browser_convert' );
-    $this->convert->setPobj( $this );
   }
 
 
@@ -2204,76 +2193,6 @@ table     : ' . $this->browser_table;
 
     $prompt = 'Details about previous process: ' . $prompt . ' (' . $debugTrail['prompt'] . ')';
     t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
-  }
-
-
-
-  /***********************************************
-   *
-   * Update
-   *
-   **********************************************/
-
-/**
- * updateDatabase( )  :
- *
- * @param	array		$content  :
- * @return	boolean
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function updateDatabase( $content )
-  {
-    $success = false;
-
-    $this->updateDatabaseInstance( );
-    $success = $this->update->main( $content );
-
-    return $success;
-  }
-
-/**
- * updateDatabaseDrsMail( )  :
- *
- * @param	[type]		$$success: ...
- * @return	void
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function updateDatabaseDrsMail( $success )
-  {
-    switch( $success )
-    {
-      case( false ):
-        $subject  = 'Failed';
-        break;
-      case( true ):
-      default:
-        $subject  = 'Success';
-        break;
-    }
-    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
-  }
-
-/**
- * updateDatabaseInstance( )  :
- *
- * @return	boolean
- * @access private
- * @version       4.5.13
- * @since         4.5.13
- */
-  private function updateDatabaseInstance( )
-  {
-    $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
-
-    require_once( $path2lib . 'class.tx_browser_update.php' );
-
-    $this->update = t3lib_div::makeInstance( 'tx_browser_update' );
-    $this->update->setPobj( $this );
   }
 
 }
