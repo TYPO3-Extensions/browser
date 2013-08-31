@@ -504,6 +504,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $labels = array( 'uid' )
             + $this->geoupdatelabels[ 'address' ]
             + $this->geoupdatelabels[ 'api' ] 
+            + $this->geoupdatelabels[ 'geodata' ] 
             ;
 
     $select_fields  = implode( ', ', $labels );
