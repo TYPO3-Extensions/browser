@@ -1071,6 +1071,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateUpdateRowRequiredGeodata( $row )
   {
+    $prompt = var_export( $row, true );
+    $this->log( $prompt, 0, $row[ 'uid' ] );
+    $prompt = var_export( $this->geoupdatelabels, true );
+    $this->log( $prompt, 0, $row[ 'uid' ] );
+
       // RETURN : false, latitude or longitude contain content at least
     foreach( $this->geoupdatelabels[ 'geodata' ] as $label )
     {
@@ -1083,7 +1088,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         $this->geoupdateStatistic[ 'geodataNotEmpty' ]  = $this->geoupdateStatistic[ 'geodataNotEmpty' ]
                                                         + 1
                                                         ;
-
         return false;
       }
     }
@@ -1236,10 +1240,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $date           = date('Y-m-d H:i:s');
     $browser        = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptBrowserPhrase'). ':';
     $updatePrompt   = '* ' . $date . $browser . PHP_EOL 
+                    . '  [SCHEDULER] OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptGeodataUpdate')
                     . $prompt . PHP_EOL
                     . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
                     ;
-    $prompt = '[SCHEDULER] OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptGeodataUpdate');
     
     $updatePrompt = $GLOBALS['TYPO3_DB']->quoteStr( $updatePrompt, $this->browser_table );
     
