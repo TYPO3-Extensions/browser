@@ -783,10 +783,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
-        $updated = '+ which would updated [TEST MODE] : ' . $this->geoupdateStatisticData[ 'addressEmpty' ];
+        $updated = '+ which would updated [TEST MODE] : ' . $this->geoupdateStatisticData[ 'updatedTest' ];
         break;
       case( 'disabled' ):
-        $updated = '+ which are updated               : ' . $this->geoupdateStatisticData[ 'addressEmpty' ];
+        $updated = '+ which are updated               : ' . $this->geoupdateStatisticData[ 'updated' ];
         break;
       default:
         $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
