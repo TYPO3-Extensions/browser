@@ -171,8 +171,17 @@ class tx_browser_tcemainprocdm
       return;
     }
       // RETURN : no address field is touched
+
+      // RETURN : no address field is touched
+    if( $this->geoupdateIsForbiddenByRecord( $fieldArray ) )
+    {
+      return;
+    }
+      // RETURN : no address field is touched
       
-    $arrResult = $this->geoupdateHandleData( $fieldArray );
+    
+      
+    $arrResult = $this->geoupdateHandleData( $row, $fieldArray );
     if( $arrResult['error'] )
     {
       return;
@@ -305,14 +314,7 @@ class tx_browser_tcemainprocdm
 
       // Get former address data
     $row = $this->geoupdateSetRow( );
-      
-      // RETURN : no address field is touched
-    if( $this->geoupdateIsForbidden( $fieldArray ) )
-    {
-      return;
-    }
-      // RETURN : no address field is touched
-      
+    
       // Get address
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray, $row );
     if( empty( $address ) )
@@ -661,7 +663,7 @@ class tx_browser_tcemainprocdm
   }
 
 /**
- * geoupdateIsForbidden( )
+ * geoupdateIsForbiddenByRecord( )
  *
  * @param	array		$fieldArray : Array of modified fields
  * @return	boolean         $untouched  : true, if address data are untouched
@@ -670,21 +672,26 @@ class tx_browser_tcemainprocdm
  * @since     4.5.13
  */
 
-  private function geoupdateIsForbidden( &$fieldArray ) 
+  private function geoupdateIsForbiddenByRecord( &$fieldArray ) 
   {
-//      // RETURN : false, an address field is touched at least
-//    foreach( $this->geoupdatelabels as $label )
-//    {
-//      if( isset ( $fieldArray[ $label ] ) )
-//      {
-//        return false;
-//      }
-//    }
-//      // RETURN : false, an address field is touched at least
-//    
-//    $prompt = 'OK: Address data are untouched.';
-//    $this->log( $prompt );
-//    return true;
+      // Get former address data
+    $row = $this->geoupdateSetRow( );
+      
+    if( ! isset( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ) )
+    {
+      return false;
+    }
+    
+    if( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] )
+    {
+        // Prompt to the current record
+      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataIsForbiddenByRecord');
+      $this->geoupdateSetPrompt( $prompt, $fieldArray );
+        // Prompt to the current record
+      return true;
+    }
+      
+    return false;
   }
 
 /**

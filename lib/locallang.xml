@@ -154,6 +154,7 @@
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
       ]]></label>
       <label index="promptGeodataDisabledByExttablesphp">Geoupdate is disabled by ext_tables.php</label>
+      <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
       <label index="promptGeodataGoogleapiOK">Google API status: OK</label>
       <label index="promptGeodataGoogleapiOVER_QUERY_LIMIT">Google API status 'OVER_QUERY_LIMIT': The limit of allowed queries is overrun. Please check the Google API licence.</label>
       <label index="promptGeodataGoogleapiINVALID_REQUEST">Google API status 'INVALID_REQUEST': The sent query is invalid. You can get details at TYPO3 modul > Admintools > Reports.</label>
@@ -311,6 +312,7 @@
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
       ]]></label>
       <label index="promptGeodataDisabledByExttablesphp">Geoupdate ist in der Datei ext_tables.php deaktiviert.</label>
+      <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
       <label index="promptGeodataGoogleapiOK">Google-API-Status: OK</label>
       <label index="promptGeodataGoogleapiOVER_QUERY_LIMIT">Google-API-Status 'OVER_QUERY_LIMIT': Die Zahl erlaubter Anfragen wurde überschritten. Näheres erfährst Du in den Lizenzbedingungen der Google-API.</label>
       <label index="promptGeodataGoogleapiINVALID_REQUEST">Google-API-Status 'INVALID_REQUEST': Es wurde an die Google-API eine ungültige Anfrage gesendet. Näheres erfährst Du unter Modulleiste > Adminwerkzeuge > Protokoll.</label>
