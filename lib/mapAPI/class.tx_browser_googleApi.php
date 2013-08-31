@@ -70,7 +70,7 @@ class tx_browser_googleApi
  *
  * @param	string		$address    : address in the syntax like '1600 Amphitheatre Parkway, Mountain View, CA'
  * @param	object		$fieldArray : Array of modified fields * @param	string		$address    : Address
- * @return	array           $result     : geodata( lon, lat), status
+ * @return	array           $returnData     : geodata( lon, lat), status
  * 
  * @access    public
  * 
@@ -80,6 +80,9 @@ class tx_browser_googleApi
 
   public function main( $address, $pObj ) 
   {
+    $returnData   = null;
+    $returnStatus = null;
+    
       // Set URL
     $urlAddress = urlencode( $address );
     $googleApiUrl  = str_replace( '%address%', $urlAddress, $this->googleApiUrl );
@@ -97,15 +100,15 @@ class tx_browser_googleApi
     {
       case( $status == 'OK' ):
 //          // Prompt to the current record
-        $status = null;
-//        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOK');
+        $returnStatus = null;
+//        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOK');
 //          // Prompt to the current record
         $prompt = 'Google API status is: OK';
         $pObj->log( $prompt );
         break;
       case( $status == 'ZERO_RESULTS' ):
           // Prompt to the current record
-        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS');
+        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS');
         $prompt = 'Google API status is: ZERO_RESULTS';
         $pObj->log( $prompt );
         $prompt = 'This means: Query was proper, but Google API doesn\'t know the given address.';
@@ -115,7 +118,7 @@ class tx_browser_googleApi
         break;
       case( $status == 'OVER_QUERY_LIMIT' ):
           // Prompt to the current record
-        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOVER_QUERY_LIMIT');
+        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOVER_QUERY_LIMIT');
         $prompt = 'Google API status is: OVER_QUERY_LIMIT';
         $pObj->log( $prompt );
         $prompt = 'This means: Query was proper, but your website overrun the limit of allowed or contracted Google requests.';
@@ -123,7 +126,7 @@ class tx_browser_googleApi
         break;
       case( $status == 'REQUEST_DENIED' ):
           // Prompt to the current record
-        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiREQUEST_DENIED');
+        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiREQUEST_DENIED');
         $error  = 1;
         $prompt = 'ERROR: Google API status is: REQUEST_DENIED';
         $pObj->log( $prompt, $error );
@@ -134,7 +137,7 @@ class tx_browser_googleApi
         break;
       case( $status == 'INVALID_REQUEST' ):
           // Prompt to the current record
-        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiINVALID_REQUEST');
+        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiINVALID_REQUEST');
         $error  = 1;
         $prompt = 'ERROR: Google API status is: INVALID_REQUEST';
         $pObj->log( $prompt, $error );
@@ -145,7 +148,7 @@ class tx_browser_googleApi
         break;
       default:
           // Prompt to the current record
-        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiUNDEFINED');
+        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiUNDEFINED');
         $error  = 1;
         $prompt = 'ERROR: Google API status is undefined: ' . $status;
         $pObj->log( $prompt, $error );
@@ -154,15 +157,15 @@ class tx_browser_googleApi
       // Log the status message
 
       //  RETURN  : geodata 
-    $result  = array
+    $returnData  = array
                 (
                   'geodata' => array(
                     'lat' => $lat,
                     'lon' => $lon
                   ),
-                  'status' => $status,
+                  'status' => $returnStatus,
                 );
-    return $result;
+    return $returnData;
   }
 
 }
