@@ -384,9 +384,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
     if( ! $this->geoupdateUpdate( ) )
     {
+      $this->geoupdateStatistic( );
       return false;
     }
 
+    $this->geoupdateStatistic( );
     return true;
   }
 
@@ -690,6 +692,48 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // E-mail to admin
 
     return false;
+  }
+
+
+
+  /***********************************************
+   *
+   * Geo Update - Statistic
+   *
+   **********************************************/
+
+/**
+ * geoupdateStatistic( ) : 
+ *
+ * @return	void
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateStatistic( )
+  {
+    $this->geoupdateStatistic = array( 
+      'addressEmpty'    => 0,
+      'errors'          => 0,
+      'forbidden'       => 0,
+      'geodataNotEmpty' => 0,
+      'rows'            => 0,
+      'updated'         => 0,
+    );
+    
+    $prompt = 'Statistic: handled rows #' . $this->geoupdateStatistic[ 'rows' ];
+    $this->log( $prompt );
+    $prompt = 'Statistic: rows with an empty address #' . $this->geoupdateStatistic[ 'addressEmpty' ];
+    $this->log( $prompt );
+    $prompt = 'Statistic: rows with no permission for update #' . $this->geoupdateStatistic[ 'forbidden' ];
+    $this->log( $prompt );
+    $prompt = 'Statistic: rows with geo data #' . $this->geoupdateStatistic[ 'geodataNotEmpty' ];
+    $this->log( $prompt );
+    $prompt = 'Statistic: errors #' . $this->geoupdateStatistic[ 'errors' ];
+    $this->log( $prompt );
+    $prompt = 'Statistic: updates rows #' . $this->geoupdateStatistic[ 'updated' ];
+    $this->log( $prompt );
+
   }
 
 
@@ -1182,7 +1226,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     {
       $prompt = $prompt . PHP_EOL;
     }
-    $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate')
+    $prompt = '[SCHEDULER] OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate')
             . $prompt 
             . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
             ;
