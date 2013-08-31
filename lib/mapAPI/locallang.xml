@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Language labels for plugin &quot;tx_browser_pi1&quot;</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="statusGoogleApiOK">Google API status: OK</label>
+      <label index="statusGoogleApiOVER_QUERY_LIMIT">Google API status 'OVER_QUERY_LIMIT': The limit of allowed queries is overrun. Please check the Google API licence.</label>
+      <label index="statusGoogleApiINVALID_REQUEST">Google API status 'INVALID_REQUEST': The sent query is invalid. You can get details at TYPO3 modul > Admintools > Reports.</label>
+      <label index="statusGoogleApiREQUEST_DENIED">Google API status 'REQUEST_DENIED': The Google API rejected an answer. Please check the Google API licence.</label>
+      <label index="statusGoogleApiUNDEFINED">Google API status 'UNDEFINED': The Google API prompts an undefinied status.</label>
+      <label index="statusGoogleApiZERO_RESULTS">Google API status 'ZERO_RESULTS': The Google API doesn't know the sent adress and can't fetch any geo data.</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="statusGoogleApiOK">Google-API-Status: OK</label>
+      <label index="statusGoogleApiOVER_QUERY_LIMIT">Google-API-Status 'OVER_QUERY_LIMIT': Die Zahl erlaubter Anfragen wurde überschritten. Näheres erfährst Du in den Lizenzbedingungen der Google-API.</label>
+      <label index="statusGoogleApiINVALID_REQUEST">Google-API-Status 'INVALID_REQUEST': Es wurde an die Google-API eine ungültige Anfrage gesendet. Näheres erfährst Du unter Modulleiste > Adminwerkzeuge > Protokoll.</label>
+      <label index="statusGoogleApiREQUEST_DENIED">Google-API-Status 'REQUEST_DENIED': Die Google-API verweigert die Antwort. Näheres erfährst Du in den Lizenzbedingungen der Google-API.</label>
+      <label index="statusGoogleApiUNDEFINED">Google-API-Status 'UNDEFINED': Die Google-API hat einen undefinierten Status gemeldet.</label>
+      <label index="statusGoogleApiZERO_RESULTS">Google-API-Status 'ZERO_RESULTS': Die Google-API kennt die gesendete Adresse nicht und konnte keine Geo-Koordinaten ermitteln.</label>
+    </languageKey>
+  </data>
+</T3locallang>

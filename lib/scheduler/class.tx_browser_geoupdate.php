@@ -215,7 +215,42 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     */
     private $browser_reportMode;
 
-  /**
+   /**
+    * Geo API URL
+    *
+    * @var string
+    */
+    private $googleApiUrl  = 'http://maps.googleapis.com/maps/api/geocode/json?address=%address%&sensor=false';
+  
+   /**
+    * Geoupdate lables from ext_tables.php
+    *
+    * @var array
+    */
+    private $geoupdatelabels = null;
+
+   /**
+    * Rows of the current table with geodata
+    *
+    * @var array
+    */
+    private $geoupdaterows  = null;
+    
+   /**
+    * Prompts for the current row
+    *
+    * @var array
+    */
+    private $geoupdateRowPrompts = null;
+    
+   /**
+    * Fields for updating the current row
+    *
+    * @var array
+    */
+    private $geoupdateRowUpdateFields = null;
+
+   /**
     * t3lib_timeTrack object
     *
     * @var object
@@ -325,7 +360,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
    *
    **********************************************/
 
-  /**
+/**
  * geoupdate( ) : 
  *
  * @return	boolean   Information to display
@@ -342,101 +377,148 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
       // RETURN : requirements aren't matched
 
-    $rows = $this->geoupdateGet( );
-    if( ! $this->geoupdateSet( $rows ) )
+    if( ! $this->geoupdateInit( ) )
     {
       return false;
     }
-    // Durchlaufe alle Datensätze der angegebenen Tabelle
-    //    Wenn Breiten- oder Längengrad leer, prüfe ob Adresse vorhanden.
-    //      Wenn Adresse vorhanden, aktualisiere Breiten- und Längengrad
+
+    if( ! $this->geoupdateUpdate( ) )
+    {
+      return false;
+    }
+
     return true;
   }
 
-  /**
- * geoupdateGet( ) : 
+
+
+  /***********************************************
+   *
+   * Geo Update - Init
+   *
+   **********************************************/
+
+/**
+ * geoupdateInit( ) : 
  *
- * @return	array   $rows
+ * @param       array   $rows
+ * @return	boolean   true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
  */
-  private function geoupdateGet( )
+  private function geoupdateInit( )
   {
-      // Labels of the address fields
-    $labels = $this->geoupdateGetLabels( );
-    
-      // Get former address data
-    $select_fields  = implode( ', ', $labels );
-    $rows           = $this->geoupdateGetRows( $select_fields );
+    if( ! $this->geoupdateInitLabels( ) )
+    {
+      return false;
+    }
 
-    return $rows;
+    if( ! $this->geoupdateInitRows( ) )
+    {
+      return false;
+    }
+
+    return true;
   }
 
 /**
- * geoupdateGetLabels( )
+ * geoupdateInitLabels( )  : Set lables. Get lables from ext_tables.php.
  *
- * @return	array          $labels    : Labels
+ * @return	boolean     true in case of success
  * 
  * @version   4.5.13
  * @since     4.5.13
  */
 
-  private function geoupdateGetLabels( ) 
+  private function geoupdateInitLabels( ) 
   {
-      // Get field labels
-    $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
-    $tcaCtrlGeodata = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
-    
-      // Labels of the address fields
-    $labels = array( );
-    $labels[ 'areaLevel1' ]   = $tcaCtrlAddress[ 'areaLevel1' ]; 
-    $labels[ 'areaLevel2' ]   = $tcaCtrlAddress[ 'areaLevel2' ]; 
-    $labels[ 'country' ]      = $tcaCtrlAddress[ 'country' ]; 
-    $labels[ 'lat' ]          = $tcaCtrlGeodata[ 'lat' ]; 
-    $labels[ 'locationZip' ]  = $tcaCtrlAddress[ 'location' ][ 'zip' ]; 
-    $labels[ 'locationCity' ] = $tcaCtrlAddress[ 'location' ][ 'city' ]; 
-    $labels[ 'lon' ]          = $tcaCtrlGeodata[ 'lon' ]; 
-    $labels[ 'streetName' ]   = $tcaCtrlAddress[ 'street' ][ 'name' ]; 
-    $labels[ 'streetNumber' ] = $tcaCtrlAddress[ 'street' ][ 'number' ]; 
-    
-      // Remove empty labels
-    foreach( $labels as $key => $label )
+    if( $this->geoupdatelabels !== null )
     {
-      if( empty ( $label ) )
+      return true;
+    }
+    
+    $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
+    
+    $labels = array( 
+      'address' => array( 
+        'areaLevel1'   => $tcaCtrlAddress[ 'areaLevel1' ],
+        'areaLevel2'   => $tcaCtrlAddress[ 'areaLevel2' ],
+        'country'      => $tcaCtrlAddress[ 'country' ],
+        'locationZip'  => $tcaCtrlAddress[ 'location' ][ 'zip' ],
+        'locationCity' => $tcaCtrlAddress[ 'location' ][ 'city' ],
+        'streetName'   => $tcaCtrlAddress[ 'street' ][ 'name' ],
+        'streetNumber' => $tcaCtrlAddress[ 'street' ][ 'number' ]
+      ),
+      'api'     => $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['api'],
+      'geodata' => $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata']
+
+    );
+       
+      // Remove empty labels
+    foreach( $labels as $groupKey => $group )
+    {
+      foreach( $group as $labelKey => $label )
       {
-        unset( $labels[ $key ] );
+        if( empty ( $label ) )
+        {
+          unset( $labels[$groupKey][ $labelKey ] );
+        }
       }
     }
       // Remove empty labels
 
-    return $labels;
+    $this->geoupdatelabels = $labels;
+    
+      // RETURN : no record field for prompting configured
+    if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
+    {
+      $prompt = 'WARN: Geoupdate can\'t prompt to the records, because there is no prompt field configured.';
+      $this->log( $prompt, 1 );
+      return;
+    }
+      // RETURN : no record field for prompting configured
+       
+    return true;
   }
-
+  
  /**
-  * geoupdateGetRows( ):  The method select the values of the given table and select and
-  *                 returns the values as a marker array
+  * geoupdateInitRows( ):  
   *
-  * @param	string		$select_fields:  fields for the SQL select
-  * @return	array		$result       :  Array with field-value pairs
-  * @access public
+  * @return	boolean		true in case of success
+  * @access   private
   * @version  4.5.17
   * @since    4.5.17
   */
-  public function geoupdateGetRows( $select_fields )
+  private function geoupdateInitRows( )
   {
-    $rows = array( );
-    
+      // RETURN : row is set before
+    if( $this->geoupdaterows != null )
+    {
+      return true;
+    }
+      // RETURN : row is set before
+
+    $labels = array( 'uid' )
+            + $this->geoupdatelabels[ 'address' ]
+            + $this->geoupdatelabels[ 'api' ] 
+            ;
+
+    $select_fields  = implode( ', ', $labels );
+
       // RETURN : select fields are empty
     if( empty( $select_fields ) )
     {
-      return null;
+      $prompt = 'ERROR: SELECT fields are empty!';
+      $this->log( $prompt, 2 );
+      return false;
     }
       // RETURN : select fields are empty
 
       // Set the query
-    $select_fields  = 'uid, ' . $select_fields;
-    $from_table     = $this->browser_table;
+    $from_table     = $this->processTable;
+    //$where_clause   = 'uid = ' . $this->processId;
+    $where_clause   = null;
     $groupBy        = null;
     $orderBy        = null;
     $limit          = null;
@@ -469,30 +551,39 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     if( ! empty( $error ) )
     {
       $prompt = 'ERROR: Unproper SQL query';
-      //$this->log( $prompt, 1 );
+      $this->log( $prompt, 2 );
       $prompt = 'query: ' . $query;
-      //$this->log( $prompt );
+      $this->log( $prompt, 1 );
       $prompt = 'prompt: ' . $error;
-      //$this->log( $prompt );
+      $this->log( $prompt, 1 );
       
-      return;
+      return false;
     }
       // RETURN : ERROR
 
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $rows[ $row[ 'uid' ] ] = $row;
+      $this->geoupdaterows[ $row[ 'uid' ] ] = $row;
     }
 
       // Free the SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
       // RETURN the result array
-    $prompt = var_export( $rows, true );
-          t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 2 );
+    $prompt = var_export( $this->geoupdaterows, true );
+    t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 2 );
     //$this->log( $prompt );
-    return $rows;
+    
+    return;
   }
+
+
+
+  /***********************************************
+   *
+   * Geo Update - Requirements
+   *
+   **********************************************/
 
 /**
  * geoupdateRequired( )
@@ -603,20 +694,267 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     return false;
   }
 
+
+
+  /***********************************************
+   *
+   * Geo Update - Update
+   *
+   **********************************************/
+
 /**
- * geoupdateSet( ) : 
+ * geoupdateUpdate( ) : 
  *
- * @param       array   $rows
  * @return	boolean   true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
  */
-  private function geoupdateSet( $rows )
+  private function geoupdateUpdate( )
   {
-    unset( $rows );
+    foreach( $this->geoupdaterows as $row )
+    {
+      if( ! $this->geoupdateUpdateRowRequired( $row ) )
+      {
+        continue;
+      }
+      if( ! $this->geoupdateUpdateRowUpdate( $row ) )
+      {
+        continue;
+      }
+
+    }
+    
     return true;
   }
+
+/**
+ * geoupdateUpdateRowRequired( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowRequired( $row )
+  {
+    // Durchlaufe alle Datensätze der angegebenen Tabelle
+    //    Wenn Breiten- oder Längengrad leer, prüfe ob Adresse vorhanden.
+    //      Wenn Adresse vorhanden, aktualisiere Breiten- und Längengrad
+
+    if( ! $this->geoupdateUpdateRowRequiredPermission( $row ) )
+    {
+      continue;
+    }
+
+    if( ! $this->geoupdateUpdateRowRequiredGeodata( $row ) )
+    {
+      continue;
+    }
+
+    if( ! $this->geoupdateUpdateRowRequiredAddress( $row ) )
+    {
+      continue;
+    }
+
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowRequiredAddress( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowRequiredAddress( $row )
+  {
+      // RETURN : true, one address field contains content at least
+    foreach( $this->geoupdatelabels[ 'address' ] as $label )
+    {
+      if( isset ( $row[ $label ] ) )
+      {
+        return true;
+      }
+    }
+      // RETURN : true, one address field contains content at least
+
+      // prompt to syslog
+    $prompt = 'NO UPDATE: Adress fields don\'t contain any data.';
+    $this->log( $prompt, 0, $row[ 'uid' ] );
+
+      // RETURN : false, no address field doesn't contain any data
+    return false;
+  }
+
+/**
+ * geoupdateUpdateRowRequiredGeodata( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowRequiredGeodata( $row )
+  {
+      // RETURN : false, latitude or longitude contain content at least
+    foreach( $this->geoupdatelabels[ 'geodata' ] as $label )
+    {
+      if( isset ( $row[ $label ] ) )
+      {
+          // prompt to syslog
+        $prompt = 'NO UPDATE: latitude and/or longitude contain content';
+        $this->log( $prompt, 0, $row[ 'uid' ] );
+        return false;
+      }
+    }
+      // RETURN : false, latitude or longitude contain content at least
+
+      // RETURN : true, latitude and longitude don't contain any content
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowRequiredPermission( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowRequiredPermission( $row )
+  {
+    if( ! isset( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ) )
+    {
+      return true;
+    }
+    
+    if( $row[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ] )
+    {
+        // Prompt to the current record
+      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataIsForbiddenByRecord');
+      $this->geoupdateUpdateFieldPrompt( $prompt );
+        // prompt to syslog
+      $prompt = 'NO UPDATE: Record forbids an update';
+      $this->log( $prompt, 0, $row[ 'uid' ] );
+      return false;
+    }
+
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowUpdate( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowUpdate( $row )
+  {
+    $this->geoupdateUpdateRowUpdateInitPrompts( );
+
+    if( ! $this->geoupdateUpdateRowUpdateInitGeodata( $row ) )
+    {
+      return false;
+    }
+
+    if( ! $this->geoupdateUpdateRowUpdateExecute( $row ) )
+    {
+      return false;
+    }
+
+    // Aktualisiere Breiten- und Längengrad
+    
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowUpdateExecute( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowUpdateExecute( $row )
+  {
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowUpdateInitGeodata( ) : 
+ *
+ * @param       array   $row
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowUpdateInitGeodata( $row )
+  {
+    
+    return true;
+  }
+
+/**
+ * geoupdateUpdateRowUpdateInitPrompts( ) : 
+ *
+ * @return	boolean   true in case of success
+ * @access private
+ * @version       4.5.13
+ * @since         4.5.13
+ */
+  private function geoupdateUpdateRowUpdateInitPrompts( )
+  {
+    unset( $this->geoupdateRowPrompts );
+    
+    $this->geoupdateRowPrompts = array( );
+
+    return true;
+  }
+
+/**
+ * geoupdateUpdateFieldPrompt( )  : Set lables. Get lables from ext_tables.php.
+ *
+ * @param	string		$prompt     : 
+ * @return	void
+ * 
+ * @version   4.5.13
+ * @since     4.5.13
+ */
+
+  private function geoupdateUpdateFieldPrompt( $prompt ) 
+  {
+    $this->geoupdateInitLabels( );
+
+      // RETURN : no record field for prompting configured
+    if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
+    {
+//      $prompt = 'WARN: Geoupdate can\'t prompt to the record, because there is no prompt field configured.';
+//      $this->log( $prompt, 1 );
+      return;
+    }
+      // RETURN : no record field for prompting configured
+       
+    $date     = date('Y-m-d H:i:s');
+    $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
+    $prompt   = '* ' . $date . $browser . PHP_EOL 
+              . '  ' . $prompt . PHP_EOL
+              . $promptFromRow
+              ;
+
+    $this->geoupdateRowPrompts[ ] = $prompt;
+  }
+
 
 
   /***********************************************
@@ -1235,6 +1573,54 @@ table     : ' . $this->browser_table;
     $this->timeTracking_init( );
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
+  }
+
+
+
+  /***********************************************
+  *
+  * Log
+  *
+  **********************************************/
+
+/**
+ * log( )
+ *
+ * @param	string		$prompt : prompt
+ * @param	integer		$error  : 0 = notice, 1 = warn, 2 = error
+ * @param	integer		$uid    : uid of the current record
+ * @param	integer		$pid    : pid of the current record
+ * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+ * @return	void
+ * 
+ * @version   4.5.7
+ * @since     4.5.7
+ */
+
+  private function log( $prompt, $error=0, $uid=0, $action=2 ) 
+  {
+    $table  = $this->browser_table;
+    if( $uid )
+    {
+      $table = $table . ':' . $uid;
+    }
+
+    $prompt = '[tx_browser (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
+
+    $type       = 4;        // denotes which module that has submitted the entry. This is the current list:  1=tce_db; 2=tce_file; 3=system (eg. sys_history save); 4=modules; 254=Personal settings changed; 255=login / out action: 1=login, 2=logout, 3=failed login (+ errorcode 3), 4=failure_warning_email sent
+    //$action     = 0;        // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+    //$error      = 0;        // flag. 0 = message, 1 = error (user problem), 2 = System Error (which should not happen), 3 = security notice (admin)
+    $details_nr = -1;       // The message number. Specific for each $type and $action. in the future this will make it possible to translate errormessages to other languages
+    $details    = $prompt;  // Default text that follows the message
+    $data       = array( ); // Data that follows the log. Might be used to carry special information. If an array the first 5 entries (0-4) will be sprintf'ed the details-text...
+    //$table      = null;     // Special field used by tce_main.php. These ($tablename, $recuid, $recpid) holds the reference to the record which the log-entry is about. (Was used in attic status.php to update the interface.)
+    $recuid     = $uid;     // Secial field used by tce_main.php. These ($tablename, $recuid, $recpid) holds the reference to the record which the log-entry is about. (Was used in attic status.php to update the interface.)
+    $recpid     = 0;        // Normally 0 (zero). If set, it indicates that this log-entry is used to notify the backend of a record which is moved to another location
+    $event_pid  = -1;
+    $NEWid      = null;
+
+    $this->BE_USER->writelog( $type, $action, $error, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
+    
   }
 
 

@@ -205,6 +205,21 @@ class tx_browser_tcemainprocdm
 
   private function geoupdateGoogleAPI( &$fieldArray, $address ) 
   {
+      // Require map library
+    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php');
+      // Create object
+    $objGoogleApi = new tx_browser_googleApi( );
+    
+    $result = $objGoogleApi->main( $address, $this );
+    
+    if( isset( $result[ 'status'] ) )
+    {
+      $prompt = $result[ 'status'];
+      $this->geoupdateSetPrompt( $prompt, $fieldArray );
+    }
+
+    return $result[ 'geodata' ];
+
       // Set URL
     $urlAddress = urlencode( $address );
     $googleApiUrl  = str_replace( '%address%', $urlAddress, $this->googleApiUrl );
@@ -935,7 +950,7 @@ class tx_browser_tcemainprocdm
  * log( )
  *
  * @param	string		$prompt : prompt
- * @param	integer		$error  : 0 = message, 1 = error, 2 = System Error, 3 = security notice 
+ * @param	integer		$error  : 0 = notice, 1 = warn, 2 = error
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
  * @return	void
  * 

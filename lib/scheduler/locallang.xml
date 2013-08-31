@@ -36,6 +36,7 @@
       <label index="msg.reportMode.update">Send an e-mail: only if TYPO3 database is updated.</label>
       <label index="msg.reportMode.warn">Send an e-mail: only in case of errors.</label>
       <label index="msg.reportMode.undefined">Send an e-mail: value is undefined!</label>
+      <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="label.copy">Kopie</label>
@@ -69,6 +70,7 @@
       <label index="msg.reportMode.update">Mail senden: wenn die Datenbank aktualisiert wurde.</label>
       <label index="msg.reportMode.warn">Mail senden: nur im Fall von Fehlern</label>
       <label index="msg.reportMode.undefined">Mail senden: undefinierter Wert!</label>
+      <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
     </languageKey>
   </data>
 </T3locallang>
