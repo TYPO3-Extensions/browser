@@ -931,7 +931,9 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
-        $prompt = 'TESTMODE: [tx_browser (' . $table . ':' . $uid . ')] will updated, if test mode would be disabled.' . PHP_EOL;
+        $prompt = 'TESTMODE query: ' . $query;
+        $this->log( $prompt, 0, $uid );
+        $prompt = 'TESTMODE: [tx_browser (' . $table . ':' . $uid . ')] will updated, if test mode would be disabled.';
         $this->log( $prompt, 0, $uid );
         break;
       case( 'disabled' ):
@@ -941,7 +943,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         $error          = $GLOBALS['TYPO3_DB']->sql_error( );
         break;
       default:
-        $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"' . PHP_EOL;
+        $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
         $this->log( $prompt, 0, $uid );
         die( $prompt );
         break;
