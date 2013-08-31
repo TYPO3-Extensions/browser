@@ -763,7 +763,8 @@ class tx_browser_tcemainprocdm
               . '  ' . $prompt . PHP_EOL
               . $promptFromRow
               ;
-
+    $prompt = $GLOBALS['TYPO3_DB']->quoteStr( $prompt, $this->processTable );
+    
     $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] = $prompt;
   }
   

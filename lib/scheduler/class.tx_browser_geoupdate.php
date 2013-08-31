@@ -1232,16 +1232,21 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     {
       $prompt = $prompt . PHP_EOL;
     }
-    $prompt = '[SCHEDULER] OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate')
-            . $prompt 
-            . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
-            ;
-    $prompt = $GLOBALS['TYPO3_DB']->quoteStr( $prompt, $this->browser_table );
+
+    $date           = date('Y-m-d H:i:s');
+    $browser        = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptBrowserPhrase'). ':';
+    $updatePrompt   = '* ' . $date . $browser . PHP_EOL 
+                    . $prompt . PHP_EOL
+                    . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
+                    ;
+    $prompt = '[SCHEDULER] OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptGeodataUpdate');
+    
+    $updatePrompt = $GLOBALS['TYPO3_DB']->quoteStr( $updatePrompt, $this->browser_table );
     
     $updateFields = array( 
       $this->geoupdatelabels[ 'geodata' ][ 'lat' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] . '"',
       $this->geoupdatelabels[ 'geodata' ][ 'lon' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] . '"',
-      $this->geoupdatelabels[ 'api' ][ 'prompt' ]   . ' = "' . $prompt . '"'
+      $this->geoupdatelabels[ 'api' ][ 'prompt' ]   . ' = "' . $updatePrompt . '"'
     );
     
     $set  = implode( ', ', $updateFields );
