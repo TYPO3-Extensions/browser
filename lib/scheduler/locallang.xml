@@ -38,6 +38,7 @@
       <label index="msg.reportMode.undefined">Send an e-mail: value is undefined!</label>
       <label index="promptBrowserPhrase">Browser - TYPO3 without PHP - [SCHEDULER]</label>
       <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
+      <label index="promptGeodataUpdate">latitude and longitude are updated!</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="label.copy">Kopie</label>
@@ -73,6 +74,7 @@
       <label index="msg.reportMode.undefined">Mail senden: undefinierter Wert!</label>
       <label index="promptBrowserPhrase">Browsers - TYPO3 ohne PHP - [SCHEDULER]</label>
       <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
+      <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert!</label>
     </languageKey>
   </data>
 </T3locallang>
