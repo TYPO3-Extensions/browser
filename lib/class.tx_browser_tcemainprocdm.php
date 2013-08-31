@@ -685,7 +685,9 @@ class tx_browser_tcemainprocdm
     if( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] )
     {
         // Prompt to the current record
-      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataIsForbiddenByRecord');
+      $prompt = '"' . $this->geoupdatelabels[ 'api' ][ 'forbidden' ] . '"' . PHP_EOL
+              . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataIsForbiddenByRecord')
+              ;
       $this->geoupdateSetPrompt( $prompt, $fieldArray );
         // Prompt to the current record
       return true;
