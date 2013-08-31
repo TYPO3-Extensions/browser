@@ -362,8 +362,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
     $body = 'Task is done with success.' . PHP_EOL
           . PHP_EOL
-          . 'Statistic: ' . PHP_EOL
-          . PHP_EOL
           . $this->geoupdateStatisticEmail . PHP_EOL
           . PHP_EOL
           . __METHOD__ . ' (' . __LINE__ . ')';
@@ -794,12 +792,15 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         break;
     }
     $this->geoupdateStatisticEmail = '' .
-'rows
+'Statistic
+- - - - - - - - - - - - - - - - - - - - - - - - 
+rows
   with empty address              : ' . $this->geoupdateStatisticData[ 'addressEmpty' ] . '
 + with not empty geodata          : ' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ] . '
 + without update permission       : ' . $this->geoupdateStatisticData[ 'forbidden' ] . '
 + with errors                     : ' . $this->geoupdateStatisticData[ 'errors' ] . '
 ' . $updated . '
+- - - - - - - - - - - - - - - - - - - - - - - - 
 # which are handled               # ' . $this->geoupdateStatisticData[ 'rows' ] . '
 ';
     
