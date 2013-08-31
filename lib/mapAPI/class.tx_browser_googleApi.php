@@ -72,11 +72,13 @@ class tx_browser_googleApi
  * @param	object		$fieldArray : Array of modified fields * @param	string		$address    : Address
  * @return	array           $result     : geodata( lon, lat), status
  * 
+ * @access    public
+ * 
  * @version   4.5.13
  * @since     4.5.13
  */
 
-  private function main( $address, $pObj ) 
+  public function main( $address, $pObj ) 
   {
       // Set URL
     $urlAddress = urlencode( $address );
