@@ -712,14 +712,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateStatistic( )
   {
-    $this->geoupdateStatistic = array( 
-      'addressEmpty'    => 0,
-      'errors'          => 0,
-      'forbidden'       => 0,
-      'geodataNotEmpty' => 0,
-      'rows'            => 0,
-      'updated'         => 0,
-    );
     
     $prompt = 'Statistic: handled rows #' . $this->geoupdateStatistic[ 'rows' ];
     $this->log( $prompt );
@@ -731,7 +723,20 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $this->log( $prompt );
     $prompt = 'Statistic: errors #' . $this->geoupdateStatistic[ 'errors' ];
     $this->log( $prompt );
-    $prompt = 'Statistic: updates rows #' . $this->geoupdateStatistic[ 'updated' ];
+    switch( $this->browser_testMode )
+    {
+      case( 'enabled' ):
+        $prompt = 'Statistic: not updates rows because of test mode #' . $this->geoupdateStatistic[ 'updatedTest' ];
+        break;
+      case( 'disabled' ):
+        $prompt = 'Statistic: updates rows #' . $this->geoupdateStatistic[ 'updated' ];
+        break;
+      default:
+        $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
+        $this->log( $prompt, 2 );
+        die( $prompt );
+        break;
+    }
     $this->log( $prompt );
 
   }
@@ -761,6 +766,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       'geodataNotEmpty' => 0,
       'rows'            => 0,
       'updated'         => 0,
+      'updatedTest'     => 0,
     );
     foreach( $this->geoupdaterows as $row )
     {
@@ -1251,6 +1257,9 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
+        $this->geoupdateStatistic[ 'updatedTest' ]  = $this->geoupdateStatistic[ 'updatedTest' ]
+                                                    + 1
+                                                    ;
         $prompt = 'TESTMODE query: ' . $query;
         $this->log( $prompt, 0, $uid );
         $prompt = 'TESTMODE: [tx_browser (' . $table . ':' . $uid . ')] will updated, if test mode would be disabled.';
