@@ -366,7 +366,6 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
           . PHP_EOL
           . $this->geoupdateStatisticEmail . PHP_EOL
           . PHP_EOL
-          . PHP_EOL
           . __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body, 'update' );
       // E-mail to admin
