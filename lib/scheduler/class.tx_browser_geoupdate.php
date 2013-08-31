@@ -1383,7 +1383,7 @@ rows
       return false;
     }
 
-    $prompt = 'OK: [tx_browser (' . $this->browser_table . ':' . $uid . ')] is updated.' . PHP_EOL;
+    $prompt = 'OK: record is updated.' . PHP_EOL;
     $this->log( $prompt, 0, $uid );
 
       // Statistic
