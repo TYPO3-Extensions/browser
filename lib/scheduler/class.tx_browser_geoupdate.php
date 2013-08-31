@@ -237,19 +237,19 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     private $geoupdaterows  = null;
     
    /**
-    * Prompts for the current row
+    * Update values for the current row
     *
     * @var array
     */
-    private $geoupdateRowPrompts = null;
+    private $geoupdateUpdateValues = null;
     
    /**
-    * Fields for updating the current row
+    * Statistic data
     *
     * @var array
     */
-    private $geoupdateRowUpdateFields = null;
-
+    private $geoupdateStatistic = null;
+    
    /**
     * t3lib_timeTrack object
     *
@@ -712,17 +712,21 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateUpdate( )
   {
+    $this->geoupdateStatistic = array( 
+      'addressEmpty'    => 0,
+      'errors'          => 0,
+      'forbidden'       => 0,
+      'geodataNotEmpty' => 0,
+      'rows'            => 0,
+      'updated'         => 0,
+    );
     foreach( $this->geoupdaterows as $row )
     {
       if( ! $this->geoupdateUpdateRowRequired( $row ) )
       {
         continue;
       }
-      if( ! $this->geoupdateUpdateRowUpdate( $row ) )
-      {
-        continue;
-      }
-
+      $this->geoupdateUpdateRowUpdate( $row );
     }
     
     return true;
@@ -786,6 +790,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $prompt = 'NO UPDATE: Adress fields don\'t contain any data.';
     $this->log( $prompt, 0, $row[ 'uid' ] );
 
+    $this->geoupdateStatistic[ 'addressEmpty' ] = $this->geoupdateStatistic[ 'addressEmpty' ]
+                                                + 1
+                                                ;
+
       // RETURN : false, no address field doesn't contain any data
     return false;
   }
@@ -809,6 +817,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
           // prompt to syslog
         $prompt = 'NO UPDATE: latitude and/or longitude contain content';
         $this->log( $prompt, 0, $row[ 'uid' ] );
+
+        $this->geoupdateStatistic[ 'geodataNotEmpty' ]  = $this->geoupdateStatistic[ 'geodataNotEmpty' ]
+                                                        + 1
+                                                        ;
+
         return false;
       }
     }
@@ -838,10 +851,14 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     {
         // Prompt to the current record
       $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataIsForbiddenByRecord');
-      $this->geoupdateUpdateFieldPrompt( $prompt );
+      $this->geoupdateUpdateSetPrompts( $prompt );
         // prompt to syslog
       $prompt = 'NO UPDATE: Record forbids an update';
       $this->log( $prompt, 0, $row[ 'uid' ] );
+
+      $this->geoupdateStatistic[ 'forbidden' ]  = $this->geoupdateStatistic[ 'forbidden' ]
+                                                + 1
+                                                ;
       return false;
     }
 
@@ -859,14 +876,13 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateUpdateRowUpdate( $row )
   {
-    $this->geoupdateUpdateRowUpdateInitPrompts( );
+      // Reset update values
+    $this->geoupdateUpdateRowUpdateDataReset( );
 
-    if( ! $this->geoupdateUpdateRowUpdateInitGeodata( $row ) )
-    {
-      return false;
-    }
+      // Init geodata and prompt
+    $this->geoupdateUpdateRowUpdateDataSet( $row );
 
-    if( ! $this->geoupdateUpdateRowUpdateExecute( $row ) )
+    if( ! $this->geoupdateUpdateRowUpdateDataUpdate( $row ) )
     {
       return false;
     }
@@ -877,7 +893,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
   }
 
 /**
- * geoupdateUpdateRowUpdateExecute( ) : 
+ * geoupdateUpdateRowUpdateDataUpdate( ) : 
  *
  * @param       array   $row
  * @return	boolean   true in case of success
@@ -885,13 +901,79 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  * @version       4.5.13
  * @since         4.5.13
  */
-  private function geoupdateUpdateRowUpdateExecute( $row )
+  private function geoupdateUpdateRowUpdateDataUpdate( $row )
   {
+    $prompt = implode( PHP_EOL, $this->geoupdateUpdateValues[ 'prompts' ] );
+    if( $prompt )
+    {
+      $prompt = $prompt . PHP_EOL;
+    }
+    $prompt = $prompt 
+            . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
+            ;
+    
+    $updateFields = array( 
+      $this->geoupdatelabels[ 'geodata' ][ 'lat' ]  . ' = ' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ],
+      $this->geoupdatelabels[ 'geodata' ][ 'lon' ]  . ' = ' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ],
+      $this->geoupdatelabels[ 'api' ][ 'prompt' ]   . ' = ' . $prompt
+    );
+    
+    $set  = implode( ', ', $updateFields );
+    $uid  = $row[ 'uid' ];
+
+      // Build the query
+    $query = '' .
+      'UPDATE ' . $this->browser_table . ' ' .
+      'SET    ' . $set . 
+      'WHERE  uid = ' . $uid ;
+
+
+    switch( $this->browser_testMode )
+    {
+      case( 'enabled' ):
+        $prompt = 'TESTMODE: [tx_browser (' . $table . ':' . $uid . ')] will updated, if test mode would be disabled.' . PHP_EOL;
+        $this->log( $prompt, 0, $uid );
+        break;
+      case( 'disabled' ):
+          // Execute the query
+        $GLOBALS['TYPO3_DB']->sql_query( $query );
+          // Evaluate the query
+        $error          = $GLOBALS['TYPO3_DB']->sql_error( );
+        break;
+      default:
+        $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"' . PHP_EOL;
+        $this->log( $prompt, 0, $uid );
+        die( $prompt );
+        break;
+    }
+    
+    if( ! empty( $error ) )
+    {
+      $prompt = 'ERROR: Unproper SQL query';
+      $this->log( $prompt, 2 );
+      $prompt = 'query: ' . $query;
+      $this->log( $prompt, 1 );
+      $prompt = 'prompt: ' . $error;
+      $this->log( $prompt, 1 );
+      
+      $this->geoupdateStatistic[ 'errors' ] = $this->geoupdateStatistic[ 'errors' ]
+                                            + 1
+                                            ;
+      return false;
+    }
+
+    $prompt = 'OK: [tx_browser (' . $table . ':' . $uid . ')] is updated.' . PHP_EOL;
+    $this->log( $prompt, 0, $uid );
+
+      // Statistic
+    $this->geoupdateStatistic[ 'updated' ]  = $this->geoupdateStatistic[ 'updated' ]
+                                            + 1
+                                            ;
     return true;
   }
 
 /**
- * geoupdateUpdateRowUpdateInitGeodata( ) : 
+ * geoupdateUpdateRowUpdateDataSet( ) : 
  *
  * @param       array   $row
  * @return	boolean   true in case of success
@@ -899,31 +981,59 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  * @version       4.5.13
  * @since         4.5.13
  */
-  private function geoupdateUpdateRowUpdateInitGeodata( $row )
+  private function geoupdateUpdateRowUpdateDataSet( $row )
   {
+      // Require map library
+    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
+      // Create object
+    $objGoogleApi = new tx_browser_googleApi( );
+    
+      // Get data from API
+    $result = $objGoogleApi->main( $address, $this );
+    
+      // Prompt to current record
+    if( isset( $result[ 'status'] ) )
+    {
+      $prompt = 'ERROR: ' . $result[ 'status' ];
+        // Prompt to the current record
+      $this->geoupdateUpdateSetPrompts( $prompt );
+        // prompt to syslog
+      $this->log( $prompt, 1, $row[ 'uid' ] );
+      
+        // Statistic
+      $this->geoupdateStatistic[ 'errors' ] = $this->geoupdateStatistic[ 'errors' ]
+                                            + 1
+                                            ;
+
+      return false;
+    }
+      // Prompt to current record
+
+    $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] = $result[ 'geodata' ][ 'lat' ];
+    $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] = $result[ 'geodata' ][ 'lon' ];
     
     return true;
   }
 
 /**
- * geoupdateUpdateRowUpdateInitPrompts( ) : 
+ * geoupdateUpdateRowUpdateDataReset( ) : 
  *
  * @return	boolean   true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
  */
-  private function geoupdateUpdateRowUpdateInitPrompts( )
+  private function geoupdateUpdateRowUpdateDataReset( )
   {
-    unset( $this->geoupdateRowPrompts );
+    unset( $this->geoupdateUpdateValues );
     
-    $this->geoupdateRowPrompts = array( );
+    $this->geoupdateUpdateValues = array( );
 
     return true;
   }
 
 /**
- * geoupdateUpdateFieldPrompt( )  : Set lables. Get lables from ext_tables.php.
+ * geoupdateUpdateSetPrompts( )  : Set lables. Get lables from ext_tables.php.
  *
  * @param	string		$prompt     : 
  * @return	void
@@ -932,7 +1042,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  * @since     4.5.13
  */
 
-  private function geoupdateUpdateFieldPrompt( $prompt ) 
+  private function geoupdateUpdateSetPrompts( $prompt ) 
   {
     $this->geoupdateInitLabels( );
 
@@ -952,7 +1062,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
               . $promptFromRow
               ;
 
-    $this->geoupdateRowPrompts[ ] = $prompt;
+    $this->geoupdateUpdateValues[ 'prompts' ][ ] = $prompt;
   }
 
 
@@ -1605,7 +1715,7 @@ table     : ' . $this->browser_table;
       $table = $table . ':' . $uid;
     }
 
-    $prompt = '[tx_browser (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
+    $prompt = '[tx_browser (' . $table . ')] ' . $prompt . PHP_EOL;
 
     $type       = 4;        // denotes which module that has submitted the entry. This is the current list:  1=tce_db; 2=tce_file; 3=system (eg. sys_history save); 4=modules; 254=Personal settings changed; 255=login / out action: 1=login, 2=logout, 3=failed login (+ errorcode 3), 4=failure_warning_email sent
     //$action     = 0;        // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate

@@ -206,110 +206,23 @@ class tx_browser_tcemainprocdm
   private function geoupdateGoogleAPI( &$fieldArray, $address ) 
   {
       // Require map library
-    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php');
+    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
       // Create object
     $objGoogleApi = new tx_browser_googleApi( );
     
+      // Get data from API
     $result = $objGoogleApi->main( $address, $this );
     
+      // Prompt to current record
     if( isset( $result[ 'status'] ) )
     {
       $prompt = $result[ 'status'];
       $this->geoupdateSetPrompt( $prompt, $fieldArray );
     }
+      // Prompt to current record
 
+      // RETURN geodata
     return $result[ 'geodata' ];
-
-      // Set URL
-    $urlAddress = urlencode( $address );
-    $googleApiUrl  = str_replace( '%address%', $urlAddress, $this->googleApiUrl );
-    
-      // Get geodata from Google API
-    $json   = file_get_contents( $googleApiUrl );
-    $data   = json_decode( $json );
-    $lat    = $data->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
-    $lon    = $data->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
-    $status = $data->{'status'};
-      // Get geodata from Google API
-
-      // Log the status message
-    switch( true )
-    {
-      case( $status == 'OK' ):
-//          // Prompt to the current record
-//        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiOK');
-//        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-//          // Prompt to the current record
-        $prompt = 'Google API status is: OK';
-        $this->log( $prompt );
-        break;
-      case( $status == 'ZERO_RESULTS' ):
-          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiZERO_RESULTS');
-        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-          // Prompt to the current record
-        $prompt = 'Google API status is: ZERO_RESULTS';
-        $this->log( $prompt );
-        $prompt = 'This means: Query was proper, but Google API doesn\'t know the given address.';
-        $this->log( $prompt );
-        $prompt = 'Address: ' . $address;
-        $this->log( $prompt );
-        break;
-      case( $status == 'OVER_QUERY_LIMIT' ):
-          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiOVER_QUERY_LIMIT');
-        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-          // Prompt to the current record
-        $prompt = 'Google API status is: OVER_QUERY_LIMIT';
-        $this->log( $prompt );
-        $prompt = 'This means: Query was proper, but your website overrun the limit of allowed or contracted Google requests.';
-        $this->log( $prompt );
-        break;
-      case( $status == 'REQUEST_DENIED' ):
-          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiREQUEST_DENIED');
-        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-          // Prompt to the current record
-        $error  = 1;
-        $prompt = 'ERROR: Google API status is: REQUEST_DENIED';
-        $this->log( $prompt, $error );
-        $prompt = 'This means: Query was unproper. Probably because of a wrong sensor parameter';
-        $this->log( $prompt );
-        $prompt = $googleApiUrl;
-        $this->log( $prompt );
-        break;
-      case( $status == 'INVALID_REQUEST' ):
-          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiINVALID_REQUEST');
-        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-          // Prompt to the current record
-        $error  = 1;
-        $prompt = 'ERROR: Google API status is: INVALID_REQUEST';
-        $this->log( $prompt, $error );
-        $prompt = 'This means: Query was unproper. Probably because of a missing address';
-        $this->log( $prompt );
-        $prompt = $googleApiUrl;
-        $this->log( $prompt );
-        break;
-      default:
-          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataGoogleapiUNDEFINED');
-        $this->geoupdateSetPrompt( $prompt, $fieldArray );
-          // Prompt to the current record
-        $error  = 1;
-        $prompt = 'ERROR: Google API status is undefined: ' . $status;
-        $this->log( $prompt, $error );
-        break;
-    }
-      // Log the status message
-
-      //  RETURN  : geodata 
-    $geodata  = array
-                (
-                  'lat' => $lat,
-                  'lon' => $lon,
-                );
-    return $geodata;
   }
 
 /**
