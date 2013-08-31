@@ -570,11 +570,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
       // RETURN the result array
-    $prompt = var_export( $this->geoupdaterows, true );
-    t3lib_div::devLog( '[tx_browser_Geoupdate]: ' . $prompt, $this->extKey, 2 );
-    //$this->log( $prompt );
+    $prompt = '[tx_browser_Geoupdate]: ' . var_export( $this->geoupdaterows, true );
+    $this->log( $prompt );
     
-    return;
+    return true;
   }
 
 
