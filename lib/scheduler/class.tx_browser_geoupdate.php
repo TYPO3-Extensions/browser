@@ -1731,7 +1731,7 @@ table     : ' . $this->browser_table;
     $event_pid  = -1;
     $NEWid      = null;
 
-    $this->BE_USER->writelog( $type, $action, $error, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
+    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $error, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
     
   }
 
