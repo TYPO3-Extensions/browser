@@ -408,11 +408,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
     if( ! $this->geoupdateUpdate( ) )
     {
-      $this->geoupdateStatisticData( );
+      $this->geoupdateStatistic( );
       return false;
     }
 
-    $this->geoupdateStatisticData( );
+    $this->geoupdateStatistic( );
     return true;
   }
 
