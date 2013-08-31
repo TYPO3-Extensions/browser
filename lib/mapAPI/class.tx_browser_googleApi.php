@@ -97,6 +97,7 @@ class tx_browser_googleApi
     {
       case( $status == 'OK' ):
 //          // Prompt to the current record
+        $status = null;
 //        $status = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOK');
 //          // Prompt to the current record
         $prompt = 'Google API status is: OK';
