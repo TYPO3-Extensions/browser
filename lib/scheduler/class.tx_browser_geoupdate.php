@@ -783,10 +783,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
-        $updated = '+ which would updated [TEST MODE] #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
+        $updated = '+ which would updated [TEST MODE] : ' . $this->geoupdateStatisticData[ 'addressEmpty' ];
         break;
       case( 'disabled' ):
-        $updated = '+ which are updated               #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
+        $updated = '+ which are updated               : ' . $this->geoupdateStatisticData[ 'addressEmpty' ];
         break;
       default:
         $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
@@ -795,13 +795,13 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         break;
     }
     $this->geoupdateStatisticEmail = '' .
-'  rows
-  with empty address              #' . $this->geoupdateStatisticData[ 'addressEmpty' ] . '
-+ with not empty geodata          #' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ] . '
-+ without update permission       #' . $this->geoupdateStatisticData[ 'forbidden' ] . '
-+ with errors                     #' . $this->geoupdateStatisticData[ 'errors' ] . '
+'rows
+  with empty address              : ' . $this->geoupdateStatisticData[ 'addressEmpty' ] . '
++ with not empty geodata          : ' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ] . '
++ without update permission       : ' . $this->geoupdateStatisticData[ 'forbidden' ] . '
++ with errors                     : ' . $this->geoupdateStatisticData[ 'errors' ] . '
 ' . $updated . '
-# which are handled               #' . $this->geoupdateStatisticData[ 'rows' ] . '
+# which are handled               # ' . $this->geoupdateStatisticData[ 'rows' ] . '
 ';
     
   }
