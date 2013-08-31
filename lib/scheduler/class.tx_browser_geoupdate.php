@@ -1352,7 +1352,7 @@ rows
                                                     ;
         $prompt = 'TESTMODE query: ' . $query;
         $this->log( $prompt, 0, $uid );
-        $prompt = 'TESTMODE: [tx_browser (' . $table . ':' . $uid . ')] will updated, if test mode would be disabled.';
+        $prompt = 'TESTMODE: [tx_browser (' . $this->browser_table . ':' . $uid . ')] will updated, if test mode would be disabled.';
         $this->log( $prompt, 0, $uid );
         break;
       case( 'disabled' ):
@@ -1383,7 +1383,7 @@ rows
       return false;
     }
 
-    $prompt = 'OK: [tx_browser (' . $table . ':' . $uid . ')] is updated.' . PHP_EOL;
+    $prompt = 'OK: [tx_browser (' . $this->browser_table . ':' . $uid . ')] is updated.' . PHP_EOL;
     $this->log( $prompt, 0, $uid );
 
       // Statistic
