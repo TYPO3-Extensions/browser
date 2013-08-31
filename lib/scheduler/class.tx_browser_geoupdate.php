@@ -1182,7 +1182,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     {
       $prompt = $prompt . PHP_EOL;
     }
-    $prompt = $prompt 
+    $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate')
+            . $prompt 
             . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
             ;
     $prompt = $GLOBALS['TYPO3_DB']->quoteStr( $prompt, $this->browser_table );
