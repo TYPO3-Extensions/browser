@@ -682,7 +682,7 @@ class tx_browser_tcemainprocdm
       return false;
     }
     
-    if( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] )
+    if( $row[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ] )
     {
         // Prompt to the current record
       $prompt = '"' . $this->geoupdatelabels[ 'api' ][ 'forbidden' ] . '"' . PHP_EOL
