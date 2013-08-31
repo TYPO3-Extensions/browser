@@ -713,6 +713,13 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
  */
   private function geoupdateStatistic( )
   {
+    $this->geoupdateStatistic[ 'rows' ] = $this->geoupdateStatistic[ 'addressEmpty' ]
+                                        + $this->geoupdateStatistic[ 'forbidden' ]
+                                        + $this->geoupdateStatistic[ 'geodataNotEmpty' ]
+                                        + $this->geoupdateStatistic[ 'errors' ]
+                                        + $this->geoupdateStatistic[ 'updatedTest' ]
+                                        + $this->geoupdateStatistic[ 'updated' ]
+                                        ;
     
     $prompt = 'Statistic: handled rows #' . $this->geoupdateStatistic[ 'rows' ];
     $this->log( $prompt );
@@ -1080,17 +1087,24 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // RETURN : false, latitude or longitude contain content at least
     foreach( $this->geoupdatelabels[ 'geodata' ] as $label )
     {
-      if( isset ( $row[ $label ] ) )
+      if( ! isset ( $row[ $label ] ) )
       {
-          // prompt to syslog
-        $prompt = 'NO UPDATE: latitude and/or longitude contain content';
-        $this->log( $prompt, 0, $row[ 'uid' ] );
-
-        $this->geoupdateStatistic[ 'geodataNotEmpty' ]  = $this->geoupdateStatistic[ 'geodataNotEmpty' ]
-                                                        + 1
-                                                        ;
-        return false;
+        continue;
       }
+        
+      if( ! $row[ $label ] )
+      {
+        continue;
+      }
+      
+        // prompt to syslog
+      $prompt = 'NO UPDATE: latitude and/or longitude contain content';
+      $this->log( $prompt, 0, $row[ 'uid' ] );
+        // Statistic
+      $this->geoupdateStatistic[ 'geodataNotEmpty' ]  = $this->geoupdateStatistic[ 'geodataNotEmpty' ]
+                                                      + 1
+                                                      ;
+      return false;
     }
       // RETURN : false, latitude or longitude contain content at least
 
