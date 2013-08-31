@@ -1704,11 +1704,13 @@ table     : ' . $this->browser_table;
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
  * @return	void
  * 
+ * @access    public
+ * 
  * @version   4.5.7
  * @since     4.5.7
  */
 
-  private function log( $prompt, $error=0, $uid=0, $action=2 ) 
+  public function log( $prompt, $error=0, $uid=0, $action=2 ) 
   {
     $table  = $this->browser_table;
     if( $uid )
