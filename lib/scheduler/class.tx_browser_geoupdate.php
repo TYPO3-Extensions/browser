@@ -1106,10 +1106,15 @@ rows
       // RETURN : true, one address field contains content at least
     foreach( $this->geoupdatelabels[ 'address' ] as $label )
     {
-      if( isset ( $row[ $label ] ) )
+      if( ! isset ( $row[ $label ] ) )
       {
-        return true;
+        continue;
       }
+      if( ! $row[ $label ] )
+      {
+        continue;
+      }
+      return true;
     }
       // RETURN : true, one address field contains content at least
 
@@ -1264,6 +1269,10 @@ rows
     $objGoogleApi = new tx_browser_googleApi( );
     
     $address = $this->geoupdateUpdateGetAddress( $row );
+    if( ! $address )
+    {
+      return false;
+    }
     
       // Get data from API
     $result = $objGoogleApi->main( $address, $this );
