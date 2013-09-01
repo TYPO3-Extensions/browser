@@ -970,7 +970,7 @@ class tx_browser_pi1_map
     $this->view       = $this->pObj->view;
     $viewWiDot        = $this->view . '.';
     $this->conf_path  = $viewWiDot . $this->mode;
-    $this->conf_view  = $this->conf['views.'][$viewWiDot][$this->mode . '.'];
+    $this->conf_view  = $this->conf[ 'views.' ][ $viewWiDot ][ $this->mode . '.' ];
       // Get TypoScript configuration for the current view
 
       // Set the global var $confMap
@@ -1197,12 +1197,17 @@ class tx_browser_pi1_map
  * initVarProvider( ) : The method sets the global $provider
  *
  * @return	void
- * @version 4.5.6
+ * @version 4.5.13
  * @since   4.5.6
  */
   private function initVarProvider(  )
   {
     $this->provider = $this->confMap['provider'];
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = 'Map provider is: ' . $this->provider;
+      t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
+    }
     switch( true )
     {
       case( $this->provider == 'GoogleMaps' ):
