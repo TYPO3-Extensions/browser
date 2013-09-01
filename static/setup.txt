@@ -1309,7 +1309,6 @@ plugin.tx_browser_pi1 {
                     equals  = GoogleMaps
                   }
                   value = 'GMap'
-                  value = 'OSM'
                 }
                   // OSM, if Open Street Map
                 20 = TEXT
