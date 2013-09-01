@@ -1268,7 +1268,7 @@ class tx_browser_pi1_map
  * @param	array           $phpArray : php array with data for JSON.
  * @return	string		$jsonData : JSON array
  * 
- * @internal  #i0018 
+ * @internal  #i0018
  * @version 4.5.11
  * @since   4.5.11
  */
@@ -2037,11 +2037,8 @@ class tx_browser_pi1_map
 
         // #i0019, 130717, dwildt, 1+
       $description = str_replace( $this->catDevider, $this->pObj->objTyposcript->str_sqlDeviderDisplay, $description );
-        // 130901, dwildt, 1+
-      //$description = urlencode( $description );
+        // #i0018, 130901, dwildt, 1+
       $description = str_replace( "'", null, $description );
-
-      
         // Get the description
         
         // Get the url
