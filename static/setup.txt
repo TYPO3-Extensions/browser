@@ -1321,6 +1321,7 @@ plugin.tx_browser_pi1 {
                 }
               }
                 // Map wms: OSM
+              oxMapConfigWms >
               oxMapConfigWms = TEXT
               oxMapConfigWms {
                 value = 'OSM'
