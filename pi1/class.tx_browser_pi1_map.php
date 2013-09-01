@@ -2038,7 +2038,8 @@ class tx_browser_pi1_map
         // #i0019, 130717, dwildt, 1+
       $description = str_replace( $this->catDevider, $this->pObj->objTyposcript->str_sqlDeviderDisplay, $description );
         // 130901, dwildt, 1+
-      $description = urlencode( $description );
+      //$description = urlencode( $description );
+      $description = str_replace( "'", null, $description );
 
       
         // Get the description
