@@ -27,33 +27,33 @@
  *
  *
  *
- *   73: class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
+ *   70: class tx_browser_Geoupdate_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
  *
  *              SECTION: Bulding the form
- *  106:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  137:     private function getFieldTestMode( array &$taskInfo, $task, $parentObject )
- *  210:     private function getFieldTable( array &$taskInfo, $task, $parentObject )
- *  268:     private function getFieldBrowserAdminEmail( array &$taskInfo, $task, $parentObject )
- *  326:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *  103:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
+ *  133:     private function getFieldTestMode( array &$taskInfo, $task, $parentObject )
+ *  203:     private function getFieldTable( array &$taskInfo, $task, $parentObject )
+ *  261:     private function getFieldBrowserAdminEmail( array &$taskInfo, $task, $parentObject )
+ *  319:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
  *
  *              SECTION: Saving
- *  460:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  479:     private function saveFieldTestMode( array $submittedData, tx_scheduler_Task $task )
- *  495:     private function saveFieldTable( array $submittedData, tx_scheduler_Task $task )
- *  511:     private function saveFieldBrowserAdminEmail( array $submittedData, tx_scheduler_Task $task )
- *  526:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *  395:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
+ *  413:     private function saveFieldTestMode( array $submittedData, tx_scheduler_Task $task )
+ *  429:     private function saveFieldTable( array $submittedData, tx_scheduler_Task $task )
+ *  445:     private function saveFieldBrowserAdminEmail( array $submittedData, tx_scheduler_Task $task )
+ *  460:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
  *
  *              SECTION: Validating
- *  565:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
- *  626:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  651:     private function validateFieldTestMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  691:     private function validateFieldTable( array &$submittedData, tx_scheduler_Module $parentObject )
- *  721:     private function validateFieldBrowserAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
- *  747:     public function validateOS( tx_scheduler_Module $parentObject )
- *  778:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  822:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  484:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  540:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  565:     private function validateFieldTestMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  601:     private function validateFieldTable( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  631:     private function validateFieldBrowserAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  657:     public function validateOS( tx_scheduler_Module $parentObject )
+ *  692:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  736:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
  *
- * TOTAL FUNCTIONS: 21
+ * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */

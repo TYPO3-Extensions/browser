@@ -28,59 +28,81 @@
  *
  *
  *
- *  105: class tx_browser_Geoupdate extends tx_scheduler_Task
+ *  119: class tx_browser_Geoupdate extends tx_scheduler_Task
  *
  *              SECTION: Main
- *  300:     public function execute( )
+ *  341:     public function execute( )
+ *
+ *              SECTION: Geo Update
+ *  414:     private function geoupdate( )
+ *
+ *              SECTION: Geo Update - Init
+ *  455:     private function geoupdateInit( )
+ *  477:     private function geoupdateInitLabels( )
+ *  536:     private function geoupdateInitRows( )
+ *
+ *              SECTION: Geo Update - Requirements
+ *  646:     private function geoupdateRequired( )
+ *  715:     private function geoupdateRequiredTable( )
+ *
+ *              SECTION: Geo Update - Statistic
+ *  760:     private function geoupdateStatistic( )
+ *
+ *              SECTION: Geo Update - Update
+ *  841:     private function geoupdateUpdate( )
+ *  873:     private function geoupdateUpdateGetAddress( $row )
+ *  946:     private function geoupdateUpdateGetAddressAreaLevel1( $row )
+ *  966:     private function geoupdateUpdateGetAddressAreaLevel2( $row )
+ *  986:     private function geoupdateUpdateGetAddressCountry( $row )
+ * 1006:     private function geoupdateUpdateGetAddressLocation( $row )
+ * 1041:     private function geoupdateUpdateGetAddressStreet( $row )
+ * 1076:     private function geoupdateUpdateRowRequired( $row )
+ * 1109:     private function geoupdateUpdateRowRequiredAddress( $row )
+ * 1147:     private function geoupdateUpdateRowRequiredGeodata( $row )
+ * 1191:     private function geoupdateUpdateRowRequiredPermission( $row )
+ * 1225:     private function geoupdateUpdateRowUpdate( $row )
+ * 1251:     private function geoupdateUpdateRowUpdateDataReset( )
+ * 1269:     private function geoupdateUpdateRowUpdateDataSet( $row )
+ * 1318:     private function geoupdateUpdateRowUpdateDataUpdate( $row )
+ * 1409:     private function geoupdateUpdateSetPrompts( $prompt )
  *
  *              SECTION: Additional information for scheduler
- *  380:     public function getAdditionalInformation( )
- *
- *              SECTION: Converting
- *  406:     private function convertContent( $xml )
- *  423:     private function convertContentDrsMail( $success )
- *  447:     private function convertContentInstance( )
+ * 1448:     public function getAdditionalInformation( )
  *
  *              SECTION: DRS - Development Reporting System
- *  476:     private function drsDebugTrail( $level = 1 )
- *  522:     public function drsMailToAdmin( $subject='Information', $body=null )
- *
- *              SECTION: Get private
- *  635:     private function getContent( )
- *  665:     private function getContentInstance( )
+ * 1480:     private function drsDebugTrail( $level = 1 )
+ * 1527:     public function drsMailToAdmin( $subject='Information', $body=null, $status='error' )
  *
  *              SECTION: Get public
- *  691:     public function getAdminmail( )
- *  704:     public function getTestMode( )
- *  717:     public function getTable( )
- *  730:     public function getReportMode( )
+ * 1704:     public function getAdminmail( )
+ * 1717:     public function getTestMode( )
+ * 1730:     public function getTable( )
+ * 1743:     public function getReportMode( )
  *
  *              SECTION: Initials
- *  764:     private function init( )
- *  793:     private function initDRS( )
- *  841:     private function initRequirements( )
- *  870:     private function initRequirementsAdminmail( )
- *  898:     private function initRequirementsAllowUrlFopen( )
- *  937:     private function initRequirementsOs( )
- * 1002:     private function initTimetracking( )
+ * 1764:     private function init( )
+ * 1791:     private function initDRS( )
+ * 1823:     private function initRequirements( )
+ * 1852:     private function initRequirementsAdminmail( )
+ * 1880:     private function initRequirementsAllowUrlFopen( )
+ * 1919:     private function initRequirementsOs( )
+ * 1977:     private function initTimetracking( )
+ *
+ *              SECTION: Log
+ * 2005:     public function log( $prompt, $error=0, $uid=0, $action=2 )
  *
  *              SECTION: Set public
- * 1130:     public function setAdminmail( $value )
- * 1144:     public function setTestMode( $value )
- * 1158:     public function setTable( $value )
- * 1172:     public function setReportMode( $value )
+ * 2048:     public function setAdminmail( $value )
+ * 2062:     public function setTestMode( $value )
+ * 2076:     public function setTable( $value )
+ * 2090:     public function setReportMode( $value )
  *
  *              SECTION: Time tracking
- * 1208:     private function timeTracking_init( )
- * 1230:     private function timeTracking_log( $debugTrailLevel, $prompt )
- * 1282:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
+ * 2112:     private function timeTracking_init( )
+ * 2134:     private function timeTracking_log( $debugTrailLevel, $prompt )
+ * 2186:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
  *
- *              SECTION: Update
- * 1320:     private function updateDatabase( $content )
- * 1339:     private function updateDatabaseDrsMail( $success )
- * 1363:     private function updateDatabaseInstance( )
- *
- * TOTAL FUNCTIONS: 36
+ * TOTAL FUNCTIONS: 46
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -221,7 +243,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     * @var string
     */
     private $googleApiUrl  = 'http://maps.googleapis.com/maps/api/geocode/json?address=%address%&sensor=false';
-  
+
    /**
     * Geoupdate lables from ext_tables.php
     *
@@ -235,28 +257,28 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     * @var array
     */
     private $geoupdaterows  = null;
-    
+
    /**
     * Update values for the current row
     *
     * @var array
     */
     private $geoupdateUpdateValues = null;
-    
+
    /**
     * Statistic data
     *
     * @var array
     */
     private $geoupdateStatisticData = null;
-    
+
    /**
     * Statistic data
     *
     * @var string
     */
     private $geoupdateStatisticEmail = null;
-    
+
    /**
     * t3lib_timeTrack object
     *
@@ -382,9 +404,9 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
    **********************************************/
 
 /**
- * geoupdate( ) : 
+ * geoupdate( ) :
  *
- * @return	boolean   Information to display
+ * @return	boolean		Information to display
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -422,10 +444,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
    **********************************************/
 
 /**
- * geoupdateInit( ) : 
+ * geoupdateInit( ) :
  *
- * @param       array   $rows
- * @return	boolean   true in case of success
+ * @param	array		$rows
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -448,23 +470,21 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 /**
  * geoupdateInitLabels( )  : Set lables. Get lables from ext_tables.php.
  *
- * @return	boolean     true in case of success
- * 
+ * @return	boolean		true in case of success
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateInitLabels( ) 
+  private function geoupdateInitLabels( )
   {
     if( $this->geoupdatelabels !== null )
     {
       return true;
     }
-    
+
     $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
-    
-    $labels = array( 
-      'address' => array( 
+
+    $labels = array(
+      'address' => array(
         'areaLevel1'   => $tcaCtrlAddress[ 'areaLevel1' ],
         'areaLevel2'   => $tcaCtrlAddress[ 'areaLevel2' ],
         'country'      => $tcaCtrlAddress[ 'country' ],
@@ -477,7 +497,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       'geodata' => $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata']
 
     );
-       
+
       // Remove empty labels
     foreach( $labels as $groupKey => $group )
     {
@@ -492,7 +512,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       // Remove empty labels
 
     $this->geoupdatelabels = $labels;
-    
+
       // RETURN : no record field for prompting configured
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
     {
@@ -501,15 +521,15 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
       return;
     }
       // RETURN : no record field for prompting configured
-       
+
     return true;
   }
-  
+
  /**
-  * geoupdateInitRows( ):  
+  * geoupdateInitRows( ):
   *
   * @return	boolean		true in case of success
-  * @access   private
+  * @access private
   * @version  4.5.17
   * @since    4.5.17
   */
@@ -524,8 +544,8 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
     $labels = array( 'uid' )
             + $this->geoupdatelabels[ 'address' ]
-            + $this->geoupdatelabels[ 'api' ] 
-            + $this->geoupdatelabels[ 'geodata' ] 
+            + $this->geoupdatelabels[ 'api' ]
+            + $this->geoupdatelabels[ 'geodata' ]
             ;
 
     $select_fields  = implode( ', ', $labels );
@@ -589,7 +609,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
                 . PHP_EOL
                 . __METHOD__ . ' (' . __LINE__ . ')';
       $this->drsMailToAdmin( $subject, $body, 'error' );
-      
+
       return false;
     }
       // RETURN : ERROR
@@ -604,7 +624,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
 //    $prompt = '[tx_browser_Geoupdate]: ' . var_export( $this->geoupdaterows, true );
 //    $this->log( $prompt );
-    
+
     return true;
   }
 
@@ -619,23 +639,21 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 /**
  * geoupdateRequired( )
  *
- * @return	boolean         true if requierements matched, false if not.
- * 
+ * @return	boolean		true if requierements matched, false if not.
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateRequired( ) 
+  private function geoupdateRequired( )
   {
     if( ! $this->geoupdateRequiredTable( ) )
     {
       return false;
     }
-    
+
     $address  = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
     $geodata  = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
     $update   = $GLOBALS[ 'TCA' ][ $this->browser_table ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['update'];
-    
+
     switch( true )
     {
       case( ! $update ):
@@ -679,30 +697,28 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         return false;
         break;
     }
-    
+
     unset( $address );
     unset( $geodata );
     unset( $update  );
-    
+
     return true;
   }
 
 /**
  * geoupdateRequiredTable( )
  *
- * @return	boolean         true if requierements matched, false if not.
- * 
+ * @return	boolean		true if requierements matched, false if not.
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateRequiredTable( ) 
+  private function geoupdateRequiredTable( )
   {
     if( isset( $GLOBALS[ 'TCA' ][ $this->browser_table ] ) )
     {
       return true;
     }
-    
+
       // Prompt
     $prompt = 'ERROR: $GLOBALS[TCA][' . $this->browser_table . '] isn\'t set.';
 
@@ -734,7 +750,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
    **********************************************/
 
 /**
- * geoupdateStatistic( ) : 
+ * geoupdateStatistic( ) :
  *
  * @return	void
  * @access private
@@ -750,7 +766,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
                                             + $this->geoupdateStatisticData[ 'updatedTest' ]
                                             + $this->geoupdateStatisticData[ 'updated' ]
                                             ;
-    
+
     $prompt = 'Statistic: handled rows #' . $this->geoupdateStatisticData[ 'rows' ];
     $this->log( $prompt );
     $prompt = 'Statistic: rows with an empty address #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
@@ -776,7 +792,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         break;
     }
     $this->log( $prompt );
-    
+
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
@@ -793,17 +809,17 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     }
     $this->geoupdateStatisticEmail = '' .
 'Statistic
-- - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - -
 rows
   with empty address              : ' . $this->geoupdateStatisticData[ 'addressEmpty' ] . '
 + with not empty geodata          : ' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ] . '
 + without update permission       : ' . $this->geoupdateStatisticData[ 'forbidden' ] . '
 + with errors                     : ' . $this->geoupdateStatisticData[ 'errors' ] . '
 ' . $updated . '
-- - - - - - - - - - - - - - - - - - - - - - - - 
+- - - - - - - - - - - - - - - - - - - - - - - -
 # which are handled               # ' . $this->geoupdateStatisticData[ 'rows' ] . '
 ';
-    
+
   }
 
 
@@ -815,16 +831,16 @@ rows
    **********************************************/
 
 /**
- * geoupdateUpdate( ) : 
+ * geoupdateUpdate( ) :
  *
- * @return	boolean   true in case of success
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
  */
   private function geoupdateUpdate( )
   {
-    $this->geoupdateStatisticData = array( 
+    $this->geoupdateStatisticData = array(
       'addressEmpty'    => 0,
       'errors'          => 0,
       'forbidden'       => 0,
@@ -842,20 +858,19 @@ rows
       $this->geoupdateUpdateRowUpdate( $row );
       //break;  // For development only: Update one row at maximum
     }
-    
+
     return true;
   }
 
 /**
  * geoupdateUpdateGetAddress( )
  *
- * @return	string          $address    : Address
- * 
+ * @param	[type]		$$row: ...
+ * @return	string		$address    : Address
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateUpdateGetAddress( $row ) 
+  private function geoupdateUpdateGetAddress( $row )
   {
     $address    = null;
     $arrAddress = array( );
@@ -867,7 +882,7 @@ rows
       $arrAddress[ 'street' ] = $street;
     }
       // Set street
-    
+
       // Set location
     $location = $this->geoupdateUpdateGetAddressLocation( $row );
     if( $location )
@@ -902,7 +917,7 @@ rows
 
      // 'Amphitheatre Parkway 1600, Mountain View, CA';
     $address = implode( ', ', $arrAddress );
-    
+
       // Logging
     switch( $address )
     {
@@ -924,12 +939,10 @@ rows
  * geoupdateUpdateGetAddressAreaLevel1( )
  *
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $country       : AreaLevel1
- * 
+ * @return	string		$country       : AreaLevel1
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateUpdateGetAddressAreaLevel1( $row )
   {
     $areaLevel1 = null;
@@ -938,7 +951,7 @@ rows
     {
       $areaLevel1 = $row[ $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ];
     }
-    
+
     return $areaLevel1;
   }
 
@@ -946,12 +959,10 @@ rows
  * geoupdateUpdateGetAddressAreaLevel2( )
  *
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $country       : AreaLevel2
- * 
+ * @return	string		$country       : AreaLevel2
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateUpdateGetAddressAreaLevel2( $row )
   {
     $areaLevel2 = null;
@@ -960,7 +971,7 @@ rows
     {
       $areaLevel2 = $row[ $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ];
     }
-    
+
     return $areaLevel2;
   }
 
@@ -968,12 +979,10 @@ rows
  * geoupdateUpdateGetAddressCountry( )
  *
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $country       : Country
- * 
+ * @return	string		$country       : Country
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateUpdateGetAddressCountry( $row )
   {
     $country = null;
@@ -982,7 +991,7 @@ rows
     {
       $country = $row[ $this->geoupdatelabels[ 'address' ][ 'country' ] ];
     }
-    
+
     return $country;
   }
 
@@ -990,12 +999,10 @@ rows
  * geoupdateUpdateGetAddressLocation( )
  *
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $location       : Location
- * 
+ * @return	string		$location       : Location
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateUpdateGetAddressLocation( $row )
   {
       // Get location
@@ -1017,7 +1024,7 @@ rows
         unset( $arrLocation[ 'city' ] );
       }
     }
-    
+
     $location = implode( ' ', $arrLocation );
 
     return $location;
@@ -1027,12 +1034,10 @@ rows
  * geoupdateUpdateGetAddressStreet( )
  *
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $street       : Street
- * 
+ * @return	string		$street       : Street
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateUpdateGetAddressStreet( $row )
   {
       // Get street
@@ -1053,17 +1058,17 @@ rows
         unset( $arrStreet[ 'number' ] );
       }
     }
-    
+
     $street = implode( ' ', $arrStreet );
 
     return $street;
   }
 
 /**
- * geoupdateUpdateRowRequired( ) : 
+ * geoupdateUpdateRowRequired( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1093,10 +1098,10 @@ rows
   }
 
 /**
- * geoupdateUpdateRowRequiredAddress( ) : 
+ * geoupdateUpdateRowRequiredAddress( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1131,10 +1136,10 @@ rows
   }
 
 /**
- * geoupdateUpdateRowRequiredGeodata( ) : 
+ * geoupdateUpdateRowRequiredGeodata( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1153,12 +1158,12 @@ rows
       {
         continue;
       }
-        
+
       if( ! $row[ $label ] )
       {
         continue;
       }
-      
+
         // prompt to syslog
       $prompt = 'NO UPDATE: latitude and/or longitude contain content';
       $this->log( $prompt, 0, $row[ 'uid' ] );
@@ -1175,10 +1180,10 @@ rows
   }
 
 /**
- * geoupdateUpdateRowRequiredPermission( ) : 
+ * geoupdateUpdateRowRequiredPermission( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1189,7 +1194,7 @@ rows
     {
       return true;
     }
-    
+
     if( $row[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ] )
     {
         // Prompt to the current record
@@ -1209,10 +1214,10 @@ rows
   }
 
 /**
- * geoupdateUpdateRowUpdate( ) : 
+ * geoupdateUpdateRowUpdate( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1231,14 +1236,14 @@ rows
     }
 
     // Aktualisiere Breiten- und Längengrad
-    
+
     return true;
   }
 
 /**
- * geoupdateUpdateRowUpdateDataReset( ) : 
+ * geoupdateUpdateRowUpdateDataReset( ) :
  *
- * @return	boolean   true in case of success
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1246,17 +1251,17 @@ rows
   private function geoupdateUpdateRowUpdateDataReset( )
   {
     unset( $this->geoupdateUpdateValues );
-    
+
     $this->geoupdateUpdateValues = array( );
 
     return true;
   }
 
 /**
- * geoupdateUpdateRowUpdateDataSet( ) : 
+ * geoupdateUpdateRowUpdateDataSet( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1267,16 +1272,16 @@ rows
     require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
       // Create object
     $objGoogleApi = new tx_browser_googleApi( );
-    
+
     $address = $this->geoupdateUpdateGetAddress( $row );
     if( ! $address )
     {
       return false;
     }
-    
+
       // Get data from API
     $result = $objGoogleApi->main( $address, $this );
-    
+
       // Prompt to current record
     if( isset( $result[ 'status'] ) )
     {
@@ -1285,7 +1290,7 @@ rows
       $this->geoupdateUpdateSetPrompts( $prompt );
         // prompt to syslog
       $this->log( $prompt, 1, $row[ 'uid' ] );
-      
+
         // Statistic
       $this->geoupdateStatisticData[ 'errors' ] = $this->geoupdateStatisticData[ 'errors' ]
                                             + 1
@@ -1297,15 +1302,15 @@ rows
 
     $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] = $result[ 'geodata' ][ 'lat' ];
     $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] = $result[ 'geodata' ][ 'lon' ];
-    
+
     return true;
   }
 
 /**
- * geoupdateUpdateRowUpdateDataUpdate( ) : 
+ * geoupdateUpdateRowUpdateDataUpdate( ) :
  *
- * @param       array   $row
- * @return	boolean   true in case of success
+ * @param	array		$row
+ * @return	boolean		true in case of success
  * @access private
  * @version       4.5.13
  * @since         4.5.13
@@ -1320,20 +1325,20 @@ rows
 
     $date           = date('Y-m-d H:i:s');
     $browser        = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptBrowserPhrase'). ':';
-    $updatePrompt   = '* ' . $date . $browser . PHP_EOL 
+    $updatePrompt   = '* ' . $date . $browser . PHP_EOL
                     . '  OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/scheduler/locallang.xml:promptGeodataUpdate')
                     . $prompt . PHP_EOL
                     . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
                     ;
-    
+
     $updatePrompt = $GLOBALS['TYPO3_DB']->quoteStr( $updatePrompt, $this->browser_table );
-    
-    $updateFields = array( 
+
+    $updateFields = array(
       $this->geoupdatelabels[ 'geodata' ][ 'lat' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] . '"',
       $this->geoupdatelabels[ 'geodata' ][ 'lon' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lon' ] . '"',
       $this->geoupdatelabels[ 'api' ][ 'prompt' ]   . ' = "' . $updatePrompt . '"'
     );
-    
+
     $set  = implode( ', ', $updateFields );
     $uid  = $row[ 'uid' ];
 
@@ -1367,7 +1372,7 @@ rows
         die( $prompt );
         break;
     }
-    
+
     if( ! empty( $error ) )
     {
       $prompt = 'ERROR: Unproper SQL query';
@@ -1376,7 +1381,7 @@ rows
       $this->log( $prompt, 1 );
       $prompt = 'prompt: ' . $error;
       $this->log( $prompt, 1 );
-      
+
       $this->geoupdateStatisticData[ 'errors' ] = $this->geoupdateStatisticData[ 'errors' ]
                                             + 1
                                             ;
@@ -1396,14 +1401,12 @@ rows
 /**
  * geoupdateUpdateSetPrompts( )  : Set lables. Get lables from ext_tables.php.
  *
- * @param	string		$prompt     : 
+ * @param	string		$prompt     :
  * @return	void
- * 
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateUpdateSetPrompts( $prompt ) 
+  private function geoupdateUpdateSetPrompts( $prompt )
   {
     $this->geoupdateInitLabels( );
 
@@ -1415,10 +1418,10 @@ rows
       return;
     }
       // RETURN : no record field for prompting configured
-       
+
     $date     = date('Y-m-d H:i:s');
     $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
-    $prompt   = '* ' . $date . $browser . PHP_EOL 
+    $prompt   = '* ' . $date . $browser . PHP_EOL
               . '  ' . $prompt . PHP_EOL
               . $promptFromRow
               ;
@@ -1536,7 +1539,7 @@ rows
         return;
         break;
     }
-    
+
     switch( $status )
     {
       case( 'error' ):
@@ -1599,8 +1602,8 @@ rows
         }
         break;
     }
-    
-    
+
+
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
     {
@@ -1915,12 +1918,12 @@ table     : ' . $this->browser_table;
  */
   private function initRequirementsOs( )
   {
-      
+
       // #i0005, 130413, dwildt, 2+
     $os = true;
     return $os;
       // #i0005, 130413, dwildt, 2+
-    
+
 //    $os = false;
 //
 //      // SWITCH : server OS
@@ -1995,14 +1998,11 @@ table     : ' . $this->browser_table;
  * @param	integer		$pid    : pid of the current record
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
  * @return	void
- * 
- * @access    public
- * 
+ * @access public
  * @version   4.5.7
  * @since     4.5.7
  */
-
-  public function log( $prompt, $error=0, $uid=0, $action=2 ) 
+  public function log( $prompt, $error=0, $uid=0, $action=2 )
   {
     $table  = $this->browser_table;
     if( $uid )
@@ -2025,7 +2025,7 @@ table     : ' . $this->browser_table;
     $NEWid      = null;
 
     $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $error, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
-    
+
   }
 
 

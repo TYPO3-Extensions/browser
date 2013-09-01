@@ -39,29 +39,18 @@
  *
  *
  *
- *   28: class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
- *   41:     public function getDBlistQuery ($table, $pageId, &$additionalWhereClause, &$selectedFieldsList, &$parentObject)
- *   88:     public function makeFormitem($item, $table, $conf)
- *  151:     public function editFormitem($confarray, $item, $labelValue)
- *  170:     public function makeWhereClause($item, $conf, $itemValue, $table)
- *  212:     public function makeQueryInputTrim($item, $itemValue, $table)
- *  225:     public function makeQuerySelect($item, $itemValue, $table)
- *  238:     public function makeQueryCheckTime($item, $itemValue, $table)
- *  253:     public function makeQueryInputFromto($item, $from, $to, $table)
- *  275:     public function getTimestampFrom($timetime)
- *  287:     public function getTimestampTo($timetime)
- *  303:     private function init_ts()
+ *   49: class tx_browser_googleApi
+ *   67:     public function main( $address, $pObj )
  *
- * TOTAL FUNCTIONS: 11
+ * TOTAL FUNCTIONS: 1
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-
-class tx_browser_googleApi 
+class tx_browser_googleApi
 {
     // [String] Geo API URL
   private $googleApiUrl  = 'http://maps.googleapis.com/maps/api/geocode/json?address=%address%&sensor=false';
-  
+
 
 
 
@@ -70,23 +59,20 @@ class tx_browser_googleApi
  *
  * @param	string		$address    : address in the syntax like '1600 Amphitheatre Parkway, Mountain View, CA'
  * @param	object		$fieldArray : Array of modified fields * @param	string		$address    : Address
- * @return	array           $returnData     : geodata( lon, lat), status
- * 
- * @access    public
- * 
+ * @return	array		$returnData     : geodata( lon, lat), status
+ * @access public
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  public function main( $address, $pObj ) 
+  public function main( $address, $pObj )
   {
     $returnData   = null;
     $returnStatus = null;
-    
+
       // Set URL
     $urlAddress = urlencode( $address );
     $googleApiUrl  = str_replace( '%address%', $urlAddress, $this->googleApiUrl );
-    
+
       // Get geodata from Google API
     $json   = file_get_contents( $googleApiUrl );
     $data   = json_decode( $json );
@@ -153,7 +139,7 @@ class tx_browser_googleApi
     }
       // Log the status message
 
-      //  RETURN  : geodata 
+      //  RETURN  : geodata
     $returnData  = array
                 (
                   'geodata' => array(

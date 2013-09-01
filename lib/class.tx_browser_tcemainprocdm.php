@@ -39,25 +39,42 @@
  *
  *
  *
- *   28: class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
- *   41:     public function getDBlistQuery ($table, $pageId, &$additionalWhereClause, &$selectedFieldsList, &$parentObject)
- *   88:     public function makeFormitem($item, $table, $conf)
- *  151:     public function editFormitem($confarray, $item, $labelValue)
- *  170:     public function makeWhereClause($item, $conf, $itemValue, $table)
- *  212:     public function makeQueryInputTrim($item, $itemValue, $table)
- *  225:     public function makeQuerySelect($item, $itemValue, $table)
- *  238:     public function makeQueryCheckTime($item, $itemValue, $table)
- *  253:     public function makeQueryInputFromto($item, $from, $to, $table)
- *  275:     public function getTimestampFrom($timetime)
- *  287:     public function getTimestampTo($timetime)
- *  303:     private function init_ts()
+ *   77: class tx_browser_tcemainprocdm
  *
- * TOTAL FUNCTIONS: 11
+ *              SECTION: Hook: processDatamap_postProcessFieldArray
+ *  122:     public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference )
+ *
+ *              SECTION: Geo Update
+ *  167:     private function geoupdate( &$fieldArray )
+ *  218:     private function geoupdateGoogleAPI( &$fieldArray, $address )
+ *  248:     private function geoupdateHandleData( &$fieldArray )
+ *  334:     private function geoupdateHandleDataGetAddress( $fieldArray, $row )
+ *  408:     private function geoupdateHandleDataGetAddressAreaLevel1( $fieldArray, $row )
+ *  433:     private function geoupdateHandleDataGetAddressAreaLevel2( $fieldArray, $row )
+ *  458:     private function geoupdateHandleDataGetAddressCountry( $fieldArray, $row )
+ *  483:     private function geoupdateHandleDataGetAddressLocation( $fieldArray, $row )
+ *  527:     private function geoupdateHandleDataGetAddressStreet( $fieldArray, $row )
+ *  569:     private function geoupdateIsAddressUntouched( &$fieldArray )
+ *  598:     private function geoupdateIsForbiddenByRecord( &$fieldArray )
+ *  631:     private function geoupdateRequired( &$fieldArray )
+ *  681:     private function geoupdateSetLabels( )
+ *  728:     private function geoupdateSetPrompt( $prompt, &$fieldArray )
+ *  770:     private function geoupdateSetRow( )
+ *
+ *              SECTION: Log
+ *  864:     public function log( $prompt, $error=0, $action=2 )
+ *
+ *              SECTION: Route
+ *  895:     private function route( &$fieldArray, &$reference )
+ *  911:     private function routeGpx( &$fieldArray, &$reference )
+ *  940:     private function routeGpxHandleData( &$fieldArray )
+ * 1017:     private function routeGpxRequired( $fieldArray )
+ *
+ * TOTAL FUNCTIONS: 21
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-
-class tx_browser_tcemainprocdm 
+class tx_browser_tcemainprocdm
 {
     // [String] status of the current process: update, edit, delete, moved
   private $prefixLog = 'tx_browser ';
@@ -68,13 +85,13 @@ class tx_browser_tcemainprocdm
   private $processTable   = null;
     // [String] record uid of the current process
   private $processId      = null;
-  
+
     // [Object] parent object
   private $pObj       = null;
-  
+
     // [String] Geo API URL
   private $googleApiUrl  = 'http://maps.googleapis.com/maps/api/geocode/json?address=%address%&sensor=false';
-  
+
     // [Array] Geoupdate lables from ext_tables.php
   private $geoupdatelabels = null;
 
@@ -99,12 +116,10 @@ class tx_browser_tcemainprocdm
  * @param	array		$fieldArray : modified fields - reference!
  * @param	object		$reference  : parent object - reference!
  * @return	void
- * 
  * @version   4.5.13
  * @since     4.5.7
  */
-
-  public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference ) 
+  public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference )
   {
       // RETURN : current table is without any tx_browser configuration
     if( ! is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser'] ) )
@@ -112,7 +127,7 @@ class tx_browser_tcemainprocdm
       return;
     }
       // RETURN : current table is without any tx_browser configuration
-    
+
       // Initial global variables
     $this->processStatus  = $status;
     $this->processTable   = $table;
@@ -124,12 +139,12 @@ class tx_browser_tcemainprocdm
     {
       $this->geoupdate( $fieldArray, $reference );
     }
-      
+
     if( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) )
     {
       $this->route( &$fieldArray, &$reference );
     }
-    
+
     return;
   }
 
@@ -146,12 +161,10 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray : Array of modified fields
  * @return	void
- * 
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdate( &$fieldArray ) 
+  private function geoupdate( &$fieldArray )
   {
       // RETURN : requirements aren't matched
     if( ! $this->geoupdateRequired( $fieldArray ) )
@@ -178,9 +191,9 @@ class tx_browser_tcemainprocdm
       return;
     }
       // RETURN : no address field is touched
-      
-    
-      
+
+
+
     $arrResult = $this->geoupdateHandleData( $fieldArray );
     if( $arrResult['error'] )
     {
@@ -197,22 +210,21 @@ class tx_browser_tcemainprocdm
  * geoupdateGoogleAPI( )
  *
  * @param	array		$fieldArray : Array of modified fields * @param	string		$address    : Address
- * @return	array           $geodata    : lon, lat
- * 
+ * @param	[type]		$address: ...
+ * @return	array		$geodata    : lon, lat
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateGoogleAPI( &$fieldArray, $address ) 
+  private function geoupdateGoogleAPI( &$fieldArray, $address )
   {
       // Require map library
     require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
       // Create object
     $objGoogleApi = new tx_browser_googleApi( );
-    
+
       // Get data from API
     $result = $objGoogleApi->main( $address, $this );
-    
+
       // Prompt to current record
     if( isset( $result[ 'status'] ) )
     {
@@ -230,19 +242,17 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray : Array of modified fields
  * @return	void
- * 
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateHandleData( &$fieldArray ) 
+  private function geoupdateHandleData( &$fieldArray )
   {
       // get lables for geodata
     $geodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
 
       // Get former address data
     $row = $this->geoupdateSetRow( );
-    
+
       // Get address
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray, $row );
     if( empty( $address ) )
@@ -265,9 +275,9 @@ class tx_browser_tcemainprocdm
 
       return;
     }
-    
+
       // Get geodata
-    $latLon = $this->geoupdateGoogleAPI( $fieldArray, $address ); 
+    $latLon = $this->geoupdateGoogleAPI( $fieldArray, $address );
     $lat = $latLon[ 'lat' ];
     $lon = $latLon[ 'lon' ];
 
@@ -306,7 +316,7 @@ class tx_browser_tcemainprocdm
     $prompt = 'Address: ' . $address;
     $this->log( $prompt );
     $prompt = 'latitude: ' . $lat . '; longigute: ' . $lon;
-    
+
       // logging
 
     return;
@@ -316,13 +326,12 @@ class tx_browser_tcemainprocdm
  * geoupdateHandleDataGetAddress( )
  *
  * @param	array		$fieldArray : Array of modified fields
- * @return	string          $address    : Address
- * 
+ * @param	[type]		$row: ...
+ * @return	string		$address    : Address
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateHandleDataGetAddress( $fieldArray, $row ) 
+  private function geoupdateHandleDataGetAddress( $fieldArray, $row )
   {
     $address    = null;
     $arrAddress = array( );
@@ -334,7 +343,7 @@ class tx_browser_tcemainprocdm
       $arrAddress[ 'street' ] = $street;
     }
       // Set street
-    
+
       // Set location
     $location = $this->geoupdateHandleDataGetAddressLocation( $fieldArray, $row );
     if( $location )
@@ -369,7 +378,7 @@ class tx_browser_tcemainprocdm
 
      // 'Amphitheatre Parkway 1600, Mountain View, CA';
     $address = implode( ', ', $arrAddress );
-    
+
       // Logging
     switch( $address )
     {
@@ -392,12 +401,10 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray   : Array of modified fields
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $country       : AreaLevel1
- * 
+ * @return	string		$country       : AreaLevel1
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateHandleDataGetAddressAreaLevel1( $fieldArray, $row )
   {
     $areaLevel1 = null;
@@ -410,7 +417,7 @@ class tx_browser_tcemainprocdm
         $areaLevel1 = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'areaLevel1' ] ];
       }
     }
-    
+
     return $areaLevel1;
   }
 
@@ -419,12 +426,10 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray   : Array of modified fields
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $country       : AreaLevel2
- * 
+ * @return	string		$country       : AreaLevel2
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateHandleDataGetAddressAreaLevel2( $fieldArray, $row )
   {
     $areaLevel2 = null;
@@ -437,7 +442,7 @@ class tx_browser_tcemainprocdm
         $areaLevel2 = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'areaLevel2' ] ];
       }
     }
-    
+
     return $areaLevel2;
   }
 
@@ -446,12 +451,10 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray   : Array of modified fields
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $country       : Country
- * 
+ * @return	string		$country       : Country
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateHandleDataGetAddressCountry( $fieldArray, $row )
   {
     $country = null;
@@ -464,7 +467,7 @@ class tx_browser_tcemainprocdm
         $country = $fieldArray[ $this->geoupdatelabels[ 'address' ][ 'country' ] ];
       }
     }
-    
+
     return $country;
   }
 
@@ -473,12 +476,10 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray   : Array of modified fields
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $location       : Location
- * 
+ * @return	string		$location       : Location
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateHandleDataGetAddressLocation( $fieldArray, $row )
   {
       // Get location
@@ -508,7 +509,7 @@ class tx_browser_tcemainprocdm
         unset( $arrLocation[ 'city' ] );
       }
     }
-    
+
     $location = implode( ' ', $arrLocation );
 
     return $location;
@@ -519,12 +520,10 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray   : Array of modified fields
  * @param	array		$row    : Array of former field values (from database)
- * @return	string          $street       : Street
- * 
+ * @return	string		$street       : Street
  * @version   4.5.13
  * @since     4.5.13
  */
-
   private function geoupdateHandleDataGetAddressStreet( $fieldArray, $row )
   {
       // Get street
@@ -553,7 +552,7 @@ class tx_browser_tcemainprocdm
         unset( $arrStreet[ 'number' ] );
       }
     }
-    
+
     $street = implode( ' ', $arrStreet );
 
     return $street;
@@ -563,13 +562,11 @@ class tx_browser_tcemainprocdm
  * geoupdateIsAddressUntouched( )
  *
  * @param	array		$fieldArray : Array of modified fields
- * @return	boolean         $untouched  : true, if address data are untouched
- * 
+ * @return	boolean		$untouched  : true, if address data are untouched
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateIsAddressUntouched( &$fieldArray ) 
+  private function geoupdateIsAddressUntouched( &$fieldArray )
   {
       // RETURN : false, an address field is touched at least
     foreach( $this->geoupdatelabels[ 'address' ] as $label )
@@ -580,13 +577,13 @@ class tx_browser_tcemainprocdm
       }
     }
       // RETURN : false, an address field is touched at least
-    
+
 //    $prompt = 'OK: Address data are untouched.';
 //    $this->geoupdateSetPrompt( $prompt, $fieldArray );
 
     $prompt = 'OK: Address data are untouched.';
     $this->log( $prompt );
-    
+
     return true;
   }
 
@@ -594,22 +591,20 @@ class tx_browser_tcemainprocdm
  * geoupdateIsForbiddenByRecord( )
  *
  * @param	array		$fieldArray : Array of modified fields
- * @return	boolean         $untouched  : true, if address data are untouched
- * 
+ * @return	boolean		$untouched  : true, if address data are untouched
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateIsForbiddenByRecord( &$fieldArray ) 
+  private function geoupdateIsForbiddenByRecord( &$fieldArray )
   {
       // Get former address data
     $row = $this->geoupdateSetRow( );
-      
+
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ) )
     {
       return false;
     }
-    
+
     if( $row[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ] )
     {
         // Prompt to the current record
@@ -621,27 +616,26 @@ class tx_browser_tcemainprocdm
         // Prompt to the current record
       return true;
     }
-      
+
     return false;
   }
 
 /**
  * geoupdateRequired( )
  *
- * @return	boolean         $requirementsMatched  : true if requierements matched, false if not.
- * 
+ * @param	[type]		$&$fieldArray: ...
+ * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateRequired( &$fieldArray ) 
+  private function geoupdateRequired( &$fieldArray )
   {
-    $requirementsMatched = true; 
-    
+    $requirementsMatched = true;
+
     $address  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
     $geodata  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
     $update   = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['update'];
-    
+
     switch( true )
     {
       case( ! $update ):
@@ -653,8 +647,8 @@ class tx_browser_tcemainprocdm
         $prompt = 'OK: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate][update] is set to false. '
                 . 'Geodata won\'t updated.'
                 ;
-        $this->log( $prompt );    
-        $requirementsMatched = false; 
+        $this->log( $prompt );
+        $requirementsMatched = false;
         return $requirementsMatched;
         break;
       case( empty( $address ) ):
@@ -665,15 +659,15 @@ class tx_browser_tcemainprocdm
                 . 'Please take care off a proper TCA configuration!'
                 ;
         $this->log( $prompt, $error );
-        $requirementsMatched = false; 
+        $requirementsMatched = false;
         return $requirementsMatched;
         break;
     }
-    
+
     unset( $address );
     unset( $geodata );
     unset( $update  );
-    
+
     return $requirementsMatched;
   }
 
@@ -681,22 +675,20 @@ class tx_browser_tcemainprocdm
  * geoupdateSetLabels( )  : Set lables. Get lables from ext_tables.php.
  *
  * @return	void
- * 
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateSetLabels( ) 
+  private function geoupdateSetLabels( )
   {
     if( $this->geoupdatelabels !== null )
     {
       return;
     }
-    
+
     $tcaCtrlAddress = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['address'];
-    
-    $labels = array( 
-      'address' => array( 
+
+    $labels = array(
+      'address' => array(
         'areaLevel1'   => $tcaCtrlAddress[ 'areaLevel1' ],
         'areaLevel2'   => $tcaCtrlAddress[ 'areaLevel2' ],
         'country'      => $tcaCtrlAddress[ 'country' ],
@@ -707,7 +699,7 @@ class tx_browser_tcemainprocdm
       ),
       'api' => $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['api']
     );
-       
+
       // Remove empty labels
     foreach( $labels as $groupKey => $group )
     {
@@ -727,15 +719,13 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateSetPrompt( )  : Set lables. Get lables from ext_tables.php.
  *
- * @param	string		$prompt     : 
+ * @param	string		$prompt     :
  * @param	array		$fieldArray : Array of modified fields
  * @return	void
- * 
  * @version   4.5.13
  * @since     4.5.13
  */
-
-  private function geoupdateSetPrompt( $prompt, &$fieldArray ) 
+  private function geoupdateSetPrompt( $prompt, &$fieldArray )
   {
     $this->geoupdateSetLabels( );
 
@@ -747,33 +737,33 @@ class tx_browser_tcemainprocdm
       return;
     }
       // RETURN : no record field for prompting configured
-       
+
       // Get former address data
     $row = $this->geoupdateSetRow( );
-    
+
     $promptFromRow = $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ];
     if( isset ( $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] ) )
     {
       $promptFromRow = $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ];
     }
-    
+
     $date     = date('Y-m-d H:i:s');
     $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
-    $prompt   = '* ' . $date . $browser . PHP_EOL 
+    $prompt   = '* ' . $date . $browser . PHP_EOL
               . '  ' . $prompt . PHP_EOL
               . $promptFromRow
               ;
     $prompt = $GLOBALS['TYPO3_DB']->quoteStr( $prompt, $this->processTable );
-    
+
     $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] = $prompt;
   }
-  
+
  /**
   * geoupdateSetRow( ):  The method select the values of the given table and select and
   *                 returns the values as a marker array
   *
   * @return	array		$row :  Array with field-value pairs
-  * @access   private
+  * @access private
   * @version  4.5.17
   * @since    4.5.17
   */
@@ -787,7 +777,7 @@ class tx_browser_tcemainprocdm
       // RETURN : row is set before
 
     $labels = $this->geoupdatelabels[ 'address' ]
-            + $this->geoupdatelabels[ 'api' ] 
+            + $this->geoupdatelabels[ 'api' ]
             ;
 
     $select_fields  = implode( ', ', $labels );
@@ -839,7 +829,7 @@ class tx_browser_tcemainprocdm
       $this->log( $prompt );
       $prompt = 'prompt: ' . $error;
       $this->log( $prompt );
-      
+
       return;
     }
       // RETURN : ERROR
@@ -867,19 +857,16 @@ class tx_browser_tcemainprocdm
  * @param	integer		$error  : 0 = notice, 1 = warn, 2 = error
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
  * @return	void
- * 
- * @access    public
- * 
+ * @access public
  * @version   4.5.7
  * @since     4.5.7
  */
-
-  public function log( $prompt, $error=0, $action=2 ) 
+  public function log( $prompt, $error=0, $action=2 )
   {
     $table  = $this->processTable;
     $uid    = $this->processId;
-    $pid    = null; 
-    
+    $pid    = null;
+
     $prompt = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
     //    $details_nr = -1;
     //    $data       = array( );
@@ -902,12 +889,10 @@ class tx_browser_tcemainprocdm
  * @param	array		$fieldArray : Array of modified fields
  * @param	object		$reference  : reference to parent object
  * @return	void
- * 
  * @version   4.5.7
  * @since     4.5.7
  */
-
-  private function route( &$fieldArray, &$reference ) 
+  private function route( &$fieldArray, &$reference )
   {
     $this->routeGpx( &$fieldArray, &$reference );
 
@@ -920,12 +905,10 @@ class tx_browser_tcemainprocdm
  * @param	array		$fieldArray : Array of modified fields
  * @param	object		$reference  : reference to parent object
  * @return	void
- * 
  * @version   4.5.7
  * @since     4.5.7
  */
-
-  private function routeGpx( &$fieldArray, &$reference ) 
+  private function routeGpx( &$fieldArray, &$reference )
   {
       // RETURN : requirements aren't matched
     if( ! $this->routeGpxRequired( $fieldArray ) )
@@ -951,39 +934,37 @@ class tx_browser_tcemainprocdm
  *
  * @param	array		$fieldArray : Array of modified fields
  * @return	void
- * 
  * @version   4.5.7
  * @since     4.5.7
  */
-
-  private function routeGpxHandleData( &$fieldArray ) 
+  private function routeGpxHandleData( &$fieldArray )
   {
       // Get field labels
     $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ];
     $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'geodata' ];
-    
+
       // Update TCA array of the current table
     if( ! is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ] ) )
     {
       t3lib_div::loadTCA( $this->processTable );
     }
       // Update TCA array of the current table
-    
+
       // Get field configuration
     $confGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGpxfile ][ 'config' ];
     // 130829, dwildt, 1-
     //$confGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ][ $fieldGeodata ][ 'config' ];
-    
+
       // Get the absoulte path of the uploaded file
     $uploadfolder = $confGpxfile[ 'uploadfolder' ];
     $absPath      = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' ) . '/' . $uploadfolder . '/' . $fieldArray[ $fieldGpxfile ];
-    
+
       // RETURN : file is missing
     if( ! file_exists( $absPath ) )
     {
       $error  = 1;
       $prompt = 'ERROR: file is missing: ' . $absPath;
-      $this->log( $prompt, $error );    
+      $this->log( $prompt, $error );
       return;
     }
       // RETURN : file is missing
@@ -1001,12 +982,12 @@ class tx_browser_tcemainprocdm
       }
       $arrTrackpoints[] = $arrTrackPoint[ 'lon' ] . ',' . $arrTrackPoint[ 'lat' ];
     }
-    
+
     $strGeodata = implode( PHP_EOL, ( array ) $arrTrackpoints );
-    
+
     unset( $arrTrackpoint );
     unset( $arrTrackpoints );
-    
+
     if( empty( $strGeodata ) )
     {
       $error  = 1;
@@ -1028,31 +1009,30 @@ class tx_browser_tcemainprocdm
 /**
  * routeGpx( )
  *
- * @return	boolean         $requirementsMatched  : true if requierements matched, false if not.
- * 
+ * @param	[type]		$$fieldArray: ...
+ * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
  * @version   4.5.7
  * @since     4.5.7
  */
-
-  private function routeGpxRequired( $fieldArray ) 
+  private function routeGpxRequired( $fieldArray )
   {
-    $requirementsMatched = true; 
-    
+    $requirementsMatched = true;
+
     $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['gpxfile'];
     $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['geodata'];
-    
+
     switch( true )
     {
       case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
-        $this->log( $prompt );    
-        $requirementsMatched = false; 
+        $this->log( $prompt );
+        $requirementsMatched = false;
         return $requirementsMatched;
         break;
       case( empty( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: GPX file is removed. Nothing to do.';
-        $this->log( $prompt );    
-        $requirementsMatched = false; 
+        $this->log( $prompt );
+        $requirementsMatched = false;
         return $requirementsMatched;
         break;
       case( empty( $fieldGpxfile ) ):
@@ -1063,15 +1043,15 @@ class tx_browser_tcemainprocdm
                 . 'Please take care off a proper TCA configuration!'
                 ;
         $this->log( $prompt, $error );
-        $requirementsMatched = false; 
+        $requirementsMatched = false;
         return $requirementsMatched;
         break;
     }
-    
+
     unset( $fieldArray );
     unset( $fieldGpxfile );
     unset( $fieldGeodata );
-    
+
     return $requirementsMatched;
   }
 
