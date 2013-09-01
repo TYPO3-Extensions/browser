@@ -1228,7 +1228,10 @@ rows
     $this->geoupdateUpdateRowUpdateDataReset( );
 
       // Init geodata and prompt
-    $this->geoupdateUpdateRowUpdateDataSet( $row );
+    if( ! $this->geoupdateUpdateRowUpdateDataSet( $row ) )
+    {
+      return false;
+    }
 
     if( ! $this->geoupdateUpdateRowUpdateDataUpdate( $row ) )
     {
@@ -1268,16 +1271,16 @@ rows
  */
   private function geoupdateUpdateRowUpdateDataSet( $row )
   {
-      // Require map library
-    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
-      // Create object
-    $objGoogleApi = new tx_browser_googleApi( );
-
     $address = $this->geoupdateUpdateGetAddress( $row );
     if( ! $address )
     {
       return false;
     }
+
+      // Require map library
+    require_once( PATH_typo3conf . 'ext/browser/lib/mapAPI/class.tx_browser_googleApi.php' );
+      // Create object
+    $objGoogleApi = new tx_browser_googleApi( );
 
       // Get data from API
     $result = $objGoogleApi->main( $address, $this );
@@ -1295,7 +1298,6 @@ rows
       $this->geoupdateStatisticData[ 'errors' ] = $this->geoupdateStatisticData[ 'errors' ]
                                             + 1
                                             ;
-
       return false;
     }
       // Prompt to current record
