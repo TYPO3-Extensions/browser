@@ -1423,10 +1423,10 @@ rows
 
     $date     = date('Y-m-d H:i:s');
     $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
-    $prompt   = '* ' . $date . $browser . '</br>'
-              . '  ' . $prompt . '</br>'
-              . $promptFromRow
-              ;
+    $prompt   = '* ' . $date . $browser . '
+  ' . $prompt . '
+' . $promptFromRow
+;
 
     $this->geoupdateUpdateValues[ 'prompts' ][ ] = $prompt;
   }

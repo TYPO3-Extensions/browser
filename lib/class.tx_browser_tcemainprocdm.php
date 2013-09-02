@@ -749,10 +749,10 @@ class tx_browser_tcemainprocdm
 
     $date     = date('Y-m-d H:i:s');
     $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
-    $prompt   = '* ' . $date . $browser . '</br>'
-              . '  ' . $prompt . '</br>'
-              . $promptFromRow
-              ;
+    $prompt   = '* ' . $date . $browser . '
+  ' . $prompt . '
+' . $promptFromRow
+;
     $prompt = $GLOBALS['TYPO3_DB']->quoteStr( $prompt, $this->processTable );
 
     $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] = $prompt;
