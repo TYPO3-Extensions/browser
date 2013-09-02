@@ -890,7 +890,7 @@ class tx_browser_tcemainprocdm
     $this->pObj->log( $table, $uid, $action, $pid, $error, $prompt );
     
     $fmHeader     = 't3lib_FlashMessage';
-    $fmPrompt     = 'Reward the user for actually doing something right today! <br /><i>&quot;Good boy!&quot;</i>',
+    $fmPrompt     = 'Reward the user for actually doing something right today! <br /><i>&quot;Good boy!&quot;</i>' .
                     'Everything is O.K!';
     $fmStatus     = t3lib_FlashMessage::OK;
     $flashMessage = t3lib_div::makeInstance( $fmHeader, $fmPrompt, $fmStatus );
