@@ -268,7 +268,7 @@ class tx_browser_tcemainprocdm
 
         // logging
       $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataRemoved');
-      $this->log( $prompt, 3 );
+      $this->log( $prompt, 2 );
         // logging
 
       return;
@@ -284,7 +284,7 @@ class tx_browser_tcemainprocdm
     {
       case( $lat == null ):
       case( $lon == null ):
-        $prompt = 'ERROR: Returned latitude and/or longitude is null!';
+        $prompt = 'WARNING: Returned latitude and/or longitude is null. Latitude and longitude aren\'t changed.';
         $this->log( $prompt, 3 );
         return;
         break;
@@ -307,9 +307,9 @@ class tx_browser_tcemainprocdm
     $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
     $this->log( $prompt, 2 );
     $prompt = 'Address: ' . $address;
-    $this->log( $prompt, 0 );
+    $this->log( $prompt, -1 );
     $prompt = 'latitude: ' . $lat . '; longigute: ' . $lon;
-    $this->log( $prompt, 0 );
+    $this->log( $prompt, -1 );
 
       // logging
 
@@ -378,7 +378,7 @@ class tx_browser_tcemainprocdm
     {
       case( false ):
         $prompt = 'OK: address is empty.';
-        $this->log( $prompt, 3 );
+        $this->log( $prompt, 1 );
         break;
       case( true ):
       default:
@@ -876,6 +876,9 @@ class tx_browser_tcemainprocdm
     $uid    = $this->processId;
     $pid    = null;
 
+    $fmPrompt   = $prompt;
+    $logPrompt  = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
+
     //    $details_nr = -1;
     //    $data       = array( );
     //    $event_pid  = null; // page id
@@ -904,11 +907,15 @@ class tx_browser_tcemainprocdm
         break;
       case( 3 ):
         $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmPrompt   = $prompt . '<br />
+                      Detailes are prompted to syslog.';
         $fmStatus = t3lib_FlashMessage::WARNING;
         $logStatus = 0;
         break;
       case( 4 ):
         $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmPrompt   = $prompt . '<br />
+                      Detailes are prompted to syslog.';
         $fmStatus = t3lib_FlashMessage::ERROR;
         $logStatus = 0;
         break;
@@ -917,7 +924,6 @@ class tx_browser_tcemainprocdm
         break;
     }
     
-    $logPrompt    = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
     $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
     
       // RETURN : Don't prompt to the backend
@@ -927,7 +933,6 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : Don't prompt to the backend
 
-    $fmPrompt     = $prompt;
     $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
     t3lib_FlashMessageQueue::addMessage( $flashMessage );    
   }
