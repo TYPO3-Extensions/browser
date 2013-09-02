@@ -888,6 +888,13 @@ class tx_browser_tcemainprocdm
     //    $event_pid  = null; // page id
     //    $NEWid      = null;
     $this->pObj->log( $table, $uid, $action, $pid, $error, $prompt );
+    
+    $fmHeader     = 't3lib_FlashMessage';
+    $fmPrompt     = 'Reward the user for actually doing something right today! <br /><i>&quot;Good boy!&quot;</i>',
+                    'Everything is O.K!';
+    $fmStatus     = t3lib_FlashMessage::OK;
+    $flashMessage = t3lib_div::makeInstance( $fmHeader, $fmPrompt, $fmStatus );
+    t3lib_FlashMessageQueue::addMessage( $flashMessage );    
   }
 
 
