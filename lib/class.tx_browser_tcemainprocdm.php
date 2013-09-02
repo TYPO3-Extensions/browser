@@ -605,7 +605,13 @@ class tx_browser_tcemainprocdm
       return false;
     }
 
-    if( $row[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ] )
+    $forbidden = $row[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ];
+    if( isset( $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ] ) )
+    {
+      $forbidden = $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ];
+    }
+
+    if( $forbidden )
     {
         // Prompt to the current record
 //      $prompt = '"' . $this->geoupdatelabels[ 'api' ][ 'forbidden' ] . '"' . PHP_EOL
