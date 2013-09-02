@@ -780,11 +780,11 @@ class tx_browser_tcemainprocdm
     $this->log( $prompt );
     $prompt = '$this->processId: ' . $this->processId ;
     $this->log( $prompt );
-    $prompt = '( ( int ) $this->processId ) == $this->processId: "' . ( ( int ) $this->processId ) != $this->processId .'"';
+    $prompt = '! ( ( ( int ) $this->processId ) === $this->processId ): "' . ( ( ( int ) $this->processId ) === $this->processId ) .'"';
     $this->log( $prompt );
 
       // RETURN null  : action is new record
-    if( ! ( ( ( int ) $this->processId ) == $this->processId ) )
+    if( ! ( ( ( int ) $this->processId ) === $this->processId ) )
     {
         // f.e: uid = 'NEW52248e41babcf'
       return null;
