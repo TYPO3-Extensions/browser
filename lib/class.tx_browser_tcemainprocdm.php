@@ -169,8 +169,8 @@ class tx_browser_tcemainprocdm
       // RETURN : requirements aren't matched
     if( ! $this->geoupdateRequired( $fieldArray ) )
     {
-      $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
-      $this->log( $prompt );
+//      $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
+//      $this->log( $prompt );
       return;
     }
       // RETURN : requirements aren't matched
@@ -267,10 +267,8 @@ class tx_browser_tcemainprocdm
         // Prompt to the current record
 
         // logging
-      $prompt = 'OK: Address is empty ';
-      $this->log( $prompt );
-      $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
-      $this->log( $prompt, 1 );
+      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataRemoved');
+      $this->log( $prompt, 3 );
         // logging
 
       return;
@@ -286,12 +284,10 @@ class tx_browser_tcemainprocdm
     {
       case( $lat == null ):
       case( $lon == null ):
-        $error  = 1;
         $prompt = 'ERROR: Returned latitude and/or longitude is null!';
-        $this->log( $prompt, $error );
-        $error  = 0;
+        $this->log( $prompt, 4 );
         $prompt = 'address: ' . $address;
-        $this->log( $prompt, $error );
+        $this->log( $prompt, 0 );
         return;
         break;
       default:
@@ -310,12 +306,12 @@ class tx_browser_tcemainprocdm
       // Prompt to the current record
 
       // logging
-    $this->log( $prompt );
-    $prompt = 'OK: ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
-    $this->log( $prompt, 1 );
+    $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataUpdate');
+    $this->log( $prompt, 2 );
     $prompt = 'Address: ' . $address;
-    $this->log( $prompt );
+    $this->log( $prompt, 0 );
     $prompt = 'latitude: ' . $lat . '; longigute: ' . $lon;
+    $this->log( $prompt, 0 );
 
       // logging
 
@@ -384,13 +380,14 @@ class tx_browser_tcemainprocdm
     {
       case( false ):
         $prompt = 'OK: address is empty.';
+        $this->log( $prompt, 1 );
         break;
       case( true ):
       default:
         $prompt = 'OK: address is "' . $address . '"';
+        $this->log( $prompt, 2 );
         break;
     }
-    $this->log( $prompt );
       // Logging
 
     return $address;
@@ -582,7 +579,7 @@ class tx_browser_tcemainprocdm
 //    $this->geoupdateSetPrompt( $prompt, $fieldArray );
 
     $prompt = 'OK: Address data are untouched.';
-    $this->log( $prompt );
+    $this->log( $prompt, 0 );
 
     return true;
   }
@@ -653,18 +650,17 @@ class tx_browser_tcemainprocdm
         $prompt = 'OK: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate][update] is set to false. '
                 . 'Geodata won\'t updated.'
                 ;
-        $this->log( $prompt );
+        $this->log( $prompt, 0 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
       case( empty( $address ) ):
       case( empty( $geodata ) ):
-        $error  = 1;
         $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate] is set, '
                 . 'but the element [address] and/or [geodata] isn\'t configured! '
                 . 'Please take care off a proper TCA configuration!'
                 ;
-        $this->log( $prompt, $error );
+        $this->log( $prompt, 5 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
@@ -738,8 +734,8 @@ class tx_browser_tcemainprocdm
       // RETURN : no record field for prompting configured
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
     {
-      $prompt = 'WARN: Geoupdate can\'t prompt to the record, because there is no prompt field configured.';
-      $this->log( $prompt, 1 );
+      $prompt = 'Geoupdate can\'t prompt to the record, because there is no prompt field configured.';
+      $this->log( $prompt, 0 );
       return;
     }
       // RETURN : no record field for prompting configured
@@ -839,11 +835,11 @@ class tx_browser_tcemainprocdm
     if( ! empty( $error ) )
     {
       $prompt = 'ERROR: Unproper SQL query';
-      $this->log( $prompt, 1 );
+      $this->log( $prompt, 5 );
       $prompt = 'query: ' . $query;
-      $this->log( $prompt );
+      $this->log( $prompt, 0 );
       $prompt = 'prompt: ' . $error;
-      $this->log( $prompt );
+      $this->log( $prompt, 4 );
 
       return;
     }
@@ -869,14 +865,14 @@ class tx_browser_tcemainprocdm
  * log( )
  *
  * @param	string		$prompt : prompt
- * @param	integer		$error  : 0 = notice, 1 = warn, 2 = error
+ * @param	integer		$status : 0 = notice, 1 = info, 3 = OK, 4 = warn, 5 = error
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
  * @return	void
  * @access public
  * @version   4.5.7
  * @since     4.5.7
  */
-  public function log( $prompt, $error=0, $action=2 )
+  public function log( $prompt, $status=0, $action=2 )
   {
     $table  = $this->processTable;
     $uid    = $this->processId;
@@ -887,12 +883,40 @@ class tx_browser_tcemainprocdm
     //    $data       = array( );
     //    $event_pid  = null; // page id
     //    $NEWid      = null;
-    $this->pObj->log( $table, $uid, $action, $pid, $error, $prompt );
+    switch( $status ) 
+    {
+      case( 0 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus   = t3lib_FlashMessage::NOTICE;
+        $logStatus  = 0;
+        break;
+      case( 1 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus = t3lib_FlashMessage::INFO;
+        $logStatus = 0;
+        break;
+      case( 2 ):
+        $fmHeader   = 'OK: Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus = t3lib_FlashMessage::OK;
+        $logStatus = 0;
+        break;
+      case( 3 ):
+        $fmHeader   = 'WARN: Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus = t3lib_FlashMessage::WARN;
+        $logStatus = 1;
+        break;
+      case( 4 ):
+        $fmHeader   = 'ERROR: Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus = t3lib_FlashMessage::ERROR;
+        $logStatus = 2;
+        break;
+      default:
+        $logStatus = 0;
+        break;
+    }
+    $this->pObj->log( $table, $uid, $action, $pid, $status, $prompt );
     
-    $fmHeader     = 't3lib_FlashMessage';
-    $fmPrompt     = 'Reward the user for actually doing something right today! <br /><i>&quot;Good boy!&quot;</i>' .
-                    'Everything is O.K!';
-    $fmStatus     = t3lib_FlashMessage::OK;
+    $fmPrompt     = $prompt;
     $flashMessage = t3lib_div::makeInstance( $fmHeader, $fmPrompt, $fmStatus );
     t3lib_FlashMessageQueue::addMessage( $flashMessage );    
   }
@@ -946,9 +970,6 @@ class tx_browser_tcemainprocdm
     }
 
     return;
-    $error  = 1;
-    $prompt = $this->processStatus . ': ' . $this->processTable . ': ' . $this->processId  . ': ' . var_export( $fieldArray, true );
-    $this->log( $prompt, $error );
   }
 
 /**
@@ -984,9 +1005,8 @@ class tx_browser_tcemainprocdm
       // RETURN : file is missing
     if( ! file_exists( $absPath ) )
     {
-      $error  = 1;
       $prompt = 'ERROR: file is missing: ' . $absPath;
-      $this->log( $prompt, $error );
+      $this->log( $prompt, 5 );
       return;
     }
       // RETURN : file is missing
@@ -1012,20 +1032,18 @@ class tx_browser_tcemainprocdm
 
     if( empty( $strGeodata ) )
     {
-      $error  = 1;
       $prompt = 'ERROR: GPX file seems to be empty or XML structure is unproper. Data can\ imported.';
-      $this->log( $prompt, $error );
+      $this->log( $prompt, 4 );
       $error  = 1;
       $prompt = 'INFO: Please take care off a proper XML structure: XML->trk->trkseg->trkpt->attributes[ lat || lon ]';
-      $this->log( $prompt, $error );
+      $this->log( $prompt, 1 );
       return;
     }
 
     $fieldArray[ $fieldGeodata ] = $strGeodata;
 
-    $error  = 1;
     $prompt = 'OK: GPX data are updated!';
-    $this->log( $prompt, $error );
+    $this->log( $prompt, 2 );
   }
 
 /**
@@ -1047,24 +1065,23 @@ class tx_browser_tcemainprocdm
     {
       case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
-        $this->log( $prompt );
+        $this->log( $prompt, 2 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
       case( empty( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: GPX file is removed. Nothing to do.';
-        $this->log( $prompt );
+        $this->log( $prompt, 2 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
       case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
-        $error  = 1;
         $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
                 . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
                 . 'Please take care off a proper TCA configuration!'
                 ;
-        $this->log( $prompt, $error );
+        $this->log( $prompt, 4 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
