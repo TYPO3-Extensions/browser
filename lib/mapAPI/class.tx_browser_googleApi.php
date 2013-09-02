@@ -89,13 +89,13 @@ class tx_browser_googleApi
         $returnStatus = null;
 //        $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOK');
 //          // Prompt to the current record
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS') . ': OK';
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApi') . ': OK';
         $pObj->log( $prompt, -1 );
         break;
       case( $status == 'ZERO_RESULTS' ):
           // Prompt to the current record
         $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS');
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS') . ': ZERO_RESULTS';
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApi') . ': ZERO_RESULTS';
         $pObj->log( $prompt, 3 );
         $prompt = $returnStatus;
         $pObj->log( $prompt, 1 );
@@ -105,7 +105,7 @@ class tx_browser_googleApi
       case( $status == 'OVER_QUERY_LIMIT' ):
           // Prompt to the current record
         $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiOVER_QUERY_LIMIT');
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS') . ': OVER_QUERY_LIMIT';
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApi') . ': OVER_QUERY_LIMIT';
         $pObj->log( $prompt, 3 );
         $prompt = $returnStatus;
         $pObj->log( $prompt, 1 );
@@ -113,7 +113,7 @@ class tx_browser_googleApi
       case( $status == 'REQUEST_DENIED' ):
           // Prompt to the current record
         $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiREQUEST_DENIED');
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS') . ': REQUEST_DENIED';
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApi') . ': REQUEST_DENIED';
         $pObj->log( $prompt, 4 );
         $prompt = $returnStatus;
         $pObj->log( $prompt, 1 );
@@ -123,7 +123,7 @@ class tx_browser_googleApi
       case( $status == 'INVALID_REQUEST' ):
           // Prompt to the current record
         $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiINVALID_REQUEST');
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS') . ': INVALID_REQUEST';
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApi') . ': INVALID_REQUEST';
         $pObj->log( $prompt, 4 );
         $prompt = $returnStatus;
         $pObj->log( $prompt, 1 );
@@ -133,7 +133,7 @@ class tx_browser_googleApi
       default:
           // Prompt to the current record
         $returnStatus = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiUNDEFINED');
-        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApiZERO_RESULTS') . ' undefined: ' . $status;
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/mapAPI/locallang.xml:statusGoogleApi') . ' undefined: ' . $status;
         $pObj->log( $prompt, 4 );
         break;
     }
