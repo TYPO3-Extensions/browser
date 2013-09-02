@@ -579,7 +579,7 @@ class tx_browser_tcemainprocdm
 //    $this->geoupdateSetPrompt( $prompt, $fieldArray );
 
     $prompt = 'OK: Address data are untouched.';
-    $this->log( $prompt, 0 );
+    $this->log( $prompt, 2 );
 
     return true;
   }
@@ -878,7 +878,6 @@ class tx_browser_tcemainprocdm
     $uid    = $this->processId;
     $pid    = null;
 
-    $prompt = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
     //    $details_nr = -1;
     //    $data       = array( );
     //    $event_pid  = null; // page id
@@ -914,7 +913,9 @@ class tx_browser_tcemainprocdm
         $logStatus = 0;
         break;
     }
-    $this->pObj->log( $table, $uid, $action, $pid, $status, $prompt );
+    
+    $logPrompt    = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
+    $this->pObj->log( $table, $uid, $action, $pid, $status, $logPrompt );
     
     $fmPrompt     = $prompt;
     $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
