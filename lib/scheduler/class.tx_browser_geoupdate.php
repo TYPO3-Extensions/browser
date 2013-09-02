@@ -1423,8 +1423,8 @@ rows
 
     $date     = date('Y-m-d H:i:s');
     $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
-    $prompt   = '* ' . $date . $browser . PHP_EOL
-              . '  ' . $prompt . PHP_EOL
+    $prompt   = '* ' . $date . $browser . '</br>'
+              . '  ' . $prompt . '</br>'
               . $promptFromRow
               ;
 
