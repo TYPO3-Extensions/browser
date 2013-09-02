@@ -1332,8 +1332,8 @@ rows
                     . $prompt . PHP_EOL
                     . $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ]
                     ;
-
-    $updatePrompt = $GLOBALS['TYPO3_DB']->quoteStr( $updatePrompt, $this->browser_table );
+    // 130902, dwildt, 1-
+    //$updatePrompt = $GLOBALS['TYPO3_DB']->quoteStr( $updatePrompt, $this->browser_table );
 
     $updateFields = array(
       $this->geoupdatelabels[ 'geodata' ][ 'lat' ]  . ' = "' . $this->geoupdateUpdateValues[ 'geodata' ][ 'lat' ] . '"',
@@ -1423,10 +1423,10 @@ rows
 
     $date     = date('Y-m-d H:i:s');
     $browser  = ' - ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptBrowserPhrase'). ':';
-    $prompt   = '* ' . $date . $browser . '
-  ' . $prompt . '
-' . $promptFromRow
-;
+    $prompt   = '* ' . $date . $browser . PHP_EOL
+              . '  ' . $prompt . PHP_EOL
+              . $promptFromRow
+              ;
 
     $this->geoupdateUpdateValues[ 'prompts' ][ ] = $prompt;
   }
