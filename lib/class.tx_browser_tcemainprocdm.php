@@ -895,17 +895,17 @@ class tx_browser_tcemainprocdm
         $logStatus = 0;
         break;
       case( 2 ):
-        $fmHeader   = 'OK: Geocoding by Browser - TYPO3 without PHP';
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus = t3lib_FlashMessage::OK;
         $logStatus = 0;
         break;
       case( 3 ):
-        $fmHeader   = 'WARN: Geocoding by Browser - TYPO3 without PHP';
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus = t3lib_FlashMessage::WARN;
         $logStatus = 1;
         break;
       case( 4 ):
-        $fmHeader   = 'ERROR: Geocoding by Browser - TYPO3 without PHP';
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus = t3lib_FlashMessage::ERROR;
         $logStatus = 2;
         break;
@@ -915,7 +915,7 @@ class tx_browser_tcemainprocdm
     }
     
     $logPrompt    = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
-    $this->pObj->log( $table, $uid, $action, $pid, $status, $logPrompt );
+    $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
     
     $fmPrompt     = $prompt;
     $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
