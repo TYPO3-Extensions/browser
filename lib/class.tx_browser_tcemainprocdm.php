@@ -285,9 +285,7 @@ class tx_browser_tcemainprocdm
       case( $lat == null ):
       case( $lon == null ):
         $prompt = 'ERROR: Returned latitude and/or longitude is null!';
-        $this->log( $prompt, 4 );
-        $prompt = 'address: ' . $address;
-        $this->log( $prompt, 0 );
+        $this->log( $prompt, 3 );
         return;
         break;
       default:
