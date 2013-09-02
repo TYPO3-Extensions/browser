@@ -1995,7 +1995,7 @@ table     : ' . $this->browser_table;
  * log( )
  *
  * @param	string		$prompt : prompt
- * @param	integer		$error  : 0 = notice, 1 = warn, 2 = error
+ * @param	integer		$status : -1 = no flash message, 0 = notice, 1 = info, 3 = OK, 4 = warn, 5 = error
  * @param	integer		$uid    : uid of the current record
  * @param	integer		$pid    : pid of the current record
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
@@ -2004,7 +2004,7 @@ table     : ' . $this->browser_table;
  * @version   4.5.7
  * @since     4.5.7
  */
-  public function log( $prompt, $error=0, $uid=0, $action=2 )
+  public function log( $prompt, $status=0, $uid=0, $action=2 )
   {
     $table  = $this->browser_table;
     if( $uid )
@@ -2014,9 +2014,26 @@ table     : ' . $this->browser_table;
 
     $prompt = '[tx_browser (' . $table . ')] ' . $prompt . PHP_EOL;
 
+    switch( $status ) 
+    {
+      case( 3 ):
+        $logStatus = 1;
+        break;
+      case( 4 ):
+        $logStatus = 2;
+        break;
+      case( -1 ):
+      case( 0 ):
+      case( 1 ):
+      case( 2 ):
+      default:
+        $logStatus = 0;
+        break;
+    }
+
     $type       = 4;        // denotes which module that has submitted the entry. This is the current list:  1=tce_db; 2=tce_file; 3=system (eg. sys_history save); 4=modules; 254=Personal settings changed; 255=login / out action: 1=login, 2=logout, 3=failed login (+ errorcode 3), 4=failure_warning_email sent
     //$action     = 0;        // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
-    //$error      = 0;        // flag. 0 = message, 1 = error (user problem), 2 = System Error (which should not happen), 3 = security notice (admin)
+    //$status      = 0;        // flag. 0 = message, 1 = error (user problem), 2 = System Error (which should not happen), 3 = security notice (admin)
     $details_nr = -1;       // The message number. Specific for each $type and $action. in the future this will make it possible to translate errormessages to other languages
     $details    = $prompt;  // Default text that follows the message
     $data       = array( ); // Data that follows the log. Might be used to carry special information. If an array the first 5 entries (0-4) will be sprintf'ed the details-text...
@@ -2026,7 +2043,7 @@ table     : ' . $this->browser_table;
     $event_pid  = -1;
     $NEWid      = null;
 
-    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $error, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
+    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
 
   }
 

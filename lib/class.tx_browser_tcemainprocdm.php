@@ -380,12 +380,12 @@ class tx_browser_tcemainprocdm
     {
       case( false ):
         $prompt = 'OK: address is empty.';
-        $this->log( $prompt, 1 );
+        $this->log( $prompt, 3 );
         break;
       case( true ):
       default:
         $prompt = 'OK: address is "' . $address . '"';
-        $this->log( $prompt, 2 );
+        $this->log( $prompt, -1 );
         break;
     }
       // Logging
@@ -872,7 +872,7 @@ class tx_browser_tcemainprocdm
  * @version   4.5.7
  * @since     4.5.7
  */
-  public function log( $prompt, $status=0, $action=2 )
+  public function log( $prompt, $status=-1, $action=2 )
   {
     $table  = $this->processTable;
     $uid    = $this->processId;
