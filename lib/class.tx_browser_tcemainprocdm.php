@@ -776,6 +776,14 @@ class tx_browser_tcemainprocdm
   */
   private function geoupdateSetRow( )
   {
+      // RETURN null  : action is new record
+    if( ( int ) $this->processId != $this->processId )
+    {
+        // f.e: uid = 'NEW52248e41babcf'
+      return null;
+    }
+      // RETURN null  : action is new record
+
       // RETURN : row is set before
     if( $this->geoupdaterow != null )
     {
