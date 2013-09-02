@@ -1,5 +1,10 @@
   * #51494: Index-Browser: make SQL command LATIN1 configurable
 
+4.5.14
+  13-09-02
+  Improvements
+  * #i0025: Flash Messages GPX-Data Upload
+
 4.5.13
   13-08-28
   Features

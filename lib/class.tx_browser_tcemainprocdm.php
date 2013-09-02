@@ -1048,7 +1048,7 @@ class tx_browser_tcemainprocdm
 
     if( empty( $strGeodata ) )
     {
-      $prompt = 'ERROR: GPX file seems to be empty or XML structure is unproper. Data can\ imported.';
+      $prompt = 'ERROR: GPX file seems to be empty or XML structure is unproper. Data can\'t imported.';
       $this->log( $prompt, 4 );
       $error  = 1;
       $prompt = 'INFO: Please take care off a proper XML structure: XML->trk->trkseg->trkpt->attributes[ lat || lon ]';
@@ -1081,7 +1081,7 @@ class tx_browser_tcemainprocdm
     {
       case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
-        $this->log( $prompt, 2 );
+        $this->log( $prompt, -1 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
