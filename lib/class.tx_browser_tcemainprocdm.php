@@ -906,7 +906,7 @@ class tx_browser_tcemainprocdm
         break;
       case( 3 ):
         $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
-        $fmStatus = t3lib_FlashMessage::WARN;
+        $fmStatus = t3lib_FlashMessage::WARNING;
         $logStatus = 1;
         break;
       case( 4 ):
