@@ -579,7 +579,7 @@ class tx_browser_tcemainprocdm
 //    $this->geoupdateSetPrompt( $prompt, $fieldArray );
 
     $prompt = 'OK: Address data are untouched.';
-    $this->log( $prompt, 2 );
+    $this->log( $prompt, -1 );
 
     return true;
   }
@@ -865,7 +865,7 @@ class tx_browser_tcemainprocdm
  * log( )
  *
  * @param	string		$prompt : prompt
- * @param	integer		$status : 0 = notice, 1 = info, 3 = OK, 4 = warn, 5 = error
+ * @param	integer		$status : -1 = no flash message, 0 = notice, 1 = info, 3 = OK, 4 = warn, 5 = error
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
  * @return	void
  * @access public
@@ -884,6 +884,11 @@ class tx_browser_tcemainprocdm
     //    $NEWid      = null;
     switch( $status ) 
     {
+      case( -1 ):
+        $fmHeader   = null;
+        $fmStatus   = null;
+        $logStatus  = 0;
+        break;
       case( 0 ):
         $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus   = t3lib_FlashMessage::NOTICE;
@@ -917,6 +922,13 @@ class tx_browser_tcemainprocdm
     $logPrompt    = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
     $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
     
+      // RETURN : Don't prompt to the backend
+    if( $status < 0 )
+    {
+      return;
+    }
+      // RETURN : Don't prompt to the backend
+
     $fmPrompt     = $prompt;
     $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
     t3lib_FlashMessageQueue::addMessage( $flashMessage );    
