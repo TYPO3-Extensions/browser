@@ -917,7 +917,7 @@ class tx_browser_tcemainprocdm
     $this->pObj->log( $table, $uid, $action, $pid, $status, $prompt );
     
     $fmPrompt     = $prompt;
-    $flashMessage = t3lib_div::makeInstance( $fmHeader, $fmPrompt, $fmStatus );
+    $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
     t3lib_FlashMessageQueue::addMessage( $flashMessage );    
   }
 
