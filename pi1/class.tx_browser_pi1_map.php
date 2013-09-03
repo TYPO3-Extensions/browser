@@ -3857,7 +3857,7 @@ class tx_browser_pi1_map
  *
  * @param       string    $prefixMarker : MARKER || PATH
  * @return	void
- * @version 4.5.8
+ * @version 4.5.14
  * @since   4.5.8
  * 
  * @internal    #47630
@@ -3883,6 +3883,7 @@ class tx_browser_pi1_map
     switch( $prefixMarker )
     {
       case( 'MARKER' ):
+$this->pObj->dev_var_dump( $this->pObj->rows );
         $prompt = '<div style="background:white;">' .
                 ' <h1 style="color:red;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_marker_relation_h1' ) 
