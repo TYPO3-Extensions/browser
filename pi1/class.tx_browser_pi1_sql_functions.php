@@ -157,14 +157,17 @@ class tx_browser_pi1_sql_functions
  *
  * @param	array		$arr_aliastableField: Array with local table values
  * @return	array		$arr_aliastableField with replaced table aliases.
- * @version 3.9.12
+ * @version 4.5.14
  * @since   3.9.12
  */
   private function aliasToTable( $arr_aliastableField )
   {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
+    // 130903, dwildt, 1-
+    //$conf       = $this->conf;
+    // 130903, dwildt, 1-
+    //$mode       = $this->piVar_mode;
+    // 130903, dwildt, 1-
+    //$view       = $this->view;
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
 
@@ -299,16 +302,21 @@ class tx_browser_pi1_sql_functions
  *
  * @param	array		$arr_tablefields  : Array with table.field values maybe with an AS
  * @return	array		$arr_tablefields  : Array with table.fields (real names)
- * @version 3.9.12
+ * @version 4.5.14
  * @since   3.9.12
  */
   public function expressionAndAliasToTable( $arr_tablefields )
   {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
-    $conf_path  = $this->conf_path;
-    $conf_view  = $this->conf_view;
+    // 130903, dwildt, 1-
+    //$conf       = $this->conf;
+    // 130903, dwildt, 1-
+    //$mode       = $this->piVar_mode;
+    // 130903, dwildt, 1-
+    //$view       = $this->view;
+    // 130903, dwildt, 1-
+    //$conf_path  = $this->conf_path;
+    // 130903, dwildt, 1-
+    //$conf_view  = $this->conf_view;
 
     if( ! is_array( $arr_tablefields ) )
     {
@@ -337,15 +345,19 @@ class tx_browser_pi1_sql_functions
  *
  * @param	string		$sqlStatement : The current SQL statement
  * @return	string		$sqlStatement : The handled SQL statement
- * @version 3.9.12
+ * @version 4.5.14
  * @since   3.9.12
  */
   public function expressionToAlias( $sqlStatement )
   {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
-    $conf_path  = $this->conf_path;
+    // 130903, dwildt, 1-
+    // $conf       = $this->conf;
+    // 130903, dwildt, 1-
+    //$mode       = $this->piVar_mode;
+    // 130903, dwildt, 1-
+    //$view       = $this->view;
+    // 130903, dwildt, 1-
+    //$conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
 
     if( ! is_array( $conf_view['select.']['deal_as_table.'] ) )
@@ -526,11 +538,15 @@ class tx_browser_pi1_sql_functions
  */
   public function cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
   {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
+    // 130903, dwildt, 1-
+    //$conf       = $this->conf;
+    // 130903, dwildt, 1-
+    //$mode       = $this->piVar_mode;
+    // 130903, dwildt, 1-
+    //$view       = $this->view;
     $conf_path  = $this->conf_path;
-    $conf_view  = $this->conf_view;
+    // 130903, dwildt, 1-
+    //$conf_view  = $this->conf_view;
 
       // RETURN : coa_conf isn't an array
     if( ! is_array( $coa_conf ) )
@@ -909,17 +925,21 @@ class tx_browser_pi1_sql_functions
 
 
 
-  /**
+/**
  * zz_prependPiVarSort( ):  Prepends the value from the piVars['sort'] to the
  *                          the given ORCER BY statement, if there is a piVar.
  *
  * @param	[type]		$$orderBy: ...
  * @return	string		The ORDER BY statement
+ * 
+ * @version 4.5.14
+ * @since   4.0.0
  */
   public function zz_prependPiVarSort( $orderBy )
   {
     $b_desc       = false;
-    $str_order_by = false;
+    // 130903, dwildt, 1-
+    //$str_order_by = false;
 
 
       // RETURN without any piVar[sort]

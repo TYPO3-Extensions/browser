@@ -28,7 +28,7 @@
 * @author       Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package      TYPO3
 * @subpackage   browser
-* @version      4.4.0
+* @version      4.5.14
 * since         2.0.0
 */
 
@@ -533,7 +533,7 @@ class tx_browser_pi1_typoscript
   *
   * @return	array		$conf_sql:
   *
-  * @version  3.9.19
+  * @version  4.5.14
   * @since    3.0.0
   */
   function set_confSql( )
@@ -571,14 +571,14 @@ class tx_browser_pi1_typoscript
           t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         }
           // DRS
-          // #i0026
+          // #i0026, 130903, dwildt
 //        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
 //                                      (
 //                                        'override.' . $str_query_part,
 //                                        $coa_name,
 //                                        $coa_conf
 //                                      );
-          // #i0026
+          // #i0026, 130903, dwildt
         $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->cObjGetSingle
                                       (
                                         'override.' . $str_query_part,
@@ -604,14 +604,14 @@ class tx_browser_pi1_typoscript
         $coa_name = $this->conf_view[$str_query_part];
         $coa_conf = $this->conf_view[$str_query_part.'.'];
         // 3.3.7
-          // #i0026
+          // #i0026, 130903, dwildt
 //        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
 //                                      (
 //                                        $str_query_part,
 //                                        $coa_name,
 //                                        $coa_conf
 //                                      );
-          // #i0026
+          // #i0026, 130903, dwildt
         $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->cObjGetSingle
                                       (
                                         $str_query_part,

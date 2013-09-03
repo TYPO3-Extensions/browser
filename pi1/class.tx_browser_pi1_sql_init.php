@@ -497,7 +497,7 @@ class tx_browser_pi1_sql_init
       if( $this->pObj->b_drs_sql )
       {
         $prompt = 'Used tables: Statement "' . $arr_dealastable['statement'] . '" is replaced with "' . $arr_dealastable['alias'] . '"';
-        t3lib_div::devlog( '[INFO/SQL] ', $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
       // Is there a statement, which should replaced with an alias?
