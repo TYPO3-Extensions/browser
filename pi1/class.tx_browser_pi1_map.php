@@ -2342,10 +2342,6 @@ class tx_browser_pi1_map
       $view         = $this->pObj->view;
       $viewWiDot    = $view.'.';
       $tsPath       = 'plugin.tx_browser_pi1.views.' . $viewWiDot . $mode;
-      $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
-      $prompt = str_replace( '%pluginUid%',   $pluginUid,   $prompt );
-      $prompt = str_replace( '%pluginTitle%', $pluginTitle, $prompt );
-      $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
       $prompt = '<div style="background:white;">' .
               ' <h1 style="color:red;">' 
               . $this->pObj->pi_getLL( 'error_maproutes_marker_woUid_h1' ) 
@@ -2355,6 +2351,10 @@ class tx_browser_pi1_map
               . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '</p>'
               . '</div>';
+      $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
+      $prompt = str_replace( '%pluginUid%',   $pluginUid,   $prompt );
+      $prompt = str_replace( '%pluginTitle%', $pluginTitle, $prompt );
+      $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
       //die( $prompt );
       echo( $prompt );
     }
