@@ -560,7 +560,7 @@ class tx_browser_pi1_sql_functions
                   . '...'
                   ;
         }
-        $prompt = $coa_name. ' doesn\'t seem to be a name for a TypoScript object like TEXT or COA.';
+        $prompt = $prompt. ' doesn\'t seem to be a name for a TypoScript object like TEXT or COA.';
         t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'There won\'t be any wrap.';
         t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
