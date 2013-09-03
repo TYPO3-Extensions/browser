@@ -3809,7 +3809,7 @@ class tx_browser_pi1_map
     $rowCounter = 0;
     
       // LOOP rows
-$this->pObj->dev_var_dump( 'Hallo', $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
 
     foreach( $this->pObj->rows as $row )
     {
@@ -3883,22 +3883,26 @@ $this->pObj->dev_var_dump( 'Hallo', $this->pObj->rows );
     switch( $prefixMarker )
     {
       case( 'MARKER' ):
-        $prompt = '<h1 style="color:red;">' 
+        $prompt = '<div style="background:white;">' .
+                ' <h1 style="color:red;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_marker_relation_h1' ) 
                 . '</h1>'
                 . $this->pObj->pi_getLL( 'error_maproutes_marker_relation_missing' ) 
                 . '<p>' . PHP_EOL
                 . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
-                . '</p>';
+                . '</p>'
+                . '</div>';
         break;
       case( 'PATH' ):
-        $prompt = '<h1 style="color:red;">' 
+        $prompt = '<div style="background:white;">' .
+                ' <h1 style="color:red;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_path_relation_h1' ) 
                 . '</h1>'
                 . $this->pObj->pi_getLL( 'error_maproutes_path_relation_missing' ) 
                 . '<p>' . PHP_EOL
                 . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
-                . '</p>';
+                . '</p>'
+                . '</div>';
         break;
       default:
         $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
