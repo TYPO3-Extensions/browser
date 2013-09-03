@@ -2330,11 +2330,31 @@ class tx_browser_pi1_map
       // DIE  : if $markerUid is empty
     if( empty( $markerUid ) )
     {
-      $prompt = '<div style="background:white;color:red">' 
-              . 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' 
-              . '$markerUid is empty.'
-              . '</div>'
-              ;
+//      $prompt = '<div style="background:white;color:red">' 
+//              . 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' 
+//              . '$markerUid is empty.'
+//              . '</div>'
+//              ;
+      $pluginPid    = $this->pObj->cObj->data['pid'];
+      $pluginUid    = $this->pObj->cObj->data['uid'];
+      $pluginTitle  = $this->pObj->cObj->data['header'];
+      $mode         = $this->mode;
+      $view         = $this->pObj->view;
+      $viewWiDot    = $view.'.';
+      $tsPath       = 'plugin.tx_browser_pi1.views.' . $viewWiDot . $mode;
+      $prompt = str_replace( '%pluginPid%',   $pluginPid,   $prompt );
+      $prompt = str_replace( '%pluginUid%',   $pluginUid,   $prompt );
+      $prompt = str_replace( '%pluginTitle%', $pluginTitle, $prompt );
+      $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
+      $prompt = '<div style="background:white;">' .
+              ' <h1 style="color:red;">' 
+              . $this->pObj->pi_getLL( 'error_maproutes_marker_woUid_h1' ) 
+              . '</h1>'
+              . $this->pObj->pi_getLL( 'error_maproutes_marker_woUid_prompt' ) 
+              . '<p>' . PHP_EOL
+              . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
+              . '</p>'
+              . '</div>';
       //die( $prompt );
       echo( $prompt );
     }

@@ -55,14 +55,87 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   Browser - TYPO3 without PHP.
 </p>
 ]]></label>
+      <label index="error_maproutes_marker_woUid_h1">Marker with a missing uid!</label>
+      <label index="error_maproutes_marker_woUid_prompt"><![CDATA[
+<h2>
+  Type of error
+</h2>
+<p>
+  A marker (POI) is without a needed uid.
+</p>
+<h2>
+  Possible reasons
+</h2>
+<ul>
+  <li>
+    The marker (POI) is without an address.
+  </li>
+  <li>
+    The marker (POI) is without latitude or / and without longitude.
+  </li>
+</ul>
+<h2>
+  Your job:
+</h2>
+<p>
+  Please check your marker (POI): Do they have a one category at least? Do they have a latitude and a longitude?
+</p>
+<h2>
+  Further information
+</h2>
+<p>
+  Without a proper relation you won't get any proper result in the map.
+</p>
+<p>
+  Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
+</p>
+<p>
+  TypoScript: %tsPath%
+</p>
+<p>
+  Sorry for the trouble.<br />
+  Browser - TYPO3 without PHP.
+</p>
+]]></label>
       <label index="error_maproutes_marker_relation_h1">Path with a relation error</label>
       <label index="error_maproutes_marker_relation_missing"><![CDATA[
+<h2>
+  Type of error
+</h2>
 <p>
-  One path is without any relation to a marker.
+  One path is without a relation to a marker (POI).
+</p>
+<h2>
+  Possible reasons
+</h2>
+<ul>
+  <li>
+    Your path isn't linked with any marker (POI).
+  </li>
+  <li>
+    The linked marker (POI) aren't proper because of
+    <ul>
+      <li>
+        a missing category
+      </li>
+      <li>
+        or a missing latitude or longitude
+      </li>
+    </ul>
+  </li>
+</ul>
+<h2>
+  Your job:
+</h2>
+<p>
+  Please check your paths, if they are linked with one marker (POI) at least.
 </p>
 <p>
-  Please check your paths and the relations to the marker.
+  Please check your marker (POI): Do they have a one category at least? Do they have a latitude and a longitude?
 </p>
+<h2>
+  Further information
+</h2>
 <p>
   Without a proper relation you won't get any proper result in the map.
 </p>
@@ -231,17 +304,86 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Browser - TYPO3 ohne PHP.
 </p>
 ]]></label>
+      <label index="error_maproutes_marker_woUid_h1">Einer Markierung (POI) fehlt eine Uid!</label>
+      <label index="error_maproutes_marker_woUid_prompt"><![CDATA[
+<h2>
+  M&ouml;gliche Gr&uuml;nde
+</h2>
+<ul>
+  <li>
+    Der Markierung (POI) fehlt eine Kategorie.
+  </li>
+  <li>
+    Der Markierung (POI) fehlen der Breiten- und / oder der L&auml;ngengrad.
+  </li>
+</ul>
+<h2>
+  Das kannst Du tun
+</h2>
+<p>
+  Pr&uuml;fe Deine Markierungen (POI) auf zugeordnete Kategorien.
+  Jeder Markierung (POI) muss mindestens einer Kategorie zugeordnet sein.
+</p>
+<p>
+  &Uuml;berpr&uuml;fe die Geokodierung Deiner Markierungen (POI). 
+  Jeder Markierung (POI) m&uuml;ssen ein Breiten- und ein L&auml;ngengrad zugeordnet sein.
+</p>
+<h2>
+  Weitere Infos
+</h2>
+<p>
+  Browser-Plugin: %pluginTitle% mit der UID #%pluginUid% auf der Seite mit der ID #%pluginPid%
+</p>
+<p>
+  TypoScript: %tsPath%
+</p>
+<p>
+  Sorry wegen der Umst&auml;nde.<br />
+  Browser - TYPO3 ohne PHP.
+</p>
+]]></label>
       <label index="error_maproutes_marker_relation_h1">Pfad mit Relations-Fehler</label>
       <label index="error_maproutes_marker_relation_missing"><![CDATA[
+<h2>
+  Fehlerbeschreibung
+</h2>
 <p>
   Einem Pfad fehlt eine Markierung.
 </p>
 <p>
   Ein Pfad muss aber mindestens einer Markierung zugeordnet sein, sonst kommt es zu Fehlern in der Karte.
 </p>
+<h2>
+  M&ouml;gliche Gr&uuml;nde
+</h2>
+<ul>
+  <li>
+    Deinem Pfad ist keine Markierung (POI) zugeordnet.
+  </li>
+  <li>
+    Die zugeordnete Markierung (POI) ist nicht in Ordnung weil.
+    <ul>
+      <li>
+        sie keine Kategorie hat
+      </li>
+      <li>
+        oder weil L&auml;ngen- und Breitengrad fehlen.
+      </li>
+    </ul>
+  </li>
+</ul>
+<h2>
+  Das kannst Du tun
+</h2>
 <p>
-  Pr&uuml;fe bitte die Zurodnung von Markierungen zu Deinen Pfaden.
+  Pr&uuml;fe bitte die Zuordnung von Markierungen zu Deinen Pfaden.
 </p>
+<p>
+  Pr&uuml;fe bitte die zugeordneten Markierungen auf Kategorien und Geokodierung.
+</p>
+<h2>
+  Weitere Infos
+</h2>
 <p>
   Browser-Plugin: %pluginTitle% mit der UID #%pluginUid% auf der Seite mit der ID #%pluginPid%
 </p>
@@ -262,7 +404,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Ein Pfad muss aber einer Kategorie zugeordnet sein, sonst kommt es zu Fehlern in der Karte.
 </p>
 <p>
-  Pr&uuml;fe bitte die Zurodnung von Kategorien zu Deinen Pfaden.
+  Pr&uuml;fe bitte die Zuordnung von Kategorien zu Deinen Pfaden.
 </p>
 <p>
   Browser-Plugin: %pluginTitle% mit der UID #%pluginUid% auf der Seite mit der ID #%pluginPid%
