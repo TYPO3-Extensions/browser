@@ -2272,7 +2272,7 @@ class tx_browser_pi1_map
  * renderMapMarkerPointsPointProperties( ): Points are map marker
  *
  * @return	array
- * @version 4.5.7
+ * @version 4.5.14
  * @since   4.5.7
  */
   private function renderMapMarkerPointsPointProperties( $row )
@@ -2330,8 +2330,11 @@ class tx_browser_pi1_map
       // DIE  : if $markerUid is empty
     if( empty( $markerUid ) )
     {
-      $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                '$markerUid is empty.';
+      $prompt = '<div style="background:white;color:red">' 
+              . 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' 
+              . '$markerUid is empty.'
+              . '</div>'
+              ;
       //die( $prompt );
       echo( $prompt );
     }
