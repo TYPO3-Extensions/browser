@@ -2465,7 +2465,7 @@ class tx_browser_pi1_viewlist
         $prompt = $this->conf_path . ' hasn\'t any linkToSingleView.';
         t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you want a link to a single view, please configure ' .
-                  $this->conf_path . '.csvLinkToSingleView.';
+                  $this->conf_path . 'csvLinkToSingleView.';
         t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
       }
         // DRS
@@ -2500,7 +2500,7 @@ class tx_browser_pi1_viewlist
       $prompt       = 'Fields which will get a link to a single view: ' . $str_csvList . '.';
       t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->pObj->extKey, 0 );
       $prompt       = 'If you want to configure the field list, please use ' .
-                      $this->conf_path . '.csvLinkToSingleView.';
+                      $this->conf_path . 'csvLinkToSingleView.';
       t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
     }
       // DRS

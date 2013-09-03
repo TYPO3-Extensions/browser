@@ -3214,9 +3214,11 @@ class tx_browser_pi1_map
  */
   private function renderMapRouteMarkerAddPaths( $marker, $rowsPathWiCat )
   {
-    $tablePath      = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.']['path'];
+    // 130903, dwildt, 1-
+    //$tablePath      = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.']['path'];
     $tableMarker    = $this->confMap['configuration.']['route.']['markerMapper.']['tables.']['local.']['marker'];
-    $tablePathUid   = $tablePath    . '.uid';
+    // 130903, dwildt, 1-
+    //$tablePathUid   = $tablePath    . '.uid';
     $tableMarkerUid = $tableMarker  . '.uid';
 
     foreach( $marker as $key => $arrMarker )
@@ -3807,7 +3809,7 @@ class tx_browser_pi1_map
     $rowCounter = 0;
     
       // LOOP rows
-//$this->pObj->dev_var_dump( $this->pObj->rows );
+$this->pObj->dev_var_dump( $this->pObj->rows );
 
     foreach( $this->pObj->rows as $row )
     {
