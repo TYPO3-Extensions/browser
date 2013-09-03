@@ -571,9 +571,18 @@ class tx_browser_pi1_typoscript
           t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         }
           // DRS
-        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
+          // #i0026
+//        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
+//                                      (
+//                                        'override.' . $str_query_part,
+//                                        $coa_name,
+//                                        $coa_conf
+//                                      );
+          // #i0026
+        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->cObjGetSingle
                                       (
                                         'override.' . $str_query_part,
+                                        $coa_name,
                                         $coa_name,
                                         $coa_conf
                                       );
@@ -595,9 +604,18 @@ class tx_browser_pi1_typoscript
         $coa_name = $this->conf_view[$str_query_part];
         $coa_conf = $this->conf_view[$str_query_part.'.'];
         // 3.3.7
-        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
+          // #i0026
+//        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
+//                                      (
+//                                        $str_query_part,
+//                                        $coa_name,
+//                                        $coa_conf
+//                                      );
+          // #i0026
+        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->cObjGetSingle
                                       (
                                         $str_query_part,
+                                        $coa_name,
                                         $coa_name,
                                         $coa_conf
                                       );

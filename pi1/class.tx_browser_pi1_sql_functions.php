@@ -510,7 +510,7 @@ class tx_browser_pi1_sql_functions
 
 
 
-  /**
+/**
  * cObjGetSingle( ):  Wraps the given statement by the given TypoScript configuration.
  *                    It returns the statement unwrapped, if there isn't any TypoScript
  *                    configuratuion.
@@ -521,7 +521,7 @@ class tx_browser_pi1_sql_functions
  * @param	string		$coa_name     : name of COA like TEXT or COA
  * @param	array		$coa_conf     : the COA, the configuration object array
  * @return	string		$statement    : wrapped or unwrapped statement
- * @version 3.9.12
+ * @version 4.5.14
  * @since   3.9.12
  */
   public function cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
@@ -553,14 +553,21 @@ class tx_browser_pi1_sql_functions
     {
       if( $this->pObj->b_drs_sql )
       {
+        $prompt = $coa_name;
+        if( strlen( $prompt ) > 100 )
+        {
+          $prompt = substr( $prompt, 0, 100 )
+                  . '...'
+                  ;
+        }
         $prompt = $coa_name. ' doesn\'t seem to be a name for a TypoScript object like TEXT or COA.';
-        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'There won\'t be any wrap.';
-        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
         $prompt = 'If you like to wrap it, please configure i.e. '.
                   $conf_path . $currConfPath . ' = TEXT and ' .
                   $conf_path . $currConfPath . '.value = your value';
-        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div::devLog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
       }
       return $coa_name;
     }
@@ -571,12 +578,12 @@ class tx_browser_pi1_sql_functions
     {
       if ($this->pObj->b_drs_sql)
       {
-        $prompt = 'Statement is empty.';
-        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
-        $prompt = 'This is an undefined error. Please post this bug at http://typo3-browser-forum.de/';
-        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'Statement / COA type is empty.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'Maybe empty statement / empty COA type is proper in case of a manual configured SQL query.';
+        t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 1 );
         $prompt = 'Statement won\'t be wrapped';
-        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
       }
       return $statement;
     }
@@ -587,7 +594,7 @@ class tx_browser_pi1_sql_functions
     if( $this->pObj->b_drs_sql )
     {
       $prompt = $conf_path . $currConfPath . ' is wrapped: ' . $statement;
-      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
     }
 
     return $statement;

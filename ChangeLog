@@ -3,6 +3,7 @@
 4.5.14
   13-09-02
   Improvements
+  * #i0026: Replace 3.x-method global_stdWrap with 4.x-method cObjGetSingle
   * #i0025: Flash Messages GPX-Data Upload
 
 4.5.13

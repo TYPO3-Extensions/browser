@@ -85,7 +85,7 @@ class tx_browser_typoscript extends tslib_pibase
     if (!$content)
     {
       $conf     = $conf['userFunc.'];
-      $content  = $local_cObj->cObjGetSingle($conf['number'], $conf['number.']);
+      $content  = $local_cObj->cObjGetSingle( $conf['number'], $conf['number.'] );
     }
 
     return number_format($content, $conf['decimal'], $conf['dec_point'], $conf['thousands_sep']);

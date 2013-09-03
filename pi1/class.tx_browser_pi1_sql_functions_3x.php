@@ -74,7 +74,7 @@
  * 1891:     function global_csvSelect()
  * 2015:     function global_csvSearch( )
  * 2076:     function global_csvOrderBy()
- * 2231:     function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
+ * 2231:     function global_csvSelectStdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
  *
  *              SECTION: Helpers
  * 2362:     public function prompt_error( )
@@ -1921,7 +1921,7 @@ class tx_browser_pi1_sql_functions_3x
 
       // 3.3.7
       $this->pObj->csvSelect = $conf_view['select'];
-      $this->pObj->csvSelect = $this->global_stdWrap('select', $this->pObj->csvSelect, $conf_view['select.']);
+      $this->pObj->csvSelect = $this->global_csvSelectStdWrap('select', $this->pObj->csvSelect, $conf_view['select.']);
       $this->pObj->csvSelect = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($this->pObj->csvSelect);
 
       if ( ! $this->pObj->csvSelect || $this->pObj->csvSelect == '' )
@@ -2237,17 +2237,17 @@ class tx_browser_pi1_sql_functions_3x
 
 
 /**
- * global_stdWrap: The method wraps sql query parts
+ * global_csvSelectStdWrap: The method wraps sql query parts
  *
  * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
  * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
  * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
  * @return	string		wrapped value, if there is a stdWrap configuration
- * @access    public 
+ * @access    private 
  * @version 4.5.13
  * @since   2.0.0
  */
-  public function global_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
+  private function global_csvSelectStdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
   {
 
     $conf = $this->pObj->conf;
