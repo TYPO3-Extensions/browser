@@ -3895,6 +3895,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
                 . '</div>';
         break;
       case( 'PATH' ):
+$this->pObj->dev_var_dump( $this->pObj->rows );
         $prompt = '<div style="background:white;">' .
                 ' <h1 style="color:red;">' 
                 . $this->pObj->pi_getLL( 'error_maproutes_path_relation_h1' ) 

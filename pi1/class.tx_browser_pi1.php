@@ -62,7 +62,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.5.0
+ * @version 4.5.14
  * @since 0.0.1
  */
 
@@ -1348,7 +1348,7 @@ class tx_browser_pi1 extends tslib_pibase {
  *
  * @param    mixed        $content : String or array for prompting in the frontend
  * @return    void
- * @version 3.9.11
+ * @version 4.5.14
  * @since   3.9.9
  */
   public function dev_var_dump( $content )
