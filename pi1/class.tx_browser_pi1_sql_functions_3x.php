@@ -74,7 +74,7 @@
  * 1891:     function global_csvSelect()
  * 2015:     function global_csvSearch( )
  * 2076:     function global_csvOrderBy()
- * 2231:     function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
+ * 2231:     function global_csvSelectStdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
  *
  *              SECTION: Helpers
  * 2362:     public function prompt_error( )
@@ -1905,7 +1905,7 @@ class tx_browser_pi1_sql_functions_3x
  *
  * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
  */
-    function global_csvSelect()
+    private function global_csvSelect( )
     {
       $conf = $this->pObj->conf;
       $mode = $this->pObj->piVar_mode;
@@ -1921,12 +1921,12 @@ class tx_browser_pi1_sql_functions_3x
 
       // 3.3.7
       $this->pObj->csvSelect = $conf_view['select'];
-      $this->pObj->csvSelect = $this->global_stdWrap('select', $this->pObj->csvSelect, $conf_view['select.']);
+      $this->pObj->csvSelect = $this->global_csvSelectStdWrap('select', $this->pObj->csvSelect, $conf_view['select.']);
       $this->pObj->csvSelect = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($this->pObj->csvSelect);
 
-      if (!$this->pObj->csvSelect || $this->pObj->csvSelect == '')
+      if ( ! $this->pObj->csvSelect || $this->pObj->csvSelect == '' )
       {
-        if ($this->pObj->b_drs_error)
+        if( $this->pObj->b_drs_error )
         {
           t3lib_div::devlog('[ERROR/SQL] views.'.$viewWiDot.$mode.' hasn\'t any select fields.', $this->pObj->extKey, 3);
           t3lib_div::devLog('[HELP/SQL] Did you included the static template from this extensions?', $this->pObj->extKey, 1);
@@ -2237,15 +2237,16 @@ class tx_browser_pi1_sql_functions_3x
 
 
   /**
- * global_stdWrap: The method wraps sql query parts
+ * global_csvSelectStdWrap: The method wraps sql query parts
  *
  * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
  * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
  * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
  * @return	string		wrapped value, if there is a stdWrap configuration
- * @version 4.0.0
+ * @version 4.5.13
+ * @since   2.0.0
  */
-  function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
+  function global_csvSelectStdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
   {
 
     $conf = $this->pObj->conf;
@@ -2265,9 +2266,9 @@ class tx_browser_pi1_sql_functions_3x
 
 //if(t3lib_div::_GP('dev')) var_dump('sqlFun 2320', $str_tsProperty.'.', $conf_view);
 
-    if (!is_array($arr_tsArray))
+    if( ! is_array( $arr_tsArray ) )
     {
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
         t3lib_div::devlog('[INFO/SQL] '.$str_tsProperty.' hasn\'t any stdWrap.', $this->pObj->extKey, 0);
         t3lib_div::devLog('[HELP/SQL] If you like to wrap it, please configure '.$conf_path.$str_tsProperty.'.value ...', $this->pObj->extKey, 1);
@@ -2291,12 +2292,19 @@ class tx_browser_pi1_sql_functions_3x
     //     value = tt_news.title, tt_news_cat.title
     //     ...
 
-    if ($str_tsValue != strtoupper($str_tsValue))
+    if( $str_tsValue != strtoupper( $str_tsValue ) )
     {
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[ERROR/SQL] '.$str_tsValue.' doesn\'t seem to be a TypoScript object like TEXT or COA.', $this->pObj->extKey, 3);
-        t3lib_div::devlog('[WARN/SQL] There will be any wrap.', $this->pObj->extKey, 2);
+        $prompt = $str_tsValue;
+        if( str_len( $prompt ) > 100 )
+        {
+          $prompt = substr( $prompt, 0, 100 )
+                  . '...'
+                  ;
+        }
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt . ' doesn\'t seem to be a COA type like TEXT or COA.', $this->pObj->extKey, 0 );
+        t3lib_div::devlog('[INFO/SQL] There will be any wrap. But maybe this is OK.', $this->pObj->extKey, 0 );
         t3lib_div::devLog('[HELP/SQL] If you like to wrap it, please configure i.e. '.$conf_path.$str_tsProperty.' = TEXT and '.$conf_path.$str_tsProperty.'.value = your value', $this->pObj->extKey, 1);
       }
       return $str_tsValue;
@@ -2309,13 +2317,15 @@ class tx_browser_pi1_sql_functions_3x
     //
     // RETURN value, if property is empty
 
-    if ($str_tsValue == false || $str_tsValue == '')
+    if( $str_tsValue == false || $str_tsValue == '' )
     {
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[ERROR/SQL] '.$str_tsValue.' isn\'t any TypoScript object like TEXT or COA.', $this->pObj->extKey, 3);
-        t3lib_div::devlog('[WARN/SQL] There will be any wrap.', $this->pObj->extKey, 2);
-        t3lib_div::devLog('[HELP/SQL] If you like to wrap it, please configure i.e. '.$conf_path.$str_tsProperty.' = TEXT and '.$conf_path.$str_tsProperty.'.value = your value', $this->pObj->extKey, 1);
+        t3lib_div::devlog( '[INFO/SQL] The TypoScript COA type is empty.', $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[INFO/SQL] There will be any wrap.', $this->pObj->extKey, 0 );
+        t3lib_div::devLog( '[HELP/SQL] If you like to wrap it, please configure i.e. ' 
+                          . $conf_path . $str_tsProperty . ' = TEXT and '. $conf_path . $str_tsProperty 
+                          .'.value = your value', $this->pObj->extKey, 1 );
       }
       return $str_tsValue;
     }
