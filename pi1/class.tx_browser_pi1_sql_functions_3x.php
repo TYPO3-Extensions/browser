@@ -2298,7 +2298,7 @@ class tx_browser_pi1_sql_functions_3x
       if( $this->pObj->b_drs_sql )
       {
         $prompt = $str_tsValue;
-        if( str_len( $prompt ) > 100 )
+        if( strlen( $prompt ) > 100 )
         {
           $prompt = substr( $prompt, 0, 100 )
                   . '...'
