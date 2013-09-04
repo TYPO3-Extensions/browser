@@ -3166,6 +3166,31 @@ plugin.tx_browser_pi1 {
               useCacheHash = 1
             }
           }
+            // Link to the single view (in 'click'-mode only)
+          30 >
+          30 = COA
+          30 {
+            if {
+              isFalse = {$plugin.tx_browser_pi1.map.mobileTouchscreen}
+            }
+            10 = TEXT
+            10 {
+              if {
+                value   = '{$plugin.tx_browser_pi1.map.popup.behaviour}' 
+                equals  = 'click'
+              }
+              value = In detail &raquo;
+              lang {
+                de = Details &raquo;
+                en = In detail &raquo;
+              }
+              typolink {
+                parameter.data = field:mapLinkToSingle
+                  // 130117
+                useCacheHash = 1
+              }
+            }
+          }
         }
       }
       modules {
