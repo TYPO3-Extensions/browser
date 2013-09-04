@@ -1,5 +1,14 @@
   * #51494: Index-Browser: make SQL command LATIN1 configurable
 
+
+4.5.15
+  13-09-04
+  Improvement
+  * #51477: BrowserMaps: mobile navigation
+            displayList.master_templates.map.descriptionWiLinkToSingle.30 moved from TEXT to COA
+            Effected files:
+            * static/setup.txt
+
 4.5.14
   13-09-02
   Improvements

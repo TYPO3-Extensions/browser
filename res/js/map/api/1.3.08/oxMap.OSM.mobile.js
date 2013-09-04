@@ -15,6 +15,11 @@ window.OSM = {
   , osmOptions 		: {
         controls    : [ 
                           new OpenLayers.Control.Attribution() 
+                        , new OpenLayers.Control.TouchNavigation({   /* 130828, dwildt, 5+ */
+                            dragPanOptions: {
+                                enableKinetic: true
+                            }
+                          }),
                       ],
         projection  : new OpenLayers.Projection( "EPSG:4326" ),
         units       : 'degrees',
