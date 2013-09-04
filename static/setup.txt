@@ -1231,10 +1231,26 @@ plugin.tx_browser_pi1 {
                 }
               }
                 // Map marker event type
-              oxMapConfigMapMarkerEvent = TEXT
+              oxMapConfigMapMarkerEvent = COA
               oxMapConfigMapMarkerEvent {
-                  // [STRING] customized marker events
-                value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
+                  // Touchscreen mode is disabled
+                10 = TEXT
+                10 {
+                  if {
+                    isFalse = {$plugin.tx_browser_pi1.map.mobileTouchscreen}
+                  }
+                    // [STRING] customized marker events
+                  value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
+                }
+                  // Touchscreen mode is enabled
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.map.mobileTouchscreen}
+                  }
+                    // [STRING] customized marker events
+                  value = 'hover'
+                }
               }
                 // Map zoom wheel
               oxMapConfigZoomWheelEnable = TEXT

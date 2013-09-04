@@ -208,7 +208,7 @@ plugin.tx_browser_pi1 {
   map.openLayers.imgPath  = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/img/
   # cat=BrowserMaps - Controlling*//209;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/
   map.path.categoryIcon = uploads/media/ 
-  # cat=BrowserMaps - Controlling*//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on:
+  # cat=BrowserMaps - Controlling*//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on: ?. If you have touchscreens enabled (see section MOBILE), your selection will ignored: hover will used in any case.
   map.popup.behaviour = hover
   # cat=BrowserMaps - Controlling*/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.controlling.links = Click me!
@@ -323,6 +323,11 @@ plugin.tx_browser_pi1 {
   map.icon.listNum.categoryIconText       = 0 
   # cat=BrowserMaps - Icons/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.icon.links = Click me!
+
+  # cat=BrowserMaps - Mobile//101;        type=boolean;   label= Optimize for Touchscreens:You can navigate in your map in touchscreens, if this option is enabled. This option has the disadvantage, that you can't use the click mode for your pop ups. In enabled touchscreen mode pop ups will enabled by a hover automatically, click mode will ignored.
+  map.mobileTouchscreen = 0
+  # cat=BrowserMaps - Mobile/others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  map.mobile.links = Click me!
 
   # cat=BrowserMaps - Zoom//101;        type=boolean;   label= Zoom wheel:Enable or disable the zoom wheel.
   map.zoomWheel = 1
