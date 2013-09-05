@@ -1506,7 +1506,7 @@ plugin.tx_browser_pi1 {
                     // [STRING] table.field. Example: tx_org_headquarterscat.icons
                   field = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
                     // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
-                  stdWrap.listNum = {$plugin.tx_browser_pi1.map.icon.listNum.categoryIconMap}
+                  stdWrap.listNum = {$plugin.tx_browser_pi1.map.icon.listNum.categoryIconMapSingle}
                 }
               }
             }
