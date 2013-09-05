@@ -51,6 +51,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   If you need a latitude and a longitude at 0,0
 </h2>
 <p>
+  Please configure<br />
   <pre style="color:blue;font-size:.8em;">
   plugin.tx_browser_pi1 {
     views.list.<i>x</i>.navigation.map.configuration.00Coordinates.dontHandle = 0
