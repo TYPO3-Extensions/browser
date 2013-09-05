@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.5.6
+* @version 4.5.15
 * @since 3.9.6
 */
 
@@ -3335,7 +3335,7 @@ class tx_browser_pi1_map
  * renderMapRouteMarkerByPathLocalObligate( )  : Adds a marker for each path
  *
  * @return	array
- * @version 4.5.8
+ * @version 4.5.15
  * @since   4.5.7
  * 
  * @internal    #47630, #i0013
@@ -3345,6 +3345,7 @@ class tx_browser_pi1_map
     $row = array( );
     
       // short variables
+    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
     $confMapper   = $this->confMap['configuration.']['route.']['markerMapper.'];
     $tablePath    = $confMapper['tables.']['local.']['path'];
     $tableMarker  = $confMapper['tables.']['local.']['marker'];
@@ -3419,6 +3420,11 @@ class tx_browser_pi1_map
       }
         // DIE  : one off the values is empty
       
+      if( ! $dontHandle00 )
+      {
+        continue;
+      }
+
       $row[ $markerTableField ] = $elements[ $pathTableField ];
 
       switch( true )
