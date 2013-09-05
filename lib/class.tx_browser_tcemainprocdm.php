@@ -645,10 +645,12 @@ class tx_browser_tcemainprocdm
         $this->geoupdateSetPrompt( $prompt, $fieldArray );
           // Prompt to the current record
 
+        $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGeodataEnableByExtmngr');
+        $this->log( $prompt, 1 );
         $prompt = 'OK: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][geoupdate][update] is set to false. '
                 . 'Geodata won\'t updated.'
                 ;
-        $this->log( $prompt, 0 );
+        $this->log( $prompt, -1 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
@@ -658,7 +660,7 @@ class tx_browser_tcemainprocdm
                 . 'but the element [address] and/or [geodata] isn\'t configured! '
                 . 'Please take care off a proper TCA configuration!'
                 ;
-        $this->log( $prompt, 5 );
+        $this->log( $prompt, 4 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;

@@ -154,6 +154,7 @@
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
       ]]></label>
       <label index="promptGeodataDisabledByExttablesphp">Geoupdate is disabled by ext_tables.php</label>
+      <label index="promptGeodataEnableByExtmngr">Geoupdate is disabled. You can enable it in the extension manager of the current database.</label>
       <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
       <label index="promptGeodataRemoved">latitude and longitude are removed!</label>
       <label index="promptGeodataUpdate">latitude and longitude are updated!</label>
@@ -306,6 +307,7 @@
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
       ]]></label>
       <label index="promptGeodataDisabledByExttablesphp">Geoupdate ist in der Datei ext_tables.php deaktiviert.</label>
+      <label index="promptGeodataEnableByExtmngr">Geoupdate ist abgeschaltet. Du kannst es im Extension Manager dieser Datenbank aktivieren.</label>
       <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
       <label index="promptGeodataRemoved">Breiten- und Längengrad wurden entfernt!</label>
       <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert!</label>
