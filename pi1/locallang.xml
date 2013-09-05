@@ -68,18 +68,23 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 </h2>
 <ul>
   <li>
-    The marker (POI) is without an address.
+    The marker (POI) is without any category
   </li>
   <li>
     The marker (POI) is without latitude or / and without longitude.
   </li>
 </ul>
 <h2>
-  Your job:
+  Please check your marker (POI)
 </h2>
-<p>
-  Please check your marker (POI): Do they have a one category at least? Do they have a latitude and a longitude?
-</p>
+<ul>
+  <li>
+    Do they have one category at least?
+  </li>
+  <li>
+     Do they have a latitude and a longitude?
+  </li>
+</ul>
 <h2>
   Further information
 </h2>
@@ -318,16 +323,16 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   </li>
 </ul>
 <h2>
-  Das kannst Du tun
+  Pr&uuml;fe Deine Markierungen (POI)
 </h2>
-<p>
-  Pr&uuml;fe Deine Markierungen (POI) auf zugeordnete Kategorien.
-  Jede Markierung (POI) muss mindestens einer Kategorie zugeordnet sein.
-</p>
-<p>
-  &Uuml;berpr&uuml;fe die Geokodierung Deiner Markierungen (POI). 
-  Jeder Markierung (POI) m&uuml;ssen ein Breiten- und ein L&auml;ngengrad zugeordnet sein.
-</p>
+<ul>
+  <li>
+    Ist jede Markierung (POI) mindestens einer Kategorie zugeordnet?
+  </li>
+  <li>
+    Hat jede Markierung (POI) einen Breiten- und einen L&auml;ngengrad?
+  </li>
+</ul>
 <h2>
   Weitere Infos
 </h2>
