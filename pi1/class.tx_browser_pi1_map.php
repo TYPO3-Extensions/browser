@@ -3420,17 +3420,17 @@ class tx_browser_pi1_map
       }
         // DIE  : one off the values is empty
       
-      if( ! $dontHandle00 )
-      {
-        continue;
-      }
-
       $row[ $markerTableField ] = $elements[ $pathTableField ];
 
       switch( true )
       {
         case( $key == 'lat' ):
         case( $key == 'lon' ):
+          if( ! $dontHandle00 )
+          {
+            $row[ $key ] = $elements[ $pathTableField ];
+            continue;
+          }
           if( empty( $elements[ $pathTableField ] ) )
           {
             $browserPlugin  = $this->pObj->cObj->data['header'] . ' with uid #' . $this->pObj->cObj->data['uid'] . ' at page #' . $this->pObj->cObj->data['pid'];
