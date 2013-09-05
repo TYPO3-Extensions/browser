@@ -25,7 +25,7 @@ plugin.tx_browser_pi1 {
                   20 {
                     if {
                       value     = GoogleMaps,Open Street Map
-                      isInList  = {$plugin.tx_browser_pi1.map.provider}
+                      isInList  = {$plugin.tx_browser_pi1.map.controlling.provider}
                     }
                       // OpenLayers
                     10 = TEXT
@@ -41,7 +41,7 @@ plugin.tx_browser_pi1 {
                       10 = TEXT
                       10 {
                         if {
-                          value   = {$plugin.tx_browser_pi1.map.provider}
+                          value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                           equals  = GoogleMaps
                         }
                         value (
@@ -52,7 +52,7 @@ plugin.tx_browser_pi1 {
                       20 = TEXT
                       20 {
                         if {
-                          value   = {$plugin.tx_browser_pi1.map.provider}
+                          value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                           equals  = Open Street Map
                         }
                         value (
@@ -167,7 +167,7 @@ plugin.tx_browser_pi1 {
                 10 = TEXT
                 10 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = GoogleMaps
                   }
                   value = ['ROADMAP']
@@ -176,7 +176,7 @@ plugin.tx_browser_pi1 {
                 20 = TEXT
                 20 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = Open Street Map
                   }
                   value = ['Mapnik']
@@ -189,7 +189,7 @@ plugin.tx_browser_pi1 {
                 10 = TEXT
                 10 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = GoogleMaps
                   }
                   value = 'GMap'
@@ -198,7 +198,7 @@ plugin.tx_browser_pi1 {
                 20 = TEXT
                 20 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = Open Street Map
                   }
                   value = 'OSM'

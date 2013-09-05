@@ -4,6 +4,21 @@
 4.5.15
   13-09-04
   Improvement
+  * #i0027: Renamin Constant Marker
+            * map.enabled                   -> map.controlling.enabled
+            * map.provider                  -> map.controlling.provider
+            * map.openLayers.css            -> map.design.css
+            * map.height                    -> map.design.height
+            * map.openLayers.imgPath        -> map.design.imgPath
+            * map.path.categoryIcon         -> map.design.path.categoryIcon
+            * map.width                     -> map.design.width
+            * map.controls.debugging        -> map.openlayers.controls.debugging
+            * map.controls.default          -> map.openlayers.controls.default
+            * map.modules.debugging         -> map.openlayers.modules.debugging
+            * map.modules.default           -> map.openlayers.modules.default
+            * map.modules.routes.debugging  -> map.openlayers.modules.routes.debugging
+            * map.modules.routes.default    -> map.openlayers.modules.routes.default
+            * map.popup.behaviour           -> map.openlayers.popup.behaviour
   * #51477: BrowserMaps: mobile navigation
             displayList.master_templates.map.descriptionWiLinkToSingle.30 moved from TEXT to COA
             Effected files:

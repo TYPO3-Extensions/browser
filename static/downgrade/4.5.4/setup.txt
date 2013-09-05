@@ -344,9 +344,9 @@ plugin.tx_browser_pi1 {
 
     map {
         // [BOOLEAN] 0 (default), 1
-      enabled  = {$plugin.tx_browser_pi1.map.enabled}
+      enabled  = {$plugin.tx_browser_pi1.map.controlling.enabled}
         // [STRING] GoogleMaps or Open Street Map
-      provider  = {$plugin.tx_browser_pi1.map.provider}
+      provider  = {$plugin.tx_browser_pi1.map.controlling.provider}
       template {
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default_1.1.01.tmpl
@@ -843,14 +843,14 @@ plugin.tx_browser_pi1 {
                   10 {
                     if {
                       value     = GoogleMaps,Open Street Map
-                      isInList  = {$plugin.tx_browser_pi1.map.provider}
+                      isInList  = {$plugin.tx_browser_pi1.map.controlling.provider}
                       negate  = 1
                     }
                     value (
                       <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
                         <h1>TypoScript Error</h1>
                         <p>
-                          '{$plugin.tx_browser_pi1.map.provider}' isn't any element of the list: GoogleMaps,Open Street Map
+                          '{$plugin.tx_browser_pi1.map.controlling.provider}' isn't any element of the list: GoogleMaps,Open Street Map
                         </p>
                         <p>
                           Browser - TYPO3 without PHP
@@ -861,7 +861,7 @@ plugin.tx_browser_pi1 {
                       <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
                         <h1>TypoScript Fehler</h1>
                         <p>
-                          '{$plugin.tx_browser_pi1.map.provider}' ist kein Element der Liste: GoogleMaps,Open Street Map
+                          '{$plugin.tx_browser_pi1.map.controlling.provider}' ist kein Element der Liste: GoogleMaps,Open Street Map
                         </p>
                         <p>
                           Browser - TYPO3 ohne PHP
@@ -874,7 +874,7 @@ plugin.tx_browser_pi1 {
                   20 {
                     if {
                       value     = GoogleMaps,Open Street Map
-                      isInList  = {$plugin.tx_browser_pi1.map.provider}
+                      isInList  = {$plugin.tx_browser_pi1.map.controlling.provider}
                     }
                       // OpenLayers
                     10 = TEXT
@@ -890,7 +890,7 @@ plugin.tx_browser_pi1 {
                       10 = TEXT
                       10 {
                         if {
-                          value   = {$plugin.tx_browser_pi1.map.provider}
+                          value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                           equals  = GoogleMaps
                         }
                         value (
@@ -901,7 +901,7 @@ plugin.tx_browser_pi1 {
                       20 = TEXT
                       20 {
                         if {
-                          value   = {$plugin.tx_browser_pi1.map.provider}
+                          value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                           equals  = Open Street Map
                         }
                         value (
@@ -997,7 +997,7 @@ plugin.tx_browser_pi1 {
               OpenLayersImgPath = TEXT
               OpenLayersImgPath {
                   // [STRING] Relative path. Be aware of the ending slash!
-                value = "{$plugin.tx_browser_pi1.map.openLayers.imgPath}"
+                value = "{$plugin.tx_browser_pi1.map.design.imgPath}"
               }
                 // Default center of the map
               oxMapConfigCenter = TEXT
@@ -1026,7 +1026,7 @@ plugin.tx_browser_pi1 {
                     isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
                   }
                     // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
-                  value = {$plugin.tx_browser_pi1.map.controls.default}
+                  value = {$plugin.tx_browser_pi1.map.openlayers.controls.default}
                 }
                   // Debug mode on
                 20 = TEXT
@@ -1035,14 +1035,14 @@ plugin.tx_browser_pi1 {
                     isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
                   }
                     // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
-                  value = {$plugin.tx_browser_pi1.map.controls.debugging}
+                  value = {$plugin.tx_browser_pi1.map.openlayers.controls.debugging}
                 }
               }
                 // Map marker event type
               oxMapConfigMapMarkerEvent = TEXT
               oxMapConfigMapMarkerEvent {
                   // [STRING] customized marker events
-                value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
+                value = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
               }
                 // Map zoom wheel
               oxMapConfigZoomWheelEnable = TEXT
@@ -1060,7 +1060,7 @@ plugin.tx_browser_pi1 {
                     isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
                   }
                     // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
-                  value = {$plugin.tx_browser_pi1.map.modules.default}
+                  value = {$plugin.tx_browser_pi1.map.openlayers.modules.default}
                 }
                   // Debug mode on
                 20 = TEXT
@@ -1069,7 +1069,7 @@ plugin.tx_browser_pi1 {
                     isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
                   }
                     // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
-                  value = {$plugin.tx_browser_pi1.map.modules.debugging}
+                  value = {$plugin.tx_browser_pi1.map.openlayers.modules.debugging}
                 }
               }
                 // Map zoom level
@@ -1091,7 +1091,7 @@ plugin.tx_browser_pi1 {
                 10 = TEXT
                 10 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = GoogleMaps
                   }
                   value = ['ROADMAP']
@@ -1100,7 +1100,7 @@ plugin.tx_browser_pi1 {
                 20 = TEXT
                 20 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = Open Street Map
                   }
                   value = ['Mapnik']
@@ -1113,7 +1113,7 @@ plugin.tx_browser_pi1 {
                 10 = TEXT
                 10 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = GoogleMaps
                   }
                   value = 'GMap'
@@ -1122,7 +1122,7 @@ plugin.tx_browser_pi1 {
                 20 = TEXT
                 20 {
                   if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    value   = {$plugin.tx_browser_pi1.map.controlling.provider}
                     equals  = Open Street Map
                   }
                   value = 'OSM'
@@ -1138,12 +1138,12 @@ plugin.tx_browser_pi1 {
             css_mapHeight = TEXT
             css_mapHeight {
                 // [PIXEL] Default: 400px
-              value = {$plugin.tx_browser_pi1.map.height}px;
+              value = {$plugin.tx_browser_pi1.map.design.height}px;
             }
             css_mapWidth = TEXT
             css_mapWidth {
                 // [PIXEL] Default: 600px
-              value = {$plugin.tx_browser_pi1.map.width}px;
+              value = {$plugin.tx_browser_pi1.map.design.width}px;
             }
           }
           system {
@@ -1158,7 +1158,7 @@ plugin.tx_browser_pi1 {
             categoryIconLegend {
               file {
                   // [STRING] Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
-                import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
+                import = {$plugin.tx_browser_pi1.map.design.path.categoryIcon}
                 import {
                     // [STRING] table.field. Example: tx_org_headquarterscat.icons
                   field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
@@ -1174,7 +1174,7 @@ plugin.tx_browser_pi1 {
               10 = TEXT
               10 {
                   // [STRING] Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
-                value = {$plugin.tx_browser_pi1.map.path.categoryIcon}
+                value = {$plugin.tx_browser_pi1.map.design.path.categoryIcon}
               }
                 // File
               20 = TEXT
@@ -2938,7 +2938,7 @@ plugin.tx_browser_pi1 {
           30 = TEXT
           30 {
             if {
-              value   = '{$plugin.tx_browser_pi1.map.popup.behaviour}' 
+              value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}' 
               equals  = 'click'
             }
             value = In detail &raquo;
