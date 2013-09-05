@@ -1451,12 +1451,63 @@ plugin.tx_browser_pi1 {
                 value = {$plugin.tx_browser_pi1.map.path.categoryIcon}
               }
                 // File
-              20 = TEXT
-              20 {
-                  // [STRING] table.field. Example: tx_org_headquarterscat.icons
-                field = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
-                  // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
-                stdWrap.listNum = {$plugin.tx_browser_pi1.map.icon.listNum.categoryIconMap}
+              10 = COA
+              10 {
+                  // list view
+                10 = TEXT
+                10 {
+                    // if.isFalse markerUid or routeUid
+                  if =
+                  if {
+                    isTrue {
+                      cObject = COA
+                      cObject {
+                          // markerUid
+                        10 = TEXT
+                        10 {
+                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                        }
+                          // routeUid
+                        20 = TEXT
+                        20 {
+                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.path}
+                        }
+                      }
+                    }
+                    negate = 1
+                  }
+                    // [STRING] table.field. Example: tx_org_headquarterscat.icons
+                  field = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
+                    // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                  stdWrap.listNum = {$plugin.tx_browser_pi1.map.icon.listNum.categoryIconMap}
+                }
+                  // single view
+                20 = TEXT
+                20 {
+                    // if.isTrue markerUid or routeUid
+                  if =
+                  if {
+                    isTrue {
+                      cObject = COA
+                      cObject {
+                          // markerUid
+                        10 = TEXT
+                        10 {
+                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                        }
+                          // routeUid
+                        20 = TEXT
+                        20 {
+                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.path}
+                        }
+                      }
+                    }
+                  }
+                    // [STRING] table.field. Example: tx_org_headquarterscat.icons
+                  field = {$plugin.tx_browser_pi1.map.marker.field.categoryIcon}
+                    // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                  stdWrap.listNum = {$plugin.tx_browser_pi1.map.icon.listNum.categoryIconMap}
+                }
               }
             }
               // [INTEGER] x-offset of the current icon in pixel
