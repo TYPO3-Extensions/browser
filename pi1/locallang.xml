@@ -41,9 +41,26 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 <p>
   The category of one path is without longitude or latitude.
 </p>
+<h2>
+  Please check your paths
+</h2>
 <p>
-  Please check your paths and their category longitudes and latitudes.
+  Has every path and their categories proper longitudes and latitudes?
 </p>
+<h2>
+  If you need a latitude and a longitude at 0,0
+</h2>
+<p>
+  <pre style="color:blue;font-size:.8em;">
+  plugin.tx_browser_pi1 {
+    views.list.<i>x</i>.navigation.map.configuration.00Coordinates.dontHandle = 0
+  }
+  <pre style="color:blue;">
+  where 'x' is the id of your view.
+</p>
+<h2>
+  Further Information
+</h2>
 <p>
   Browser plugin: %pluginTitle% with uid #%pluginUid% at page with id #%pluginPid%
 </p>
