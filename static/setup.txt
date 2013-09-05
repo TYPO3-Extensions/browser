@@ -1465,12 +1465,12 @@ plugin.tx_browser_pi1 {
                           // markerUid
                         10 = TEXT
                         10 {
-                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
                         }
                           // routeUid
                         20 = TEXT
                         20 {
-                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.path}
+                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
                         }
                       }
                     }
@@ -1493,12 +1493,12 @@ plugin.tx_browser_pi1 {
                           // markerUid
                         10 = TEXT
                         10 {
-                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
                         }
                           // routeUid
                         20 = TEXT
                         20 {
-                          data = GP:tx_browser_pi1|{plugin.tx_browser_pi1.map.aliases.showUid.path}
+                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
                         }
                       }
                     }
