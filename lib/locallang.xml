@@ -310,7 +310,7 @@
       <label index="promptGeodataEnableByExtmngr">Geoupdate ist abgeschaltet. Du kannst es im Extension Manager dieser Datenbank aktivieren.</label>
       <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
       <label index="promptGeodataRemoved">Breiten- und Längengrad wurden entfernt!</label>
-      <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert! Beachte bitte die Lizenzbedingungen der hierf&uuml;r genutzten Google API.</label>
+      <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert! Beachte bitte die Lizenzbedingungen der hierfür genutzten Google API.</label>
     </languageKey>
   </data>
 </T3locallang>
