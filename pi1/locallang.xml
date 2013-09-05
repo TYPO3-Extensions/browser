@@ -70,9 +70,6 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   <li>
     The marker (POI) is without any category
   </li>
-  <li>
-    The marker (POI) is without latitude or / and without longitude.
-  </li>
 </ul>
 <h2>
   Please check your marker (POI)
@@ -80,9 +77,6 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 <ul>
   <li>
     Do they have one category at least?
-  </li>
-  <li>
-     Do they have a latitude and a longitude?
   </li>
 </ul>
 <h2>
@@ -318,9 +312,6 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   <li>
     Der Markierung (POI) fehlt eine Kategorie.
   </li>
-  <li>
-    Der Markierung (POI) fehlen der Breiten- und / oder der L&auml;ngengrad.
-  </li>
 </ul>
 <h2>
   Pr&uuml;fe Deine Markierungen (POI)
@@ -328,9 +319,6 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 <ul>
   <li>
     Ist jede Markierung (POI) mindestens einer Kategorie zugeordnet?
-  </li>
-  <li>
-    Hat jede Markierung (POI) einen Breiten- und einen L&auml;ngengrad?
   </li>
 </ul>
 <h2>
