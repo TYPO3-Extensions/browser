@@ -671,7 +671,7 @@ plugin.tx_browser_pi1 {
         }
         00Coordinates {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
-          dontHandle = 1
+          dontHandle = {$plugin.tx_browser_pi1.map.controlling.dontHandle00Coordinates}
         }
           // markerMapper, tables
         route =
