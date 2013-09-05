@@ -55,7 +55,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   plugin.tx_browser_pi1 {
     views.list.<i>x</i>.navigation.map.configuration.00Coordinates.dontHandle = 0
   }
-  <pre style="color:blue;">
+  </pre>
   where 'x' is the id of your view.
 </p>
 <h2>
