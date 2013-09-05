@@ -157,7 +157,7 @@
       <label index="promptGeodataEnableByExtmngr">Geoupdate is disabled. You can enable it in the extension manager of the current database.</label>
       <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
       <label index="promptGeodataRemoved">latitude and longitude are removed!</label>
-      <label index="promptGeodataUpdate">latitude and longitude are updated!</label>
+      <label index="promptGeodataUpdate">latitude and longitude are updated! Please take care of the Google API licence.</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
@@ -310,7 +310,7 @@
       <label index="promptGeodataEnableByExtmngr">Geoupdate ist abgeschaltet. Du kannst es im Extension Manager dieser Datenbank aktivieren.</label>
       <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
       <label index="promptGeodataRemoved">Breiten- und Längengrad wurden entfernt!</label>
-      <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert!</label>
+      <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert! Beachte bitte die Lizenzbedingungen der hierf&uuml;r genutzten Google API.</label>
     </languageKey>
   </data>
 </T3locallang>
