@@ -1451,8 +1451,8 @@ plugin.tx_browser_pi1 {
                 value = {$plugin.tx_browser_pi1.map.path.categoryIcon}
               }
                 // File
-              10 = COA
-              10 {
+              20 = COA
+              20 {
                   // list view
                 10 = TEXT
                 10 {
