@@ -306,9 +306,26 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 <p>
   Bei einem Pfad fehlen L&auml;ngengrad und/oder Breitengrad f&uuml;r das Kategorie-Symbol.
 </p>
+<h2>
+  Pr&uuml;fe bitte Deine Pfade
+</h2>
 <p>
-  Pr&uuml;fe bitte die Pfade auf L&auml;ngengrad und/oder Breitengrad des Kategorie-Symbols.
+  Hat jeder Pfad einen korrekten Breiten- und Längengrad?
 </p>
+<h2>
+  Brauchst Du ein Pfad-Icon mit Breiten- und Längengrad 0,0?
+</h2>
+<p>
+  Bitte konfiguriere im Constant Editor
+</p>
+<ul>
+  <li>
+    Category: [BROWSERMAPS – CONTROLLING*] > Empty coordinates?
+  </li>
+</ul>
+<h2>
+  Weitere Infos
+</h2>
 <p>
   Browser-Plugin: %pluginTitle% mit der UID #%pluginUid% auf der Seite mit der ID #%pluginPid%
 </p>

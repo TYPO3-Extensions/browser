@@ -1995,7 +1995,7 @@ class tx_browser_pi1_map
         // Get the longitude and latitude
       $lon = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
       $lat = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
-//$this->pObj->dev_var_dump( $lat, $lon );
+$this->pObj->dev_var_dump( $lat, $lon );
         // SWITCH logitude and latitude
       switch( true )
       {

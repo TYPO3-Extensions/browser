@@ -335,7 +335,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - OpenLayers//107;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on: ?. If you have touchscreens enabled (see section MOBILE), your selection will ignored: hover will used in any case.
   map.openlayers.popup.behaviour = hover
   # cat=BrowserMaps - OpenLayers/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  maps.openlayers.controlling.links = Click me!
+  map.openlayers.controlling.links = Click me!
 
   # cat=BrowserMaps - Zoom//101;        type=boolean;   label= Zoom wheel:Enable or disable the zoom wheel.
   map.zoomWheel = 1
