@@ -2874,10 +2874,10 @@ $this->pObj->dev_var_dump( $this->arrCategories['icons'], $catIconMap );
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 
-//if( $item == 'description' && $value )
-//{
-//  $this->pObj->dev_var_dump( $value, $coa_conf );    
-//}
+if( $item == 'categoryIconMap' )
+{
+  $this->pObj->dev_var_dump( $value, $coa_conf );    
+}
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
     return $value;
