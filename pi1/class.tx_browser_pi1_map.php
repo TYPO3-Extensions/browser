@@ -2055,7 +2055,7 @@ class tx_browser_pi1_map
       {
         $catIconMap = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
       }
-//$this->pObj->dev_var_dump( $catIconMap );
+$this->pObj->dev_var_dump( $this->arrCategories['icons'], $catIconMap );
       $iconKey     = $arrCategoriesFlipped[ $catTitle ];
       $iconOffsetX = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
       $iconOffsetY = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
@@ -2555,12 +2555,17 @@ class tx_browser_pi1_map
       return $arrIcon;
     }
       // RETURN : Any own icon
+$this->pObj->dev_var_dump( $mapMarker[ 'catIconMap' ] );
+    if( empty( $mapMarker[ 'catIconMap' ] ) )
+    {
+      $prompt = 'Undefined error at ' . __METHOD__ . ' (' . __LINE__ . ')';
+      die( $prompt );
+    }
       
       // Database category has its own icon
       // Path to the root
     $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
     list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
-$this->pObj->dev_var_dump( $rootPath, $mapMarker[ 'catIconMap' ] );
     $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
     $arrIcon[ ] = $width;
     $arrIcon[ ] = $height;
