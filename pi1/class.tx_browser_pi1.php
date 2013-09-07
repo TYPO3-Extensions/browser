@@ -1390,7 +1390,7 @@ class tx_browser_pi1 extends tslib_pibase {
         // Move content to a string
       $arg_list[$i] = var_export( $arg_list[$i], true );
         // Concatenate method, line, type and content. Wrap it with <pre>
-      $prompt       = '<pre style="background:white;>type: ' . $type . PHP_EOL .
+      $prompt       = '<pre style="background:white;">type: ' . $type . PHP_EOL .
                       $arg_list[$i] . PHP_EOL .
                       '</pre>' . PHP_EOL;
         // Concatenate method, line, type and content. Wrap it with <pre>
