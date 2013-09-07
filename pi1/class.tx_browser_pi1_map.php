@@ -1984,7 +1984,7 @@ class tx_browser_pi1_map
 
       // Get category properties
     $catValues  = $this->renderMapMarkerPointsPointProperties( $row );
-//$this->pObj->dev_var_dump( $row, $catValues, $arrLabels );
+$this->pObj->dev_var_dump( $row, $catValues, $arrLabels );
 
       // FOREACH category title
     foreach( $catValues[ 'catTitles' ] as $key => $catTitle )
@@ -1995,7 +1995,7 @@ class tx_browser_pi1_map
         // Get the longitude and latitude
       $lon = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
       $lat = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
-$this->pObj->dev_var_dump( 'lat: ' . $lat . ', lon: ' . $lon );
+//$this->pObj->dev_var_dump( 'lat: ' . $lat . ', lon: ' . $lon );
         // SWITCH logitude and latitude
       switch( true )
       {
