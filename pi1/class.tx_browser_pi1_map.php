@@ -2054,8 +2054,8 @@ class tx_browser_pi1_map
       if( isset( $this->arrCategories['icons'] ) )
       {
         $catIconMap = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
-      }
 $this->pObj->dev_var_dump( $this->arrCategories['icons'], $catIconMap );
+      }
       $iconKey     = $arrCategoriesFlipped[ $catTitle ];
       $iconOffsetX = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
       $iconOffsetY = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
@@ -2555,7 +2555,7 @@ $this->pObj->dev_var_dump( $this->arrCategories['icons'], $catIconMap );
       return $arrIcon;
     }
       // RETURN : Any own icon
-$this->pObj->dev_var_dump( $mapMarker[ 'catIconMap' ] );
+//$this->pObj->dev_var_dump( $mapMarker[ 'catIconMap' ] );
     if( empty( $mapMarker[ 'catIconMap' ] ) )
     {
       $prompt = 'Undefined error at ' . __METHOD__ . ' (' . __LINE__ . ')';
