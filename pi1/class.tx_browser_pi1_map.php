@@ -2157,9 +2157,9 @@ class tx_browser_pi1_map
 //$this->pObj->dev_var_dump( $key, $catTitle, $localUid, $markerCounter );
       $mapMarkers[ ] = $mapMarker;
         // Save each longitude
-      $lons[] = ( double ) $mapMarker['lon'];
+      $lons[] = $mapMarker['lon'];
         // Save each latitude
-      $lats[]  = ( double ) $mapMarker['lat'];
+      $lats[]  = $mapMarker['lat'];
 
         // Remove the current row from cObj->data
       $this->renderMapMarkerPointsPointCobjDataRemove( $row, $arrLabels );
@@ -2560,6 +2560,7 @@ class tx_browser_pi1_map
       // Path to the root
     $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
     list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
+$this->pObj->dev_var_dump( $rootPath, $mapMarker[ 'catIconMap' ] );
     $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
     $arrIcon[ ] = $width;
     $arrIcon[ ] = $height;
