@@ -2096,7 +2096,7 @@ table     : ' . $this->browser_table;
         break;
     }
     
-    $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
+//    $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
     
       // RETURN : Don't prompt to the backend
     if( $status < 0 )
