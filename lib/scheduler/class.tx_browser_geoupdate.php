@@ -794,7 +794,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         die( $prompt );
         break;
     }
-    $this->log( $prompt, -1 );
+    $this->log( $prompt, 1 );
 
     switch( $this->browser_testMode )
     {
