@@ -12,7 +12,15 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Browser - TYPO3 without PHP',
-	'description' => 'Browser - TYPO3 without PHP. Develop your database 8 times faster! You need one line TypoScript for a view with filters, a search form and a page browser among others. SEO, Search Engine Optimisation, is included. DRS supports the TypoScript configuration. Best documented.',
+	'description' =>    'Publish your data in list and single views and in maps! '
+                          . 'You don\'t need neither any own plugin nor any line PHP code. ' 
+                          . 'The Browser - TYPO3 without PHP - provides an index browser (a-z), '
+                          . 'a page browser, a record browser, a search form, filters, category menus, AJAX, '
+                          . 'GoogleMaps and OpenStreetMap by default. Your data will be detected as objects, '
+                          . 'i.e. images will be wrapped automatically. SEO - Search Engine Optimization - is supported. '
+                          . 'The Browser enables the development of TYPO3-Extensions without any line PHP. ' 
+                          . 'TYPO3 developers and TYPO3 integrators  will be eight times faster! ' 
+                          . 'The browser is very suitable for database development.',
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '4.6.0',
