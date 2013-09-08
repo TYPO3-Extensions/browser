@@ -660,6 +660,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         $prompt = 'WARN: $GLOBALS[TCA][' . $this->browser_table . '][ctrl][tx_browser][geoupdate][update] is set to false. '
                 . 'Geodata won\'t updated.'
                 ;
+        $this->log( $prompt, 3 );
           // DRS
         if( $this->drsModeInfo )
         {
@@ -681,6 +682,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
                 . 'but the element [address] and/or [geodata] isn\'t configured! '
                 . 'Please take care off a proper TCA configuration!'
                 ;
+        $this->log( $prompt, 4 );
           // DRS
         if( $this->drsModeInfo )
         {
@@ -721,6 +723,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
 
       // Prompt
     $prompt = 'ERROR: $GLOBALS[TCA][' . $this->browser_table . '] isn\'t set.';
+    $this->log( $prompt, 4 );
 
       // DRS
     if( $this->drsModeInfo )
@@ -1995,7 +1998,7 @@ table     : ' . $this->browser_table;
  * log( )
  *
  * @param	string		$prompt : prompt
- * @param	integer		$status : -1 = no flash message, 0 = notice, 1 = info, 3 = OK, 4 = warn, 5 = error
+ * @param	integer		$status : -1 = no flash message, 0 = notice, 1 = info, 2 = OK, 3 = warn, 4 = error
  * @param	integer		$uid    : uid of the current record
  * @param	integer		$pid    : pid of the current record
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate

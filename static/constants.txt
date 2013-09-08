@@ -182,7 +182,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Aliases/others/999;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.aliases.links = Click me!
 
-  # cat=BrowserMaps - Controlling*//101;             type=options[disabled,Map,Map +Routes];   label= Enable the map:Map:Map with marker only. Map +Routes: Map with routes and marker.
+  # cat=BrowserMaps - Controlling*//101;             type=options[disabled,Map,Map +Routes];   label= Enable the map:Map: Map with marker only. Map +Routes: Map with routes and marker.
   map.controlling.enabled = disabled
   # cat=BrowserMaps - Controlling*//102;             type=options[GoogleMaps,Open Street Map];  label= Map Provider: GoogleMaps or OpenStreetMap. Please take care of the licences! Copyright must be visible!
   map.controlling.provider = Open Street Map
@@ -332,7 +332,7 @@ plugin.tx_browser_pi1 {
   map.openlayers.modules.debugging   = 'Error,OSM.Base,OSM.Filter'
   # cat=BrowserMaps - OpenLayers//106;             type=string;    label= Map +Routes modules (debugging): Comma seperated list of map modules (quoted). OSM.Routes must be the first element! Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array.
   map.openlayers.modules.routes.debugging   = 'Error,OSM.Route,OSM.Base,OSM.Filter'
-  # cat=BrowserMaps - OpenLayers//107;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on: ?. If you have touchscreens enabled (see section MOBILE), your selection will ignored: hover will used in any case.
+  # cat=BrowserMaps - OpenLayers//107;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on: display a point without any effect. If you have touchscreens enabled (see section MOBILE), your selection will ignored: hover will used in any case.
   map.openlayers.popup.behaviour = hover
   # cat=BrowserMaps - OpenLayers/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.openlayers.controlling.links = Click me!
