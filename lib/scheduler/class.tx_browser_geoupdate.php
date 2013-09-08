@@ -674,7 +674,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
                   . __METHOD__ . ' (' . __LINE__ . ')';
         $this->drsMailToAdmin( $subject, $body, 'warn' );
           // E-mail to admin
-        return false;
+        return true;
         break;
       case( empty( $address ) ):
       case( empty( $geodata ) ):
@@ -2015,30 +2015,14 @@ table     : ' . $this->browser_table;
       $table = $table . ':' . $uid;
     }
 
-    $prompt = '[tx_browser (' . $table . ')] ' . $prompt . PHP_EOL;
-
-    switch( $status ) 
-    {
-      case( 3 ):
-        $logStatus = 1;
-        break;
-      case( 4 ):
-        $logStatus = 2;
-        break;
-      case( -1 ):
-      case( 0 ):
-      case( 1 ):
-      case( 2 ):
-      default:
-        $logStatus = 0;
-        break;
-    }
+    $prompt = $prompt . PHP_EOL;
 
     $type       = 4;        // denotes which module that has submitted the entry. This is the current list:  1=tce_db; 2=tce_file; 3=system (eg. sys_history save); 4=modules; 254=Personal settings changed; 255=login / out action: 1=login, 2=logout, 3=failed login (+ errorcode 3), 4=failure_warning_email sent
     //$action     = 0;        // Action number: 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
     //$status      = 0;        // flag. 0 = message, 1 = error (user problem), 2 = System Error (which should not happen), 3 = security notice (admin)
     $details_nr = -1;       // The message number. Specific for each $type and $action. in the future this will make it possible to translate errormessages to other languages
-    $details    = $prompt;  // Default text that follows the message
+    //$details    = $prompt;  // Default text that follows the message
+    $details    = '[tx_browser (' . $table . ')] ' . '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
     $data       = array( ); // Data that follows the log. Might be used to carry special information. If an array the first 5 entries (0-4) will be sprintf'ed the details-text...
     //$table      = null;     // Special field used by tce_main.php. These ($tablename, $recuid, $recpid) holds the reference to the record which the log-entry is about. (Was used in attic status.php to update the interface.)
     $recuid     = $uid;     // Secial field used by tce_main.php. These ($tablename, $recuid, $recpid) holds the reference to the record which the log-entry is about. (Was used in attic status.php to update the interface.)
@@ -2046,10 +2030,7 @@ table     : ' . $this->browser_table;
     $event_pid  = -1;
     $NEWid      = null;
 
-    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
-
     $fmPrompt   = $prompt;
-    $logPrompt  = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
 
     //    $details_nr = -1;
     //    $data       = array( );
@@ -2082,21 +2063,21 @@ table     : ' . $this->browser_table;
         $fmPrompt   = $prompt . '<br />
                       Detailes are prompted to syslog.';
         $fmStatus = t3lib_FlashMessage::WARNING;
-        $logStatus = 0;
+        $logStatus = 1;
         break;
       case( 4 ):
         $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmPrompt   = $prompt . '<br />
                       Detailes are prompted to syslog.';
         $fmStatus = t3lib_FlashMessage::ERROR;
-        $logStatus = 0;
+        $logStatus = 2;
         break;
       default:
         $logStatus = 0;
         break;
     }
     
-//    $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
+    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
     
       // RETURN : Don't prompt to the backend
     if( $status < 0 )
