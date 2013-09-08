@@ -2048,6 +2048,65 @@ table     : ' . $this->browser_table;
 
     $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
 
+    $fmPrompt   = $prompt;
+    $logPrompt  = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
+
+    //    $details_nr = -1;
+    //    $data       = array( );
+    //    $event_pid  = null; // page id
+    //    $NEWid      = null;
+    switch( $status ) 
+    {
+      case( -1 ):
+        $fmHeader   = null;
+        $fmStatus   = null;
+        $logStatus  = 0;
+        break;
+      case( 0 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus   = t3lib_FlashMessage::NOTICE;
+        $logStatus  = 0;
+        break;
+      case( 1 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus = t3lib_FlashMessage::INFO;
+        $logStatus = 0;
+        break;
+      case( 2 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmStatus = t3lib_FlashMessage::OK;
+        $logStatus = 0;
+        break;
+      case( 3 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmPrompt   = $prompt . '<br />
+                      Detailes are prompted to syslog.';
+        $fmStatus = t3lib_FlashMessage::WARNING;
+        $logStatus = 0;
+        break;
+      case( 4 ):
+        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
+        $fmPrompt   = $prompt . '<br />
+                      Detailes are prompted to syslog.';
+        $fmStatus = t3lib_FlashMessage::ERROR;
+        $logStatus = 0;
+        break;
+      default:
+        $logStatus = 0;
+        break;
+    }
+    
+    $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
+    
+      // RETURN : Don't prompt to the backend
+    if( $status < 0 )
+    {
+      return;
+    }
+      // RETURN : Don't prompt to the backend
+
+    $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
+    t3lib_FlashMessageQueue::addMessage( $flashMessage );    
   }
 
 
