@@ -2091,9 +2091,9 @@ class tx_browser_pi1_map
                       'cat'         => $catTitleWoSpc,
                       'desc'        => $description,
                       'number'      => $number,
-                      'lon'         => $lon,
+                      'lon'         => ( double ) $lon,
                       'lat'         => ( double ) $lat,
-                      'url'         => ( double ) $url,
+                      'url'         => $url,
                       'catIconMap'  => $catIconMap,
                       'iconKey'     => $iconKey,
                       'iconOffsetX' => $iconOffsetX,
@@ -2874,10 +2874,10 @@ class tx_browser_pi1_map
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 
-if( $item == 'url' )
-{
-  $this->pObj->dev_var_dump( $value, $coa_conf );    
-}
+//if( $item == 'url' )
+//{
+//  $this->pObj->dev_var_dump( $value, $coa_conf );    
+//}
     $this->renderMapMarkerVariablesSystemItemUrl( $item, $value );
 
     return $value;
