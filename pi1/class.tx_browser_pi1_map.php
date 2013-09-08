@@ -2442,6 +2442,7 @@ class tx_browser_pi1_map
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
+$this->pObj->dev_var_dump( $jsonData );
     return $arr_return;
   }
 
@@ -2469,7 +2470,7 @@ class tx_browser_pi1_map
       'number'  => htmlspecialchars( $mapMarker['number'] ),
       'route'   => $this->renderMapMarkerPointsToJsonDataRoute( $mapMarker )
     );
-$this->pObj->dev_var_dump( $arrData );
+//$this->pObj->dev_var_dump( $arrData );
 
       // Remove elements, if their value is empty
     if( empty ( $arrData['url'] ) )
