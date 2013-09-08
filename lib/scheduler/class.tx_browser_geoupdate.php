@@ -2077,7 +2077,10 @@ table     : ' . $this->browser_table;
         break;
     }
     
-    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
+    if( $logStatus >  0 )
+    {
+      $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
+    }
     
       // RETURN : Don't prompt to the backend
     if( $status < 0 )
