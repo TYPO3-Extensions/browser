@@ -2077,17 +2077,18 @@ table     : ' . $this->browser_table;
         break;
     }
     
-    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
-    
-      // RETURN : Don't prompt to the backend
+    $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
+    t3lib_FlashMessageQueue::addMessage( $flashMessage );    
+
+      // RETURN : Don't prompt to syslog
     if( $status < 0 )
     {
       return;
     }
-      // RETURN : Don't prompt to the backend
+      // RETURN : Don't prompt to syslog
 
-    $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
-    t3lib_FlashMessageQueue::addMessage( $flashMessage );    
+    $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
+    
   }
 
 
