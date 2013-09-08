@@ -2046,7 +2046,7 @@ class tx_browser_pi1_map
 ////$this->pObj->dev_var_dump( $this->pObj->cObj->data[ $lastItem ] );
 //$this->pObj->dev_var_dump( $this->pObj->cObj->data );
       $url    = $this->renderMapMarkerVariablesSystemItem( 'url' );
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['mapLinkToSingle'], $url );
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['mapLinkToSingle'], $url );
         // Get the number
       $number = $this->renderMapMarkerVariablesSystemItem( 'number' );
 
