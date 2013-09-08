@@ -517,7 +517,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'prompt' ] ) )
     {
       $prompt = 'WARN: Geoupdate can\'t prompt to the records, because there is no prompt field configured.';
-      $this->log( $prompt, 1 );
+      $this->log( $prompt, 3 );
       return;
     }
       // RETURN : no record field for prompting configured
@@ -554,7 +554,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     if( empty( $select_fields ) )
     {
       $prompt = 'ERROR: SELECT fields are empty!';
-      $this->log( $prompt, 2 );
+      $this->log( $prompt, 4 );
       return false;
     }
       // RETURN : select fields are empty
@@ -595,11 +595,11 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     if( ! empty( $error ) )
     {
       $prompt_01 = 'ERROR: Unproper SQL query';
-      $this->log( $prompt_01, 2 );
+      $this->log( $prompt_01, 4 );
       $prompt_02 = 'query: ' . $query;
-      $this->log( $prompt_02, 1 );
+      $this->log( $prompt_02, 4 );
       $prompt_03 = 'error: ' . $error;
-      $this->log( $prompt_03, 1 );
+      $this->log( $prompt_03, 4 );
         // E-mail to admin
       $subject  = 'Failed!';
       $body     = $prompt_01 . PHP_EOL
@@ -783,10 +783,10 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
-        $prompt = 'Statistic: not updates rows because of test mode #' . $this->geoupdateStatisticData[ 'updatedTest' ];
+        $prompt = 'Statistic: not updated rows because of test mode #' . $this->geoupdateStatisticData[ 'updatedTest' ];
         break;
       case( 'disabled' ):
-        $prompt = 'Statistic: updates rows #' . $this->geoupdateStatisticData[ 'updated' ];
+        $prompt = 'Statistic: updated rows #' . $this->geoupdateStatisticData[ 'updated' ];
         break;
       default:
         $prompt = 'ERROR: browser_testMode is undefined: "' . $this->browser_testMode . '"';
@@ -1128,7 +1128,7 @@ rows
 
       // prompt to syslog
     $prompt = 'NO UPDATE: Adress fields don\'t contain any data.';
-    $this->log( $prompt, 0, $row[ 'uid' ] );
+    $this->log( $prompt, -1, $row[ 'uid' ] );
 
     $this->geoupdateStatisticData[ 'addressEmpty' ] = $this->geoupdateStatisticData[ 'addressEmpty' ]
                                                 + 1
