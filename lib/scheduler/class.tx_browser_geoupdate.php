@@ -1150,9 +1150,9 @@ rows
   private function geoupdateUpdateRowRequiredGeodata( $row )
   {
     $prompt = var_export( $row, true );
-    $this->log( $prompt, 0, $row[ 'uid' ] );
+    $this->log( $prompt, -1, $row[ 'uid' ] );
     $prompt = var_export( $this->geoupdatelabels, true );
-    $this->log( $prompt, 0, $row[ 'uid' ] );
+    $this->log( $prompt, -1, $row[ 'uid' ] );
 
       // RETURN : false, latitude or longitude contain content at least
     foreach( $this->geoupdatelabels[ 'geodata' ] as $label )
@@ -1169,7 +1169,7 @@ rows
 
         // prompt to syslog
       $prompt = 'NO UPDATE: latitude and/or longitude contain content';
-      $this->log( $prompt, 0, $row[ 'uid' ] );
+      $this->log( $prompt, -1, $row[ 'uid' ] );
         // Statistic
       $this->geoupdateStatisticData[ 'geodataNotEmpty' ]  = $this->geoupdateStatisticData[ 'geodataNotEmpty' ]
                                                       + 1
