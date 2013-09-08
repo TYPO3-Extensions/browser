@@ -1,10 +1,15 @@
   * #51494: Index-Browser: make SQL command LATIN1 configurable
 
 
+4.6.0
+  13-09-09
+  Improvement
+  * #i0028: Update the manual
+
 4.5.15
   13-09-04
   Improvement
-  * #i0027: Renamin Constant Marker
+  * #i0027: Renaming Constant Marker
             * map.enabled                   -> map.controlling.enabled
             * map.provider                  -> map.controlling.provider
             * map.openLayers.css            -> map.design.css
