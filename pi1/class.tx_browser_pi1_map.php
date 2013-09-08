@@ -2442,7 +2442,7 @@ class tx_browser_pi1_map
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
-$this->pObj->dev_var_dump( $jsonData );
+//$this->pObj->dev_var_dump( $jsonData );
     return $arr_return;
   }
 
