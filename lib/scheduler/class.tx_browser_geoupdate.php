@@ -623,7 +623,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
 //    $prompt = '[tx_browser_Geoupdate]: ' . var_export( $this->geoupdaterows, true );
-//    $this->log( $prompt );
+//    $this->log( $prompt, -1 );
 
     return true;
   }
@@ -771,15 +771,15 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
                                             ;
 
     $prompt = 'Statistic: handled rows #' . $this->geoupdateStatisticData[ 'rows' ];
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
     $prompt = 'Statistic: rows with an empty address #' . $this->geoupdateStatisticData[ 'addressEmpty' ];
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
     $prompt = 'Statistic: rows with no permission for update #' . $this->geoupdateStatisticData[ 'forbidden' ];
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
     $prompt = 'Statistic: rows with geo data #' . $this->geoupdateStatisticData[ 'geodataNotEmpty' ];
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
     $prompt = 'Statistic: errors #' . $this->geoupdateStatisticData[ 'errors' ];
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
     switch( $this->browser_testMode )
     {
       case( 'enabled' ):
@@ -794,7 +794,7 @@ class tx_browser_Geoupdate extends tx_scheduler_Task {
         die( $prompt );
         break;
     }
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
 
     switch( $this->browser_testMode )
     {
@@ -932,7 +932,7 @@ rows
         $prompt = 'OK: address is "' . $address . '"';
         break;
     }
-    $this->log( $prompt );
+    $this->log( $prompt, -1 );
       // Logging
 
     return $address;
