@@ -2081,7 +2081,7 @@ table     : ' . $this->browser_table;
     t3lib_FlashMessageQueue::addMessage( $flashMessage );    
 
       // RETURN : Don't prompt to syslog
-    if( $logStatus < 0 )
+    if( $logStatus <= 0 )
     {
       return;
     }
