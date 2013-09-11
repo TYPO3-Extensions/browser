@@ -316,9 +316,10 @@ class tx_browser_pi1_map
 //}
 
       // FOREACH row
+$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
-$this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
+//$this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
         // RETURN : field for category label is missing
         // 130530, dwildt
       switch( true )
