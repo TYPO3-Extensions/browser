@@ -438,7 +438,7 @@ class tx_browser_pi1_map
     {
       $this->arrCategories['icons']   = $catIcons;
     }
-$this->pObj->dev_var_dump( $this->arrCategories );
+//$this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
   }
 
@@ -2065,7 +2065,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       {
         $catIconMap = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
       }
-$this->pObj->dev_var_dump( $arrCategoriesFlipped, $catTitle );
+//$this->pObj->dev_var_dump( $arrCategoriesFlipped, $catTitle );
       $iconKey     = $arrCategoriesFlipped[ $catTitle ];
       $iconOffsetX = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
       $iconOffsetY = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
@@ -2307,7 +2307,7 @@ $this->pObj->dev_var_dump( $arrCategoriesFlipped, $catTitle );
         $catTitles = explode( $this->catDevider, $row[ $arrLabels[ 'catTitle' ] ] );
       }
     }
-$this->pObj->dev_var_dump( $catTitles );
+//$this->pObj->dev_var_dump( $catTitles );
 
       // #47602, 130911, dwildt, 14-
 //    else
@@ -2403,7 +2403,7 @@ $this->pObj->dev_var_dump( $catTitles );
                     'markerTable'  => $markerTable,
                     'markerUid'    => $markerUid
                   );
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
       // RETURN result
   }
@@ -2571,7 +2571,7 @@ $this->pObj->dev_var_dump( $arr_return );
     if( isset( $series[ $catTitle ][ 'icon' ] ) )
     {
       $arrIcon = $series[ $catTitle ][ 'icon' ];
-$this->pObj->dev_var_dump( $arrIcon );
+//$this->pObj->dev_var_dump( $arrIcon );
       return $arrIcon;
     }
       // RETURN  : json icon array is set
@@ -2580,7 +2580,7 @@ $this->pObj->dev_var_dump( $arrIcon );
     if( ! isset( $mapMarker[ 'catIconMap' ] ) )
     {
       $arrIcon = $catIcons[ $mapMarker[ 'iconKey' ] ];
-$this->pObj->dev_var_dump( $arrIcon );
+//$this->pObj->dev_var_dump( $arrIcon );
       return $arrIcon;
     }
       // RETURN : Any own icon
@@ -2625,7 +2625,7 @@ $this->pObj->dev_var_dump( $arrIcon );
       // IF database has a field y-offset, take calue from database
       // Database category has its own icon
     
-$this->pObj->dev_var_dump( $arrIcon );
+//$this->pObj->dev_var_dump( $arrIcon );
     return $arrIcon;
   }
 
