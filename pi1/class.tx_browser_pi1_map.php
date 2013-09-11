@@ -2060,6 +2060,7 @@ class tx_browser_pi1_map
       {
         $catIconMap = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
       }
+$this->pObj->dev_var_dump( $arrCategoriesFlipped, $catTitle );
       $iconKey     = $arrCategoriesFlipped[ $catTitle ];
       $iconOffsetX = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
       $iconOffsetY = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
