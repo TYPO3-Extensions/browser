@@ -2565,6 +2565,7 @@ $this->pObj->dev_var_dump( $arr_return );
     if( isset( $series[ $catTitle ][ 'icon' ] ) )
     {
       $arrIcon = $series[ $catTitle ][ 'icon' ];
+$this->pObj->dev_var_dump( $arrIcon );
       return $arrIcon;
     }
       // RETURN  : json icon array is set
@@ -2573,6 +2574,7 @@ $this->pObj->dev_var_dump( $arr_return );
     if( ! isset( $mapMarker[ 'catIconMap' ] ) )
     {
       $arrIcon = $catIcons[ $mapMarker[ 'iconKey' ] ];
+$this->pObj->dev_var_dump( $arrIcon );
       return $arrIcon;
     }
       // RETURN : Any own icon
@@ -2617,6 +2619,7 @@ $this->pObj->dev_var_dump( $arr_return );
       // IF database has a field y-offset, take calue from database
       // Database category has its own icon
     
+$this->pObj->dev_var_dump( $arrIcon );
     return $arrIcon;
   }
 
