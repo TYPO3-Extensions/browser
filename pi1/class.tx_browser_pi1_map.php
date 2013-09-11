@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.5.15
+* @version 4.6.1
 * @since 3.9.6
 */
 
@@ -262,7 +262,7 @@ class tx_browser_pi1_map
  * categoriesGet( ): Get the category labels from the current rows. And set it in $this->arrCategories.
  *
  * @return	array		$this->arrCategories
- * @version 4.1.7
+ * @version 4.6.1
  * @since   4.1.4
  */
   private function categoriesGet( )
@@ -2282,7 +2282,7 @@ class tx_browser_pi1_map
  * renderMapMarkerPointsPointProperties( ): Points are map marker
  *
  * @return	array
- * @version 4.5.14
+ * @version 4.6.1
  * @since   4.5.7
  */
   private function renderMapMarkerPointsPointProperties( $row )

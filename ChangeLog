@@ -1,7 +1,7 @@
-  * #51494: Index-Browser: make SQL command LATIN1 configurable
-
 4.6.1
   13-09-11
+  Feature
+  * #51494: Index-Browser: make SQL command LATIN1 configurable
   Bugfixing
   * #47602: BrowserMaps: No icons without categories
 

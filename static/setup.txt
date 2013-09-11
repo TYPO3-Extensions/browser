@@ -340,6 +340,12 @@ plugin.tx_browser_pi1 {
       }
         // [STRING] (auto || iso || utf): Manual configuring of using multibyte methods
       charset = auto
+        // Workaround for UTF8
+      workaround =
+      workaround {
+          // [BOOLEAN] Workaround for the index browser in case of trouble with UTF8: Send the SQL query 'SET NAMES latin1' before other any query.
+        latin1 = {$plugin.tx_browser_pi1.navigation.indexbrowser.workaroundLatin1}
+      }
     }
 
     map {

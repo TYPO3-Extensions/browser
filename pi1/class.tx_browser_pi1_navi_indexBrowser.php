@@ -2038,6 +2038,13 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  */
   private function sqlCharsetSet( $sqlCharset )
   {
+      // #51494, 130911, dwildt, 5+
+    $workaround = $this->conf_view['navigation.']['indexBrowser.']['workaround.']['latin1'];
+    if( ! $workaround )
+    {
+      return;
+    }
+    
     $query  = "SET NAMES " . $sqlCharset . ";";
     $GLOBALS['TYPO3_DB']->sql_query( $query );
 
