@@ -2326,6 +2326,9 @@ $this->pObj->dev_var_dump( $catTitles );
     }
       // Get category icons
       // Get category offsets
+      // #47602, 130911, dwildt, 2+
+    $catOffsetsX = array( '0' );
+    $catOffsetsY = array( '0' );
       // #42125, 121031, dwildt, 8+
     if( isset( $row[ $arrLabels[ 'catOffsetX' ] ] ) )
     {
