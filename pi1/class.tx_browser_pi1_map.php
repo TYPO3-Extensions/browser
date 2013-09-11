@@ -2285,24 +2285,36 @@ class tx_browser_pi1_map
     }
 
       // Get categories
+      // #47602, 130911, dwildt, 7+
+    $catTitles =  array
+                  ( 
+                    array
+                    ( 
+                      '0' => $this->pObj->pi_getLL( 'phrase_noMapCat' )
+                    )
+                  );
     if( isset( $row[ $arrLabels[ 'catTitle' ] ] ) )
     {
-      $catTitles = explode( $this->catDevider, $row[ $arrLabels[ 'catTitle' ] ] );
+      if( $row[ $arrLabels[ 'catTitle' ] ] )
+      {
+        $catTitles = explode( $this->catDevider, $row[ $arrLabels[ 'catTitle' ] ] );
+      }
     }
-    else
-    {
-        // 130602, dwildt, 1-
-      //$llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
-      //$catTitles = array( $keys[ 0 ] => $llNoCat );
-        // 130602, dwildt, +
-      $catTitles = array
-                    ( 
-                      array
-                      ( 
-                        '0' => $this->pObj->pi_getLL( 'phrase_noMapCat' )
-                      )
-                    );
-    }
+      // #47602, 130911, dwildt, 14-
+//    else
+//    {
+//        // 130602, dwildt, 1-
+//      //$llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
+//      //$catTitles = array( $keys[ 0 ] => $llNoCat );
+//        // 130602, dwildt, +
+//      $catTitles = array
+//                    ( 
+//                      array
+//                      ( 
+//                        '0' => $this->pObj->pi_getLL( 'phrase_noMapCat' )
+//                      )
+//                    );
+//    }
       // Get categories
 
       // Get category icons
