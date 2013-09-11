@@ -2393,6 +2393,7 @@ $this->pObj->dev_var_dump( $catTitles );
                     'markerTable'  => $markerTable,
                     'markerUid'    => $markerUid
                   );
+$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
       // RETURN result
   }
