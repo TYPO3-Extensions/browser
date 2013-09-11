@@ -316,10 +316,10 @@ class tx_browser_pi1_map
 //}
 
       // FOREACH row
-$this->pObj->dev_var_dump( $this->pObj->rows );
+//$this->pObj->dev_var_dump( $this->pObj->rows );
     foreach( $this->pObj->rows as $row )
     {
-$this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
+//$this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
         // RETURN : field for category label is missing
         // 130530, dwildt
       switch( true )
@@ -2691,15 +2691,15 @@ $this->pObj->dev_var_dump( $arr_return );
   {
     $markerArray = array( );
 
-    if( ! $this->categoriesMoreThanOne( ) )
-    {
-      if( $this->pObj->b_drs_map )
-      {
-        $prompt = 'There isn\'t more than one category. Any form with categories will rendered.';
-        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
-      }
-      return $markerArray;
-    }
+//    if( ! $this->categoriesMoreThanOne( ) )
+//    {
+//      if( $this->pObj->b_drs_map )
+//      {
+//        $prompt = 'There isn\'t more than one category. Any form with categories will rendered.';
+//        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
+//      }
+//      return $markerArray;
+//    }
 
     $tsProperty   = 'categories';
     $markerArray  =  $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
@@ -2707,6 +2707,7 @@ $this->pObj->dev_var_dump( $arr_return );
     $inputs = $this->categoriesFormInputs( );
     $markerArray[ '###FILTER_FORM###' ] = str_replace('###INPUTS###', $inputs, $markerArray[ '###FILTER_FORM###' ] );
 
+$this->pObj->dev_var_dump( $markerArray );
     return $markerArray;
   }
 
