@@ -340,7 +340,7 @@ $this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
           // #47602, 130911, dwildt, 1-
 //        case( ! isset( $row[ $fieldForLabel ] ) ):
           // #47602, 130911, dwildt, 1+
-        case( ! array_key_exists( $row, $fieldForLabel ) ):
+        case( ! array_key_exists( $fieldForLabel, $row ) ):
             // DRS
           if( $this->pObj->b_drs_warn )
           {
