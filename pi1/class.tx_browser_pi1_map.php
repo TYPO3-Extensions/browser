@@ -2300,6 +2300,8 @@ class tx_browser_pi1_map
         $catTitles = explode( $this->catDevider, $row[ $arrLabels[ 'catTitle' ] ] );
       }
     }
+$this->pObj->dev_var_dump( $catTitles );
+
       // #47602, 130911, dwildt, 14-
 //    else
 //    {
