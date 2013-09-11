@@ -337,7 +337,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
           $this->arrCategories = array( );
           return $this->arrCategories;
           break;
-        case( ! isset( $row[ $fieldForLabel ] ) ):
+          // #47602, 130911, dwildt, 1-
+//        case( ! isset( $row[ $fieldForLabel ] ) ):
+          // #47602, 130911, dwildt, 1+
+        case( ! array_key_exists( $row, $fieldForLabel ) ):
             // DRS
           if( $this->pObj->b_drs_warn )
           {
