@@ -361,6 +361,11 @@ class tx_browser_pi1_map
       $catLabelsOfCurrRow = explode( $this->catDevider, $row[ $fieldForLabel ] );
       foreach( $catLabelsOfCurrRow as $labelKey => $labelValue )
       {
+          // #47602, 130911, dwildt, 4+
+        if( empty ( $labelValue ) )
+        {
+          $labelValue = $this->pObj->pi_getLL( 'phrase_noMapCat' );
+        }
         $categoryLabels[] = $labelValue;
         if( isset( $row[ $fieldForIcon ] ) )
         {
