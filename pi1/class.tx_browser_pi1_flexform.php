@@ -907,32 +907,69 @@ class tx_browser_pi1_flexform {
       }
       // Remove every id, which isn't proper
 
-      // Remove every view, which isn't element of the id list
-      $arr_keyslistViews = array_keys($this->pObj->conf['views.']['list.']);
-      foreach ($arr_keyslistViews as $key => $value) {
-        if (!in_array($value, $arr_viewsList_proper)) {
+        // Remove every view, which isn't element of the id list
+        // #i0029, dwildt, 1-
+//      $arr_keyslistViews = array_keys($this->pObj->conf['views.']['list.']);
+        // #i0029, dwildt, 5+
+      $arr_keyslistViews  = array_merge(
+                                array_keys( $this->pObj->conf[ 'views.' ][ 'list.' ]    ) 
+                              , array_keys( $this->pObj->conf[ 'views.' ][ 'single.' ]  )
+                            );
+      $arr_keyslistViews  = array_unique( $arr_keyslistViews );
+        // #i0029, dwildt, 5+
+      foreach ($arr_keyslistViews as $key => $value) 
+      {
+          // #i0029, dwildt, -
+//        if (!in_array($value, $arr_viewsList_proper)) {
+//          // Remove list view
+//          // Remove array
+//          unset ($this->pObj->conf['views.']['list.'][$value]);
+//          // Remove string
+//          $valueWoDot = substr($value, 0, strlen($value) - 1);
+//          unset ($this->pObj->conf['views.']['list.'][$value]);
+//          if ($this->pObj->b_drs_flexform) {
+//            t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
+//          }
+//          // Remove list view
+//
+//          // Remove single view
+//          // Remove array
+//          unset ($this->pObj->conf['views.']['single.'][$value]);
+//          // Remove string
+//          $valueWoDot = substr($value, 0, strlen($value) - 1);
+//          unset ($this->pObj->conf['views.']['single.'][$value]);
+//          if ($this->pObj->b_drs_flexform) {
+//            t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
+//          }
+//          // Remove single view
+//        }
+          // #i0029, dwildt, -
+          // #i0029, dwildt, +
+        if( in_array( $value, $arr_viewsList_proper ) ) 
+        {
+          continue;
+        }
           // Remove list view
           // Remove array
-          unset ($this->pObj->conf['views.']['list.'][$value]);
+        unset ($this->pObj->conf['views.']['list.'][$value]);
           // Remove string
-          $valueWoDot = substr($value, 0, strlen($value) - 1);
-          unset ($this->pObj->conf['views.']['list.'][$value]);
-          if ($this->pObj->b_drs_flexform) {
-            t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
-          }
+        $valueWoDot = substr($value, 0, strlen($value) - 1);
+        unset ($this->pObj->conf['views.']['list.'][$value]);
+        if ($this->pObj->b_drs_flexform) {
+          t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
+        }
           // Remove list view
 
           // Remove single view
           // Remove array
-          unset ($this->pObj->conf['views.']['single.'][$value]);
+        unset ($this->pObj->conf['views.']['single.'][$value]);
           // Remove string
-          $valueWoDot = substr($value, 0, strlen($value) - 1);
-          unset ($this->pObj->conf['views.']['single.'][$value]);
-          if ($this->pObj->b_drs_flexform) {
-            t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
-          }
-          // Remove single view
+        $valueWoDot = substr($value, 0, strlen($value) - 1);
+        unset ($this->pObj->conf['views.']['single.'][$value]);
+        if ($this->pObj->b_drs_flexform) {
+          t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
         }
+          // Remove single view
       }
       //var_dump($arr_viewsList_proper);
       if ($this->pObj->b_drs_flexform) {

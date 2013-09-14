@@ -1,3 +1,10 @@
+4.6.2
+  13-09-12
+  Improvement
+  * #i0029: Views array will cleaned up proper
+            Example:
+            * single.301. ... will removed, if single.301 is not configured
+
 4.6.1
   13-09-11
   Feature
