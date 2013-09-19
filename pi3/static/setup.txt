@@ -838,6 +838,8 @@ plugin.tx_browser_pi3 {
     2150 {
       10 {
         11 {
+          data >
+          value = typo3-route.de
           typolink {
             parameter = http://typo3-route.de/
           }
