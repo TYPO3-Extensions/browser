@@ -843,7 +843,7 @@ plugin.tx_browser_pi3 {
           }
         }
         12 {
-          value = typo3-route.de
+          value = " title="typo3-route.de">
         }
         20 {
           file = EXT:browser/pi3/icons/route.gif
