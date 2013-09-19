@@ -1,6 +1,8 @@
 4.6.2
   13-09-12
   Improvement
+  * #i0030: Update the tutorial overview: the pi3-plugin
+  * #52139: Browser Tutorial SEO - Search Engine Optimization           ( new ) 
   * #i0029: Views array will cleaned up proper
             Example:
             * single.301. ... will removed, if single.301 is not configured

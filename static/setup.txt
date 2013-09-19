@@ -1249,13 +1249,13 @@ plugin.tx_browser_pi1 {
               OpenLayersCss = TEXT
               OpenLayersCss {
                   // [STRING] Relative path. Be aware of the ending slash!
-                value = "{$plugin.tx_browser_pi1.map.design.css}"
+                value = '{$plugin.tx_browser_pi1.map.design.css}'
               }
                 // Path to the folder with the icons of the control panel among others
               OpenLayersImgPath = TEXT
               OpenLayersImgPath {
                   // [STRING] Relative path. Be aware of the ending slash!
-                value = "{$plugin.tx_browser_pi1.map.design.imgPath}"
+                value = '{$plugin.tx_browser_pi1.map.design.imgPath}'
               }
                 // Default center of the map
               oxMapConfigCenter = TEXT
