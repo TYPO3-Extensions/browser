@@ -838,11 +838,12 @@ plugin.tx_browser_pi3 {
     2150 {
       10 {
         11 {
-          data >
-          value = typo3-route.de
           typolink {
             parameter = http://typo3-route.de/
           }
+        }
+        12 {
+          value = typo3-route.de
         }
         20 {
           file = EXT:browser/pi3/icons/route.gif
