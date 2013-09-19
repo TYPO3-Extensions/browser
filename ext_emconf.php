@@ -43,6 +43,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'constraints' => array(
 		'depends' => array(
 			'browser_manual_en' => '',
+			'typo3' => '4.5.0-6.1.99',
 		),
 		'conflicts' => array(
 			'be_tablefilter' => '',
