@@ -746,6 +746,9 @@ plugin.tx_browser_pi3 {
             parameter = http://grüne-autos.org
           }
         }
+        12 {
+          value = " title="grüne-autos.org">
+        }
         20 {
           file = EXT:browser/pi3/icons/green_cars.gif
         }
@@ -769,6 +772,9 @@ plugin.tx_browser_pi3 {
           typolink {
             parameter = http://typo3-job-market.de/
           }
+        }
+        12 {
+          value = " title="typo3-job-market.de">
         }
         20 {
           file = EXT:browser/pi3/icons/job_market.gif
@@ -794,6 +800,9 @@ plugin.tx_browser_pi3 {
             parameter = http://typo3-organiser.de/
           }
         }
+        12 {
+          value = " title="typo3-organiser.de">
+        }
         20 {
           file = EXT:browser/pi3/icons/organiser.gif
         }
@@ -817,6 +826,9 @@ plugin.tx_browser_pi3 {
           typolink {
             parameter = http://typo3-quick-shop.de/
           }
+        }
+        12 {
+          value = " title="typo3-quick-shop.de">
         }
         20 {
           file = EXT:browser/pi3/icons/quick_shop.gif
