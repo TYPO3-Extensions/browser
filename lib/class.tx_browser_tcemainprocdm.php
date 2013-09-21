@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.5.13
+* @version 4.6.3
 * @since 4.5.7
 */
 
@@ -116,7 +116,7 @@ class tx_browser_tcemainprocdm
  * @param	array		$fieldArray : modified fields - reference!
  * @param	object		$reference  : parent object - reference!
  * @return	void
- * @version   4.5.13
+ * @version   4.6.3
  * @since     4.5.7
  */
   public function processDatamap_postProcessFieldArray( $status, $table, $id, &$fieldArray, &$reference )
@@ -142,7 +142,8 @@ class tx_browser_tcemainprocdm
 
     if( is_array( $GLOBALS['TCA'][$table]['ctrl']['tx_browser']['route'] ) )
     {
-      $this->route( &$fieldArray, &$reference );
+        // #52166, 130921, dwildt
+      $this->route( $fieldArray, $reference );
     }
 
     return;
@@ -953,12 +954,13 @@ class tx_browser_tcemainprocdm
  * @param	array		$fieldArray : Array of modified fields
  * @param	object		$reference  : reference to parent object
  * @return	void
- * @version   4.5.7
+ * @version   4.6.3
  * @since     4.5.7
  */
   private function route( &$fieldArray, &$reference )
   {
-    $this->routeGpx( &$fieldArray, &$reference );
+      // #52166, 130921, dwildt    
+    $this->routeGpx( $fieldArray, $reference );
 
     return;
   }
@@ -969,7 +971,7 @@ class tx_browser_tcemainprocdm
  * @param	array		$fieldArray : Array of modified fields
  * @param	object		$reference  : reference to parent object
  * @return	void
- * @version   4.5.7
+ * @version   4.6.3
  * @since     4.5.7
  */
   private function routeGpx( &$fieldArray, &$reference )
@@ -981,7 +983,8 @@ class tx_browser_tcemainprocdm
     }
       // RETURN : requirements aren't matched
 
-    $arrResult = $this->routeGpxHandleData( &$fieldArray, &$reference );
+      // #52166, 130921, dwildt
+    $arrResult = $this->routeGpxHandleData( $fieldArray, $reference );
     if( $arrResult['error'] )
     {
       return;
