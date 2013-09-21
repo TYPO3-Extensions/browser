@@ -1,3 +1,10 @@
+4.6.4
+  13-09-21
+  Bugfixing
+  * #00031: pi1/class.tx_browser_pi1_multisort.php
+            * 857: PHP Warning: array_multisort()
+            * 320: PHP Warning: array_multisort()
+
 4.6.3
   13-09-21
   Bugfixing

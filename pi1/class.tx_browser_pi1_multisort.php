@@ -223,7 +223,7 @@ class tx_browser_pi1_multisort
    * multisort_rows( ): Order the rows depending on csvOrderBy and piVars[sort]
    *
    * @return	void
-   * @version 4.1.13
+   * @version   4.6.4
    */
   public function multisort_rows( )
   {
@@ -287,6 +287,25 @@ class tx_browser_pi1_multisort
       }
       return;
     }
+      // RETURN if there isn't any orderBy array
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN if there isn't any orderBy array
+
+      // #00031, 130921, dwildt, 9+
+    if( empty( $arrOrderByWoAscDesc ) )
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        $prompt = 'Abort multisort_rows(). There is no orderBy clause.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return;
+    }
+      // #00031, 130921, dwildt, 9+
       // RETURN if there isn't any orderBy array
 //$this->pObj->dev_var_dump( $rows, $arrOrderByWoAscDesc );
 
@@ -819,7 +838,7 @@ class tx_browser_pi1_multisort
  * @param	array		$rows           : Result of a database query
  * @return	array		$arr_return     : [arr_multisort] ordered
  * @since   3.4.3
- * @version 3.4.3
+ * @version 4.6.4
  */
   private function multisort_rows_upto_6_level($arr_multisort, $rows)
   {
@@ -844,70 +863,77 @@ class tx_browser_pi1_multisort
     if((count($arr_multisort) -1 ) == 0)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
         $rows
       );
     }
     if((count($arr_multisort) -1 ) == 1)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
         $rows
       );
     }
     if((count($arr_multisort) -1 ) == 2)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
         $rows
       );
     }
     if((count($arr_multisort) -1 ) == 3)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
         $rows
       );
     }
     if((count($arr_multisort) -1 ) == 4)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
-        $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        ( array ) $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
         $rows
       );
     }
     if((count($arr_multisort) -1 ) == 5)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
-        $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
-        $arr_multisort[5]['table.field'], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        ( array ) $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        ( array ) $arr_multisort[5]['table.field'], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
         $rows
       );
     }
     if((count($arr_multisort) -1 ) > 5)
     {
       array_multisort(
-        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
-        $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
-        $arr_multisort[5]['table.field'], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
-        $arr_multisort[6]['table.field'], $arr_multisort[6]['int_orderFlag'], $arr_multisort[6]['int_typeFlag'],
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        ( array ) $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        ( array ) $arr_multisort[5]['table.field'], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
+        ( array ) $arr_multisort[6]['table.field'], $arr_multisort[6]['int_orderFlag'], $arr_multisort[6]['int_typeFlag'],
         $rows
       );
     }
@@ -927,7 +953,7 @@ class tx_browser_pi1_multisort
  * @param	array		$arr_multisort  : array with elements (arrays) for multisort
  * @return	array		$arr_multisort  : ordered
  * @since   3.4.3
- * @version 3.4.3
+ * @version 4.6.4
  */
   private function multisort_upto_6_level($arr_multisort)
   {
@@ -938,64 +964,71 @@ class tx_browser_pi1_multisort
     if((count($arr_multisort) -1 ) == 0)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag']
       );
     }
     if((count($arr_multisort) -1 ) == 1)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag']
       );
     }
     if((count($arr_multisort) -1 ) == 2)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag']
       );
     }
     if((count($arr_multisort) -1 ) == 3)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag']
       );
     }
     if((count($arr_multisort) -1 ) == 4)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
-        $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        ( array ) $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag']
       );
     }
     if((count($arr_multisort) -1 ) == 5)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
-        $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
-        $arr_multisort[5][key($arr_multisort[5])], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        ( array ) $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        ( array ) $arr_multisort[5][key($arr_multisort[5])], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag']
       );
     }
     if((count($arr_multisort) -1 ) > 5)
     {
       array_multisort(
-        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
-        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
-        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
-        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
-        $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
-        $arr_multisort[5][key($arr_multisort[5])], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
-        $arr_multisort[6][key($arr_multisort[6])], $arr_multisort[6]['int_orderFlag'], $arr_multisort[6]['int_typeFlag']
+          // #00031, 130921, dwildt, ~
+        ( array ) $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        ( array ) $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        ( array ) $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        ( array ) $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        ( array ) $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        ( array ) $arr_multisort[5][key($arr_multisort[5])], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
+        ( array ) $arr_multisort[6][key($arr_multisort[6])], $arr_multisort[6]['int_orderFlag'], $arr_multisort[6]['int_typeFlag']
       );
     }
     // Process array_multisort
