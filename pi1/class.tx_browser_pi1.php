@@ -2627,10 +2627,11 @@ class tx_browser_pi1 extends tslib_pibase {
  *                  Handles error.
  *
  * @return    array        With element template
+ * @access  public
  * @version 3.9.8
  * @since   1.0.0
  */
-  private function getTemplate( )
+  public function getTemplate( )
   {
     $cObj = $this->cObj;
     $conf = $this->conf;
