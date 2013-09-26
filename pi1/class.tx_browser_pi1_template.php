@@ -2573,14 +2573,15 @@ class tx_browser_pi1_template
 
 
       $templateMarker = $this->lDisplayList['selectBox_orderBy.']['templateMarker'];
-      $selectBox      = $this->pObj->cObj->getSubpart($this->pObj->str_template_raw, $templateMarker);
+      $selectBox      = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, $templateMarker );
+var_dump(__METHOD__, __LINE__, $this->pObj->str_template_raw, $templateMarker, $selectBox );
 
         // DRS - Development Reporting System
-      if(empty($selectBox))
+      if( empty( $selectBox ) )
       {
-        if ($this->pObj->b_drs_templating || $this->pObj->b_drs_error)
+        if($this->pObj->b_drs_templating || $this->pObj->b_drs_error)
         {
-          t3lib_div::devlog('[WARN/TEMPLATING] '.$templateMarker.' is empty or missing!', $this->pObj->extKey, 2);
+          t3lib_div::devlog('[WARN/TEMPLATING] ' . $templateMarker . ' is empty or missing!', $this->pObj->extKey, 2);
           t3lib_div::devlog('[INFO/TEMPLATING] Please take care of your HTML code.', $this->pObj->extKey, 1);
         }
       }
