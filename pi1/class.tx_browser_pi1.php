@@ -2660,7 +2660,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $template_path = $conf['template.']['file'];
     }
     $template = $cObj->fileResource( $template_path );
-var_dump(__METHOD__, __LINE__, $template_path, $template );
+//var_dump(__METHOD__, __LINE__, $template_path, $template );
       // Catch the template
 
 

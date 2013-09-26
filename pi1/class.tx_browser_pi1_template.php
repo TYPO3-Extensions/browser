@@ -2572,16 +2572,16 @@ class tx_browser_pi1_template
 
 
 
-      $templateMarker = $this->lDisplayList['selectBox_orderBy.']['templateMarker'];
-      $selectBox      = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, $templateMarker );
+        // #52297, 130926, dwildt, 2-
+//      $templateMarker = $this->lDisplayList['selectBox_orderBy.']['templateMarker'];
+//      $selectBox      = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, $templateMarker );
 
+        // #52297, 130926, dwildt, 4+
       $templateMarker   = $this->lDisplayList['selectBox_orderBy.']['templateMarker'];
       $arr_result       = $this->pObj->getTemplate( );
       $str_template_raw = $arr_result['data']['template'];
       $selectBox        = $this->pObj->cObj->getSubpart( $str_template_raw, $templateMarker );
-      
-      
-var_dump(__METHOD__, __LINE__, $str_template_raw, $templateMarker, $selectBox );
+var_dump(__METHOD__, __LINE__, $selectBox );
 
         // DRS - Development Reporting System
       if( empty( $selectBox ) )
