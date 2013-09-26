@@ -2,6 +2,7 @@
   13-09-26
   Bugfixing
   * #52297: Selectbox for ordering is missing
+            * displayList.selectBox_orderBy.display = 0 (before 1)
             Effected files:
             * pi1
               * class.tx_browser_pi1.php
@@ -9,6 +10,8 @@
             * res/html
               * default.tmpl
               * main.tmpl
+            * static
+              * setup.txt
 
 4.6.4
   13-09-21

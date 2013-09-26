@@ -2222,7 +2222,7 @@ plugin.tx_browser_pi1 {
 
     selectBox_orderBy {
         // [Boolean] 1: Display the select box for ordering (default), 0: don't display.
-      display = 1
+      display = 0
         // upto 3.4.5: templateMarker = ###TEMPLATE_SELECTBOX###
       templateMarker = ###TEMPLATE_SELECTBOX_VALID###
       selectbox = SELECTBOX
