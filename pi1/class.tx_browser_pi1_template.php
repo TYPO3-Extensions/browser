@@ -2598,7 +2598,7 @@ var_dump(__METHOD__, __LINE__, $selectBox );
       $selectBox      = $this->pObj->cObj->substituteMarkerArray($selectBox, $arr_marker_option);
       $items          = $selectBox;
         // DRS - Development Reporting System
-//if(t3lib_div::_GP('dev')) var_dump('template 1893', $selectBox);
+var_dump(__METHOD__, __LINE__, $selectBox );
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] '.$templateMarker.' will be rendered as the select box for ordering records.', $this->pObj->extKey, 0);
@@ -2618,6 +2618,7 @@ var_dump(__METHOD__, __LINE__, $selectBox );
       //
       // Return the template with the table head
 
+var_dump(__METHOD__, __LINE__, $template );
     return $template;
       // Return the template with the table head
   }
