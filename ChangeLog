@@ -1,7 +1,14 @@
+4.6.5
+  13-09-26
+  Bugfixing
+  * #i0032: ###TEMPLATE_SELECTBOX_VALID### added to
+            res/html
+            * main.tmpl
+
 4.6.4
   13-09-21
   Bugfixing
-  * #00031: pi1/class.tx_browser_pi1_multisort.php
+  * #i0031: pi1/class.tx_browser_pi1_multisort.php
             * 857: PHP Warning: array_multisort()
             * 320: PHP Warning: array_multisort()
 
@@ -398,7 +405,7 @@
 4.4.4
   13-01-27
   Improvement
-  * #00000: BrowserMaps Constant Editor
+  * #i0000: BrowserMaps Constant Editor
             Debug mode for modules
             Effected files:
             * static
@@ -465,7 +472,7 @@
 4.4.1
   130113
   Improvement
-  * #00000: Tree view can enabled and disabled by the constant editor
+  * #i0000: Tree view can enabled and disabled by the constant editor
             Effected files:
             * static
               * constants.txt
@@ -526,7 +533,7 @@
             * static
               * setup.txt
               * downgrade/3.9.0/setup.txt
-  * #00000: Removed deprecated files
+  * #i0000: Removed deprecated files
             Effected files:
             * res/js/map
               * oxMapConfig_0.0.9.js      removed
@@ -640,9 +647,9 @@
 4.1.26
   121206
   Improvements
-  * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
-  * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
-  * #00000: category_menu.treeview.enabled.value = 0
+  * #i0000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
+  * #i0000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
+  * #i0000: category_menu.treeview.enabled.value = 0
   Bugfixes
   * #43685: Treeview and localisation: language prefixes are ignored
   * #43558: navigation.indexBrowser.defaultTabWrap isn't handled since 4.0
@@ -684,7 +691,7 @@
 4.1.24
   121024
   Update
-  * #00000: * pi3/locallang.xml
+  * #i0000: * pi3/locallang.xml
 
 4.1.23
   121023
@@ -699,7 +706,7 @@
   * #42126: OpenStreetMap: individual design of control panel
             Effected files: see #42173
   Update
-  * #00000: Manual
+  * #i0000: Manual
 
 4.1.22
   121018
@@ -726,7 +733,7 @@
               * setup.txt
               * downgrade/3.9.0/setup.txt
             * t3jquery.txt
-  * #00000: inc3ludeLibs -> includeLibs
+  * #i0000: inc3ludeLibs -> includeLibs
             Effected files:
             * static/setup.txt
 
@@ -771,35 +778,35 @@
 4.1.20
   121008
   Improvement
-  * #00000: oxRenderMap 0.0.9
+  * #i0000: oxRenderMap 0.0.9
 
 4.1.19
   120930
   Development
-  * #00000: Treeview Checkboxes
+  * #i0000: Treeview Checkboxes
 
 4.1.18
   120928
   Improvement
-  * #00000: t3jquery.txt for supporting the configuration of t3jquery
-  * #00000: jsTree: non used files and folders are removed
+  * #i0000: t3jquery.txt for supporting the configuration of t3jquery
+  * #i0000: jsTree: non used files and folders are removed
             jsTree TypoScript Constant Editor: dots and icons
-  * #00000: jQuery 1.8.x is checked with success
-  * #00000: res/js/jquery
+  * #i0000: jQuery 1.8.x is checked with success
+  * #i0000: res/js/jquery
               tx_browser_pi1_jstree-3.9.21.js is moved to tx_browser_pi1_jstree-4.1.18.js
   Bugfix
-  * #00000: res/js/tx_browser_pi1_ajax-0.0.4.js            
+  * #i0000: res/js/tx_browser_pi1_ajax-0.0.4.js            
 
 4.1.17
   120927
   Bugfix
-  * #00000: oxRenderMap 0.0.7
+  * #i0000: oxRenderMap 0.0.7
 
 4.1.16
   120927
   Bugfix
-  * #00000: Filter areas: If any filter is matched in localised context, alls records were displayed
-  * #00000: Filter weren't displayed in case of any record doesn't matched 
+  * #i0000: Filter areas: If any filter is matched in localised context, alls records were displayed
+  * #i0000: Filter weren't displayed in case of any record doesn't matched 
 
 4.1.15
   120925
@@ -809,7 +816,7 @@
 4.1.14
   120924
   Improvement
-  * #00000: oxRenderMap 0.0.6
+  * #i0000: oxRenderMap 0.0.6
 
 4.1.13
   120918
@@ -834,13 +841,13 @@
             * pi1/class.tx_browser_pi1_template.php
 
   Improvement
-  * #00000: Update OpenLayers from 1.x to 2.10
+  * #i0000: Update OpenLayers from 1.x to 2.10
             Effected files:
             * static/setup.txt
             * static/downgrade/3.9.0/setup.txt
   Bugfix
   * #41051: UPPER causes bugs in some SQL engines. Solution UPPER -> upper
-  * #00000: Invalid argument supplied for foreach() in 
+  * #i0000: Invalid argument supplied for foreach() in 
             * lib
               * class.tx_browser_cssstyledcontent.php line 904
             * pi1
@@ -871,14 +878,14 @@
 4.1.10
   120916
   New Feature
-  * #00000: Register [General] of the plugin / flexform got the field "my comment"
+  * #i0000: Register [General] of the plugin / flexform got the field "my comment"
   Bugfix
   * #40958: Multiple plugins: if you are using multiple plugins but any filter, piVars are missing in the URL.
   * #40960: Multiple Plugins: Record Browser doesn't use piVars[plugin] in links to the single view
             Effected files:
             * pi1/class.tx_browser_pi1_navi_recordbrowser.php
             * static/setup.txt
-  * #00000: * SearchForm: remove hiddden field for plugin
+  * #i0000: * SearchForm: remove hiddden field for plugin
             Effected files:
             * res/sample/tt_news/default.tmpl
 
@@ -906,9 +913,9 @@
             * static/contstants.txt
             * static/setup.txt
   Improvements
-  * #00000: Plugin check: record storage page and access to root level records
+  * #i0000: Plugin check: record storage page and access to root level records
   Bugfixes
-  * #00000: Plugin check: Fatal error, if plugin wasn't never saved
+  * #i0000: Plugin check: Fatal error, if plugin wasn't never saved
   * #40354: Checkbox without input-tag
             Effected file: static/setup.txt
   * #40354: Checkbox and radiobuttons
@@ -922,49 +929,49 @@
 4.1.6
   120822
   Update
-  * #00000: Sponsors
+  * #i0000: Sponsors
             * Drei Gorillas
             * r-system
 4.1.5
   120809
   Improvements
-  * #00000: static/setup.txt
+  * #i0000: static/setup.txt
   Bugfix
-  * #00000: static/setup.txt
+  * #i0000: static/setup.txt
 
 4.1.4
   120804
   New Feature
-  * #00000: Filter for map
+  * #i0000: Filter for map
             Effected files:
             * pi1/class.tx_browser_pi1_map.php
             * static/contstants.txt
             * static/setup.txt
   120710
   Bugfix
-  * #00000: Array error in lib/class.tx_browser_befilter_hooks.php::getDBlistQuery
+  * #i0000: Array error in lib/class.tx_browser_befilter_hooks.php::getDBlistQuery
 
 4.1.3
   120703
   Improvement
-  * #00000: Code is cleaned up in class.tx_browser_pi1_views.php
+  * #i0000: Code is cleaned up in class.tx_browser_pi1_views.php
   * #38612: Record browser is able to overwrite sys_lsysanguage_overlay temporarily (freemedia case)
             Effected file: static/setup.txt
 
 4.1.2
   120703
   Improvement
-  * #00000: Record browser got an own class. See class.tx_browser_navi_recordbrowser.php
+  * #i0000: Record browser got an own class. See class.tx_browser_navi_recordbrowser.php
   * #38612: Record browser respects all items of the listview and not only the displayed one
-  * #00000: Session management of the record browser differs languages
-  * #00000: navi class moved to navi_3x class
+  * #i0000: Session management of the record browser differs languages
+  * #i0000: navi class moved to navi_3x class
   Bugfix
   * #38611: Pagebrowser is confused in localisation mode
 
 4.1.1
   120702
   Improvement
-  * #00000: Extension Manager. Effected file: ext_conf_template.txt
+  * #i0000: Extension Manager. Effected file: ext_conf_template.txt
 
 4.1.0
   120623
@@ -974,73 +981,73 @@
 4.0.0
   120606
   Publishing
-  * #00000: Release 4.0.0
+  * #i0000: Release 4.0.0
 
 3.9.26
   120605
   Bugfixes
-  * #00000: flexform values for jQuery UI missed in some cases
-  * #00000: single view doesn't detect images proper
+  * #i0000: flexform values for jQuery UI missed in some cases
+  * #i0000: single view doesn't detect images proper
 
 3.9.25
   120605
   Bugfixes
-  * #00000: indexBrowser ignored the TS andWhere
-  * #00000: pageBrowser ignored the TS andWhere
-  * #00000: pageBrowser ignored localisation in some cases
+  * #i0000: indexBrowser ignored the TS andWhere
+  * #i0000: pageBrowser ignored the TS andWhere
+  * #i0000: pageBrowser ignored localisation in some cases
 
 3.9.24
   120604
   Improvement
   * #37731: noItemMessage becomes cObject. Before it was a stdWrap only
-  * #00000: content_dieIfEmpty with improved error message
+  * #i0000: content_dieIfEmpty with improved error message
   Bugfixes
-  * #00000: pageBrowser counted 0 records, if indexBrowser was disabled
-  * #00000: multiple plugins: piVars aren't ignored  
-  * #00000: Message of empty list at start isn't rendered
-  * #00000: Missing argument 1 for tx_browser_pi1_sql_auto::get_joinsSetCsv()
-  * #00000: Missing argument 1 for tx_browser_pi1_sql_auto::get_statements_whereLL()
+  * #i0000: pageBrowser counted 0 records, if indexBrowser was disabled
+  * #i0000: multiple plugins: piVars aren't ignored  
+  * #i0000: Message of empty list at start isn't rendered
+  * #i0000: Missing argument 1 for tx_browser_pi1_sql_auto::get_joinsSetCsv()
+  * #i0000: Missing argument 1 for tx_browser_pi1_sql_auto::get_statements_whereLL()
 
 3.9.23
   120530
   Improvement
-  * #00000: locallang_db.xml
+  * #i0000: locallang_db.xml
 
 3.9.22
   120526
   Improvement
-  * #00000: optimising five tree views
+  * #i0000: optimising five tree views
 
 3.9.21
   120525
   Improvement
-  * #00000: enable more than one tree view by default
+  * #i0000: enable more than one tree view by default
 
 3.9.20
   120524
   Improvement
-  * #00000: tree view performance
+  * #i0000: tree view performance
 
 3.9.19
   120523
   Bugfix
-  * #00000: andWhere search -> trim tableFields
+  * #i0000: andWhere search -> trim tableFields
 
 3.9.18
   120522
   Bugfix
-  * #00000: andWhere is ignored
-  * #00000: image in single view is not detected as image
+  * #i0000: andWhere is ignored
+  * #i0000: image in single view is not detected as image
 
 3.9.17
   120522
   Bugfix
-  * #00000: Downward compatibility with TYPO3 4.5
+  * #i0000: Downward compatibility with TYPO3 4.5
 
 3.9.16
   120519
   Bugfix
-  * #00000: First filter item counts hits
+  * #i0000: First filter item counts hits
             First filter item counts hits in the tree view proper
 
 3.9.15
@@ -1049,15 +1056,15 @@
   * #37165: DAM sample
   Bugfix
   * #12738: ###CLASS### marker for rows (even/odd)
-  * #00000: Labels for jQuery UI in the Flexform were broken
+  * #i0000: Labels for jQuery UI in the Flexform were broken
 
 3.9.14
   120514
   Improvements
-  * #00000: Static template for downgrade 
+  * #i0000: Static template for downgrade 
             New files: static/downgrade/3.9.0/*
   Bugfixes
-  * #00000: Debugging special chars
+  * #i0000: Debugging special chars
             Effected file: pi1/locallang_flexform.xml
 
 3.9.13
@@ -1085,7 +1092,7 @@
   * #35014: Download module +++ Bug with hidden localised records
   * #34212: TypoScript limit hasn't any effect
   Imrovements
-  * #00000: a-z-browser is renamed as index browser
+  * #i0000: a-z-browser is renamed as index browser
             Effects
             * CSS             : azSelector              -> indexBrowser
             * HTML templates  : AZSELECTOR              -> INDEXBROWSER
@@ -1114,7 +1121,7 @@
 3.9.6
   120126
   UPDATE:
-  * #00000: default.html and default_ul.html is moved from res/ to res/html/
+  * #i0000: default.html and default_ul.html is moved from res/ to res/html/
             You have to edit the Browser plugin:
               * Tab [Templating]: Update the value of the template
               * Tab [General]:    Update the value of the selected view (optional)
@@ -1134,12 +1141,12 @@
                 * ... selectbox.wrap.item.stdWrap
                 is moved to ... item.wraps.value.stdWrap
   * #30912: Filter: independent total items
-  * #00000: DRS displays warnings and errors eclusive
+  * #i0000: DRS displays warnings and errors eclusive
   Development
   * #32654: Integration of Open Street Map - Step I
   Imrovement
   * #33535: Clean up handleAs
-  * #00000: Constant plugin.tx_browser_pi1.strftime is moved from %a, %d.%b.%y to %a, %d.%b.%y %H:%M
+  * #i0000: Constant plugin.tx_browser_pi1.strftime is moved from %a, %d.%b.%y to %a, %d.%b.%y %H:%M
 
   Bugfixes:
   * #32676: Link to single view without mode parameter
@@ -1170,17 +1177,17 @@
               * ###TH_COUNTER###, ###TH_FIRST_LAST###, ###TH_EVEN_OR_ODD###
               * ###TR_COUNTER###, ###TR_FIRST_LAST###, ###TR_EVEN_OR_ODD###
             * See: displayList.templateMarker.oddClass
-  * #00000: New tutorial "Browser Tutorial User Defined Functions" (browser_tut_userdefined_en)
-  * #00000: New tutorial "Browser Tutorial Download Module" (browser_tut_downloads_en)
-  * #00000: New tutorial "Browser Tutorial Statistics" (browser_tut_statistics_en)
+  * #i0000: New tutorial "Browser Tutorial User Defined Functions" (browser_tut_userdefined_en)
+  * #i0000: New tutorial "Browser Tutorial Download Module" (browser_tut_downloads_en)
+  * #i0000: New tutorial "Browser Tutorial Statistics" (browser_tut_statistics_en)
   Improvements
   * #32145: Record browser: home button links to the list view
-  * #00000: Record browser: showUid can replace by TypoScript constant. See plugin.tx_browser_pi1.recordBrowser.uidName
+  * #i0000: Record browser: showUid can replace by TypoScript constant. See plugin.tx_browser_pi1.recordBrowser.uidName
   * #32119: Marker becomes cObject
   * #29198: Simplifying stdWrap of SQL query parts
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
             where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
-  * #00000: Integration of the button method into the old ajax object.
+  * #i0000: Integration of the button method into the old ajax object.
             res/js/tx_browser_pi1_ajax.js moves to res/js/tx_browser_pi1_ajax-0.0.2.js
   Bugfixes
   * #29444: Category menu: Selected isn't detected
@@ -1198,7 +1205,7 @@
 3.7.9
   120505
   Improvement
-  * #00000: Plugin 3 - manuals - link to local PDF files, but not to the TER.
+  * #i0000: Plugin 3 - manuals - link to local PDF files, but not to the TER.
             
 3.7.8
   120403
@@ -1213,7 +1220,7 @@
 3.7.5
   120320
   New Feature
-  * #00000: page tree icon
+  * #i0000: page tree icon
   Improvements
   * #34966: Proper order by in case of TCA type none
             Effected file: pi1/class.tx_browser_pi1_sql_functions.php
@@ -1227,7 +1234,7 @@
             Effected file: pi1/class.tx_browser_pi1_sql_functions.php
             Thanks to Fabian Constien for the bugfix
   Sponsors
-  * #00000: New sponsor: lieska.net
+  * #i0000: New sponsor: lieska.net
 
 3.7.4
   120102
@@ -1276,9 +1283,9 @@
               * res/default_ul.tmpl
               * res/sample/tt_news/default.tmpl
   Update
-  * #00000  jQuery library 1.6 -> 1.6.2
+  * #i0000  jQuery library 1.6 -> 1.6.2
   Miscellaneous
-  * #00000: PHP: substitute_marker() is moved to substitute_tablefield_marker()
+  * #i0000: PHP: substitute_marker() is moved to substitute_tablefield_marker()
   Bugfixes
   * #28878: Empty list at start: Form is empty for ever
   * #28855: Broken RSS-Feed

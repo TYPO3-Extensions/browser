@@ -205,6 +205,33 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 
 
 
+<em>
+
+TEMPLATE FOR SELECT BOX FOR ORDERING
+====================================
+This template is used in list views for ordering records by a select box.
+This template generates valid HTML code.
+If you want to disable the sortbox, please configure in your TypoScript template
+displayList.selectBox_orderBy.display = 0
+
+</em>
+
+<!-- ###TEMPLATE_SELECTBOX_VALID### begin -->
+            <div class="sortbox c###TT_CONTENT.UID###-###VIEW###view-###MODE###-sortbox">
+              <form ###CLASS### action="###URL###" method="POST">
+                <fieldset>
+                  <legend>###LEGEND###</legend>
+                  <input type="hidden" name="no_cache" value="1" />
+                  ###HIDDEN###
+                  ###SELECTBOX###
+                  <input class="button" type="submit" value="###BUTTON###" />
+                </fieldset>
+              </form>
+            </div>
+<!-- ###TEMPLATE_SELECTBOX_VALID### end -->
+
+
+
 </pre>
   </body>
 </html>
