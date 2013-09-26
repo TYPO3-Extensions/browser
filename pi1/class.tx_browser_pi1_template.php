@@ -2581,7 +2581,7 @@ class tx_browser_pi1_template
       $arr_result       = $this->pObj->getTemplate( );
       $str_template_raw = $arr_result['data']['template'];
       $selectBox        = $this->pObj->cObj->getSubpart( $str_template_raw, $templateMarker );
-var_dump(__METHOD__, __LINE__, $selectBox );
+//var_dump(__METHOD__, __LINE__, $selectBox );
 
         // DRS - Development Reporting System
       if( empty( $selectBox ) )
@@ -2598,7 +2598,7 @@ var_dump(__METHOD__, __LINE__, $selectBox );
       $selectBox      = $this->pObj->cObj->substituteMarkerArray($selectBox, $arr_marker_option);
       $items          = $selectBox;
         // DRS - Development Reporting System
-var_dump(__METHOD__, __LINE__, $selectBox );
+//var_dump(__METHOD__, __LINE__, $selectBox );
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] '.$templateMarker.' will be rendered as the select box for ordering records.', $this->pObj->extKey, 0);
@@ -2618,7 +2618,7 @@ var_dump(__METHOD__, __LINE__, $selectBox );
       //
       // Return the template with the table head
 
-var_dump(__METHOD__, __LINE__, $template );
+//var_dump(__METHOD__, __LINE__, $template );
     return $template;
       // Return the template with the table head
   }

@@ -1,9 +1,14 @@
 4.6.5
   13-09-26
   Bugfixing
-  * #i0032: ###TEMPLATE_SELECTBOX_VALID### added to
-            res/html
-            * main.tmpl
+  * #52297: Selectbox for ordering is missing
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1.php
+              * class.tx_browser_pi1_template.php
+            * res/html
+              * default.tmpl
+              * main.tmpl
 
 4.6.4
   13-09-21
