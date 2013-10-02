@@ -501,7 +501,17 @@ class tx_browser_pi1_filter_4x {
       $filterType = $conf_view['filter.'][$table];
       if( $filterType == 'RADIALSEARCH' )
       {
-        //$arr_andWhereFilter[$table . '.' . $field] = $str_andWhere;
+        $arrResult      = $this->init_andWhereFilter_radialserach( );
+        $latAndWhere    = $arrResult['lat']['andWhere'];
+        $latTableField  = $arrResult['lat']['tableField'];
+        $lonAndWhere    = $arrResult['lon']['andWhere'];
+        $lonTableField  = $arrResult['lon']['tableField'];
+        //'tx_org_headquarterscat.title' => 'tx_org_headquarterscat.uid IN (3)
+        $arr_andWhereFilter[ $latTableField ] = $latAndWhere;
+        $arr_andWhereFilter[ $lonTableField ] = $lonAndWhere;
+        $arr_andWhereFilter = $arr_andWhereFilter
+                            + $this->init_andWhereFilterRadialserach( )
+                            ;
         continue;
       }
         // #52486, 131002, dwildt, 6+
@@ -555,7 +565,6 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP: filter tableFields
 
-$this->pObj->dev_var_dump( $arr_andWhereFilter );
       // andWhere statement
     $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
 
@@ -1225,6 +1234,31 @@ $this->pObj->dev_var_dump( $arr_andWhereFilter );
       <p>This is a message of the Browser - TYPO3 without PHP.</p>
       ';
     exit;
+  }
+
+/**
+ * init_andWhereFilter_radialserach( ): 
+ *
+ * @return	string
+ * @internal    #52486
+ * @access    private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function init_andWhereFilter_radialserach( )
+  {
+    return array( );
+    $arrResult      = $this->init_andWhereFilterRadialserach( );
+    $latAndWhere    = $arrResult['lat']['andWhere'];
+    $latTableField  = $arrResult['lat']['tableField'];
+    $lonAndWhere    = $arrResult['lon']['andWhere'];
+    $lonTableField  = $arrResult['lon']['tableField'];
+    //'tx_org_headquarterscat.title' => 'tx_org_headquarterscat.uid IN (3)
+    $arr_andWhereFilter[ $latTableField ] = $latAndWhere;
+    $arr_andWhereFilter[ $lonTableField ] = $lonAndWhere;
+    $arr_andWhereFilter = $arr_andWhereFilter
+                        + $this->init_andWhereFilterRadialserach( )
+                        ;
   }
 
 
