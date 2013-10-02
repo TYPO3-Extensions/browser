@@ -473,8 +473,8 @@ class tx_browser_pi1_filter_4x {
       // Init area
     $this->pObj->objCal->area_init( );
     $conf       = $this->pObj->conf;
-    $view             = $this->pObj->view;
-    $viewWiDot        = $view.'.';
+    $view             = $this->view;
+    $viewWiDot        = $view . '.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Init area
 
