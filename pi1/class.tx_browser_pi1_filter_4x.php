@@ -473,10 +473,11 @@ class tx_browser_pi1_filter_4x {
       // Init area
     $this->pObj->objCal->area_init( );
     $conf       = $this->pObj->conf;
-    $view             = $this->view;
-    $viewWiDot        = $view . '.';
+    $view       = $this->view;
+    $viewWiDot  = $view . '.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Init area
+$this->pObj->dev_var_dump( $view, $conf );
 
       // LOOP: filter tableFields
     foreach( $this->arr_tsFilterTableFields as $tableField )
@@ -484,7 +485,7 @@ class tx_browser_pi1_filter_4x {
       list( $table, $field )  = explode( '.', $tableField );
       $str_andWhere           = null;
 
-$this->pObj->dev_var_dump( $tableField, $conf_view, $conf_view['filter.'], $table, $conf_view['filter.'][$table] );
+//$this->pObj->dev_var_dump( $tableField, $conf_view, $conf_view['filter.'], $table, $conf_view['filter.'][$table] );
           // #52486, 131002, dwildt, 4+
         if( $arrFields == 'RADIALSEARCH' )
         {
