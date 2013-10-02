@@ -1239,7 +1239,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter_radialsearch( )
   {
-    $path2pi1 = t3lib_extMgm::extPath( 'radialsearch' ) . 'pi1/';
+    $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
 
     require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
     $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
