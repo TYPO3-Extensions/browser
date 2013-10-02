@@ -473,11 +473,9 @@ class tx_browser_pi1_filter_4x {
       // Init area
     $this->pObj->objCal->area_init( );
     $conf       = $this->pObj->conf;
-    $view       = $this->view;
-    $viewWiDot  = $view . '.';
+    $viewWiDot  = $this->view . '.';
     $conf_view  = $conf['views.'][$viewWiDot][$this->mode . '.'];
       // Init area
-//$this->pObj->dev_var_dump( $view, $conf );
 
       // LOOP: filter tableFields
     foreach( $this->arr_tsFilterTableFields as $tableField )
@@ -485,13 +483,14 @@ class tx_browser_pi1_filter_4x {
       list( $table, $field )  = explode( '.', $tableField );
       $str_andWhere           = null;
 
-$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
-          // #52486, 131002, dwildt, 4+
-        if( $arrFields == 'RADIALSEARCH' )
-        {
-          continue;
-        }
-          // #52486, 131002, dwildt, 4+
+        // #52486, 131002, dwildt, 6+
+      //$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
+      $filterType = $conf_view['filter.'][$table];
+      if( $filterType == 'RADIALSEARCH' )
+      {
+        continue;
+      }
+        // #52486, 131002, dwildt, 6+
 
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
@@ -1424,9 +1423,8 @@ $this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
       // DRS
     if( $this->pObj->b_drs_filter )
     {
-      $view             = $this->pObj->view;
-      $viewWiDot        = $view.'.';
-      $prompt = $viewWiDot . $this->mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
+      $viewWiDot  = $this->view.'.';
+      $prompt     = $viewWiDot . $this->mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
       t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
@@ -1477,9 +1475,8 @@ $this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
       // DRS
     if( $this->pObj->b_drs_error )
     {
-      $view             = $this->pObj->view;
-      $viewWiDot        = $view.'.';
-      $prompt = $viewWiDot . $this->mode . '.filters hasn\'t any table.field syntax.';
+      $viewWiDot  = $this->view . '.';
+      $prompt     = $viewWiDot . $this->mode . '.filters hasn\'t any table.field syntax.';
       t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
     }
       // DRS
