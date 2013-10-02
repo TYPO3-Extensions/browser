@@ -323,6 +323,7 @@ class tx_browser_pi1_typoscript
       //$arr_prompt = array( );
       foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $arrFields )
       {
+var_dump( __METHOD__, __LINE__, $tableWiDot, $arrFields );
         // Get piVar name
         $tableField           = $tableWiDot.key( $arrFields );
         list( $table, $field )  = explode( '.', $tableField );
