@@ -296,7 +296,7 @@ class tx_browser_pi1_filter_4x {
  * get( ):  Get filters. Returns a marker array or an error message.
  *
  * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
- * @version 3.9.9
+ * @version 4.7.0
  * @since   3.9.9
  */
   public function get( )
@@ -385,7 +385,7 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-$this->pObj->dev_var_dump( $arr_return );
+
     return $arr_return;
   }
 
