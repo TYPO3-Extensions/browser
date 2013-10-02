@@ -382,6 +382,7 @@ $this->pObj->dev_var_dump( $tableWiDot, $fields );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
