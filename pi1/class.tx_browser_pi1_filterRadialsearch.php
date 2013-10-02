@@ -71,7 +71,7 @@ class tx_browser_pi1_filterRadialsearch {
  */
   public function andWhere( )
   {
-    if( ! is_object( $$this->pObj ) )
+    if( ! is_object( $this->pObj ) )
     {
       $prompt = 'ERROR: no object!<br />' . PHP_EOL .
                 'Sorry for the trouble.<br />' . PHP_EOL .
