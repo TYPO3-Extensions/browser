@@ -224,7 +224,7 @@ class tx_browser_pi1_typoscript
  *
  * @return	array		Array with the syntax array[table][] = field
  *
- * @version 3.9.9.
+ * @version 4.7.0
  * @since   2.0.0
  */
   function fetch_realTables_arrFields( )
@@ -323,7 +323,13 @@ class tx_browser_pi1_typoscript
       //$arr_prompt = array( );
       foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $arrFields )
       {
-var_dump( __METHOD__, __LINE__, $tableWiDot, $arrFields );
+//var_dump( __METHOD__, __LINE__, $tableWiDot, $arrFields );
+          // #52486, 131002, dwildt, 4+
+        if( $arrFields == 'RADIALSEARCH' )
+        {
+          continue;
+        }
+          // #52486, 131002, dwildt, 4+
         // Get piVar name
         $tableField           = $tableWiDot.key( $arrFields );
         list( $table, $field )  = explode( '.', $tableField );
