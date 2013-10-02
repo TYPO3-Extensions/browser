@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 3.6.1
+* @version 4.7.0
 * @since 3.6.1
 */
 
@@ -120,14 +120,6 @@ class tx_browser_extmanager
     return $str_prompt;
   }
 
-
-
-
-
-
-
-
-
   /**
  * promptExternalLinks(): Displays the quick start message.
  *
@@ -135,7 +127,7 @@ class tx_browser_extmanager
  * @since 3.6.1
  * @version 3.6.1
  */
-  function promptExternalLinks()
+  function promptExternalLinks( )
   {
 //.message-notice
 //.message-information
@@ -159,13 +151,36 @@ class tx_browser_extmanager
     return $str_prompt;
   }
 
+  /**
+ * promptRadialsearch(): Displays the quick start message.
+ *
+ * @return	string		message wrapped in HTML
+ * @since 3.6.1
+ * @version 3.6.1
+ */
+  function promptRadialsearch( )
+  {
+//.message-notice
+//.message-information
+//.message-ok
+//.message-warning
+//.message-error
 
+    $str_prompt = null;
 
+    $str_prompt = $str_prompt . '
+<div class="message-body">
+  ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchBody'). '
+</div>';
+      
+//      // #48613, dwildt, 3+
+//    $arrDefinedConstants  = get_defined_constants( );
+//    $path_typo3conf       = $arrDefinedConstants['PATH_typo3conf'];
+//    $str_prompt           = str_replace( '%PATH_typo3conf%', $path_typo3conf, $str_prompt );
+//      // #48613, dwildt, 3+
 
-
-
-
-
+    return $str_prompt;
+  }
 
 }
 

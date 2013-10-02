@@ -158,6 +158,35 @@
       <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
       <label index="promptGeodataRemoved">latitude and longitude are removed!</label>
       <label index="promptGeodataUpdate">latitude and longitude are updated! Please take care of the Google API licence.</label>
+      <label index="promptRadialsearchBody"><![CDATA[
+        <p style="padding:1em 0;">
+          You need the extension Radial Search (German: Umkreissuche).<br />
+          See
+        </p>
+        <ul style="list-style:outside;">
+          <li>
+            <a href="http://typo3.org/extensions/repository/view/radialsearch"
+              style="text-decoration:underline;"
+              alt="Radial Search (Umkreissuche)"
+              title="Radial Search (Umkreissuche)"
+              target="_blank">Radial Search on typo3.org</a>
+          </li>
+          <li>
+            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual,pdf" 
+              style="text-decoration:underline;"
+              alt="Radial Search Manual"
+              title="Radial Search Manual"
+              target="_blank">Radial Search Manual (PDF)</a>
+          </li>
+          <li>
+            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual,pdf" 
+              style="text-decoration:underline;"
+              alt="Browser Tutorial Search and Filter"
+              title="Browser Tutorial Search and Filter"
+              target="_blank">Browser Tutorial Search and Filter (PDF)</a>
+          </li>
+        </ul>
+      ]]></label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
