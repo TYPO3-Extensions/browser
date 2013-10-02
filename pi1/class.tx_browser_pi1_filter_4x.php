@@ -502,7 +502,7 @@ class tx_browser_pi1_filter_4x {
       if( $filterType == 'RADIALSEARCH' )
       {
         $arr_andWhereFilter = $arr_andWhereFilter
-                            + $this->init_andWhereFilter_radialserach( )
+                            + $this->init_andWhereFilter_radialsearch( )
                             ;
         continue;
       }
@@ -1229,7 +1229,7 @@ class tx_browser_pi1_filter_4x {
   }
 
 /**
- * init_andWhereFilter_radialserach( ): 
+ * init_andWhereFilter_radialsearch( ): 
  *
  * @return	string
  * @internal    #52486
@@ -1237,12 +1237,12 @@ class tx_browser_pi1_filter_4x {
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init_andWhereFilter_radialserach( )
+  private function init_andWhereFilter_radialsearch( )
   {
     $path2pi1 = t3lib_extMgm::extPath( 'radialsearch' ) . 'pi1/';
 
-    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialserach.php' );
-    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialserach' );
+    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
+    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
 
     $this->filterRadialsearch->setParentObject( $this->pObj );
 
@@ -1250,7 +1250,7 @@ class tx_browser_pi1_filter_4x {
                         + $this->filterRadialsearch->andWhere( )
                         ;
     return array( );
-    $arrResult      = $this->init_andWhereFilterRadialserach( );
+    $arrResult      = $this->init_andWhereFilterRadialsearch( );
     $latAndWhere    = $arrResult['lat']['andWhere'];
     $latTableField  = $arrResult['lat']['tableField'];
     $lonAndWhere    = $arrResult['lon']['andWhere'];
@@ -1259,7 +1259,7 @@ class tx_browser_pi1_filter_4x {
     $arr_andWhereFilter[ $latTableField ] = $latAndWhere;
     $arr_andWhereFilter[ $lonTableField ] = $lonAndWhere;
     $arr_andWhereFilter = $arr_andWhereFilter
-                        + $this->init_andWhereFilterRadialserach( )
+                        + $this->init_andWhereFilterRadialsearch( )
                         ;
   }
 

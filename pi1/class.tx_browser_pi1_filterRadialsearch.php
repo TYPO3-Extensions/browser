@@ -24,7 +24,7 @@
 ***************************************************************/
 
 /**
- * The class tx_browser_pi1_filterRadialserach bundles methods for rendering and processing radial search filter
+ * The class tx_browser_pi1_filterRadialsearch bundles methods for rendering and processing radial search filter
  *
  * @author       Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package      TYPO3
@@ -38,12 +38,12 @@
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  */
-class tx_browser_pi1_filterRadialserach {
+class tx_browser_pi1_filterRadialsearch {
   
   public $prefixId = 'tx_browser_pi1';
 
   // same as class name
-  public $scriptRelPath = 'pi1/class.tx_browser_pi1_filterRadialserach.php';
+  public $scriptRelPath = 'pi1/class.tx_browser_pi1_filterRadialsearch.php';
 
   // path to this script relative to the extension dir.
   public $extKey = 'browser';
@@ -126,7 +126,7 @@ class tx_browser_pi1_filterRadialserach {
   }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filterRadialserach.php']) {
-  include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filterRadialserach.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filterRadialsearch.php']) {
+  include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filterRadialsearch.php']);
 }
 ?>
