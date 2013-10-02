@@ -2788,6 +2788,12 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
         area = 0
       }
+        // Master template for a radialsearch with a sword input and a radius select box. You are needing the extension radialsearch!
+      radialsearch = RADIALSEARCH
+      radialsearch {
+        radialsearch < plugin.tx_radialsearch_pi1
+        radiusbox    < plugin.tx_radialsearch_pi2
+      }
         // Master template for a selectbox
       selectbox = SELECTBOX
       selectbox {
@@ -3311,12 +3317,6 @@ plugin.tx_browser_pi1 {
             }
           }
         }
-      }
-        // Master template for a radialsearch with a sword input and a radius select box. You are needing the extension radialsearch!
-      radialsearch = RADIALSEARCH
-      radialsearch {
-        radialsearch < plugin.tx_radialsearch_pi1
-        radiusbox    < plugin.tx_radialsearch_pi2
       }
         // download
       modules =
