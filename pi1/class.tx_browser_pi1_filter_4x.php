@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.5.7
+ * @version      4.7.0
  * @since        3.9.9
  */
 
@@ -448,7 +448,7 @@ class tx_browser_pi1_filter_4x {
  * init_andWhereFilter( ): Set and returns the SQL andWhere statement
  *
  * @return	string		$this->andWhereFilter : the SQL andWhere statement
- * @version 4.1.21
+ * @version 4.7.0
  * @since   3.9.12
  */
   private function init_andWhereFilter( )
@@ -479,8 +479,15 @@ class tx_browser_pi1_filter_4x {
       // LOOP: filter tableFields
     foreach( $this->arr_tsFilterTableFields as $tableField )
     {
-      list( $table, $field ) = explode( '.', $tableField );
-      $str_andWhere         = null;
+var_dump( __METHOD__, __LINE__, $tableField );
+          // #52486, 131002, dwildt, 4+
+        if( $arrFields == 'RADIALSEARCH' )
+        {
+          continue;
+        }
+          // #52486, 131002, dwildt, 4+
+      list( $table, $field )  = explode( '.', $tableField );
+      $str_andWhere           = null;
 
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
