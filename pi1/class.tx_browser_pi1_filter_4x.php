@@ -329,7 +329,15 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
+        // #52486, 131002, dwildt, 6+
+      //$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
+      if( $fields == 'RADIALSEARCH' )
+      {
 $this->pObj->dev_var_dump( $tableWiDot, $fields );
+        continue;
+      }
+        // #52486, 131002, dwildt, 6+
+
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
           // CONTINUE : field has an dot
