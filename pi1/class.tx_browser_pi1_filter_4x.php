@@ -501,14 +501,6 @@ class tx_browser_pi1_filter_4x {
       $filterType = $conf_view['filter.'][$table];
       if( $filterType == 'RADIALSEARCH' )
       {
-        $arrResult      = $this->init_andWhereFilter_radialserach( );
-        $latAndWhere    = $arrResult['lat']['andWhere'];
-        $latTableField  = $arrResult['lat']['tableField'];
-        $lonAndWhere    = $arrResult['lon']['andWhere'];
-        $lonTableField  = $arrResult['lon']['tableField'];
-        //'tx_org_headquarterscat.title' => 'tx_org_headquarterscat.uid IN (3)
-        $arr_andWhereFilter[ $latTableField ] = $latAndWhere;
-        $arr_andWhereFilter[ $lonTableField ] = $lonAndWhere;
         $arr_andWhereFilter = $arr_andWhereFilter
                             + $this->init_andWhereFilterRadialserach( )
                             ;
