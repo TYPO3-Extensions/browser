@@ -334,6 +334,11 @@ class tx_browser_pi1_filter_4x {
       if( $fields == 'RADIALSEARCH' )
       {
 $this->pObj->dev_var_dump( $tableWiDot, $fields );
+    $cObj_name = 'COA';
+    $cObj_conf = $this->conf_view['filter.'][$tableWiDot][$fields . '.'];
+    $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+$this->pObj->dev_var_dump( $item );
+//        $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
         continue;
       }
         // #52486, 131002, dwildt, 6+
