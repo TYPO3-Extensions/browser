@@ -172,18 +172,18 @@
               target="_blank">Radial Search on typo3.org</a>
           </li>
           <li style="margin-left:2em;">
-            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual,pdf" 
+            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf" 
               style="text-decoration:underline;"
               alt="Radial Search Manual"
               title="Radial Search Manual"
               target="_blank">Radial Search Manual (PDF)</a>
           </li>
           <li style="margin-left:2em;">
-            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual,pdf" 
+            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf" 
               style="text-decoration:underline;"
               alt="Browser Tutorial Search and Filter"
               title="Browser Tutorial Search and Filter"
-              target="_blank">Browser Tutorial Search and Filter (PDF)</a>
+              target="_blank">Browser Tutorial Search and Filter (PDF)</a>. Look for "Radial Search".
           </li>
         </ul>
       ]]></label>
