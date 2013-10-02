@@ -329,21 +329,17 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
-        // #52486, 131002, dwildt, 6+
-      //$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
+        // #52486, 131002, dwildt, 9+
       if( $fields == 'RADIALSEARCH' )
       {
-//$this->pObj->dev_var_dump( $tableWiDot, $fields );
-    $cObj_name = 'COA';
-    $cObj_conf = $this->conf_view['filter.'][$tableWiDot . '.'];
-    $htmlFilter  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-    $hashMarker = '###' . strtoupper( $tableWiDot ) . '###';
-    
-//$this->pObj->dev_var_dump( $item );
+        $cObj_name    = 'COA';
+        $cObj_conf    = $this->conf_view['filter.'][$tableWiDot . '.'];
+        $htmlFilter   = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        $hashMarker   = '###' . strtoupper( $tableWiDot ) . '###';
         $arr_return['data']['filter'][$hashMarker] = $htmlFilter;
         continue;
       }
-        // #52486, 131002, dwildt, 6+
+        // #52486, 131002, dwildt, 9+
 
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
@@ -505,6 +501,7 @@ $this->pObj->dev_var_dump( $arr_return );
       $filterType = $conf_view['filter.'][$table];
       if( $filterType == 'RADIALSEARCH' )
       {
+        //$arr_andWhereFilter[$table . '.' . $field] = $str_andWhere;
         continue;
       }
         // #52486, 131002, dwildt, 6+
@@ -558,6 +555,7 @@ $this->pObj->dev_var_dump( $arr_return );
     }
       // LOOP: filter tableFields
 
+$this->pObj->dev_var_dump( $arr_andWhereFilter );
       // andWhere statement
     $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
 
