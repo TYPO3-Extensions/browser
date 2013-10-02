@@ -475,7 +475,7 @@ class tx_browser_pi1_filter_4x {
     $conf       = $this->pObj->conf;
     $view       = $this->view;
     $viewWiDot  = $view . '.';
-    $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
+    $conf_view  = $conf['views.'][$viewWiDot][$this->mode . '.'];
       // Init area
 $this->pObj->dev_var_dump( $view, $conf );
 
@@ -1426,7 +1426,7 @@ $this->pObj->dev_var_dump( $view, $conf );
     {
       $view             = $this->pObj->view;
       $viewWiDot        = $view.'.';
-      $prompt = $viewWiDot . $mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
+      $prompt = $viewWiDot . $this->mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
       t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
@@ -1479,7 +1479,7 @@ $this->pObj->dev_var_dump( $view, $conf );
     {
       $view             = $this->pObj->view;
       $viewWiDot        = $view.'.';
-      $prompt = $viewWiDot . $mode . '.filters hasn\'t any table.field syntax.';
+      $prompt = $viewWiDot . $this->mode . '.filters hasn\'t any table.field syntax.';
       t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
     }
       // DRS
