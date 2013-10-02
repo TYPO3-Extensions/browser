@@ -479,7 +479,7 @@ class tx_browser_pi1_filter_4x {
       // LOOP: filter tableFields
     foreach( $this->arr_tsFilterTableFields as $tableField )
     {
-var_dump( __METHOD__, __LINE__, $tableField );
+//var_dump( __METHOD__, __LINE__, $tableField );
           // #52486, 131002, dwildt, 4+
         if( $arrFields == 'RADIALSEARCH' )
         {
