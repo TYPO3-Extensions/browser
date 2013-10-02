@@ -4,6 +4,7 @@
   * #52486: Radial Search
             Effected files:
             * pi1
+              * class.tx_browser_pi1_filter_4x.php
               * class.tx_browser_pi1_typoscript.php
             * static
               * constants.txt

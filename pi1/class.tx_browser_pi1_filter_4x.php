@@ -329,6 +329,7 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
+$this->pObj->dev_var_dump( $tableWiDot, $fields );
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
           // CONTINUE : field has an dot
