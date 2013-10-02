@@ -477,7 +477,7 @@ class tx_browser_pi1_filter_4x {
     $viewWiDot  = $view . '.';
     $conf_view  = $conf['views.'][$viewWiDot][$this->mode . '.'];
       // Init area
-$this->pObj->dev_var_dump( $view, $conf );
+//$this->pObj->dev_var_dump( $view, $conf );
 
       // LOOP: filter tableFields
     foreach( $this->arr_tsFilterTableFields as $tableField )
@@ -485,7 +485,7 @@ $this->pObj->dev_var_dump( $view, $conf );
       list( $table, $field )  = explode( '.', $tableField );
       $str_andWhere           = null;
 
-//$this->pObj->dev_var_dump( $tableField, $conf_view, $conf_view['filter.'], $table, $conf_view['filter.'][$table] );
+$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
           // #52486, 131002, dwildt, 4+
         if( $arrFields == 'RADIALSEARCH' )
         {
