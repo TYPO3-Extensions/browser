@@ -482,7 +482,7 @@ class tx_browser_pi1_filter_4x {
       list( $table, $field )  = explode( '.', $tableField );
       $str_andWhere           = null;
 
-$this->pObj->dev_var_dump( $tableField, $conf_view['filter.'][$table] );
+$this->pObj->dev_var_dump( $tableField, $conf_view['filter.'], $table, $conf_view['filter.'][$table] );
           // #52486, 131002, dwildt, 4+
         if( $arrFields == 'RADIALSEARCH' )
         {
