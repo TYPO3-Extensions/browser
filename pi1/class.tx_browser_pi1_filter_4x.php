@@ -1239,6 +1239,16 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter_radialserach( )
   {
+    $path2pi1 = t3lib_extMgm::extPath( 'radialsearch' ) . 'pi1/';
+
+    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialserach.php' );
+    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialserach' );
+
+    $this->filterRadialsearch->setParentObject( $this->pObj );
+
+    $arr_andWhereFilter = $arr_andWhereFilter
+                        + $this->filterRadialsearch->andWhere( )
+                        ;
     return array( );
     $arrResult      = $this->init_andWhereFilterRadialserach( );
     $latAndWhere    = $arrResult['lat']['andWhere'];
