@@ -155,7 +155,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Page Objects/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   pageobjects.links = Click me!
 
-  # cat=Browser - Radial Search/others/100;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptRadialsearch]; label=Click for help!
+  # cat=Browser - Radial Search/others/100;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptRadialsearch]; label=Help!
   radialsearch.help = Click me!
   # cat=Browser - Radial Search//200;       type=string;    label= Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
   radialsearch.lat = 
