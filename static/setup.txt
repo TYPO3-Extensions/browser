@@ -2791,8 +2791,6 @@ plugin.tx_browser_pi1 {
         // Master template for a radialsearch with a sword input and a radius select box. You are needing the extension radialsearch!
       radialsearch = RADIALSEARCH
       radialsearch {
-          // [String/optional] Name for the piVar. Name must be unique.
-        nice_piVar =
           // radialsearch, radiusbox
         10 = COA 
         10 {
