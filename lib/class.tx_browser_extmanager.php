@@ -169,8 +169,10 @@ class tx_browser_extmanager
     $str_prompt = null;
 
     $str_prompt = $str_prompt . '
-<div class="message-body">
-  ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchBody'). '
+<div class="typo3-message message-information">
+  <div class="message-body">
+    ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchBody'). '
+  </div>
 </div>';
       
 //      // #48613, dwildt, 3+

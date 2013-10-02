@@ -164,7 +164,7 @@
           See
         </p>
         <ul style="list-style:outside;">
-          <li>
+          <li style="margin-left:2em;">
             <a href="http://typo3.org/extensions/repository/view/radialsearch"
               style="text-decoration:underline;"
               alt="Radial Search (Umkreissuche)"
