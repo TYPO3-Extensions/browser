@@ -501,8 +501,8 @@ class tx_browser_pi1_filter_4x {
       $filterType = $conf_view['filter.'][$table];
       if( $filterType == 'RADIALSEARCH' )
       {
-        $arr_andWhereFilter = $arr_andWhereFilter
-                            + $this->init_andWhereFilter_radialsearch( )
+        $arr_andWhereFilter = ( array ) $arr_andWhereFilter
+                            + ( array ) $this->init_andWhereFilter_radialsearch( )
                             ;
         continue;
       }
