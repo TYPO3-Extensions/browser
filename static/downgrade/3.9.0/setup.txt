@@ -3253,7 +3253,7 @@ plugin.tx_browser_pi1 {
             csvValue = title
           }
         }
-          // [BOOLEAN] Detect iamges automatically
+          // [BOOLEAN] Detect images automatically
         image = {$plugin.tx_browser_pi1.autoDiscoverImage}
         image {
           localTableOnly  = 0

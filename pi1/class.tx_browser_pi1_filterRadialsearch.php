@@ -87,11 +87,23 @@ class tx_browser_pi1_filterRadialsearch {
 
     $this->filter = $this->pObj->objFltr4x;
     
+    $andWhere = '            AND tx_radialsearch_postalcodes.pid = 0 
+            AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
+            AND tx_radialsearch_postalcodes.admin_code1 LIKE "TH"
+            AND
+            (
+                  tx_radialsearch_postalcodes.postal_code LIKE "99084 Erfurt%" 
+              OR  tx_radialsearch_postalcodes.place_name LIKE "99084 Erfurt%" 
+              OR  CONCAT(tx_radialsearch_postalcodes.postal_code, " ", tx_radialsearch_postalcodes.place_name) LIKE "99084 Erfurt%"
+            ) 
+            AND tx_radialsearch_postalcodes.deleted = 0 
+';
       // Prompt the expired time to devlog
+
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-    return false;
+    return $andWhere;
   }
 
 

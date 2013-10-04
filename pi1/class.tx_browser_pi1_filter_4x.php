@@ -443,6 +443,9 @@ class tx_browser_pi1_filter_4x {
       // Init calendar area
     $this->init_calendarArea( );
 
+      // Init class var $...
+    $this->init_radialSearch( );
+
       // Init class var $andWhereFilter
     $this->init_andWhereFilter( );
 
@@ -1250,17 +1253,6 @@ class tx_browser_pi1_filter_4x {
                         + $this->filterRadialsearch->andWhere( )
                         ;
     return array( );
-    $arrResult      = $this->init_andWhereFilterRadialsearch( );
-    $latAndWhere    = $arrResult['lat']['andWhere'];
-    $latTableField  = $arrResult['lat']['tableField'];
-    $lonAndWhere    = $arrResult['lon']['andWhere'];
-    $lonTableField  = $arrResult['lon']['tableField'];
-    //'tx_org_headquarterscat.title' => 'tx_org_headquarterscat.uid IN (3)
-    $arr_andWhereFilter[ $latTableField ] = $latAndWhere;
-    $arr_andWhereFilter[ $lonTableField ] = $lonAndWhere;
-    $arr_andWhereFilter = $arr_andWhereFilter
-                        + $this->init_andWhereFilterRadialsearch( )
-                        ;
   }
 
 
@@ -1590,7 +1582,59 @@ class tx_browser_pi1_filter_4x {
 
     return;
   }
+  
+/**
+ * init_radialSearch( ): 
+ *
+ * @return	string		$this->andWhereFilter : the SQL andWhere statement
+ * @version 4.7.0
+ * @since   3.9.12
+ */
+  private function init_radialSearch( )
+  {
+//      // RETURN : $this->andWhereFilter was set before
+//    if( ! ( $this->andWhereFilter === null ) )
+//    {
+//      return $this->andWhereFilter;
+//    }
+//      // RETURN : $this->andWhereFilter was set before
 
+      // RETURN : there isn't any filter
+    if( ! $this->bool_isFilter )
+    {
+      $this->andWhereFilter = false;
+      return $this->andWhereFilter;
+    }
+      // RETURN : there isn't any filter
+
+    $arr_andWhereFilter = null;
+
+      // Init area
+    $this->pObj->objCal->area_init( );
+    $conf       = $this->pObj->conf;
+    $viewWiDot  = $this->view . '.';
+    $conf_view  = $conf['views.'][$viewWiDot][$this->mode . '.'];
+      // Init area
+
+      // LOOP: filter tableFields
+    foreach( $this->arr_tsFilterTableFields as $tableField )
+    {
+      list( $table, $field )  = explode( '.', $tableField );
+      $str_andWhere           = null;
+
+        // #52486, 131002, dwildt, 6+
+$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
+      $filterType = $conf_view['filter.'][$table];
+      if( $filterType == 'RADIALSEARCH' )
+      {
+        $arr_andWhereFilter = ( array ) $arr_andWhereFilter
+                            + ( array ) $this->init_andWhereFilter_radialsearch( )
+                            ;
+        continue;
+      }
+        // #52486, 131002, dwildt, 6+
+    }
+  }
 
 
 /**
