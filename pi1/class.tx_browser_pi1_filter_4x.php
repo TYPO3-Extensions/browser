@@ -1658,8 +1658,6 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // Init radialsserach filter class
     $this->init_radialSearchObject( );
 
-      // Init radialsserach typoscript
-    $this->init_radialSearchTS( );
   }
   
 /**
@@ -1740,22 +1738,6 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
     $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
     $this->filterRadialsearch->setParentObject( $this->pObj );
-  }
-  
-/**
- * init_radialSearchTS( ) : 
- *
- * @return	void
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialSearchTS( )
-  {
-      // LOOP each table
-    $radialsearchConf = $this->conf_view['radialsearch.'];
-
-    return;
   }
 
 

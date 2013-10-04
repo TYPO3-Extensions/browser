@@ -97,45 +97,6 @@ class tx_browser_pi1_filterRadialsearch {
     return $andWhere;
   }
   
-/**
- * html( )  : Get the radialsearch filter
- *
- * @return	array         : array with hashKey and html code (string)
- * @access  public
- * @version 4.7.6
- * @since   4.7.6
- */
-  public function html( )
-  {
-    $this->init( );
-
-      // RETURN : there isn't any radialsearch filter
-    if( ! $this->filter->radialsearchTable )
-    {
-      return null;
-    }
-      // RETURN : there isn't any radialsearch filter
-    
-    $arrReturn  = array( );
-    $table      = $this->filter->radialsearchTable;
-
-    $name = $this->filter->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
-    $conf = $this->filter->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
-    $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
-    
-      // DIE  : unexpected result
-    if( ! $html )
-    {
-      $prompt = __METHOD__ . ' (line #' . __LINE__ . '): html is empty!';
-      die( $prompt );
-    }
-      // DIE  : unexpected result
-
-    $key  = '###' . strtoupper( $table ) . '###';
-    $arrReturn[ $key ] = $html;
-    
-    return $arrReturn;
-  }
 
 
 
