@@ -1596,23 +1596,6 @@ plugin.tx_browser_pi1 {
       }
     }
 
-      // [Array] constanteditor
-    radialsearch = 
-    radialsearch {
-        // [Array] lat, lon, radius, sword
-      constanteditor =
-      constanteditor {
-          // [String] Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
-        lat     = {$plugin.tx_browser_pi1.radialsearch.lat}
-          // [String] Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
-        lon     = {$plugin.tx_browser_pi1.radialsearch.lon}
-          // [String] Radius: HTML name of the select box with the radius options.
-        radius  = {$plugin.tx_browser_pi1.radialsearch.radius}
-          // [String] Sword: HTML name of the input field for the search word (sword).
-        sword   = {$plugin.tx_browser_pi1.radialsearch.sword}
-      }
-    }
-
       // [BOOLEAN] 1 (default): Display the record browser. 0: Don't display it.
     record_browser = 1
     record_browser {
@@ -2805,11 +2788,31 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
         area = 0
       }
-        // [COA] Master template for a radialsearch with a sword input and a radius select box. You are needing the extension radialsearch!
+        // [Array] conf, content. Master template for a radialsearch with a sword input and a radius select box. You are needing the extension radialsearch!
       radialsearch = RADIALSEARCH
       radialsearch {
-        10 < plugin.tx_radialsearch_pi1
-        20 < plugin.tx_radialsearch_pi2
+          // [Array] constanteditor
+        conf = 
+        conf {
+            // [Array] lat, lon, radius, sword
+          constanteditor =
+          constanteditor {
+              // [String] Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
+            lat     = {$plugin.tx_browser_pi1.radialsearch.lat}
+              // [String] Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
+            lon     = {$plugin.tx_browser_pi1.radialsearch.lon}
+              // [String] Radius: HTML name of the select box with the radius options.
+            radius  = {$plugin.tx_browser_pi1.radialsearch.radius}
+              // [String] Sword: HTML name of the input field for the search word (sword).
+            sword   = {$plugin.tx_browser_pi1.radialsearch.sword}
+          }
+        }
+          // [Array] plugin.tx_radialsearch_pi1, plugin.tx_radialsearch_pi2
+        content = COA
+        content {
+          10 < plugin.tx_radialsearch_pi1
+          20 < plugin.tx_radialsearch_pi2
+        }
       }
         // Master template for a selectbox
       selectbox = SELECTBOX
