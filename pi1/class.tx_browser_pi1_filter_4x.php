@@ -1500,12 +1500,14 @@ class tx_browser_pi1_filter_4x {
           // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
+$this->pObj->dev_var_dump( $table, $field );
           $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
         }
           // IF : add field without a dot to $arr_tsFilterTableFields
         next( $arrFields );
       }
     }
+$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // LOOP : all table.field
 
       // RETURN : true, there is one table.field at least
@@ -1623,7 +1625,7 @@ class tx_browser_pi1_filter_4x {
       $str_andWhere           = null;
 
         // #52486, 131002, dwildt, 6+
-$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
+      //$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
       $filterType = $conf_view['filter.'][$table];
       if( $filterType == 'RADIALSEARCH' )
       {
