@@ -2649,9 +2649,9 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
   }
   
 /**
- * get_filterRadialsearch( ):  
+ * get_filterRadialsearch( )  : Get the radialserach filter
  *
- * @return	array
+ * @return	array         : array with hashKey and html code (string)
  * @internal #52486
  * @access  private
  * @version 4.7.6
@@ -2659,32 +2659,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  */
   private function get_filterRadialsearch( )
   {
-      // RETURN : there isn't any radialsearch filter
-    if( ! $this->radialsearchTable )
-    {
-      return null;
-    }
-      // RETURN : there isn't any radialsearch filter
-    
-    $arrReturn  = array( );
-    $table      = $this->radialsearchTable;
-
-    $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
-    $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
-    $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
-    
-      // DIE  : unexpected result
-    if( ! $html )
-    {
-      $prompt = __METHOD__ . ' (line #' . __LINE__ . '): html is empty!';
-      die( $prompt );
-    }
-      // DIE  : unexpected result
-
-    $key  = '###' . strtoupper( $table ) . '###';
-    $arrReturn[ $key ] = $html;
-    
-    return $arrReturn;
+    return $this->filterRadialsearch->html( );
   }
 
 

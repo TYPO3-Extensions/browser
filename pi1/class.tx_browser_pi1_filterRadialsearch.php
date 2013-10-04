@@ -71,21 +71,12 @@ class tx_browser_pi1_filterRadialsearch {
  */
   public function andWhere( )
   {
-    if( ! is_object( $this->pObj ) )
-    {
-      $prompt = 'ERROR: no object!<br />' . PHP_EOL .
-                'Sorry for the trouble.<br />' . PHP_EOL .
-                'TYPO3 Radial Search<br />' . PHP_EOL .
-              __METHOD__ . ' (' . __LINE__ . ')';
-      die( $prompt );
-
-    }
+    $this->init( );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-    $this->filter = $this->pObj->objFltr4x;
     
     $andWhere = '            AND tx_radialsearch_postalcodes.pid = 0 
             AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
@@ -104,6 +95,88 @@ class tx_browser_pi1_filterRadialsearch {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
     return $andWhere;
+  }
+  
+/**
+ * html( )  : Get the radialsearch filter
+ *
+ * @return	array         : array with hashKey and html code (string)
+ * @access  public
+ * @version 4.7.6
+ * @since   4.7.6
+ */
+  public function html( )
+  {
+    $this->init( );
+
+      // RETURN : there isn't any radialsearch filter
+    if( ! $this->filter->radialsearchTable )
+    {
+      return null;
+    }
+      // RETURN : there isn't any radialsearch filter
+    
+    $arrReturn  = array( );
+    $table      = $this->filter->radialsearchTable;
+
+    $name = $this->filter->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
+    $conf = $this->filter->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
+    $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
+    
+      // DIE  : unexpected result
+    if( ! $html )
+    {
+      $prompt = __METHOD__ . ' (line #' . __LINE__ . '): html is empty!';
+      die( $prompt );
+    }
+      // DIE  : unexpected result
+
+    $key  = '###' . strtoupper( $table ) . '###';
+    $arrReturn[ $key ] = $html;
+    
+    return $arrReturn;
+  }
+
+
+
+  /***********************************************
+  *
+  * Init
+  *
+  **********************************************/
+/**
+ * init( ): 
+ *
+ * @return	boolen        true
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function init( )
+  {
+    if( ! is_object( $this->pObj ) )
+    {
+      $prompt = 'ERROR: no object!<br />' . PHP_EOL .
+                'Sorry for the trouble.<br />' . PHP_EOL .
+                'TYPO3 Radial Search<br />' . PHP_EOL .
+              __METHOD__ . ' (' . __LINE__ . ')';
+      die( $prompt );
+
+    }
+
+    $this->filter = $this->pObj->objFltr4x;
+
+    if( ! is_object( $this->filter ) )
+    {
+      $prompt = 'ERROR: no object!<br />' . PHP_EOL .
+                'Sorry for the trouble.<br />' . PHP_EOL .
+                'TYPO3 Radial Search<br />' . PHP_EOL .
+              __METHOD__ . ' (' . __LINE__ . ')';
+      die( $prompt );
+
+    }
+
+    return true;
   }
 
 
