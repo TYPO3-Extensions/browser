@@ -3231,10 +3231,10 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     $this->arr_selectedFilters = false;
 
       // LOOP : each filter table
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
         // CONTINUE : table has an dot
-      if( rtrim( $tableWiDot, '.') != $tableWiDot )
+      if( rtrim( $table, '.') != $table )
       {
         continue;
       }
@@ -3248,7 +3248,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
           continue;
         }
         $field      = substr($fieldWiDot, 0, -1);
-        $tableField = $tableWiDot . $field;
+        $tableField = $table . $field;
         if( isset( $this->pObj->piVars[$tableField] ) )
         {
             // #41754.02, 121010, dwildt, 2-
@@ -4699,10 +4699,10 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     static $bool_drsFirstPrompt = true;
     
       // LOOP each filter
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
         // CONTINUE : table has an dot
-      if( rtrim( $tableWiDot, '.') != $tableWiDot )
+      if( rtrim( $table, '.') != $table )
       {
         continue;
       }
@@ -4718,11 +4718,8 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
           // CONTINUE : field has an dot
 
           // Class var table.field
-        $tableField = $tableWiDot . $field;
+        $tableField = $table . $field;
 
-          // Get table
-        list( $table ) = explode( '.', $tableField );
-        
         $conf_view        = $this->conf_view;
         $cObj_name        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
         $cObj_conf        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
