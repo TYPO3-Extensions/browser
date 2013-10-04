@@ -1576,14 +1576,50 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  */
   private function init_consolidationAndSelect_isTableFieldsRadialsearch( )
   {
-    $this->pObj->dev_var_dump( $this->radialsearchTable );
     if( ! $this->radialsearchTable )
     {
       return false;
     }
 
     $this->pObj->dev_var_dump( $this->radialsearchTable );
-    return false;
+    
+    $table = $this->radialsearchTable;
+    
+    $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ];
+    $lat  = $conf[ 'constanteditor.' ][ 'lat' ];
+    $lon  = $conf[ 'constanteditor.' ][ 'lat' ];
+    
+    switch( true )
+    {
+      case( empty( $lat ) ):
+      case( empty( $lon ) ):
+        $prompt = '
+<h1>
+  ERROR: radial search
+</h1>
+<p>
+  The configuration of your radial search filter isn\'t proper.
+</p>
+<p>
+  Please enter the tableField label for the latitude and the longitude!
+</p>
+<p>
+  See Constant Editor of the current page. Category [BROWSER - RADIAL SERACH].
+</p>
+<p>
+  Sorry for the trouble. Browser - TYPO3 without PHP.
+</p>
+';
+        die( $prompt );
+      default:
+          // Follow the workflow
+        break;
+    }
+
+    $this->arr_tsFilterTableFields[] = $lat;
+    $this->arr_tsFilterTableFields[] = $lon;
+
+    return true;
   }
 
 
