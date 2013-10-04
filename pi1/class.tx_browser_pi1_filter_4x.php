@@ -430,13 +430,17 @@ class tx_browser_pi1_filter_4x {
  *          * cObj->data
  *
  * @return	void
- * @version 4.1.21
+ * @version 4.7.6
  * @since   3.9.9
  */
   private function init( )
   {
       // #41776, dwildt, 1-
 //    $this->pObj->objFltr3x->get_tableFields( );
+
+      // #52486, 131005, dwildt, 2+
+      // Init radialsearch filter and object
+    $this->init_radialSearch( );
 
       // RETURN: if there isn't any filter array
     if( ! $this->init_boolIsFilter( ) )
@@ -458,9 +462,6 @@ class tx_browser_pi1_filter_4x {
 
       // Init calendar area
     $this->init_calendarArea( );
-
-      // Init class var $...
-    $this->init_radialSearch( );
 
       // Init class var $andWhereFilter
     $this->init_andWhereFilter( );
@@ -1645,6 +1646,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  *
  * @return	void
  * @access  private
+ * @internal    #52486
  * @version 4.7.0
  * @since   4.7.0
  */
@@ -1671,6 +1673,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  *                                * returns false
  *
  * @return	boolean         TRue, if radialsearch filter is set
+ * @internal    #52486
  * @access  private
  * @version 4.7.0
  * @since   4.7.0
@@ -1728,6 +1731,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  * init_radialSearchObject( ): 
  *
  * @return	void
+ * @internal    #52486
  * @access  private
  * @version 4.7.0
  * @since   4.7.0
