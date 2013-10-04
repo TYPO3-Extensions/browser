@@ -1695,37 +1695,34 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
         continue;
       }
       
-        // BREAK : Name (COA object) is RADIALSEARCH
+        // RETURN true : Name (COA object) is RADIALSEARCH
       if( $name == 'RADIALSEARCH' )
       {
-        break;
-      }
-      
-        // DRS
-      if( $this->pObj->b_drs_filter )
-      {
-        $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
-        t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS
-     
-        // RETURN false : any radialsearch filter isn't used
-      return false;
+          // Set the radialsearch "table". Example: radialsearch
+        $this->radialsearchTable = $table;
+          // DRS
+        if( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
+          t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // DRS
+        return true;
+      }      
+        // RETURN true : Name (COA object) is RADIALSEARCH
     }
       // LOOP each table
 
-      // Set the radialsearch "table". Example: radialsearch
-    $this->radialsearchTable = $table;
-    
       // DRS
     if( $this->pObj->b_drs_filter )
     {
-      $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
+      $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
       t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
 
-    return true;
+      // RETURN false : any radialsearch filter isn't used
+    return false;
   }
   
 /**
@@ -2674,7 +2671,6 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
     $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
-$this->pObj->dev_var_dump( $table, $$name, $conf );
     $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
     
       // DIE  : unexpected result
