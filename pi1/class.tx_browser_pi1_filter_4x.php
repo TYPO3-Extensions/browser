@@ -304,7 +304,7 @@ class tx_browser_pi1_filter_4x {
  * get( ):  Get filters. Returns a marker array or an error message.
  *
  * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
- * @version 4.7.0
+ * @version 4.7.6
  * @since   3.9.9
  */
   public function get( )
@@ -347,7 +347,8 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-      if( substr( $table, -1 ) != '.' )
+        // 131005, dwildt, 4+
+      if( rtrim( $table, '.') != $table )
       {
         continue;
       }
@@ -1504,8 +1505,7 @@ class tx_browser_pi1_filter_4x {
       // LOOP each table
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-        // 131004, dwildt, 4+
-      if( substr( $table, -1 ) != '.' )
+      if( rtrim( $table, '.') != $table )
       {
           #52486, 131004, dwildt, 5+
         $name = $this->conf_view[ 'filter.' ][ $table ];
@@ -3207,7 +3207,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  *                          is an element of the piVars.
  *
  * @return	array       $arr_selectedFilters: contains $tableFields of selected filters
- * @version 4.1.21
+ * @version 4.7.6
  * @since   3.9.12
  */
   public function get_selectedFilters( )
@@ -3231,8 +3231,14 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     $this->arr_selectedFilters = false;
 
       // LOOP : each filter table
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
+        // 131005, dwildt, 4+
+      if( rtrim( $table, '.') != $table )
+      {
+        continue;
+      }
+
         // LOOP : each filter field
       foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
       {
@@ -3241,7 +3247,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
           continue;
         }
         $field      = substr($fieldWiDot, 0, -1);
-        $tableField = $tableWiDot . $field;
+        $tableField = $table . $field;
         if( isset( $this->pObj->piVars[$tableField] ) )
         {
             // #41754.02, 121010, dwildt, 2-
@@ -4684,7 +4690,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  *
  * @return	void
  * @internal  #41753
- * @version 4.1.21
+ * @version 4.7.6
  * @since   4.1.21
  */
   private function eval_treeview( )
@@ -4692,8 +4698,14 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     static $bool_drsFirstPrompt = true;
     
       // LOOP each filter
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
+        // 131005, dwildt, 4+
+      if( rtrim( $table, '.') != $table )
+      {
+        continue;
+      }
+
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
           // CONTINUE : field has an dot
@@ -4704,11 +4716,8 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
           // CONTINUE : field has an dot
 
           // Class var table.field
-        $tableField = $tableWiDot . $field;
+        $tableField = $table . $field;
 
-          // Get table
-        list( $table ) = explode( '.', $tableField );
-        
         $conf_view        = $this->conf_view;
         $cObj_name        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
         $cObj_conf        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
