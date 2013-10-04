@@ -1494,9 +1494,20 @@ class tx_browser_pi1_filter_4x {
         // #41776, dwildt, 1-
 //      while( $value = current( $arrFields ) )
         // #41776, dwildt, 1+
-      while( current( $arrFields ) )
+//      while( current( $arrFields ) )
+//      {
+//        $field = key( $arrFields );
+//          // IF : add field without a dot to $arr_tsFilterTableFields
+//        if( substr( $field, -1 ) != '.' )
+//        {
+//$this->pObj->dev_var_dump( $tables, $table, $field );
+//          $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
+//        }
+//          // IF : add field without a dot to $arr_tsFilterTableFields
+//        next( $arrFields );
+//      }
+      foreach( array_keys( $arrFields ) as $field )
       {
-        $field = key( $arrFields );
           // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
@@ -1504,7 +1515,6 @@ $this->pObj->dev_var_dump( $tables, $table, $field );
           $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
         }
           // IF : add field without a dot to $arr_tsFilterTableFields
-        next( $arrFields );
       }
     }
 $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
