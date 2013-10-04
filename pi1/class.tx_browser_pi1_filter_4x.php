@@ -1491,6 +1491,7 @@ class tx_browser_pi1_filter_4x {
       // LOOP : all table.field
     foreach( ( array ) $this->conf_view['filter.'] as $tables => $arrFields )
     {
+// 131004, dwildt, -
         // #41776, dwildt, 1-
 //      while( $value = current( $arrFields ) )
         // #41776, dwildt, 1+
@@ -1506,6 +1507,8 @@ class tx_browser_pi1_filter_4x {
 //          // IF : add field without a dot to $arr_tsFilterTableFields
 //        next( $arrFields );
 //      }
+// 131004, dwildt, -
+// 131004, dwildt, +
       foreach( array_keys( $arrFields ) as $field )
       {
           // IF : add field without a dot to $arr_tsFilterTableFields
@@ -1517,6 +1520,7 @@ $this->pObj->dev_var_dump( $tables, $table, $field );
           // IF : add field without a dot to $arr_tsFilterTableFields
       }
     }
+// 131004, dwildt, +
 $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // LOOP : all table.field
 
