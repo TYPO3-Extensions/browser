@@ -1500,7 +1500,7 @@ class tx_browser_pi1_filter_4x {
           // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
-$this->pObj->dev_var_dump( $table, $field );
+$this->pObj->dev_var_dump( $tables, $table, $field );
           $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
         }
           // IF : add field without a dot to $arr_tsFilterTableFields
