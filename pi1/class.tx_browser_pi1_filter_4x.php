@@ -1575,6 +1575,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  */
   private function init_consolidationAndSelect_isTableFieldsRadialsearch( )
   {
+    $this->pObj->dev_var_dump( $this->radialsearchTable );
     if( ! $this->radialsearchTable )
     {
       return false;
