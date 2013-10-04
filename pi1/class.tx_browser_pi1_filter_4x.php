@@ -1598,13 +1598,12 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
   ERROR: radial search
 </h1>
 <p>
-  The configuration of your radial search filter isn\'t proper.
-</p>
-<p>
-  Please enter the tableField label for the latitude and the longitude!
-</p>
-<p>
+  The configuration of your radial search filter isn\'t proper.<br />
+  Please enter the tableField label for the latitude and the longitude!<br />
   See Constant Editor of the current page. Category [BROWSER - RADIAL SERACH].
+</p>
+<p>
+  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
 </p>
 <p>
   Sorry for the trouble. Browser - TYPO3 without PHP.
