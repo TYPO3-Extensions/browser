@@ -401,7 +401,6 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
@@ -2675,6 +2674,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
     $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
+$this->pObj->dev_var_dump( $table, $$name, $conf );
     $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
     
       // DIE  : unexpected result
