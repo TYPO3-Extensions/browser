@@ -3233,6 +3233,13 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // LOOP : each filter table
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
+        // CONTINUE : table has an dot
+      if( rtrim( $tableWiDot, '.') != $tableWiDot )
+      {
+        continue;
+      }
+        // CONTINUE : field has an dot
+
         // LOOP : each filter field
       foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
       {
@@ -4694,6 +4701,13 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
+        // CONTINUE : table has an dot
+      if( rtrim( $tableWiDot, '.') != $tableWiDot )
+      {
+        continue;
+      }
+        // CONTINUE : field has an dot
+
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
           // CONTINUE : field has an dot
