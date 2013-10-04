@@ -1489,7 +1489,7 @@ class tx_browser_pi1_filter_4x {
   private function init_consolidationAndSelect_isTableFields( )
   {
       #52486, 131004, dwildt, 1+
-    $radialsearch = null;
+    $radialsearchTable = null;
     
       // LOOP each table
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
@@ -1501,15 +1501,16 @@ class tx_browser_pi1_filter_4x {
         $name = $this->conf_view[ 'filter.' ][ $table ];
         if( $name == 'RADIALSEARCH' )
         {
-          $radialsearch = $table . '.';
+          $radialsearchTable = $table . '.';
         }
           #52486, 131004, dwildt, 5+
         continue;
       }
       
         #52486, 131004, dwildt, 4+
-      if( $radialsearch == $table )
+      if( $radialsearchTable == $table )
       {
+        $radialsearchTable = null;
         continue;
       }
         #52486, 131004, dwildt, 4+
@@ -1520,7 +1521,6 @@ class tx_browser_pi1_filter_4x {
           // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
-//$this->pObj->dev_var_dump( $table, $field );
           $this->arr_tsFilterTableFields[] = trim( $table ) . $field;
         }
           // IF : add field without a dot to $arr_tsFilterTableFields
@@ -1528,13 +1528,11 @@ class tx_browser_pi1_filter_4x {
         // LOOP each field
     }
       // LOOP each table
-// 131004, dwildt, +
-$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
-      // LOOP : all table.field
 
       // #52486, 131004, dwildt, 1+
     $this->init_consolidationAndSelect_isTableFieldsRadialsearch( );
 
+$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // RETURN : true, there is one table.field at least
     if( is_array( $this->arr_tsFilterTableFields ) )
     {
