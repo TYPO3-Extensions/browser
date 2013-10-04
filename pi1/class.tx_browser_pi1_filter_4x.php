@@ -1488,48 +1488,52 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_consolidationAndSelect_isTableFields( )
   {
-      // LOOP : all table.field
+      #52486, 131004, dwildt, 1+
+    $radialsearch = null;
+    
+      // LOOP each table
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
         // 131004, dwildt, 4+
       if( substr( $table, -1 ) != '.' )
       {
-        $this->pObj->dev_var_dump( $table, $this->conf_view[ 'filter.' ][ $table ] );
+          #52486, 131004, dwildt, 5+
+        $name = $this->conf_view[ 'filter.' ][ $table ];
+        if( $name == 'RADIALSEARCH' )
+        {
+          $radialsearch = $table . '.';
+        }
+          #52486, 131004, dwildt, 5+
         continue;
       }
-        // 131004, dwildt, 4+
-// 131004, dwildt, -
-        // #41776, dwildt, 1-
-//      while( $value = current( $fields ) )
-        // #41776, dwildt, 1+
-//      while( current( $fields ) )
-//      {
-//        $field = key( $fields );
-//          // IF : add field without a dot to $arr_tsFilterTableFields
-//        if( substr( $field, -1 ) != '.' )
-//        {
-//$this->pObj->dev_var_dump( $table, $table, $field );
-//          $this->arr_tsFilterTableFields[] = trim( $table ) . $field;
-//        }
-//          // IF : add field without a dot to $arr_tsFilterTableFields
-//        next( $fields );
-//      }
-// 131004, dwildt, -
-// 131004, dwildt, +
+      
+        #52486, 131004, dwildt, 4+
+      if( $radialsearch == $table )
+      {
+        continue;
+      }
+        #52486, 131004, dwildt, 4+
+      
+        // LOOP each field
       foreach( array_keys( $fields ) as $field )
       {
           // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
-$this->pObj->dev_var_dump( $table, $field );
+//$this->pObj->dev_var_dump( $table, $field );
           $this->arr_tsFilterTableFields[] = trim( $table ) . $field;
         }
           // IF : add field without a dot to $arr_tsFilterTableFields
       }
+        // LOOP each field
     }
+      // LOOP each table
 // 131004, dwildt, +
 $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // LOOP : all table.field
+
+      // #52486, 131004, dwildt, 1+
+    $this->init_consolidationAndSelect_isTableFieldsRadialsearch( );
 
       // RETURN : true, there is one table.field at least
     if( is_array( $this->arr_tsFilterTableFields ) )
@@ -1548,6 +1552,30 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // DRS
 
       // RETURN : false, there is any table.field
+    return false;
+  }
+
+/**
+ * init_consolidationAndSelect_isTableFieldsRadialsearch( ) :
+ *
+ * @return	boolean		true: there is a table.field configured. false: there isn't
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.6
+ * @since   4.7.6
+ */
+  private function init_consolidationAndSelect_isTableFieldsRadialsearch( )
+  {
+      // LOOP : all table.field
+    foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
+    {
+      if( substr( $table, -1 ) == '.' )
+      {
+        continue;
+      }
+      $this->pObj->dev_var_dump( $table, $this->conf_view[ 'filter.' ][ $table ] );
+    }
+
     return false;
   }
 
