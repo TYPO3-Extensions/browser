@@ -1483,39 +1483,45 @@ class tx_browser_pi1_filter_4x {
  *
  * @return	boolean		true: there is a table.field configured. false: there isn't
  * @internal  #41776
- * @version 4.1.21
+ * @version 4.7.6
  * @since   4.1.21
  */
   private function init_consolidationAndSelect_isTableFields( )
   {
       // LOOP : all table.field
-    foreach( ( array ) $this->conf_view['filter.'] as $tables => $arrFields )
+    foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
+        // 131004, dwildt, 4+
+      if( substr( $table, -1 ) != '.' )
+      {
+        continue;
+      }
+        // 131004, dwildt, 4+
 // 131004, dwildt, -
         // #41776, dwildt, 1-
-//      while( $value = current( $arrFields ) )
+//      while( $value = current( $fields ) )
         // #41776, dwildt, 1+
-//      while( current( $arrFields ) )
+//      while( current( $fields ) )
 //      {
-//        $field = key( $arrFields );
+//        $field = key( $fields );
 //          // IF : add field without a dot to $arr_tsFilterTableFields
 //        if( substr( $field, -1 ) != '.' )
 //        {
-//$this->pObj->dev_var_dump( $tables, $table, $field );
-//          $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
+//$this->pObj->dev_var_dump( $table, $table, $field );
+//          $this->arr_tsFilterTableFields[] = trim( $table ) . $field;
 //        }
 //          // IF : add field without a dot to $arr_tsFilterTableFields
-//        next( $arrFields );
+//        next( $fields );
 //      }
 // 131004, dwildt, -
 // 131004, dwildt, +
-      foreach( array_keys( $arrFields ) as $field )
+      foreach( array_keys( $fields ) as $field )
       {
           // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
-$this->pObj->dev_var_dump( $tables, $table, $field );
-          $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
+$this->pObj->dev_var_dump( $table, $field );
+          $this->arr_tsFilterTableFields[] = trim( $table ) . $field;
         }
           // IF : add field without a dot to $arr_tsFilterTableFields
       }
