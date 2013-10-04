@@ -338,8 +338,8 @@ class tx_browser_pi1_filter_4x {
     $arr_filterRadialsearch = $this->get_filterRadialsearch( );
     if( ! empty ( $arr_filterRadialsearch ) )
     {
-      $arr_return[ 'data' ][ 'filter' ] = $arr_return[ 'data' ][ 'filter' ]
-                                        + $arr_filterRadialsearch
+      $arr_return[ 'data' ][ 'filter' ] = ( array ) $arr_return[ 'data' ][ 'filter' ]
+                                        + ( array ) $arr_filterRadialsearch
                                         ;
     }
       // #52486, 131002, dwildt, 7+
@@ -403,6 +403,7 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
