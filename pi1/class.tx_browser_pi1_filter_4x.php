@@ -338,7 +338,7 @@ class tx_browser_pi1_filter_4x {
     $arr_filterRadialsearch = $this->get_filterRadialsearch( );
     if( ! empty ( $arr_filterRadialsearch ) )
     {
-      $arr_return = ( array ) $arr_return
+      $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter']
                   + ( array ) $arr_filterRadialsearch
                   ;
     }
@@ -2688,7 +2688,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // DIE  : unexpected result
 
     $key  = '###' . strtoupper( $table ) . '###';
-    $arrReturn[ 'data' ][ 'filter' ][ $key ] = $html;
+    $arrReturn[ $key ] = $html;
     
     return $arrReturn;
   }
