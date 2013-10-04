@@ -1579,7 +1579,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
         continue;
       }
       
-      if( $name != 'RADIALSEARCH' )
+      if( $name == 'RADIALSEARCH' )
       {
         break;
       }
