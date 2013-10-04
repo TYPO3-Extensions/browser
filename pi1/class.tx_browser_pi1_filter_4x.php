@@ -1507,13 +1507,14 @@ class tx_browser_pi1_filter_4x {
         continue;
       }
       
-        #52486, 131004, dwildt, 4+
+        #52486, 131004, dwildt, 5+
+        // CONTINUE : current filter is RADIALSEARCH
       if( $radialsearchTable == $table )
       {
         $radialsearchTable = null;
         continue;
       }
-        #52486, 131004, dwildt, 4+
+        #52486, 131004, dwildt, 5+
       
         // LOOP each field
       foreach( array_keys( $fields ) as $field )
@@ -1571,9 +1572,22 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       {
         continue;
       }
-      $this->pObj->dev_var_dump( $table, $this->conf_view[ 'filter.' ][ $table ] );
+      
+      $name = $this->conf_view[ 'filter.' ][ $table ];
+      if( $name != 'RADIALSEARCH' )
+      {
+        continue;
+      }
+      
+      if( $name != 'RADIALSEARCH' )
+      {
+        break;
+      }
+      
+      return false;
     }
 
+    $this->pObj->dev_var_dump( $table, $this->conf_view[ 'filter.' ][ $table ] );
     return false;
   }
 
