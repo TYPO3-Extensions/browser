@@ -656,7 +656,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = typo3conf/ext/browser_tut_tt_address_de/doc/manual.pdf
+            parameter   = http://blog.matthaa.de/die-typo3-extension-browser-typo3-without-php-anwendungsbeispiel-mit-tt_address-daten/ _blank
           }
         }
         30 {
