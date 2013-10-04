@@ -203,6 +203,9 @@ class tx_browser_pi1_filter_4x {
     // [String] TypoScript path to the current view. I.e. views.single.1
   var $conf_path  = false;
     // Variables set by the pObj (by class.tx_browser_pi1.php)
+  
+    // [Object]
+  private $pObj = null;
 
 
     // #44621, 130118, dwildt, 2-
@@ -222,6 +225,11 @@ class tx_browser_pi1_filter_4x {
   var $sql_filterFields       = null;
     // [String] andWhere statement, if a filter is set
   var $andWhereFilter         = null;
+  
+    // [String] radialsearch "table"/filter. Example: radialsearch
+  private $radialsearchTable = null;
+    
+
 
     // [Array] Rows of the current filter
   var $rows = null;
@@ -1559,31 +1567,12 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
  */
   private function init_consolidationAndSelect_isTableFieldsRadialsearch( )
   {
-      // LOOP : all table.field
-    foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
+    if( ! $this->radialsearchTable )
     {
-      if( substr( $table, -1 ) == '.' )
-      {
-        continue;
-      }
-      
-      $name = $this->conf_view[ 'filter.' ][ $table ];
-      if( $name != 'RADIALSEARCH' )
-      {
-        continue;
-      }
-      
-      if( $name == 'RADIALSEARCH' )
-      {
-        break;
-      }
-      
       return false;
     }
-    
-    
 
-    $this->pObj->dev_var_dump( $table, $this->conf_view[ 'filter.' ][ $table ] );
+    $this->pObj->dev_var_dump( $this->radialsearchTable );
     return false;
   }
 
@@ -1645,18 +1634,103 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 /**
  * init_radialSearch( ): 
  *
- * @return	string		$this->andWhereFilter : the SQL andWhere statement
+ * @return	void
+ * @access  private
  * @version 4.7.0
  * @since   4.7.0
  */
   private function init_radialSearch( )
+  {
+    if( ! $this->init_radialSearchFilter( ) )
+    {
+      return;
+    }
+      // LOOP each table
+    $this->init_radialSearchObject( );
+
+  }
+  
+/**
+ * init_radialSearchFilter( ) : Checks weather a radialserach filter is set or not.
+ *                              If radialsearch filter 
+ *                              * is set
+ *                                * it sets the class var $radialsearchTable
+ *                                * returns true
+ *                              * isn't set
+ *                                * returns false
+ *
+ * @return	boolean         TRue, if radialsearch filter is set
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function init_radialSearchFilter( )
+  {
+      // LOOP each table
+    foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
+    {
+      if( substr( $table, -1 ) == '.' )
+      {
+        continue;
+      }
+      
+        // Name (COA object) of the current filter table
+      $name = $this->conf_view[ 'filter.' ][ $table ];
+      
+        // CONTINUE : Name (COA object) isn't RADIALSEARCH
+      if( $name != 'RADIALSEARCH' )
+      {
+        continue;
+      }
+      
+        // BREAK : Name (COA object) is RADIALSEARCH
+      if( $name == 'RADIALSEARCH' )
+      {
+        break;
+      }
+      
+        // DRS
+      if( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
+        t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+     
+        // RETURN false : any radialsearch filter isn't used
+      return false;
+    }
+      // LOOP each table
+
+      // Set the radialsearch "table". Example: radialsearch
+    $this->radialsearchTable = $table;
+    
+      // DRS
+    if( $this->pObj->b_drs_filter )
+    {
+      $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
+      t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+    return true;
+  }
+  
+/**
+ * init_radialSearchObject( ): 
+ *
+ * @return	void
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function init_radialSearchObject( )
   {
     $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
     require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
 
     $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
     $this->filterRadialsearch->setParentObject( $this->pObj );
-
   }
 
 
