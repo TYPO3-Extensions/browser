@@ -1494,6 +1494,7 @@ class tx_browser_pi1_filter_4x {
         // 131004, dwildt, 4+
       if( substr( $table, -1 ) != '.' )
       {
+        $this->pObj->dev_var_dump( $table, $this->conf_view[ 'filter.' ][ $table ] );
         continue;
       }
         // 131004, dwildt, 4+
