@@ -65,6 +65,8 @@
       <label index="tutorials.browser_tut_templating_en.description">Create your own template and your own view.</label>
       <label index="tutorials.browser_tut_tca_en.title">Browser Tutorial TCA</label>
       <label index="tutorials.browser_tut_tca_en.description">Configure the TCA Browser properties. Use ready methods for TCA backend form (itemsProcFunc)</label>
+      <label index="tutorials.browser_tut_tt_address_de.title">Browser Tutorial tt_address Sample (German)</label>
+      <label index="tutorials.browser_tut_tt_address_de.description">Example of use with the Browser and tt_address in German language.</label>
       <label index="tutorials.browser_tut_tt_news_en.title">Browser Tutorial tt_news Sample</label>
       <label index="tutorials.browser_tut_tt_news_en.description">Test the Browser out of the box with tt_news and than with your own data.</label>
       <label index="tutorials.browser_tut_userfunc_en.title">Browser Tutorial Userfunc</label>
@@ -141,6 +143,8 @@
       <label index="tutorials.browser_tut_templating_en.description">Gestalte Deine eigenen Templates und Views.</label>
       <label index="tutorials.browser_tut_tca_en.title">Browser Tutorial TCA</label>
       <label index="tutorials.browser_tut_tca_en.description">Konfiguriere die TCA-Browser-Eigenschaften. Nutze die fertigen Methoden f<![CDATA[&uuml;]]>r TCA-Backend-Formulare (itemsProcFunc)!</label>
+      <label index="tutorials.browser_tut_tt_address_de.title">Browser Tutorial tt_address Beispiel (Deutsch)</label>
+      <label index="tutorials.browser_tut_tt_address_de.description">Anwendungsbeispiel mit dem Browser und tt_address auf Deutsch.</label>
       <label index="tutorials.browser_tut_tt_news_en.title">Browser Tutorial tt_news Sample</label>
       <label index="tutorials.browser_tut_tt_news_en.description">Teste den Browser "out of the box" mit tt_news. Und danach mit Deinen eigenen Daten.</label>
       <label index="tutorials.browser_tut_userfunc_en.title">Browser Tutorial Userfunc - Benutzer-Funktionen</label>
