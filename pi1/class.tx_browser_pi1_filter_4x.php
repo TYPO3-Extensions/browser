@@ -338,9 +338,9 @@ class tx_browser_pi1_filter_4x {
     $arr_filterRadialsearch = $this->get_filterRadialsearch( );
     if( ! empty ( $arr_filterRadialsearch ) )
     {
-      $arr_return[ 'data' ][ 'filter' ] = ( array ) $arr_return[ 'data' ][ 'filter' ]
-                                        + ( array ) $arr_filterRadialsearch
-                                        ;
+      $arr_return = ( array ) $arr_return
+                  + ( array ) $arr_filterRadialsearch
+                  ;
     }
       // #52486, 131002, dwildt, 7+
     $this->pObj->dev_var_dump( $arr_return );
