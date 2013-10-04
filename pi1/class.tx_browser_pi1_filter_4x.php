@@ -1595,7 +1595,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       case( empty( $lon ) ):
         $prompt = '
 <h1>
-  ERROR: radial search
+  ERROR: radial search (Umkreissuche)
 </h1>
 <p>
   The configuration of your radial search filter isn\'t proper.<br />
@@ -7152,6 +7152,15 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
     list ($table, $field) = explode( '.', $tableField );
 
+      // #52486, 131005, dwildt, 6+
+      // RETURN : there isn't any radialsearch filter
+    if( $table == $this->radialsearchTable )
+    {
+      return $tableField;
+    }
+      // RETURN : there isn't any radialsearch filter
+      // #52486, 131005, dwildt, 6+
+    
       // SWITCH : default $tableField versus 'orderBy'
     switch( $tableField )
     {
