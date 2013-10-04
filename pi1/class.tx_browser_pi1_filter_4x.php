@@ -339,17 +339,15 @@ class tx_browser_pi1_filter_4x {
     if( ! empty ( $arr_filterRadialsearch ) )
     {
       $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter']
-                  + ( array ) $arr_filterRadialsearch
-                  ;
+                                    + ( array ) $arr_filterRadialsearch
+                                    ;
     }
       // #52486, 131002, dwildt, 7+
-    $this->pObj->dev_var_dump( $arr_return );
-
 
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-      if( substr( $table, -1 ) == '.' )
+      if( substr( $table, -1 ) != '.' )
       {
         continue;
       }
