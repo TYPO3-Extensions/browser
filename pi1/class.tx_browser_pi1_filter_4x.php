@@ -334,21 +334,31 @@ class tx_browser_pi1_filter_4x {
       // Init localisation
     $this->init( );
 
-      // LOOP each filter
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+      // #52486, 131002, dwildt, 7+
+    $arr_filterRadialsearch = $this->get_filterRadialsearch( );
+    if( ! empty ( $arr_filterRadialsearch ) )
     {
-        // #52486, 131002, dwildt, 9+
-      if( $fields == 'RADIALSEARCH' )
+      $arr_return[ 'data' ][ 'filter' ] = $arr_return[ 'data' ][ 'filter' ]
+                                        + $arr_filterRadialsearch
+                                        ;
+    }
+      // #52486, 131002, dwildt, 7+
+    $this->pObj->dev_var_dump( $arr_return );
+
+
+      // LOOP each filter
+    foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
+    {
+      if( substr( $table, -1 ) == '.' )
       {
-        $cObj_name    = 'COA';
-        $cObj_conf    = $this->conf_view['filter.'][$tableWiDot . '.'];
-        $htmlFilter   = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-        $hashMarker   = '###' . strtoupper( $tableWiDot ) . '###';
-        $arr_return['data']['filter'][$hashMarker] = $htmlFilter;
         continue;
       }
-        // #52486, 131002, dwildt, 9+
-
+      
+      if( $table == $this->radialsearchTable . '.' )
+      {
+        continue;
+      }
+      
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
           // CONTINUE : field has an dot
@@ -359,7 +369,7 @@ class tx_browser_pi1_filter_4x {
           // CONTINUE : field has an dot
 
           // Class var table.field
-        $this->curr_tableField = $tableWiDot . $field;
+        $this->curr_tableField = $table . $field;
 
           // Get table
         list( $table ) = explode( '.', $this->curr_tableField );
@@ -2642,7 +2652,45 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     }
     return $item;
   }
+  
+/**
+ * get_filterRadialsearch( ):  
+ *
+ * @return	array
+ * @internal #52486
+ * @access  private
+ * @version 4.7.6
+ * @since   4.7.6
+ */
+  private function get_filterRadialsearch( )
+  {
+      // RETURN : there isn't any radialsearch filter
+    if( ! $this->radialsearchTable )
+    {
+      return null;
+    }
+      // RETURN : there isn't any radialsearch filter
+    
+    $arrReturn  = array( );
+    $table      = $this->radialsearchTable;
 
+    $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
+    $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
+    $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
+    
+      // DIE  : unexpected result
+    if( ! $html )
+    {
+      $prompt = __METHOD__ . ' (line #' . __LINE__ . '): html is empty!';
+      die( $prompt );
+    }
+      // DIE  : unexpected result
+
+    $key  = '###' . strtoupper( $table ) . '###';
+    $arrReturn[ 'data' ][ 'filter' ][ $key ] = $html;
+    
+    return $arrReturn;
+  }
 
 
 /**
