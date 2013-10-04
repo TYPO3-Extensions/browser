@@ -4701,7 +4701,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
         // 131005, dwildt, 4+
-      if( rtrim( $table, '.') != $table )
+      if( rtrim( $table, '.') == $table )
       {
         continue;
       }
