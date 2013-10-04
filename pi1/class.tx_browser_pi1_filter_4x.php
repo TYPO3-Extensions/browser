@@ -1505,7 +1505,7 @@ class tx_browser_pi1_filter_4x {
       // LOOP each table
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-      if( rtrim( $table, '.') != $table )
+      if( rtrim( $table, '.') == $table )
       {
           #52486, 131004, dwildt, 5+
         $name = $this->conf_view[ 'filter.' ][ $table ];
