@@ -1281,7 +1281,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter_radialsearch( )
   {
-    return $this->objRadialsearch->andWhere( );
+//    return $this->objRadialsearch->andWhere( );
   }
 
 
@@ -4074,7 +4074,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_select_radialsearch( )
   {
-    return $this->objRadialsearch->andSelect( );
+//    return $this->objRadialsearch->andSelect( );
   }
 
 
@@ -4144,7 +4144,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_fromRadialsearch( )
   {
-    return $this->objRadialsearch->andFrom( );
+//    return $this->objRadialsearch->andFrom( );
   }
 
 
