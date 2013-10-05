@@ -7152,14 +7152,18 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
     list ($table, $field) = explode( '.', $tableField );
 
-      // #52486, 131005, dwildt, 6+
+      // #52486, 131005, dwildt, 10+
       // RETURN : there isn't any radialsearch filter
     if( ! isset( $this->conf_view['filter.'][$table . '.'] ) )
     {
-      return $tableField;
+      $key_piVar    = $this->pObj->prefixId . '[' . $tableField . ']';
+      $arr_return['data']['key_piVar']  = $key_piVar;
+      $arr_return['data']['arr_piVar']  = null;
+      $arr_return['data']['nice_piVar'] = $tableField;
+      return $arr_return;
     }
       // RETURN : there isn't any radialsearch filter
-      // #52486, 131005, dwildt, 6+
+      // #52486, 131005, dwildt, 10+
     
       // SWITCH : default $tableField versus 'orderBy'
     switch( $tableField )
