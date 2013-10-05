@@ -7156,10 +7156,9 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // RETURN : there isn't any radialsearch filter
     if( ! isset( $this->conf_view['filter.'][$table . '.'] ) )
     {
-      $key_piVar    = $this->pObj->prefixId . '[' . $tableField . ']';
-      $arr_return['data']['key_piVar']  = $key_piVar;
+      $arr_return['data']['key_piVar']  = 'no_filter';
       $arr_return['data']['arr_piVar']  = null;
-      $arr_return['data']['nice_piVar'] = $tableField;
+      $arr_return['data']['nice_piVar'] = 'no_filter';
       return $arr_return;
     }
       // RETURN : there isn't any radialsearch filter
@@ -7268,7 +7267,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
