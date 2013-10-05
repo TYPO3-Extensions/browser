@@ -3323,9 +3323,6 @@ class tx_browser_pi1_filter_4x {
       }
         // CONTINUE : table hasn't any dot
 
-        // Remove the dot
-      $table = rtrim( $table, '.');
-      
         // LOOP : each filter field
       foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
       {
