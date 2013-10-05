@@ -229,7 +229,7 @@ class tx_browser_pi1_filter_4x {
     // [Object] interface of extension radialsearch
   private $radialsearch       = null;
     // [String] radialsearch "table"/filter. Example: radialsearch
-  private $radialsearchTable  = null;
+  public  $radialsearchTable  = null;
     
 
 
