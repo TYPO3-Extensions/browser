@@ -594,14 +594,12 @@ class tx_browser_pi1_filter_4x {
     $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
 
       // #52486, 131002, dwildt, 6+
-$this->pObj->dev_var_dump( $strAndWhere );
     if( $this->objRadialsearchTable )
     {
       $strAndWhere  = $strAndWhere
                     . $this->init_andWhereFilter_radialsearch( )
                     ;
     }
-$this->pObj->dev_var_dump( $strAndWhere );
       // #52486, 131002, dwildt, 6+
 
       // RETURN : there isn't any andWhere statement
@@ -3809,7 +3807,7 @@ $this->pObj->dev_var_dump( $strAndWhere );
     $select = $select . $this->sql_select_addLL( );
 
     $select = $select 
-            . $this->sql_select_radiussearch( );
+            . $this->sql_select_radialsearch( );
 
       // RETURN select
     return $select;
