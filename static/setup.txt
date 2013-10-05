@@ -2803,7 +2803,7 @@ plugin.tx_browser_pi1 {
             lon         = {$plugin.tx_browser_pi1.radialsearch.lon}
               // [String] Radius: HTML name of the select box with the radius options.
             radius      = {$plugin.tx_browser_pi1.radialsearch.radius}
-              // [String] Options: Hits within the radius only, Hits within and without the radius
+              // [String] Display hits. Options: Within the radius only, Within and without the radius
             searchmode  = {$plugin.tx_browser_pi1.radialsearch.searchmode}
               // [String] Sword: HTML name of the input field for the search word (sword).
             sword       = {$plugin.tx_browser_pi1.radialsearch.sword}
