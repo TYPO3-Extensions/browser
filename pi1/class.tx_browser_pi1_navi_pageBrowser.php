@@ -582,24 +582,6 @@ class tx_browser_pi1_navi_pageBrowser
     $orderBy  = null;
     $limit    = null;
 
-//      // #52486, 131006, +
-//      // Query for all filter items
-//    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'"
-//              . $this->sql_radialsearchSelect( )
-//              ;
-//    $from     = $this->sqlStatement_from( $table )
-//              . $this->sql_radialsearchFrom( )
-//              ;
-//    $where    = $this->sqlStatement_where( $table )
-//              . $this->sql_radialsearchWhere( )
-//              ;
-//    $groupBy  = $tableField
-//              . $this->sql_radialsearchHaving( )
-//              ;
-//    $orderBy  = $this->sql_radialsearchOrderBy( );
-//    $limit    = null;
-//      // #52486, 131006, +
-
       // #52486, 131006, -
       // Execute the query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -611,7 +593,26 @@ class tx_browser_pi1_navi_pageBrowser
                     $orderBy,
                     $limit
                   );
-$this->pObj->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] ) );
+
+      // #52486, 131006, +
+      // Query for all filter items
+    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'"
+              . $this->sql_radialsearchSelect( )
+              ;
+    $from     = $this->sqlStatement_from( $table )
+              . $this->sql_radialsearchFrom( )
+              ;
+    $where    = $this->sqlStatement_where( $table )
+              . $this->sql_radialsearchWhere( )
+              ;
+    $groupBy  = $tableField
+              . $this->sql_radialsearchHaving( )
+              ;
+    $orderBy  = $this->sql_radialsearchOrderBy( );
+    $limit    = null;
+      // #52486, 131006, +
+
 
       // #52486, 131006, +
       // Get query
@@ -630,7 +631,7 @@ $this->pObj->dev_var_dump( $arr_return );
     $promptOptimise   = 'Maintain the performance? Disbale the page browser, if it isn\'t needed.';
     $debugTrailLevel  = 1;
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
-$this->pObj->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] ) );
       // Execute query
 
 
