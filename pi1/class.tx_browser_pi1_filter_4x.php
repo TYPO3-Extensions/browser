@@ -3344,7 +3344,6 @@ class tx_browser_pi1_filter_4x {
         // LOOP : each filter field
     }
       // LOOP : each filter table
-$this->pObj->dev_var_dump( $this->arr_selectedFilters );
     return $this->arr_selectedFilters;
   }
 
@@ -4816,12 +4815,12 @@ $this->pObj->dev_var_dump( $this->arr_selectedFilters );
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-        // CONTINUE : table has an dot
-      if( rtrim( $table, '.') != $table )
+        // CONTINUE : table hasn't any dot
+      if( rtrim( $table, '.') == $table )
       {
         continue;
       }
-        // CONTINUE : field has an dot
+        // CONTINUE : table hasn't any dot
 
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
