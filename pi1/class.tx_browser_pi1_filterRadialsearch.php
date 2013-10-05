@@ -58,14 +58,15 @@ class tx_browser_pi1_filterRadialsearch {
 
  /***********************************************
   *
-  * Main
+  * andWhere
   *
   **********************************************/
 
 /**
  * andWhere( ): 
  *
- * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
+ * @return	string		
+ * @access  public
  * @version 4.7.0
  * @since   4.7.0
  */
@@ -73,28 +74,33 @@ class tx_browser_pi1_filterRadialsearch {
   {
     $this->init( );
 
-      // Prompt the expired time to devlog
-    $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
-
-    
     $andWhere = '' .
-'            AND tx_radialsearch_postalcodes.pid = 0 
-            AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
-            AND tx_radialsearch_postalcodes.admin_code1 LIKE "TH"
-            AND
-            (
-                  tx_radialsearch_postalcodes.postal_code LIKE "99084 Erfurt%" 
-              OR  tx_radialsearch_postalcodes.place_name LIKE "99084 Erfurt%" 
-              OR  CONCAT(tx_radialsearch_postalcodes.postal_code, " ", tx_radialsearch_postalcodes.place_name) LIKE "99084 Erfurt%"
-            ) 
-            AND tx_radialsearch_postalcodes.deleted = 0 
+'AND tx_radialsearch_postalcodes.pid = 0 
+AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
+AND tx_radialsearch_postalcodes.admin_code1 LIKE "TH"
+AND
+(
+      tx_radialsearch_postalcodes.postal_code LIKE "99084 Erfurt%" 
+  OR  tx_radialsearch_postalcodes.place_name LIKE "99084 Erfurt%" 
+  OR  CONCAT(tx_radialsearch_postalcodes.postal_code, " ", tx_radialsearch_postalcodes.place_name) LIKE "99084 Erfurt%"
+) 
+' . $this->andWhereEnabledFields( ) . ' 
 ';
-      // Prompt the expired time to devlog
 
-    $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+    return $andWhere;
+  }
 
+/**
+ * andWhereEnabledFields( ): 
+ *
+ * @return	string		
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function andWhereEnabledFields( )
+  {
+    $andWhere = $this->pObj->cObj->enableFields( 'tx_radialsearch_postalcodes' );
     return $andWhere;
   }
   
