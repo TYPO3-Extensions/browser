@@ -120,9 +120,11 @@ class tx_browser_pi1_viewlist
   var $content = null;
 
     // [Object] interface of extension radialsearch
-  private $objRadialsearch    = null;
+  private $objRadialsearch      = null;
     // [String] radialsearch "table"/filter. Example: radialsearch
-  public  $radialsearchTable  = null;
+  public  $radialsearchTable    = null;
+    // [Boolean] Radialsearch Sword is set oer isn't set
+  private $radialsearchIsSword  = null;
   
 
 
@@ -583,6 +585,12 @@ class tx_browser_pi1_viewlist
     {
       return;
     }
+    
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->init_radialsearchSword( ) )
+    {
+      return;
+    }
 
       // Check if EXT radialserach is installed
     $this->init_radialsearchExtension( );
@@ -714,6 +722,42 @@ class tx_browser_pi1_viewlist
     $this->objRadialsearch->setCurrentObject( $this );
   }
 
+/**
+ * initSword( ): Set the class var $isSword
+ *
+ * @return	boolean        true, if sword is set. False, if not.
+ * @access  private
+ * @version 0.0.1
+ * @since   0.0.1
+ */
+  private function init_radialsearchSword( )
+  {
+      // RETURN : sword is set before
+    if( $this->radialsearchIsSword !== null )
+    {
+      return $this->radialsearchIsSword;
+    }
+      // RETURN : sword is set before
+
+      // Get the current sword
+    $tx_radialsearch_pi1  = ( array ) t3lib_div::_GP( 'tx_radialsearch_pi1' );
+    $sword = $tx_radialsearch_pi1[ 'sword' ];
+    
+      // Set class var $isSword
+    switch( true )
+    {
+      case( $sword === null ):
+      case( $sword == '' ):
+      case( $sword == '*' ):
+        $this->radialsearchIsSword = false;
+      default:
+        $this->radialsearchIsSword = true;
+    }
+    unset( $sword );
+      // Set class var $isSword
+
+    return $this->radialsearchIsSword;
+  }
 
 
 
@@ -1809,6 +1853,7 @@ class tx_browser_pi1_viewlist
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'"
               //. $this->objRadialsearch->andSelect( )
+              . $this->sql_selectRadialsearch( )
               ;
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
@@ -2090,24 +2135,6 @@ $this->pObj->dev_var_dump( $query );
     }
       // SWITCH $int_localisation_mode
 
-//      // Get array with localised parts
-//      // Get localtable
-//    $table = $this->pObj->localTable;
-//    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-//
-//      // Add the localised parts with aliases to the current SELECT statement
-//    $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
-//    if( $selectLocalisedPart )
-//    {
-//      $select = $select . ', ' . $selectLocalisedPart;
-//      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
-//      {
-//        $prompt = 'SELECT got the part for localising: ... ' . $selectLocalisedPart;
-//        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
-//      }
-//    }
-//      // Add the localised part with aliases to the current SELECT statement
-
       ////////////////////////////////////////////////////////////////////
       //
       // Add localisation fields
@@ -2174,6 +2201,25 @@ $this->pObj->dev_var_dump( $query );
     $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
 
     return $select;
+  }
+
+/**
+ * sql_select_radialsearch( )  :
+ *
+ * @return	string
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_selectRadialsearch( )
+  {
+      // RETURN : 
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andSelect( );
   }
 
 
