@@ -601,28 +601,28 @@ class tx_browser_pi1_navi_pageBrowser
       // #52486, 131006, +
 
       // #52486, 131006, -
-//      // Execute the query
-//    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
-//                  (
-//                    $select,
-//                    $from,
-//                    $where,
-//                    $groupBy,
-//                    $orderBy,
-//                    $limit
-//                  );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
-      // #52486, 131006, +
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
+//      // #52486, 131006, +
+//      // Get query
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
 
 $this->pObj->dev_var_dump( str_replace( '\'', '"', $query ) );
 //$this->pObj->dev_var_dump( str_replace( '\\\'', "'", $query ) );
