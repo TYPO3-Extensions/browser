@@ -573,13 +573,31 @@ class tx_browser_pi1_navi_pageBrowser
     $tableField     = $this->pObj->arrLocalTable['uid'];
     list( $table )  = explode( '.', $tableField );
 
+      // #52486, 131006, 7-
+//      // Query for all filter items
+//    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
+//    $from     = $this->sqlStatement_from( $table );
+//    $where    = $this->sqlStatement_where( $table );
+//    $groupBy  = null;
+//    $orderBy  = null;
+//    $limit    = null;
+
+      // #52486, 131006, +
       // Query for all filter items
-    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
-    $from     = $this->sqlStatement_from( $table );
-    $where    = $this->sqlStatement_where( $table );
+    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'"
+              . $this->sql_radialsearchSelect( )
+              ;
+    $from     = $this->sqlStatement_from( $table )
+              . $this->sql_radialsearchFrom( )
+              ;
+    $where    = $this->sqlStatement_where( $table )
+              . $this->sql_radialsearchWhere( )
+              . $this->sql_radialsearchHaving( )
+              ;
     $groupBy  = null;
-    $orderBy  = null;
+    $orderBy  = $this->sql_radialsearchOrderBy( );
     $limit    = null;
+      // #52486, 131006, +
 
       // Execute the query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -685,6 +703,107 @@ class tx_browser_pi1_navi_pageBrowser
 
     return $where;
   }
+  
+/**
+ * sql_radialsearchFrom( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchFrom( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andFrom( );
+  }
+
+/**
+ * sql_radialsearchHaving( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchHaving( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andHaving( );
+  }
+
+/**
+ * sql_radialsearchOrderBy( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchOrderBy( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andOrderBy( );
+  }
+
+/**
+ * sql_radialsearchSelect( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchSelect( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andSelect( );
+  }
+
+/**
+ * sql_radialsearchWhere( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchWhere( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andWhere( );
+  }
+  
 
 
 

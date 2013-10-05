@@ -569,6 +569,7 @@ class tx_browser_pi1_viewlist
     $this->pObj->arr_realTables_localised     = array_unique( $this->pObj->arr_realTables_localised );
     $this->pObj->arr_realTables_notLocalised  = array_unique( $this->pObj->arr_realTables_notLocalised );
   }
+  
 /**
  * init_radialsearch( ): 
  *
@@ -727,8 +728,8 @@ class tx_browser_pi1_viewlist
  *
  * @return	boolean        true, if sword is set. False, if not.
  * @access  private
- * @version 0.0.1
- * @since   0.0.1
+ * @version 4.7.0
+ * @since   4.7.0
  */
   private function init_radialsearchSword( )
   {
