@@ -1810,7 +1810,7 @@ class tx_browser_pi1_viewlist
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'"
               //. $this->objRadialsearch->andSelect( )
               ;
-      $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
 //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements['listView'] );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
