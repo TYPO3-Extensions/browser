@@ -267,8 +267,6 @@ class tx_browser_pi1_viewlist
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
-$this->pObj->dev_var_dump( $rows );
-
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -318,6 +316,8 @@ $this->pObj->dev_var_dump( $rows );
 
       // Set the global $arrLinkToSingle
     $this->zz_setGlobalArrLinkToSingle( );
+$this->pObj->dev_var_dump( $rows );
+
 
 
 
