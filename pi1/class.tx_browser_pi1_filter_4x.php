@@ -3316,15 +3316,16 @@ class tx_browser_pi1_filter_4x {
       // LOOP : each filter table
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-$this->pObj->dev_var_dump( $table );
-        // CONTINUE : table has an dot
-      if( rtrim( $table, '.') != $table )
+        // CONTINUE : table hasn't any dot
+      if( rtrim( $table, '.') == $table )
       {
         continue;
       }
-        // CONTINUE : field has an dot
-$this->pObj->dev_var_dump( $table );
+        // CONTINUE : table hasn't any dot
 
+        // Remove the dot
+      $table = rtrim( $table, '.');
+      
         // LOOP : each filter field
       foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
       {
