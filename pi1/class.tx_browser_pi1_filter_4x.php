@@ -516,18 +516,6 @@ class tx_browser_pi1_filter_4x {
       list( $table, $field )  = explode( '.', $tableField );
       $str_andWhere           = null;
 
-        // #52486, 131002, dwildt, 6+
-$this->pObj->dev_var_dump( $table, $this->radialsearchTable . '.' );
-      if( $table == $this->radialsearchTable . '.' )
-      {
-        $arr_andWhereFilter = ( array ) $arr_andWhereFilter
-                            + ( array ) $this->init_andWhereFilter_radialsearch( )
-                            ;
-$this->pObj->dev_var_dump( $arr_andWhereFilter );
-        continue;
-      }
-        // #52486, 131002, dwildt, 6+
-
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
@@ -576,6 +564,17 @@ $this->pObj->dev_var_dump( $arr_andWhereFilter );
         // Build the andWhere statement
     }
       // LOOP: filter tableFields
+
+      // #52486, 131002, dwildt, 6+
+$this->pObj->dev_var_dump( $arr_andWhereFilter );
+    if( $this->radialsearchTable )
+    {
+      $arr_andWhereFilter = ( array ) $arr_andWhereFilter
+                          + ( array ) $this->init_andWhereFilter_radialsearch( )
+                          ;
+$this->pObj->dev_var_dump( $arr_andWhereFilter );
+    }
+      // #52486, 131002, dwildt, 6+
 
       // andWhere statement
     $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
