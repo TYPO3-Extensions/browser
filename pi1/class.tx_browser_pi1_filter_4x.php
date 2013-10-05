@@ -572,13 +572,13 @@ class tx_browser_pi1_filter_4x {
 
       // #52486, 131002, dwildt, 6+
 $this->pObj->dev_var_dump( $strAndWhere );
-    if( $this->radialsearchTable )
-    {
-      $strAndWhere  = $strAndWhere
-                    . $this->init_andWhereFilter_radialsearch( )
-                    ;
-    }
-$this->pObj->dev_var_dump( $strAndWhere );
+//    if( $this->radialsearchTable )
+//    {
+//      $strAndWhere  = $strAndWhere
+//                    . $this->init_andWhereFilter_radialsearch( )
+//                    ;
+//    }
+//$this->pObj->dev_var_dump( $strAndWhere );
       // #52486, 131002, dwildt, 6+
 
       // RETURN : there isn't any andWhere statement
@@ -1247,6 +1247,20 @@ $this->pObj->dev_var_dump( $strAndWhere );
       <p>This is a message of the Browser - TYPO3 without PHP.</p>
       ';
     exit;
+  }
+
+/**
+ * init_andWhereFilter_radialsearch( ): 
+ *
+ * @return	string
+ * @internal    #52486
+ * @access    private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function init_andWhereFilter_radialsearch( )
+  {
+    return $this->radialsearch->andWhere( );
   }
 
 
