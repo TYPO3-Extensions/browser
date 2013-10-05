@@ -2806,6 +2806,7 @@ plugin.tx_browser_pi1 {
               // [String] Sword: HTML name of the input field for the search word (sword).
             sword   = {$plugin.tx_browser_pi1.radialsearch.sword}
           }
+          filter < plugin.tx_radialsearch_pi1.res.js.tx_radialsearch_pi1.filter
         }
           // [Array] plugin.tx_radialsearch_pi1, plugin.tx_radialsearch_pi2
         content = COA
