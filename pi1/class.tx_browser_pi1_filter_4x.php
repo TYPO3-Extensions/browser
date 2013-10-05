@@ -442,7 +442,7 @@ class tx_browser_pi1_filter_4x {
 
       // #52486, 131005, dwildt, 2+
       // Init radialsearch filter and object
-    $this->init_radialSearch( );
+    $this->init_radialsearch( );
 
       // RETURN: if there isn't any filter array
     if( ! $this->init_boolIsFilter( ) )
@@ -572,13 +572,13 @@ class tx_browser_pi1_filter_4x {
 
       // #52486, 131002, dwildt, 6+
 $this->pObj->dev_var_dump( $strAndWhere );
-//    if( $this->radialsearchTable )
-//    {
-//      $strAndWhere  = $strAndWhere
-//                    . $this->init_andWhereFilter_radialsearch( )
-//                    ;
-//    }
-//$this->pObj->dev_var_dump( $strAndWhere );
+    if( $this->radialsearchTable )
+    {
+      $strAndWhere  = $strAndWhere
+                    . $this->init_andWhereFilter_radialsearch( )
+                    ;
+    }
+$this->pObj->dev_var_dump( $strAndWhere );
       // #52486, 131002, dwildt, 6+
 
       // RETURN : there isn't any andWhere statement
@@ -1249,32 +1249,6 @@ $this->pObj->dev_var_dump( $strAndWhere );
     exit;
   }
 
-/**
- * init_andWhereFilter_radialsearch( ): 
- *
- * @return	string
- * @internal    #52486
- * @access    private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_andWhereFilter_radialsearch( )
-  {
-    $andWhere = '' .
-'AND tx_radialsearch_postalcodes.pid = 0 
-AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
-AND tx_radialsearch_postalcodes.admin_code1 LIKE "TH"
-AND
-(
-      tx_radialsearch_postalcodes.postal_code LIKE "99084 Erfurt%" 
-  OR  tx_radialsearch_postalcodes.place_name LIKE "99084 Erfurt%" 
-  OR  CONCAT(tx_radialsearch_postalcodes.postal_code, " ", tx_radialsearch_postalcodes.place_name) LIKE "99084 Erfurt%"
-) 
-AND tx_radialsearch_postalcodes.deleted = 0 
-';
-    return $this->radialsearch->andWhere( );
-  }
-
 
 
 /**
@@ -1686,7 +1660,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
   }
   
 /**
- * init_radialSearch( ): 
+ * init_radialsearch( ): 
  *
  * @return	void
  * @access  private
@@ -1694,24 +1668,24 @@ AND tx_radialsearch_postalcodes.deleted = 0
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init_radialSearch( )
+  private function init_radialsearch( )
   {
       // RETURN : There isn't any radialsearch filter
-    if( ! $this->init_radialSearchFilter( ) )
+    if( ! $this->init_radialsearchFilter( ) )
     {
       return;
     }
 
       // Check if EXT radialserach is installed
-    $this->init_radialSearchExtension( );
+    $this->init_radialsearchExtension( );
 
       // Init radialsserach filter class
-    $this->init_radialSearchObject( );
+    $this->init_radialsearchObject( );
 
   }
   
 /**
- * init_radialSearchExtension( )  : Check if EXT radialserach is installed
+ * init_radialsearchExtension( )  : Check if EXT radialserach is installed
  *
  * @return	void
  * @access  private
@@ -1719,7 +1693,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init_radialSearchExtension( )
+  private function init_radialsearchExtension( )
   {
     $key = 'radialsearch';
     
@@ -1750,7 +1724,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
   }
   
 /**
- * init_radialSearchFilter( ) : Checks weather a radialserach filter is set or not.
+ * init_radialsearchFilter( ) : Checks weather a radialserach filter is set or not.
  *                              If radialsearch filter 
  *                              * is set
  *                                * it sets the class var $radialsearchTable
@@ -1764,7 +1738,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init_radialSearchFilter( )
+  private function init_radialsearchFilter( )
   {
       // LOOP each table
     foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
@@ -1814,7 +1788,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
   }
   
 /**
- * init_radialSearchObject( ): 
+ * init_radialsearchObject( ): 
  *
  * @return	void
  * @internal    #52486
@@ -1822,7 +1796,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init_radialSearchObject( )
+  private function init_radialsearchObject( )
   {
 //    $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
 //    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
@@ -1835,6 +1809,7 @@ AND tx_radialsearch_postalcodes.deleted = 0
 
     $this->radialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
     $this->radialsearch->setParentObject( $this->pObj );
+    $this->radialsearch->setFilterObject( $this );
   }
 
 
