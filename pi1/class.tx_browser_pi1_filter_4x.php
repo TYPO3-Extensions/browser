@@ -7154,8 +7154,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
       // #52486, 131005, dwildt, 6+
       // RETURN : there isn't any radialsearch filter
-$this->pObj->dev_var_dump( $table, $this->radialsearchTable );
-    if( $table == $this->radialsearchTable )
+    if( ! isset( $this->conf_view['filter.'][$table . '.'] ) )
     {
       return $tableField;
     }
