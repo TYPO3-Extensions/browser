@@ -463,9 +463,9 @@ class tx_browser_pi1_filter_4x {
       // #41776, dwildt, 1-
 //    $this->pObj->objFltr3x->get_tableFields( );
 
-      // #52486, 131005, dwildt, 2+
-      // Init radialsearch filter and object
-    $this->init_radialsearch( );
+//      // #52486, 131005, dwildt, 2+
+//      // Init radialsearch filter and object
+//    $this->init_radialsearch( );
 
       // RETURN: if there isn't any filter array
     if( ! $this->init_boolIsFilter( ) )
