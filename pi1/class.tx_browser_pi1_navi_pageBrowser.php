@@ -606,9 +606,18 @@ $this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] 
     $where    = $this->sqlStatement_where( $table )
               . $this->sql_radialsearchWhere( )
               ;
-    $groupBy  = $tableField
-              . $this->sql_radialsearchHaving( )
-              ;
+    $having   = $this->sql_radialsearchHaving( );
+    
+    if( ! $having )
+    {
+      $groupBy  = null;
+    }
+    if( $having )
+    {
+      $groupBy  = $tableField
+                . $this->sql_radialsearchHaving( )
+                ;
+    }
     $orderBy  = $this->sql_radialsearchOrderBy( );
     $limit    = null;
       // #52486, 131006, +
