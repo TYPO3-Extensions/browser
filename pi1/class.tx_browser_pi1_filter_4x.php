@@ -1693,9 +1693,51 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       return;
     }
 
+      // Check if EXT radialserach is installed
+    $this->init_radialSearchExtension( );
+
       // Init radialsserach filter class
     $this->init_radialSearchObject( );
 
+  }
+  
+/**
+ * init_radialSearchExtension( )  : Check if EXT radialserach is installed
+ *
+ * @return	void
+ * @access  private
+ * @internal    #52486
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function init_radialSearchExtension( )
+  {
+    $key = 'radialsearch';
+    
+      // RETURN : extension is installed
+    if( t3lib_extMgm::isLoaded( $key ) )
+    {
+      return true;
+    }
+      // RETURN : extension is installed
+
+        $prompt = '
+<h1>
+  ERROR: radial search (Umkreissuche)
+</h1>
+<p>
+  You are using a radial search filter in the current view.<br />
+  But the extension Radial Search (Umkreissuche) (extension kwey: radialsearch) isn\'t loaded.<br />
+  Please remove the radialsearch filter or install and enable the extension radialsearch.
+</p>
+<p>
+  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
+</p>
+<p>
+  Sorry for the trouble. Browser - TYPO3 without PHP.
+</p>
+';
+    die( $prompt );
   }
   
 /**
