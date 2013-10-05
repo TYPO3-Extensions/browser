@@ -518,12 +518,12 @@ class tx_browser_pi1_filter_4x {
 
         // #52486, 131002, dwildt, 6+
       //$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
-      $filterType = $conf_view['filter.'][$table];
-      if( $filterType == 'RADIALSEARCH' )
+      if( $table == $this->radialsearchTable . '.' )
       {
         $arr_andWhereFilter = ( array ) $arr_andWhereFilter
                             + ( array ) $this->init_andWhereFilter_radialsearch( )
                             ;
+$this->pObj->dev_var_dump( $arr_andWhereFilter );
         continue;
       }
         // #52486, 131002, dwildt, 6+
@@ -1260,9 +1260,8 @@ class tx_browser_pi1_filter_4x {
   private function init_andWhereFilter_radialsearch( )
   {
 
-    $arr_andWhereFilter = $arr_andWhereFilter
-                        + $this->filterRadialsearch->andWhere( )
-                        ;
+    $andWhere = $this->filterRadialsearch->andWhere( );
+$this->pObj->dev_var_dump( $andWhere );
     return array( );
   }
 
@@ -1727,7 +1726,7 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 </h1>
 <p>
   You are using a radial search filter in the current view.<br />
-  But the extension Radial Search (Umkreissuche) (extension kwey: radialsearch) isn\'t loaded.<br />
+  But the extension Radial Search (Umkreissuche) (extension key: radialsearch) isn\'t loaded.<br />
   Please remove the radialsearch filter or install and enable the extension radialsearch.
 </p>
 <p>
