@@ -78,7 +78,8 @@ class tx_browser_pi1_filterRadialsearch {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
     
-    $andWhere = '            AND tx_radialsearch_postalcodes.pid = 0 
+    $andWhere = '' .
+'            AND tx_radialsearch_postalcodes.pid = 0 
             AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
             AND tx_radialsearch_postalcodes.admin_code1 LIKE "TH"
             AND

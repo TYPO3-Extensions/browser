@@ -1258,10 +1258,7 @@ $this->pObj->dev_var_dump( $strAndWhere );
  */
   private function init_andWhereFilter_radialsearch( )
   {
-
-    $andWhere = $this->filterRadialsearch->andWhere( );
-$this->pObj->dev_var_dump( $andWhere );
-    return array( );
+    return $this->filterRadialsearch->andWhere( );
   }
 
 
