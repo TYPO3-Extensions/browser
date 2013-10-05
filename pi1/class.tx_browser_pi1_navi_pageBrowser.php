@@ -574,31 +574,31 @@ class tx_browser_pi1_navi_pageBrowser
     list( $table )  = explode( '.', $tableField );
 
       // #52486, 131006, 7-
-//      // Query for all filter items
-//    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
-//    $from     = $this->sqlStatement_from( $table );
-//    $where    = $this->sqlStatement_where( $table );
-//    $groupBy  = null;
-//    $orderBy  = null;
-//    $limit    = null;
-
-      // #52486, 131006, +
       // Query for all filter items
-    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'"
-              . $this->sql_radialsearchSelect( )
-              ;
-    $from     = $this->sqlStatement_from( $table )
-              . $this->sql_radialsearchFrom( )
-              ;
-    $where    = $this->sqlStatement_where( $table )
-              . $this->sql_radialsearchWhere( )
-              ;
-    $groupBy  = $tableField
-              . $this->sql_radialsearchHaving( )
-              ;
-    $orderBy  = $this->sql_radialsearchOrderBy( );
+    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
+    $from     = $this->sqlStatement_from( $table );
+    $where    = $this->sqlStatement_where( $table );
+    $groupBy  = null;
+    $orderBy  = null;
     $limit    = null;
-      // #52486, 131006, +
+
+//      // #52486, 131006, +
+//      // Query for all filter items
+//    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'"
+//              . $this->sql_radialsearchSelect( )
+//              ;
+//    $from     = $this->sqlStatement_from( $table )
+//              . $this->sql_radialsearchFrom( )
+//              ;
+//    $where    = $this->sqlStatement_where( $table )
+//              . $this->sql_radialsearchWhere( )
+//              ;
+//    $groupBy  = $tableField
+//              . $this->sql_radialsearchHaving( )
+//              ;
+//    $orderBy  = $this->sql_radialsearchOrderBy( );
+//    $limit    = null;
+//      // #52486, 131006, +
 
       // #52486, 131006, -
       // Execute the query
