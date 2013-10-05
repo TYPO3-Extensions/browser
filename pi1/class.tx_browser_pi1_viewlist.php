@@ -742,6 +742,7 @@ class tx_browser_pi1_viewlist
       // Get the current sword
     $tx_radialsearch_pi1  = ( array ) t3lib_div::_GP( 'tx_radialsearch_pi1' );
     $sword = $tx_radialsearch_pi1[ 'sword' ];
+$this->pObj->dev_var_dump( $sword );
     
       // Set class var $isSword
     switch( true )
@@ -750,8 +751,10 @@ class tx_browser_pi1_viewlist
       case( $sword == '' ):
       case( $sword == '*' ):
         $this->radialsearchIsSword = false;
+        break;
       default:
         $this->radialsearchIsSword = true;
+        break;
     }
     unset( $sword );
       // Set class var $isSword
@@ -1618,7 +1621,7 @@ class tx_browser_pi1_viewlist
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "',
                           " . $tableL10nParent . " AS '" . $tableL10nParent . "'"
-              . $this->objRadialsearch->andSelect( )
+//              . $this->objRadialsearch->andSelect( )
               ;
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
       // If FROM contains a relation from $tableUid to a foreign table, move
@@ -1852,7 +1855,6 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'"
-              //. $this->objRadialsearch->andSelect( )
               . $this->sql_selectRadialsearch( )
               ;
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
@@ -2218,6 +2220,7 @@ $this->pObj->dev_var_dump( $query );
     {
       return null;
     }
+$this->pObj->dev_var_dump( $this->radialsearchIsSword );
     
     return $this->objRadialsearch->andSelect( );
   }
