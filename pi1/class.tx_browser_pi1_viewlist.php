@@ -1621,7 +1621,7 @@ class tx_browser_pi1_viewlist
                 $orderBy,
                 $limit
               );
-$this->pObj->dev_var_dump( $query );
+//$this->pObj->dev_var_dump( $query );
       // Execute
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
@@ -1807,8 +1807,10 @@ $this->pObj->dev_var_dump( $query );
     }
 
       // SQL query array
-    $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'";
-    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+    $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'"
+              . $this->objRadialsearch->andSelect( )
+              ;
+      $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
 //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements['listView'] );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
@@ -1826,7 +1828,6 @@ $this->pObj->dev_var_dump( $query );
 //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $findInSetForCurrTab );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $where );
 
     $groupBy  = null;
 
@@ -1874,6 +1875,7 @@ $this->pObj->dev_var_dump( $query );
               );
       // Get query
 
+$this->pObj->dev_var_dump( $query );
       // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
