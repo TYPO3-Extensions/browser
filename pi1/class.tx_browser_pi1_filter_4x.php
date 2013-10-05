@@ -1822,30 +1822,24 @@ class tx_browser_pi1_filter_4x {
     return false;
   }
   
-/**
- * init_radialsearchObject( ): 
- *
- * @return	void
- * @internal    #52486
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchObject( )
-  {
-//    $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
-//    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
+///**
+// * init_radialsearchObject( ): 
+// *
+// * @return	void
+// * @internal    #52486
+// * @access  private
+// * @version 4.7.0
+// * @since   4.7.0
+// */
+//  private function init_radialsearchObject( )
+//  {
+//    $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
+//    require_once( $path . 'class.tx_radialsearch_interface.php' );
 //
-//    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
-//    $this->filterRadialsearch->setParentObject( $this->pObj );
-
-    $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
-    require_once( $path . 'class.tx_radialsearch_interface.php' );
-
-    $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
-    $this->objRadialsearch->setParentObject( $this->pObj );
-    $this->objRadialsearch->setCurrentObject( $this );
-  }
+//    $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
+//    $this->objRadialsearch->setParentObject( $this->pObj );
+//    $this->objRadialsearch->setCurrentObject( $this );
+//  }
 
 
 /**

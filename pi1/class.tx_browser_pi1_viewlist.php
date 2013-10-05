@@ -707,12 +707,6 @@ class tx_browser_pi1_viewlist
  */
   private function init_radialsearchObject( )
   {
-//    $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
-//    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
-//
-//    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
-//    $this->filterRadialsearch->setParentObject( $this->pObj );
-
     $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
     require_once( $path . 'class.tx_radialsearch_interface.php' );
 
@@ -2052,7 +2046,7 @@ class tx_browser_pi1_viewlist
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
-//var_dump( __METHOD__, __LINE__, $query, $arr_return );    
+$this->pObj->dev_var_dump( $query, $arr_return );    
     return $arr_return;
   }
 
