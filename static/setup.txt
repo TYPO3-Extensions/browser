@@ -5414,7 +5414,7 @@ plugin.tx_browser_pi1 {
 
 plugin.tx_browser_pi1 {
     // TypoScript version. Don't touch this value!
-  version = 4.5.8
+  version = 4.7.0
 }
   // plugin.tx_browser_pi1: version
 
