@@ -572,11 +572,11 @@ class tx_browser_pi1_filter_4x {
 $this->pObj->dev_var_dump( $strAndWhere );
     if( $this->radialsearchTable )
     {
-      $arr_andWhereFilter = ( array ) $arr_andWhereFilter
-                          + ( array ) $this->init_andWhereFilter_radialsearch( )
-                          ;
-$this->pObj->dev_var_dump( $strAndWhere );
+      $strAndWhere  = $strAndWhere
+                    . $this->init_andWhereFilter_radialsearch( )
+                    ;
     }
+$this->pObj->dev_var_dump( $strAndWhere );
       // #52486, 131002, dwildt, 6+
 
       // RETURN : there isn't any andWhere statement
