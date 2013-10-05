@@ -3808,6 +3808,9 @@ $this->pObj->dev_var_dump( $strAndWhere );
       // Add localisation fields to select
     $select = $select . $this->sql_select_addLL( );
 
+    $select = $select 
+            . $this->sql_select_radiussearch( );
+
       // RETURN select
     return $select;
   }
@@ -4063,6 +4066,19 @@ $this->pObj->dev_var_dump( $strAndWhere );
     return $addSelect;
   }
 
+/**
+ * sql_select_radialsearch( )  :
+ *
+ * @return	string
+ * @access  private
+ * @version 4.7.6
+ * @since   4.7.6
+ */
+  private function sql_select_radialsearch( )
+  {
+    return $this->objRadialsearch->andSelect( );
+  }
+
 
 
 
@@ -4102,11 +4118,7 @@ $this->pObj->dev_var_dump( $strAndWhere );
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
-        $from = $this->pObj->objSqlInit->statements['listView']['from']
-                // :TODO: #52486, 131005: Check integration to objSqlInit
-                // :TODO: #52486, 131005: Check modus "with alternate matches"
-              . $this->sql_fromRadialsearch( )
-              ;
+        $from = $this->pObj->objSqlInit->statements['listView']['from'];
         break;
       case( $conf_flexform == 'independent' ) :
         $from = $table;
@@ -4118,6 +4130,10 @@ $this->pObj->dev_var_dump( $strAndWhere );
     }
       // SWITCH
     
+    $from = $from
+          . $this->sql_fromRadialsearch( )
+          ;
+
     return $from;
   }
 
