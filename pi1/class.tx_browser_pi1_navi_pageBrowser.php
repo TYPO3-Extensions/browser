@@ -611,6 +611,7 @@ class tx_browser_pi1_navi_pageBrowser
                     $orderBy,
                     $limit
                   );
+$this->pObj->dev_var_dump( $arr_return );
 
 //      // #52486, 131006, +
 //      // Get query
@@ -625,11 +626,11 @@ class tx_browser_pi1_navi_pageBrowser
 //              );
 
 //$this->pObj->dev_var_dump( str_replace( '\'', '"', $query ) );
-//$this->pObj->dev_var_dump( str_replace( '\\\'', "'", $query ) );
       // Execute query
     $promptOptimise   = 'Maintain the performance? Disbale the page browser, if it isn\'t needed.';
     $debugTrailLevel  = 1;
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+$this->pObj->dev_var_dump( $arr_return );
       // Execute query
 
 
