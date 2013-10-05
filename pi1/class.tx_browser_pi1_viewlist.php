@@ -1808,7 +1808,7 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'"
-              . $this->objRadialsearch->andSelect( )
+              //. $this->objRadialsearch->andSelect( )
               ;
       $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
