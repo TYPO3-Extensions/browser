@@ -1573,7 +1573,9 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "',
-                          " . $tableL10nParent . " AS '" . $tableL10nParent . "'";
+                          " . $tableL10nParent . " AS '" . $tableL10nParent . "'"
+              . $this->objRadialsearch->andSelect( )
+              ;
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
       // If FROM contains a relation from $tableUid to a foreign table, move
       //    $tableUid to $tableL10nParent
@@ -1619,7 +1621,7 @@ class tx_browser_pi1_viewlist
                 $orderBy,
                 $limit
               );
-
+$this->pObj->dev_var_dump( $query );
       // Execute
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
