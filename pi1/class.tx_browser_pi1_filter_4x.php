@@ -517,7 +517,7 @@ class tx_browser_pi1_filter_4x {
       $str_andWhere           = null;
 
         // #52486, 131002, dwildt, 6+
-      //$this->pObj->dev_var_dump( $table, $conf_view['filter.'][$table] );
+$this->pObj->dev_var_dump( $table, $this->radialsearchTable . '.' );
       if( $table == $this->radialsearchTable . '.' )
       {
         $arr_andWhereFilter = ( array ) $arr_andWhereFilter
@@ -1543,7 +1543,6 @@ $this->pObj->dev_var_dump( $andWhere );
       // #52486, 131004, dwildt, 1+
     $this->init_consolidationAndSelect_isTableFieldsRadialsearch( );
 
-$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       // RETURN : true, there is one table.field at least
     if( is_array( $this->arr_tsFilterTableFields ) )
     {
@@ -1566,8 +1565,11 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
 
 /**
  * init_consolidationAndSelect_isTableFieldsRadialsearch( ) :
+ *                              Adds to the class var $arr_tsFilterTableFields the tableField 
+ *                              labels for the lat and the lon.
+ *                              Maybe this isn't needed.
  *
- * @return	boolean		true: there is a table.field configured. false: there isn't
+ * @return	boolean		true: there is a table.field configured. false: if there isn't
  * @internal    #52486
  * @access  private
  * @version 4.7.6
@@ -1580,8 +1582,6 @@ $this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
       return false;
     }
 
-    $this->pObj->dev_var_dump( $this->radialsearchTable );
-    
     $table = $this->radialsearchTable;
     
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ];
