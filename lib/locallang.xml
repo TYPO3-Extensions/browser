@@ -193,7 +193,8 @@
       ]]></label>
       <label index="promptRadialsearchIsNotLoadedBody"><![CDATA[
         <p style="padding:1em 0;">
-          Warning: Radial Search (Umkreissuche) isn't loaded.
+          Warning: Radial Search (Umkreissuche) isn't loaded.<br />
+          Please install and enable Radial Search (radialsearch).
         </p>
       ]]></label>
     </languageKey>
