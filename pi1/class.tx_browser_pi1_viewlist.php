@@ -267,6 +267,8 @@ class tx_browser_pi1_viewlist
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
+$this->pObj->dev_var_dump( $rows );
+
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
