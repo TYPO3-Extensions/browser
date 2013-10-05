@@ -1844,7 +1844,7 @@ class tx_browser_pi1_filter_4x {
 
     $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
     $this->objRadialsearch->setParentObject( $this->pObj );
-    $this->objRadialsearch->setFilterObject( $this );
+    $this->objRadialsearch->setCurrentObject( $this );
   }
 
 
