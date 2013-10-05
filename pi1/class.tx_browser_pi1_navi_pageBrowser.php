@@ -623,7 +623,7 @@ class tx_browser_pi1_navi_pageBrowser
                 $limit
               );
 
-$this->pObj->dev_var_dump( str_replace( '\'', "'", $query );
+$this->pObj->dev_var_dump( str_replace( '\'', "'", $query ) );
       // Execute query
     $promptOptimise   = 'Maintain the performance? Disbale the page browser, if it isn\'t needed.';
     $debugTrailLevel  = 1;
