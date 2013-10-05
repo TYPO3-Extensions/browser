@@ -599,16 +599,37 @@ class tx_browser_pi1_navi_pageBrowser
     $limit    = null;
       // #52486, 131006, +
 
-      // Execute the query
-    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
-                  (
-                    $select,
-                    $from,
-                    $where,
-                    $groupBy,
-                    $orderBy,
-                    $limit
-                  );
+      // #52486, 131006, -
+//      // Execute the query
+//    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+//                  (
+//                    $select,
+//                    $from,
+//                    $where,
+//                    $groupBy,
+//                    $orderBy,
+//                    $limit
+//                  );
+
+      // #52486, 131006, +
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+$this->pObj->dev_var_dump( $query );
+      // Execute query
+    $promptOptimise   = 'Maintain the performance? Disbale the page browser, if it isn\'t needed.';
+    $debugTrailLevel  = 1;
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+      // Execute query
+
 
       // #38611, 120703, dwildt+
       // SWITCH $int_localisation_mode
