@@ -592,9 +592,10 @@ class tx_browser_pi1_navi_pageBrowser
               ;
     $where    = $this->sqlStatement_where( $table )
               . $this->sql_radialsearchWhere( )
+              ;
+    $groupBy  = $tableField
               . $this->sql_radialsearchHaving( )
               ;
-    $groupBy  = $tableField;
     $orderBy  = $this->sql_radialsearchOrderBy( );
     $limit    = null;
       // #52486, 131006, +
