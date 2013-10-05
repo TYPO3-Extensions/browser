@@ -226,8 +226,10 @@ class tx_browser_pi1_filter_4x {
     // [String] andWhere statement, if a filter is set
   var $andWhereFilter         = null;
   
+    // [Object] interface of extension radialsearch
+  private $radialsearch       = null;
     // [String] radialsearch "table"/filter. Example: radialsearch
-  private $radialsearchTable = null;
+  private $radialsearchTable  = null;
     
 
 
@@ -1258,7 +1260,19 @@ $this->pObj->dev_var_dump( $strAndWhere );
  */
   private function init_andWhereFilter_radialsearch( )
   {
-    return $this->filterRadialsearch->andWhere( );
+    $andWhere = '' .
+'AND tx_radialsearch_postalcodes.pid = 0 
+AND tx_radialsearch_postalcodes.country_code LIKE "DE" 
+AND tx_radialsearch_postalcodes.admin_code1 LIKE "TH"
+AND
+(
+      tx_radialsearch_postalcodes.postal_code LIKE "99084 Erfurt%" 
+  OR  tx_radialsearch_postalcodes.place_name LIKE "99084 Erfurt%" 
+  OR  CONCAT(tx_radialsearch_postalcodes.postal_code, " ", tx_radialsearch_postalcodes.place_name) LIKE "99084 Erfurt%"
+) 
+AND tx_radialsearch_postalcodes.deleted = 0 
+';
+    return $this->radialsearch->andWhere( );
   }
 
 
@@ -1810,11 +1824,17 @@ $this->pObj->dev_var_dump( $strAndWhere );
  */
   private function init_radialSearchObject( )
   {
-    $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
-    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
+//    $path2pi1 = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
+//    require_once( $path2pi1 . 'class.tx_browser_pi1_filterRadialsearch.php' );
+//
+//    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
+//    $this->filterRadialsearch->setParentObject( $this->pObj );
 
-    $this->filterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
-    $this->filterRadialsearch->setParentObject( $this->pObj );
+    $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
+    require_once( $path . 'class.tx_radialsearch_interface.php' );
+
+    $this->radialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
+    $this->radialsearch->setParentObject( $this->pObj );
   }
 
 
