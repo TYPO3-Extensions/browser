@@ -165,6 +165,8 @@ plugin.tx_browser_pi1 {
   radialsearch.sword = tx_radialsearch_pi1[sword]
   # cat=Browser - Radial Search//301;       type=string;    label= Radius: HTML name of the select box with the radius options.
   radialsearch.radius = tx_radialsearch_pi1[radius]
+  # cat=Browser - Radial Search//400;       type=options[Hits within the radius only,Hits within and without the radius];    label= Search mode: 
+  radialsearch.serachmode = Hits within and without the radius
   # cat=Browser - Radial Search/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   radialsearch.links = Click me!
 

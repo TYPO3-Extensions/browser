@@ -350,6 +350,45 @@
       <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
       <label index="promptGeodataRemoved">Breiten- und Längengrad wurden entfernt!</label>
       <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert! Beachte bitte die Lizenzbedingungen der hierfür genutzten Google API.</label>
+      <label index="promptRadialsearchInfoBody"><![CDATA[
+        <p style="padding:1em 0;">
+          <strong>Details</strong>
+        </p>
+        <ul style="list-style:outside;">
+          <li style="margin-left:2em;">
+            <a href="http://typo3.org/extensions/repository/view/radialsearch"
+              style="text-decoration:underline;"
+              alt="Radial Search (Umkreissuche)"
+              title="Radial Search (Umkreissuche)"
+              target="_blank">Radial Search auf typo3.org</a>
+          </li>
+          <li style="margin-left:2em;">
+            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf" 
+              style="text-decoration:underline;"
+              alt="Radial Search Handbuch"
+              title="Radial Search Handbuch"
+              target="_blank">Radial Search Handbuch (PDF)</a>
+          </li>
+          <li style="margin-left:2em;">
+            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf" 
+              style="text-decoration:underline;"
+              alt="Browser Tutorial Search and Filter"
+              title="Browser Tutorial Search and Filter"
+              target="_blank">Browser Tutorial Search and Filter (PDF)</a>. Suche nach "Radial Search".
+          </li>
+        </ul>
+      ]]></label>
+      <label index="promptRadialsearchIsLoadedBody"><![CDATA[
+        <p style="padding:1em 0;">
+          OK: Radial Search (Umkreissuche) ist aktiviert.
+        </p>
+      ]]></label>
+      <label index="promptRadialsearchIsNotLoadedBody"><![CDATA[
+        <p style="padding:1em 0;">
+          Warning: Radial Search (Umkreissuche) ist nicht aktiviert.<br />
+          Bitte installiere und aktiviere Radial Search (radialsearch).
+        </p>
+      ]]></label>
     </languageKey>
   </data>
 </T3locallang>
