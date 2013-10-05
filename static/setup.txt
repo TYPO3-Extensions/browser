@@ -2798,13 +2798,15 @@ plugin.tx_browser_pi1 {
           constanteditor =
           constanteditor {
               // [String] Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
-            lat     = {$plugin.tx_browser_pi1.radialsearch.lat}
+            lat         = {$plugin.tx_browser_pi1.radialsearch.lat}
               // [String] Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
-            lon     = {$plugin.tx_browser_pi1.radialsearch.lon}
+            lon         = {$plugin.tx_browser_pi1.radialsearch.lon}
               // [String] Radius: HTML name of the select box with the radius options.
-            radius  = {$plugin.tx_browser_pi1.radialsearch.radius}
+            radius      = {$plugin.tx_browser_pi1.radialsearch.radius}
+              // [String] Options: Hits within the radius only, Hits within and without the radius
+            searchmode  = {$plugin.tx_browser_pi1.radialsearch.searchmode}
               // [String] Sword: HTML name of the input field for the search word (sword).
-            sword   = {$plugin.tx_browser_pi1.radialsearch.sword}
+            sword       = {$plugin.tx_browser_pi1.radialsearch.sword}
           }
             // [Array] admin_code1, country_code
           filter < plugin.tx_radialsearch_pi1.res.js.tx_radialsearch_pi1.filter
