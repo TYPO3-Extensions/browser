@@ -316,7 +316,7 @@ class tx_browser_pi1_viewlist
 
       // Set the global $arrLinkToSingle
     $this->zz_setGlobalArrLinkToSingle( );
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
 
 
 
@@ -1874,6 +1874,7 @@ $this->pObj->dev_var_dump( $rows );
                 $limit
               );
       // Get query
+$this->pObj->dev_var_dump( $query );    
 
       // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
@@ -2048,7 +2049,6 @@ $this->pObj->dev_var_dump( $rows );
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
-$this->pObj->dev_var_dump( $query, $arr_return );    
     return $arr_return;
   }
 
