@@ -1618,14 +1618,19 @@ class tx_browser_pi1_viewlist
 
 
       // SQL query array
+      // #52486, 131005, dwildt, ~
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "',
                           " . $tableL10nParent . " AS '" . $tableL10nParent . "'"
-//              . $this->objRadialsearch->andSelect( )
+              . $this->sql_radialsearchSelect( )
               ;
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
       // If FROM contains a relation from $tableUid to a foreign table, move
       //    $tableUid to $tableL10nParent
     $from     = str_replace( $tableUid . ' = ' , $tableL10nParent . ' = ' , $from );
+      // #52486, 131005, dwildt, 3+
+    $from     = $from
+              . $this->sql_radialsearchFrom( )
+              ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $andWhere = $table . '.' . $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
@@ -1648,9 +1653,27 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
     
+      // #52486, 131005, dwildt, 4+
+    $where  = $where
+            . $this->sql_radialsearchWhere( )
+            . $this->sql_radialsearchHaving( )
+            ;
+    
     $groupBy  = null;
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+    
+      // #52486, 131005, dwildt, 5+
+    $orderBy  = $this->sql_radialsearchOrderBy( );
+    if( ! empty( $orderBy ) )
+    {
+      $orderBy = $orderBy . ',';
+    }
+      // #52486, 131005, dwildt, ~
+    $orderBy  = $orderBy
+              . $this->pObj->objSqlInit->statements['listView']['orderBy']
+              ;
+    
     $limit    = $this->conf_view['limit'];
+
     if( $withIdList )
     {
       $limit = null;
@@ -1862,37 +1885,36 @@ class tx_browser_pi1_viewlist
               . $this->sql_radialsearchFrom( )
               ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements['listView'] );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
-//$this->pObj->dev_var_dump( $where );
     if( $this->pObj->objFltr4x->get_selectedFilters( ) )
     {
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objFltr4x->andWhereFilter );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $findInSetForCurrTab );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
-      // #52486, 131005, dwildt, ~
+      // #52486, 131005, dwildt, 4+
     $where  = $where
             . $this->sql_radialsearchWhere( )
             . $this->sql_radialsearchHaving( )
             ;
-    $groupBy  = null;
-    
 
-      // #52486, 131005, dwildt, ~
+    $groupBy  = null;
+
+      // #52486, 131005, dwildt, 5+
     $orderBy  = $this->sql_radialsearchOrderBy( );
     if( ! empty( $orderBy ) )
     {
       $orderBy = $orderBy . ',';
     }
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+      // #52486, 131005, dwildt, ~
+    $orderBy  = $orderBy
+              . $this->pObj->objSqlInit->statements['listView']['orderBy']
+              ;
 
     switch( $limited )
     {
