@@ -227,7 +227,7 @@ class tx_browser_pi1_filter_4x {
   var $andWhereFilter         = null;
   
     // [Object] interface of extension radialsearch
-  private $radialsearch       = null;
+  private $objRadialsearch    = null;
     // [String] radialsearch "table"/filter. Example: radialsearch
   public  $radialsearchTable  = null;
     
@@ -315,6 +315,14 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
+      // DRS
+    if( $this->pObj->b_drs_filter )
+    {
+      $b_drs_sql = $this->pObj->b_drs_sql;
+      $this->pObj->b_drs_sql = true;
+    }
+      // DRS
+
       // Default return value
     $arr_return = array( );
     $arr_return['data']['marker'] = array( );
@@ -327,8 +335,10 @@ class tx_browser_pi1_filter_4x {
       {
         $prompt = $this->conf_path . 'filters isn\'t an array. There isn\'t any filter for processing.';
         t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        $this->pObj->b_drs_sql = $b_drs_sql;
       }
         // DRS
+
       return $arr_return;
     }
       // RETURN there isn't any filter
@@ -354,7 +364,7 @@ class tx_browser_pi1_filter_4x {
         continue;
       }
       
-      if( $table == $this->radialsearchTable . '.' )
+      if( $table == $this->objRadialsearchTable . '.' )
       {
         continue;
       }
@@ -389,6 +399,12 @@ class tx_browser_pi1_filter_4x {
         {
           $debugTrailLevel = 1;
           $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+            // DRS
+          if( $this->pObj->b_drs_filter )
+          {
+            $this->pObj->b_drs_sql = $b_drs_sql;
+          }
+            // DRS
           return $arr_result;
         }
         $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
@@ -399,6 +415,13 @@ class tx_browser_pi1_filter_4x {
 
       // Reset some vars
     $this->init_reset( );
+
+      // DRS
+    if( $this->pObj->b_drs_filter )
+    {
+      $this->pObj->b_drs_sql = $b_drs_sql;
+    }
+      // DRS
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -572,7 +595,7 @@ class tx_browser_pi1_filter_4x {
 
       // #52486, 131002, dwildt, 6+
 $this->pObj->dev_var_dump( $strAndWhere );
-    if( $this->radialsearchTable )
+    if( $this->objRadialsearchTable )
     {
       $strAndWhere  = $strAndWhere
                     . $this->init_andWhereFilter_radialsearch( )
@@ -1260,7 +1283,7 @@ $this->pObj->dev_var_dump( $strAndWhere );
  */
   private function init_andWhereFilter_radialsearch( )
   {
-    return $this->radialsearch->andWhere( );
+    return $this->objRadialsearch->andWhere( );
   }
 
 
@@ -1575,12 +1598,12 @@ $this->pObj->dev_var_dump( $strAndWhere );
  */
   private function init_consolidationAndSelect_isTableFieldsRadialsearch( )
   {
-    if( ! $this->radialsearchTable )
+    if( ! $this->objRadialsearchTable )
     {
       return false;
     }
 
-    $table = $this->radialsearchTable;
+    $table = $this->objRadialsearchTable;
     
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ];
     $lat  = $conf[ 'constanteditor.' ][ 'lat' ];
@@ -1775,7 +1798,7 @@ $this->pObj->dev_var_dump( $strAndWhere );
       if( $name == 'RADIALSEARCH' )
       {
           // Set the radialsearch "table". Example: radialsearch
-        $this->radialsearchTable = $table;
+        $this->objRadialsearchTable = $table;
           // DRS
         if( $this->pObj->b_drs_filter )
         {
@@ -1821,9 +1844,9 @@ $this->pObj->dev_var_dump( $strAndWhere );
     $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
     require_once( $path . 'class.tx_radialsearch_interface.php' );
 
-    $this->radialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
-    $this->radialsearch->setParentObject( $this->pObj );
-    $this->radialsearch->setFilterObject( $this );
+    $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
+    $this->objRadialsearch->setParentObject( $this->pObj );
+    $this->objRadialsearch->setFilterObject( $this );
   }
 
 
@@ -2728,14 +2751,14 @@ $this->pObj->dev_var_dump( $strAndWhere );
   private function get_filterRadialsearch( )
   {
       // RETURN : there isn't any radialsearch filter
-    if( ! $this->radialsearchTable )
+    if( ! $this->objRadialsearchTable )
     {
       return null;
     }
       // RETURN : there isn't any radialsearch filter
     
     $arrReturn  = array( );
-    $table      = $this->radialsearchTable;
+    $table      = $this->objRadialsearchTable;
 
     $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
@@ -4090,8 +4113,24 @@ $this->pObj->dev_var_dump( $strAndWhere );
         break;
     }
       // SWITCH
+    
+    $from = $from
+          . $this->sql_fromRadialsearch( )
+          ;
 
     return $from;
+  }
+
+/**
+ * sql_fromRadialsearch( )  :
+ *
+ * @return	string
+ * @version 4.7.6
+ * @since   4.7.6
+ */
+  private function sql_fromRadialsearch( )
+  {
+    return $this->objRadialsearch->andFrom( );
   }
 
 
