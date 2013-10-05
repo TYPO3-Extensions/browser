@@ -424,7 +424,7 @@ class tx_browser_pi1_viewlist
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
  * @return    void
- * @version 4.5.7
+ * @version 4.7.0
  * @since 1.0.0
  */
   private function init( )
@@ -742,7 +742,6 @@ class tx_browser_pi1_viewlist
       // Get the current sword
     $tx_radialsearch_pi1  = ( array ) t3lib_div::_GP( 'tx_radialsearch_pi1' );
     $sword = $tx_radialsearch_pi1[ 'sword' ];
-$this->pObj->dev_var_dump( $sword );
     
       // Set class var $isSword
     switch( true )
@@ -1778,7 +1777,7 @@ $this->pObj->dev_var_dump( $sword );
   * @param    array        $withoutIds : Ids of rows, which have a translated record
   * @param    boolean        $limited    : true: query gets a limit
   * @return    array        $arr_return : Contains the ids of rows
-  * @version 4.1.2
+  * @version 4.7.0
   * @since   3.9.13
   */
   private function rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds, $limited=true )
@@ -1854,10 +1853,14 @@ $this->pObj->dev_var_dump( $sword );
     }
 
       // SQL query array
+      // #52486, 131005, dwildt, ~
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'"
-              . $this->sql_selectRadialsearch( )
+              . $this->sql_radialsearchSelect( )
               ;
-    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+      // #52486, 131005, dwildt, ~
+    $from     = $this->pObj->objSqlInit->statements['listView']['from']
+              . $this->sql_radialsearchFrom( )
+              ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
 //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements['listView'] );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
@@ -1875,10 +1878,20 @@ $this->pObj->dev_var_dump( $sword );
 //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $findInSetForCurrTab );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
-
+      // #52486, 131005, dwildt, ~
+    $where  = $where
+            . $this->sql_radialsearchWhere( )
+            . $this->sql_radialsearchHaving( )
+            ;
     $groupBy  = null;
+    
 
-      // #9917: Selecting a random sample from a set of rows
+      // #52486, 131005, dwildt, ~
+    $orderBy  = $this->sql_radialsearchOrderBy( );
+    if( ! empty( $orderBy ) )
+    {
+      $orderBy = $orderBy . ',';
+    }
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
 
     switch( $limited )
@@ -2206,23 +2219,103 @@ $this->pObj->dev_var_dump( $query );
   }
 
 /**
- * sql_select_radialsearch( )  :
+ * sql_radialsearchFrom( )  :
  *
  * @return	string
+ * @internal    #52486
  * @access  private
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function sql_selectRadialsearch( )
+  private function sql_radialsearchFrom( )
   {
-      // RETURN : 
+      // RETURN : There isn't any radialsearch sword
     if( ! $this->radialsearchIsSword )
     {
       return null;
     }
-$this->pObj->dev_var_dump( $this->radialsearchIsSword );
+    
+    return $this->objRadialsearch->andFrom( );
+  }
+
+/**
+ * sql_radialsearchHaving( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchHaving( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andHaving( );
+  }
+
+/**
+ * sql_radialsearchOrderBy( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchOrderBy( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andOrderBy( );
+  }
+
+/**
+ * sql_radialsearchSelect( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchSelect( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
     
     return $this->objRadialsearch->andSelect( );
+  }
+
+/**
+ * sql_radialsearchWhere( )  :
+ *
+ * @return	string
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function sql_radialsearchWhere( )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    return $this->objRadialsearch->andWhere( );
   }
 
 
