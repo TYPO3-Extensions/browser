@@ -1958,7 +1958,7 @@ class tx_browser_pi1_viewlist
               );
       // Get query
 
-//$this->pObj->dev_var_dump( $query );
+$this->pObj->dev_var_dump( $query );
       // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
