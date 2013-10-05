@@ -4102,7 +4102,11 @@ $this->pObj->dev_var_dump( $strAndWhere );
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
-        $from = $this->pObj->objSqlInit->statements['listView']['from'];
+        $from = $this->pObj->objSqlInit->statements['listView']['from']
+                // :TODO: #52486, 131005: Check integration to objSqlInit
+                // :TODO: #52486, 131005: Check modus "with alternate matches"
+              . $this->sql_fromRadialsearch( )
+              ;
         break;
       case( $conf_flexform == 'independent' ) :
         $from = $table;
@@ -4114,10 +4118,6 @@ $this->pObj->dev_var_dump( $strAndWhere );
     }
       // SWITCH
     
-    $from = $from
-          . $this->sql_fromRadialsearch( )
-          ;
-
     return $from;
   }
 

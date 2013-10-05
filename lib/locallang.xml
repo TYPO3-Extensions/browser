@@ -158,10 +158,9 @@
       <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
       <label index="promptGeodataRemoved">latitude and longitude are removed!</label>
       <label index="promptGeodataUpdate">latitude and longitude are updated! Please take care of the Google API licence.</label>
-      <label index="promptRadialsearchBody"><![CDATA[
+      <label index="promptRadialsearchInfoBody"><![CDATA[
         <p style="padding:1em 0;">
-          You need the extension Radial Search (German: Umkreissuche).<br />
-          See
+          <strong>Details</strong>
         </p>
         <ul style="list-style:outside;">
           <li style="margin-left:2em;">
@@ -186,6 +185,16 @@
               target="_blank">Browser Tutorial Search and Filter (PDF)</a>. Look for "Radial Search".
           </li>
         </ul>
+      ]]></label>
+      <label index="promptRadialsearchIsLoadedBody"><![CDATA[
+        <p style="padding:1em 0;">
+          OK: Radial Search (Umkreissuche) is loaded.
+        </p>
+      ]]></label>
+      <label index="promptRadialsearchIsNotLoadedBody"><![CDATA[
+        <p style="padding:1em 0;">
+          Warning: Radial Search (Umkreissuche) isn't loaded.
+        </p>
       ]]></label>
     </languageKey>
     <languageKey index="de" type="array">

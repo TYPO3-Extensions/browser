@@ -168,10 +168,31 @@ class tx_browser_extmanager
 
     $str_prompt = null;
 
+    $key = 'radialsearch';
+    
+    if( t3lib_extMgm::isLoaded( $key ) )
+    {
+      $str_prompt = $str_prompt . '
+<div class="typo3-message message-ok">
+  <div class="message-body">
+    ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchIsLoadedBody'). '
+  </div>
+</div>';
+    }
+    else
+    {
+      $str_prompt = $str_prompt . '
+<div class="typo3-message message-warning">
+  <div class="message-body">
+    ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchIsNotLoadedBody'). '
+  </div>
+</div>';
+    }
+
     $str_prompt = $str_prompt . '
 <div class="typo3-message message-information">
   <div class="message-body">
-    ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchBody'). '
+    ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptRadialsearchInfoBody'). '
   </div>
 </div>';
       
