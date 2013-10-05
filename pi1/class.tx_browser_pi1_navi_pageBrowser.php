@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2012-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -613,17 +613,17 @@ class tx_browser_pi1_navi_pageBrowser
                   );
 $this->pObj->dev_var_dump( $arr_return );
 
-//      // #52486, 131006, +
-//      // Get query
-//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
+      // #52486, 131006, +
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
 
 //$this->pObj->dev_var_dump( str_replace( '\'', '"', $query ) );
       // Execute query
