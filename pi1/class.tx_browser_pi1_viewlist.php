@@ -28,7 +28,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.7.0
+ * @version     4.5.7
  * @since       1.0
  */
 
@@ -119,10 +119,6 @@ class tx_browser_pi1_viewlist
     // [String] Current content
   var $content = null;
 
-    // [Object] interface of extension radialsearch
-  private $objRadialsearch    = null;
-    // [String] radialsearch "table"/filter. Example: radialsearch
-  public  $radialsearchTable  = null;
 
 
 
@@ -316,8 +312,6 @@ class tx_browser_pi1_viewlist
 
       // Set the global $arrLinkToSingle
     $this->zz_setGlobalArrLinkToSingle( );
-//$this->pObj->dev_var_dump( $rows );
-
 
 
 
@@ -423,8 +417,7 @@ class tx_browser_pi1_viewlist
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
  * @return    void
- * @access  private
- * @version 4.7.0
+ * @version 4.5.7
  * @since 1.0.0
  */
   private function init( )
@@ -433,11 +426,6 @@ class tx_browser_pi1_viewlist
     $this->init_lDisplayList( );
     $this->init_lDisplay( );
     $this->init_localisation( );
-
-      // #52486, 131005, dwildt, 2+
-      // Init radialsearch filter and object
-    $this->init_radialsearch( );
-
   }
 
 /**
@@ -568,153 +556,6 @@ class tx_browser_pi1_viewlist
 
     $this->pObj->arr_realTables_localised     = array_unique( $this->pObj->arr_realTables_localised );
     $this->pObj->arr_realTables_notLocalised  = array_unique( $this->pObj->arr_realTables_notLocalised );
-  }
-  
-/**
- * init_radialsearch( ): 
- *
- * @return	void
- * @access  private
- * @internal    #52486
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearch( )
-  {
-      // RETURN : There isn't any radialsearch filter
-    if( ! $this->init_radialsearchFilter( ) )
-    {
-      return;
-    }
-
-      // Check if EXT radialserach is installed
-    $this->init_radialsearchExtension( );
-
-      // Init radialsserach filter class
-    $this->init_radialsearchObject( );
-
-  }
-  
-/**
- * init_radialsearchExtension( )  : Check if EXT radialserach is installed
- *
- * @return	void
- * @access  private
- * @internal    #52486
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchExtension( )
-  {
-    $key = 'radialsearch';
-    
-      // RETURN : extension is installed
-    if( t3lib_extMgm::isLoaded( $key ) )
-    {
-      return true;
-    }
-      // RETURN : extension is installed
-
-        $prompt = '
-<h1>
-  ERROR: radial search (Umkreissuche)
-</h1>
-<p>
-  You are using a radial search filter in the current view.<br />
-  But the extension Radial Search (Umkreissuche) (extension key: radialsearch) isn\'t loaded.<br />
-  Please remove the radialsearch filter or install and enable the extension radialsearch.
-</p>
-<p>
-  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
-</p>
-<p>
-  Sorry for the trouble. Browser - TYPO3 without PHP.
-</p>
-';
-    die( $prompt );
-  }
-  
-/**
- * init_radialsearchFilter( ) : Checks weather a radialserach filter is set or not.
- *                              If radialsearch filter 
- *                              * is set
- *                                * it sets the class var $radialsearchTable
- *                                * returns true
- *                              * isn't set
- *                                * returns false
- *
- * @return	boolean         TRue, if radialsearch filter is set
- * @internal    #52486
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchFilter( )
-  {
-      // LOOP each table
-    foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
-    {
-      if( substr( $table, -1 ) == '.' )
-      {
-        continue;
-      }
-      
-        // Name (COA object) of the current filter table
-      $name = $this->conf_view[ 'filter.' ][ $table ];
-      
-        // CONTINUE : Name (COA object) isn't RADIALSEARCH
-      if( $name != 'RADIALSEARCH' )
-      {
-        continue;
-      }
-      
-        // RETURN true : Name (COA object) is RADIALSEARCH
-      if( $name == 'RADIALSEARCH' )
-      {
-          // Set the radialsearch "table". Example: radialsearch
-        $this->objRadialsearchTable = $table;
-          // DRS
-        if( $this->pObj->b_drs_filter )
-        {
-          $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
-          t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-          // DRS
-        return true;
-      }      
-        // RETURN true : Name (COA object) is RADIALSEARCH
-    }
-      // LOOP each table
-
-      // DRS
-    if( $this->pObj->b_drs_filter )
-    {
-      $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
-      t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-      // RETURN false : any radialsearch filter isn't used
-    return false;
-  }
-  
-/**
- * init_radialsearchObject( ): 
- *
- * @return	void
- * @internal    #52486
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchObject( )
-  {
-    $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
-    require_once( $path . 'class.tx_radialsearch_interface.php' );
-
-    $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
-    $this->objRadialsearch->setParentObject( $this->pObj );
-    $this->objRadialsearch->setCurrentObject( $this );
   }
 
 
@@ -1874,7 +1715,6 @@ class tx_browser_pi1_viewlist
                 $limit
               );
       // Get query
-$this->pObj->dev_var_dump( $query );    
 
       // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
@@ -2049,6 +1889,7 @@ $this->pObj->dev_var_dump( $query );
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
+//var_dump( __METHOD__, __LINE__, $query, $arr_return );    
     return $arr_return;
   }
 
