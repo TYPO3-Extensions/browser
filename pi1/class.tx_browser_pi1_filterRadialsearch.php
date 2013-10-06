@@ -436,7 +436,7 @@ class tx_browser_pi1_filterRadialsearch {
   */
   public function setConfView( $confView )
   {
-    if( ! is_arry( $confView ) )
+    if( ! is_array( $confView ) )
     {
       $prompt = 'ERROR: no object!<br />' . PHP_EOL .
                 'Sorry for the trouble.<br />' . PHP_EOL .
