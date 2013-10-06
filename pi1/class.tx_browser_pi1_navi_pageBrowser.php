@@ -573,52 +573,39 @@ class tx_browser_pi1_navi_pageBrowser
     $tableField     = $this->pObj->arrLocalTable['uid'];
     list( $table )  = explode( '.', $tableField );
 
-      // #52486, 131006, 7-
-      // Query for all filter items
-    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
-    $from     = $this->sqlStatement_from( $table );
-    $where    = $this->sqlStatement_where( $table );
-    $groupBy  = null;
-    $orderBy  = null;
-    $limit    = null;
-
       // #52486, 131006, -
-      // Execute the query
-    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
-                  (
-                    $select,
-                    $from,
-                    $where,
-                    $groupBy,
-                    $orderBy,
-                    $limit
-                  );
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] ) );
+//      // Query for all filter items
+//    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
+//    $from     = $this->sqlStatement_from( $table );
+//    $where    = $this->sqlStatement_where( $table );
+//    $groupBy  = null;
+//    $orderBy  = null;
+//    $limit    = null;
+//
+//      // Execute the query
+//    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+//                  (
+//                    $select,
+//                    $from,
+//                    $where,
+//                    $groupBy,
+//                    $orderBy,
+//                    $limit
+//                  );
+      // #52486, 131006, -
+//$this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] ) );
 
       // #52486, 131006, +
       // Query for all filter items
-    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'"
-              . $this->sql_radialsearchSelect( )
-              ;
+    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
     $from     = $this->sqlStatement_from( $table )
               . $this->sql_radialsearchFrom( )
               ;
     $where    = $this->sqlStatement_where( $table )
-              . $this->sql_radialsearchWhere( )
+              . $this->sql_radialsearchWhere( true )
               ;
-    $having   = $this->sql_radialsearchHaving( );
-    
-    if( ! $having )
-    {
-      $groupBy  = null;
-    }
-    if( $having )
-    {
-      $groupBy  = $tableField
-                . $this->sql_radialsearchHaving( )
-                ;
-    }
-    $orderBy  = $this->sql_radialsearchOrderBy( );
+    $groupBy  = null;
+    $orderBy  = null;
     $limit    = null;
       // #52486, 131006, +
 
@@ -821,13 +808,14 @@ $this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] 
 /**
  * sql_radialsearchWhere( )  :
  *
+ * @param       boolean   $withDistance :
  * @return	string
  * @internal    #52486
  * @access  private
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function sql_radialsearchWhere( )
+  private function sql_radialsearchWhere( $withDistance )
   {
       // RETURN : There isn't any radialsearch sword
     if( ! $this->radialsearchIsSword )
@@ -835,7 +823,7 @@ $this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] 
       return null;
     }
     
-    return $this->objRadialsearch->andWhere( );
+    return $this->objRadialsearch->andWhere( $withDistance );
   }
   
 
