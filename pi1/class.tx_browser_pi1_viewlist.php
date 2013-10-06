@@ -309,8 +309,10 @@ $this->pObj->dev_var_dump( $rows );
       // DRS - :TODO:
 
       // Delete fields, which were added whily runtime
+$this->pObj->dev_var_dump( $rows );
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
+$this->pObj->dev_var_dump( $rows );
     unset($arr_return);
     $this->pObj->rows = $rows;
 
