@@ -593,7 +593,22 @@ class tx_browser_pi1_viewlist
 
     $this->objFilterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
     $this->objFilterRadialsearch->setParentObject( $this->pObj );
-    $this->objFilterRadialsearch->setConfView( $this->conf_view );
+    $this->objFilterRadialsearch->init( );
+
+      // Get field labels
+    $table = $this->objFilterRadialsearch->getRadialsearchTSname( );
+    $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
+    $lat        = $constanteditor[ 'lat' ];
+    $lon        = $constanteditor[ 'lon' ];
+    $fields = array(
+      'lat' => $lat,
+      'lon' => $lon
+    );
+    
+      // Get filter
+    $tsFilter = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'filter.' ];
+
+    $this->objFilterRadialsearch->setConfiguration( $fields, $tsFilter );
   }
   
 ///**

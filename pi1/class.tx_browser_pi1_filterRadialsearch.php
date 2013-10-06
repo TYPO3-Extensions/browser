@@ -193,6 +193,30 @@ class tx_browser_pi1_filterRadialsearch {
     **********************************************/
   
 /**
+ * getRadialsearchTSname( )  : 
+ *
+ * @return	string
+ * @access  public
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  public function getRadialsearchTSname( )
+  {
+    $radialsearchTable = $this->radialsearchTable;
+
+    if( ! $radialsearchTable )
+    {
+      $prompt = 'ERROR: radialsearchTable isn\'t initiated!<br />' . PHP_EOL .
+                'Sorry for the trouble.<br />' . PHP_EOL .
+                'TYPO3 Radial Search (Umkreissuche)<br />' . PHP_EOL .
+              __METHOD__ . ' (' . __LINE__ . ')';
+      die( $prompt );
+    }
+    
+    return $radialsearchTable;
+  }  
+  
+/**
  * getSword( )  : 
  *
  * @return	string
@@ -446,6 +470,22 @@ class tx_browser_pi1_filterRadialsearch {
   **********************************************/
 
  /**
+  * setConfiguration( )  : Set fields and filter
+  *
+  * @param	array		$fields: array with elements lat and lon
+  * @return	void
+  * @access public
+  * @version    4.7.0
+  * @since      4.7.0
+  */
+  public function setConfiguration( $fields, $filter )
+  {
+    $this->init( );
+    
+    $this->objRadialsearch->setConfiguration( $fields, $filter );
+  }
+
+ /**
   * setConfView( )  : Set the parent object
   *
   * @param	object		$pObj: Parent Object
@@ -488,6 +528,7 @@ class tx_browser_pi1_filterRadialsearch {
     }
     $this->pObj = $pObj;
   }
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filterRadialsearch.php']) {
