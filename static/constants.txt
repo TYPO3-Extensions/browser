@@ -161,7 +161,7 @@ plugin.tx_browser_pi1 {
   radialsearch.lat = 
   # cat=Browser - Radial Search//201;       type=string;    label= Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
   radialsearch.lon = 
-  # cat=Browser - Radial Search//202;       type=string;    label= Distance: table.field label for the distance. Field isn't part of your database. Field will generated while runtime and will added to SELECT statemennts. Example: tx_myext_address.distance, , tx_org_headquarters.distance
+  # cat=Browser - Radial Search//202;       type=string;    label= Distance: field label for the distance. Field isn't part of your database. Field will generated while runtime and will added to SELECT statemennts. Example: distance, Don't use tableField syntax like tx_myext_main.distance: You will get an SQL error!
   radialsearch.distance = 
   # cat=Browser - Radial Search//300;       type=string;    label= Sword: HTML name of the input field for the search word (sword).
   radialsearch.sword = tx_radialsearch_pi1[sword]
