@@ -51,7 +51,7 @@ class tx_browser_pi1_filterRadialsearch {
     // [Object] Parent object
   private $pObj       = null;
     // [Array] TypoSCript of the current view
-  private $conf_view  = null;
+  public  $conf_view  = null;
 
     // [Boolean] False, init process was unproper, true in case of success
   private $init                 = null;
