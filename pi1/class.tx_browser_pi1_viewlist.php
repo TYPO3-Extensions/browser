@@ -1049,10 +1049,11 @@ class tx_browser_pi1_viewlist
   }
   
 /**
- * rows_consolidateRadialsearch( )  :
+ * rows_consolidateRadialsearch( )  : A record has one lat and lon only - independing of children records.
+ *                                    This method removes distances but the first.
  *
- * @param    array        $rows  : consolidated rows
- * @return    void
+ * @param    array        $rows  : rows
+ * @return    array       $rows  : consolidated rows
  * @access  private
  * @internal #52486
  * @version 4.7.0
