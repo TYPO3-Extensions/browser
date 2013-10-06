@@ -156,14 +156,15 @@ class tx_browser_pi1_viewlist
 
 
 
-  /**
+/**
  * main( ): Display a search form, indexBrowser, pageBrowser and a list of records
  *
  * @return    string        $template : The processed HTML template
- * @version 3.9.8
+ * @access  public 
+ * @version 4.7.0
  * @since 3.9.8
  */
-  function main( )
+  public function main( )
   {
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -429,6 +430,7 @@ class tx_browser_pi1_viewlist
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
  * @return    void
+ * @access private
  * @version 4.7.0
  * @since 1.0.0
  */
@@ -1602,7 +1604,7 @@ class tx_browser_pi1_viewlist
  *
  * @param    [type]        $$withIds: ...
  * @return    array        $arr_return: Array with two elements with the ids
- * @version 4.1.2
+ * @version 4.7.0
  * @since   3.9.13
  */
   private function rows_sqlIdsOfRowsWiTranslation( $withIds )
@@ -2109,7 +2111,7 @@ class tx_browser_pi1_viewlist
  *
  * @param    string        $withIds     : Ids of the rows for the lost view
  * @return    array        $arr_return : Contains the SQL res or an error message
- * @version 4.1.16
+ * @version 4.7.0
  * @since   3.9.13
  * @todo    120506, dwildt: filterIsSelected
  */

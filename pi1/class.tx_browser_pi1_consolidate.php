@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +27,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version  4.2.0
+* @version  4.7.0
 * @since    3.4.4
 *
 * @package    TYPO3
@@ -101,7 +101,7 @@ class tx_browser_pi1_consolidate
  *
  * @param	array		$rows: The rows form the SQL result
  * @return	array		$rows_new: Consolidated rows.
- * @version   4.2.0
+ * @version   4.7.0
  * @since    3.4.4
  */
   function consolidate( $rows )
