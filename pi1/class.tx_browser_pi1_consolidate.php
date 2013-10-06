@@ -537,27 +537,32 @@ $this->pObj->dev_var_dump( $rows );
                 // 2nd loop at least
                   // #42565, 121031, dwildt, 1-
 //                if( $rows_cons[ $int_count ][ $table . '.' . $field ] )
+                  // #52486, 131005, dwildt, 3+
+                $tableField = $table . '.' . $field;
+                  // Remove ending dot, if file dis empty
+                $tableField = rtrim( $tableField, '.' );
+
                   // #42565, 121031, dwildt, 1+
-                if( isset( $rows_cons[ $int_count ][ $table . '.' . $field ] ) )
+                if( isset( $rows_cons[ $int_count ][ $tableField ] ) )
                 {
-                  if( $table . '.' . $field == $groupBy_table . '.' . $groupBy_field )
+                  if( $tableField == $groupBy_table . '.' . $groupBy_field )
                   {
-                    $rows_cons[$int_count][$table.'.'.$field] = $value;
+                    $rows_cons[ $int_count ][ $tableField ] = $value;
                   }
-                  if( $table . '.' . $field != $groupBy_table . '.' . $groupBy_field )
+                  if( $tableField != $groupBy_table . '.' . $groupBy_field )
                   {
-                    $rows_cons[$int_count][$table.'.'.$field] .= $str_devider . $value;
-                    $arr_children_to_devide[] = $table.'.'.$field;  // 3.3.3
+                    $rows_cons[ $int_count ][ $tableField ] .= $str_devider . $value;
+                    $arr_children_to_devide[ ] = $tableField;  // 3.3.3
                   }
                 }
                 // 2nd loop at least
                 // 1st loop
                   // #42565, 121031, dwildt, 1-
-//                if( ! $rows_cons[ $int_count ][ $table . '.' . $field ] )
+//                if( ! $rows_cons[ $int_count ][ $tableField ] )
                   // #42565, 121031, dwildt, 1+
-                if( ! isset( $rows_cons[ $int_count ][ $table . '.' . $field ] ) )
+                if( ! isset( $rows_cons[ $int_count ][ $tableField ] ) )
                 {
-                  $rows_cons[$int_count][$table.'.'.$field] = $value;
+                  $rows_cons[ $int_count ][ $tableField ] = $value;
                 }
                 // 1st loop
               }
