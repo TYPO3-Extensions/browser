@@ -2810,6 +2810,8 @@ plugin.tx_browser_pi1 {
           }
             // [Array] admin_code1, country_code
           filter < plugin.tx_radialsearch_pi1.res.js.tx_radialsearch_pi1.filter
+            // [Array] GETPOST: fieldradius, fieldsword, parameter
+          gp < plugin.tx_radialsearch_pi1.gp
         }
           // [Array] plugin.tx_radialsearch_pi1, plugin.tx_radialsearch_pi2
         content = COA

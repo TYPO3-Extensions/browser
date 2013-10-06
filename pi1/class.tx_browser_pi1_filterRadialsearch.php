@@ -419,7 +419,6 @@ class tx_browser_pi1_filterRadialsearch {
 
     $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
     $this->objRadialsearch->setParentObject( $this->pObj );
-    $this->objRadialsearch->setCurrentObject( $this );
 
       // Get field labels
     $table          = $this->radialsearchTable;
