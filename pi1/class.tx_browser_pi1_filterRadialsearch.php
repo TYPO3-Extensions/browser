@@ -241,11 +241,11 @@ class tx_browser_pi1_filterRadialsearch {
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
  * @return    void
- * @access private
+ * @access public
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init( )
+  public function init( )
   {
     if( $this->init !== null )
     {
@@ -479,9 +479,7 @@ class tx_browser_pi1_filterRadialsearch {
   * @since      4.7.0
   */
   public function setConfiguration( $fields, $filter )
-  {
-    $this->init( );
-    
+  { 
     $this->objRadialsearch->setConfiguration( $fields, $filter );
   }
 
