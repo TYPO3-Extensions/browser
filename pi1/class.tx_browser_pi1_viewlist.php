@@ -1071,10 +1071,12 @@ class tx_browser_pi1_viewlist
                   . $this->pObj->objTyposcript->str_sqlDeviderWorkflow
                   ;
 
+    $labelDistance = $this->objFilterRadialsearch->getLabelDistance( );
+    
     foreach( $rows as $key => $row )
     {
-      $distance = explode( $str_devider, $row[ 'distance' ] );
-      $rows[ $key ][ 'distance' ] = $distance[ 0 ];
+      $distance = explode( $str_devider, $row[ $labelDistance ] );
+      $rows[ $key ][ $labelDistance ] = $distance[ 0 ];
     }
     
     return $rows;

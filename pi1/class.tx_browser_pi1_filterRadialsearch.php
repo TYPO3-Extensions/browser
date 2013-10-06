@@ -193,6 +193,31 @@ class tx_browser_pi1_filterRadialsearch {
     **********************************************/
   
 /**
+ * getLabelDistance( )  : 
+ *
+ * @return	string
+ * @access  public
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  public function getLabelDistance( )
+  {
+    $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
+    $distance       = $constanteditor[ 'distance' ];
+
+    if( ! $distance )
+    {
+      $prompt = 'ERROR: distance isn\'t initiated!<br />' . PHP_EOL .
+                'Sorry for the trouble.<br />' . PHP_EOL .
+                'TYPO3 Radial Search (Umkreissuche)<br />' . PHP_EOL .
+              __METHOD__ . ' (' . __LINE__ . ')';
+      die( $prompt );
+    }
+    
+    return $distance;
+  }  
+  
+/**
  * getRadialsearchTSname( )  : 
  *
  * @return	string
@@ -423,11 +448,13 @@ class tx_browser_pi1_filterRadialsearch {
       // Get field labels
     $table          = $this->radialsearchTable;
     $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
+    $distance       = $constanteditor[ 'distance' ];
     $lat            = $constanteditor[ 'lat' ];
     $lon            = $constanteditor[ 'lon' ];
     $fields = array(
-      'lat' => $lat,
-      'lon' => $lon
+      'distance'  => $distance,
+      'lat'       => $lat,
+      'lon'       => $lon
     );
     
       // Get filter
