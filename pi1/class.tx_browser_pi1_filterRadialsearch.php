@@ -61,6 +61,8 @@ class tx_browser_pi1_filterRadialsearch {
   public  $radialsearchTable    = null;
     // [Boolean] Radialsearch Sword is set oer isn't set
   private $radialsearchIsSword  = null;
+    // [Boolean] Should used an having?
+  private $having               = null;
   
 
 
@@ -110,6 +112,12 @@ class tx_browser_pi1_filterRadialsearch {
     
       // RETURN : There isn't any radialsearch sword
     if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+      // RETURN : HAVING should not used
+    if( ! $this->setHaving( ))
     {
       return null;
     }
@@ -547,6 +555,45 @@ class tx_browser_pi1_filterRadialsearch {
       die( $prompt );
     }
     $this->conf_view = $confView;
+  }
+
+/**
+ * setHaving( )  :
+ *
+ * @return	booelan
+ * @internal    #52486
+ * @access  private
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function setHaving( )
+  {
+    if( $this->having !== null )
+    {
+      return $this->having;
+    }
+    
+    $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
+    $searchmode     = $constanteditor[ 'searchmode' ];
+
+    switch( $searchmode )
+    {
+      case( 'Within the radius only' ):
+        $this->having = true;
+        break;
+      case( 'Within and without the radius' ):
+        $this->having = false;
+        break;
+      default:
+        $prompt = 'ERROR: searchmode osn\'t defined!<br />' . PHP_EOL .
+                  'Sorry for the trouble.<br />' . PHP_EOL .
+                  'TYPO3 Radial Search<br />' . PHP_EOL .
+                __METHOD__ . ' (' . __LINE__ . ')';
+        die( $prompt );
+        break;
+    }
+    
+    return $this->having;
   }
 
  /**
