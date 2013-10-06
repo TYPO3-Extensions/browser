@@ -2342,6 +2342,7 @@ $this->pObj->dev_var_dump( str_replace( '\'', '"', $query) , $arr_return );
       return null;
     }
     
+$this->pObj->dev_var_dump( $this->pObj->csvSelectWoFunc );
     return $this->objRadialsearch->andSelect( );
   }
 
