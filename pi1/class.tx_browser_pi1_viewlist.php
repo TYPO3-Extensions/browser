@@ -314,7 +314,7 @@ class tx_browser_pi1_viewlist
     unset($arr_return);
 
       // #52486, 131005, dwildt, 1+
-    $rows = $this->rows_consolidateRadialserach( $rows );    
+    $rows = $this->rows_consolidateRadialsearch( $rows );    
     
     $this->pObj->rows = $rows;
 
@@ -1049,7 +1049,7 @@ class tx_browser_pi1_viewlist
   }
   
 /**
- * rows_consolidateRadialserach( )  :
+ * rows_consolidateRadialsearch( )  :
  *
  * @param    array        $rows  : consolidated rows
  * @return    void
@@ -1058,7 +1058,7 @@ class tx_browser_pi1_viewlist
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function rows_consolidateRadialserach( $rows )
+  private function rows_consolidateRadialsearch( $rows )
   {
       // RETURN : There isn't any radialsearch sword
     if( ! $this->objFilterRadialsearch->getSword( ) )

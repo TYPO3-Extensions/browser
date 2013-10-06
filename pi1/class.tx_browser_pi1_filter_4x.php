@@ -1711,16 +1711,16 @@ class tx_browser_pi1_filter_4x {
       return;
     }
 
-      // Check if EXT radialserach is installed
+      // Check if EXT radialsearch is installed
     $this->init_radialsearchExtension( );
 
-//      // Init radialsserach filter class
+//      // Init radialssearch filter class
 //    $this->init_radialsearchObject( );
 
   }
   
 /**
- * init_radialsearchExtension( )  : Check if EXT radialserach is installed
+ * init_radialsearchExtension( )  : Check if EXT radialsearch is installed
  *
  * @return	void
  * @access  private
@@ -1759,7 +1759,7 @@ class tx_browser_pi1_filter_4x {
   }
   
 /**
- * init_radialsearchFilter( ) : Checks weather a radialserach filter is set or not.
+ * init_radialsearchFilter( ) : Checks weather a radialsearch filter is set or not.
  *                              If radialsearch filter 
  *                              * is set
  *                                * it sets the class var $radialsearchTable
@@ -2732,7 +2732,7 @@ class tx_browser_pi1_filter_4x {
   }
   
 /**
- * get_filterRadialsearch( )  : Get the radialserach filter
+ * get_filterRadialsearch( )  : Get the radialsearch filter
  *
  * @return	array         : array with hashKey and html code (string)
  * @internal #52486

@@ -4560,7 +4560,7 @@ plugin.tx_browser_pi1 {
           localTableOnly  = 1
           oneValueOnly    = 1
           setUploadFolder = 0
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 0
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel        = 1
@@ -4575,7 +4575,7 @@ plugin.tx_browser_pi1 {
           localTableOnly  = 0
           oneValueOnly    = 1
           setUploadFolder = 1
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 1
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel        = 1
@@ -4609,7 +4609,7 @@ plugin.tx_browser_pi1 {
           localTableOnly  = 0
           oneValueOnly    = 1
           setUploadFolder = 0
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 0
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel        = 1
@@ -4632,7 +4632,7 @@ plugin.tx_browser_pi1 {
           localTableOnly  = 0
           oneValueOnly    = 1
           setUploadFolder = 0
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 1
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel        = 1
@@ -4655,7 +4655,7 @@ plugin.tx_browser_pi1 {
           localTableOnly  = 0
           oneValueOnly    = 1
           setUploadFolder = 0
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 1
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel        = 1
@@ -4679,7 +4679,7 @@ plugin.tx_browser_pi1 {
           oneValueOnly    = 0
             // [BOOLEAN] Take the TCA path to the upload folder
           setUploadFolder = 1
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 1
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel        = 1
@@ -4705,7 +4705,7 @@ plugin.tx_browser_pi1 {
         timestamp = {$plugin.tx_browser_pi1.autoDiscoverTimestamp}
         timestamp {
           oneValueOnly   = 0
-            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+            // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in search results, 0: Swords will be wrapped
           dontColorSwords = 0
             // [BOOLEAN] Respect TCA labels for the auto-detection
           TCAlabel       = 1

@@ -286,10 +286,10 @@ class tx_browser_pi1_filterRadialsearch {
       return $this->init;
     }
 
-    // Check if EXT radialserach is installed
+    // Check if EXT radialsearch is installed
     $this->initExtension( );
 
-      // Init radialsserach filter class
+      // Init radialssearch filter class
     $this->initObject( );
 
     $this->init = true;
@@ -297,7 +297,7 @@ class tx_browser_pi1_filterRadialsearch {
   }
   
 /**
- * initExtension( )  : Check if EXT radialserach is installed
+ * initExtension( )  : Check if EXT radialsearch is installed
  *
  * @return	void
  * @access  private
@@ -336,7 +336,7 @@ class tx_browser_pi1_filterRadialsearch {
   }
   
 /**
- * initFilterTable( ) : Checks weather a radialserach filter is set or not.
+ * initFilterTable( ) : Checks weather a radialsearch filter is set or not.
  *                              If radialsearch filter 
  *                              * is set
  *                                * it sets the class var $radialsearchTable
