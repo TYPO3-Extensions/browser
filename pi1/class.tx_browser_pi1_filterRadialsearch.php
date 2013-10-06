@@ -432,8 +432,9 @@ class tx_browser_pi1_filterRadialsearch {
     
       // Get filter
     $tsFilter = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'filter.' ];
+    $gp       = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'gp.' ];
 
-    $this->objRadialsearch->setConfiguration( $fields, $tsFilter );
+    $this->objRadialsearch->setConfiguration( $fields, $tsFilter, $gp );
   }
 
 /**
@@ -488,13 +489,13 @@ class tx_browser_pi1_filterRadialsearch {
   *
   * @param	array		$fields: array with elements lat and lon
   * @return	void
-  * @access public
+  * @access private
   * @version    4.7.0
   * @since      4.7.0
   */
-  public function setConfiguration( $fields, $filter )
+  private function setConfiguration( $fields, $filter, $gp )
   { 
-    $this->objRadialsearch->setConfiguration( $fields, $filter );
+    $this->objRadialsearch->setConfiguration( $fields, $filter, $gp );
   }
 
  /**
