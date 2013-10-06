@@ -183,7 +183,27 @@ class tx_browser_pi1_filterRadialsearch {
     
     return $this->objRadialsearch->andWhere( $withDistance );
   }
+
+
+
+   /***********************************************
+    *
+    * Get
+    *
+    **********************************************/
   
+/**
+ * getSword( )  : 
+ *
+ * @return	string
+ * @access  public
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  public function getSword( )
+  {
+    return $this->radialsearchIsSword;
+  }  
 
 
 

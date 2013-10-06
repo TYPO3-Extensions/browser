@@ -1253,7 +1253,7 @@ class tx_browser_pi1_viewlist
   private function rows_consolidateRadialserach( $rows )
   {
       // RETURN : There isn't any radialsearch sword
-    if( ! $this->radialsearchIsSword )
+    if( ! $this->objFilterRadialsearch->getSword( ) )
     {
       return $rows;
     }
