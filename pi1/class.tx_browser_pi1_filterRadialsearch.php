@@ -467,6 +467,7 @@ class tx_browser_pi1_filterRadialsearch {
       // RETURN : sword is set before
 
       // Get the current sword
+    $table  = $this->radialsearchTable;
     $gp     = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'gp.' ];
     $piVar  = ( array ) t3lib_div::_GP( $gp[ 'parameter' ] );
     $sword  = $piVar[ $gp[ 'input' ] ];
