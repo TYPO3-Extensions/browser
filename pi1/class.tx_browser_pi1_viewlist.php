@@ -1234,7 +1234,7 @@ class tx_browser_pi1_viewlist
       // RETURN : There isn't any radialsearch sword
     if( ! $this->radialsearchIsSword )
     {
-      return null;
+      return $rows;
     }
     
     $this->pObj->objTyposcript->set_confSqlDevider();
