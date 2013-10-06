@@ -1237,9 +1237,16 @@ $this->pObj->dev_var_dump( $rows );
       return null;
     }
     
+    $this->pObj->objTyposcript->set_confSqlDevider();
+    $str_devider  = $this->pObj->objTyposcript->str_sqlDeviderDisplay
+                  . $this->pObj->objTyposcript->str_sqlDeviderWorkflow
+                  ;
+
     foreach( $rows as $key => $row )
     {
-      $arrDistance = explode( $row[ 'distance' ] );
+      $distance = explode( $str_devider, $row[ 'distance' ] );
+$this->pObj->dev_var_dump( $distance, $str_devider, $row[ 'distance' ] );
+      $rows[ $key ][ 'distance' ] = $distance[ 0 ];
     }
     
     return $rows;

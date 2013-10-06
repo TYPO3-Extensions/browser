@@ -5,6 +5,7 @@
   * #52486: Radial Search
             Effected files:
             * pi1
+              * class.tx_browser_pi1_consolidate.php
               * class.tx_browser_pi1_filter_4x.php
               * class.tx_browser_pi1_filterRadialsearch.php   ( new )
               * class.tx_browser_pi1_navi_pageBrowser.php
