@@ -219,7 +219,7 @@ class tx_browser_pi1_filterRadialsearch {
 
     }
     
-    if( ! is_arry( $this->conf_view ) )
+    if( ! is_array( $this->conf_view ) )
     {
       $prompt = 'ERROR: no array!<br />' . PHP_EOL .
                 'Sorry for the trouble.<br />' . PHP_EOL .
