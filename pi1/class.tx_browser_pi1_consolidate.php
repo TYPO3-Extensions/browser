@@ -573,7 +573,7 @@ $this->pObj->dev_var_dump( $rows );
       // Loop through all tables (local and foreign)
     }
     // Consolidate groupBy. Bugfix #9025, #8523
-//$this->pObj->dev_var_dump( $rows_cons );    
+$this->pObj->dev_var_dump( $rows_cons );    
 
 
 
