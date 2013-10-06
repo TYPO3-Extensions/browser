@@ -58,7 +58,7 @@ class tx_browser_pi1_filterRadialsearch {
     // [Object] interface of extension radialsearch
   private $objRadialsearch      = null;
     // [String] radialsearch "table"/filter. Example: radialsearch
-  private $radialsearchTable    = null;
+  public  $radialsearchTable    = null;
     // [Boolean] Radialsearch Sword is set oer isn't set
   private $radialsearchIsSword  = null;
   
