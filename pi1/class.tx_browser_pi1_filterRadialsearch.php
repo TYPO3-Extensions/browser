@@ -210,6 +210,7 @@ class tx_browser_pi1_filterRadialsearch {
  */
   public function getLabelDistance( )
   {
+    $table          = $this->radialsearchTable;
     $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
     $distance       = $constanteditor[ 'distance' ];
 
@@ -573,6 +574,7 @@ class tx_browser_pi1_filterRadialsearch {
       return $this->having;
     }
     
+    $table          = $this->radialsearchTable;
     $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
     $searchmode     = $constanteditor[ 'searchmode' ];
 
@@ -585,7 +587,7 @@ class tx_browser_pi1_filterRadialsearch {
         $this->having = false;
         break;
       default:
-        $prompt = 'ERROR: searchmode osn\'t defined!<br />' . PHP_EOL .
+        $prompt = 'ERROR: searchmode isn\'t defined!<br />' . PHP_EOL .
                   'Sorry for the trouble.<br />' . PHP_EOL .
                   'TYPO3 Radial Search<br />' . PHP_EOL .
                 __METHOD__ . ' (' . __LINE__ . ')';
