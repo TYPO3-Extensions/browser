@@ -247,17 +247,11 @@ class tx_browser_pi1_filterRadialsearch {
  */
   private function init( )
   {
-    $prompt = 'TEST';
-    t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->extKey, 3 );
-
     if( $this->init !== null )
     {
       return $this->init;
     }
     
-    $prompt = 'TEST';
-    t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->extKey, 3 );
-
     if( ! is_object( $this->pObj ) )
     {
       $this->init = false;
@@ -285,18 +279,12 @@ class tx_browser_pi1_filterRadialsearch {
       return;
     }
     
-    $prompt = 'TEST';
-    t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->extKey, 3 );
-
       // RETURN : There isn't any radialsearch sword
     if( ! $this->initSword( ) )
     {
       $this->init = true;
       return $this->init;
     }
-
-    $prompt = 'TEST';
-    t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->extKey, 3 );
 
     // Check if EXT radialserach is installed
     $this->initExtension( );
