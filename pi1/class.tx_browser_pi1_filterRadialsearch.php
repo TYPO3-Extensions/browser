@@ -247,6 +247,9 @@ class tx_browser_pi1_filterRadialsearch {
  */
   private function init( )
   {
+    $prompt = 'TEST';
+    t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->extKey, 3 );
+
     if( $this->init !== null )
     {
       return $this->init;
