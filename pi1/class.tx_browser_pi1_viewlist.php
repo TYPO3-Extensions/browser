@@ -317,7 +317,7 @@ class tx_browser_pi1_viewlist
     
     $this->pObj->rows = $rows;
 
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
 
       // DRS - display first row
     $this->zz_drsFirstRow( );
@@ -1245,7 +1245,6 @@ $this->pObj->dev_var_dump( $rows );
     foreach( $rows as $key => $row )
     {
       $distance = explode( $str_devider, $row[ 'distance' ] );
-$this->pObj->dev_var_dump( $distance, $str_devider, $row[ 'distance' ] );
       $rows[ $key ][ 'distance' ] = $distance[ 0 ];
     }
     
