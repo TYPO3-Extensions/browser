@@ -627,7 +627,7 @@ class tx_browser_pi1_navi_pageBrowser
     $promptOptimise   = 'Maintain the performance? Disbale the page browser, if it isn\'t needed.';
     $debugTrailLevel  = 1;
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] ) );
+//$this->pObj->dev_var_dump( str_replace( '\'', '"', $arr_return['data']['query'] ) );
       // Execute query
 
 
