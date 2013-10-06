@@ -467,8 +467,9 @@ class tx_browser_pi1_filterRadialsearch {
       // RETURN : sword is set before
 
       // Get the current sword
-    $tx_radialsearch_pi1  = ( array ) t3lib_div::_GP( 'tx_radialsearch_pi1' );
-    $sword = $tx_radialsearch_pi1[ 'sword' ];
+    $gp     = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'gp.' ];
+    $piVar  = ( array ) t3lib_div::_GP( $gp[ 'parameter' ] );
+    $sword  = $piVar[ $gp[ 'input' ] ];
     
       // Set class var $isSword
     switch( true )
