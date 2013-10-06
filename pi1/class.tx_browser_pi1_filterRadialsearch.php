@@ -422,10 +422,10 @@ class tx_browser_pi1_filterRadialsearch {
     $this->objRadialsearch->setCurrentObject( $this );
 
       // Get field labels
-    $table = $this->radialsearchTable;
+    $table          = $this->radialsearchTable;
     $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
-    $lat        = $constanteditor[ 'lat' ];
-    $lon        = $constanteditor[ 'lon' ];
+    $lat            = $constanteditor[ 'lat' ];
+    $lon            = $constanteditor[ 'lon' ];
     $fields = array(
       'lat' => $lat,
       'lon' => $lon
