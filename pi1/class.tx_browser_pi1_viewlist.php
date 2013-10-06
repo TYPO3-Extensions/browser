@@ -2397,6 +2397,9 @@ class tx_browser_pi1_viewlist
  */
   private function sql_radialsearchSelect( )
   {
+    $this->pObj->csvSelectWoFunc  = $this->pObj->csvSelectWoFunc
+                                  . ', distance'
+                                  ;
     return $this->objFilterRadialsearch->andSelect( );
 //      // RETURN : There isn't any radialsearch sword
 //    if( ! $this->radialsearchIsSword )
