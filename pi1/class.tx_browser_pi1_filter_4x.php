@@ -364,7 +364,7 @@ class tx_browser_pi1_filter_4x {
         continue;
       }
       
-      if( $table == $this->objRadialsearchTable . '.' )
+      if( $table == $this->radialsearchTable . '.' )
       {
         continue;
       }
@@ -594,7 +594,7 @@ class tx_browser_pi1_filter_4x {
     $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
 
       // #52486, 131002, dwildt, 6+
-    if( $this->objRadialsearchTable )
+    if( $this->radialsearchTable )
     {
       $strAndWhere  = $strAndWhere
                     . $this->init_andWhereFilter_radialsearch( )
@@ -1596,12 +1596,12 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_consolidationAndSelect_isTableFieldsRadialsearch( )
   {
-    if( ! $this->objRadialsearchTable )
+    if( ! $this->radialsearchTable )
     {
       return false;
     }
 
-    $table = $this->objRadialsearchTable;
+    $table = $this->radialsearchTable;
     
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ];
     $lat  = $conf[ 'constanteditor.' ][ 'lat' ];
@@ -1796,7 +1796,7 @@ class tx_browser_pi1_filter_4x {
       if( $name == 'RADIALSEARCH' )
       {
           // Set the radialsearch "table". Example: radialsearch
-        $this->objRadialsearchTable = $table;
+        $this->radialsearchTable = $table;
           // DRS
         if( $this->pObj->b_drs_filter )
         {
@@ -2743,14 +2743,14 @@ class tx_browser_pi1_filter_4x {
   private function get_filterRadialsearch( )
   {
       // RETURN : there isn't any radialsearch filter
-    if( ! $this->objRadialsearchTable )
+    if( ! $this->radialsearchTable )
     {
       return null;
     }
       // RETURN : there isn't any radialsearch filter
     
     $arrReturn  = array( );
-    $table      = $this->objRadialsearchTable;
+    $table      = $this->radialsearchTable;
 
     $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];

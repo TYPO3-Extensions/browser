@@ -330,7 +330,7 @@ class tx_browser_pi1_navi_pageBrowser
       if( $name == 'RADIALSEARCH' )
       {
           // Set the radialsearch "table". Example: radialsearch
-        $this->objRadialsearchTable = $table;
+        $this->radialsearchTable = $table;
           // DRS
         if( $this->pObj->b_drs_filter )
         {
