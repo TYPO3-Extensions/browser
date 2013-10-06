@@ -443,7 +443,7 @@ class tx_browser_pi1_viewlist
 
       // #52486, 131005, dwildt, 2+
       // Init radialsearch filter and object
-    $this->init_radialsearch( );
+    $this->init_filterRadialsearch( );
 
   }
 
@@ -576,143 +576,9 @@ class tx_browser_pi1_viewlist
     $this->pObj->arr_realTables_localised     = array_unique( $this->pObj->arr_realTables_localised );
     $this->pObj->arr_realTables_notLocalised  = array_unique( $this->pObj->arr_realTables_notLocalised );
   }
-  
+
 /**
- * init_radialsearch( ): 
- *
- * @return	void
- * @access  private
- * @internal    #52486
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearch( )
-  {
-      // RETURN : There isn't any radialsearch filter
-    if( ! $this->init_radialsearchFilter( ) )
-    {
-      return;
-    }
-    
-      // RETURN : There isn't any radialsearch sword
-    if( ! $this->init_radialsearchSword( ) )
-    {
-      return;
-    }
-
-      // Check if EXT radialserach is installed
-    $this->init_radialsearchExtension( );
-
-      // Init radialsserach filter class
-    $this->init_radialsearchObject( );
-
-  }
-  
-/**
- * init_radialsearchExtension( )  : Check if EXT radialserach is installed
- *
- * @return	void
- * @access  private
- * @internal    #52486
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchExtension( )
-  {
-    $key = 'radialsearch';
-    
-      // RETURN : extension is installed
-    if( t3lib_extMgm::isLoaded( $key ) )
-    {
-      return true;
-    }
-      // RETURN : extension is installed
-
-        $prompt = '
-<h1>
-  ERROR: radial search (Umkreissuche)
-</h1>
-<p>
-  You are using a radial search filter in the current view.<br />
-  But the extension Radial Search (Umkreissuche) (extension key: radialsearch) isn\'t loaded.<br />
-  Please remove the radialsearch filter or install and enable the extension radialsearch.
-</p>
-<p>
-  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
-</p>
-<p>
-  Sorry for the trouble. Browser - TYPO3 without PHP.
-</p>
-';
-    die( $prompt );
-  }
-  
-/**
- * init_radialsearchFilter( ) : Checks weather a radialserach filter is set or not.
- *                              If radialsearch filter 
- *                              * is set
- *                                * it sets the class var $radialsearchTable
- *                                * returns true
- *                              * isn't set
- *                                * returns false
- *
- * @return	boolean         TRue, if radialsearch filter is set
- * @internal    #52486
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchFilter( )
-  {
-      // LOOP each table
-    foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
-    {
-      if( substr( $table, -1 ) == '.' )
-      {
-        continue;
-      }
-      
-        // Name (COA object) of the current filter table
-      $name = $this->conf_view[ 'filter.' ][ $table ];
-      
-        // CONTINUE : Name (COA object) isn't RADIALSEARCH
-      if( $name != 'RADIALSEARCH' )
-      {
-        continue;
-      }
-      
-        // RETURN true : Name (COA object) is RADIALSEARCH
-      if( $name == 'RADIALSEARCH' )
-      {
-          // Set the radialsearch "table". Example: radialsearch
-        $this->radialsearchTable = $table;
-          // DRS
-        if( $this->pObj->b_drs_filter )
-        {
-          $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
-          t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-          // DRS
-        return true;
-      }      
-        // RETURN true : Name (COA object) is RADIALSEARCH
-    }
-      // LOOP each table
-
-      // DRS
-    if( $this->pObj->b_drs_filter )
-    {
-      $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
-      t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-      // RETURN false : any radialsearch filter isn't used
-    return false;
-  }
-  
-/**
- * init_radialsearchObject( ): 
+ * init_filterRadialsearch( ): 
  *
  * @return	void
  * @internal    #52486
@@ -720,54 +586,207 @@ class tx_browser_pi1_viewlist
  * @version 4.7.0
  * @since   4.7.0
  */
-  private function init_radialsearchObject( )
+  private function init_filterRadialsearch( )
   {
-    $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
-    require_once( $path . 'class.tx_radialsearch_interface.php' );
+    $path = t3lib_extMgm::extPath( 'browser' ) . 'pi1/';
+    require_once( $path . 'class.tx_browser_pi1_filterRadialsearch.php' );
 
-    $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
-    $this->objRadialsearch->setParentObject( $this->pObj );
-    $this->objRadialsearch->setCurrentObject( $this );
+    $this->objFilterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
+    $this->objFilterRadialsearch->setParentObject( $this->pObj );
+    $this->objFilterRadialsearch->setConfView( $this->conf_view );
   }
-
-/**
- * initSword( ): Set the class var $isSword
- *
- * @return	boolean        true, if sword is set. False, if not.
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function init_radialsearchSword( )
-  {
-      // RETURN : sword is set before
-    if( $this->radialsearchIsSword !== null )
-    {
-      return $this->radialsearchIsSword;
-    }
-      // RETURN : sword is set before
-
-      // Get the current sword
-    $tx_radialsearch_pi1  = ( array ) t3lib_div::_GP( 'tx_radialsearch_pi1' );
-    $sword = $tx_radialsearch_pi1[ 'sword' ];
-    
-      // Set class var $isSword
-    switch( true )
-    {
-      case( $sword === null ):
-      case( $sword == '' ):
-      case( $sword == '*' ):
-        $this->radialsearchIsSword = false;
-        break;
-      default:
-        $this->radialsearchIsSword = true;
-        break;
-    }
-    unset( $sword );
-      // Set class var $isSword
-
-    return $this->radialsearchIsSword;
-  }
+  
+///**
+// * init_radialsearch( ): 
+// *
+// * @return	void
+// * @access  private
+// * @internal    #52486
+// * @version 4.7.0
+// * @since   4.7.0
+// */
+//  private function init_radialsearch( )
+//  {
+//      // RETURN : There isn't any radialsearch filter
+//    if( ! $this->init_radialsearchFilter( ) )
+//    {
+//      return;
+//    }
+//    
+//      // RETURN : There isn't any radialsearch sword
+//    if( ! $this->init_radialsearchSword( ) )
+//    {
+//      return;
+//    }
+//
+//      // Check if EXT radialserach is installed
+//    $this->init_radialsearchExtension( );
+//
+//      // Init radialsserach filter class
+//    $this->init_radialsearchObject( );
+//
+//  }
+//  
+///**
+// * init_radialsearchExtension( )  : Check if EXT radialserach is installed
+// *
+// * @return	void
+// * @access  private
+// * @internal    #52486
+// * @version 4.7.0
+// * @since   4.7.0
+// */
+//  private function init_radialsearchExtension( )
+//  {
+//    $key = 'radialsearch';
+//    
+//      // RETURN : extension is installed
+//    if( t3lib_extMgm::isLoaded( $key ) )
+//    {
+//      return true;
+//    }
+//      // RETURN : extension is installed
+//
+//        $prompt = '
+//<h1>
+//  ERROR: radial search (Umkreissuche)
+//</h1>
+//<p>
+//  You are using a radial search filter in the current view.<br />
+//  But the extension Radial Search (Umkreissuche) (extension key: radialsearch) isn\'t loaded.<br />
+//  Please remove the radialsearch filter or install and enable the extension radialsearch.
+//</p>
+//<p>
+//  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
+//</p>
+//<p>
+//  Sorry for the trouble. Browser - TYPO3 without PHP.
+//</p>
+//';
+//    die( $prompt );
+//  }
+//  
+///**
+// * init_radialsearchFilter( ) : Checks weather a radialserach filter is set or not.
+// *                              If radialsearch filter 
+// *                              * is set
+// *                                * it sets the class var $radialsearchTable
+// *                                * returns true
+// *                              * isn't set
+// *                                * returns false
+// *
+// * @return	boolean         TRue, if radialsearch filter is set
+// * @internal    #52486
+// * @access  private
+// * @version 4.7.0
+// * @since   4.7.0
+// */
+//  private function init_radialsearchFilter( )
+//  {
+//      // LOOP each table
+//    foreach( array_keys( ( array ) $this->conf_view['filter.'] ) as $table )
+//    {
+//      if( substr( $table, -1 ) == '.' )
+//      {
+//        continue;
+//      }
+//      
+//        // Name (COA object) of the current filter table
+//      $name = $this->conf_view[ 'filter.' ][ $table ];
+//      
+//        // CONTINUE : Name (COA object) isn't RADIALSEARCH
+//      if( $name != 'RADIALSEARCH' )
+//      {
+//        continue;
+//      }
+//      
+//        // RETURN true : Name (COA object) is RADIALSEARCH
+//      if( $name == 'RADIALSEARCH' )
+//      {
+//          // Set the radialsearch "table". Example: radialsearch
+//        $this->radialsearchTable = $table;
+//          // DRS
+//        if( $this->pObj->b_drs_filter )
+//        {
+//          $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
+//          t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+//          // DRS
+//        return true;
+//      }      
+//        // RETURN true : Name (COA object) is RADIALSEARCH
+//    }
+//      // LOOP each table
+//
+//      // DRS
+//    if( $this->pObj->b_drs_filter )
+//    {
+//      $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
+//      t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+//    }
+//      // DRS
+//
+//      // RETURN false : any radialsearch filter isn't used
+//    return false;
+//  }
+//  
+///**
+// * init_radialsearchObject( ): 
+// *
+// * @return	void
+// * @internal    #52486
+// * @access  private
+// * @version 4.7.0
+// * @since   4.7.0
+// */
+//  private function init_radialsearchObject( )
+//  {
+//    $path = t3lib_extMgm::extPath( 'radialsearch' ) . 'interface/';
+//    require_once( $path . 'class.tx_radialsearch_interface.php' );
+//
+//    $this->objRadialsearch = t3lib_div::makeInstance( 'tx_radialsearch_interface' );
+//    $this->objRadialsearch->setParentObject( $this->pObj );
+//    $this->objRadialsearch->setCurrentObject( $this );
+//  }
+//
+///**
+// * initSword( ): Set the class var $isSword
+// *
+// * @return	boolean        true, if sword is set. False, if not.
+// * @access  private
+// * @version 4.7.0
+// * @since   4.7.0
+// */
+//  private function init_radialsearchSword( )
+//  {
+//      // RETURN : sword is set before
+//    if( $this->radialsearchIsSword !== null )
+//    {
+//      return $this->radialsearchIsSword;
+//    }
+//      // RETURN : sword is set before
+//
+//      // Get the current sword
+//    $tx_radialsearch_pi1  = ( array ) t3lib_div::_GP( 'tx_radialsearch_pi1' );
+//    $sword = $tx_radialsearch_pi1[ 'sword' ];
+//    
+//      // Set class var $isSword
+//    switch( true )
+//    {
+//      case( $sword === null ):
+//      case( $sword == '' ):
+//      case( $sword == '*' ):
+//        $this->radialsearchIsSword = false;
+//        break;
+//      default:
+//        $this->radialsearchIsSword = true;
+//        break;
+//    }
+//    unset( $sword );
+//      // Set class var $isSword
+//
+//    return $this->radialsearchIsSword;
+//  }
 
 
 
@@ -2315,13 +2334,14 @@ class tx_browser_pi1_viewlist
  */
   private function sql_radialsearchFrom( )
   {
-      // RETURN : There isn't any radialsearch sword
-    if( ! $this->radialsearchIsSword )
-    {
-      return null;
-    }
-    
-    return $this->objRadialsearch->andFrom( );
+    return $this->objFilterRadialsearch->andFrom( );
+//      // RETURN : There isn't any radialsearch sword
+//    if( ! $this->radialsearchIsSword )
+//    {
+//      return null;
+//    }
+//    
+//    return $this->objRadialsearch->andFrom( );
   }
 
 /**
@@ -2335,13 +2355,14 @@ class tx_browser_pi1_viewlist
  */
   private function sql_radialsearchHaving( )
   {
-      // RETURN : There isn't any radialsearch sword
-    if( ! $this->radialsearchIsSword )
-    {
-      return null;
-    }
-    
-    return $this->objRadialsearch->andHaving( );
+    return $this->objFilterRadialsearch->andHaving( );
+//      // RETURN : There isn't any radialsearch sword
+//    if( ! $this->radialsearchIsSword )
+//    {
+//      return null;
+//    }
+//    
+//    return $this->objRadialsearch->andHaving( );
   }
 
 /**
@@ -2355,13 +2376,14 @@ class tx_browser_pi1_viewlist
  */
   private function sql_radialsearchOrderBy( )
   {
-      // RETURN : There isn't any radialsearch sword
-    if( ! $this->radialsearchIsSword )
-    {
-      return null;
-    }
-    
-    return $this->objRadialsearch->andOrderBy( );
+    return $this->objFilterRadialsearch->andOrderBy( );
+//      // RETURN : There isn't any radialsearch sword
+//    if( ! $this->radialsearchIsSword )
+//    {
+//      return null;
+//    }
+//    
+//    return $this->objRadialsearch->andOrderBy( );
   }
 
 /**
@@ -2375,16 +2397,17 @@ class tx_browser_pi1_viewlist
  */
   private function sql_radialsearchSelect( )
   {
-      // RETURN : There isn't any radialsearch sword
-    if( ! $this->radialsearchIsSword )
-    {
-      return null;
-    }
-    
-    $this->pObj->csvSelectWoFunc  = $this->pObj->csvSelectWoFunc
-                                  . ', distance'
-                                  ;
-    return $this->objRadialsearch->andSelect( );
+    return $this->objFilterRadialsearch->andSelect( );
+//      // RETURN : There isn't any radialsearch sword
+//    if( ! $this->radialsearchIsSword )
+//    {
+//      return null;
+//    }
+//    
+//    $this->pObj->csvSelectWoFunc  = $this->pObj->csvSelectWoFunc
+//                                  . ', distance'
+//                                  ;
+//    return $this->objRadialsearch->andSelect( );
   }
 
 /**
@@ -2398,13 +2421,14 @@ class tx_browser_pi1_viewlist
  */
   private function sql_radialsearchWhere( )
   {
-      // RETURN : There isn't any radialsearch sword
-    if( ! $this->radialsearchIsSword )
-    {
-      return null;
-    }
-    
-    return $this->objRadialsearch->andWhere( );
+    return $this->objFilterRadialsearch->andWhere( );
+//      // RETURN : There isn't any radialsearch sword
+//    if( ! $this->radialsearchIsSword )
+//    {
+//      return null;
+//    }
+//    
+//    return $this->objRadialsearch->andWhere( );
   }
 
 
