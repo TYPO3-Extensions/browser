@@ -2133,7 +2133,7 @@ $this->pObj->dev_var_dump( $rows );
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
-//var_dump( __METHOD__, __LINE__, $query, $arr_return );    
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $query) , $arr_return );    
     return $arr_return;
   }
 
