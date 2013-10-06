@@ -2087,10 +2087,16 @@ $this->pObj->dev_var_dump( $rows );
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
-
     $select = $this->sql_selectLocalised( $select );
+      // #52486, 131005, dwildt, 3+
+    $select = $select
+            . $this->sql_radialsearchSelect( )
+            ;
 
-    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+      // #52486, 131005, dwildt, ~
+    $from     = $this->pObj->objSqlInit->statements['listView']['from']
+              . $this->sql_radialsearchFrom( )
+              ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
 
     $thisIdList = implode( ',', ( array ) $withIds );
@@ -2099,8 +2105,25 @@ $this->pObj->dev_var_dump( $rows );
       $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $thisIdList . ")";
     }
 
+      // #52486, 131005, dwildt, 4+
+    $where  = $where
+            . $this->sql_radialsearchWhere( )
+            . $this->sql_radialsearchHaving( )
+            ;
+    
     $groupBy  = null;
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+
+      // #52486, 131005, dwildt, 5+
+    $orderBy  = $this->sql_radialsearchOrderBy( );
+    if( ! empty( $orderBy ) )
+    {
+      $orderBy = $orderBy . ',';
+    }
+      // #52486, 131005, dwildt, ~
+    $orderBy  = $orderBy
+              . $this->pObj->objSqlInit->statements['listView']['orderBy']
+              ;
+
 
       // Don't limit the rows (we have a list of ids!)
     $limit = null;
