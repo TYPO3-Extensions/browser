@@ -311,6 +311,10 @@ class tx_browser_pi1_viewlist
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
     unset($arr_return);
+
+      // #52486, 131005, dwildt, 1+
+    $rows = $this->rows_consolidateRadialserach( $rows );    
+    
     $this->pObj->rows = $rows;
 
 $this->pObj->dev_var_dump( $rows );
@@ -1146,11 +1150,12 @@ $this->pObj->dev_var_dump( $rows );
 
 
 
-  /**
+/**
  * rows_consolidateLL( ): Consolidate localisation. Returns consolidated rows.
  *
  * @param    array        $rows  : consolidated rows
  * @return    void
+ * @access  private
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1212,6 +1217,32 @@ $this->pObj->dev_var_dump( $rows );
 
     return $rows;
 
+  }
+  
+/**
+ * rows_consolidateRadialserach( )  :
+ *
+ * @param    array        $rows  : consolidated rows
+ * @return    void
+ * @access  private
+ * @internal #52486
+ * @version 4.7.0
+ * @since   4.7.0
+ */
+  private function rows_consolidateRadialserach( $rows )
+  {
+      // RETURN : There isn't any radialsearch sword
+    if( ! $this->radialsearchIsSword )
+    {
+      return null;
+    }
+    
+    foreach( $rows as $key => $row )
+    {
+      $arrDistance = explode( $row[ 'distance' ] );
+    }
+    
+    return $rows;
   }
 
 
@@ -2156,7 +2187,7 @@ $this->pObj->dev_var_dump( $rows );
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $query) , $arr_return );    
+//$this->pObj->dev_var_dump( str_replace( '\'', '"', $query) , $arr_return );    
     return $arr_return;
   }
 
@@ -2345,7 +2376,6 @@ $this->pObj->dev_var_dump( str_replace( '\'', '"', $query) , $arr_return );
     $this->pObj->csvSelectWoFunc  = $this->pObj->csvSelectWoFunc
                                   . ', distance'
                                   ;
-$this->pObj->dev_var_dump( $this->pObj->csvSelectWoFunc );
     return $this->objRadialsearch->andSelect( );
   }
 

@@ -106,7 +106,6 @@ class tx_browser_pi1_consolidate
  */
   function consolidate( $rows )
   {
-$this->pObj->dev_var_dump( $rows );    
     
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -578,7 +577,7 @@ $this->pObj->dev_var_dump( $rows );
       // Loop through all tables (local and foreign)
     }
     // Consolidate groupBy. Bugfix #9025, #8523
-$this->pObj->dev_var_dump( $rows_cons );    
+//$this->pObj->dev_var_dump( $rows_cons );    
 
 
 
@@ -623,7 +622,7 @@ $this->pObj->dev_var_dump( $rows_cons );
     $arr_return['data']['rows'] = $rows_new;
     $this->pObj->arrConsolidate['rows_wi_cons'] = count( $rows_new );
 
-$this->pObj->dev_var_dump( $rows_cons, $rows_new );
+//$this->pObj->dev_var_dump( $rows_cons, $rows_new );
     return $arr_return;
   }
 
