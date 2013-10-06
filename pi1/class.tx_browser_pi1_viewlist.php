@@ -279,7 +279,6 @@ class tx_browser_pi1_viewlist
       // DRS
 
       // Consolidate localisation
-//$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateLL( $rows );
       // Consolidate children
     $rows = $this->rows_consolidateChildren( $rows );
@@ -313,6 +312,8 @@ class tx_browser_pi1_viewlist
     $rows       = $arr_return['data']['rows'];
     unset($arr_return);
     $this->pObj->rows = $rows;
+
+$this->pObj->dev_var_dump( $rows );
 
       // DRS - display first row
     $this->zz_drsFirstRow( );
