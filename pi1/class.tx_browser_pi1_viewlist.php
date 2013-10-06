@@ -282,12 +282,15 @@ $this->pObj->dev_var_dump( $rows );
       // Consolidate localisation
     $rows = $this->rows_consolidateLL( $rows );
       // Consolidate children
+$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateChildren( $rows );
     $this->pObj->rows = $rows;
+$this->pObj->dev_var_dump( $rows );
 
       // Implement the hook rows_filter_values
     $this->hook_afterConsolidatetRows( );
     $rows = $this->pObj->rows;
+$this->pObj->dev_var_dump( $rows );
 
       // Order the rows
     if( ! $this->zz_orderByValueIsLocalised( ) )
@@ -295,9 +298,11 @@ $this->pObj->dev_var_dump( $rows );
       $this->pObj->objMultisort->multisort_rows( );
       $rows = $this->pObj->rows;
     }
+$this->pObj->dev_var_dump( $rows );
 
       // Ordering the children rows
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
+$this->pObj->dev_var_dump( $rows );
     $this->pObj->rows = $rows;
 
       // DRS - :TODO:
@@ -309,10 +314,8 @@ $this->pObj->dev_var_dump( $rows );
       // DRS - :TODO:
 
       // Delete fields, which were added whily runtime
-$this->pObj->dev_var_dump( $rows );
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
-$this->pObj->dev_var_dump( $rows );
     unset($arr_return);
     $this->pObj->rows = $rows;
 
