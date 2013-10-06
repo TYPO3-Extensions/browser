@@ -281,10 +281,8 @@ class tx_browser_pi1_viewlist
       // Consolidate localisation
     $rows = $this->rows_consolidateLL( $rows );
       // Consolidate children
-$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateChildren( $rows );
     $this->pObj->rows = $rows;
-$this->pObj->dev_var_dump( $rows );
 
       // Implement the hook rows_filter_values
     $this->hook_afterConsolidatetRows( );
