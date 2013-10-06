@@ -269,7 +269,6 @@ class tx_browser_pi1_viewlist
       // Set rows
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
-$this->pObj->dev_var_dump( $rows );
 
       // DRS
     if( $this->pObj->b_drs_devTodo )
@@ -290,7 +289,6 @@ $this->pObj->dev_var_dump( $rows );
       // Implement the hook rows_filter_values
     $this->hook_afterConsolidatetRows( );
     $rows = $this->pObj->rows;
-$this->pObj->dev_var_dump( $rows );
 
       // Order the rows
     if( ! $this->zz_orderByValueIsLocalised( ) )
@@ -298,11 +296,9 @@ $this->pObj->dev_var_dump( $rows );
       $this->pObj->objMultisort->multisort_rows( );
       $rows = $this->pObj->rows;
     }
-$this->pObj->dev_var_dump( $rows );
 
       // Ordering the children rows
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
-$this->pObj->dev_var_dump( $rows );
     $this->pObj->rows = $rows;
 
       // DRS - :TODO:
