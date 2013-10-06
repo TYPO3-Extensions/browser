@@ -263,15 +263,15 @@ class tx_browser_pi1_filterRadialsearch {
 
     }
     
-    if( ! is_array( $this->conf_view ) )
-    {
-      $prompt = 'ERROR: no array!<br />' . PHP_EOL .
-                'Sorry for the trouble.<br />' . PHP_EOL .
-                'TYPO3 Radial Search<br />' . PHP_EOL .
-              __METHOD__ . ' (' . __LINE__ . ')';
-      die( $prompt );
-
-    }
+//    if( ! is_array( $this->conf_view ) )
+//    {
+//      $prompt = 'ERROR: no array!<br />' . PHP_EOL .
+//                'Sorry for the trouble.<br />' . PHP_EOL .
+//                'TYPO3 Radial Search<br />' . PHP_EOL .
+//              __METHOD__ . ' (' . __LINE__ . ')';
+//      die( $prompt );
+//
+//    }
 
       // RETURN : There isn't any radialsearch filter
     if( ! $this->initFilterTable( ) )
