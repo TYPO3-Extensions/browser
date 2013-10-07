@@ -116,12 +116,6 @@ class tx_browser_pi1_filterRadialsearch {
       return null;
     }
     
-      // RETURN : HAVING should not used
-    if( ! $this->setHaving( ))
-    {
-      return null;
-    }
-    
     return $this->objRadialsearch->andHaving( );
   }
 
@@ -460,10 +454,12 @@ class tx_browser_pi1_filterRadialsearch {
     $distance       = $constanteditor[ 'distance' ];
     $lat            = $constanteditor[ 'lat' ];
     $lon            = $constanteditor[ 'lon' ];
+    $searchmode     = $constanteditor[ 'searchmode' ];
     $fields = array(
-      'distance'  => $distance,
-      'lat'       => $lat,
-      'lon'       => $lon
+      'distance'    => $distance,
+      'lat'         => $lat,
+      'lon'         => $lon,
+      'searchmode'  => $searchmode
     );
     
       // Get filter
@@ -556,46 +552,6 @@ class tx_browser_pi1_filterRadialsearch {
       die( $prompt );
     }
     $this->conf_view = $confView;
-  }
-
-/**
- * setHaving( )  :
- *
- * @return	booelan
- * @internal    #52486
- * @access  private
- * @version 4.7.0
- * @since   4.7.0
- */
-  private function setHaving( )
-  {
-    if( $this->having !== null )
-    {
-      return $this->having;
-    }
-    
-    $table          = $this->radialsearchTable;
-    $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
-    $searchmode     = $constanteditor[ 'searchmode' ];
-
-    switch( $searchmode )
-    {
-      case( 'Within the radius only' ):
-        $this->having = true;
-        break;
-      case( 'Within and without the radius' ):
-        $this->having = false;
-        break;
-      default:
-        $prompt = 'ERROR: searchmode isn\'t defined!<br />' . PHP_EOL .
-                  'Sorry for the trouble.<br />' . PHP_EOL .
-                  'TYPO3 Radial Search<br />' . PHP_EOL .
-                __METHOD__ . ' (' . __LINE__ . ')';
-        die( $prompt );
-        break;
-    }
-    
-    return $this->having;
   }
 
  /**
