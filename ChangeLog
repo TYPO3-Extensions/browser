@@ -7,6 +7,7 @@
               * class.tx_browser_pi1_map.php
             * static
               * constants.txt
+              * setup.txt
   * #52545: Example of use for tt_address
   * #52486: Radial Search
             Effected files:
