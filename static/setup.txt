@@ -356,13 +356,13 @@ plugin.tx_browser_pi1 {
         route =
         route {
             // [Boolean] Route Relations:(Recommended) Debug unproper relations for routes. You will get a prompt in the frontend, if categories or marker (POI) aren't proper
-          relations = {$plugin.tx_browser_pi1.map.controlling.provider}
+          relations = {$plugin.tx_browser_pi1.map.route.relations}
         }
       }
         // [STRING] disabled,Map,Map +Routes 
       enabled  = {$plugin.tx_browser_pi1.map.controlling.enabled}
         // [STRING] GoogleMaps or Open Street Map
-      provider  = {$plugin.tx_browser_pi1.map.route.relations}
+      provider  = {$plugin.tx_browser_pi1.map.controlling.provider}
       template {
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default_1.3.tmpl
