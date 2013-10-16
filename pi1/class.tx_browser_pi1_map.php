@@ -3983,7 +3983,24 @@ class tx_browser_pi1_map
     $prompt = str_replace( '%tsPath%',      $tsPath,      $prompt );
 
       // die: no relation
-    echo( $prompt );
+    
+    $promptToFrontend = $this->confMap['debugging.']['route.']['relations'];
+    if( $promptToFrontend )
+    {
+      echo( $prompt );
+    }
+    
+      // RETURN : no DRS
+    if( ! $this->pObj->b_drs_error )
+    {
+      return;
+    }
+      // RETURN : no DRS
+
+      // DRS
+    t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+      // DRS
+    
   }
 
 /**
