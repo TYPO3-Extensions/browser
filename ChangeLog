@@ -1,7 +1,12 @@
 4.7.0
   13-10-16
-  Fetaure
+  Feature
   * #52903: BroserMaps/Routes: configurable error prompt in case of missing categories / marker (POI)
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_map.php
+            * static
+              * constants.txt
   * #52545: Example of use for tt_address
   * #52486: Radial Search
             Effected files:
