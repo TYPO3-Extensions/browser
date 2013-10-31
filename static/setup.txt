@@ -5370,7 +5370,7 @@ plugin.tx_browser_pi1 {
       text-align:right;
     }
     select#tx_browser_pi1_radius option{
-      padding-right:.1em;
+      padding-right:1em;
     }
     /* #9659 */
     .returntolist {
