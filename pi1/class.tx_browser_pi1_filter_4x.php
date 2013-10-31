@@ -1618,7 +1618,7 @@ class tx_browser_pi1_filter_4x {
 <p>
   The configuration of your radial search filter isn\'t proper.<br />
   Please enter the tableField label for the latitude and the longitude!<br />
-  See Constant Editor of the current page. Category [BROWSER - RADIAL SERACH].
+  See Constant Editor of the current page. Category [BROWSER - RADIAL SEARCH].
 </p>
 <p>
   Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
