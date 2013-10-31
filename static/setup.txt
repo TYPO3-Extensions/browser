@@ -2808,7 +2808,7 @@ plugin.tx_browser_pi1 {
           constanteditor =
           constanteditor {
               // Distance: field label for the distance. Field isn't part of your database. Field will generated while runtime and will added to SELECT statemennts. Example: distance, Don't use tableField syntax like tx_myext_main.distance: You will get an SQL error!
-            distance    = {$plugin.tx_browser_pi1.radialsearch.distance}
+            distance    = {$plugin.tx_radialsearch_pi1.distance.fieldLabel}
               // [String] Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
             lat         = {$plugin.tx_browser_pi1.radialsearch.lat}
               // [String] Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
@@ -5364,6 +5364,13 @@ plugin.tx_browser_pi1 {
     }
     .tx-browser-pi1 .ui-tabs-list {
       padding:0.2em;
+    }
+    select#tx_browser_pi1_radius {
+      padding-right:.2em;
+      text-align:right;
+    }
+    select#tx_browser_pi1_radius option{
+      padding-right:.1em;
     }
     /* #9659 */
     .returntolist {
