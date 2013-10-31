@@ -2828,6 +2828,7 @@ plugin.tx_browser_pi1 {
           // [Array] plugin.tx_radialsearch_pi1, plugin.tx_radialsearch_pi2
         content = COA
         content {
+          wrap = <div class="filter-radialsearch">|</div>
           10 < plugin.tx_radialsearch_pi1
           20 < plugin.tx_radialsearch_pi2
         }
