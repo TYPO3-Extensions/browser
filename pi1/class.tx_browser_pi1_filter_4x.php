@@ -359,6 +359,8 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
+#53356
+$this->pObj->dev_var_dump( $table );
       if( substr( $table, -1 ) != '.' )
       {
         continue;
@@ -372,9 +374,7 @@ class tx_browser_pi1_filter_4x {
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
 #53356
-echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
-echo $field . '<br />' . PHP_EOL;          
-echo rtrim($field, '.') . '<br />' . PHP_EOL;          
+$this->pObj->dev_var_dump( $field );
           // CONTINUE : field hasn't any dot
         if( rtrim($field, '.') != $field )
         {
@@ -392,8 +392,7 @@ echo rtrim($field, '.') . '<br />' . PHP_EOL;
         if( ! $this->requiredMarker( $this->curr_tableField ) )
         {
 #53356
-echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
-echo $this->curr_tableField . '<br />' . PHP_EOL;          
+$this->pObj->dev_var_dump( $this->curr_tableField );
           continue;
         }
           // CONTINUE : marker is missing in the HTML template
@@ -412,6 +411,8 @@ echo $this->curr_tableField . '<br />' . PHP_EOL;
             $this->pObj->b_drs_sql = $b_drs_sql;
           }
             // DRS
+#53356
+$this->pObj->dev_var_dump( $arr_result );
           return $arr_result;
         }
         $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
@@ -435,9 +436,8 @@ echo $this->curr_tableField . '<br />' . PHP_EOL;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
 #53356
-echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
-var_export( $arr_return, true );
-echo '<br />' . PHP_EOL;          
+#53356
+$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
