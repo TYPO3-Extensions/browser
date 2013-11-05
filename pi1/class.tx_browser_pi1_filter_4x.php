@@ -389,6 +389,7 @@ class tx_browser_pi1_filter_4x {
         {
 #53356
 echo __METHOD__ . ' (' . __LINE__ . ')<br />';          
+echo $this->curr_tableField . '<br />';          
           continue;
         }
           // CONTINUE : marker is missing in the HTML template
