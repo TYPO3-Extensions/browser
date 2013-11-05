@@ -371,12 +371,12 @@ class tx_browser_pi1_filter_4x {
       
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
-          // CONTINUE : field has an dot
+          // CONTINUE : field hasn't any dot
         if( rtrim($field, '.') != $field )
         {
           continue;
         }
-          // CONTINUE : field has an dot
+          // CONTINUE : field hasn't any dot
 
           // Class var table.field
         $this->curr_tableField = $table . $field;
@@ -387,6 +387,8 @@ class tx_browser_pi1_filter_4x {
           // CONTINUE : marker is missing in the HTML template
         if( ! $this->requiredMarker( $this->curr_tableField ) )
         {
+#53356
+echo __METHOD__ . ' (' . __LINE__ . ')<br />';          
           continue;
         }
           // CONTINUE : marker is missing in the HTML template

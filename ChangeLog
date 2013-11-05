@@ -1,3 +1,7 @@
+4.7.2
+  Bug
+  * #53356: Filter loop seems to quit after first select box
+
 4.7.1
   13-10-31
   Imrovements
