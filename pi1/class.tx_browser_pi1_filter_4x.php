@@ -436,7 +436,8 @@ echo $this->curr_tableField . '<br />' . PHP_EOL;
 
 #53356
 echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
-echo $arr_return . '<br />' . PHP_EOL;          
+var_export( $arr_return, true );
+echo '<br />' . PHP_EOL;          
 
     return $arr_return;
   }
