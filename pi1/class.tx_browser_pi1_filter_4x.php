@@ -359,8 +359,6 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $table => $fields )
     {
-#53356
-$this->pObj->dev_var_dump( $table );
       if( substr( $table, -1 ) != '.' )
       {
         continue;
@@ -373,8 +371,6 @@ $this->pObj->dev_var_dump( $table );
       
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
-#53356
-$this->pObj->dev_var_dump( $field );
           // CONTINUE : field hasn't any dot
         if( rtrim($field, '.') != $field )
         {
@@ -391,8 +387,6 @@ $this->pObj->dev_var_dump( $field );
           // CONTINUE : marker is missing in the HTML template
         if( ! $this->requiredMarker( $this->curr_tableField ) )
         {
-#53356
-$this->pObj->dev_var_dump( $this->curr_tableField );
           continue;
         }
           // CONTINUE : marker is missing in the HTML template
@@ -401,6 +395,8 @@ $this->pObj->dev_var_dump( $this->curr_tableField );
         $this->pObj->objZz->loadTCA( $table );
 
         $arr_result = $this->get_filter( );
+#53356
+$this->pObj->dev_var_dump( $arr_result );
         if( $arr_result['error']['status'] )
         {
           $debugTrailLevel = 1;
@@ -411,8 +407,6 @@ $this->pObj->dev_var_dump( $this->curr_tableField );
             $this->pObj->b_drs_sql = $b_drs_sql;
           }
             // DRS
-#53356
-$this->pObj->dev_var_dump( $arr_result );
           return $arr_result;
         }
         $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
@@ -435,7 +429,6 @@ $this->pObj->dev_var_dump( $arr_result );
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-#53356
 #53356
 $this->pObj->dev_var_dump( $arr_return );
 
