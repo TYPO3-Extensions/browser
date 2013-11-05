@@ -371,6 +371,10 @@ class tx_browser_pi1_filter_4x {
       
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
+#53356
+echo __METHOD__ . ' (' . __LINE__ . ')<br />';          
+echo $field . '<br />';          
+echo rtrim($field, '.') . '<br />';          
           // CONTINUE : field hasn't any dot
         if( rtrim($field, '.') != $field )
         {
