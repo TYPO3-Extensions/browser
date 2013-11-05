@@ -381,14 +381,13 @@ class tx_browser_pi1_filter_4x {
           // Class var table.field
         $this->curr_tableField = $table . $field;
 
-          // Get table
+          // #53356, 131105, dwildt, 2-
+        //  // Get table
         //list( $table ) = explode( '.', $this->curr_tableField );
 
           // CONTINUE : marker is missing in the HTML template
         if( ! $this->requiredMarker( $this->curr_tableField ) )
         {
-#53356
-$this->pObj->dev_var_dump( $field, $this->curr_tableField );
           continue;
         }
           // CONTINUE : marker is missing in the HTML template
@@ -397,8 +396,7 @@ $this->pObj->dev_var_dump( $field, $this->curr_tableField );
         $this->pObj->objZz->loadTCA( $table );
 
         $arr_result = $this->get_filter( );
-#53356
-$this->pObj->dev_var_dump( $field, $arr_result );
+
         if( $arr_result['error']['status'] )
         {
           $debugTrailLevel = 1;
