@@ -379,10 +379,10 @@ class tx_browser_pi1_filter_4x {
           // CONTINUE : field hasn't any dot
 
           // Class var table.field
-        $this->curr_tableField = $table . '.' . $field;
+        $this->curr_tableField = $table . $field;
 
           // Get table
-        list( $table ) = explode( '.', $this->curr_tableField );
+        //list( $table ) = explode( '.', $this->curr_tableField );
 
           // CONTINUE : marker is missing in the HTML template
         if( ! $this->requiredMarker( $this->curr_tableField ) )
