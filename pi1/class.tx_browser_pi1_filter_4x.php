@@ -371,13 +371,9 @@ class tx_browser_pi1_filter_4x {
       
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
-#53356
-$this->pObj->dev_var_dump( $field );
           // CONTINUE : field hasn't any dot
         if( rtrim($field, '.') != $field )
         {
-#53356
-$this->pObj->dev_var_dump( $field );
           continue;
         }
           // CONTINUE : field hasn't any dot
@@ -392,7 +388,7 @@ $this->pObj->dev_var_dump( $field );
         if( ! $this->requiredMarker( $this->curr_tableField ) )
         {
 #53356
-$this->pObj->dev_var_dump( $field );
+$this->pObj->dev_var_dump( $field, $this->curr_tableField );
           continue;
         }
           // CONTINUE : marker is missing in the HTML template
