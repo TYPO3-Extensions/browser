@@ -396,7 +396,7 @@ class tx_browser_pi1_filter_4x {
 
         $arr_result = $this->get_filter( );
 #53356
-$this->pObj->dev_var_dump( $arr_result );
+$this->pObj->dev_var_dump( $field, $arr_result );
         if( $arr_result['error']['status'] )
         {
           $debugTrailLevel = 1;
@@ -428,9 +428,6 @@ $this->pObj->dev_var_dump( $arr_result );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-
-#53356
-$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
