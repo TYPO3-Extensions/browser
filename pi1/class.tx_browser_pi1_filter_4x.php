@@ -434,6 +434,10 @@ echo $this->curr_tableField . '<br />' . PHP_EOL;
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
+#53356
+echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
+echo $arr_return . '<br />' . PHP_EOL;          
+
     return $arr_return;
   }
 
