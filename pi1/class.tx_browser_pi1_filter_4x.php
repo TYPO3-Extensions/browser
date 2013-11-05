@@ -372,9 +372,9 @@ class tx_browser_pi1_filter_4x {
       foreach( array_keys ( ( array ) $fields ) as $field )
       {
 #53356
-echo __METHOD__ . ' (' . __LINE__ . ')<br />';          
-echo $field . '<br />';          
-echo rtrim($field, '.') . '<br />';          
+echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
+echo $field . '<br />' . PHP_EOL;          
+echo rtrim($field, '.') . '<br />' . PHP_EOL;          
           // CONTINUE : field hasn't any dot
         if( rtrim($field, '.') != $field )
         {
@@ -392,8 +392,8 @@ echo rtrim($field, '.') . '<br />';
         if( ! $this->requiredMarker( $this->curr_tableField ) )
         {
 #53356
-echo __METHOD__ . ' (' . __LINE__ . ')<br />';          
-echo $this->curr_tableField . '<br />';          
+echo __METHOD__ . ' (' . __LINE__ . ')<br />' . PHP_EOL;          
+echo $this->curr_tableField . '<br />' . PHP_EOL;          
           continue;
         }
           // CONTINUE : marker is missing in the HTML template
