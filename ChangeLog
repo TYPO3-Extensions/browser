@@ -1,3 +1,9 @@
+4.7.4
+  Feature
+  * #53366: Fit it into TYPO3 6.x
+            Effected files:
+            * static/setup.txt
+
 4.7.3
   Bug
   * #i0033: Missing argument 1 for tx_browser_pi1_filterRadialsearch::andWhere( )
