@@ -111,7 +111,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 	 * @access public
 	 */
 	public function render_table($content,$conf)	{
-                return '<h1>HALLO</h1>';
 
 			// Look for hook before running default code for function
 		if ($hookObj = $this->hookRequest('render_table')) {
@@ -122,7 +121,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 				// Get bodytext field content
 			$field = (isset($conf['field']) && trim($conf['field']) ? trim($conf['field']) : 'bodytext');
-			$content = trim($this->cObj->data[$field]);
+echo $field . PHP_EOL;
+                        $content = trim($this->cObj->data[$field]);
+echo $content . PHP_EOL;
 			if (!strcmp($content,''))	return '';
                         
                           // #53397, 131107, dwildt
