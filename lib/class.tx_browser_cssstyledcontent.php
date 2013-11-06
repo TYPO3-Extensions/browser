@@ -99,13 +99,158 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //  */
 //  private $bakTsfeData = null;
 
+	/**
+	 * Rendering the "Table" type content element, called from TypoScript (tt_content.table.20)
+	 *
+	 * @param	string		Content input. Not used, ignore.
+	 * @param	array		TypoScript configuration
+	 * @return	string		HTML output.
+         * @version   4.8.0
+         * @since 4.8.0
+         * @internal #53397
+	 * @access public
+	 */
+	public function render_table($content,$conf)	{
+
+			// Look for hook before running default code for function
+		if ($hookObj = $this->hookRequest('render_table')) {
+			return $hookObj->render_table($content,$conf);
+		} else {
+				// Init FlexForm configuration
+			$this->pi_initPIflexForm();
+
+				// Get bodytext field content
+			$field = (isset($conf['field']) && trim($conf['field']) ? trim($conf['field']) : 'bodytext');
+			$content = trim($this->cObj->data[$field]);
+			if (!strcmp($content,''))	return '';
+                        
+                          // #53397, 131107, dwildt
+                        $this->helper_init_drs( );
+                        $this->cObjDataSet( );
+
+				// get flexform values
+			$caption = trim(htmlspecialchars($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_caption')));
+			$useTfoot = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_tfoot'));
+			$headerPos = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_headerpos');
+			$noStyles = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_nostyles');
+			$tableClass = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_tableclass');
+
+			$delimiter = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'tableparsing_delimiter','s_parsing'));
+			if ($delimiter)	{
+				$delimiter = chr(intval($delimiter));
+			} else {
+				$delimiter = '|';
+			}
+			$quotedInput = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'tableparsing_quote','s_parsing'));
+			if ($quotedInput)	{
+				$quotedInput = chr(intval($quotedInput));
+			} else {
+				$quotedInput = '';
+			}
+
+				// generate id prefix for accessible header
+			$headerScope = ($headerPos=='top'?'col':'row');
+			$headerIdPrefix = $headerScope.$this->cObj->data['uid'].'-';
+
+				// Split into single lines (will become table-rows):
+			$rows = t3lib_div::trimExplode(LF,$content);
+			reset($rows);
+
+				// Find number of columns to render:
+			$cols = t3lib_utility_Math::forceIntegerInRange($this->cObj->data['cols']?$this->cObj->data['cols']:count(explode($delimiter,current($rows))),0,100);
+
+				// Traverse rows (rendering the table here)
+			$rCount = count($rows);
+			foreach($rows as $k => $v)	{
+				$cells = explode($delimiter,$v);
+				$newCells=array();
+				for($a=0;$a<$cols;$a++)	{
+						// remove quotes if needed
+					if ($quotedInput && substr($cells[$a],0,1) == $quotedInput && substr($cells[$a],-1,1) == $quotedInput)	{
+						$cells[$a] = substr($cells[$a],1,-1);
+					}
+
+					if (!strcmp(trim($cells[$a]),''))	$cells[$a]='&nbsp;';
+					$cellAttribs = ($noStyles ? '' : (($a > 0 && ($cols - 1) == $a) ? ' class="td-last td-' . $a . '"' : ' class="td-' . $a . '"'));
+					if (($headerPos == 'top' && !$k) || ($headerPos == 'left' && !$a))	{
+						$scope = ' scope="'.$headerScope.'"';
+						$scope .= ' id="'.$headerIdPrefix.(($headerScope=='col')?$a:$k).'"';
+
+						$newCells[$a] = '
+							<th'.$cellAttribs.$scope.'>'.$this->cObj->stdWrap($cells[$a],$conf['innerStdWrap.']).'</th>';
+					} else {
+						if (empty($headerPos))	{
+							$accessibleHeader = '';
+						} else {
+							$accessibleHeader = ' headers="'.$headerIdPrefix.(($headerScope=='col')?$a:$k).'"';
+						}
+						$newCells[$a] = '
+							<td'.$cellAttribs.$accessibleHeader.'>'.$this->cObj->stdWrap($cells[$a],$conf['innerStdWrap.']).'</td>';
+					}
+				}
+				if (!$noStyles)	{
+					$oddEven = $k%2 ? 'tr-odd' : 'tr-even';
+					$rowAttribs =  ($k>0 && ($rCount-1)==$k) ? ' class="'.$oddEven.' tr-last"' : ' class="'.$oddEven.' tr-'.$k.'"';
+				}
+				$rows[$k]='
+					<tr'.$rowAttribs.'>'.implode('',$newCells).'
+					</tr>';
+			}
+
+			$addTbody = 0;
+			$tableContents = '';
+			if ($caption)	{
+				$tableContents .= '
+					<caption>'.$caption.'</caption>';
+			}
+			if ($headerPos == 'top' && $rows[0])	{
+				$tableContents .= '<thead>'. $rows[0] .'
+					</thead>';
+				unset($rows[0]);
+				$addTbody = 1;
+			}
+			if ($useTfoot)	{
+				$tableContents .= '
+					<tfoot>'.$rows[$rCount-1].'</tfoot>';
+				unset($rows[$rCount-1]);
+				$addTbody = 1;
+			}
+			$tmpTable = implode('',$rows);
+			if ($addTbody)	{
+				$tmpTable = '<tbody>'.$tmpTable.'</tbody>';
+			}
+			$tableContents .= $tmpTable;
+
+				// Set header type:
+			$type = intval($this->cObj->data['layout']);
+
+				// Table tag params.
+			$tableTagParams = $this->getTableAttributes($conf,$type);
+			if (!$noStyles)	{
+				$tableTagParams['class'] = 'contenttable contenttable-' . $type .
+					($tableClass ? ' ' . $tableClass : '') . $tableTagParams['class'];
+			} elseif ($tableClass) {
+				$tableTagParams['class'] = $tableClass;
+			}
 
 
+				// Compile table output:
+			$out = '
+				<table ' . t3lib_div::implodeAttributes($tableTagParams) . '>' .
+				$tableContents . '
+				</table>';
 
+				// Calling stdWrap:
+			if ($conf['stdWrap.']) {
+				$out = $this->cObj->stdWrap($out, $conf['stdWrap.']);
+			}
 
+				// Return value
+			return $out;
+		}
+	}
 
-
-
+        
 
  /**
   * render_uploads(): The method enables to link to files of each language at the same time.

@@ -1,3 +1,9 @@
+4.8.0
+  Feature
+  * #53397: CSS styled content: table
+            Effected files:
+            * lib/class.tx_browser_cssstyledcontent.php
+
 4.7.4
   Feature
   * #53366: Fit it into TYPO3 6.x

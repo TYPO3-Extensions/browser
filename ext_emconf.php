@@ -23,7 +23,7 @@ $EM_CONF[$_EXTKEY] = array(
                           . 'The browser is very suitable for database development.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '4.7.3',
+	'version' => '4.8.0',
 	'dependencies' => 'browser_manual_en',
 	'conflicts' => 'be_tablefilter',
 	'priority' => '',
