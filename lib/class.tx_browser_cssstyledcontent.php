@@ -111,6 +111,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 	 * @access public
 	 */
 	public function render_table($content,$conf)	{
+                return '<h1>HALLO</h1>';
 
 			// Look for hook before running default code for function
 		if ($hookObj = $this->hookRequest('render_table')) {
