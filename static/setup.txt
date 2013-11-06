@@ -30,6 +30,16 @@
   // pages: browser_csv
   // pages: browser_download
 
+lib {
+  parseFunc {
+      // #53362, 131106, dwildt, 1+
+    allowTags := addToList( figure )
+  }
+  parseFunc_RTE {
+      // #53362, 131106, dwildt, 1+
+    allowTags := addToList( figure )
+  }
+}
 
 
   ///////////////////////////////////////////////////////////////
