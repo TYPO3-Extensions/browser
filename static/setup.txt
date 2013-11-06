@@ -3,6 +3,7 @@
   //
   // INDEX
   //
+  // lib
   // includeLibs
   // plugin.tx_browser_pi1: templating
   // plugin.tx_browser_pi1: localTable
@@ -30,6 +31,11 @@
   // pages: browser_csv
   // pages: browser_download
 
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // lib
+
 lib {
   parseFunc {
       // #53366, 131106, dwildt, 1+
@@ -40,6 +46,8 @@ lib {
     allowTags := addToList( figure )
   }
 }
+  // lib
+
 
 
   ///////////////////////////////////////////////////////////////
