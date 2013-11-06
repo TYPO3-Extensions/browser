@@ -130,7 +130,7 @@ echo $content . PHP_EOL;
                         $this->helper_init_drs( );
                         $this->cObjDataSet( );
 
-var_export( $this->cObj->data['pi_flexform'], true ) . PHP_EOL;
+var_export( $this->cObj->data['pi_flexform'], false ) . PHP_EOL;
 				// get flexform values
 			$caption = trim(htmlspecialchars($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_caption')));
 			$useTfoot = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_tfoot'));
