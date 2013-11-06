@@ -170,10 +170,10 @@ class tx_browser_pi1_filterRadialsearch {
  * @return	string
  * @internal    #52486
  * @access  public
- * @version 4.7.0
+ * @version 4.7.2
  * @since   4.7.0
  */
-  public function andWhere( $withDistance )
+  public function andWhere( $withDistance=null )
   {
     $this->init( );
     
