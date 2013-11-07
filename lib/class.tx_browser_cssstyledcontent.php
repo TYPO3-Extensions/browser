@@ -131,8 +131,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                         $this->helper_init_drs( );
                         $this->cObjDataSet( );
 
-//var_export( $this->cObj->data['pi_flexform'], false ) . PHP_EOL;
-//var_export( $this->cObj->data['tx_quickshop_products.pi_flexform'], false ) . PHP_EOL;
+var_export( $this->cObj->data['pi_flexform'], false ) . PHP_EOL;
+var_export( $this->cObj->data['tx_quickshop_products.pi_flexform'], false ) . PHP_EOL;
 				// get flexform values
 			$caption = trim(htmlspecialchars($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_caption')));
 			$useTfoot = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_tfoot'));
@@ -1231,7 +1231,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  */
   private function cObjDataSetFieldWrapper(  )
   {
-var_dump( __METHOD__, __LINE__, var_export( $this->conf['userFunc.']['cObjDataFieldWrapper.'], true ) );
+//var_dump( __METHOD__, __LINE__, var_export( $this->conf['userFunc.']['cObjDataFieldWrapper.'], true ) );
       // RETURN : if fields shouldn't  added with another key ...
     if( ! is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
     {
@@ -1268,7 +1268,7 @@ var_dump( __METHOD__, __LINE__, var_export( $this->conf['userFunc.']['cObjDataFi
             break;
         }
       }
-var_dump( __METHOD__, __LINE__, 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: ' . $this->cObj->data[$value] );
+//var_dump( __METHOD__, __LINE__, 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: ' . $this->cObj->data[$value] );
 
 
         // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
