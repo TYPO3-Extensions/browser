@@ -127,6 +127,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 			if (!strcmp($content,''))	return '';
                         
                           // #53397, 131107, dwildt
+                        $this->conf = $conf;
                         $this->helper_init_drs( );
                         $this->cObjDataSet( );
 
