@@ -161,7 +161,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 				// Split into single lines (will become table-rows):
 			$rows = t3lib_div::trimExplode(LF,$content);
 			reset($rows);
-var_dump( __METHOD__, __LINE__, var_export( $rows, true ) );
+//var_dump( __METHOD__, __LINE__, var_export( $rows, true ) );
 
 				// Find number of columns to render:
 			$cols = t3lib_utility_Math::forceIntegerInRange($this->cObj->data['cols']?$this->cObj->data['cols']:count(explode($delimiter,current($rows))),0,100);
@@ -227,7 +227,7 @@ var_dump( __METHOD__, __LINE__, var_export( $rows, true ) );
 				$tmpTable = '<tbody>'.$tmpTable.'</tbody>';
 			}
 			$tableContents .= $tmpTable;
-var_dump( __METHOD__, __LINE__, var_export( $tableContents, true ) );
+//var_dump( __METHOD__, __LINE__, var_export( $tableContents, true ) );
 
 				// Set header type:
 			$type = intval($this->cObj->data['layout']);
@@ -247,7 +247,7 @@ var_dump( __METHOD__, __LINE__, var_export( $tableContents, true ) );
 				<table ' . t3lib_div::implodeAttributes($tableTagParams) . '>' .
 				$tableContents . '
 				</table>';
-var_dump( __METHOD__, __LINE__, var_export( $out, true ) );
+//var_dump( __METHOD__, __LINE__, var_export( $out, true ) );
 
 				// Calling stdWrap:
 			if ($conf['stdWrap.']) {
