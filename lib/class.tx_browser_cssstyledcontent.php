@@ -134,6 +134,7 @@ var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], tr
 
                         $this->cObjDataSet( );
 
+			$this->pi_initPIflexForm();
 var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
 				// get flexform values
 			$caption = trim(htmlspecialchars($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_caption')));
