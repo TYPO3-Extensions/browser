@@ -1231,7 +1231,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   private function cObjDataSetFieldWrapper(  )
   {
 echo 'XXX' . PHP_EOL;
-var_export( $this->conf['userFunc.']['cObjDataFieldWrapper.'], false ) . PHP_EOL;
+var_export( $this->conf['userFunc.'], false ) . PHP_EOL;
       // RETURN : if fields shouldn't  added with another key ...
     if( ! is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
     {
