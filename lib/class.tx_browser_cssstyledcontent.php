@@ -127,16 +127,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 			if (!strcmp($content,''))	return '';
                         
                           // #53397, 131107, dwildt
+//var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
                         $this->conf = $conf;
                         $this->helper_init_drs( );
-var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
-
-
                         $this->cObjDataSet( );
-
 			$this->pi_initPIflexForm();
-var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
-				// get flexform values
+//var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
+
+                          // get flexform values
 			$caption = trim(htmlspecialchars($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_caption')));
 			$useTfoot = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_tfoot'));
 			$headerPos = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_headerpos');
@@ -163,6 +161,7 @@ var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], tr
 				// Split into single lines (will become table-rows):
 			$rows = t3lib_div::trimExplode(LF,$content);
 			reset($rows);
+var_dump( __METHOD__, __LINE__, var_export( $rows, true ) );
 
 				// Find number of columns to render:
 			$cols = t3lib_utility_Math::forceIntegerInRange($this->cObj->data['cols']?$this->cObj->data['cols']:count(explode($delimiter,current($rows))),0,100);
@@ -228,6 +227,7 @@ var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], tr
 				$tmpTable = '<tbody>'.$tmpTable.'</tbody>';
 			}
 			$tableContents .= $tmpTable;
+var_dump( __METHOD__, __LINE__, var_export( $tableContents, true ) );
 
 				// Set header type:
 			$type = intval($this->cObj->data['layout']);
@@ -247,6 +247,7 @@ var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], tr
 				<table ' . t3lib_div::implodeAttributes($tableTagParams) . '>' .
 				$tableContents . '
 				</table>';
+var_dump( __METHOD__, __LINE__, var_export( $out, true ) );
 
 				// Calling stdWrap:
 			if ($conf['stdWrap.']) {
@@ -254,6 +255,7 @@ var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], tr
 			}
 
 				// Return value
+var_dump( __METHOD__, __LINE__, var_export( $out, true ) );
 			return $out;
 		}
 	}
