@@ -255,7 +255,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 			}
 
 				// Return value
-$out = '<h1>HALLO</h1><table><tr><td>TABELLE</td></tr></table>';
+$out = '<h1>HALLO</h1><table><tr><td>TABELLE</td></tr></table>' . $out;
 var_dump( __METHOD__, __LINE__, var_export( $out, true ) );
 			return $out;
 		}
