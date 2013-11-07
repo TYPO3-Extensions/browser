@@ -1231,14 +1231,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  */
   private function cObjDataSetFieldWrapper(  )
   {
-echo 'XXX' . PHP_EOL;
-var_export( $this->conf['userFunc.'], false ) . PHP_EOL;
+var_dump( __METHOD__, __LINE__, var_export( $this->conf['userFunc.']['cObjDataFieldWrapper.'], true ) );
       // RETURN : if fields shouldn't  added with another key ...
     if( ! is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
     {
       return;
     }
-var_export( $this->conf['userFunc.']['cObjDataFieldWrapper.'], false ) . PHP_EOL;
       // RETURN : if fields shouldn't  added with another key ...
       
       // FOREACH  : userFunc.cObjDataFieldWrapper. ...
@@ -1270,8 +1268,8 @@ var_export( $this->conf['userFunc.']['cObjDataFieldWrapper.'], false ) . PHP_EOL
             break;
         }
       }
-echo 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: '  . 
-          $this->cObj->data[$value] . PHP_EOL;
+var_dump( __METHOD__, __LINE__, 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: ' . $this->cObj->data[$value] );
+
 
         // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
       $this->cObj->data[$key] = $this->cObj->data[$value];
