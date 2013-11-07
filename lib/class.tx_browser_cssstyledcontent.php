@@ -129,10 +129,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                           // #53397, 131107, dwildt
                         $this->conf = $conf;
                         $this->helper_init_drs( );
+var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
+
+
                         $this->cObjDataSet( );
 
-var_export( $this->cObj->data['pi_flexform'], false ) . PHP_EOL;
-var_export( $this->cObj->data['tx_quickshop_products.pi_flexform'], false ) . PHP_EOL;
+var_dump( __METHOD__, __LINE__, var_export( $this->cObj->data['pi_flexform'], true ) );
 				// get flexform values
 			$caption = trim(htmlspecialchars($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_caption')));
 			$useTfoot = trim($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'acctables_tfoot'));
