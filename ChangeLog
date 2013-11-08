@@ -1,20 +1,36 @@
+4.8.1
+  13-11-08
+  Bug
+  * #53466: BrowserMaps Corporate Design: Zoom-Level properties without effect
+            Effected files:
+            * res/js/map
+              * api/1.3.08/                               ( new )
+              * lib
+                * OpenLayers_2.12/ol-te7.js               ( new )
+                * OpenStreetMap/OpenStreetMap_1.3.10.js   ( new )
+            * static/setup.txt
+
 4.8.0
+  13-11-07
   Feature
   * #53397: CSS styled content: table
             Effected files:
             * lib/class.tx_browser_cssstyledcontent.php
 
 4.7.4
+  13-11-03
   Feature
   * #53366: Fit it into TYPO3 6.x
             Effected files:
             * static/setup.txt
 
 4.7.3
+  13-11-03
   Bug
   * #i0033: Missing argument 1 for tx_browser_pi1_filterRadialsearch::andWhere( )
 
 4.7.2
+  13-11-03
   Bug
   * #53356: Filter loop seems to quit after first select box
 
