@@ -697,11 +697,13 @@ class tx_browser_pi1_filter_4x {
     switch( $this->pObj->objCal->is_loaded )
     {
       case( true ):
+$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar is loaded
         $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
+$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar isn't loaded
         $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField );
         break;
