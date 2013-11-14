@@ -995,11 +995,13 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
     switch( $this->pObj->objCal->is_loaded )
     {
       case( true ):
+$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar is loaded
         $str_andWhere = $this->init_andWhereFilter_localTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
+$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar isn't loaded
         $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
         break;
