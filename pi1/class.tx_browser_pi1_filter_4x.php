@@ -1180,8 +1180,8 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // #45422, 130212, dwildt, 1-
         $arr_item[] = $tableField . " >= '" . $from . "'";
           // #45422, 130212, dwildt, 2-
-          // #45422, 130212, dwildt, 1+    
-        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
+//          // #45422, 130212, dwildt, 1+    
+//        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
           // #45422, 130212, dwildt, 2-
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$tableField]['from'] = $from;
