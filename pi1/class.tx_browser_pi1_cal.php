@@ -271,10 +271,10 @@ class tx_browser_pi1_cal
       {
         t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 0);
       }
-$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
+//$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
       return $arr_return;
     }
-$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
+//$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
       // RETURN flexform doesn't contain any data
 
 
@@ -1370,10 +1370,10 @@ $this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
       {
         t3lib_div :: devLog('[INFO/CAL/UI] RETURN: flexform extend.cal_ui doesn\'t contain any data.', $this->pObj->extKey, 0);
       }
-$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_ui );
+//$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_ui );
       return false;
     }
-$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_ui );
+//$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_ui );
       // RETURN field cal_ui is false
 
       // RETURN field cal_view is false

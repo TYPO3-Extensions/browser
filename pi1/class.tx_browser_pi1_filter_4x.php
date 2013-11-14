@@ -547,7 +547,7 @@ class tx_browser_pi1_filter_4x {
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
-$this->pObj->dev_var_dump( $arr_piVar );
+//$this->pObj->dev_var_dump( $arr_piVar );
       unset ($arr_result);
         // Get nice_piVar
 
@@ -564,7 +564,7 @@ $this->pObj->dev_var_dump( $arr_piVar );
         case( $this->pObj->b_sql_manual ):
             // SQL manual mode
           $str_andWhere = $this->init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view );
-$this->pObj->dev_var_dump( $str_andWhere );
+//$this->pObj->dev_var_dump( $str_andWhere );
           break;
             // SQL manual mode
         case( ! $this->pObj->b_sql_manual ):
@@ -575,12 +575,12 @@ $this->pObj->dev_var_dump( $str_andWhere );
           {
             case( $table == $this->pObj->localTable ):
               $str_andWhere = $this->init_andWhereFilter_localTable( $arr_piVar, $tableField);
-$this->pObj->dev_var_dump( $str_andWhere );
+//$this->pObj->dev_var_dump( $str_andWhere );
               break;
             case( $table != $this->pObj->localTable ):
             default:
               $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField);
-$this->pObj->dev_var_dump( $str_andWhere );
+//$this->pObj->dev_var_dump( $str_andWhere );
               break;
           }
             // SWITCH : local table versus foreign table
@@ -701,13 +701,13 @@ $this->pObj->dev_var_dump( $str_andWhere );
     switch( $this->pObj->objCal->is_loaded )
     {
       case( true ):
-$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+//$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar is loaded
         $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
-$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+//$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar isn't loaded
         $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField );
         break;
@@ -999,13 +999,13 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
     switch( $this->pObj->objCal->is_loaded )
     {
       case( true ):
-$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+//$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar is loaded
         $str_andWhere = $this->init_andWhereFilter_localTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
-$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+//$this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
           // +Browser Calendar isn't loaded
         $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
         break;
@@ -1179,10 +1179,10 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
       {
           // #45422, 130212, dwildt, 1-
         $arr_item[] = $tableField . " >= '" . $from . "'";
-          // #45422, 130212, dwildt, 2-
+          // #45422, #i0036, 130212, dwildt, 2-
 //          // #45422, 130212, dwildt, 1+    
 //        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
-          // #45422, 130212, dwildt, 2-
+          // #45422, #i0036, 130212, dwildt, 2-
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$tableField]['from'] = $from;
       }
@@ -1197,10 +1197,10 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
       {
           // #45422, 130212, dwildt, 1-
         $arr_item[] = $tableField . " <= '" . $to . "'";
-          // #45422, 130212, dwildt, 2-
+          // #45422, #i0036,130212, dwildt, 2-
 //          // #45422, 130212, dwildt, 1+
 //        $arr_item[] = $tableField . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
-          // #45422, 130212, dwildt, 2-
+          // #45422, #i0036, 130212, dwildt, 2-
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$tableField]['to'] = $to;
       }

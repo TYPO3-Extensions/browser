@@ -1325,7 +1325,7 @@ class tx_browser_pi1_flexform {
 
     $field = 'cal_ui';
     $this->sheet_extend_cal_ui = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
-$this->pObj->dev_var_dump( $this->sheet_extend_cal_ui );
+//$this->pObj->dev_var_dump( $this->sheet_extend_cal_ui );
     if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
     {
       t3lib_div :: devlog('[INFO/FLEXFORM+CAL/UI] ' .
