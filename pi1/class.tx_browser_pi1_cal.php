@@ -220,11 +220,14 @@ class tx_browser_pi1_cal
       //
       // Set default values
 
-    $this->rows             = $rows;
-    $this->template         = $template;
-    $arr_return['rows']     = $rows;
-    $arr_return['template'] = $template;
-    $arr_return['success']  = false;
+    $this->rows     = $rows;
+    $this->template = $template;
+    $arr_return = array
+    (
+      'rows'     => $rows,
+      'template' => $template,
+      'success'  => false
+    );
       // Set default values
 
 
@@ -262,14 +265,16 @@ class tx_browser_pi1_cal
       //
       // RETURN flexform doesn't contain any data
 
-    if( !$this->cal_eval_flexform( ) )
+    if( ! $this->cal_eval_flexform( ) )
     {
-      if ($this->pObj->b_drs_cal)
+      if( $this->pObj->b_drs_cal )
       {
         t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 0);
       }
+$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
       return $arr_return;
     }
+$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
       // RETURN flexform doesn't contain any data
 
 
@@ -278,7 +283,7 @@ class tx_browser_pi1_cal
       //
       // RETURN flexform data aren't valid
 
-    if( !$this->cal_eval_data( ) )
+    if( ! $this->cal_eval_data( ) )
     {
       if ($this->pObj->b_drs_warn)
       {
@@ -294,7 +299,7 @@ class tx_browser_pi1_cal
       //
       // Upgrade the TypoScript with data of the tx_browser_pi5 plugin
 
-    if( !$this->cal_typoscript( ) )
+    if( ! $this->cal_typoscript( ) )
     {
       if ($this->pObj->b_drs_warn)
       {
@@ -324,7 +329,7 @@ class tx_browser_pi1_cal
       //
       // Generate the schedule data (periods contains the rows)
 
-    if( !$this->cal_data( ) )
+    if( ! $this->cal_data( ) )
     {
       if ($this->pObj->b_drs_warn)
       {
@@ -393,11 +398,14 @@ class tx_browser_pi1_cal
  * cal_data(): Get periods data (periods which contains the rows)
  *
  * @return	boolean		true in case of success
- * @version 4.0.0
+ * @version 4.8.2
  * @since 4.0.0
  */
   private function cal_data( )
   {
+    // #i0036, 131114, dwildt, 1+
+    $bool_success = false;
+
       // Get TypoScript configuration for the flexform of the plugin pi5
     $conf_flexform_pi5 = $this->conf_view['flexform.']['pi5.'];
 
@@ -416,7 +424,8 @@ class tx_browser_pi1_cal
     $cObj_name        = $conf_flexform_pi5[$sheet . '.'][$field . '.']['stdWrap'];
     $cObj_conf        = $conf_flexform_pi5[$sheet . '.'][$field . '.']['stdWrap.'];
     $sDEF_initialView = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-    switch($sDEF_initialView)
+    
+    switch( $sDEF_initialView )
     {
       case('day'):
           // Get the day's schedule configuration
@@ -438,7 +447,10 @@ class tx_browser_pi1_cal
         break;
     }
 
-    if( ! $$bool_success )
+    // #i0036, 131114, dwildt, 1-
+    // if( ! $$bool_success )
+    // #i0036, 131114, dwildt, 1+
+    if( ! $bool_success )
     {
       if ($this->pObj->b_drs_cal)
       {
@@ -1352,14 +1364,16 @@ class tx_browser_pi1_cal
   private function cal_eval_flexform( )
   {
       // RETURN field cal_ui is false
-    if( !$this->pObj->objFlexform->sheet_extend_cal_ui )
+    if( ! $this->pObj->objFlexform->sheet_extend_cal_ui )
     {
-      if ($this->pObj->b_drs_cal)
+      if( $this->pObj->b_drs_cal )
       {
         t3lib_div :: devLog('[INFO/CAL/UI] RETURN: flexform extend.cal_ui doesn\'t contain any data.', $this->pObj->extKey, 0);
       }
+$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_ui );
       return false;
     }
+$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_ui );
       // RETURN field cal_ui is false
 
       // RETURN field cal_view is false

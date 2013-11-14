@@ -538,6 +538,7 @@ class tx_browser_pi1_filter_4x {
       // Init area
 
       // LOOP: filter tableFields
+//$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     foreach( $this->arr_tsFilterTableFields as $tableField )
     {
       list( $table, $field )  = explode( '.', $tableField );
@@ -1607,7 +1608,8 @@ class tx_browser_pi1_filter_4x {
     
     $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ];
     $lat  = $conf[ 'constanteditor.' ][ 'lat' ];
-    $lon  = $conf[ 'constanteditor.' ][ 'lat' ];
+      // #i0035, 131114, dwildt, lat -> lon
+    $lon  = $conf[ 'constanteditor.' ][ 'lon' ];
     
     switch( true )
     {
@@ -7248,12 +7250,15 @@ class tx_browser_pi1_filter_4x {
 
       // #52486, 131005, dwildt, 10+
       // RETURN : there isn't any radialsearch filter
-    if( ! isset( $this->conf_view['filter.'][$table . '.'] ) )
+    switch( true )
     {
-      $arr_return['data']['key_piVar']  = 'no_filter';
-      $arr_return['data']['arr_piVar']  = null;
-      $arr_return['data']['nice_piVar'] = 'no_filter';
-      return $arr_return;
+      case( ! isset( $this->conf_view[ 'filter.' ][ $table . '.' ] ) ):
+        // #i0035, 131114, dwildt, 1+
+      case( ! isset( $this->conf_view[ 'filter.' ][ $tableField ] ) ):
+        $arr_return[ 'data' ][ 'key_piVar' ]  = 'no_filter';
+        $arr_return[ 'data' ][ 'arr_piVar' ]  = null;
+        $arr_return[ 'data' ][ 'nice_piVar' ] = 'no_filter';
+        return $arr_return;
     }
       // RETURN : there isn't any radialsearch filter
       // #52486, 131005, dwildt, 10+
@@ -7306,8 +7311,10 @@ class tx_browser_pi1_filter_4x {
           $prompt = 'undefined value in switch: \'';
           t3lib_div :: devlog( '[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3 );
         }
+          // #i0034, 131114, dwildt, ~
         echo '<h1>Undefined value</h1>
-          <h2>' . $conf_name . ' is not defined</h2>
+          <h2>Filter type "' . $conf_name . '" is not defined</h2>
+          <p>Filter: ' . $tableField . '</p>  
           <p>Method ' . __METHOD__ . ' (line: ' . __LINE__ . ')</p>  
           <p>Sorry, this error shouldn\'t occured!</p>  
           <p>Browser - TYPO3 without PHP</p>  
