@@ -7262,7 +7262,7 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
     {
       case( ! isset( $this->conf_view[ 'filter.' ][ $table . '.' ] ) ):
         // #i0035, 131114, dwildt, 1+
-      case( ! isset( $this->conf_view[ 'filter.' ][ $tableField ] ) ):
+      case( ! isset( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ] ) ):
         $arr_return[ 'data' ][ 'key_piVar' ]  = 'no_filter';
         $arr_return[ 'data' ][ 'arr_piVar' ]  = null;
         $arr_return[ 'data' ][ 'nice_piVar' ] = 'no_filter';
