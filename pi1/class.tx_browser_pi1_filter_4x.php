@@ -547,6 +547,7 @@ class tx_browser_pi1_filter_4x {
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
+$this->pObj->dev_var_dump( $arr_piVar );
       unset ($arr_result);
         // Get nice_piVar
 
@@ -563,6 +564,7 @@ class tx_browser_pi1_filter_4x {
         case( $this->pObj->b_sql_manual ):
             // SQL manual mode
           $str_andWhere = $this->init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view );
+$this->pObj->dev_var_dump( $str_andWhere );
           break;
             // SQL manual mode
         case( ! $this->pObj->b_sql_manual ):
