@@ -573,10 +573,12 @@ class tx_browser_pi1_filter_4x {
           {
             case( $table == $this->pObj->localTable ):
               $str_andWhere = $this->init_andWhereFilter_localTable( $arr_piVar, $tableField);
+$this->pObj->dev_var_dump( $str_andWhere );
               break;
             case( $table != $this->pObj->localTable ):
             default:
               $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField);
+$this->pObj->dev_var_dump( $str_andWhere );
               break;
           }
             // SWITCH : local table versus foreign table
