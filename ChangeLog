@@ -1,8 +1,15 @@
+4.8.3
+  13-11-21
+  * #i0037: Improved DRS for hooks
+            Effected files:
+            * pi1/class.tx_browser_pi1_template.php
+
 4.8.2
   13-11-14
   * #i0036: area with intergers got an andWhere with an unix_timestamp
   * #i0035: Conflict radial search and multiple filter 
   * #i0034: Improved error prompt for filter 
+
 4.8.1
   13-11-08
   Bug

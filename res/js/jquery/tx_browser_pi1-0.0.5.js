@@ -37,7 +37,7 @@ $( document ).ready( function( )
       {
         if( t3browserAlert )
         {
-          alert( "ERROR: The selctor \"#c###TT_CONTENT.UID###-singleview-###MODE###\" isn't part of the DOM!");
+          alert( "ERROR: The selector \"#c###TT_CONTENT.UID###-singleview-###MODE###\" isn't part of the DOM!");
         }
         return;
       }

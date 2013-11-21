@@ -2748,7 +2748,7 @@ class tx_browser_pi1_template
 
       // #12723, mbless, 110310
     $this->_elements                = $elements;
-    $this->hook_template_elements();
+    $this->hook_template_elements( );
     $elements                       = $this->_elements;
     unset($this->_elements);
     $this->_elementsTransformed     = array();
@@ -3902,10 +3902,33 @@ class tx_browser_pi1_template
  */
   function hook_template_elements() {
       // debug($this->_elements,'$this->_elements',__LINE__,__FILE__);
-    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'])) {
-      foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'] as $_classRef) {
-        $_procObj = & t3lib_div :: getUserObj($_classRef);
-        $_procObj->BR_TemplateElementsHook($this);
+    if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'] ) )
+    {
+        // #i0037, 131121, dwildt, +
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_hooks)
+      {
+        $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook']);
+        $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook']);
+        $csv_ext      = implode(',', $arr_ext);
+        if ($i_extensions == 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extension '.$csv_ext.' uses the HOOK BR_TemplateElementsHook.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extension!', $this->pObj->extKey, 1);
+        }
+        if ($i_extensions > 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extensions '.$csv_ext.' use the HOOK BR_TemplateElementsHook.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extenions!', $this->pObj->extKey, 1);
+        }
+      }
+        // DRS - Development Reporting System
+        // #i0037, 131121, dwildt, +
+
+      foreach( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'] as $_classRef )
+      {
+        $_procObj = & t3lib_div :: getUserObj( $_classRef );
+        $_procObj->BR_TemplateElementsHook( $this );
       }
     }
   }
@@ -3921,10 +3944,33 @@ class tx_browser_pi1_template
   function hook_template_elements_transformed( ) {
       // debug($this->_elementsTransformed,'$this->_elementsTransformed',__LINE__,__FILE__);
       // debug($this->_elementsBoolSubstitute,'$this->_elementsBoolSubstitute',__LINE__,__FILE__);
-    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'])) {
-      foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'] as $_classRef) {
-        $_procObj = & t3lib_div :: getUserObj($_classRef);
-        $_procObj->BR_TemplateElementsTransformedHook($this);
+    if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'] ) )
+    {
+        // #i0037, 131121, dwildt, +
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_hooks)
+      {
+        $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook']);
+        $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook']);
+        $csv_ext      = implode(',', $arr_ext);
+        if ($i_extensions == 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extension '.$csv_ext.' uses the HOOK BR_TemplateElementsTransformedHook.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extension!', $this->pObj->extKey, 1);
+        }
+        if ($i_extensions > 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extensions '.$csv_ext.' use the HOOK BR_TemplateElementsTransformedHook.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extenions!', $this->pObj->extKey, 1);
+        }
+      }
+        // DRS - Development Reporting System
+        // #i0037, 131121, dwildt, +
+
+      foreach( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'] as $_classRef )
+      {
+        $_procObj = & t3lib_div :: getUserObj( $_classRef );
+        $_procObj->BR_TemplateElementsTransformedHook( $this );
       }
     }
   }

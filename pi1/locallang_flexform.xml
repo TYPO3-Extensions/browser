@@ -39,7 +39,7 @@
       <label index="sheet_evaluate.handle_marker.1">Don't remove any marker (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">The DRS - Development Reporting System - is enabled. This costs performance and is a security risk for any operative sytem. You can disable the DRS in the extension manager. Status: %status%.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIConflict">Bug: You like to use OpenStreetMap. And you have enabled AJAX. But there is a conflict of the map and AJAX unfortunately.</label>
-      <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">Bug: You like to use OpenStreetMap. And you have enabled the record browser. But there is a conflict of the map and the record browser unfortunately.</label>
+      <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">Bug: You like to use BrowserMaps. And you have enabled the record browser. But there is a conflict of the map and the record browser unfortunately.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Bug: You like to use AJAX. But there isn't any default typeNum for the AJAX page object.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAXpageObject">Bug: You like to use AJAX, but there isn't any AJAX page object.</label>
       <label index="sheet_evaluate.plugin.error.no_CSV_defaultTypeNum">Bug: You like to use CSV export. But there isn't any default typeNum for the CSV export page object.</label>
@@ -411,7 +411,7 @@
       <label index="sheet_evaluate.handle_marker.1">Nicht ersetzte Marker anzeigen (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">Das DRS - Development Reporting System - ist aktiviert. Das kostet Performance und ist ein Sicherheitsrisiko f<![CDATA[&uuml;]]>r jedes operative Sytem. Du kannst das DRS im Extension Manager abschalten. Status: %status%.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap und AJAX gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
-      <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap und den Record-Browser gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
+      <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest BrowserMaps und den Record-Browser gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest AJAX verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das AJAX Page Objekt.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAXpageObject">Fehler: Du m<![CDATA[&ouml;]]>chtest AJAX verwenden. Es fehlt aber das AJAX Page Objekt.</label>
       <label index="sheet_evaluate.plugin.error.no_CSV_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest den CSV-Export verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das CSV-Export Page Objekt.</label>

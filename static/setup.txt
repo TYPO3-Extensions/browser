@@ -4614,22 +4614,32 @@ plugin.tx_browser_pi1 {
         }
         10 = CONTENT
         10 {
-          table=tt_content
-          select{
+          table = tt_content
+          select {
               // only use current page
-            pidInList = this
+            pidInList     = this
               // only use current language
-            languageField=sys_language_uid
-            andWhere.cObject = COA
-            andWhere.cObject {
-                // choose all Browser plugins...
-              10 = TEXT
-              10.value = list_type = 'browser_pi1'
-                // if an UID is provided in the querystring, choose only that plugin
-              20 = TEXT
-              20.data = GP:tx_browser_pi1|plugin
-              20.if.isTrue.data = GP:tx_browser_pi1|plugin
-              20.outerWrap = AND uid = |
+            languageField = sys_language_uid
+            andWhere {
+              cObject = COA
+              cObject {
+                  // choose all Browser plugins...
+                10 = TEXT
+                10 {
+                  value = list_type = 'browser_pi1'
+                }
+                  // if an UID is provided in the querystring, choose only that plugin
+                20 = TEXT
+                20 {
+                  data = GP:tx_browser_pi1|plugin
+                  if {
+                    isTrue {
+                      data = GP:tx_browser_pi1|plugin
+                    }
+                  }
+                  outerWrap = AND uid = |
+                }
+              }
             }
           }
         }
@@ -5463,7 +5473,7 @@ plugin.tx_browser_pi1 {
   //
   // pages: browser_ajax
 
-  // TYPO3-Browser: ajax page object II. In case of localisation: Configure the id of sys_languagein the Constant Editor. Move in this line ...jQuery.default to ...jQuery.de (i.e.)
+  // TYPO3-Browser: ajax page object II. In case of localisation: Configure the id of sys_language in the Constant Editor. Move in this line ...jQuery.default to ...jQuery.de (i.e.)
 browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
 
 [globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}]

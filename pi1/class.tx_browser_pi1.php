@@ -1027,7 +1027,7 @@ class tx_browser_pi1 extends tslib_pibase {
       case( 'map' ) :
         switch ( $this->objMap->enabled )
         {
-            // CSV export is enabled
+            // map is enabled
             // #47632, 130508, 1-
           //case( true ) :
             // #47632, 130508, 3+
@@ -1039,7 +1039,7 @@ class tx_browser_pi1 extends tslib_pibase {
             $this->timeTracking_log( $debugTrailLevel,  'END (file with map markers is returned)' );
             return trim( $str_template_completed );
             break;
-            // CSV export isn't enabled
+            // map isn't enabled
           case( false ) :
             // #47632, 130508, 1+
           case( 'disabled' ) :
