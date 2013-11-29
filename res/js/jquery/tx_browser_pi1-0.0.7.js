@@ -16,18 +16,11 @@
 // #45846, 130226, dwildt, 1+
 var t3browserAlert = ###T3BROWSERALERT###;
   
-// #54094, 131129
-//$( document ).ready( function( )
-//{
 //////////////////////////////////////////////////////////
 //
 // Record browser
 
 // User has clicked the record browser
-// #54094, 131129
-//$( ".c###TT_CONTENT.UID###-recordBrowser" ).live(
-//    'click',
-//    function( e ) {
 $(document).on("click", ".c###TT_CONTENT.UID###-recordBrowser", function(e) {
   // Don't execute the click
   e.preventDefault( );
@@ -52,37 +45,38 @@ $(document).on("click", ".c###TT_CONTENT.UID###-recordBrowser", function(e) {
 
 
 
-$( document ).ready( function( )
-{
-  //////////////////////////////////////////////////////////
-  //
-  // CSV export
+//$( document ).ready( function( )
+//{
+//////////////////////////////////////////////////////////
+//
+// CSV export
 
-  // User has clicked the CSV export button
-  // Append a hidden field with TYPO3 page type for csv export
-  $( "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" ).live(
-  'click',
-  function ( e )
+// User has clicked the CSV export button
+// Append a hidden field with TYPO3 page type for csv export
+$(document).on("click", "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###", function(e) {
+  //  $( "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" ).live(
+  //  'click',
+  //  function ( e )
+  //  {
+  // RETURN selected form with fieldset isn't part of the DOM
+  if( ! $( "#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset" ).length )
   {
-    // RETURN selected form with fieldset isn't part of the DOM
-    if( ! $( "#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset" ).length )
+    // Don't execute the click
+    e.preventDefault( );
+    if( t3browserAlert )
     {
-      // Don't execute the click
-      e.preventDefault( );
-      if( t3browserAlert )
-      {
-        alert( "ERROR: The selector \"#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset\" isn't part of the DOM!");
-      }
-      return;
+      alert( "ERROR: The selector \"#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset\" isn't part of the DOM!");
     }
-    // Append the TYPO3 typeNum of the csv export page object
-    $( "#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset" )
-    .append(
-    '<input id="c###TT_CONTENT.UID###-button-export-###MODE###" type="hidden" name="type" value="###TYPENUM_CSV###" />'
-  );
-    bool_sendAjaxRequest = false;
+    return;
   }
+  // Append the TYPO3 typeNum of the csv export page object
+  $( "#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset" )
+  .append(
+  '<input id="c###TT_CONTENT.UID###-button-export-###MODE###" type="hidden" name="type" value="###TYPENUM_CSV###" />'
 );
+  bool_sendAjaxRequest = false;
+  //}
+  //);
   // Append a hidden field with TYPO3 page type for csv export
   // Remove the hidden field after submitting the form
   $( "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" ).blur(
@@ -94,7 +88,8 @@ $( document ).ready( function( )
 );
   // Remove the hidden field after submitting the form
   // User has clicked the CSV export button
-  // CSV export
+});
+    // CSV export
 
 
 
@@ -102,6 +97,7 @@ $( document ).ready( function( )
   //
   // Mode sliding
 
+$(document).on("click", ".c###TT_CONTENT.UID###-list-tab", function(e) {
   // Parameters for the slide effect
   var int_minutes   = 60 * 1000;
   var element_out   = ".c###TT_CONTENT.UID###-tx-browser-pi1-list:visible";
@@ -118,9 +114,9 @@ $( document ).ready( function( )
   // The user has clicked a tab
   // * Slide the current TYPO3 plugin out
   // * Slide the selected TYPO3 plugin in
-  $( ".c###TT_CONTENT.UID###-list-tab" ).live(
-  'click',
-  function( e ) {
+//  $( ".c###TT_CONTENT.UID###-list-tab" ).live(
+//  'click',
+//  function( e ) {
 
     // Get the mode
     var tab_id      = $( this ).attr( "id" );
@@ -146,8 +142,8 @@ $( document ).ready( function( )
       $( element_in ).effect( 'slide', options_in, 500 );
     }, 500 );
     // Slide
-  }
-);
+//  }
+//);
   // The user has clicked a tab
 
   // Load the content for the given mode, append it to the content of the browser plugin and hide it.
