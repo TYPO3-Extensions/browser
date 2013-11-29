@@ -1,3 +1,8 @@
+4.8.4
+  13-11-29
+  Feature
+  * #54094: jQuery: replace live() with on()
+
 4.8.3
   13-11-21
   * #i0037: Improved DRS for hooks

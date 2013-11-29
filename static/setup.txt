@@ -4511,7 +4511,7 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.6.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.7.js
           library {
               // [Boolean] 1 (default): place JSS scripts in the footer section
             footer = {$plugin.tx_browser_pi1.jss.placement.footer}

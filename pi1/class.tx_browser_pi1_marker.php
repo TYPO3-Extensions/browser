@@ -1124,12 +1124,12 @@
     //
     // Add to the marker array the piVars
 
-    foreach ($this->pObj->cObj->data as $key_cObjData => $value_cObjData)
+    foreach( $this->pObj->cObj->data as $key_cObjData => $value_cObjData )
     {
-      if(!empty($value_cObjData))
+      if( ! empty( $value_cObjData ) )
       {
         $markerArray['###TT_CONTENT.'.strtoupper($key_cObjData).'###'] = $value_cObjData;
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
+        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
         {
             // Make serial array line-break-able
           $value_cObjData = str_replace(';', '; ', $value_cObjData);
