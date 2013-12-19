@@ -1,6 +1,7 @@
 4.8.5
   13-12-18
   Improvement
+  * #i0039: BrowserMaps: Limit for children of a path is increased from 99 to 999
   * #i0038: OpenStreetMap_0.0.2.js > OpenStreetMap_1.3.10.js
             oxMap.Render_1.2.01.js > oxMap.Render_1.3.07.js
 

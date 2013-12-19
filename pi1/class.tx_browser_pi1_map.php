@@ -4099,14 +4099,14 @@ class tx_browser_pi1_map
           $uid = $rowsCounter + $childCounter;
           $rowsTemp[ $uid ][ $tableField ] = $child;
           $childCounter++;
-            // DIE  : if there are more than 99 children
-          if( $childCounter > 99 )
+            // DIE  : if there are more than 999 children
+          if( $childCounter > 999 )
           {
             $prompt = 'Unexpeted result in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' .
-                      'There are more than 99 children.';
+                      'There are more than 999 children.';
             die( $prompt );
           }
-            // DIE  : if there are more than 99 children
+            // DIE  : if there are more than 999 children
         }
           // LOOP children
       }
