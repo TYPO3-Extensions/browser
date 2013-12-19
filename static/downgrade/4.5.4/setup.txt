@@ -928,6 +928,19 @@ plugin.tx_browser_pi1 {
 
 )
                   }
+                  10 >
+                  10 = TEXT
+                  10 {
+                    value (
+                      <script>
+                      /* <![CDATA[ */
+                          // Be aware of the trailing slash!
+                        var rawdata = '###RAWDATA###';
+                        var routes  = '###ROUTES###';
+                        configuration = {
+
+)
+                  }
                     // Variables: Adapt it to your needs
                   20 = TEXT
                   20 {
