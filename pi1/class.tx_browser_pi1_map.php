@@ -4189,6 +4189,8 @@ class tx_browser_pi1_map
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'JSON array for the paths: ' . var_export( $jsonData, true );
+      $prompt = str_replace(':{', ': {', $prompt );
+      $prompt = str_replace('},', '}, ', $prompt );
       t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
