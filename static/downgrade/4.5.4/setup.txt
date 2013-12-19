@@ -911,6 +911,53 @@ plugin.tx_browser_pi1 {
                     }
                   }
                 }
+                  // 10: Error prompt, if provider isn't proper. 20: GoogleMaps API || OpenStreetMap API
+                20 >
+                20 = COA
+                20 {
+                    // Error prompt, if provider isn't in list of providers
+                  10 = TEXT
+                  10 {
+                    if {
+                      value     = GoogleMaps,Open Street Map
+                      isInList  = {$plugin.tx_browser_pi1.map.controlling.provider}
+                      negate  = 1
+                    }
+                    value (
+                      <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
+                        <h1>TypoScript Error</h1>
+                        <p>
+                          '{$plugin.tx_browser_pi1.map.controlling.provider}' isn't any element of the list: GoogleMaps,Open Street Map
+                        </p>
+                        <p>
+                          Browser - TYPO3 without PHP
+                        </p>
+                      </div>
+)
+                    lang.de (
+                      <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
+                        <h1>TypoScript Fehler</h1>
+                        <p>
+                          '{$plugin.tx_browser_pi1.map.controlling.provider}' ist kein Element der Liste: GoogleMaps,Open Street Map
+                        </p>
+                        <p>
+                          Browser - TYPO3 ohne PHP
+                        </p>
+                      </div>
+)
+                  }
+                    // GoogleMaps Api, if provider is an element of the list of providers
+                  20 = TEXT
+                  20 {
+                    if {
+                      value   = {$plugin.tx_browser_pi1.map.controlling.provider}
+                      equals  = GoogleMaps
+                    }
+                    value (
+                      <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+)
+                  }
+                }
                   // Custom configuration
                 30 = COA
                 30 {
