@@ -97,6 +97,35 @@ plugin.tx_browser_pi1 {
                       , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
 )
                   }
+                  20 >
+                  20 = TEXT
+                  20 {
+                    value (
+                            language        : '###OXMAPCONFIGLANGUAGE###'         //  default | en | de
+                          , wms             : '###OXMAPCONFIGWMS###'              //  OSM
+                          , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
+                          , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
+                          , imagePath       : '###OPENLAYERSIMGPATH###'
+                          , cssPath         : '###OPENLAYERSCSS###'
+                          , mapId           : '{$plugin.tx_browser_pi1.map.html.id}'
+                          , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
+                          , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
+                          , filter          : {
+                                                wrapper : '{$plugin.tx_browser_pi1.map.html.form.id}'
+                                              }
+                          , center          : '###OXMAPCONFIGCENTER###'
+                          , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
+                          , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
+                          , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
+                          , route           : {
+                                                  data : routes
+                                                , defaultStyle : {
+                                                                      strokeWidth : 1
+                                                                    , strokeColor : '#000'
+                                                                  }
+                                              }
+)
+                  }
                     // End: Don't edit it!
                   30 = TEXT
                   30 {
