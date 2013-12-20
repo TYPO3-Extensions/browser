@@ -1150,8 +1150,9 @@ plugin.tx_browser_pi1 {
                           , route           : {
                                                   data : routes
                                                 , defaultStyle : {
-                                                                      strokeWidth : 1
-                                                                    , strokeColor : '#000'
+                                                                      strokeWidth     : 1
+                                                                    , strokeColor     : '#000'
+                                                                    , strokeDashstyle : dot     // Default is “solid”.  [dot | dash | dashdot | longdash | longdashdot | solid]
                                                                   }
                                               }
 )
