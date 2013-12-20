@@ -1828,7 +1828,7 @@
  * @param	string		$str_devider: The devider of the childrens in the current string
  * @return	array		$arr_multi_dimensional: A proper TypoScript array for the current child
  */
-  function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
+  function children_tsconf_recurs( $key, $arr_multi_dimensional, $str_devider )
   {
     ////////////////////////////////////////////////
     //
@@ -1838,14 +1838,34 @@
 
     $int_levelRecursMax = $this->int_advanced_recursionGard;
     $int_levelRecurs++;
-    if ($int_levelRecurs > $int_levelRecursMax)
+    if( $int_levelRecurs > $int_levelRecursMax )
     {
-      if ($this->pObj->b_drs_error)
+      if ( $this->pObj->b_drs_error )
       {
-        t3lib_div::devlog('[ERROR/TTC] Recursion is bigger than '.$int_levelRecursMax, $this->pObj->extKey, 3);
-        t3lib_div::devlog('[HELP/TTC] If it is ok, please increase advanced.recursionGuard.', $this->pObj->extKey, 1);
-        t3lib_div::devlog('[ERROR/TTC] EXIT', $this->pObj->extKey, 3);
+        $prompt_01 = 'Recursion is bigger than ' . $int_levelRecursMax;
+        t3lib_div::devlog( '[ERROR/TTC] ' . $prompt_01, $this->pObj->extKey, 3 );
+        $prompt_02 = 'If it is ok, please increase advanced.recursionGuard.';
+        t3lib_div::devlog( '[HELP/TTC] ' . $prompt_02, $this->pObj->extKey, 1 );
+        $prompt_03 = ' EXIT';
+        t3lib_div::devlog( '[ERROR/TTC] ' . $prompt_03, $this->pObj->extKey, 3 );
       }
+      $prompt = '
+        <div style="border:solid 1em red;color:red;padding:1em; text-align:center;">
+          <h1>
+            ' . $prompt_01 . '
+          </h1>
+          <p>
+            ' . $prompt_02 . '
+          </p>
+          <p>
+            ' . $prompt_03 . '
+          </p>
+          <p>
+            Browser - TYPO3 without PHP
+          </p>
+        </div>
+      ';
+      echo $prompt;
       exit;
     }
     // Security: recursionGuard
