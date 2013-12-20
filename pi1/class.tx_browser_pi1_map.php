@@ -4249,8 +4249,9 @@ class tx_browser_pi1_map
                                         'markerList'  =>  $markerList,
                                         'style'       =>  array
                                                           (
-                                                            'strokeWidth' => ( int ) $strokeWidth,
-                                                            'strokeColor' => $strokeColor,
+                                                            'strokeWidth'     => ( int ) $strokeWidth,
+                                                            'strokeColor'     => $strokeColor,
+                                                            'strokeDashstyle' => 'dot',
                                                           ),  // style
                                       ),  // properties
                   );  // feature
