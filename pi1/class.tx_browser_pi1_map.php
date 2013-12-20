@@ -4251,7 +4251,7 @@ class tx_browser_pi1_map
                                                           (
                                                             'strokeWidth'     => ( int ) $strokeWidth,
                                                             'strokeColor'     => $strokeColor,
-                                                            'strokeDashstyle' => 'dot',
+                                                            //'strokeDashstyle' => 'dot',
                                                           ),  // style
                                       ),  // properties
                   );  // feature
