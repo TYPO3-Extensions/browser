@@ -690,6 +690,7 @@
 
 
 
+      // #i0040, 131220, dwildt, ~
     if(!empty($conf_view['advanced.']))
     {
       $this->int_advanced_recursionGard   = (int) $conf_view['advanced.']['recursionGuard'];
@@ -1827,13 +1828,15 @@
 
 
 
-  /**
+/**
  * children_tsconf_recurs:
  *
  * @param	integer		$key: key of the current child in the string with childrens
  * @param	array		$arr_multi_dimensional: Multi-dimensional TypoScript array
  * @param	string		$str_devider: The devider of the childrens in the current string
  * @return	array		$arr_multi_dimensional: A proper TypoScript array for the current child
+ * 
+ * @version   4.8.5
  */
   function children_tsconf_recurs( $key, $arr_multi_dimensional, $str_devider )
   {
@@ -1847,6 +1850,7 @@
     $int_levelRecurs++;
     if( $int_levelRecurs > $int_levelRecursMax )
     {
+        // #i0040, 131220, dwildt, ~
       if ( $this->pObj->b_drs_error )
       {
         $prompt_01 = 'Recursion is bigger than ' . $int_levelRecursMax;
