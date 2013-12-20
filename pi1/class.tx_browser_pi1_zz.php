@@ -176,7 +176,7 @@
  * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
  *
  * @return	void
- * @version   4.1.9
+ * @version   4.8.5
  * @since     1.0.0 
  */
   function prepairePiVars()
@@ -579,7 +579,6 @@
       {
         $int_minLenSword                    = $conf_view['advanced.']['security.']['sword.']['minLenWord'];
         $this->bool_advanced_dontReplace    = $conf_view['advanced.']['performance.']['GLOBALS.']['dont_replace'];
-        $this->int_advanced_recursionGard   = (int) $conf_view['advanced.']['recursionGuard'];
         $this->arr_advanced_securitySword   = $conf_view['advanced.']['security.']['sword.'];
           // #12528, dwildt, 110125
         $this->bool_advanced_3_6_0_rmMarker = $conf_view['advanced.']['downgrade.']['3_6_0.marker.']['in_typoscript.']['remove_emptyMarker'];
@@ -588,7 +587,6 @@
       {
         $int_minLenSword                    = $conf['advanced.']['security.']['sword.']['minLenWord'];
         $this->bool_advanced_dontReplace    = $conf['advanced.']['performance.']['GLOBALS.']['dont_replace'];
-        $this->int_advanced_recursionGard   = (int) $conf['advanced.']['recursionGuard'];
         $this->arr_advanced_securitySword   = $conf['advanced.']['security.']['sword.'];
           // #12528, dwildt, 110125
         $this->bool_advanced_3_6_0_rmMarker = $conf['advanced.']['downgrade.']['3_6_0.marker.']['in_typoscript.']['remove_emptyMarker'];
@@ -691,6 +689,15 @@
 //      // SWORD - RELOAD?
 
 
+
+    if(!empty($conf_view['advanced.']))
+    {
+      $this->int_advanced_recursionGard   = (int) $conf_view['advanced.']['recursionGuard'];
+    }
+    if(empty($conf_view['advanced.']))
+    {
+      $this->int_advanced_recursionGard   = (int) $conf['advanced.']['recursionGuard'];
+    }
 
     //////////////////////////////////////
     //
