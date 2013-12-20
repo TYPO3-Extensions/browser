@@ -1868,7 +1868,7 @@
             ' . $prompt_03 . '
           </p>
           <p>
-            Sorry for tzhe trouble.<br />
+            Sorry for the trouble.<br />
             Browser - TYPO3 without PHP
           </p>
         </div>
