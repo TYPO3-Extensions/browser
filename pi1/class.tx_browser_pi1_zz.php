@@ -1851,9 +1851,9 @@
       {
         $prompt_01 = 'Recursion is bigger than ' . $int_levelRecursMax;
         t3lib_div::devlog( '[ERROR/TTC] ' . $prompt_01, $this->pObj->extKey, 3 );
-        $prompt_02 = 'If it is ok, please increase plugin.tx_browser_pi1.advanced.recursionGuard.';
+        $prompt_02 = 'Recursion limit os controlled by plugin.tx_browser_pi1.advanced.recursionGuard. You are allowed to increase it!';
         t3lib_div::devlog( '[HELP/TTC] ' . $prompt_02, $this->pObj->extKey, 1 );
-        $prompt_03 = ' EXIT';
+        $prompt_03 = 'Browser - TYPO3 without PHP: EXIT!';
         t3lib_div::devlog( '[ERROR/TTC] ' . $prompt_03, $this->pObj->extKey, 3 );
       }
       $prompt = '
