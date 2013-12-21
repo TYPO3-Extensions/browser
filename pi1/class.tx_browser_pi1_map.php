@@ -278,6 +278,9 @@ class tx_browser_pi1_map
     $catLabels = null;
       // Local array for category icons
     $catIcons = null;
+      // #54548, 131221, dwildt, 2+
+      // Local array for category label css classes
+    $catCss = null;
 
       // #47631, dwildt, 4-
 //      // Get the field name of the field with the category label
@@ -297,6 +300,9 @@ class tx_browser_pi1_map
       default:
           // Get the field name of the field with the category label
         $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryTitle'];
+          // #54548, 131221, dwildt, 2+
+          // Get the field name of the field with the category label class
+        $fieldForCss = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryCss'];
           // Get the field name of the field with the category icon
         $fieldForIcon = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
         break;
@@ -366,11 +372,17 @@ class tx_browser_pi1_map
         {
           $labelValue = $this->pObj->pi_getLL( 'phrase_noMapCat' );
         }
-        $categoryLabels[] = $labelValue;
+        $categoryLabels[ ] = $labelValue;
         if( isset( $row[ $fieldForIcon ] ) )
         {
           $catIconsOfCurrRow            = explode( $this->catDevider, $row[ $fieldForIcon ] );
           $categoryIcons[ $labelValue ] = $catIconsOfCurrRow[ $labelKey ];
+        }
+          // #54548, 131221, dwildt, 5+
+        if( isset( $row[ $fieldForCss ] ) )
+        {
+          $catCssOfCurrRow            = explode( $this->catDevider, $row[ $fieldForCss ] );
+          $categoryCss[ $labelValue ] = $catCssOfCurrRow[ $labelKey ];
         }
       }
         // 4.1.7, dwildt, 10+
@@ -424,6 +436,11 @@ class tx_browser_pi1_map
       {
         $catIcons[ $catKey ]  = $categoryIcons[ $categoryLabels[ $counter ] ];
       }
+        // #54548, 131221, dwildt, 4+
+      if( isset( $row[ $fieldForCss ] ) )
+      {
+        $catCss[ $catKey ]  = $categoryCss[ $categoryLabels[ $counter ] ];
+      }
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -433,10 +450,15 @@ class tx_browser_pi1_map
       // Set the keys: keys should correspondend with keys of the item colours
 //$this->pObj->dev_var_dump( $catLabels );
 
-    $this->arrCategories['labels']  = $catLabels;
+    $this->arrCategories['labels'] = $catLabels;
     if( isset( $row[ $fieldForIcon ] ) )
     {
-      $this->arrCategories['icons']   = $catIcons;
+      $this->arrCategories['icons'] = $catIcons;
+    }
+      // #54548, 131221, dwildt, 4+
+    if( isset( $row[ $fieldForCss ] ) )
+    {
+      $this->arrCategories['css'] = $catCss;
     }
 $this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
@@ -2268,6 +2290,8 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
         $arrLabels[ 'catTitle' ]    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryTitle'];
+          // #54548, 131221, dwildt, 1+
+        $arrLabels[ 'catCss' ]      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryFormlabelcss'];
         $arrLabels[ 'catIcon' ]     = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
         $arrLabels[ 'catOffsetX' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
         $arrLabels[ 'catOffsetY' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
