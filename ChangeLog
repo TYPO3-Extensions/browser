@@ -1,5 +1,8 @@
 4.8.5
-  13-12-20
+  13-12-21
+  Feature
+  * #54548: CSS class for form lables
+            Effected files:
   Improvement
   * #i0040: Frontend prompt, if recursion is bigger than ...
   * #i0039: BrowserMaps: Limit for children of a path is increased from 99 to 999
