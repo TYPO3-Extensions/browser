@@ -379,14 +379,16 @@ class tx_browser_pi1_map
           $catIconsOfCurrRow            = explode( $this->catDevider, $row[ $fieldForIcon ] );
           $categoryIcons[ $labelValue ] = $catIconsOfCurrRow[ $labelKey ];
         }
-          // #54548, 131221, dwildt, 11+
+          // #54548, 131221, dwildt, 13+
         switch( true )
         {
           case( isset( $row[ $fieldForCssMarker ] ) ):
-            $categoryCss[ $labelValue ] = $row[ $fieldForCssMarker ];
+            $catCssOfCurrRow            = explode( $this->catDevider, $row[ $fieldForCssMarker ] );
+            $categoryCss[ $labelValue ] = $catCssOfCurrRow[ $labelKey ];
             break;
           case( isset( $row[ $fieldForCssPath ] ) ):
-            $categoryCss[ $labelValue ] = $row[ $fieldForCssPath ];
+            $catCssOfCurrRow            = explode( $this->catDevider, $row[ $fieldForCssPath ] );
+            $categoryCss[ $labelValue ] = $catCssOfCurrRow[ $labelKey ];
             break;
           default;
             break;
