@@ -302,9 +302,9 @@ class tx_browser_pi1_map
         $fieldForLabel      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryTitle'];
           // #54548, 131221, dwildt, 4+
           // Get the field name of the field with the category label class for a marker category
-        $fieldForCssMarker  = $this->confMap['map.']['html.']['form.']['label.']['class.']['marker'];
+        $fieldForCssMarker  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryCssMarker'];
           // Get the field name of the field with the category label class for a path category
-        $fieldForCssPath    = $this->confMap['map.']['html.']['form.']['label.']['class.']['path'];
+        $fieldForCssPath    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryCssPath'];
           // Get the field name of the field with the category icon
         $fieldForIcon       = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
         break;
@@ -2284,8 +2284,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       case( $this->pObj->typoscriptVersion <= 4005007 ):
       default:
         $arrLabels[ 'catTitle' ]    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryTitle'];
-          // #54548, 131221, dwildt, 1+
-        $arrLabels[ 'catCss' ]      = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryFormlabelcss'];
+          // #54548, 131221, dwildt, 2+
+        $arrLabels[ 'catCssMarker' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryCssMarker'];
+        $arrLabels[ 'catCssPath' ]    = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryCssPath'];
         $arrLabels[ 'catIcon' ]     = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
         $arrLabels[ 'catOffsetX' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetX'];
         $arrLabels[ 'catOffsetY' ]  = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryOffsetY'];
