@@ -322,7 +322,6 @@ class tx_browser_pi1_map
 //}
 
       // FOREACH row
-$this->pObj->dev_var_dump( $fieldForCss );
     foreach( $this->pObj->rows as $row )
     {
 //$this->pObj->dev_var_dump( $fieldForLabel, array_keys( $row ) );
@@ -379,6 +378,7 @@ $this->pObj->dev_var_dump( $fieldForCss );
           $categoryIcons[ $labelValue ] = $catIconsOfCurrRow[ $labelKey ];
         }
           // #54548, 131221, dwildt, 5+
+$this->pObj->dev_var_dump( $row[ $fieldForCss ] );
         if( isset( $row[ $fieldForCss ] ) )
         {
           $catCssOfCurrRow            = explode( $this->catDevider, $row[ $fieldForCss ] );
