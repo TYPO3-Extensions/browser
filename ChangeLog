@@ -3,6 +3,10 @@
   Feature
   * #54548: CSS class for form lables
             Effected files:
+            * pi1/class.tx_browser_pi1_map.php
+            * static
+              * constants.txt
+              * setup.txt
   Improvement
   * #i0040: Frontend prompt, if recursion is bigger than ...
   * #i0039: BrowserMaps: Limit for children of a path is increased from 99 to 999

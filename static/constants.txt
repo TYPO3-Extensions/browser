@@ -220,7 +220,9 @@ plugin.tx_browser_pi1 {
   map.marker.field.number = 
   # cat=BrowserMaps - Database Marker*//106;           type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.marker.field.category = 
-  # cat=BrowserMaps - Database Marker*//107;           type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
+  # cat=BrowserMaps - Database Marker*//107;           type=string;    label= table.field with the CSS class: CSS class for the lable tag in the map form. Example: tx_org_headquarterscat.formlabelcss
+  map.marker.field.categoryFormlabelcss = 
+  # cat=BrowserMaps - Database Marker*//108;           type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.marker.field.categoryIcon = 
   # cat=BrowserMaps - Database Marker*//110;           type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
   map.marker.field.categoryOffsetX = 
