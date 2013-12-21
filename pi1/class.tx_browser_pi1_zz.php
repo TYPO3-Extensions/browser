@@ -265,7 +265,7 @@
         {
           if(empty($this->pObj->piVars['showUid']))
           {
-            $prompt = 'views.list.' . $mode . 'showUid: '. $str_alias_showUid;
+            $prompt = 'views.list.' . $mode . '.showUid: '. $str_alias_showUid;
             t3lib_div::devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
             $prompt = 'piVar ' . $str_alias_showUid . ' is empty. If you have expect a value for the current plugin,
               please configure in the current plugin: [General] handle piVars from foreign plugins!';
