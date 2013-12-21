@@ -1940,7 +1940,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
     $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
       // LOOP row
-//$this->pObj->dev_var_dump( $this->pObj->rows );    
+$this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
         // Get mapMarkers, lats and lons
