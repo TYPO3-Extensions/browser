@@ -383,10 +383,10 @@ class tx_browser_pi1_map
         switch( true )
         {
           case( isset( $row[ $fieldForCssMarker ] ) ):
-            $categoryIcons[ $labelValue ] = $row[ $fieldForCssMarker ];
+            $categoryCss[ $labelValue ] = $row[ $fieldForCssMarker ];
             break;
           case( isset( $row[ $fieldForCssPath ] ) ):
-            $categoryIcons[ $labelValue ] = $row[ $fieldForCssPath ];
+            $categoryCss[ $labelValue ] = $row[ $fieldForCssPath ];
             break;
           default;
             break;
