@@ -379,6 +379,18 @@ class tx_browser_pi1_map
           $catIconsOfCurrRow            = explode( $this->catDevider, $row[ $fieldForIcon ] );
           $categoryIcons[ $labelValue ] = $catIconsOfCurrRow[ $labelKey ];
         }
+          // #54548, 131221, dwildt, 11+
+        switch( true )
+        {
+          case( isset( $row[ $fieldForCssMarker ] ) ):
+            $categoryIcons[ $labelValue ] = $row[ $fieldForCssMarker ];
+            break;
+          case( isset( $row[ $fieldForCssPath ] ) ):
+            $categoryIcons[ $labelValue ] = $row[ $fieldForCssPath ];
+            break;
+          default;
+            break;
+        }
       }
         // 4.1.7, dwildt, 10+
     }
@@ -431,14 +443,15 @@ class tx_browser_pi1_map
       {
         $catIcons[ $catKey ]  = $categoryIcons[ $categoryLabels[ $counter ] ];
       }
-        // #54548, 131221, dwildt, 8+
-      if( isset( $row[ $fieldForCssMarker ] ) )
+        // #54548, 131221, dwildt, 9+
+      switch( true )
       {
-        $catCss[ $catKey ]  = $row[ $fieldForCssMarker ];
-      }
-      if( isset( $row[ $fieldForCssPath ] ) )
-      {
-        $catCss[ $catKey ]  = $row[ $fieldForCssPath ];
+        case( isset( $row[ $fieldForCssMarker ] ) ):
+        case( isset( $row[ $fieldForCssPath ] ) ):
+          $catCss[ $catKey ]  = $categoryCss[ $categoryLabels[ $counter ] ];
+          break;
+        default;
+          break;
       }
       $counter++;
       if( $counter >= $maxItem )
