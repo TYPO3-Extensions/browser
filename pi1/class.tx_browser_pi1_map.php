@@ -217,7 +217,14 @@ class tx_browser_pi1_map
       $labelValueWoSpc = $this->zz_properFormLabel( $labelValue );
       $input = str_replace( '###CAT_WO_SPC###', $labelValueWoSpc, $input );
         // 4.1.17, 120927, dwildt
-
+        // #54548, 131221, dwildt, 6+
+      $class = $this->arrCategories[ 'cssClass' ][ $labelKey ];
+      if( ! empty( $class ) )
+      {
+        $class = ' class="' . $class . '"';
+      }
+      $input = str_replace( '###CLASS###', $class, $input );
+ 
         // IF draft for an input field contains ###IMG###, render an image
       $pos = strpos( $input, '###IMG###' );
       if( ! ( $pos === false ) )
@@ -472,9 +479,9 @@ class tx_browser_pi1_map
       // #54548, 131221, dwildt, 8+
     if( ! empty( $catCss ) )
     {
-      $this->arrCategories['css'] = $catCss;
+      $this->arrCategories['cssClass'] = $catCss;
     }
-$this->pObj->dev_var_dump( $this->arrCategories );
+//$this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
   }
 
@@ -1954,7 +1961,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
     $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
 
       // LOOP row
-$this->pObj->dev_var_dump( $this->pObj->rows );    
+//$this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
         // Get mapMarkers, lats and lons
