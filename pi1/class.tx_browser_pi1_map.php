@@ -387,6 +387,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       }
         // 4.1.7, dwildt, 10+
     }
+$this->pObj->dev_var_dump( $categoryCss );
       // FOREACH row
       // Get categories from the rows
 
@@ -449,6 +450,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     }
       // Set the keys: keys should correspondend with keys of the item colours
 //$this->pObj->dev_var_dump( $catLabels );
+$this->pObj->dev_var_dump( $catCss );
 
     $this->arrCategories['labels'] = $catLabels;
     if( isset( $row[ $fieldForIcon ] ) )
