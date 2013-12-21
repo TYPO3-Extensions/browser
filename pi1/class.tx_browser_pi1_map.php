@@ -381,8 +381,7 @@ class tx_browser_pi1_map
 $this->pObj->dev_var_dump( $row, $fieldForCss, $row[ $fieldForCss ] );
         if( isset( $row[ $fieldForCss ] ) )
         {
-          $catCssOfCurrRow            = explode( $this->catDevider, $row[ $fieldForCss ] );
-          $categoryCss[ $labelValue ] = $catCssOfCurrRow[ $labelKey ];
+          $categoryCss = $row[ $fieldForCss ];
         }
       }
         // 4.1.7, dwildt, 10+
