@@ -280,7 +280,7 @@ class tx_browser_pi1_map
     $catIcons = null;
       // #54548, 131221, dwildt, 2+
       // Local array for category label css classes
-    $catCss = null;
+    $catCss   = null;
 
       // #47631, dwildt, 4-
 //      // Get the field name of the field with the category label
@@ -431,6 +431,15 @@ class tx_browser_pi1_map
       {
         $catIcons[ $catKey ]  = $categoryIcons[ $categoryLabels[ $counter ] ];
       }
+        // #54548, 131221, dwildt, 8+
+      if( isset( $row[ $fieldForCssMarker ] ) )
+      {
+        $catCss[ $catKey ]  = $row[ $fieldForCssMarker ];
+      }
+      if( isset( $row[ $fieldForCssPath ] ) )
+      {
+        $catCss[ $catKey ]  = $row[ $fieldForCssPath ];
+      }
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -446,13 +455,9 @@ class tx_browser_pi1_map
       $this->arrCategories['icons'] = $catIcons;
     }
       // #54548, 131221, dwildt, 8+
-    if( isset( $row[ $fieldForCssMarker ] ) )
+    if( ! empty( $catCss ) )
     {
-      $this->arrCategories['css'] = $row[ $fieldForCssMarker ];
-    }
-    if( isset( $row[ $fieldForCssPath ] ) )
-    {
-      $this->arrCategories['css'] = $row[ $fieldForCssPath ];
+      $this->arrCategories['css'] = $catCss;
     }
 $this->pObj->dev_var_dump( $this->arrCategories );
     return $this->arrCategories;
