@@ -220,8 +220,6 @@ plugin.tx_browser_pi1 {
   map.marker.field.number = 
   # cat=BrowserMaps - Database Marker*//106;           type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.marker.field.category = 
-  # cat=BrowserMaps - Database Marker*//107;           type=string;    label= table.field with the CSS class: CSS class for the lable tag in the map form. Example: tx_org_headquarterscat.formlabelcss
-  map.marker.field.categoryFormlabelcss = 
   # cat=BrowserMaps - Database Marker*//108;           type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.marker.field.categoryIcon = 
   # cat=BrowserMaps - Database Marker*//110;           type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
@@ -322,6 +320,10 @@ plugin.tx_browser_pi1 {
   map.html.form.id          = oxMap-filter-module
   # cat=BrowserMaps - HTML//103;             type=string;    label= Input class: HTML class of the input fields
   map.html.form.input.class = oxMap-filter-item
+  # cat=BrowserMaps - HTML//200;             type=string;    label= label= table.field with the CSS class: CSS class for the lable tag in the map form for a marker. Example: tx_route_marker_cat.formlabelcss
+  map.html.form.label.class.marker = 
+  # cat=BrowserMaps - HTML//201;             type=string;    label= label= table.field with the CSS class: CSS class for the lable tag in the map form for a path. Example: tx_route_path_cat.formlabelcss
+  map.html.form.label.class.path = 
   # cat=BrowserMaps - HTML/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.html.links = Click me!
 
