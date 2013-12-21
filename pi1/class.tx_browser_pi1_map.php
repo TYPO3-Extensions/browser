@@ -378,7 +378,7 @@ class tx_browser_pi1_map
           $categoryIcons[ $labelValue ] = $catIconsOfCurrRow[ $labelKey ];
         }
           // #54548, 131221, dwildt, 5+
-$this->pObj->dev_var_dump( $row[ $fieldForCss ] );
+$this->pObj->dev_var_dump( $row, $fieldForCss, $row[ $fieldForCss ] );
         if( isset( $row[ $fieldForCss ] ) )
         {
           $catCssOfCurrRow            = explode( $this->catDevider, $row[ $fieldForCss ] );
