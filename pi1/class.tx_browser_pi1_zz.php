@@ -249,25 +249,27 @@
       // #9599
 
     $str_alias_showUid = null;
-    if(!isset($this->pObj->piVars['showUid']))
+    if( ! isset($this->pObj->piVars[ 'showUid' ] ) )
     {
-      $str_alias_showUid = $conf['views.']['list.'][$mode.'.']['showUid'];
-      if(!empty($str_alias_showUid))
+      $str_alias_showUid = $conf[ 'views.' ][ 'list.' ][ $mode . '.' ][ 'showUid' ];
+      if( ! empty( $str_alias_showUid ) )
       {
         $this->pObj->piVars['showUid']    = $this->pObj->piVars[$str_alias_showUid];
         $this->pObj->piVar_alias_showUid  = $str_alias_showUid;
         if ($this->pObj->b_drs_realurl)
         {
-          $prompt = 'showUid has the alias: '.$str_alias_showUid;
-          t3lib_div::devlog('[INFO/REALURL] '.$prompt, $this->pObj->extKey, 1);
+          $prompt = 'showUid has the alias: ' . $str_alias_showUid;
+          t3lib_div::devlog( '[INFO/REALURL] ' . $prompt, $this->pObj->extKey, 1 );
         }
         if ($this->pObj->b_drs_warn)
         {
           if(empty($this->pObj->piVars['showUid']))
           {
-            t3lib_div::devlog('[INFO/FLEXFORM] showUid is empty. If you have expect a value for the current plugin,
-              please configure in the current plugin: [General] handle piVars from foreign plugins!',
-              $this->pObj->extKey, 0);
+            $prompt = 'views.list.' . $mode . 'showUid: '. $str_alias_showUid;
+            t3lib_div::devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
+            $prompt = 'piVar ' . $str_alias_showUid . ' is empty. If you have expect a value for the current plugin,
+              please configure in the current plugin: [General] handle piVars from foreign plugins!';
+            t3lib_div::devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
           }
         }
       }
