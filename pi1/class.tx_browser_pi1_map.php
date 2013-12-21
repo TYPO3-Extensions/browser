@@ -302,7 +302,7 @@ class tx_browser_pi1_map
         $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryTitle'];
           // #54548, 131221, dwildt, 2+
           // Get the field name of the field with the category label class
-        $fieldForCss = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryCss'];
+        $fieldForCss = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryFormlabelcss'];
           // Get the field name of the field with the category icon
         $fieldForIcon = $this->confMap['configuration.']['categories.']['fields.']['marker.']['categoryIcon'];
         break;
