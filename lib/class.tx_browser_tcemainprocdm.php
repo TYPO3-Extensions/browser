@@ -97,6 +97,8 @@ class tx_browser_tcemainprocdm
 
     // [Array] Row of the current record with former data
   private $geoupdaterow  = null;
+    // [Array] Row of the current record with former data
+  private $row  = null;
 
 
 
@@ -1003,8 +1005,11 @@ class tx_browser_tcemainprocdm
   {
     $requirementsMatched = true;
 
-//    $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
-//    $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
+    $fieldMarker  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
+    $fieldPath    = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
+    
+    $valueMarker  = $this->setValue( $fieldArray, $fieldMarker );
+    $valuePath    = $this->setValue( $fieldArray, $fieldPath );
 
     switch( true )
     {
@@ -1031,7 +1036,7 @@ class tx_browser_tcemainprocdm
 //        return $requirementsMatched;
 //        break;
       default:
-        $prompt = 'This is the category of route';
+        $prompt = 'This is the category of route. ' . $fieldMarker . ': ' . $valueMarker . '. ' . $fieldPath . ': ' . $valuePath;
         $this->log( $prompt, 1, 2, 2 );
         $requirementsMatched = false;
         return $requirementsMatched;
@@ -1043,6 +1048,77 @@ class tx_browser_tcemainprocdm
 //    unset( $fieldGeodata );
 
     return $requirementsMatched;
+  }
+
+/**
+ * routeCategory( )
+ *
+ * @param	[type]		$$fieldArray: ...
+ * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
+ * @version   4.8.5
+ * @since     4.8.5
+ */
+  private function routeCategoryRequired( $fieldArray )
+  {
+    $requirementsMatched = true;
+
+    $fieldMarker  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
+    $fieldPath    = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
+
+
+    switch( true )
+    {
+      case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
+        $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
+        $this->log( $prompt, -1 );
+        $requirementsMatched = false;
+        return $requirementsMatched;
+        break;
+      case( empty( $fieldArray[ $fieldGpxfile ] ) ):
+        $prompt = 'OK: GPX file is removed. Nothing to do.';
+        $this->log( $prompt, 2 );
+        $requirementsMatched = false;
+        return $requirementsMatched;
+        break;
+      case( empty( $fieldGpxfile ) ):
+      case( empty( $fieldGeodata ) ):
+        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
+                . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
+                . 'Please take care off a proper TCA configuration!'
+                ;
+        $this->log( $prompt, 4 );
+        $requirementsMatched = false;
+        return $requirementsMatched;
+        break;
+    }
+
+    unset( $fieldArray );
+    unset( $fieldGpxfile );
+    unset( $fieldGeodata );
+
+    return $requirementsMatched;
+  }
+
+/**
+ * setValue( )
+ *
+ * @param	array		$fieldArray : Array of modified fields
+ * @return	string		$label      : label of the return field
+ * @version   4.8.5
+ * @since     4.8.5
+ */
+  private function setValue( $fieldArray, $label )
+  {
+    $row    = $this->setRow( );
+    $value  = null;
+    
+    $value = $row[ $label ];
+    if( isset( $fieldArray[ $label ] ) )
+    {
+      $value = $fieldArray[ $label ];
+    }
+
+    return $value;
   }
 
 /**
@@ -1301,6 +1377,96 @@ class tx_browser_tcemainprocdm
 //    unset( $fieldGeodata );
 
     return $requirementsMatched;
+  }
+
+ /**
+  * setRow( ):  The method select the values of the given table and select and
+  *                 returns the values as a marker array
+  *
+  * @return	array		$row :  Array with field-value pairs
+  * @access private
+  * @version  4.8.5
+  * @since    4.8.5
+  */
+  private function setRow( )
+  {
+      // RETURN null  : action is new record
+    if( ( ( int ) $this->processId ) !== $this->processId )
+    {
+        // f.e: uid = 'NEW52248e41babcf'
+      return null;
+    }
+      // RETURN null  : action is new record
+
+      // RETURN : row is set before
+    if( $this->row != null )
+    {
+      return $this->row;
+    }
+      // RETURN : row is set before
+
+    $columns = array_keys( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ] );
+    
+    $select_fields  = implode( ', ', $columns );
+
+      // RETURN : select fields are empty
+    if( empty( $select_fields ) )
+    {
+      return null;
+    }
+      // RETURN : select fields are empty
+
+      // Set the query
+    $from_table     = $this->processTable;
+    $where_clause   = 'uid = ' . $this->processId;
+    $groupBy        = null;
+    $orderBy        = null;
+    $limit          = null;
+
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Set the query
+
+      // Execute the query
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute the query
+
+      // RETURN : ERROR
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( ! empty( $error ) )
+    {
+      $prompt = 'ERROR: Unproper SQL query';
+      $this->log( $prompt, 5 );
+      $prompt = 'query: ' . $query;
+      $this->log( $prompt, 0 );
+      $prompt = 'prompt: ' . $error;
+      $this->log( $prompt, 4 );
+
+      return;
+    }
+      // RETURN : ERROR
+
+      // Fetch first row only
+    $this->row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    return $this->row;
   }
 
 }
