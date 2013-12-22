@@ -1027,7 +1027,7 @@ class tx_browser_tcemainprocdm
 //        break;
       default:
         $prompt = 'This is the category of route';
-        $this->log( $prompt, -1 );
+        $this->log( $prompt, 1 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
@@ -1231,7 +1231,7 @@ class tx_browser_tcemainprocdm
 //        break;
       default:
         $prompt = 'This is the marker of route';
-        $this->log( $prompt, -1 );
+        $this->log( $prompt, 1 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
@@ -1285,7 +1285,7 @@ class tx_browser_tcemainprocdm
 //        break;
       default:
         $prompt = 'This is the path of route';
-        $this->log( $prompt, -1 );
+        $this->log( $prompt, 1 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
