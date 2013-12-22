@@ -868,12 +868,13 @@ class tx_browser_tcemainprocdm
  * @param	string		$prompt : prompt
  * @param	integer		$status : -1 = no flash message, 0 = notice, 1 = info, 3 = OK, 4 = warn, 5 = error
  * @param	string		$action : 0=No category, 1=new record, 2=update record, 3= delete record, 4= move record, 5= Check/evaluate
+ * @param	string		$header : 0=No header, 1=Geocoding by Browser - TYPO3 without PHP, 2=Browser - TYPO3 without PHP
  * @return	void
  * @access public
- * @version   4.5.7
+ * @version   4.8.5
  * @since     4.5.7
  */
-  public function log( $prompt, $status=-1, $action=2 )
+  public function log( $prompt, $status=-1, $action=2, $header=1 )
   {
     $table  = $this->processTable;
     $uid    = $this->processId;
@@ -888,35 +889,43 @@ class tx_browser_tcemainprocdm
     //    $NEWid      = null;
     switch( $status ) 
     {
+      case( 0 ):
+        $fmHeader = '';
+        break;
+      case( 2 ):
+        $fmHeader = 'Browser - TYPO3 without PHP';
+        break;
+      case( 1 ):
+      default:
+        $fmHeader = 'Geocoding by Browser - TYPO3 without PHP';
+        break;
+    }
+
+    switch( $status ) 
+    {
       case( -1 ):
-        $fmHeader   = null;
         $fmStatus   = null;
         $logStatus  = 0;
         break;
       case( 0 ):
-        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus   = t3lib_FlashMessage::NOTICE;
         $logStatus  = 0;
         break;
       case( 1 ):
-        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus = t3lib_FlashMessage::INFO;
         $logStatus = 0;
         break;
       case( 2 ):
-        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmStatus = t3lib_FlashMessage::OK;
         $logStatus = 0;
         break;
       case( 3 ):
-        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmPrompt   = $prompt . '<br />
                       Detailes are prompted to syslog.';
         $fmStatus = t3lib_FlashMessage::WARNING;
         $logStatus = 0;
         break;
       case( 4 ):
-        $fmHeader   = 'Geocoding by Browser - TYPO3 without PHP';
         $fmPrompt   = $prompt . '<br />
                       Detailes are prompted to syslog.';
         $fmStatus = t3lib_FlashMessage::ERROR;
@@ -1027,7 +1036,7 @@ class tx_browser_tcemainprocdm
 //        break;
       default:
         $prompt = 'This is the category of route';
-        $this->log( $prompt, 1 );
+        $this->log( $prompt, 1, 2, 2 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
