@@ -1,6 +1,10 @@
 4.8.5
   13-12-21
-  Feature
+  Features
+  * #54575: Evaluate Backend tables route
+            Effected files:
+            * lib
+              * class.tx_browser_tcemainprocdm.php
   * #54548: CSS class for form lables
             Effected files:
             * pi1/class.tx_browser_pi1_map.php

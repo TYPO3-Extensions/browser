@@ -959,10 +959,85 @@ class tx_browser_tcemainprocdm
  */
   private function route( &$fieldArray, &$reference )
   {
-      // #52166, 130921, dwildt    
-    $this->routeGpx( $fieldArray, $reference );
+      // #54575, 131222, dwildt, 4+
+    if( is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'category' ] ) )
+    {
+      $this->routeCategory( $fieldArray, $reference );
+    }
+
+    if( is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ] ) )
+    {
+        // #52166, 130921, dwildt    
+      $this->routeGpx( $fieldArray, $reference );
+    }
+
+      // #54575, 131222, dwildt, 4+
+    if( is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'marker' ] ) )
+    {
+      $this->routeMarker( $fieldArray, $reference );
+    }
+
+      // #54575, 131222, dwildt, 4+
+    if( is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'path' ] ) )
+    {
+      $this->routePath( $fieldArray, $reference );
+    }
 
     return;
+  }
+
+/**
+ * routeCategory( )
+ *
+ * @param	[type]		$$fieldArray: ...
+ * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
+ * @version   4.8.5
+ * @since     4.8.5
+ */
+  private function routeCategory( $fieldArray )
+  {
+    $requirementsMatched = true;
+
+//    $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
+//    $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
+
+    switch( true )
+    {
+//      case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
+//        $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
+//        $this->log( $prompt, -1 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+//      case( empty( $fieldArray[ $fieldGpxfile ] ) ):
+//        $prompt = 'OK: GPX file is removed. Nothing to do.';
+//        $this->log( $prompt, 2 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+//      case( empty( $fieldGpxfile ) ):
+//      case( empty( $fieldGeodata ) ):
+//        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
+//                . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
+//                . 'Please take care off a proper TCA configuration!'
+//                ;
+//        $this->log( $prompt, 4 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+      default:
+        $prompt = 'This is the category of route';
+        $this->log( $prompt, -1 );
+        $requirementsMatched = false;
+        return $requirementsMatched;
+        break;
+    }
+
+//    unset( $fieldArray );
+//    unset( $fieldGpxfile );
+//    unset( $fieldGeodata );
+
+    return $requirementsMatched;
   }
 
 /**
@@ -1111,6 +1186,114 @@ class tx_browser_tcemainprocdm
     unset( $fieldArray );
     unset( $fieldGpxfile );
     unset( $fieldGeodata );
+
+    return $requirementsMatched;
+  }
+
+/**
+ * routeMarker( )
+ *
+ * @param	[type]		$$fieldArray: ...
+ * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
+ * @version   4.8.5
+ * @since     4.8.5
+ */
+  private function routeMarker( $fieldArray )
+  {
+    $requirementsMatched = true;
+
+//    $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
+//    $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
+
+    switch( true )
+    {
+//      case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
+//        $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
+//        $this->log( $prompt, -1 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+//      case( empty( $fieldArray[ $fieldGpxfile ] ) ):
+//        $prompt = 'OK: GPX file is removed. Nothing to do.';
+//        $this->log( $prompt, 2 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+//      case( empty( $fieldGpxfile ) ):
+//      case( empty( $fieldGeodata ) ):
+//        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
+//                . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
+//                . 'Please take care off a proper TCA configuration!'
+//                ;
+//        $this->log( $prompt, 4 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+      default:
+        $prompt = 'This is the marker of route';
+        $this->log( $prompt, -1 );
+        $requirementsMatched = false;
+        return $requirementsMatched;
+        break;
+    }
+
+//    unset( $fieldArray );
+//    unset( $fieldGpxfile );
+//    unset( $fieldGeodata );
+
+    return $requirementsMatched;
+  }
+
+/**
+ * routePath( )
+ *
+ * @param	[type]		$$fieldArray: ...
+ * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
+ * @version   4.8.5
+ * @since     4.8.5
+ */
+  private function routePath( $fieldArray )
+  {
+    $requirementsMatched = true;
+
+//    $fieldGpxfile = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
+//    $fieldGeodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
+
+    switch( true )
+    {
+//      case( ! isset( $fieldArray[ $fieldGpxfile ] ) ):
+//        $prompt = 'OK: No GPX file is uploaded. Nothing to do.';
+//        $this->log( $prompt, -1 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+//      case( empty( $fieldArray[ $fieldGpxfile ] ) ):
+//        $prompt = 'OK: GPX file is removed. Nothing to do.';
+//        $this->log( $prompt, 2 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+//      case( empty( $fieldGpxfile ) ):
+//      case( empty( $fieldGeodata ) ):
+//        $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
+//                . 'but the element [gpxfile] and/or [geodata] isn\'t configured! '
+//                . 'Please take care off a proper TCA configuration!'
+//                ;
+//        $this->log( $prompt, 4 );
+//        $requirementsMatched = false;
+//        return $requirementsMatched;
+//        break;
+      default:
+        $prompt = 'This is the path of route';
+        $this->log( $prompt, -1 );
+        $requirementsMatched = false;
+        return $requirementsMatched;
+        break;
+    }
+
+//    unset( $fieldArray );
+//    unset( $fieldGpxfile );
+//    unset( $fieldGeodata );
 
     return $requirementsMatched;
   }
