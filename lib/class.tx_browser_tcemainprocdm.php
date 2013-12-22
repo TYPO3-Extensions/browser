@@ -883,11 +883,7 @@ class tx_browser_tcemainprocdm
     $fmPrompt   = $prompt;
     $logPrompt  = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
 
-    //    $details_nr = -1;
-    //    $data       = array( );
-    //    $event_pid  = null; // page id
-    //    $NEWid      = null;
-    switch( $status ) 
+    switch( $header ) 
     {
       case( 0 ):
         $fmHeader = '';
