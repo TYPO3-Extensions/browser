@@ -981,10 +981,13 @@ class tx_browser_tcemainprocdm
       $this->routeCategory( $fieldArray, $reference );
     }
 
+      // 131223
+    $prompt = 'route 1';
+    $this->log( $prompt, 4, 2, 1 );
     if( is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ] ) )
     {
         // 131223
-      $prompt = 'route';
+      $prompt = 'route 2';
       $this->log( $prompt, 4, 2, 1 );
         // #52166, 130921, dwildt    
       $this->routeGpx( $fieldArray, $reference );
