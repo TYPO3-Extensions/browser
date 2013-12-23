@@ -241,7 +241,7 @@
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
       <label index="befilter_to">bis</label>
-      <label index="promptBrowserPhrase">Browsers - TYPO3 ohne PHP</label>
+      <label index="promptBrowserPhrase">Browser - TYPO3 ohne PHP</label>
       <label index="promptCategoryRelationError"><![CDATA[
         Die Kategorie ist nicht in Ordnung. Eine Kategorie ist OK, wenn eine der folgenden Regeln zutrifft:
         <ol style="list-style:outside;">

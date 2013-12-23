@@ -1092,9 +1092,6 @@ class tx_browser_tcemainprocdm
       return;
     }
 
-    $prompt = 'routeGPX 2';
-    $this->log( $prompt, 4, 2, 1 );
-
     return;
   }
 
