@@ -179,12 +179,7 @@
       <label index="promptGpxError">ERROR: GPX file seems to be empty or XML structure is unproper. Data can't imported.</label>
       <label index="promptGpxInfo"><![CDATA[
         INFO: Please take care off this proper XML structure: XML->trk->trkseg->trkpt->attributes[ lat || lon ].<br />
-        You can create the GPX file without any fee here:
-        <ul style="list-style:outside;">
-          <li>
-            <a href="http://openrouteservice.org/">openrouteservice.org</a>
-          </li>
-        </ul>
+        You can create the GPX file without any fee here: <a href="http://openrouteservice.org/" target="_blank">openrouteservice.org</a>
       ]]></label>
       <label index="promptMarkerRelationError"><![CDATA[
         Marker (POI) isn't proper! A marker (POI) is proper only if the following rule does match:
@@ -421,12 +416,7 @@
       <label index="promptGpxError">FEHLER: Die GPX-Datei ist leer oder hat keine korrekte XML-Struktur. Es können keine GPX-Daten importiert werden.</label>
       <label index="promptGpxInfo"><![CDATA[
         INFO: Bitte lade nur GPX-Dateien hoch, die diese XML-Struktur haben: XML->trk->trkseg->trkpt->attributes[ lat || lon ].<br />
-        Du kannst die GPX-Datei unter anderem hier kostenlos erstellen:
-        <ul style="list-style:outside;">
-          <li>
-            <a href="http://openrouteservice.org/">openrouteservice.org</a>
-          </li>
-        </ul>
+        Du kannst die GPX-Datei unter anderem hier kostenlos erstellen: <a href="http://openrouteservice.org/" target="_blank">openrouteservice.org</a>
       ]]></label>
       <label index="promptMarkerRelationError"><![CDATA[
         Der Marker (POI) ist nicht in Ordnung! Ein Marker (POI) ist nur OK, wenn die folgende Regel zutrifft:
