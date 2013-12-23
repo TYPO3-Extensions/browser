@@ -838,7 +838,7 @@ class tx_browser_tcemainprocdm
     if( ! empty( $error ) )
     {
       $prompt = 'ERROR: Unproper SQL query';
-      $this->log( $prompt, 5, 2, 1 );
+      $this->log( $prompt, 4, 2, 1 );
       $prompt = 'query: ' . $query;
       $this->log( $prompt, 0, 2, 1 );
       $prompt = 'prompt: ' . $error;
@@ -1025,7 +1025,7 @@ class tx_browser_tcemainprocdm
         break;
       default:
         $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptCategoryRelationError');
-        $this->log( $prompt, 5 );
+        $this->log( $prompt, 4 );
         break;
     }
     
@@ -1117,7 +1117,7 @@ class tx_browser_tcemainprocdm
     if( ! file_exists( $absPath ) )
     {
       $prompt = 'ERROR: file is missing: ' . $absPath;
-      $this->log( $prompt, 5, 2, 1 );
+      $this->log( $prompt, 4, 2, 1 );
       return;
     }
       // RETURN : file is missing
@@ -1228,7 +1228,7 @@ class tx_browser_tcemainprocdm
         break;
       default:
         $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptMarkerRelationError');
-        $this->log( $prompt, 5 );
+        $this->log( $prompt, 4 );
         break;
     }
     
@@ -1260,7 +1260,7 @@ class tx_browser_tcemainprocdm
         break;
       default:
         $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptPathRelationError');
-        $this->log( $prompt, 5 );
+        $this->log( $prompt, 4 );
         break;
     }
     
@@ -1340,7 +1340,7 @@ class tx_browser_tcemainprocdm
     if( ! empty( $error ) )
     {
       $prompt = 'ERROR: Unproper SQL query';
-      $this->log( $prompt, 5, 2, 1 );
+      $this->log( $prompt, 4, 2, 1 );
       $prompt = 'query: ' . $query;
       $this->log( $prompt, 0, 2, 1 );
       $prompt = 'prompt: ' . $error;
