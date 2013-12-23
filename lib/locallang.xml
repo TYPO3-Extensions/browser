@@ -9,6 +9,22 @@
       <label index="befilter_from">from</label>
       <label index="befilter_to">to</label>
       <label index="promptBrowserPhrase">Browser - TYPO3 without PHP</label>
+      <label index="promptCategoryRelationError"><![CDATA[
+        Category isn't proper! A category is proper, if one of the following rules does match:
+        <ol style="list-style:outside;">
+          <li>
+            A category has a relation to one marker (POI) at least but hasn't any relation to a path.
+          </li>
+          <li>
+            A category has a relation to one path exactly but hasn't any relation to a marker (POI).
+          </li>
+          <li>
+            A category hasn't any relation neither to a marker (POI) nor to a path.
+          </li>
+        </ol>
+        You can get unexpected results in the frontend.<br />
+        Please check the relations to the marker (POI) and to the path.
+      ]]></label>
       <label index="promptCheckUpdateHeader">Update wizard</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         You don't need the update wizard
@@ -158,6 +174,26 @@
       <label index="promptGeodataIsForbiddenByRecord">latitude and longitude aren't updated, because the current record shouldn't updated.</label>
       <label index="promptGeodataRemoved">latitude and longitude are removed!</label>
       <label index="promptGeodataUpdate">latitude and longitude are updated! Please take care of the Google API licence.</label>
+      <label index="promptMarkerRelationError"><![CDATA[
+        Marker (POI) isn't proper! A marker (POI) is proper only if the following rule does match:
+        <ul style="list-style:outside;">
+          <li>
+            A marker (POI) must have relations to one category at least and to one path exactly.
+          </li>
+        </ul>
+        You can get unexpected results in the frontend.<br />
+        Please check the relations to categories and to the path.
+      ]]></label>
+      <label index="promptPathRelationError"><![CDATA[
+        Path isn't proper! A path is proper only if the following rule does match:
+        <ul style="list-style:outside;">
+          <li>
+            A path must have relations to one category exactly and to one marker (POI) at least.
+          </li>
+        </ul>
+        You can get unexpected results in the frontend.<br />
+        Please check the relations to categories and to marker (POI).
+      ]]></label>
       <label index="promptRadialsearchInfoBody"><![CDATA[
         <p style="padding:1em 0;">
           <strong>Details</strong>
@@ -202,6 +238,22 @@
       <label index="befilter_from">von</label>
       <label index="befilter_to">bis</label>
       <label index="promptBrowserPhrase">Browsers - TYPO3 ohne PHP</label>
+      <label index="promptCategoryRelationError"><![CDATA[
+        Die Kategorie ist nicht in Ordnung. Eine Kategorie ist OK, wenn eine der folgenden Regeln zutrifft:
+        <ol style="list-style:outside;">
+          <li>
+            Eine Kategorie ist mit einem oder mehreren Markern (POI) verbunden, aber mit keinem Pfad.
+          </li>
+          <li>
+            Eine Kategorie ist mit genau einem Pfad verbunden, aber mit keinem Marker (POI).
+          </li>
+          <li>
+            Eine Kategorie ist weder mit einem Marker (POI) noch mit einem Pfad verbunden.
+          </li>
+        </ol>
+        Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
+        Bitte &uuml;pr&uuml;fe die Verbindungen zu den Markern (POI) und zu den Pfaden. 
+      ]]></label>
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         Du brauchst keinen Update-Test durchzuf&uuml;hren,
@@ -350,6 +402,26 @@
       <label index="promptGeodataIsForbiddenByRecord">Breiten- und Längengrad wurden nicht aktualisiert, weil dieser Datensatz nicht aktualisiert werden soll.</label>
       <label index="promptGeodataRemoved">Breiten- und Längengrad wurden entfernt!</label>
       <label index="promptGeodataUpdate">Breiten- und Längengrad wurden aktualisiert! Beachte bitte die Lizenzbedingungen der hierfür genutzten Google API.</label>
+      <label index="promptMarkerRelationError"><![CDATA[
+        Der Marker (POI) ist nicht in Ordnung! Ein Marker (POI) ist nur OK, wenn die folgende Regel zutrifft:
+        <ul style="list-style:outside;">
+          <li>
+            Ein Marker (POI) muss mindestens mit einer Kategorie und genau einem Pfad verbunden sein.
+          </li>
+        </ul>
+        Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
+        Bitte &uuml;berpr&uuml;fe die Verbindungen zu den Kategorien und Pfaden.
+      ]]></label>
+      <label index="promptPathRelationError"><![CDATA[
+        Der Pfad ist nicht in Ordnung! Ein Pfad ist nur OK, wenn die folgende Regel zutrifft:
+        <ul style="list-style:outside;">
+          <li>
+            Ein Pfad muss genau mit einer Kategorie und mindestens einem Marker (POI) verbunden sein.
+          </li>
+        </ul>
+        Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
+        Bitte &uuml;berpr&uuml;fe die Verbindungen zu den Kategorien und Markern (POI).
+      ]]></label>
       <label index="promptRadialsearchInfoBody"><![CDATA[
         <p style="padding:1em 0;">
           <strong>Details</strong>
