@@ -1155,9 +1155,9 @@ class tx_browser_tcemainprocdm
 
     if( empty( $strGeodata ) )
     {
-      $prompt = 'ERROR: GPX file seems to be empty or XML structure is unproper. Data can\'t imported.';
+      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGpxError');
       $this->log( $prompt, 4, 2, 1 );
-      $prompt = 'INFO: Please take care off a proper XML structure: XML->trk->trkseg->trkpt->attributes[ lat || lon ]';
+      $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGpxInfo');
       $this->log( $prompt, 1, 2, 1 );
       return;
     }
