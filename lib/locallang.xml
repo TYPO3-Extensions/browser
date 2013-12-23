@@ -23,6 +23,7 @@
           </li>
         </ol>
         You can get unexpected results in the frontend.<br />
+        Amounts of relations: #%marker% marker (POI), #%path% path(s).<br />
         Please check the relations to the marker (POI) and to the path.
       ]]></label>
       <label index="promptCheckUpdateHeader">Update wizard</label>
@@ -183,6 +184,7 @@
           </li>
         </ul>
         You can get unexpected results in the frontend.<br />
+        Amounts of relations: #%category% categories, #%path% paths(s).<br />
         Please check the relations to categories and to the path.
       ]]></label>
       <label index="promptPathRelationError"><![CDATA[
@@ -254,6 +256,7 @@
           </li>
         </ol>
         Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
+        Anzahl der Verbindungen: #%marker% Marker (POI), #%path% Pfad(e).<br />
         Bitte &uuml;pr&uuml;fe die Verbindungen zu den Markern (POI) und zu den Pfaden. 
       ]]></label>
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
@@ -413,6 +416,7 @@
           </li>
         </ul>
         Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
+        Anzahl der Verbindungen: #%category% Kategorie(n), #%path% Pfad(e).<br />
         Bitte &uuml;berpr&uuml;fe die Verbindungen zu den Kategorien und Pfaden.
       ]]></label>
       <label index="promptPathRelationError"><![CDATA[

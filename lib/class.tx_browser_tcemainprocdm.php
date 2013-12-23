@@ -1025,6 +1025,8 @@ class tx_browser_tcemainprocdm
         break;
       default:
         $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptCategoryRelationError');
+        $prompt = str_replace( '%marker%',  $valueMarker, $prompt );
+        $prompt = str_replace( '%path%',    $valuePath,   $prompt );
         $this->log( $prompt, 4 );
         break;
     }
@@ -1228,6 +1230,8 @@ class tx_browser_tcemainprocdm
         break;
       default:
         $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptMarkerRelationError');
+        $prompt = str_replace( '%category%',  $valueCategory, $prompt );
+        $prompt = str_replace( '%path%',      $valuePath,     $prompt );
         $this->log( $prompt, 4 );
         break;
     }
