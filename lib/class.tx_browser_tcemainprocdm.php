@@ -254,7 +254,10 @@ class tx_browser_tcemainprocdm
     $geodata = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'geoupdate' ]['geodata'];
 
       // Get former address data
-    $row = $this->geoupdateSetRow( );
+      // 131223, dwilt, 1-
+//    $row = $this->geoupdateSetRow( );
+      // 131223, dwilt, 1+
+    $row = $this->setRow( );
 
       // Get address
     $address = $this->geoupdateHandleDataGetAddress( $fieldArray, $row );
@@ -596,7 +599,10 @@ class tx_browser_tcemainprocdm
   private function geoupdateIsForbiddenByRecord( &$fieldArray )
   {
       // Get former address data
-    $row = $this->geoupdateSetRow( );
+      // 131223, dwilt, 1-
+//    $row = $this->geoupdateSetRow( );
+      // 131223, dwilt, 1+
+    $row = $this->setRow( );
 
     if( ! isset( $this->geoupdatelabels[ 'api' ][ 'forbidden' ] ) )
     {
@@ -744,7 +750,10 @@ class tx_browser_tcemainprocdm
       // RETURN : no record field for prompting configured
 
       // Get former address data
-    $row = $this->geoupdateSetRow( );
+      // 131223, dwilt, 1-
+//    $row = $this->geoupdateSetRow( );
+      // 131223, dwilt, 1+
+    $row = $this->setRow( );
 
     $promptFromRow = $row[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ];
     if( isset ( $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] ) )
@@ -764,97 +773,97 @@ class tx_browser_tcemainprocdm
     $fieldArray[ $this->geoupdatelabels[ 'api' ][ 'prompt' ] ] = $prompt;
   }
 
- /**
-  * geoupdateSetRow( ):  The method select the values of the given table and select and
-  *                 returns the values as a marker array
-  *
-  * @return	array		$row :  Array with field-value pairs
-  * @access private
-  * @version  4.5.17
-  * @since    4.5.17
-  */
-  private function geoupdateSetRow( )
-  {
-      // RETURN null  : action is new record
-    if( ( ( int ) $this->processId ) !== $this->processId )
-    {
-        // f.e: uid = 'NEW52248e41babcf'
-      return null;
-    }
-      // RETURN null  : action is new record
-
-      // RETURN : row is set before
-    if( $this->geoupdaterow != null )
-    {
-      return $this->geoupdaterow;
-    }
-      // RETURN : row is set before
-
-    $labels = $this->geoupdatelabels[ 'address' ]
-            + $this->geoupdatelabels[ 'api' ]
-            ;
-
-    $select_fields  = implode( ', ', $labels );
-
-      // RETURN : select fields are empty
-    if( empty( $select_fields ) )
-    {
-      return null;
-    }
-      // RETURN : select fields are empty
-
-      // Set the query
-    $from_table     = $this->processTable;
-    $where_clause   = 'uid = ' . $this->processId;
-    $groupBy        = null;
-    $orderBy        = null;
-    $limit          = null;
-
-    $query = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select_fields,
-                                      $from_table,
-                                      $where_clause,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Set the query
-
-      // Execute the query
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                    (
-                                      $select_fields,
-                                      $from_table,
-                                      $where_clause,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Execute the query
-
-      // RETURN : ERROR
-    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( ! empty( $error ) )
-    {
-      $prompt = 'ERROR: Unproper SQL query';
-      $this->log( $prompt, 4, 2, 1 );
-      $prompt = 'query: ' . $query;
-      $this->log( $prompt, 0, 2, 1 );
-      $prompt = 'prompt: ' . $error;
-      $this->log( $prompt, 4, 2, 1 );
-
-      return;
-    }
-      // RETURN : ERROR
-
-      // Fetch first row only
-    $this->geoupdaterow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-      // Free the SQL result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-    return $this->geoupdaterow;
-  }
+// /**
+//  * geoupdateSetRow( ):  The method select the values of the given table and select and
+//  *                 returns the values as a marker array
+//  *
+//  * @return	array		$row :  Array with field-value pairs
+//  * @access private
+//  * @version  4.5.17
+//  * @since    4.5.17
+//  */
+//  private function geoupdateSetRow( )
+//  {
+//      // RETURN null  : action is new record
+//    if( ( ( int ) $this->processId ) !== $this->processId )
+//    {
+//        // f.e: uid = 'NEW52248e41babcf'
+//      return null;
+//    }
+//      // RETURN null  : action is new record
+//
+//      // RETURN : row is set before
+//    if( $this->geoupdaterow != null )
+//    {
+//      return $this->geoupdaterow;
+//    }
+//      // RETURN : row is set before
+//
+//    $labels = $this->geoupdatelabels[ 'address' ]
+//            + $this->geoupdatelabels[ 'api' ]
+//            ;
+//
+//    $select_fields  = implode( ', ', $labels );
+//
+//      // RETURN : select fields are empty
+//    if( empty( $select_fields ) )
+//    {
+//      return null;
+//    }
+//      // RETURN : select fields are empty
+//
+//      // Set the query
+//    $from_table     = $this->processTable;
+//    $where_clause   = 'uid = ' . $this->processId;
+//    $groupBy        = null;
+//    $orderBy        = null;
+//    $limit          = null;
+//
+//    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+//                                    (
+//                                      $select_fields,
+//                                      $from_table,
+//                                      $where_clause,
+//                                      $groupBy,
+//                                      $orderBy,
+//                                      $limit
+//                                    );
+//      // Set the query
+//
+//      // Execute the query
+//    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//                                    (
+//                                      $select_fields,
+//                                      $from_table,
+//                                      $where_clause,
+//                                      $groupBy,
+//                                      $orderBy,
+//                                      $limit
+//                                    );
+//      // Execute the query
+//
+//      // RETURN : ERROR
+//    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+//    if( ! empty( $error ) )
+//    {
+//      $prompt = 'ERROR: Unproper SQL query';
+//      $this->log( $prompt, 4, 2, 1 );
+//      $prompt = 'query: ' . $query;
+//      $this->log( $prompt, 0, 2, 1 );
+//      $prompt = 'prompt: ' . $error;
+//      $this->log( $prompt, 4, 2, 1 );
+//
+//      return;
+//    }
+//      // RETURN : ERROR
+//
+//      // Fetch first row only
+//    $this->geoupdaterow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+//      // Free the SQL result
+//    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+//
+//    return $this->geoupdaterow;
+//  }
 
 
 

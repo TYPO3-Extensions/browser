@@ -412,7 +412,7 @@
         Der Marker (POI) ist nicht in Ordnung! Ein Marker (POI) ist nur OK, wenn die folgende Regel zutrifft:
         <ul style="list-style:outside;">
           <li>
-            Ein Marker (POI) muss mindestens mit einer Kategorie und genau einem Pfad verbunden sein.
+            Ein Marker (POI) muss mit mindestens einer Kategorie und genau einem Pfad verbunden sein.
           </li>
         </ul>
         Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
