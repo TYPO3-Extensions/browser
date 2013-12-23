@@ -919,13 +919,13 @@ class tx_browser_tcemainprocdm
         break;
       case( 3 ):
         $fmPrompt   = $prompt . '<br />
-                      Detailes are prompted to syslog.';
+                      ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptDetailsToSyslog');
         $fmStatus = t3lib_FlashMessage::WARNING;
         $logStatus = 0;
         break;
       case( 4 ):
         $fmPrompt   = $prompt . '<br />
-                      Detailes are prompted to syslog.';
+                      ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptDetailsToSyslog');
         $fmStatus = t3lib_FlashMessage::ERROR;
         $logStatus = 0;
         break;

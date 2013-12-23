@@ -59,6 +59,7 @@
         </ol>
       ]]></label>
       <label index="promptCurrIPBody">Your current IP</label>
+      <label index="promptDetailsToSyslog">See details at Modul Admintools > Report.</label>
       <label index="promptExternalLinksBody"><![CDATA[
         <div style="float:right;padding-left:1em;">
           <a href="http://typo3-browser.de/en/"
@@ -288,6 +289,7 @@
         </ol>
       ]]></label>
       <label index="promptCurrIPBody">Deine aktuelle IP-Adresse</label>
+      <label index="promptDetailsToSyslog">Einzelheiten findest Du im Modul Adminwerkzeuge > Protokoll.</label>
       <label index="promptExternalLinksBody"><![CDATA[
         <div style="float:right;padding-left:1em;">
           <a href="http://typo3-browser.de/"
