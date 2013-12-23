@@ -1164,7 +1164,7 @@ class tx_browser_tcemainprocdm
 
     $fieldArray[ $fieldGeodata ] = $strGeodata;
 
-    $prompt = 'OK: GPX data are updated!';
+    $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptGpxUpdate');
     $this->log( $prompt, 2, 2, 1 );
   }
 
@@ -1193,7 +1193,7 @@ class tx_browser_tcemainprocdm
         break;
       case( empty( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: GPX file is removed. Nothing to do.';
-        $this->log( $prompt, 2, 2, 1 );
+        $this->log( $prompt, -1 );
         $requirementsMatched = false;
         return $requirementsMatched;
         break;
