@@ -193,6 +193,7 @@
           </li>
         </ul>
         You can get unexpected results in the frontend.<br />
+        Amounts of relations: #%category% categories, #%marker% marker (POI).<br />
         Please check the relations to categories and to marker (POI).
       ]]></label>
       <label index="promptRadialsearchInfoBody"><![CDATA[
@@ -422,6 +423,7 @@
           </li>
         </ul>
         Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
+        Anzahl der Verbindungen: #%category% Kategorie(n), #%marker% Marker (POI).<br />
         Bitte &uuml;berpr&uuml;fe die Verbindungen zu den Kategorien und Markern (POI).
       ]]></label>
       <label index="promptRadialsearchInfoBody"><![CDATA[

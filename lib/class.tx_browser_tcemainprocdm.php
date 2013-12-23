@@ -1249,8 +1249,8 @@ class tx_browser_tcemainprocdm
     $fieldCategory  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['path']['category'];
     $fieldMarker    = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['path']['marker'];
     
-    $valueCategory  = $this->setValue( $fieldArray, $fieldCategory );
-    $valueMarker      = $this->setValue( $fieldArray, $fieldMarker );
+    $valueCategory  = ( int ) $this->setValue( $fieldArray, $fieldCategory );
+    $valueMarker    = ( int ) $this->setValue( $fieldArray, $fieldMarker );
 
     switch( true )
     {
@@ -1260,6 +1260,8 @@ class tx_browser_tcemainprocdm
         break;
       default:
         $prompt = $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptPathRelationError');
+        $prompt = str_replace( '%category%',  $valueCategory, $prompt );
+        $prompt = str_replace( '%marker%',    $valueMarker,   $prompt );
         $this->log( $prompt, 4 );
         break;
     }
