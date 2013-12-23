@@ -983,6 +983,9 @@ class tx_browser_tcemainprocdm
 
     if( is_array( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ] ) )
     {
+        // 131223
+      $prompt = 'route';
+      $this->log( $prompt, 4, 2, 1 );
         // #52166, 130921, dwildt    
       $this->routeGpx( $fieldArray, $reference );
     }
@@ -1077,6 +1080,10 @@ class tx_browser_tcemainprocdm
  */
   private function routeGpx( &$fieldArray, &$reference )
   {
+      // 131223
+    $prompt = 'routeGPX 1';
+    $this->log( $prompt, 4, 2, 1 );
+
       // RETURN : requirements aren't matched
     if( ! $this->routeGpxRequired( $fieldArray ) )
     {
@@ -1090,6 +1097,9 @@ class tx_browser_tcemainprocdm
     {
       return;
     }
+
+    $prompt = 'routeGPX 2';
+    $this->log( $prompt, 4, 2, 1 );
 
     return;
   }
