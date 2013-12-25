@@ -2471,7 +2471,7 @@ class tx_browser_pi1_map
       // #54595, 131225, dwildt, 1-
     //$series       = null;
       // #54595, 131225, dwildt, 1+
-    $series       = "{'nodata':{'icon': [],'data': {'nodata': {'coors': [90,180],'desc': '',}}},}";
+    $series       = "{'nodata':{'icon': [],'data': {'nodata': {'coors': [0,0],'desc': '',}}}}";
 
       // Category icons in case of database categories without own icons
     $catIcons = $this->renderMapMarkerCategoryIcons( );
@@ -2518,7 +2518,7 @@ class tx_browser_pi1_map
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
-//$this->pObj->dev_var_dump( $jsonData );
+$this->pObj->dev_var_dump( $jsonData );
     return $arr_return;
   }
 
