@@ -353,11 +353,11 @@ class tx_browser_pi1_navi_pageBrowser
       case( false ) :
       case( 'disabled' ) :
       default :
-//        if( $this->pObj->b_drs_navi )
-//        {
-//          $prompt = 'Sorry, pageBrowser isn\'t possible. Map +Route is used.';
-//          t3lib_div :: devLog( '[INFO/NAVI] ' . $prompt , $this->pObj->extKey, 3 );
-//        }
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = 'Map status is "' . $this->pObj->objMap->enabled . '". pageBrowser isn\'t possible. Map +Route is used.';
+          t3lib_div :: devLog( '[INFO/NAVI] ' . $prompt , $this->pObj->extKey, 0 );
+        }
         return false;
         break;
     }
