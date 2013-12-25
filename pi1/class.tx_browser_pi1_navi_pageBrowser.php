@@ -340,7 +340,7 @@ class tx_browser_pi1_navi_pageBrowser
     $this->pObj->objMap->init( );
     switch ( $this->pObj->objMap->enabled )
     {
-      case( 'Map +Route' ) :
+      case( 'Map +Routes' ) :
         if( $this->pObj->b_drs_warn )
         {
           $prompt = 'Sorry, pageBrowser isn\'t possible. Map +Route is used.';

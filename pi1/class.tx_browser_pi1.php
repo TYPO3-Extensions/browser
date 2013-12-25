@@ -1033,7 +1033,7 @@ class tx_browser_pi1 extends tslib_pibase {
             // #47632, 130508, 3+
           case( 1 ) :
           case( 'Map' ) :
-          case( 'Map +Route' ) :
+          case( 'Map +Routes' ) :
               // Prompt the expired time to devlog
             $debugTrailLevel = 1;
             $this->timeTracking_log( $debugTrailLevel,  'END (file with map markers is returned)' );
