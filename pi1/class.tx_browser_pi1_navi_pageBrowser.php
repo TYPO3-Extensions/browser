@@ -147,6 +147,12 @@ class tx_browser_pi1_navi_pageBrowser
       // RETURN : there isn't any record.
     if( $this->sum < 1 )
     {
+        // 131225, dwildt, 4+
+      if( $this->pObj->b_drs_navi )
+      {
+        $prompt = 'No pageBrowser: there isn\'t any record.';
+        t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
@@ -192,6 +198,12 @@ class tx_browser_pi1_navi_pageBrowser
     $GLOBALS['TSFE']->id = $globalTsfeId; // #9458
 
       // RETURN the content
+      // 131225, dwildt, 4+
+    if( $this->pObj->b_drs_navi )
+    {
+      $prompt = 'pageBrowser is returned with content.';
+      t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+    }
     $arr_return['data']['content'] = $pageBrowser;
     return $arr_return;
   }
