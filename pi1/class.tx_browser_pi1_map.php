@@ -2504,7 +2504,7 @@ class tx_browser_pi1_map
     $jsonData = $this->json_encode_wi_single_quotes( $series );
       // #54595, 131225, dwildt, 1+
 $this->pObj->dev_var_dump( $jsonData );
-    if( $jsonData == "'null'")
+    if( $jsonData == "null" )
     {
       $jsonData = "{'null':{'icon': [],'data': {'null': {'coors': [0,0],'desc': '',}}}}";
     }
