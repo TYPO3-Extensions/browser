@@ -330,12 +330,13 @@ class tx_browser_pi1_navi_pageBrowser
   * requirementsRoute( ):
   *
   * @return	boolean   true, if requirements are met; false if not
+  * @internal #i0041
   * @version 4.8.5
   * @since   4.8.5
   */
   private function requirementsRoute( )
   {
-      // 131225, dwildt, ~
+      // #i0041, 131225, dwildt, ~
     switch ( $this->pObj->objMap->enabled )
     {
       case( 'Map +Route' ) :
