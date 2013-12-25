@@ -851,10 +851,10 @@ class tx_browser_pi1_map
  * init(): The method sets the globals $enabled and $confMap
  *
  * @return	void
- * @version 4.5.6
+ * @version 4.8.5
  * @since   3.9.6
  */
-  private function init(  )
+  public function init(  )
   {
       // RETURN : global vars are set before
     if( $this->initVar( ) )

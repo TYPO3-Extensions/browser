@@ -337,13 +337,14 @@ class tx_browser_pi1_navi_pageBrowser
   private function requirementsRoute( )
   {
       // #i0041, 131225, dwildt, ~
+    $this->pObj->objMap->init( );
     switch ( $this->pObj->objMap->enabled )
     {
       case( 'Map +Route' ) :
-        if( $this->pObj->b_drs_navi )
+        if( $this->pObj->b_drs_warn )
         {
           $prompt = 'Sorry, pageBrowser isn\'t possible. Map +Route is used.';
-          t3lib_div :: devLog( '[WARN/NAVI] ' . $prompt , $this->pObj->extKey, 2 );
+          t3lib_div :: devLog( '[WARN/MAP/NAVI] ' . $prompt , $this->pObj->extKey, 2 );
         }
         return true;
         break;
@@ -353,10 +354,10 @@ class tx_browser_pi1_navi_pageBrowser
       case( false ) :
       case( 'disabled' ) :
       default :
-        if( $this->pObj->b_drs_navi )
+        if( $this->pObj->b_drs_map || $this->pObj->b_drs_navi )
         {
-          $prompt = 'Map status is "' . $this->pObj->objMap->enabled . '". pageBrowser isn\'t possible. Map +Route is used.';
-          t3lib_div :: devLog( '[INFO/NAVI] ' . $prompt , $this->pObj->extKey, 0 );
+          $prompt = 'pageBrowser is possible. Map status is "' . $this->pObj->objMap->enabled . '".';
+          t3lib_div :: devLog( '[INFO/MAP/NAVI] ' . $prompt , $this->pObj->extKey, 0 );
         }
         return false;
         break;
