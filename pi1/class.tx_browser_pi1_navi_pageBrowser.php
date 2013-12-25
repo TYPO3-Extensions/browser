@@ -172,6 +172,12 @@ class tx_browser_pi1_navi_pageBrowser
 
       // Get TypoScript configuration
     $confPageBrowser = $this->conf['navigation.']['pageBrowser.'];
+      // 131225, dwildt, 4+
+    if( $this->pObj->b_drs_navi )
+    {
+      $prompt = var_export( $confPageBrowser, true );
+      t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+    }
 
       // Init piBase for pagebrowser
     $this->pObj->internal['res_count']          = $this->sum;
@@ -201,7 +207,7 @@ class tx_browser_pi1_navi_pageBrowser
       // 131225, dwildt, 4+
     if( $this->pObj->b_drs_navi )
     {
-      $prompt = 'pageBrowser is returned with content.';
+      $prompt = 'pageBrowser: ' . $pageBrowser;
       t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
     }
     $arr_return['data']['content'] = $pageBrowser;

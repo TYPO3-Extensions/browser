@@ -2398,12 +2398,6 @@ class tx_browser_pi1_viewlist
       // Replace markers in the current content
     $subpart        = $this->pObj->cObj->getSubpart(  $this->content, '###PAGEBROWSER###' );
     $pageBrowser    = $this->pObj->cObj->substituteMarkerArray( $subpart, $markerArray );
-      // 131225, dwildt, 4+
-    if( $this->pObj->b_drs_navi )
-    {
-      $prompt = 'pageBrowser: ' . $pageBrowser;
-      t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
-    }
     $this->content  = $this->pObj->cObj->substituteSubpart
                       (
                         $this->content, '###PAGEBROWSER###', $pageBrowser, true
