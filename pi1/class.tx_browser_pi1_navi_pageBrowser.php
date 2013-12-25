@@ -172,11 +172,26 @@ class tx_browser_pi1_navi_pageBrowser
 
       // Get TypoScript configuration
     $confPageBrowser = $this->conf['navigation.']['pageBrowser.'];
+      // 131225, dwildt, 16+
+    if( empty( $this->sum ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'pageBrowser sum is empty';
+        t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
+      }      
+    }
+    else 
+    {
+      if( $this->pObj->b_drs_navi )
+      {
+        $prompt = 'pageBrowser sum #' . $this->sum;
+        t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
       // 131225, dwildt, 7+
     if( $this->pObj->b_drs_navi )
     {
-      $prompt = 'pageBrowser sum #' . $his->sum;
-      t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       $prompt = 'pageBrowser parameter: ' . var_export( $confPageBrowser, true );
       t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
     }
