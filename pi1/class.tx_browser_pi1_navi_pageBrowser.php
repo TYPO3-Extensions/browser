@@ -206,7 +206,7 @@ class tx_browser_pi1_navi_pageBrowser
     $GLOBALS['TSFE']->id = $globalTsfeId; // #9458
 
       // RETURN the content
-      // 131225, dwildt, 4+
+      // 131225, dwildt, 16+
     if( empty( $pageBrowser ) )
     {
       if( $this->pObj->b_drs_error )
