@@ -2502,8 +2502,7 @@ class tx_browser_pi1_map
     //$jsonData = json_encode( $series );
       // #i0018, 130717, dwildt, 1+
     $jsonData = $this->json_encode_wi_single_quotes( $series );
-      // #54595, 131225, dwildt, 1+
-$this->pObj->dev_var_dump( $jsonData );
+      // #54595, 131225, dwildt, 4+
     if( $jsonData == "null" )
     {
       $jsonData = "{'null':{'icon': [],'data': {'null': {'coors': [0,0],'desc': '',}}}}";
@@ -2521,7 +2520,7 @@ $this->pObj->dev_var_dump( $jsonData );
 
     $arr_return['data']['jsonData']     = $jsonData;
     $arr_return['data']['coordinates']  = $coordinates;
-$this->pObj->dev_var_dump( $jsonData );
+//$this->pObj->dev_var_dump( $jsonData );
     return $arr_return;
   }
 
