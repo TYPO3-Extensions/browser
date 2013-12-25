@@ -1,6 +1,7 @@
 4.8.5
   13-12-21
   Features
+  * #i0042: DRS prompt: Map +Route: no indexBrowser possible.
   * #i0041: DRS prompt: Map +Route: no pageBrowser possible.
   * #54575: Evaluate Backend tables route
             Effected files:

@@ -523,7 +523,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                        It returns true, if a requirement isn't met
  *
  * @return    mixed        true or array, if a requirement isn't met
- * @version 3.9.11
+ * @version 4.8.5
  * @since   3.9.9
  * @todo  120503: Remove $this->bool_dontLocalise. It isn't needed.
  */
@@ -540,6 +540,11 @@ class tx_browser_pi1_navi_indexBrowser
       return true;
     }
       // RETURN true : index browser is disabled
+    
+    if( $this->requirementsRoute( ) )
+    {
+      return true;
+    }
 
     $this->localisation_init( );
 
@@ -568,6 +573,46 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN false : requirements are OK
     return false;
+  }
+  
+ /**
+  * requirementsRoute( ):
+  *
+  * @return	boolean   true, if requirements are met; false if not
+  * @internal #i0042
+  * @version 4.8.5
+  * @since   4.8.5
+  */
+  private function requirementsRoute( )
+  {
+      // #i0042, 131225, dwildt, ~
+    $this->pObj->objMap->init( );
+    switch ( $this->pObj->objMap->enabled )
+    {
+      case( 'Map +Routes' ) :
+        if( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'Sorry, indexBrowser isn\'t possible. Map +Route is used.';
+          t3lib_div :: devLog( '[WARN/MAP/NAVI] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        return true;
+        break;
+        // map isn't enabled
+      case( 1 ) :
+      case( 'Map' ) :
+      case( false ) :
+      case( 'disabled' ) :
+      default :
+        if( $this->pObj->b_drs_map || $this->pObj->b_drs_navi )
+        {
+          $prompt = 'indexBrowser is possible. Map status is "' . $this->pObj->objMap->enabled . '".';
+          t3lib_div :: devLog( '[INFO/MAP/NAVI] ' . $prompt , $this->pObj->extKey, 0 );
+        }
+        return false;
+        break;
+    }
+
+   return true;
   }
 
 
