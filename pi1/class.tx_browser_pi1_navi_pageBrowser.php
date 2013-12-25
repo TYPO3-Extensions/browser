@@ -175,7 +175,9 @@ class tx_browser_pi1_navi_pageBrowser
       // 131225, dwildt, 4+
     if( $this->pObj->b_drs_navi )
     {
-      $prompt = var_export( $confPageBrowser, true );
+      $prompt = 'pageBrowser parameter: ' . var_export( $confPageBrowser, true );
+      t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'pageBrowser sum: #' . $this->sum;
       t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
     }
 
@@ -205,10 +207,21 @@ class tx_browser_pi1_navi_pageBrowser
 
       // RETURN the content
       // 131225, dwildt, 4+
-    if( $this->pObj->b_drs_navi )
+    if( empty( $pageBrowser ) )
     {
-      $prompt = 'pageBrowser: ' . $pageBrowser;
-      t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'pageBrowser is empty.';
+        t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
+      }      
+    }
+    else 
+    {
+      if( $this->pObj->b_drs_navi )
+      {
+        $prompt = 'pageBrowser: ' . $pageBrowser;
+        t3lib_div::devlog( '[INFO/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
     }
     $arr_return['data']['content'] = $pageBrowser;
     return $arr_return;
