@@ -2461,14 +2461,17 @@ class tx_browser_pi1_map
  *
  * @param	array
  * @return	string		$jsonData
- * @version 4.1.7
+ * @version 4.8.5
  * @since   4.1.0
  */
   private function renderMapMarkerPointsToJson( $markers )
   {
     $arr_return   = array( );
-    $series       = null;
     $coordinates  = array( );
+      // #54595, 131225, dwildt, 1-
+    //$series       = null;
+      // #54595, 131225, dwildt, 1+
+    $series       = "{'nodata':{'icon': [],'data': {'nodata': {'coors': [90,180],'desc': '',}}},}";
 
       // Category icons in case of database categories without own icons
     $catIcons = $this->renderMapMarkerCategoryIcons( );
