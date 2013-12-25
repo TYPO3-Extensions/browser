@@ -592,7 +592,7 @@ class tx_browser_pi1_navi_indexBrowser
       case( 'Map +Routes' ) :
         if( $this->pObj->b_drs_warn )
         {
-          $prompt = 'Sorry, indexBrowser isn\'t possible. Map +Route is used.';
+          $prompt = 'Sorry, indexBrowser isn\'t possible. Map +Routes is used.';
           t3lib_div :: devLog( '[WARN/MAP/NAVI] ' . $prompt , $this->pObj->extKey, 2 );
         }
         return true;
