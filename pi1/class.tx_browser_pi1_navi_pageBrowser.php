@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.7.0
+ * @version     4.8.5
  * @since       3.9.12
  */
 
@@ -310,11 +310,56 @@ class tx_browser_pi1_navi_pageBrowser
       // RETURN : pagebrowser shouldn't displayed
 
       // RETURN : firstVisit but emptyListAtStart
+    if( $this->requirementsRoute( ) )
+    {
+     return false;
+    }
+      // RETURN : firstVisit but emptyListAtStart
+
+      // RETURN : firstVisit but emptyListAtStart
     if( $this->pObj->boolFirstVisit && $this->pObj->objFlexform->bool_emptyAtStart )
     {
      return false;
     }
       // RETURN : firstVisit but emptyListAtStart
+
+   return true;
+  }
+  
+ /**
+  * requirementsRoute( ):
+  *
+  * @return	boolean   true, if requirements are met; false if not
+  * @version 4.8.5
+  * @since   4.8.5
+  */
+  private function requirementsRoute( )
+  {
+      // 131225, dwildt, ~
+    switch ( $this->pObj->objMap->enabled )
+    {
+      case( 'Map +Route' ) :
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = 'Sorry, pageBrowser isn\'t possible. Map +Route is used.';
+          t3lib_div :: devLog( '[WARN/NAVI] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        return true;
+        break;
+        // map isn't enabled
+      case( 1 ) :
+      case( 'Map' ) :
+      case( false ) :
+      case( 'disabled' ) :
+      default :
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = 'Sorry, pageBrowser isn\'t possible. Map +Route is used.';
+//          t3lib_div :: devLog( '[INFO/NAVI] ' . $prompt , $this->pObj->extKey, 3 );
+//        }
+        return false;
+        break;
+    }
 
    return true;
   }
