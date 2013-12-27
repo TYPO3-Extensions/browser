@@ -2466,6 +2466,7 @@ class tx_browser_pi1_map
  */
   private function renderMapMarkerPointsToJson( $markers )
   {
+$this->pObj->dev_var_dump( $markers );
     $arr_return   = array( );
     $coordinates  = array( );
     $series       = null;
@@ -2481,7 +2482,6 @@ class tx_browser_pi1_map
 
         // icon
       $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
-$this->pObj->dev_var_dump( $icon );
       $series[ $catTitle ][ 'icon' ] = $icon;
 
         // data
