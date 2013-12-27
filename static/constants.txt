@@ -1,6 +1,11 @@
 plugin.tx_browser_pi1 >
 plugin.tx_browser_pi1 {
 
+  # cat=Browser - Advanced/enable/100;          type=int+;   label= Recursion Guard: Limit of loops. If a loop controlled by recursion guard cross the limit, the workflow will exit. You will get an error prompt in the frontend. 
+  advanced.recursionGuard = 10000
+  # cat=Browser - Advanced/others/999;          type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  advanced.links = Click me!
+
   # cat=Browser - Download Module/enable/100;   type=boolean;   label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
   downloadmodule.drs = 0
   # cat=Browser - Download Module/enable/102;   type=int+;      label= page uid: Id of the download page

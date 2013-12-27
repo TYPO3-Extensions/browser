@@ -3,6 +3,8 @@
   Features
   * #i0042: DRS prompt: Map +Route: no indexBrowser possible.
   * #i0041: DRS prompt: Map +Route: no pageBrowser possible.
+  * #54616: TypoSCript constant recursionguard
+  * #54612: BrowserMaps: custom layer: controll initial visibility
   * #54575: Evaluate Backend tables route
             Effected files:
             * lib

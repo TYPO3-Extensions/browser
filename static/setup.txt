@@ -5322,7 +5322,7 @@ plugin.tx_browser_pi1 {
       }
     }
       // [INTEGER] Guard for recursive methods. Every loop will break after x times.
-    recursionGuard = 10000
+    recursionGuard = {$plugin.tx_browser_pi1.advanced.recursionGuard}
     security {
       sword {
           // [Integer] The minimum length of a word in the sword. Example: "I am searching for" becomes "searching for"
