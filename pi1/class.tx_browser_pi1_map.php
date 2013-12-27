@@ -2657,8 +2657,10 @@ $this->pObj->dev_var_dump( $series );
     {
       if( $this->pObj->b_drs_error )
       {
-        $prompt = 'ERROR: icon can\'t rendered. Maybe the file isn\'t proper: ' . $rootPath . $mapMarker[ 'catIconMap' ];
+        $prompt = 'Icon can\'t rendered. Maybe the file isn\'t proper: ' . $rootPath . $mapMarker[ 'catIconMap' ];
         t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+        $prompt = 'A possible cause is a wrong list number for the icon. Unproper example: You have uploaded one icon only, but you like to use the second image of the icons list. ';
+        t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
       }
     }
     $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
