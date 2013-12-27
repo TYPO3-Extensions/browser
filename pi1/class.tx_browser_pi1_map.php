@@ -2653,6 +2653,14 @@ $this->pObj->dev_var_dump( $series );
       // Path to the root
     $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
     list( $width, $height ) = getimagesize( $rootPath . $mapMarker[ 'catIconMap' ] );
+    if( empty( $height ) or empty( $width) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'ERROR: icon can\'t rendered. Maybe the file isn\'t proper: ' . $rootPath . $mapMarker[ 'catIconMap' ];
+        t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+      }
+    }
     $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
     $arrIcon[ ] = $width;
     $arrIcon[ ] = $height;
