@@ -2656,6 +2656,7 @@ $this->pObj->dev_var_dump( $series );
     $arrIcon[ ] = $mapMarker[ 'catIconMap' ];
     $arrIcon[ ] = $width;
     $arrIcon[ ] = $height;
+$this->pObj->dev_var_dump( $arrIcon );
       // #42125, 121031, dwildt, 2-
 //          $arrIcon[] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
 //          $arrIcon[] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
@@ -2683,7 +2684,7 @@ $this->pObj->dev_var_dump( $series );
       // IF database has a field y-offset, take calue from database
       // Database category has its own icon
     
-//$this->pObj->dev_var_dump( $arrIcon );
+$this->pObj->dev_var_dump( $arrIcon );
     return $arrIcon;
   }
 
