@@ -2498,6 +2498,7 @@ $this->pObj->dev_var_dump( $markers );
       $coordinates[] = $marker['lon'] . ',' . $marker['lat'];
     }
       // FOREACH marker
+$this->pObj->dev_var_dump( $series );
 
       // #i0018, 130717, dwildt, 1-
     //$jsonData = json_encode( $series );
