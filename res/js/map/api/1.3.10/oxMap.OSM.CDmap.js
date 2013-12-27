@@ -102,7 +102,8 @@ window.CDmap = function( data ){
 
 		self.mapControl();
 		self.customMapLayer = self.customMapLayer();
-		//oxMap.OSM.wmsLayer[0].setVisibility( false );
+		// 131227, dwildt, 1-
+                //oxMap.OSM.wmsLayer[0].setVisibility( false );
 		oxMap.OSM.map.addLayer( self.customMapLayer );
 
 	})();
