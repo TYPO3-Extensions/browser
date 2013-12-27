@@ -103,12 +103,12 @@ window.CDmap = function( data ){
 		self.mapControl();
 		self.customMapLayer = self.customMapLayer();
 		// #54612, 131227, dwildt, 1-
-                //oxMap.OSM.wmsLayer[0].setVisibility( false );
-		// #54612, 131227, dwildt, 3+
-                if( custom.startVisibility == false )
-                {
-                  oxMap.OSM.wmsLayer[0].setVisibility( false );
-                }
+                oxMap.OSM.wmsLayer[0].setVisibility( false );
+		// #54612, 131227, dwildt, 4+
+//                if( custom.startVisibility == false )
+//                {
+//                  oxMap.OSM.wmsLayer[0].setVisibility( false );
+//                }
   		oxMap.OSM.map.addLayer( self.customMapLayer );
 
 	})();
