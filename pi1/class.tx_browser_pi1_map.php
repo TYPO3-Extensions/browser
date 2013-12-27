@@ -2481,6 +2481,7 @@ class tx_browser_pi1_map
 
         // icon
       $icon = $this->renderMapMarkerPointsToJsonIcon( $series, $marker, $catIcons );
+$this->pObj->dev_var_dump( $icon );
       $series[ $catTitle ][ 'icon' ] = $icon;
 
         // data
@@ -2505,7 +2506,10 @@ class tx_browser_pi1_map
       // #54595, 131225, dwildt, 4+
     if( $jsonData == "null" )
     {
-      $jsonData = "{'null':{'icon': [],'data': {'null': {'coors': [0,0],'desc': '',}}}}";
+      // 131227, dwildt, 1-
+      //$jsonData = "{'null':{'icon': [],'data': {'null': {'coors': [0,0],'desc': '',}}}}";
+      // 131227, dwildt, 1+
+      $jsonData = null;
     }
 
       // DRS
