@@ -105,7 +105,7 @@ window.CDmap = function( data ){
 		// #54612, 131227, dwildt, 1-
                 //oxMap.OSM.wmsLayer[0].setVisibility( false );
 		// #54612, 131227, dwildt, 1+
-                oxMap.OSM.wmsLayer[0].setVisibility( custom.startVisibility );
+                oxMap.OSM.wmsLayer[0].setVisibility( custom.wmsVisibility );
   		oxMap.OSM.map.addLayer( self.customMapLayer );
 
 	})();

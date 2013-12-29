@@ -4,7 +4,7 @@
   * #i0042: DRS prompt: Map +Route: no indexBrowser possible.
   * #i0041: DRS prompt: Map +Route: no pageBrowser possible.
   * #54616: TypoScript constant recursionguard
-  * #54612: BrowserMaps: custom layer: controll initial visibility
+  * #54612: BrowserMaps: custom map: controll map visibility
   * #54575: Evaluate Backend tables route
             Effected files:
             * lib
@@ -30,11 +30,13 @@
 
 4.8.3
   13-11-21
+  Improvement
   * #i0037: Improved DRS for hooks
             Effected files:
             * pi1/class.tx_browser_pi1_template.php
 
 4.8.2
+  Improvement
   13-11-14
   * #i0036: area with intergers got an andWhere with an unix_timestamp
   * #i0035: Conflict radial search and multiple filter 
@@ -54,7 +56,7 @@
 
 4.8.0
   13-11-07
-  Feature
+  Features
   * #53397: CSS styled content: table
             Effected files:
             * lib/class.tx_browser_cssstyledcontent.php
@@ -171,7 +173,7 @@
             * map.modules.routes.debugging  -> map.openlayers.modules.routes.debugging
             * map.modules.routes.default    -> map.openlayers.modules.routes.default
             * map.popup.behaviour           -> map.openlayers.popup.behaviour
-  * #51477: BrowserMaps: mobile navigation
+  * #51477: BrowserMaps: mobile navigation / touchscreen
             displayList.master_templates.map.descriptionWiLinkToSingle.30 moved from TEXT to COA
             Effected files:
             * static/setup.txt
