@@ -3,6 +3,7 @@
   Bugfixing
   * #54901: TYPO3 6.1: Unproper form of extension manager
             Effected files:
+            * ext_conf_template.txt
             * lib/locallang.xml
 
 4.8.5
