@@ -5,30 +5,30 @@ browserEngineIndicator = Off (recommended)
   # cat=basic/999;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_01=0
 
-  # cat=BE Language/enable;       type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
+  # cat=BE Language/100;       type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
 LLstatic = English
-  # cat=BE Language/others;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+  # cat=BE Language/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_02=0
 
-  # cat=Debugging/dev/101;        type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,Realurl,Scheduler: Geoupdate,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+  # cat=Debugging/100;        type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,Realurl,Scheduler: Geoupdate,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
-  # cat=Debugging/others;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+  # cat=Debugging/999;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_03=0
 
-  # cat=Scheduler/dev/101;        type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the Browser. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
+  # cat=Scheduler/100;        type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the Browser. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
 showSampleTasks = 0
-  # cat=Scheduler/others;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+  # cat=Scheduler/999;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_04=0
 
-  # cat=Update Wizard/enable;     type=options[I checked it,I didn't (frontend label is visible)]; label= Did you checked the Update?: Please confirm, that you have checked the update. The frontend label will disappear.
+  # cat=Update Wizard/100;     type=options[I checked it,I didn't (frontend label is visible)]; label= Did you checked the Update?: Please confirm, that you have checked the update. The frontend label will disappear.
 checked_3.9.14 = I didn't (frontend label is visible)
-  # cat=Update Wizard/enable;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
+  # cat=Update Wizard/101;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
 updateWizard=0
-  # cat=Update Wizard/enable;     type=boolean; label= Update Wizard Enabling
+  # cat=Update Wizard/102;     type=boolean; label= Update Wizard Enabling
 updateWizardEnable = 0
-  # cat=Update Wizard/enable;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCurrIP]; label=Your current IP
+  # cat=Update Wizard/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCurrIP]; label=Your current IP
 currentIP = 0
-  # cat=Update Wizard/enable;     type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report. Example: 127.0.0.1, 127.0.0.2, 83.123.4.85
+  # cat=Update Wizard/100;     type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report. Example: 127.0.0.1, 127.0.0.2, 83.123.4.85
 updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
-  # cat=Update Wizard/others;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+  # cat=Update Wizard/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_05=0
