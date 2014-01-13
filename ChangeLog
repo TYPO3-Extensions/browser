@@ -1,3 +1,8 @@
+4.8.6
+  14-01-13
+  Bugfixing
+  * #54901: TYPO3 6.1: Unproper form of extension manager
+
 4.8.5
   13-12-21
   Features
