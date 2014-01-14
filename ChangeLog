@@ -1,6 +1,7 @@
 4.8.6
   14-01-13
   Bugfixing
+  * #i0044: numberFormat( ) without cObj->data
   * #i0043: $$ -> $
             Effected files:
             * pi1
@@ -8,7 +9,7 @@
               * class.tx_browser_pi1_template.php
               * class.tx_browser_pi1_map.php
             * lib
-              *class.tx_browser_typoscript.php  
+              * class.tx_browser_typoscript.php  
   * #54901: TYPO3 6.1: Unproper form of extension manager
             Effected files:
             * ext_conf_template.txt

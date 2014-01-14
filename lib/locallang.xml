@@ -11,7 +11,7 @@
       <label index="promptBrowserPhrase">Browser - TYPO3 without PHP</label>
       <label index="promptCategoryRelationError"><![CDATA[
         Category isn't proper! A category is proper, if one of the following rules does match:
-        <ol style="list-style:outside;">
+        <ol style="list-style:inside;">
           <li>
             A category has a relation to one marker (POI) at least but hasn't any relation to a path.
           </li>
@@ -29,7 +29,7 @@
       <label index="promptCheckUpdateHeader">Update wizard</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         You don't need the update wizard
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             if you are using the Browser the first time
           </li>
@@ -43,7 +43,7 @@
         <br />
         You can check with the update wizard, if your installation is affected.<br />
         <br />
-        <ol style="list-style:outside;">
+        <ol style="list-style:inside;">
           <li>
             Please enable the option <strong>Update Wizard Enabling [x]</strong>.
           </li>
@@ -80,11 +80,11 @@
               height="80" 
               alt="Die Netzmacher - Internet is trade" /></a>
         </div>
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             TYPO3-Browser website<br />
             <a href="http://typo3-browser.de/en"
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser - TYPO3 without PHP"
               title="Browser - TYPO3 without PHP"
               target="_blank">typo3-browser.de/en</a>
@@ -92,7 +92,7 @@
           <li>
             TYPO3-Browser forum<br />
             <a href="http://typo3-browser.de/forum/" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="TYPO3-Browser - Forum"
               title="TYPO3-Browser - Forum"
               target="_blank">typo3-browser.de/forum</a>
@@ -100,7 +100,7 @@
           <li>
             TYPO3-Browser developer<br />
             <a href="http://die-netzmacher.de/" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Die Netzmacher - Internet is trade"
               title="Die Netzmacher - Internet is trade"
               target="_blank">die-netzmacher.de</a>
@@ -155,7 +155,7 @@
         <p style="padding:0 0 1em 0;">
           You like to subsidise the TYPO3-Browser project?
           <a href="http://typo3-browser.de/en/sponsoring/"
-            style="text-decoration:underline;"
+            style="background:none;border:none;float:none;text-decoration:underline;"
             alt="Your logo with your URL. 120 x 90 pixel."
             title="Your logo with your URL. 120 x 90 pixel."
             target="_blank">
@@ -183,7 +183,7 @@
       <label index="promptGpxUpdate">OK: GPX date are updated.</label>
       <label index="promptMarkerRelationError"><![CDATA[
         Marker (POI) isn't proper! A marker (POI) is proper only if the following rule does match:
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             A marker (POI) must have relations to one category at least and to one path exactly.
           </li>
@@ -194,7 +194,7 @@
       ]]></label>
       <label index="promptPathRelationError"><![CDATA[
         Path isn't proper! A path is proper only if the following rule does match:
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             A path must have relations to one category exactly and to one marker (POI) at least.
           </li>
@@ -207,24 +207,24 @@
         <p style="padding:1em 0;">
           <strong>Details</strong>
         </p>
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li style="margin-left:2em;">
             <a href="http://typo3.org/extensions/repository/view/radialsearch"
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Radial Search (Umkreissuche)"
               title="Radial Search (Umkreissuche)"
               target="_blank">Radial Search on typo3.org</a>
           </li>
           <li style="margin-left:2em;">
             <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Radial Search Manual"
               title="Radial Search Manual"
               target="_blank">Radial Search Manual (PDF)</a>
           </li>
           <li style="margin-left:2em;">
             <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser Tutorial Search and Filter"
               title="Browser Tutorial Search and Filter"
               target="_blank">Browser Tutorial Search and Filter (PDF)</a>. Look for "Radial Search".
@@ -249,7 +249,7 @@
       <label index="promptBrowserPhrase">Browser - TYPO3 ohne PHP</label>
       <label index="promptCategoryRelationError"><![CDATA[
         Die Kategorie ist nicht in Ordnung. Eine Kategorie ist OK, wenn eine der folgenden Regeln zutrifft:
-        <ol style="list-style:outside;">
+        <ol style="list-style:inside;">
           <li>
             Eine Kategorie ist mit einem oder mehreren Markern (POI) verbunden, aber mit keinem Pfad.
           </li>
@@ -267,7 +267,7 @@
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         Du brauchst keinen Update-Test durchzuf&uuml;hren,
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             wenn Du den Browser zum ersten Mal installierst
           </li>
@@ -281,7 +281,7 @@
         <br />
         Mit dem Update-Assistenten kannst Du &uuml;berpr&uuml;fen, ob Deine Installation betroffen ist.<br />
         <br />
-        <ol style="list-style:outside;">
+        <ol style="list-style:inside;">
           <li>
             Bitte aktiviere die Option <strong>Update Wizard Enabling [x]</strong>.
           </li>
@@ -318,11 +318,11 @@
               height="80" 
               alt="Die Netzmacher - Internet ist Handwerk" /></a>
         </div>
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             TYPO3-Browser Homepage<br />
             <a href="http://typo3-browser.de/" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser - TYPO3 ohne PHP"
               title="Browser - TYPO3 ohne PHP"
               target="_blank">typo3-browser.de</a>
@@ -330,7 +330,7 @@
           <li>
             TYPO3-Browser Forum<br />
             <a href="http://typo3-browser.de/forum/" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser - TYPO3 ohne PHP: Forum"
               title="Browser - TYPO3 ohne PHP: Forum"
               target="_blank">typo3-browser.de/forum</a>
@@ -338,7 +338,7 @@
           <li>
             TYPO3-Browser Entwickler<br />
             <a href="http://die-netzmacher.de/" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Die Netzmacher - Internet ist Handwerk"
               title="Die Netzmacher - Internet ist Handwerk"
               target="_blank">die-netzmacher.de</a>
@@ -393,7 +393,7 @@
         <p style="padding:0 0 1em 0;">
           Du m&ouml;chtest das TYPO3-Browser-Projekt finanziell unterst&uuml;tzen?
           <a href="http://typo3-browser.de/sponsoring/" 
-            style="text-decoration:underline;"
+            style="background:none;border:none;float:none;text-decoration:underline;"
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
             title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
             target="_blank">
@@ -421,7 +421,7 @@
       <label index="promptGpxUpdate">OK: GPX-Daten wurden aktualisiert.</label>
       <label index="promptMarkerRelationError"><![CDATA[
         Der Marker (POI) ist nicht in Ordnung! Ein Marker (POI) ist nur OK, wenn die folgende Regel zutrifft:
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             Ein Marker (POI) muss mit mindestens einer Kategorie und genau einem Pfad verbunden sein.
           </li>
@@ -432,7 +432,7 @@
       ]]></label>
       <label index="promptPathRelationError"><![CDATA[
         Der Pfad ist nicht in Ordnung! Ein Pfad ist nur OK, wenn die folgende Regel zutrifft:
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li>
             Ein Pfad muss genau mit einer Kategorie und mindestens einem Marker (POI) verbunden sein.
           </li>
@@ -445,24 +445,24 @@
         <p style="padding:1em 0;">
           <strong>Details</strong>
         </p>
-        <ul style="list-style:outside;">
+        <ul style="list-style:inside;">
           <li style="margin-left:2em;">
             <a href="http://typo3.org/extensions/repository/view/radialsearch"
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Radial Search (Umkreissuche)"
               title="Radial Search (Umkreissuche)"
               target="_blank">Radial Search auf typo3.org</a>
           </li>
           <li style="margin-left:2em;">
             <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Radial Search Handbuch"
               title="Radial Search Handbuch"
               target="_blank">Radial Search Handbuch (PDF)</a>
           </li>
           <li style="margin-left:2em;">
             <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf" 
-              style="text-decoration:underline;"
+              style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser Tutorial Search and Filter"
               title="Browser Tutorial Search and Filter"
               target="_blank">Browser Tutorial Search and Filter (PDF)</a>. Suche nach "Radial Search".

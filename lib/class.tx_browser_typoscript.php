@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,7 +34,7 @@ require_once(PATH_tslib . 'class.tslib_pibase.php');
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 3.9.3
+* @version 4.8.6
 * @since 3.6.1
 */
 
@@ -73,21 +73,24 @@ class tx_browser_typoscript extends tslib_pibase
  * @param	string		$content: current content of TypoScript workflow
  * @param	array		$conf: current TypoScript configuration array
  * @return	string		formatted number
+ * @version 4.8.6
  * @since 3.6.2
- * @version 3.6.2
  */
   public function numberFormat($content = '', $conf = array())
   {
       // 13145, dwildt, 110217
     global $TSFE;
+      // #i0044, dwildt, 1-
     $local_cObj = $TSFE->cObj;
-
+      // #i0044, dwildt, 1+
+    $local_cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     if( ! $content )
     {
       $conf     = $conf['userFunc.'];
       $content  = $local_cObj->cObjGetSingle( $conf['number'], $conf['number.'] );
-var_dump( __METHOD__, __LINE__, $local_cObj->data, $conf['number.'], $content );
     }
+//var_dump( __METHOD__, __LINE__, $content, $local_cObj->data );
+//var_dump( __METHOD__, __LINE__, $content );
 
     return number_format($content, $conf['decimal'], $conf['dec_point'], $conf['thousands_sep']);
   }

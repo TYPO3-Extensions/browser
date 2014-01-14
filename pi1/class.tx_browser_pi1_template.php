@@ -2755,9 +2755,10 @@ class tx_browser_pi1_template
     $this->_elementsBoolSubstitute  = array();
       // #12723, mbless, 110310
 
-      // #44858 
-    $drsForFirstRowOnly = $this->pObj->boolFirstRow; 
-    $this->cObjDataAdd( $elements, $drsForFirstRowOnly );    
+      // #44858
+      // 140114, dwildt, 1-
+    //$drsForFirstRowOnly = $this->pObj->boolFirstRow; 
+    $this->cObjDataAdd( $elements );
 
       // LOOP elements
     foreach( ( array ) $elements as $key => $value )
