@@ -82,10 +82,11 @@ class tx_browser_typoscript extends tslib_pibase
     global $TSFE;
     $local_cObj = $TSFE->cObj;
 
-    if (!$content)
+    if( ! $content )
     {
       $conf     = $conf['userFunc.'];
       $content  = $local_cObj->cObjGetSingle( $conf['number'], $conf['number.'] );
+var_dump( __METHOD__, __LINE__, $local_cObj->data, $conf['number.'], $content );
     }
 
     return number_format($content, $conf['decimal'], $conf['dec_point'], $conf['thousands_sep']);

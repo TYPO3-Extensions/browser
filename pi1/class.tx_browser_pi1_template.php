@@ -2757,7 +2757,7 @@ class tx_browser_pi1_template
 
       // #44858 
     $drsForFirstRowOnly = $this->pObj->boolFirstRow; 
-    $this->cObjDataAdd( $elements, $$drsForFirstRowOnly );    
+    $this->cObjDataAdd( $elements, $drsForFirstRowOnly );    
 
       // LOOP elements
     foreach( ( array ) $elements as $key => $value )

@@ -448,7 +448,7 @@ class tx_browser_pi1_cal
     }
 
     // #i0036, 131114, dwildt, 1-
-    // if( ! $$bool_success )
+    // if( ! $bool_success )
     // #i0036, 131114, dwildt, 1+
     if( ! $bool_success )
     {
@@ -547,7 +547,7 @@ class tx_browser_pi1_cal
 
 
 
-    if( ! $$bool_success )
+    if( ! $bool_success )
     {
       if ($this->pObj->b_drs_cal)
       {
@@ -670,7 +670,7 @@ class tx_browser_pi1_cal
     $bool_success = $this->cal_frame_to_period( $arr_frame );
       // Get the period with all time units and set it up with rows
 
-    if( ! $$bool_success )
+    if( ! $bool_success )
     {
       if ($this->pObj->b_drs_cal)
       {

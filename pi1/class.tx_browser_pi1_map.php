@@ -2193,14 +2193,14 @@ class tx_browser_pi1_map
 
         // Unset some mapMarker elements, if they are empty
       $keysForCleanup = array( 'catIconMap', 'number', 'url' );
-      foreach( $keysForCleanup as $$keyForCleanup )
+      foreach( $keysForCleanup as $keyForCleanup )
       {
-        if( ! empty ( $mapMarker[ $$keyForCleanup ] ) )
+        if( ! empty ( $mapMarker[ $keyForCleanup ] ) )
         {
           continue;
         }
           // UNSET : mapMarker element is empty
-        unset( $mapMarker[ $$keyForCleanup ] );
+        unset( $mapMarker[ $keyForCleanup ] );
       }
         // Unset some mapMarker elements, if they are empty
 
