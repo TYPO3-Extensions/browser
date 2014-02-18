@@ -216,6 +216,8 @@ class tx_browser_pi1_cal
  */
   public function cal( $rows, $template )
   {
+$this->pObj->dev_var_dump( $rows );
+    
       ///////////////////////////////////////////////////////////////////////////////
       //
       // Set default values
