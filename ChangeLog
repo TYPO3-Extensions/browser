@@ -1,3 +1,8 @@
+4.8.7
+  14-02-18
+  Bugfixing
+  * #56088: Browser Calendar: Bug for dates over several days
+
 4.8.6
   14-01-13
   Bugfixing
