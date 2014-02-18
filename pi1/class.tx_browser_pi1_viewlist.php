@@ -314,6 +314,7 @@ class tx_browser_pi1_viewlist
     unset($arr_return);
 
       // #52486, 131005, dwildt, 1+
+$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateRadialsearch( $rows );    
     
     $this->pObj->rows = $rows;
