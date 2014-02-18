@@ -355,18 +355,19 @@ $this->pObj->dev_var_dump( $rows );
       {
         t3lib_div::devLog('[WARN/TEMPLATING/CAL/UI]: +Browser Calendar set ignore_empty_rows_rule to true!', $this->pObj->extKey, 2);
       }
-        // #38612, 120703, dwildt+
-      if( $this->pObj->conf['navigation.']['record_browser'] == 1 )
-      {
-        if ( $this->pObj->b_drs_warn )
-        {
-          $prompt = 'Record browser isn\'t supported from version 4.1.2';
-          t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 3);
-          $prompt = 'Rows must converted. PHP snippet must coded by the TYPO3-Browser-Team!';
-          t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 2);
-        }
-      }
-        // #38612, 120703, dwildt+
+          // 4028, dwildt, -
+//        // #38612, 120703, dwildt+
+//      if( $this->pObj->conf['navigation.']['record_browser'] == 1 )
+//      {
+//        if ( $this->pObj->b_drs_warn )
+//        {
+//          $prompt = 'Record browser isn\'t supported from version 4.1.2';
+//          t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 3);
+//          $prompt = 'Rows must converted. PHP snippet must coded by the TYPO3-Browser-Team!';
+//          t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 2);
+//        }
+//      }
+//        // #38612, 120703, dwildt+
     }
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
@@ -1763,6 +1764,8 @@ $this->pObj->dev_var_dump( $rows );
               . $this->sql_radialsearchFrom( )
               ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
+$this->pObj->dev_var_dump( $where );
+    
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
     if( $this->pObj->objFltr4x->get_selectedFilters( ) )
