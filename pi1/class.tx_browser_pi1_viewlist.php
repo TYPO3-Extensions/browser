@@ -333,6 +333,7 @@ class tx_browser_pi1_viewlist
       // Extension pi5: +Browser Calendar
 
       // Will executed in case, that the Browser is extended with the Browser Calendar user Interface
+$this->pObj->dev_var_dump( $rows );
     $arr_result   = $this->pObj->objCal->cal( $rows, $content );
     $bool_success = $arr_result['success'];
     if( $bool_success )
