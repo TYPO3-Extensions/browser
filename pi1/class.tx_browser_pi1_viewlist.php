@@ -337,9 +337,7 @@ class tx_browser_pi1_viewlist
     $bool_success = $arr_result['success'];
     if( $bool_success )
     {
-$this->pObj->dev_var_dump( $rows );
       $rows     = $arr_result['rows'];
-$this->pObj->dev_var_dump( $arr_result );
       $content  = $arr_result['template'];
       $this->pObj->objTemplate->ignore_empty_rows_rule = true;
       if ($this->pObj->b_drs_cal || $this->pObj->b_drs_templating)

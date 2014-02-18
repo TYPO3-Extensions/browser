@@ -1698,6 +1698,7 @@ class tx_browser_pi1_cal
   private function cal_frame_to_period( $arr_periods )
   {
     $rows   = $this->rows;
+$this->pObj->dev_var_dump( $rows );
 
       // Names of start and end field
     $begin  = $this->pObj->objFlexform->sheet_extend_cal_field_start;
@@ -1749,6 +1750,7 @@ class tx_browser_pi1_cal
       //
       // LOOP period items
 
+$this->pObj->dev_var_dump( $arr_periods );
     foreach( $arr_periods as $key_period => $period )
     {
       $bool_period_is_empty = true;
