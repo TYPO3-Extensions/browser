@@ -1764,25 +1764,30 @@ $this->pObj->dev_var_dump( $rows );
               . $this->sql_radialsearchFrom( )
               ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-$this->pObj->dev_var_dump( $where );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     if( $this->pObj->objFltr4x->get_selectedFilters( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     }
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     }
       // #52486, 131005, dwildt, 4+
     $where  = $where
             . $this->sql_radialsearchWhere( )
             . $this->sql_radialsearchHaving( )
             ;
+$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
 
     $groupBy  = null;
 
