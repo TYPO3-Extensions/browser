@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +27,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version  4.5.11
+* @version  4.8.7
 * @since    3.5.0
 *
 * @package    TYPO3
@@ -1183,13 +1183,16 @@ class tx_browser_pi1_javascript
  * addJssFilesJqueryPluginsT3BrowserCalendar( )
  *
  * @return	void
- * @version   4.5.10
+ * @version   4.8.7
  * @since     4.5.10
  */
   public function addJssFilesJqueryPluginsT3BrowserCalendar( )
   {
       // +Browser Calendar isn't loaded
-    if( ! $this->pObj->objCal->is_loaded )
+      // #56088, 140219, dwildt, 1-
+    //if( $this->pObj->objCal->is_loaded )
+      // #56088, 140219, dwildt, 1+
+    if( ! $this->pObj->objCal->getVarLoadJss( ) )
     {
       return;
     }

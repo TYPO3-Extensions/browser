@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.1.25
+* @version 4.8.7
 * @since 3.6.0
 */
 
@@ -60,8 +60,8 @@
  *              SECTION: Calendar Helper
  * 1196:     private function cal_colours( )
  * 1246:     private function cal_due_day( )
- * 1348:     private function cal_eval_flexform( )
- * 1420:     private function cal_eval_data( )
+ * 1348:     private function cal_requirementsFlexform( )
+ * 1420:     private function cal_requirementsData( )
  * 1541:     private function cal_frame( )
  * 1680:     private function cal_frame_to_period( $arr_periods )
  * 1836:     private function cal_group_check( )
@@ -124,6 +124,8 @@ class tx_browser_pi1_cal
   var $groupFilter   = null;
     // [boolean] Is the calender plugin loaded?
   var $is_loaded      = false;
+    // #56088 [boolean] Should loaded calender jss snippet?
+  private $loadJss = false;
     // [array] Array with default markers
   var $markerArray    = null;
     // [string] HTML class for odd columns (th, td)
@@ -134,6 +136,8 @@ class tx_browser_pi1_cal
   var $periods        = null;
     // [integer] Uid of the current record
   var $record_uid     = null;
+    // [boolean] true, if requirements are matched
+  private $requirements = null;
     // [array] Current rows;
   var $rows           = null;
     // [integer] Time unit of the current schedule in seconds
@@ -182,27 +186,13 @@ class tx_browser_pi1_cal
 
 
 
-
-
-
-
-
-
   /***********************************************
   *
   * Calendar
   *
   **********************************************/
 
-
-
-
-
-
-
-
-
-  /**
+/**
  * cal(): Returns a calendar (schedule)
  *        It will executed only:
  *        * in list views
@@ -234,112 +224,16 @@ $this->pObj->dev_var_dump( $rows );
 
 
 
-      /////////////////////////////////////////////////////////////////
-      //
-      // Get TypoScript configuration for the current view
-
-    $conf             = $this->pObj->conf;
-    $mode             = $this->pObj->piVar_mode;
-    $view             = $this->pObj->view;
-    $viewWiDot        = $view.'.';
-    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
-    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
-      // Get TypoScript configuration for the current view
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN current view isn't the list view
-
-    if( $this->pObj->view != 'list' )
+      // RETURN : Browser Calendar doesn't match the requirements
+    if( ! $this->cal_requirements( ) )
     {
       if ($this->pObj->b_drs_cal)
       {
-        t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Current view isn\'t the list view.', $this->pObj->extKey, 0);
+        $prompt = 'RETURN: Browser Calendar doesn\'t match the requirements.';
+        t3lib_div :: devLog( '[INFO/CAL/UI] ' .  $prompt, $this->pObj->extKey, 0 );
       }
     }
-      // RETURN current view isn't the list view
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN flexform doesn't contain any data
-
-    if( ! $this->cal_eval_flexform( ) )
-    {
-      if( $this->pObj->b_drs_cal )
-      {
-        t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 0);
-      }
-//$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
-      return $arr_return;
-    }
-//$this->pObj->dev_var_dump( $this->cal_eval_flexform( ) );
-      // RETURN flexform doesn't contain any data
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN flexform data aren't valid
-
-    if( ! $this->cal_eval_data( ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
-      }
-      return $arr_return;
-    }
-      // RETURN flexform data aren't valid
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // Upgrade the TypoScript with data of the tx_browser_pi5 plugin
-
-    if( ! $this->cal_typoscript( ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
-      }
-      return $arr_return;
-    }
-      // Upgrade the TypoScript with data of the tx_browser_pi5 plugin
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Upgrade vars
-
-    $conf             = $this->pObj->conf;
-    $mode             = $this->pObj->piVar_mode;
-    $view             = $this->pObj->view;
-    $viewWiDot        = $view.'.';
-    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
-    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
-      // Upgrade vars
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // Generate the schedule data (periods contains the rows)
-
-    if( ! $this->cal_data( ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
-      }
-      return $arr_return;
-    }
-      // Generate the schedule data (periods contains the rows)
+      // RETURN : Browser Calendar doesn't match the requirements
 
 
 
@@ -370,6 +264,7 @@ $this->pObj->dev_var_dump( $rows );
 
     $arr_return['success']  = true;
     $this->is_loaded        = true;
+    $this->loadJss          = true;
     return $arr_return;
       // RETURN success
   }
@@ -709,10 +604,125 @@ $this->pObj->dev_var_dump( $rows );
 
 
 
+  /***********************************************
+  *
+  * Calendar Requirements
+  *
+  **********************************************/
+
+/**
+ * cal_requirements( ) :  
+ *
+ * @param	array		$rows: Consolidated rows
+ * @param	array		$template: Current HTML template
+ * @return	boolean		
+ * @access      public
+ * @internal    #56088
+ * @version 4.8.7
+ * @since 4.8.7
+ */
+  public function cal_requirements( )
+  {
+    if( $this->requirements !== null )
+    {
+      return $this->requirements;
+    }
+    
+    $this->cal_initVars( );
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN current view isn't the list view
+
+    if( $this->pObj->view != 'list' )
+    {
+      if ($this->pObj->b_drs_cal)
+      {
+        t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Current view isn\'t the list view.', $this->pObj->extKey, 0);
+      }
+      $this->requirements = false;
+      return $this->requirements;
+    }
+      // RETURN current view isn't the list view
 
 
 
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN flexform doesn't contain any data
 
+    if( ! $this->cal_requirementsFlexform( ) )
+    {
+      if( $this->pObj->b_drs_cal )
+      {
+        t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 0);
+      }
+//$this->pObj->dev_var_dump( $this->cal_requirementsFlexform( ) );
+      $this->requirements = false;
+      return $this->requirements;
+    }
+//$this->pObj->dev_var_dump( $this->cal_requirementsFlexform( ) );
+      // RETURN flexform doesn't contain any data
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN flexform data aren't valid
+
+    if( ! $this->cal_requirementsData( ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
+      }
+      $this->requirements = false;
+      return $this->requirements;
+    }
+      // RETURN flexform data aren't valid
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Upgrade the TypoScript with data of the tx_browser_pi5 plugin
+
+    if( ! $this->cal_typoscript( ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
+      }
+      $this->requirements = false;
+      return $this->requirements;
+    }
+      // Upgrade the TypoScript with data of the tx_browser_pi5 plugin
+
+
+
+      // Update vars
+    $this->cal_initVars( );
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Generate the schedule data (periods contains the rows)
+
+    if( ! $this->cal_data( ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
+      }
+      $this->requirements = false;
+      return $this->requirements;
+    }
+      // Generate the schedule data (periods contains the rows)
+
+    $this->requirements = true;
+    return $this->requirements;
+  }
 
 
 
@@ -722,15 +732,7 @@ $this->pObj->dev_var_dump( $rows );
   *
   **********************************************/
 
-
-
-
-
-
-
-
-
-  /**
+/**
  * cal_template(): Returns the HTML template
  *
  * @return	string		$template   The template
@@ -1356,14 +1358,14 @@ $this->pObj->dev_var_dump( $rows );
 
 
   /**
- * cal_eval_flexform(): Checks, if the flexform sheet 'extend' contains any data.
+ * cal_requirementsFlexform(): Checks, if the flexform sheet 'extend' contains any data.
  *                      Set some global vars. See code at the bottom.
  *
  * @return	boolean		Returns false in case of no data, true in case of data
  * @version 4.0.0
  * @since 4.0.0
  */
-  private function cal_eval_flexform( )
+  private function cal_requirementsFlexform( )
   {
       // RETURN field cal_ui is false
     if( ! $this->pObj->objFlexform->sheet_extend_cal_ui )
@@ -1431,13 +1433,13 @@ $this->pObj->dev_var_dump( $rows );
 
 
   /**
- * cal_eval_data():  Checks, if the data of the flexform sheet 'extend' are valid.
+ * cal_requirementsData():  Checks, if the data of the flexform sheet 'extend' are valid.
  *
  * @return	boolean		Returns false in case of invalid, true in case of valid
  * @version 4.0.0
  * @since 4.0.0
  */
-  private function cal_eval_data( )
+  private function cal_requirementsData( )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
@@ -1934,6 +1936,54 @@ $this->pObj->dev_var_dump( $arr_periods );
       // SUCCESS group is configured, CAL_DATE_GROUP subparts are part of the HTML template
   }
 
+/**
+ * cal_initVars( )  : 
+ *
+ * @return      void
+ * @access      private
+ * @internal    #56088
+ * @version 4.8.7
+ * @since 4.8.7
+ */
+  private function cal_initVars( )
+  {
+    $this->cal_initVarsConfView( );
+    $this->cal_initVarsSinglePid( );
+  }
+
+/**
+ * cal_initVarsConfView( )  : Set TypoScript configuration for the current view
+ *
+ * @return      void
+ * @access      private
+ * @internal    #56088
+ * @version 4.8.7
+ * @since 4.8.7
+ */
+  private function cal_initVarsConfView( )
+  {
+    $conf             = $this->pObj->conf;
+    $mode             = $this->pObj->piVar_mode;
+    $view             = $this->pObj->view;
+    $viewWiDot        = $view.'.';
+    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
+  }
+
+/**
+ * cal_initVarsSinglePid( )  : 
+ *
+ * @param	array		$rows: Consolidated rows
+ * @param	array		$template: Current HTML template
+ * @return      void
+ * @access      private
+ * @internal    #56088
+ * @version 4.8.7
+ * @since 4.8.7
+ */
+  private function cal_initVarsSinglePid( )
+  {
+    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
+  }
 
 
 
@@ -2007,7 +2057,9 @@ $this->pObj->dev_var_dump( $arr_periods );
     //$conf_pi5_before  = $this->pObj->conf['flexform.']['pi5.'];
 
       // Move flexform values from XML to an php array
-    $arr_pi_flexform = t3lib_div::xml2array( $xml_pi_flexform, $NSprefix ='' , $reportDocTag = false );
+    $NSprefix         = '';
+    $reportDocTag     = false;
+    $arr_pi_flexform  = t3lib_div::xml2array( $xml_pi_flexform, $NSprefix, $reportDocTag );
 
     $modeWiDot  = $this->pObj->piVar_mode . '.';
     $viewWiDot  = $this->pObj->view . '.';
@@ -2056,28 +2108,11 @@ $this->pObj->dev_var_dump( $arr_periods );
 
 
 
-
-
-
-
-
-
-
-
   /***********************************************
   *
   * Filter
   *
   **********************************************/
-
-
-
-
-
-
-
-
-
 
   /**
  * area_init: Check configuration and init class var arr_area
@@ -2822,24 +2857,33 @@ $this->pObj->dev_var_dump( $arr_periods );
 
 
 
+  /***********************************************
+  *
+  * Filter
+  *
+  **********************************************/
 
-
-
-
-
-
+/**
+ * getVarLoadJss( ) : Returns the global $loadJss. It is true, if a javascript snippet should loaded with methods for the calender
+ *
+ * @access  public
+ * @internal  #56088
+ * @return	boolan      $loadJss  : Returns the global $loadJss
+ * @version 4.8.7
+ * @since 4.8.7
+ */
+  public function getVarLoadJss()
+  {
+    return $this->loadJss;
+  }
+  
+  
+  
   /***********************************************
   *
   * Helper
   *
   **********************************************/
-
-
-
-
-
-
-
 
   /**
  * zz_strtotime(): Upgrade rows for a day's schedule
