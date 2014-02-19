@@ -226,7 +226,7 @@ class tx_browser_pi1_cal
 
 
       // RETURN : Browser Calendar doesn't match the requirements
-    if( ! $this->cal_requirements( ) )
+    if( ! $this->cal_requirements( $rows ) )
     {
       if ($this->pObj->b_drs_cal)
       {
@@ -616,15 +616,19 @@ class tx_browser_pi1_cal
  * cal_requirements( ) :  
  *
  * @param	array		$rows: Consolidated rows
- * @param	array		$template: Current HTML template
  * @return	boolean		
  * @access      private
  * @internal    #56088
  * @version 4.8.7
  * @since 4.8.7
  */
-  private function cal_requirements( )
+  private function cal_requirements( $rows = null )
   {
+    if( $rows === null )
+    {
+      $prompt = '$rows isn\'t any array, it is null. This is wrong!';
+      die( $prompt );
+    }
     if( $this->requirements !== null )
     {
 //$this->pObj->dev_var_dump( $this->requirements );
@@ -794,7 +798,7 @@ class tx_browser_pi1_cal
 //    $template         = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $subPrt_listView, true);
       // #44295, 130103, dwildt, 1+
     $template  = $this->pObj->cObj->substituteMarkerArray($template, $this->markerArray);
-$this->pObj->dev_var_dump( $this->markerArray, $template );
+//$this->pObj->dev_var_dump( $this->markerArray, $template );
 
     $arr_return['template'] = $template;
     $arr_return['success']  = true;
