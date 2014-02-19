@@ -236,6 +236,25 @@ class tx_browser_pi1_cal
     }
       // RETURN : Browser Calendar doesn't match the requirements
 
+    
+      // Update vars
+    $this->cal_initVars( );
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Generate the schedule data (periods contains the rows)
+
+    if( ! $this->cal_data( ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
+      }
+      return $arr_return;
+    }
+      // Generate the schedule data (periods contains the rows)
+
+
 
 
       ///////////////////////////////////////////////////////////////////////////////
@@ -626,9 +645,11 @@ class tx_browser_pi1_cal
   {
     if( $rows === null )
     {
-      $prompt = '$rows isn\'t any array, it is null. This is wrong!';
+      $prompt = 'Oops! $rows isn\'t any array, it is null. This is wrong!<br />
+        Method: ' . __METHOD__ . ' #' . __LINE__;
       die( $prompt );
     }
+    
     if( $this->requirements !== null )
     {
 //$this->pObj->dev_var_dump( $this->requirements );
@@ -710,27 +731,6 @@ class tx_browser_pi1_cal
       // Upgrade the TypoScript with data of the tx_browser_pi5 plugin
 
 
-
-      // Update vars
-    $this->cal_initVars( );
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // Generate the schedule data (periods contains the rows)
-
-    if( ! $this->cal_data( ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
-      }
-      $this->requirements = false;
-//$this->pObj->dev_var_dump( $this->requirements );
-      return $this->requirements;
-    }
-      // Generate the schedule data (periods contains the rows)
 
     $this->requirements = true;
 //$this->pObj->dev_var_dump( $this->requirements );
