@@ -697,17 +697,22 @@ class tx_browser_pi1_filter_4x {
   {
     $str_andWhere = null;
 
-      // #46776, 130329, dwildt, +
-    switch( $this->pObj->objCal->is_loaded )
+      // #56088, 140219, dwildt, 2-
+//      // #46776, 130329, dwildt, +
+//    switch( $this->pObj->objCal->is_loaded )
+      // #56088, 140219, dwildt, 1+
+    switch( $this->pObj->objCal->getVarRequirements( ) )
     {
       case( true ):
 $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
           // +Browser Calendar is loaded
         $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
 $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
           // +Browser Calendar isn't loaded
         $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField );
         break;
@@ -1003,12 +1008,14 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
     {
       case( true ):
 $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
           // +Browser Calendar is loaded
         $str_andWhere = $this->init_andWhereFilter_localTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
 $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
+$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
           // +Browser Calendar isn't loaded
         $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
         break;
