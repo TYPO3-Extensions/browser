@@ -270,7 +270,7 @@ class tx_browser_pi1_viewlist
       // Set rows
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
 
       // DRS
     if( $this->pObj->b_drs_devTodo )
@@ -281,14 +281,14 @@ $this->pObj->dev_var_dump( $rows );
       // DRS
 
       // Consolidate localisation
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateLL( $rows );
       // Consolidate children
     $rows = $this->rows_consolidateChildren( $rows );
     $this->pObj->rows = $rows;
 
       // Implement the hook rows_filter_values
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $this->hook_afterConsolidatetRows( );
     $rows = $this->pObj->rows;
 
@@ -300,7 +300,7 @@ $this->pObj->dev_var_dump( $rows );
     }
 
       // Ordering the children rows
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
     $this->pObj->rows = $rows;
 
@@ -313,13 +313,13 @@ $this->pObj->dev_var_dump( $rows );
       // DRS - :TODO:
 
       // Delete fields, which were added whily runtime
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
     unset($arr_return);
 
       // #52486, 131005, dwildt, 1+
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $rows = $this->rows_consolidateRadialsearch( $rows );    
     
     $this->pObj->rows = $rows;
