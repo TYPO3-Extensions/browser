@@ -339,7 +339,7 @@ $this->pObj->dev_var_dump( $rows );
       // Extension pi5: +Browser Calendar
 
       // Will executed in case, that the Browser is extended with the Browser Calendar user Interface
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $arr_result   = $this->pObj->objCal->cal( $rows, $content );
     $bool_success = $arr_result['success'];
     if( $bool_success )
@@ -1764,30 +1764,24 @@ $this->pObj->dev_var_dump( $rows );
               . $this->sql_radialsearchFrom( )
               ;
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     if( $this->pObj->objFltr4x->get_selectedFilters( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     }
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
     }
       // #52486, 131005, dwildt, 4+
     $where  = $where
             . $this->sql_radialsearchWhere( )
             . $this->sql_radialsearchHaving( )
             ;
-$this->pObj->dev_var_dump( str_replace( '\'', '"', $where ) );
 
     $groupBy  = null;
 
