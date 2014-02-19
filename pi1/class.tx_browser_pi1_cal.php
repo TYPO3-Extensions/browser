@@ -647,7 +647,8 @@ class tx_browser_pi1_cal
     {
       $prompt = 'Oops! $rows isn\'t any array, it is null. This is wrong!<br />
         Method: ' . __METHOD__ . ' #' . __LINE__;
-      die( $prompt );
+//      die( $prompt );
+$this->pObj->dev_var_dump( $this->requirements );
     }
     
     if( $this->requirements !== null )
