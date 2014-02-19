@@ -616,13 +616,14 @@ $this->pObj->dev_var_dump( $rows );
  * @param	array		$rows: Consolidated rows
  * @param	array		$template: Current HTML template
  * @return	boolean		
- * @access      public
+ * @access      private
  * @internal    #56088
  * @version 4.8.7
  * @since 4.8.7
  */
-  public function cal_requirements( )
+  private function cal_requirements( )
   {
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
     if( $this->requirements !== null )
     {
       return $this->requirements;
@@ -641,6 +642,7 @@ $this->pObj->dev_var_dump( $rows );
         t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Current view isn\'t the list view.', $this->pObj->extKey, 0);
       }
       $this->requirements = false;
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
       return $this->requirements;
     }
       // RETURN current view isn't the list view
@@ -658,6 +660,7 @@ $this->pObj->dev_var_dump( $rows );
         t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 0);
       }
 //$this->pObj->dev_var_dump( $this->cal_requirementsFlexform( ) );
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
       $this->requirements = false;
       return $this->requirements;
     }
@@ -676,6 +679,7 @@ $this->pObj->dev_var_dump( $rows );
       {
         t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
       }
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
       $this->requirements = false;
       return $this->requirements;
     }
@@ -693,6 +697,7 @@ $this->pObj->dev_var_dump( $rows );
       {
         t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
       }
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
       $this->requirements = false;
       return $this->requirements;
     }
@@ -716,11 +721,13 @@ $this->pObj->dev_var_dump( $rows );
         t3lib_div :: devLog('[WARN/CAL/UI] RETURN: Browser isn\'t extended with the Browser Calendar User Interface.', $this->pObj->extKey, 2);
       }
       $this->requirements = false;
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
       return $this->requirements;
     }
       // Generate the schedule data (periods contains the rows)
 
     $this->requirements = true;
+$this->pObj->dev_var_dump( 'cal_requirements( )' );
     return $this->requirements;
   }
 
