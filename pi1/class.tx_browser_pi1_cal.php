@@ -226,7 +226,7 @@ class tx_browser_pi1_cal
 
 
       // RETURN : Browser Calendar doesn't match the requirements
-    if( ! $this->cal_requirements( $rows ) )
+    if( ! $this->cal_requirements( ) )
     {
       if ($this->pObj->b_drs_cal)
       {
@@ -634,22 +634,14 @@ class tx_browser_pi1_cal
 /**
  * cal_requirements( ) :  
  *
- * @param	array		$rows: Consolidated rows
  * @return	boolean		
  * @access      private
  * @internal    #56088
  * @version 4.8.7
  * @since 4.8.7
  */
-  private function cal_requirements( $rows = null )
+  private function cal_requirements( )
   {
-    if( $rows === null )
-    {
-      $prompt = 'Oops! $rows isn\'t any array, it is null. This is wrong!<br />
-        Method: ' . __METHOD__ . ' #' . __LINE__;
-//      die( $prompt );
-$this->pObj->dev_var_dump( $this->requirements );
-    }
     
     if( $this->requirements !== null )
     {
@@ -1716,7 +1708,7 @@ $this->pObj->dev_var_dump( $this->requirements );
   private function cal_frame_to_period( $arr_periods )
   {
     $rows   = $this->rows;
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
 
       // Names of start and end field
     $begin  = $this->pObj->objFlexform->sheet_extend_cal_field_start;
@@ -1768,7 +1760,7 @@ $this->pObj->dev_var_dump( $rows );
       //
       // LOOP period items
 
-$this->pObj->dev_var_dump( $arr_periods );
+//$this->pObj->dev_var_dump( $arr_periods );
     foreach( $arr_periods as $key_period => $period )
     {
       $bool_period_is_empty = true;
