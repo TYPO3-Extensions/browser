@@ -2859,7 +2859,7 @@ $this->pObj->dev_var_dump( $arr_periods );
 
   /***********************************************
   *
-  * Filter
+  * Get variables
   *
   **********************************************/
 
@@ -2875,6 +2875,20 @@ $this->pObj->dev_var_dump( $arr_periods );
   public function getVarLoadJss()
   {
     return $this->loadJss;
+  }
+
+/**
+ * getVarRequirements( ) : Returns the global $requirments. It is true, if requirements matched.
+ *
+ * @access  public
+ * @internal  #56088
+ * @return	boolan      
+ * @version 4.8.7
+ * @since 4.8.7
+ */
+  public function getVarRequirements()
+  {
+    return $this->cal_requirements( );
   }
   
   

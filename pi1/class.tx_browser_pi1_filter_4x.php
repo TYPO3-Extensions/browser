@@ -995,8 +995,11 @@ $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
   {
     $str_andWhere = null;
 
-      // #46776, 130329, dwildt, +
-    switch( $this->pObj->objCal->is_loaded )
+      // #56088, 140219, dwildt, 2-
+//      // #46776, 130329, dwildt, +
+//    switch( $this->pObj->objCal->is_loaded )
+      // #56088, 140219, dwildt, 1+
+    switch( $this->pObj->objCal->getVarRequirements( ) )
     {
       case( true ):
 $this->pObj->dev_var_dump( $this->pObj->objCal->is_loaded );
