@@ -122,8 +122,9 @@ class tx_browser_pi1_cal
   var $due_day_error  = null;
     // [array] Array for the group filter: table.field, value
   var $groupFilter   = null;
-    // [boolean] Is the calender plugin loaded?
-  var $is_loaded      = false;
+    // #56088, 140219, dwildt, 2-
+//    // [boolean] Is the calender plugin loaded?
+//  var $is_loaded      = false;
     // #56088 [boolean] Should loaded calender jss snippet?
   private $loadJss = false;
     // [array] Array with default markers
@@ -263,7 +264,8 @@ $this->pObj->dev_var_dump( $rows );
     $arr_return['template'] = $template;
 
     $arr_return['success']  = true;
-    $this->is_loaded        = true;
+      // #56088, 140219, dwildt, 1-
+    //$this->is_loaded        = true;
     $this->loadJss          = true;
     return $arr_return;
       // RETURN success
