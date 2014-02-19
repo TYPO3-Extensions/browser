@@ -873,7 +873,9 @@ class tx_browser_pi1_cal
       $counter_th = 0 + 1;
       $max_th     = count( $arr_conf_groups ) - 1 + 1;
 
-      foreach( $arr_conf_groups as $key_group => $arr_group)
+        // 140219, dwildt, 1-
+//      foreach( $arr_conf_groups as $key_group => $arr_group)
+      foreach( array_keys( $arr_conf_groups) as $key_group )
       {
         switch(true)
         {
@@ -902,6 +904,8 @@ class tx_browser_pi1_cal
       $str_caldategroup = implode( null, $arr_caldategroup );
       $listHead         = $this->pObj->cObj->substituteSubpart($listHead, '###CAL_DATE_GROUP###', $str_caldategroup, true);
     }
+      // 140219, dwildt, 1+
+    unset( $max_th );
     $counter_th = 0;
     $markerArray['###TH_FIRST_LAST###']   = 'first';
     $markerArray['###TH_EVEN_OR_ODD###']  = 0%2 ? $this->oddClassColumns : null;
@@ -1012,7 +1016,10 @@ class tx_browser_pi1_cal
         $counter_td = 0 + 1;
         $max_td     = count( $arr_conf_groups ) - 1 + 1;
 
-        foreach( $arr_conf_groups as $key_conf_group => $arr_conf_group)
+          // 140219, dwildt, 1-
+        //foreach( $arr_conf_groups as $key_conf_group => $arr_conf_group)
+          // 140219, dwildt, 1+
+        foreach( array_keys( $arr_conf_groups ) as $key_conf_group )
         {
           $markerArray['###TD_COUNTER###']  = $counter_td;
 
@@ -1048,6 +1055,8 @@ class tx_browser_pi1_cal
           $arr_group[$key_conf_group]  = $this->pObj->cObj->substituteMarkerArray( $arr_group[$key_conf_group], $markerArray );
           $counter_td++;
         }
+          // 140219, dwildt, 1+
+        unset( $max_td );        
         $counter_td = 0;
         $markerArray['###TD_COUNTER###']      = 0;
         $markerArray['###TD_FIRST_LAST###']   = 'first';
@@ -1064,6 +1073,9 @@ class tx_browser_pi1_cal
         // Group
       $counter_tr++;
     }
+      // 140219, dwildt, 1+
+    unset( $max_tr );
+    
       // LOOP periods
 
 
@@ -1237,7 +1249,10 @@ class tx_browser_pi1_cal
 
     $conf_colours = $conf_flexform_pi5[$sheet . '.'][$field . '.'];
 
-    foreach( $conf_colours as $key_colour => $value_colour)
+      // 140219, dwildt, 1-
+//    foreach( $conf_colours as $key_colour => $value_colour)
+      // 140219, dwildt, 1+
+    foreach( array_keys( $conf_colours ) as $key_colour )
     {
         // Take keys with a dot (i.e. 10.) only
       if( $key_colour === (int) rtrim( $key_colour, '.' ) )
@@ -1638,7 +1653,8 @@ class tx_browser_pi1_cal
       // Begin is greater than end: swap them
     if ( $min_begin > $min_end)
     {
-      $tmp        = $min_begin;
+        // 140219, dwildt, 1-
+//      $tmp        = $min_begin;
       $min_begin  = $min_end;
       $min_end    = $min_begin;
     }
@@ -1730,7 +1746,10 @@ class tx_browser_pi1_cal
       // Default row with emty values
     $first_key = key( $rows );
     $first_row = $rows[$first_key];
-    foreach ( $first_row as $key => $value)
+      // 140219, dwildt, 1-
+//    foreach ( $first_row as $key => $value)
+      // 140219, dwildt, 1+
+    foreach ( array_keys( $first_row ) as $key )
     {
       $empty_row[$key] = null;
     }
@@ -2210,7 +2229,10 @@ class tx_browser_pi1_cal
  */
   function area_interval($arr_ts, $arr_values, $tableField)
   {
-    list ($table, $field) = explode('.', $tableField);
+    $arr_return = array( );
+    
+      // 140219, dwildt, 1-
+//    list ($table, $field) = explode('.', $tableField);
 
       // Get an auto generated ts configuration array
     $arr_ts = $this->area_set_tsPeriod($arr_ts, $tableField);
@@ -2239,8 +2261,10 @@ class tx_browser_pi1_cal
  */
   function area_strings($arr_ts, $arr_values, $tableField)
   {
+    $arr_return = array( );
 
-    list ($table, $field) = explode('.', $tableField);
+      // 140219, dwildt, 1-
+//    list ($table, $field) = explode('.', $tableField);
 
 
 
@@ -2845,7 +2869,8 @@ class tx_browser_pi1_cal
     $view = $this->pObj->view;
 
     $viewWiDot = $view . '.';
-    $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
+    // 140219, dwildt, 1-
+    //$conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
       // Prepaire TypoScript
 
 
@@ -2916,9 +2941,11 @@ class tx_browser_pi1_cal
  */
   public function zz_strtotime( $bool_strtotime, $strtotime )
   {
-    $arr_return['result']   = $strtotime;
-    $arr_return['ISO_8601'] = null;
-    $arr_return['error']    = true;
+    $arr_return = array(
+      'result'   => $strtotime,
+      'ISO_8601' => null,
+      'error'    => true
+    );
 
     if( ! $bool_strtotime )
     {
