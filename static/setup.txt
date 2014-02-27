@@ -378,7 +378,7 @@ plugin.tx_browser_pi1 {
           relations = {$plugin.tx_browser_pi1.map.debugging.route.relations}
         }
       }
-        // [STRING] disabled,Map,Map +Routes 
+        // [STRING] disabled,Map,Map +Routes
       enabled  = {$plugin.tx_browser_pi1.map.controlling.enabled}
         // [STRING] GoogleMaps or Open Street Map
       provider  = {$plugin.tx_browser_pi1.map.controlling.provider}
@@ -679,7 +679,7 @@ plugin.tx_browser_pi1 {
             y = 0
           }
             // marker, path
-          fields = 
+          fields =
           fields {
               // category, categoryIcon, categoryOffsetX, categoryOffsetY. #47631
             marker =
@@ -711,13 +711,13 @@ plugin.tx_browser_pi1 {
           form_input {
             value = <label for="###CAT_WO_SPC###"###CLASS###><input id="###CAT_WO_SPC###" class="{$plugin.tx_browser_pi1.map.html.form.input.class}" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
           }
-            // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
+            // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING
           orderBy = SORT_STRING
         }
           // mode, dynamicMarker
         centerCoordinates =
         centerCoordinates {
-            // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
+            // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript
           mode          = auto
             // [STRING] marker for the center in the HTML code. Example: oxMapConfigCenter
           dynamicMarker = oxMapConfigCenter
@@ -843,7 +843,7 @@ plugin.tx_browser_pi1 {
               lineWidth     = {$plugin.tx_browser_pi1.map.path.table.path.lineWidth}
             }
               // title
-            pathCategory = 
+            pathCategory =
             pathCategory {
               title = {$plugin.tx_browser_pi1.map.path.table.pathCategory.title}
             }
@@ -862,7 +862,7 @@ plugin.tx_browser_pi1 {
           // mode, dynamicMarker, max
         zoomLevel =
         zoomLevel {
-            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel 
+            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel
           mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}
             // [STRING] marker for the center in the HTML code. Example: oxMapConfigStartLevel
           dynamicMarker = oxMapConfigStartLevel
@@ -877,7 +877,7 @@ plugin.tx_browser_pi1 {
         addToCData =
         addToCData {
             // mapLinkToSingle
-          system = 
+          system =
           system {
               // marker, path
             mapLinkToSingle = COA
@@ -1214,7 +1214,7 @@ plugin.tx_browser_pi1 {
   )
               }
             }
-              // map_css, map_html, map_jss 
+              // map_css, map_html, map_jss
             dynamic =
             dynamic {
                 // CSS properties
@@ -1888,17 +1888,17 @@ plugin.tx_browser_pi1 {
         current < .icons
       }
       enable {
-          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_LISTVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_LISTVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case!
         pivars_for_listview = 0
         pivars_for_listview {
             // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
-          csvDontRenderPiVars = 
+          csvDontRenderPiVars =
         }
-          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_SINGLEVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_SINGLEVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case!
         pivars_for_singleview = 0
         pivars_for_singleview {
             // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
-          csvDontRenderPiVars = 
+          csvDontRenderPiVars =
         }
       }
       special {
@@ -2413,9 +2413,11 @@ plugin.tx_browser_pi1 {
         nice_piVar =
           // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
         count_hits = 1
+          // [String] OR || AND: OR (default)
+        modeAndOr = OR
           // [Boolean] Should be added a default item?
         first_item = 1
-        first_item { 
+        first_item {
             // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
           display_wo_items = 1
             // Wrap the first filter item
@@ -2582,7 +2584,8 @@ plugin.tx_browser_pi1 {
         count_hits = 1
           // [Boolean] Is a selecting obligatory?
         required = 0
-          // [String] Wrap the object
+          // [String] OR || AND: OR (default)
+        modeAndOr = OR
           // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
         ajax_onchange = 1
         wrap (
@@ -2730,6 +2733,8 @@ plugin.tx_browser_pi1 {
         count_hits = 1
           // [Boolean] Is a selecting obligatory?
         required = 1
+          // [String] OR || AND: OR (default)
+        modeAndOr = OR
           // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
         ajax_onchange = 1
           // [String] Wrap the object
@@ -2861,7 +2866,7 @@ plugin.tx_browser_pi1 {
       radialsearch = RADIALSEARCH
       radialsearch {
           // [Array] constanteditor
-        conf = 
+        conf =
         conf {
             // [Array] lat, lon, radius, sword
           constanteditor =
@@ -2905,6 +2910,8 @@ plugin.tx_browser_pi1 {
         nice_piVar =
           // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
         count_hits = 1
+          // [String] OR || AND: OR (default)
+        modeAndOr = OR
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
@@ -2939,7 +2946,7 @@ plugin.tx_browser_pi1 {
         multiple  = 1
         multiple {
             // [String] HTML code for multiple
-          selected = multiple="multiple"
+          selected  = multiple="multiple"
         }
           // [Integer] How many items should the select box display in the visible area?
         size = 1
@@ -3375,7 +3382,7 @@ plugin.tx_browser_pi1 {
           30 = TEXT
           30 {
             if {
-              value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}' 
+              value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
               equals  = 'click'
             }
             value = In detail &raquo;
@@ -3399,7 +3406,7 @@ plugin.tx_browser_pi1 {
             10 = TEXT
             10 {
               if {
-                value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}' 
+                value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
                 equals  = 'click'
               }
               value = In detail &raquo;
@@ -3446,7 +3453,7 @@ plugin.tx_browser_pi1 {
                 data = register:linkedIcon
                 wrap (
                   <div class="csc-uploads-thumbnail csc-uploads-thumbnail-first">|</div>
-                  |*| 
+                  |*|
                   <div class="csc-uploads-thumbnail csc-uploads-thumbnail-even">|</div>
                   ||
                   <div class="csc-uploads-thumbnail">|</div>
@@ -3660,7 +3667,7 @@ plugin.tx_browser_pi1 {
   }
 }
   // plugin.tx_browser_pi1: cObjDataFieldWrapper
- 
+
 
 
   ///////////////////////////////////////////////////////////////
@@ -3875,7 +3882,7 @@ plugin.tx_browser_pi1 {
       }
     }
       // #43741, 121207, dwildt
-    javascript = 
+    javascript =
     javascript {
         // [Boolean] 0: don't embed the jquery ui library (default), 1: embed it.
       jquery_ui = 0

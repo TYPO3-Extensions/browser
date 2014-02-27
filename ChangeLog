@@ -1,7 +1,11 @@
 4.8.7
-  14-02-18
-  Bugfixing
-  * #56088: Browser Calendar: Bug for dates over several days
+  14-02-26
+  Features
+ 	* #56339: Filter: "combined" values - not realised
+	* #56332: Frontend checkboxes for backend selectbox
+	* #56329: AND option for filter
+            * New TypoScript property filter.table.field.modeAndOr
+            * Option isn't tested in localised context
 
 4.8.6
   14-01-13
@@ -14,7 +18,7 @@
               * class.tx_browser_pi1_template.php
               * class.tx_browser_pi1_map.php
             * lib
-              * class.tx_browser_typoscript.php  
+              * class.tx_browser_typoscript.php
   * #54901: TYPO3 6.1: Unproper form of extension manager
             Effected files:
             * ext_conf_template.txt
@@ -42,7 +46,7 @@
   * #i0039: BrowserMaps: Limit for children of a path is increased from 99 to 999
   * #i0038: OpenStreetMap_0.0.2.js > OpenStreetMap_1.3.10.js
             oxMap.Render_1.2.01.js > oxMap.Render_1.3.07.js
-  Bug 
+  Bug
   * #54595: Unwanted error message in case of no data for a map
 
 4.8.4
@@ -61,8 +65,8 @@
   Improvement
   13-11-14
   * #i0036: area with intergers got an andWhere with an unix_timestamp
-  * #i0035: Conflict radial search and multiple filter 
-  * #i0034: Improved error prompt for filter 
+  * #i0035: Conflict radial search and multiple filter
+  * #i0034: Improved error prompt for filter
 
 4.8.1
   13-11-08
@@ -160,7 +164,7 @@
   13-09-12
   Improvement
   * #i0030: Update the tutorial overview: the pi3-plugin
-  * #52139: Browser Tutorial SEO - Search Engine Optimization           ( new ) 
+  * #52139: Browser Tutorial SEO - Search Engine Optimization           ( new )
   * #i0029: Views array will cleaned up proper
             Example:
             * single.301. ... will removed, if single.301 is not configured
@@ -267,7 +271,7 @@
               * class.tx_browser_pi1_sql_functions_3x.php line 1090: trim() expects parameter 1 to be string, array given
               * class.tx_browser_pi1_views.php line 894: in_array() expects parameter 2 to be array, null given
               * class.tx_browser_pi1_views.php line 943: in_array() expects parameter 2 to be array, null given
-              * class.tx_browser_pi1_views.php line 998: in_array() expects parameter 2 to be array, null given   
+              * class.tx_browser_pi1_views.php line 998: in_array() expects parameter 2 to be array, null given
   * #50195: mysql_real_escape_string: Bug in case of no MySQL connection
   * #i0022: jQuery UI labels in the flexform
             Effected files:
@@ -276,7 +280,7 @@
 
 4.5.10
   13-07-16
-  Feature 
+  Feature
   * #50069: Placement controlling of JSS scripts
             Effected files:
             * pi1
@@ -314,7 +318,7 @@
             * res/js/map/api/1.3.07       (new)
             * static/setup.txt
   * #49495: Unporoper methods for TYPO3 >= 6.x
-  * #i0012: DRS prompt, if Map +Routes is enabled by Constant Editor but a Browser plugin doesn't have a proper SQL query 
+  * #i0012: DRS prompt, if Map +Routes is enabled by Constant Editor but a Browser plugin doesn't have a proper SQL query
   * #i0011: Error prompt, if TypoScript is missing
 
 4.5.7
@@ -502,7 +506,7 @@
 
 4.4.7
   13-02-12
-  Feature 
+  Feature
   * #45422: Calendar: Handle periods over days
             Effected file:
             * pi1/class.tx_browser_pi1_filter_4x.php
@@ -525,7 +529,7 @@
               Effected files:
               * t3jquery.txt
               * static/setup.txt
-  
+
 4.4.5
   13-02-06
   Feature
@@ -540,7 +544,7 @@
   * #44858: Extend cObj->data +++ first step
             Effected files:
             * lib/class.tx_browser_cssstyledcontent.php
-  
+
 4.4.4
   13-01-27
   Improvement
@@ -646,7 +650,7 @@
             * t3jquery.txt
   Improvement
   * #44318: Workaround bug t3lib_BEfunc::implodeTSParams
-  * #44316: Improve performance: substitute_marker_recurs( ) is deprecated. 
+  * #44316: Improve performance: substitute_marker_recurs( ) is deprecated.
             Substitute it with substitute_tablefield_marker( )
             Effected files:
             * pi1
@@ -787,7 +791,7 @@
   121206
   Improvements
   * #i0000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
-  * #i0000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
+  * #i0000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()
   * #i0000: category_menu.treeview.enabled.value = 0
   Bugfixes
   * #43685: Treeview and localisation: language prefixes are ignored
@@ -800,7 +804,7 @@
               * class.tx_browser_pi1_backend.php
               * class.tx_browser_pi1_flexform.php
   * #42738: CSV-Export: Supbart isn't processed
-  * #42736: "Is not an array" in cal, map, 
+  * #42736: "Is not an array" in cal, map,
             Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )
             Thanks to Thomas.Scholze@HS-Lausitz.de for bug report and a patch
   * #42302: Invalid database result resource detected
@@ -934,7 +938,7 @@
   * #i0000: res/js/jquery
               tx_browser_pi1_jstree-3.9.21.js is moved to tx_browser_pi1_jstree-4.1.18.js
   Bugfix
-  * #i0000: res/js/tx_browser_pi1_ajax-0.0.4.js            
+  * #i0000: res/js/tx_browser_pi1_ajax-0.0.4.js
 
 4.1.17
   120927
@@ -945,7 +949,7 @@
   120927
   Bugfix
   * #i0000: Filter areas: If any filter is matched in localised context, alls records were displayed
-  * #i0000: Filter weren't displayed in case of any record doesn't matched 
+  * #i0000: Filter weren't displayed in case of any record doesn't matched
 
 4.1.15
   120925
@@ -986,7 +990,7 @@
             * static/downgrade/3.9.0/setup.txt
   Bugfix
   * #41051: UPPER causes bugs in some SQL engines. Solution UPPER -> upper
-  * #i0000: Invalid argument supplied for foreach() in 
+  * #i0000: Invalid argument supplied for foreach() in
             * lib
               * class.tx_browser_cssstyledcontent.php line 904
             * pi1
@@ -1041,7 +1045,7 @@
             Effected files:
             * pi1/class.tx_browser_pi1_navi_recordbrowser.php
             * pi1/class.tx_browser_pi1_session.php
-            * static/setup.txt 
+            * static/setup.txt
 
 4.1.7
   120827
@@ -1063,7 +1067,7 @@
             * items without hits
             Effected files:
             * pi1/class.tx_browser_pi1_filter_4x.php
-            * static/setup.txt 
+            * static/setup.txt
 
 4.1.6
   120822
@@ -1142,7 +1146,7 @@
   * #i0000: content_dieIfEmpty with improved error message
   Bugfixes
   * #i0000: pageBrowser counted 0 records, if indexBrowser was disabled
-  * #i0000: multiple plugins: piVars aren't ignored  
+  * #i0000: multiple plugins: piVars aren't ignored
   * #i0000: Message of empty list at start isn't rendered
   * #i0000: Missing argument 1 for tx_browser_pi1_sql_auto::get_joinsSetCsv()
   * #i0000: Missing argument 1 for tx_browser_pi1_sql_auto::get_statements_whereLL()
@@ -1200,7 +1204,7 @@
 3.9.14
   120514
   Improvements
-  * #i0000: Static template for downgrade 
+  * #i0000: Static template for downgrade
             New files: static/downgrade/3.9.0/*
   Bugfixes
   * #i0000: Debugging special chars
@@ -1210,7 +1214,7 @@
   120513
   Development
   * #36842: Localise the index browser in version 4.0
-  * #33892: Performance/Engine 4: navigation, list view 
+  * #33892: Performance/Engine 4: navigation, list view
 
 3.9.11
   120322
@@ -1345,7 +1349,7 @@
   120505
   Improvement
   * #i0000: Plugin 3 - manuals - link to local PDF files, but not to the TER.
-            
+
 3.7.8
   120403
   Bugfix
@@ -1398,7 +1402,7 @@
   110915
   Bugfixes
   * #29778: Error in flexform css.browser
-  
+
 3.7.0
   110801, 110729
   New Features
@@ -1429,12 +1433,12 @@
   * #28878: Empty list at start: Form is empty for ever
   * #28855: Broken RSS-Feed
   * #28856: RSS template had a wrong marker (tt_news sample)
-  
+
 3.6.6
   110726
   Improvement
   * #27041: Record browser for the single view / Prev-next Switcher in the single view
-  
+
 3.6.5
   11-06-11
   Bugfixing
@@ -1501,12 +1505,12 @@
            session_marker() is removed in zz
   * 00000: substitute_marker_recurs() was double: in marker and in zz
            substitute_marker_recurs() is removed in zz
-  
+
 3.6.1
-  11-02-03 
+  11-02-03
   Revision 43034
   Bugfixes
-  * 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php 
+  * 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php
 
   11-01-25
   New Features
@@ -1520,7 +1524,7 @@
   * 12005: Blank the manual sort field by TypoScript configuration
   * 11981: Name views in TypoScript
   * 11603: Configuration to hide rows with empty values
-           Thanks to Paedagogische Hochschule Zentralschweiz, http://www.phz.ch/, who 
+           Thanks to Paedagogische Hochschule Zentralschweiz, http://www.phz.ch/, who
            has ordered this feature
   Bugfixes
   * 12471: general_stdWrap isn't local
@@ -1535,7 +1539,7 @@
   * 11847: OrderBy box: proper selected
   * 11846: Integrate hook tutorial
   Development
-  * 11666: No public code repository. 
+  * 11666: No public code repository.
            Thanks to Christian Weiske / netresearch.de for support
 
 3.6.0
@@ -1560,7 +1564,7 @@
   * 11407: Ordering filter items hasn't any effect
   * 10762: ###CLASS### won't be replaced
   * 00000: Only one filter was handled (Version 3.5.903)
-  
+
 3.5.0
   10-10-31
   New Features
@@ -1581,7 +1585,7 @@
   * 00000: Some tutorials revised
   Maintenance
   * 00000: template ###TEMPLATE_SINGLE_IMGTXT### is removed
-  
+
 3.4.5
   10-10-07
   New Features
@@ -1645,7 +1649,7 @@
   Credits
     Thanks to Frank Sander for the code snippets:
     8333, 8434, 9495, 9495
-  
+
 3.4.1
   10-08-18
   New Feature
@@ -1687,7 +1691,7 @@
   * Plugin: Tab [Advanced] moved to [Marker & RealUrl]
     * The section RealUrl enables to configure, if parameters should used in links to a single view or not.
   * Plugin: Tab [Listview] enables to configure, if swords should be colored in single views
-  * TypoScript code is shrinking 
+  * TypoScript code is shrinking
 
 3.3.4
   10-06-04
@@ -1742,7 +1746,7 @@
   Improvements
   * Check List is enhanced in the plugin
   Bugfix
-  * 6468, 6518: desc becomes DESC in fieldnames 
+  * 6468, 6518: desc becomes DESC in fieldnames
 
 3.2.0
   10-02-17
@@ -1770,7 +1774,7 @@
   Bugfix
   * 5922: PHP array error in context with missing filters
   Update Manual
-  * Illustrations and link to the Case Study "Grüne Autos"  
+  * Illustrations and link to the Case Study "Grüne Autos"
   Improvement
   * Marker ###minLenSword### moved to ###advanced.security.sword.minLenWord###
 
@@ -1785,12 +1789,12 @@
   * Foreign tables can get their own pidList: See foreignTables.your_table.csvPidList
   * Plugin value titleWrap got priority over TypoSCript value
   * RealURL, search and filter are maintained
-  
+
 3.1.3
   09-12-03
   Update Tutorial
   * Adding missing images, adding a new key image
-  
+
 3.1.2
   09-12-02
   New Features
@@ -1813,7 +1817,7 @@
   * Localisation
     * Orthography and syntax mistakes with exclude and mergeIfNotBlank
     * Counting mismatch for plugins
-    * Replace bug in case of localisation but non localised foreign tables 
+    * Replace bug in case of localisation but non localised foreign tables
 
 3.0.4
   09-10-13
@@ -1832,7 +1836,7 @@
   09-10-09
   Maintenance
   * Browser suggests to install the Tutorial Browser and Development Log.
-  
+
 3.0.1
   09-10-08
   Major Version Release
@@ -1847,12 +1851,12 @@
     * Self-defined Markers
     * Sword has AND functionality by default
     * Flexform
-      * You can configure some properties with the Browser plugin and without TypoScript 
+      * You can configure some properties with the Browser plugin and without TypoScript
   * Maintenance
     * Consolidation
       * Browser will display only one record in the result list even if
-        there a more than one children record. Values of children records 
-        will become a CSV list. 
+        there a more than one children record. Values of children records
+        will become a CSV list.
     * Single views display 1:n relations
     * A-Z-Browser tabs got the stdWrap property
   * Security
@@ -1877,7 +1881,7 @@
 2.6.6
   09-09-25
   Maintenance
-  * Browser for BZD Staff Directory got an own extension key 
+  * Browser for BZD Staff Directory got an own extension key
 
 2.6.4
   09-09-07
@@ -1889,7 +1893,7 @@
 2.5.9
   09-08-26
   Maintenance
-  * devlog  
+  * devlog
 
 2.5.5
   09-06-27
@@ -1903,17 +1907,17 @@
   Maintenance
   * Update the Manual
   * Update tutorial files
-  
+
 2.3.7
   09-06-12
   Maintenance
   * Simplification of real URL configuration
-  
+
 2.3.6
   09-06-11
   Bugfixing
   * In case of simulateStaticDocuments there was a URL rewriting with a double host
-  
+
 2.3.5
   09-06-01
   Maintenance
@@ -1925,7 +1929,7 @@
     * the synonym function
     * switching the HTML default template
   Templates
-  * Extending the browser with a second template default_ul.tmpl. 
+  * Extending the browser with a second template default_ul.tmpl.
     It wraps lists as unordered lists instead of tables.
   Bugfixing
   * There wasn't any error message in case of a missing select property but an empty content
@@ -1969,24 +1973,24 @@
 2.0.1
   09-03-11
   Major Version Release
-  * New Features 
-    * SQL override 
+  * New Features
+    * SQL override
       * You can override the system generated SQL clauses
         SELECT, FROM, WHERE and ORDER BY by TypoScript
         Warning: Feature is removed with version 2.5.5
-    * Hooks 
+    * Hooks
       * You can override any SQL query and result in third party extensions
   * New Workflow
-    * SQL 
+    * SQL
       * Changing from FULL JOIN to LEFT JOIN. Please take a look
-        in the chapter update in the manual.  
+        in the chapter update in the manual.
   * Maintainance
     * HTML-Template: The A-Z-Browser got a <div>-Tag
 
 1.1.3
   09-03-05
   Maintenance
-  * Code cleaning 
+  * Code cleaning
 
 1.1.2
   09-02-25
@@ -2003,7 +2007,7 @@
   Manual
   * Updated
   Maintenance
-  * Code cleaning 
+  * Code cleaning
 
 1.0.3
   09-02-17
