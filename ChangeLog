@@ -1,4 +1,4 @@
-4.8.7
+4.8.8
   14-02-26
   Features
  	* #56339: Filter: "combined" values - not realised
@@ -6,6 +6,11 @@
 	* #56329: AND option for filter
             * New TypoScript property filter.table.field.modeAndOr
             * Option isn't tested in localised context
+
+4.8.7
+  14-02-18
+  Bugfixing
+  * #56088: Browser Calendar: Bug for dates over several days
 
 4.8.6
   14-01-13

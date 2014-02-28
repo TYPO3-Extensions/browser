@@ -630,8 +630,11 @@ class tx_browser_pi1_filter_4x
   {
     $str_andWhere = null;
 
-    // #46776, 130329, dwildt, +
-    switch ($this->pObj->objCal->is_loaded)
+    // #56088, 140219, dwildt, 2-
+//      // #46776, 130329, dwildt, +
+//    switch( $this->pObj->objCal->is_loaded )
+    // #56088, 140219, dwildt, 1+
+    switch ($this->pObj->objCal->getVarRequirements())
     {
       case( true ):
 //$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
@@ -918,8 +921,11 @@ class tx_browser_pi1_filter_4x
   {
     $str_andWhere = null;
 
-    // #46776, 130329, dwildt, +
-    switch ($this->pObj->objCal->is_loaded)
+    // #56088, 140219, dwildt, 2-
+//      // #46776, 130329, dwildt, +
+//    switch( $this->pObj->objCal->is_loaded )
+    // #56088, 140219, dwildt, 1+
+    switch ($this->pObj->objCal->getVarRequirements())
     {
       case( true ):
 //$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
@@ -5886,7 +5892,7 @@ class tx_browser_pi1_filter_4x
       case( 'RADIOBUTTONS' ) :
       // #56332, 140227, dwildt, 1+
       case( 'SELECTBOX' ) :
-        $maxItemsPerHtmlRow = ( int ) $conf_array['wrap.']['itemsPerRow'];
+        $maxItemsPerHtmlRow = (int) $conf_array['wrap.']['itemsPerRow'];
         if ($maxItemsPerHtmlRow > 0)
         {
           $str_row_wrap = $conf_array['wrap.']['itemsPerRow.']['wrap'];

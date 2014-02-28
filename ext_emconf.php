@@ -13,17 +13,17 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Browser - TYPO3 without PHP',
 	'description' =>    'Publish your data in list and single views and in maps! '
-                          . 'You don\'t need neither any own plugin nor any line PHP code. ' 
+                          . 'You don\'t need neither any own plugin nor any line PHP code. '
                           . 'The Browser - TYPO3 without PHP - provides an index browser (a-z), '
                           . 'a page browser, a record browser, a search form, filters, category menus, AJAX, '
                           . 'GoogleMaps and OpenStreetMap by default. Your data will be detected as objects, '
                           . 'i.e. images will be wrapped automatically. SEO - Search Engine Optimization - is supported. '
-                          . 'The Browser enables the development of TYPO3-Extensions without any line PHP. ' 
-                          . 'TYPO3 developers and TYPO3 integrators  will be eight times faster! ' 
+                          . 'The Browser enables the development of TYPO3-Extensions without any line PHP. '
+                          . 'TYPO3 developers and TYPO3 integrators  will be eight times faster! '
                           . 'The browser is very suitable for database development.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '4.8.7',
+	'version' => '4.8.8',
 	'dependencies' => 'browser_manual_en',
 	'conflicts' => 'be_tablefilter',
 	'priority' => '',

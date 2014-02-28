@@ -984,7 +984,7 @@ class tx_browser_pi1_viewlist
           break;
         case( $loop < $maxLoops ):
         default:
-          $subQuery = $subQuery . ' AND tx_quickshop_products.uid IN ( ' . $subQueryTemplate . ' )';
+          $subQuery = $subQuery . ' AND ' . $this->pObj->localTable . '.uid IN ( ' . $subQueryTemplate . ' )';
           $subQuery = str_replace($limit, null, $subQuery);
           break;
       }

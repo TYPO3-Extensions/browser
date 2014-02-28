@@ -152,7 +152,7 @@ plugin.tx_browser_pi1 {
           // sort
         50 = TEXT
         50  {
-          dataWrap        = &tx_browser_pi1[sort:tx_browser_pi1|sort}
+          dataWrap        = &tx_browser_pi1[sort:tx_browser_pi1|sort]={GP:tx_browser_pi1|sort}
           if.isTrue.data  = GP:tx_browser_pi1|sort
         }
           // sword
@@ -1259,7 +1259,7 @@ plugin.tx_browser_pi1 {
                       z-index:99;
                     }
                   </style>
-  )
+)
               }
                 // HTML div tag for the map
               map_html = TEXT
