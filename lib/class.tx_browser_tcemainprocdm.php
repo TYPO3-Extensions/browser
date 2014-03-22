@@ -894,7 +894,7 @@ class tx_browser_tcemainprocdm
     $fmPrompt   = $prompt;
     $logPrompt  = '[' . $this->prefixLog . ' (' . $table . ':' . $uid . ')] ' . $prompt . PHP_EOL;
 
-    switch( $header ) 
+    switch( $header )
     {
       case( 0 ):
         $fmHeader = '';
@@ -908,7 +908,7 @@ class tx_browser_tcemainprocdm
         break;
     }
 
-    switch( $status ) 
+    switch( $status )
     {
       case( -1 ):
         $fmStatus   = null;
@@ -942,9 +942,9 @@ class tx_browser_tcemainprocdm
         $logStatus = 0;
         break;
     }
-    
+
     $this->pObj->log( $table, $uid, $action, $pid, $logStatus, $logPrompt );
-    
+
       // RETURN : Don't prompt to the backend
     if( $status < 0 )
     {
@@ -953,7 +953,7 @@ class tx_browser_tcemainprocdm
       // RETURN : Don't prompt to the backend
 
     $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
-    t3lib_FlashMessageQueue::addMessage( $flashMessage );    
+    t3lib_FlashMessageQueue::addMessage( $flashMessage );
   }
 
 
@@ -983,7 +983,7 @@ class tx_browser_tcemainprocdm
 
     if( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ][ 'gpxfile' ] )
     {
-        // #52166, 130921, dwildt    
+        // #52166, 130921, dwildt
       $this->routeGpx( $fieldArray, $reference );
     }
 
@@ -1014,7 +1014,7 @@ class tx_browser_tcemainprocdm
   {
     $fieldMarker  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['marker'];
     $fieldPath    = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['category']['path'];
-    
+
     $valueMarker  = $this->setValue( $fieldArray, $fieldMarker );
     $valuePath    = $this->setValue( $fieldArray, $fieldPath );
 
@@ -1039,7 +1039,7 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt, 4 );
         break;
     }
-    
+
     unset( $valueMarker );
     unset( $valuePath );
   }
@@ -1056,7 +1056,7 @@ class tx_browser_tcemainprocdm
   {
     $row    = $this->setRow( );
     $value  = null;
-    
+
     $value = $row[ $label ];
     if( isset( $fieldArray[ $label ] ) )
     {
@@ -1190,13 +1190,13 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt, -1 );
         $requirementsMatched = false;
         return $requirementsMatched;
-        break;
+        //break;
       case( empty( $fieldArray[ $fieldGpxfile ] ) ):
         $prompt = 'OK: GPX file is removed. Nothing to do.';
         $this->log( $prompt, -1 );
         $requirementsMatched = false;
         return $requirementsMatched;
-        break;
+        //break;
       case( empty( $fieldGpxfile ) ):
       case( empty( $fieldGeodata ) ):
         $prompt = 'ERROR: $GLOBALS[TCA][' . $this->processTable . '][ctrl][tx_browser][route] is set, '
@@ -1206,7 +1206,7 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt, 4, 2, 1 );
         $requirementsMatched = false;
         return $requirementsMatched;
-        break;
+        //break;
     }
 
     unset( $fieldArray );
@@ -1228,7 +1228,7 @@ class tx_browser_tcemainprocdm
   {
     $fieldCategory  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['marker']['category'];
     $fieldPath      = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['marker']['path'];
-    
+
     $valueCategory  = $this->setValue( $fieldArray, $fieldCategory );
     $valuePath      = $this->setValue( $fieldArray, $fieldPath );
 
@@ -1245,7 +1245,7 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt, 4 );
         break;
     }
-    
+
     unset( $valueCategory );
     unset( $valuePath );
   }
@@ -1262,7 +1262,7 @@ class tx_browser_tcemainprocdm
   {
     $fieldCategory  = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['path']['category'];
     $fieldMarker    = $GLOBALS[ 'TCA' ][ $this->processTable ][ 'ctrl' ][ 'tx_browser' ][ 'route' ]['path']['marker'];
-    
+
     $valueCategory  = ( int ) $this->setValue( $fieldArray, $fieldCategory );
     $valueMarker    = ( int ) $this->setValue( $fieldArray, $fieldMarker );
 
@@ -1279,7 +1279,7 @@ class tx_browser_tcemainprocdm
         $this->log( $prompt, 4 );
         break;
     }
-    
+
     unset( $valueCategory );
     unset( $valueMarker );
   }
@@ -1311,7 +1311,7 @@ class tx_browser_tcemainprocdm
       // RETURN : row is set before
 
     $columns = array_keys( $GLOBALS[ 'TCA' ][ $this->processTable ][ 'columns' ] );
-    
+
     $select_fields  = implode( ', ', $columns );
 
       // RETURN : select fields are empty

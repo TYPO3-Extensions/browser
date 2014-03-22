@@ -1,3 +1,10 @@
+4.8.9
+  14-03-21
+  Bugfixing
+  * #i0045: Creating default object from empty value in class.tx_browser_pi1_cObjData.php
+            * line 193
+            * line 194
+
 4.8.8
   14-02-26
   Features
@@ -6,7 +13,6 @@
 	* #56329: AND option for filter
             * New TypoScript property filter.table.field.modeAndOr
             * Option isn't tested in localised context
-
 4.8.7
   14-02-18
   Bugfixing
