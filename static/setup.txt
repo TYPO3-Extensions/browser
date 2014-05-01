@@ -1,3 +1,4 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:typo3conf/ext/browser/static/includes/typo3_45/tt_content/uploads/setup.ts">
 
   ///////////////////////////////////////////////////////////////
   //

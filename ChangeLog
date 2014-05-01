@@ -1,3 +1,9 @@
+4.8.10
+  14-04-30
+  Feature
+  * #58348: TYPO3 6.1: replacement of tt_content.uploads.20
+            * static/includes/typo3_45/tt_content/uploads/setup.ts    (new)
+
 4.8.9
   14-03-21
   Bugfixing

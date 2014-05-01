@@ -1,4 +1,7 @@
 plugin.tx_browser_pi1 >
+
+<INCLUDE_TYPOSCRIPT: source="FILE:typo3conf/ext/browser/static/includes/typo3_45/tt_content/uploads/constants.ts">
+
 plugin.tx_browser_pi1 {
 
   # cat=Browser - Advanced/enable/100;          type=int+;   label= Recursion Guard: Limit of runs per loop. The Browser checks fault-prone loops by the recursion guard limit. If a loop cross this limit, the workflow will exit. You will get an error prompt in the frontend. The limit is by default 10.000 runs per one loop.
@@ -9,9 +12,9 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Download Module/enable/100;   type=boolean;   label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
   downloadmodule.drs = 0
   # cat=Browser - Download Module/enable/102;   type=int+;      label= page uid: Id of the download page
-  downloadmodule.pageUid = 
+  downloadmodule.pageUid =
   # cat=Browser - Download Module/enable/104;   type=string;    label= Uid parameter:Parameter for the uid of the document in the URL
-  downloadmodule.urlParam = downloadUid 
+  downloadmodule.urlParam = downloadUid
   # cat=Browser - Download Module/enable/105;   type=string;    label= Uid of the download single view:Take it from your TypoScript. Default in case of the DAM sample is 37165
   downloadmodule.uidSingleView = 37165
   # cat=Browser - Download Module/dims/100;     type=int+;      label= Thumbnail list view - width: Max width for a thumbnail in the list view
@@ -21,7 +24,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Download Module//100;          type=string;   label= field files: table.field with the files (lowercase!):Examples: tx_dam.file_name, tx_org_downloads.documents
   downloadmodule.tableField = tx_org_downloads.documents
   # cat=Browser - Download Module//200;          type=string;   label= Marker field uid: TABLE.FIELD with the uid (uppercase!) of your media record:Examples: TX_DAM.UID, TX_ORG_DOWNLOADS.UID
-  downloadmodule.uid = TX_ORG_DOWNLOADS.UID 
+  downloadmodule.uid = TX_ORG_DOWNLOADS.UID
   # cat=Browser - Download Module//201;          type=string;   label= Marker field files: TABLE.FIELD with the files (uppercase!):Examples: TX_DAM.FILE_NAME, TX_ORG_DOWNLOADS.DOCUMENTS
   downloadmodule.files = TX_ORG_DOWNLOADS.DOCUMENTS
   # cat=Browser - Download Module//202;          type=string;   label= Marker field path: TABLE.FIELD with the files (uppercase!):Examples: TX_DAM.FILE_PATH, TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH
@@ -54,7 +57,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Image Dimensions/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   dimensions.links = Click me!
 
-  # cat=Browser - JavaScript//100;                type=boolean;  label= Footer placement: Place JSS scripts at the footer section / the bottom of the page 
+  # cat=Browser - JavaScript//100;                type=boolean;  label= Footer placement: Place JSS scripts at the footer section / the bottom of the page
   jss.placement.footer = 1
   # cat=Browser - JavaScript/others/999;          type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   jss.placement.links = Click me!
@@ -75,23 +78,23 @@ plugin.tx_browser_pi1 {
   # cat=Browser - jQuery jstree//201;   type=string;  label= Selector 1: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_01      = tx-browser-pi1-jstree-01
   # cat=Browser - jQuery jstree//202;   type=string;  label= table.field of Selector 1: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_01    = 
+  jQuery.plugin.jstree.tablefield_01    =
   # cat=Browser - jQuery jstree//211;   type=string;  label= Selector 2: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_02      = tx-browser-pi1-jstree-02
   # cat=Browser - jQuery jstree//212;   type=string;  label= table.field of Selector 2: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_02    = 
+  jQuery.plugin.jstree.tablefield_02    =
   # cat=Browser - jQuery jstree//221;   type=string;  label= Selector 3: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_03      = tx-browser-pi1-jstree-03
   # cat=Browser - jQuery jstree//222;   type=string;  label= table.field of Selector 3: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_03    = 
+  jQuery.plugin.jstree.tablefield_03    =
   # cat=Browser - jQuery jstree//231;   type=string;  label= Selector 4: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_04      = tx-browser-pi1-jstree-04
   # cat=Browser - jQuery jstree//232;   type=string;  label= table.field of Selector 4: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_04    = 
+  jQuery.plugin.jstree.tablefield_04    =
   # cat=Browser - jQuery jstree//241;   type=string;  label= Selector 5: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_05      = tx-browser-pi1-jstree-05
   # cat=Browser - jQuery jstree//242;   type=string;  label= table.field of Selector 5: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_05    = 
+  jQuery.plugin.jstree.tablefield_05    =
   # cat=Browser - jQuery jstree//300;   type=boolean;  label= Dots: Use dots. Default is 1.
   jQuery.plugin.jstree.dots             = 1
   # cat=Browser - jQuery jstree//400;  type=boolean;  label= Icons: Use icons. Default is 0.
@@ -105,23 +108,23 @@ plugin.tx_browser_pi1 {
   # cat=Browser - jQuery jstree//201;   type=string;  label= Selector 1: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_01      = tx-browser-pi1-jstree-01
   # cat=Browser - jQuery jstree//202;   type=string;  label= table.field of Selector 1: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_01    = 
+  jQuery.plugin.jstree.tablefield_01    =
   # cat=Browser - jQuery jstree//211;   type=string;  label= Selector 2: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_02      = tx-browser-pi1-jstree-02
   # cat=Browser - jQuery jstree//212;   type=string;  label= table.field of Selector 2: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_02    = 
+  jQuery.plugin.jstree.tablefield_02    =
   # cat=Browser - jQuery jstree//221;   type=string;  label= Selector 3: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_03      = tx-browser-pi1-jstree-03
   # cat=Browser - jQuery jstree//222;   type=string;  label= table.field of Selector 3: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_03    = 
+  jQuery.plugin.jstree.tablefield_03    =
   # cat=Browser - jQuery jstree//231;   type=string;  label= Selector 4: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_04      = tx-browser-pi1-jstree-04
   # cat=Browser - jQuery jstree//232;   type=string;  label= table.field of Selector 4: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_04    = 
+  jQuery.plugin.jstree.tablefield_04    =
   # cat=Browser - jQuery jstree//241;   type=string;  label= Selector 5: HTML id of div tag which contains a tree view. DON'T USE DOTS!
   jQuery.plugin.jstree.selector_05      = tx-browser-pi1-jstree-05
   # cat=Browser - jQuery jstree//242;   type=string;  label= table.field of Selector 5: Example: tx_greencars_manufacturer.title
-  jQuery.plugin.jstree.tablefield_05    = 
+  jQuery.plugin.jstree.tablefield_05    =
   # cat=Browser - jQuery jstree//300;   type=boolean;  label= Dots: Use dots. Default is 1.
   jQuery.plugin.jstree.dots             = 1
   # cat=Browser - jQuery jstree//400;  type=boolean;  label= Icons: Use icons. Default is 0.
@@ -145,7 +148,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Navigation//101;            type=string;  label= showUid: Alias for the parameter showUid. Alias simplifies the configuration of realUrl. I.e: staffUid.
   navigation.showUid = showUid
   # cat=Browser - Navigation//102;            type=boolean; label= Workaround latin1: Workaround for the index browser in case of trouble with UTF8: Send the SQL query 'SET NAMES latin1' before other any query.
-  navigation.indexbrowser.workaroundLatin1 = 
+  navigation.indexbrowser.workaroundLatin1 =
   # cat=Browser - Navigation/others/999;      type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   navigation.links = Click me!
 
@@ -163,9 +166,9 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Radial Search/others/100;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptRadialsearch]; label=Help!
   radialsearch.help = Click me!
   # cat=Browser - Radial Search//200;       type=string;    label= Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
-  radialsearch.lat = 
+  radialsearch.lat =
   # cat=Browser - Radial Search//201;       type=string;    label= Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
-  radialsearch.lon = 
+  radialsearch.lon =
   # cat=Browser - Radial Search//300;       type=string;    label= Sword: HTML name of the input field for the search word (sword).
   radialsearch.sword = tx_radialsearch_pi1[sword]
   # cat=Browser - Radial Search//301;       type=string;    label= Radius: HTML name of the select box with the radius options.
@@ -197,7 +200,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Time Format/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   timeFormat.links = Click me!
 
-  # cat=BrowserMaps - Aliases//101;                   type=string;    label= Label of a marker uid: Parameter of the marker uid in the URL. It is used in links to the single view 
+  # cat=BrowserMaps - Aliases//101;                   type=string;    label= Label of a marker uid: Parameter of the marker uid in the URL. It is used in links to the single view
   map.aliases.showUid.marker  = showUid
   # cat=BrowserMaps - Aliases//102;                   type=string;    label= Label of a path uid: Parameter of the path uid in the URL. It is used in links to the single view
   map.aliases.showUid.path    = routeUid
@@ -214,79 +217,79 @@ plugin.tx_browser_pi1 {
   map.controlling.links = Click me!
 
   # cat=BrowserMaps - Database Marker*//101;           type=string;    label= table.field with record uid*: *Obligate! Example: tx_org_headquarters.uid
-  map.marker.field.linktoSingle = 
+  map.marker.field.linktoSingle =
   # cat=BrowserMaps - Database Marker*//102;           type=string;    label= table.field with the latitude*: *Obligate! Example: tx_org_headquarters.latitude
-  map.marker.field.latitude = 
+  map.marker.field.latitude =
   # cat=BrowserMaps - Database Marker*//103;           type=string;    label= table.field with the longitude*: *Obligate! Example: tx_org_headquarters.longitude
-  map.marker.field.longitude = 
+  map.marker.field.longitude =
   # cat=BrowserMaps - Database Marker*//104;           type=string;    label= table.field with the content*: *Obligate! table.field with the content for the popup. Example: tx_org_headquarters.short
-  map.marker.field.description = 
+  map.marker.field.description =
   # cat=BrowserMaps - Database Marker*//105;           type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
-  map.marker.field.number = 
+  map.marker.field.number =
   # cat=BrowserMaps - Database Marker*//106;           type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
-  map.marker.field.category = 
+  map.marker.field.category =
   # cat=BrowserMaps - Database Marker*//108;           type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
-  map.marker.field.categoryIcon = 
+  map.marker.field.categoryIcon =
   # cat=BrowserMaps - Database Marker*//110;           type=string;    label= table.field with category x-offset: Example: tx_org_headquarterscat.icon_offset_x
-  map.marker.field.categoryOffsetX = 
+  map.marker.field.categoryOffsetX =
   # cat=BrowserMaps - Database Marker*//111;           type=string;    label= table.field with category y-offset: Example: tx_org_headquarterscat.icon_offset_y
-  map.marker.field.categoryOffsetY = 
+  map.marker.field.categoryOffsetY =
   # cat=BrowserMaps - Database Marker*/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.marker.database.links = Click me!
 
   # cat=BrowserMaps - Database Path//201;             type=string;    label= table.field with the path title: Example: tx_route_path.title
-  map.path.table.path.title = 
+  map.path.table.path.title =
   # cat=BrowserMaps - Database Path//202;             type=string;    label= table.field with the geodata: Example: tx_route_path.geodata
-  map.path.table.path.geodata = 
+  map.path.table.path.geodata =
   # cat=BrowserMaps - Database Path//203;             type=string;    label= table.field with the path color: Example: tx_route_path.color
-  map.path.table.path.color = 
+  map.path.table.path.color =
   # cat=BrowserMaps - Database Path//204;             type=string;    label= table.field with the path thickness: Example: tx_route_path.line_width
-  map.path.table.path.lineWidth = 
+  map.path.table.path.lineWidth =
   # cat=BrowserMaps - Database Path//206;             type=string;    label= table.field with path category titles: Example: tx_route_path_cat.title
-  map.path.table.pathCategory.title = 
+  map.path.table.pathCategory.title =
   # cat=BrowserMaps - Database Path//207;             type=string;    label= table.field with marker title: Example: tx_route_marker.title
-  map.path.table.marker.title = 
+  map.path.table.marker.title =
   # cat=BrowserMaps - Database Path//208;             type=string;    label= table.field with path marker title: Example: tx_route_marker_cat.title
-  map.path.table.markerCategory.title = 
+  map.path.table.markerCategory.title =
   # cat=BrowserMaps - Database Path/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.path.database.links = Click me!
 
   # cat=BrowserMaps - Database Path Mapper*//201;      type=string;    label= table with the path data*: *Obligate! Example: tx_route_path
-  map.path.mapper.tables.local.path = 
+  map.path.mapper.tables.local.path =
   # cat=BrowserMaps - Database Path Mapper*//202;      type=string;    label= table with the marker data*: *Obligate! Example: tx_route_marker
-  map.path.mapper.tables.local.marker = 
+  map.path.mapper.tables.local.marker =
   # cat=BrowserMaps - Database Path Mapper*//203;      type=string;    label= table with the path categories*: *Obligate! Example: tx_route_path_cat
-  map.path.mapper.tables.cat.path = 
+  map.path.mapper.tables.cat.path =
   # cat=BrowserMaps - Database Path Mapper*//204;      type=string;    label= table with the marker data*: *Obligate! Example: tx_route_marker_cat
-  map.path.mapper.tables.cat.marker = 
+  map.path.mapper.tables.cat.marker =
   # cat=BrowserMaps - Database Path Mapper*//301;      type=string;    label= title field of the path table: Example: title
-  map.path.mapper.fields.local.title.path = 
+  map.path.mapper.fields.local.title.path =
   # cat=BrowserMaps - Database Path Mapper*//302;      type=string;    label= title field of the marker table: Example: title
-  map.path.mapper.fields.local.title.marker = 
+  map.path.mapper.fields.local.title.marker =
   # cat=BrowserMaps - Database Path Mapper*//303;      type=string;    label= latitude field of the path table*: *Obligate! Example: icon_lat
-  map.path.mapper.fields.local.lat.path = 
+  map.path.mapper.fields.local.lat.path =
   # cat=BrowserMaps - Database Path Mapper*//304;      type=string;    label= latitude field of the marker table*: *Obligate! Example: lat
-  map.path.mapper.fields.local.lat.marker = 
+  map.path.mapper.fields.local.lat.marker =
   # cat=BrowserMaps - Database Path Mapper*//305;      type=string;    label= longitude field of the path table*: *Obligate! Example: icon_lon
-  map.path.mapper.fields.local.lon.path = 
+  map.path.mapper.fields.local.lon.path =
   # cat=BrowserMaps - Database Path Mapper*//306;      type=string;    label= longitude field of the marker table*: *Obligate! Example: lon
-  map.path.mapper.fields.local.lon.marker = 
+  map.path.mapper.fields.local.lon.marker =
   # cat=BrowserMaps - Database Path Mapper*//401;      type=string;    label= title field of the path cat table: Example: title
-  map.path.mapper.fields.cat.title.path = 
+  map.path.mapper.fields.cat.title.path =
   # cat=BrowserMaps - Database Path Mapper*//402;      type=string;    label= title field of the marker cat table: Example: title
-  map.path.mapper.fields.cat.title.marker = 
+  map.path.mapper.fields.cat.title.marker =
   # cat=BrowserMaps - Database Path Mapper*//403;      type=string;    label= icons field of the path cat table: Example: icons
-  map.path.mapper.fields.cat.icons.path = 
+  map.path.mapper.fields.cat.icons.path =
   # cat=BrowserMaps - Database Path Mapper*//404;      type=string;    label= icons field of the marker cat table: Example: icons
-  map.path.mapper.fields.cat.icons.marker = 
+  map.path.mapper.fields.cat.icons.marker =
   # cat=BrowserMaps - Database Path Mapper*//405;      type=string;    label= icons-offset-x of path cat table: Example: icons_offset_x
-  map.path.mapper.fields.cat.iconOffsetX.path = 
+  map.path.mapper.fields.cat.iconOffsetX.path =
   # cat=BrowserMaps - Database Path Mapper*//406;      type=string;    label= icons-offset-x of marker cat table: Example: icons_offset_x
-  map.path.mapper.fields.cat.iconOffsetX.marker = 
+  map.path.mapper.fields.cat.iconOffsetX.marker =
   # cat=BrowserMaps - Database Path Mapper*//407;      type=string;    label= icons-offset-y of path cat table: Example: icons_offset_y
-  map.path.mapper.fields.cat.iconOffsetY.path = 
+  map.path.mapper.fields.cat.iconOffsetY.path =
   # cat=BrowserMaps - Database Path Mapper*//408;      type=string;    label= icons-offset-y of marker cat table: Example: icons_offset_y
-  map.path.mapper.fields.cat.iconOffsetY.marker = 
+  map.path.mapper.fields.cat.iconOffsetY.marker =
   # cat=BrowserMaps - Database Path Mapper*/others/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.path.mapper.database.links = Click me!
 
@@ -299,9 +302,9 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Debugging/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.debugging.links = Click me!
 
-  # cat=BrowserMaps - Default Icons//101;             type=string;    label= Path to legend icons: Path to the directory, which contains the images for the form legend (with ending slash!). Default: EXT:browser/res/js/map/icons/legend/ 
+  # cat=BrowserMaps - Default Icons//101;             type=string;    label= Path to legend icons: Path to the directory, which contains the images for the form legend (with ending slash!). Default: EXT:browser/res/js/map/icons/legend/
   map.pathToLegend = EXT:browser/res/js/map/icons/legend/
-  # cat=BrowserMaps - Default Icons//102;             type=string;    label= Path to point icons: Path to the directory, which contains the images for points in the map (with ending slash!). Default: EXT:browser/res/js/map/icons/points/ 
+  # cat=BrowserMaps - Default Icons//102;             type=string;    label= Path to point icons: Path to the directory, which contains the images for points in the map (with ending slash!). Default: EXT:browser/res/js/map/icons/points/
   map.pathToPoints = EXT:browser/res/js/map/icons/points/
   # cat=BrowserMaps - Default Icons/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.defaultIcons.links = Click me!
@@ -315,7 +318,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Design//208;             type=string;    label= Control panel directory: Path to the directory with the icons of the control panel among others (with ending slash). Example: /fileadmin/my_openstreetmap/icons/
   map.design.imgPath  = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/img/
   # cat=BrowserMaps - Design//209;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/
-  map.design.path.categoryIcon = uploads/media/ 
+  map.design.path.categoryIcon = uploads/media/
   # cat=BrowserMaps - Design/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.design.controlling.links = Click me!
 
@@ -326,20 +329,20 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - HTML//103;             type=string;    label= Input class: HTML class of the input fields
   map.html.form.input.class = oxMap-filter-item
   # cat=BrowserMaps - HTML//200;             type=string;    label= label= table.field with the CSS class: CSS class for the lable tag in the map form for a marker. Example: tx_route_marker_cat.formlabelcss
-  map.html.form.label.class.marker = 
+  map.html.form.label.class.marker =
   # cat=BrowserMaps - HTML//201;             type=string;    label= label= table.field with the CSS class: CSS class for the lable tag in the map form for a path. Example: tx_route_path_cat.formlabelcss
-  map.html.form.label.class.path = 
+  map.html.form.label.class.path =
   # cat=BrowserMaps - HTML/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.html.links = Click me!
 
   # cat=BrowserMaps - Icons//100;           type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.icon.listNum.categoryIconLegend     = 0 
+  map.icon.listNum.categoryIconLegend     = 0
   # cat=BrowserMaps - Icons//101;           type=string;    label= Position of map icon (list view): Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.icon.listNum.categoryIconMap        = 0 
+  map.icon.listNum.categoryIconMap        = 0
   # cat=BrowserMaps - Icons//102;           type=string;    label= Position of map icon (single view): Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.icon.listNum.categoryIconMapSingle  = 0 
+  map.icon.listNum.categoryIconMapSingle  = 0
   # cat=BrowserMaps - Icons//103;           type=string;    label= Position of text icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
-  map.icon.listNum.categoryIconText       = 0 
+  map.icon.listNum.categoryIconText       = 0
   # cat=BrowserMaps - Icons/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.icon.links = Click me!
 
@@ -349,9 +352,9 @@ plugin.tx_browser_pi1 {
   map.mobile.links = Click me!
 
   # cat=BrowserMaps - OpenLayers//101;             type=string;    label= Map controls: Comma seperated list of quoted map controls wrapped by square brackets. Examples: Navigation,PanZoom or Navigation,PanZoom,LayerSwitcher
-  map.openlayers.controls.default         = 'Navigation,PanZoom' 
+  map.openlayers.controls.default         = 'Navigation,PanZoom'
   # cat=BrowserMaps - OpenLayers//102;             type=string;    label= Map controls (debugging): Comma seperated list of quoted map controls wrapped by square brackets. Examples: Navigation,PanZoom or Navigation,PanZoom,LayerSwitcher
-  map.openlayers.controls.debugging       = 'Navigation,PanZoom,LayerSwitcher' 
+  map.openlayers.controls.debugging       = 'Navigation,PanZoom,LayerSwitcher'
   # cat=BrowserMaps - OpenLayers//103;             type=string;    label= Map modules: Comma seperated list of map modules (quoted). Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array. And OSM.CDmap has to place before OSM.Base.
   map.openlayers.modules.default          = 'OSM.Base,OSM.Filter'
   # cat=BrowserMaps - OpenLayers//104;             type=string;    label= Map +Routes modules: Comma seperated list of map modules (quoted). OSM.Routes must be the first element! Values: Error, OSM.CDmap, OSM.Base (OSM.Render, OSM.Marker, OSM.Tooltip), OSM.Filter, OSM.Route. OSM.CDmap is needed, if you are using the custom array. And OSM.CDmap has to place before OSM.Base.
