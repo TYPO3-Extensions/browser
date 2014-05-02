@@ -1649,7 +1649,7 @@ class tx_browser_cssstyledcontent extends tslib_pibase {
         $GLOBALS['TSFE']->register['description']   = $fileData['description'];
         $GLOBALS['TSFE']->register['fileSize']      = $fileData['filesize'];
         $GLOBALS['TSFE']->register['fileExtension'] = $fileData['fileextension'];
-var_dump( __METHOD__, __LINE__, var_export($GLOBALS['TSFE']->register, true ) );
+//var_dump( __METHOD__, __LINE__, var_export($GLOBALS['TSFE']->register, true ) );
 
 // dwildt, 111106, -
 //        $outputEntries[]  = $this->helper_cObjGetSingle
