@@ -177,8 +177,8 @@ class tx_browser_pi1_cal
   /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   function __construct($pObj)
   {
@@ -199,9 +199,9 @@ class tx_browser_pi1_cal
  *        * in list views
  *        * if the Browser is extended with the Browser Calendar user Interface.
  *
- * @param	array		$rows: Consolidated rows
- * @param	array		$template: Current HTML template
- * @return	array		$arr_return: rows, template, success
+ * @param    array        $rows: Consolidated rows
+ * @param    array        $template: Current HTML template
+ * @return    array        $arr_return: rows, template, success
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -390,7 +390,7 @@ class tx_browser_pi1_cal
   /**
  * cal_data_day(): Get periods data for a day (periods which contains the rows)
  *
- * @return	boolean		true in case of success
+ * @return    boolean        true in case of success
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -487,7 +487,7 @@ class tx_browser_pi1_cal
   /**
  * cal_data_day_schedule(): Get periods data for a day (periods which contains the rows)
  *
- * @return	boolean		true in case of success
+ * @return    boolean        true in case of success
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -611,7 +611,7 @@ class tx_browser_pi1_cal
  * cal_data_day_navigator():  day's navigator
  *                            * ISN'T DEVELOPED *
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -741,7 +741,7 @@ class tx_browser_pi1_cal
 /**
  * cal_template(): Returns the HTML template
  *
- * @return	string		$template   The template
+ * @return    string        $template   The template
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -816,7 +816,7 @@ class tx_browser_pi1_cal
  *                      * summary
  *                      Result (HTML snippet) will written to the global $template
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -931,7 +931,7 @@ class tx_browser_pi1_cal
  *                      Loop with periods. Allocates finished periods including the dates to LISTBODYITEM.
  *                      Result (HTML snippet) will written to the global $template
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1105,9 +1105,9 @@ class tx_browser_pi1_cal
  * cal_template_body_calDate(): Set up the template. Here: CAL_DATE.
  *                              Loop with dates (children of periods). Allocates finished dates to CAL_DATE.
  *
- * @param	array		$dates:           Array with the dates. This are the $rows from the sql result, consolidated for the calendar.
- * @param	string		$subPrt_calDate:  The CAL_DATE subpart
- * @return	string		$str_calDate   HTML snippet
+ * @param    array        $dates:           Array with the dates. This are the $rows from the sql result, consolidated for the calendar.
+ * @param    string        $subPrt_calDate:  The CAL_DATE subpart
+ * @return    string        $str_calDate   HTML snippet
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1227,7 +1227,7 @@ class tx_browser_pi1_cal
   /**
  * cal_colours(): Initial the corlor array
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1280,7 +1280,7 @@ class tx_browser_pi1_cal
  *                The global due_day_error will set to true: Other methos will change
  *                the due_day to there needs.
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1382,7 +1382,7 @@ class tx_browser_pi1_cal
  * cal_requirementsFlexform(): Checks, if the flexform sheet 'extend' contains any data.
  *                      Set some global vars. See code at the bottom.
  *
- * @return	boolean		Returns false in case of no data, true in case of data
+ * @return    boolean        Returns false in case of no data, true in case of data
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1456,7 +1456,7 @@ class tx_browser_pi1_cal
   /**
  * cal_requirementsData():  Checks, if the data of the flexform sheet 'extend' are valid.
  *
- * @return	boolean		Returns false in case of invalid, true in case of valid
+ * @return    boolean        Returns false in case of invalid, true in case of valid
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1577,7 +1577,7 @@ class tx_browser_pi1_cal
   /**
  * cal_frame(): Building the schedules data frame (the list of all proper time units)
  *
- * @return	array		$arr_period:    Period (list of time units)
+ * @return    array        $arr_period:    Period (list of time units)
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1716,8 +1716,8 @@ class tx_browser_pi1_cal
   /**
  * cal_frame_to_period(): Set the global periods: add the rows to the frame (the list of all proper time units)
  *
- * @param	array		$arr_frame:   Frame, the list of time units
- * @return	boolean		true
+ * @param    array        $arr_frame:   Frame, the list of time units
+ * @return    boolean        true
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1878,7 +1878,7 @@ class tx_browser_pi1_cal
  * cal_group_check(): Check, if TypoScript and the HTML template is configured for grouping.
  *                    If yes, the global $bool_group becomes true.
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -2020,7 +2020,7 @@ class tx_browser_pi1_cal
   /**
  * cal_marker(): Set some global marker
  *
- * @return	void
+ * @return    void
  * @version 5.0.0
  * @since 4.0.0
  * @internal #59669
@@ -2053,7 +2053,7 @@ class tx_browser_pi1_cal
   /**
  * cal_typoscript(): Set the TypoScript depending on the flexform data
  *
- * @return	boolean		Returns false in case of an error
+ * @return    boolean        Returns false in case of an error
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -2146,7 +2146,7 @@ class tx_browser_pi1_cal
   /**
  * area_init: Check configuration and init class var arr_area
  *
- * @return	void
+ * @return    void
  * @version 4.1.25
  * @since 3.6.0
  * @link  http://forge.typo3.org/issues/11402  TYPO3-Browser: Filter for area
@@ -2224,10 +2224,10 @@ class tx_browser_pi1_cal
  *                   Add to the tsConf the array ['area.']['interval.']['options.']['fields.]
  *                   Return an array $key => $value generated by the tsConf
  *
- * @param	array		$arr_ts: The TypoScript configuration of the current filter
- * @param	array		$arr_values: The values for the current filter
- * @param	string		$tableField: The current table.field
- * @return	array		Data array with $key => $value
+ * @param    array        $arr_ts: The TypoScript configuration of the current filter
+ * @param    array        $arr_values: The values for the current filter
+ * @param    string        $tableField: The current table.field
+ * @return    array        Data array with $key => $value
  * @version 3.6.0
  * @since 3.6.0
  */
@@ -2256,10 +2256,10 @@ class tx_browser_pi1_cal
   /**
  * area_strings(): Handle the area for strings - manual configured array of $key => $value
  *
- * @param	array		$arr_ts: The TypoScript configuration of the current filter
- * @param	array		$arr_values: The values for the current filter
- * @param	string		$tableField: The current table.field
- * @return	void
+ * @param    array        $arr_ts: The TypoScript configuration of the current filter
+ * @param    array        $arr_values: The values for the current filter
+ * @param    string        $tableField: The current table.field
+ * @return    void
  * @version 3.6.0
  * @since 3.6.0
  */
@@ -2332,10 +2332,10 @@ class tx_browser_pi1_cal
  *                       Return wrapped value from 'url_stdWrap'
  *                       #13920, 110319, dwildt
  *
- * @param	array		$arr_ts: The TypoScript configuration of the current filter
- * @param	string		$tableField: The current table.field
- * @param	string		$tsKey: Current tsKey like 10, 20, 30, ...
- * @return	array		$tsKey: I.e. 2011_Jan, 2011_Feb, 2011_Mar, ...
+ * @param    array        $arr_ts: The TypoScript configuration of the current filter
+ * @param    string        $tableField: The current table.field
+ * @param    string        $tsKey: Current tsKey like 10, 20, 30, ...
+ * @return    array        $tsKey: I.e. 2011_Jan, 2011_Feb, 2011_Mar, ...
  * @version 3.6.4
  * @since 3.6.4
  */
@@ -2404,9 +2404,9 @@ class tx_browser_pi1_cal
  *                                  Returns i.e: 10, 20, 30, ...
  *                                  #13920, 110319, dwildt
  *
- * @param	string		$tableField: The current table.field
- * @param	string		$str_urlPeriod: The url of the period
- * @return	string		$str_urlPeriod: I.e. 2011M%C3%A4r, 2011Apr, 2011Mai, ...
+ * @param    string        $tableField: The current table.field
+ * @param    string        $str_urlPeriod: The url of the period
+ * @return    string        $str_urlPeriod: I.e. 2011M%C3%A4r, 2011Apr, 2011Mai, ...
  * @version 3.6.4
  * @since 3.6.4
  */
@@ -2460,10 +2460,10 @@ class tx_browser_pi1_cal
   /**
  * area_set_hits(): Recalculate the hits per item. Return updated values.
  *
- * @param	array		$arr_ts: The TypoScript configuration of the current filter
- * @param	array		$arr_values: The values for the current filter
- * @param	string		$tableField: The current table.field
- * @return	array		Array with the updated values
+ * @param    array        $arr_ts: The TypoScript configuration of the current filter
+ * @param    array        $arr_values: The values for the current filter
+ * @param    string        $tableField: The current table.field
+ * @return    array        Array with the updated values
  * @version 4.1.21
  * @since 3.6.0
  */
@@ -2621,9 +2621,9 @@ class tx_browser_pi1_cal
  *                       Add to the tsConf the array ['area.']['interval.']['options.']['fields.]
  *                       Return an updated $arr_ts
  *
- * @param	array		$arr_ts: The TypoScript configuration of the current filter
- * @param	string		$tableField: The current table.field
- * @return	array		Updated $arr_ts
+ * @param    array        $arr_ts: The TypoScript configuration of the current filter
+ * @param    string        $tableField: The current table.field
+ * @return    array        Updated $arr_ts
  * @version 3.6.4
  * @since 3.6.0
  */
@@ -2937,9 +2937,9 @@ class tx_browser_pi1_cal
   /**
  * zz_strtotime(): Upgrade rows for a day's schedule
  *
- * @param	boolean		$bool_strtotime   true: use strtotime; false: do noting
- * @param	string		$strtotime: Time string in english language
- * @return	array		$arr_return: result: in case of success timestamp else timestring; ISO_8601: timestamp in ISO 8601 format;
+ * @param    boolean        $bool_strtotime   true: use strtotime; false: do noting
+ * @param    string        $strtotime: Time string in english language
+ * @return    array        $arr_return: result: in case of success timestamp else timestring; ISO_8601: timestamp in ISO 8601 format;
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -3015,11 +3015,11 @@ class tx_browser_pi1_cal
  *                          Value will get a link to the singleView (depending on some things, see code below).
  *                          Marker in the configuration will replaced recursive with values of the current row.
  *
- * @param	string		$tableField:      Name of the current table.field
- * @param	string		$value:           Value of the current table-field
- * @param	string		$elements:        Current row (from SQL, conslidated)
- * @param	boolean		$linkToSingle:    Should value get a link to the single view
- * @return	string		$value: The wrapped value
+ * @param    string        $tableField:      Name of the current table.field
+ * @param    string        $value:           Value of the current table-field
+ * @param    string        $elements:        Current row (from SQL, conslidated)
+ * @param    boolean        $linkToSingle:    Should value get a link to the single view
+ * @return    string        $value: The wrapped value
  * @version 4.0.0
  * @since 4.0.0
  */

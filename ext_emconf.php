@@ -1,14 +1,14 @@
 <?php
 
-/* * *************************************************************
+/***************************************************************
  * Extension Manager/Repository config file for ext "browser".
  *
- * Auto generated 08-04-2013 21:59
+ * Auto generated 03-05-2014 01:27
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
  * writing. "version" and "dependencies" must not be touched!
- * ************************************************************* */
+ ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
   'title' => 'Browser - TYPO3 without PHP',
@@ -57,4 +57,5 @@ $EM_CONF[$_EXTKEY] = array(
   'suggests' => array(
   ),
 );
+
 ?>

@@ -112,12 +112,12 @@ class tx_browser_tcemainprocdm
 /**
  * processDatamap_postProcessFieldArray( )
  *
- * @param	string		$status     : update, edit, delete, moved
- * @param	string		$table      : label of the current table
- * @param	integer		$id         : uid of the current record
- * @param	array		$fieldArray : modified fields - reference!
- * @param	object		$reference  : parent object - reference!
- * @return	void
+ * @param    string        $status     : update, edit, delete, moved
+ * @param    string        $table      : label of the current table
+ * @param    integer        $id         : uid of the current record
+ * @param    array        $fieldArray : modified fields - reference!
+ * @param    object        $reference  : parent object - reference!
+ * @return    void
  * @version   4.6.3
  * @since     4.5.7
  */
@@ -162,8 +162,8 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdate( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @return	void
+ * @param    array        $fieldArray : Array of modified fields
+ * @return    void
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -212,9 +212,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateGoogleAPI( )
  *
- * @param	array		$fieldArray : Array of modified fields * @param	string		$address    : Address
- * @param	[type]		$address: ...
- * @return	array		$geodata    : lon, lat
+ * @param    array        $fieldArray : Array of modified fields * @param    string        $address    : Address
+ * @param    [type]        $address: ...
+ * @return    array        $geodata    : lon, lat
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -243,8 +243,8 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleData( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @return	void
+ * @param    array        $fieldArray : Array of modified fields
+ * @return    void
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -325,9 +325,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleDataGetAddress( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @param	[type]		$row: ...
- * @return	string		$address    : Address
+ * @param    array        $fieldArray : Array of modified fields
+ * @param    [type]        $row: ...
+ * @return    string        $address    : Address
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -400,9 +400,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleDataGetAddressAreaLevel1( )
  *
- * @param	array		$fieldArray   : Array of modified fields
- * @param	array		$row    : Array of former field values (from database)
- * @return	string		$country       : AreaLevel1
+ * @param    array        $fieldArray   : Array of modified fields
+ * @param    array        $row    : Array of former field values (from database)
+ * @return    string        $country       : AreaLevel1
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -425,9 +425,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleDataGetAddressAreaLevel2( )
  *
- * @param	array		$fieldArray   : Array of modified fields
- * @param	array		$row    : Array of former field values (from database)
- * @return	string		$country       : AreaLevel2
+ * @param    array        $fieldArray   : Array of modified fields
+ * @param    array        $row    : Array of former field values (from database)
+ * @return    string        $country       : AreaLevel2
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -450,9 +450,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleDataGetAddressCountry( )
  *
- * @param	array		$fieldArray   : Array of modified fields
- * @param	array		$row    : Array of former field values (from database)
- * @return	string		$country       : Country
+ * @param    array        $fieldArray   : Array of modified fields
+ * @param    array        $row    : Array of former field values (from database)
+ * @return    string        $country       : Country
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -475,9 +475,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleDataGetAddressLocation( )
  *
- * @param	array		$fieldArray   : Array of modified fields
- * @param	array		$row    : Array of former field values (from database)
- * @return	string		$location       : Location
+ * @param    array        $fieldArray   : Array of modified fields
+ * @param    array        $row    : Array of former field values (from database)
+ * @return    string        $location       : Location
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -519,9 +519,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateHandleDataGetAddressStreet( )
  *
- * @param	array		$fieldArray   : Array of modified fields
- * @param	array		$row    : Array of former field values (from database)
- * @return	string		$street       : Street
+ * @param    array        $fieldArray   : Array of modified fields
+ * @param    array        $row    : Array of former field values (from database)
+ * @return    string        $street       : Street
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -562,8 +562,8 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateIsAddressUntouched( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @return	boolean		$untouched  : true, if address data are untouched
+ * @param    array        $fieldArray : Array of modified fields
+ * @return    boolean        $untouched  : true, if address data are untouched
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -591,8 +591,8 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateIsForbiddenByRecord( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @return	boolean		$untouched  : true, if address data are untouched
+ * @param    array        $fieldArray : Array of modified fields
+ * @return    boolean        $untouched  : true, if address data are untouched
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -633,8 +633,8 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateRequired( )
  *
- * @param	[type]		$&$fieldArray: ...
- * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
+ * @param    [type]        $&$fieldArray: ...
+ * @return    boolean        $requirementsMatched  : true if requierements matched, false if not.
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -685,7 +685,7 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateSetLabels( )  : Set lables. Get lables from ext_tables.php.
  *
- * @return	void
+ * @return    void
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -730,9 +730,9 @@ class tx_browser_tcemainprocdm
 /**
  * geoupdateSetPrompt( )  : Set lables. Get lables from ext_tables.php.
  *
- * @param	string		$prompt     :
- * @param	array		$fieldArray : Array of modified fields
- * @return	void
+ * @param    string        $prompt     :
+ * @param    array        $fieldArray : Array of modified fields
+ * @return    void
  * @version   4.5.13
  * @since     4.5.13
  */
@@ -967,9 +967,9 @@ class tx_browser_tcemainprocdm
 /**
  * route( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @param	object		$reference  : reference to parent object
- * @return	void
+ * @param    array        $fieldArray : Array of modified fields
+ * @param    object        $reference  : reference to parent object
+ * @return    void
  * @version   4.6.3
  * @since     4.5.7
  */
@@ -1069,9 +1069,9 @@ class tx_browser_tcemainprocdm
 /**
  * routeGpx( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @param	object		$reference  : reference to parent object
- * @return	void
+ * @param    array        $fieldArray : Array of modified fields
+ * @param    object        $reference  : reference to parent object
+ * @return    void
  * @version   4.6.3
  * @since     4.5.7
  */
@@ -1098,8 +1098,8 @@ class tx_browser_tcemainprocdm
 /**
  * routeGpxHandleData( )
  *
- * @param	array		$fieldArray : Array of modified fields
- * @return	void
+ * @param    array        $fieldArray : Array of modified fields
+ * @return    void
  * @version   4.5.7
  * @since     4.5.7
  */
@@ -1171,8 +1171,8 @@ class tx_browser_tcemainprocdm
 /**
  * routeGpx( )
  *
- * @param	[type]		$$fieldArray: ...
- * @return	boolean		$requirementsMatched  : true if requierements matched, false if not.
+ * @param    [type]        $$fieldArray: ...
+ * @return    boolean        $requirementsMatched  : true if requierements matched, false if not.
  * @version   4.5.7
  * @since     4.5.7
  */

@@ -543,6 +543,7 @@ class tx_browser_pi1_zz
       // #60107, dwildt, 1-
 //      $this->pObj->piVars[ 'sword' ] = $arr_return[ 'data' ][ 'str_sword' ];
       $this->pObj->arr_resultphrase = $arr_return[ 'data' ][ 'arr_resultphrase' ];
+//var_dump( __METHOD__, __LINE__, $arr_return, $this->pObj->arr_resultphrase);
     }
     // Store sword words and phrases global
     // Sword
