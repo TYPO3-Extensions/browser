@@ -28,7 +28,7 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *
- * @version  4.8.7
+ * @version  5.0.0
  * @since    3.5.0
  *
  * @package    TYPO3
@@ -629,7 +629,7 @@ class tx_browser_pi1_javascript
    * @param	string		$str_type:      css or jss
    * @param	boolean		$inline:   true: include css/jss inline. false: include it as a file
    * @return	boolean		True: success. False: error.
-   * @since   4.5.11
+   * @since   5.0.0
    * @version 3.7.0
    */
   private function addCssFile($path, $ie_condition, $name, $keyPathTs, $str_type, $inline)
@@ -644,70 +644,6 @@ class tx_browser_pi1_javascript
       return true;
     }
     // RETURN file is loaded
-    // #50069, 130716, dwildt, -
-//      // RETURN path is empty
-//    if( empty( $path ) )
-//    {
-//      if ($this->pObj->b_drs_warn)
-//      {
-//        t3lib_div::devlog('[WARN/JSS] file can not be included. Path is empty. Maybe it is ok.', $this->pObj->extKey, 2);
-//        t3lib_div::devlog('[HELP/JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
-//      }
-//      return false;
-//    }
-//      // RETURN path is empty
-//
-//
-//    $arr_parsed_url = parse_url( $path );
-//
-//      // URL or EXT:...
-//    if(isset($arr_parsed_url['scheme']))
-//    {
-//      if($arr_parsed_url['scheme'] == 'EXT')
-//      {
-//        unset($arr_parsed_url['scheme']);
-//      }
-//    }
-//      // URL or EXT:...
-//
-//      // link to a file
-//    $bool_file_exists = true;
-//    if( ! isset( $arr_parsed_url['scheme'] ) )
-//    {
-//        // absolute path
-//        // 130104, dwildt, 1-
-////      $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
-//        // 130104, dwildt, 3+
-//      $onlyRelative       = 1;
-//      $relToTYPO3_mainDir = 0;
-//      $absPath  = t3lib_div::getFileAbsFileName($path, $onlyRelative, $relToTYPO3_mainDir );
-//      if ( ! file_exists( $absPath ) )
-//      {
-//        $bool_file_exists = false;
-//      }
-//        // #32220, uherrmann, 111202, 4-
-////        // absolute path ./. root path
-////      $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
-////        // relative path
-////      $path     = substr($absPath, strlen($rootPath.'/'));
-//        // #32220, uherrmann, 111202, 2+
-//        // relative path
-//      $path = preg_replace('%' . PATH_site . '%', '', $absPath);
-//    }
-//      // link to a file
-//
-//
-//
-//    if( ! $bool_file_exists )
-//    {
-//      if ( $this->pObj->b_drs_error )
-//      {
-//        t3lib_div::devlog('[ERROR/JSS] script can not be included. File doesn\'t exist: '.$path, $this->pObj->extKey, 3);
-//        t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
-//      }
-//      return false;
-//    }
-    // #50069, 130716, dwildt, -
     // #50069, 130716, dwildt, 5+
     $absPath = $this->getPathAbsolute($path);
     if ($absPath == false)
@@ -721,11 +657,14 @@ class tx_browser_pi1_javascript
     {
       return false;
     }
-    // #50222, 130720, dwildt, 5+
-    // marker array
-    $markerArray = array();
-    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($markerArray);
-    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($markerArray);
+    // #59669, 140624, dwildt, 5-
+//    // #50222, 130720, dwildt, 5+
+//    // marker array
+//    $markerArray = array();
+//    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($markerArray);
+//    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($markerArray);
+    // #59669, 140624, dwildt, 1+
+    $markerArray = $this->pObj->objMarker->extend_marker( );
 
     // switch: css || jss
     switch ($str_type)
@@ -1554,7 +1493,7 @@ class tx_browser_pi1_javascript
    * @return	string		$script       : The script tag
    *
    * @internal  #50069
-   * @since     4.5.10
+   * @since     5.0.0
    * @version   4.5.10
    */
   private function getTagScriptInlineMarker($script, $marker)
@@ -1579,13 +1518,19 @@ class tx_browser_pi1_javascript
       $marker[$hashKey] = $this->pObj->cObj->cObjGetSingle($coa, $conf);
     }
 
-    $marker['###MODE###'] = $this->pObj->piVar_mode;
-    $marker['###VIEW###'] = $this->pObj->view;
+    // #59669, 140624, dwildt, 7-
+//    // #59669, 140624, dwildt, 3+
+//    $marker['###MODE###'] = $this->pObj->piVar_mode;
+//    $marker['###VIEW###'] = $this->pObj->view;
+//    $load_all_modes = $this->dyn_method_load_all_modes();
+//    $marker['###LOAD_ALL_MODES###'] = $load_all_modes;
+//    $marker = $this->pObj->objMarker->extend_marker_wi_cObjData($marker);
+//    $marker = $this->pObj->objMarker->extend_marker_wi_pivars($marker);
+
+    // #59669, 140624, dwildt, 3+
+    $marker = $this->pObj->objMarker->extend_marker( $marker );
     $load_all_modes = $this->dyn_method_load_all_modes();
     $marker['###LOAD_ALL_MODES###'] = $load_all_modes;
-
-    $marker = $this->pObj->objMarker->extend_marker_wi_cObjData($marker);
-    $marker = $this->pObj->objMarker->extend_marker_wi_pivars($marker);
 
     $script = $this->pObj->cObj->substituteMarkerArray($script, $marker);
 

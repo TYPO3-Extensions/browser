@@ -390,7 +390,7 @@ class tx_browser_pi1_navi_modeSelector
       //
       // Building and Return the template
 
-    $markerArray               = $this->pObj->objWrapper->constant_markers();
+    $markerArray               = $this->pObj->objWrapper4x->constant_markers();
     $markerArray['###MODE###'] = $this->mode;
     $markerArray['###VIEW###'] = $this->view;
     $modeSelector = $this->pObj->cObj->getSubpart($template, '###MODESELECTOR###');

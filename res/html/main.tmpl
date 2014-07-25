@@ -18,7 +18,7 @@ This template is the default template for all list views.
   ===================
   You can control the display of subparts and markers with typoscript:
 
-    EACH MARKER AND SUBPART 
+    EACH MARKER AND SUBPART
     =======================
 
     plugin.tx_browser_pi1.views.list.XX.htmlSnippets {
@@ -82,7 +82,7 @@ This template is the default template for all list views.
               ###HIDDEN###
               <input type="hidden" name="no_cache" value="1" />
               <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
-              <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
+              <input class="sword" type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
               <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" class="button hidesubmit ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
                 <span class="ui-button-text">###MY_SEARCH###</span>
               </button>
@@ -115,7 +115,7 @@ This template is the default template for all list views.
               </ul>
             </div><!-- ###INDEXBROWSER### end -->
             <!-- ###PAGEBROWSER### begin -->
-            <div id="c###TT_CONTENT.UID###-browsebox-###MODE###" class="browsebox browsebox-list-###MODE###">
+            <div id="c###TT_CONTENT.UID###-pageBrowser-###MODE###" class="pageBrowser pageBrowser-list-###MODE###">
               ###RESULT_AND_ITEMS###
             </div><!-- ###PAGEBROWSER### end -->
             <!-- ###MODESELECTOR### begin -->
@@ -155,7 +155,7 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
   ===================
   You can control the display of subparts and markers with typoscript:
 
-    EACH MARKER AND SUBPART 
+    EACH MARKER AND SUBPART
     =======================
 
     plugin.tx_browser_pi1.views.list.XX.htmlSnippets {

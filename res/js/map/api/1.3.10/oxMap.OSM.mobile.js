@@ -9,12 +9,12 @@ window.OSM = {
       , 'mapID' 			: 'oxMap-area'
       , 'zoomWheelEnable'	: true
       , 'mapMarkerEvent'	: 'click'
-        	
+
     }
 
   , osmOptions 		: {
-        controls    : [ 
-                          new OpenLayers.Control.Attribution() 
+        controls    : [
+                          new OpenLayers.Control.Attribution()
                         , new OpenLayers.Control.TouchNavigation({   /* 130828, dwildt, 5+ */
                             dragPanOptions: {
                                 enableKinetic: true
@@ -99,11 +99,11 @@ window.OSM = {
 //        	'click' : function( event){
 //        		console.log(event)
 //        		console.log(this.getZoom())
-//        		
+//
 //        		//tiles vs. wms  wenn tiles dann wms entfernen
 //        		//oxMap.OSM.wmsLayer[0].setVisibility( false );
 ////        		this.addLayer(
-////        					
+////
 ////        		);
 //        	}
         })
@@ -125,7 +125,7 @@ window.OSM = {
 
         for( a = 0; a < b; a += 1 ){
             if( controls[a] === 'Navigation' ){
-                navOptions = oxMap.OSM.configuration.zoomWheelEnable 
+                navOptions = oxMap.OSM.configuration.zoomWheelEnable
                            ?
                            {
                               type              : OpenLayers.Control.TYPE_TOGGLE
@@ -164,7 +164,7 @@ window.OSM = {
     }
 
   , Util 			: {
-		transformer : { 
+		transformer : {
 			'null'	: null,
 			'WGS84'	: new OpenLayers.Projection( "EPSG:4326" ),// transform from WGS 1984
 			'OSM'	: new OpenLayers.Projection( "EPSG:4326" ),// transform from WGS 1984
@@ -173,33 +173,33 @@ window.OSM = {
 					      return oxMap.OSM.map.getProjectionObject();  // to Spherical Mercator Projection
 					  }
 		}
-	
+
 	  , createIcon : function( param ){
 	      var icon = param[0],
 	          size = new OpenLayers.Size( param[1] , param[2] ),
 	          offset = new OpenLayers.Pixel( param[3] , param[4] );
 	      return new OpenLayers.Icon( icon, size, offset );
 	  	}
-	
+
 	  , createBoundObject : function( bounds, transformType ){
 	      var W = bounds.w,
 	          S = bounds.s,
 	          E = bounds.e,
 	          N = bounds.n,
-	
+
 	          self = this,
-	
+
 	          bounds = new OpenLayers.Bounds();
 	      bounds.extend(new OpenLayers.LonLat( W,S ));
 	      bounds.extend(new OpenLayers.LonLat( E,N ));
-	
+
 	      if( transformType ){
 		        bounds.transform(
 		        		self.transformer[ transformType ],
 		        		self.transformer.map()
 		                );
 	      }
-	
+
 	      return bounds;
 		}
 

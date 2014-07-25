@@ -38,7 +38,7 @@
           </li>
         </ul>
         <br />
-        The Browser TypoScript configuration or the Browser plugin/flexform will be 
+        The Browser TypoScript configuration or the Browser plugin/flexform will be
         changed with this update!<br />
         <br />
         You can check with the update wizard, if your installation is affected.<br />
@@ -49,7 +49,7 @@
           </li>
           <li>
             Please add your IP in the field <strong>Update Wizard Allowed IPs</strong>.<br />
-            The Update Wizard displays its report for clients with this IP only. 
+            The Update Wizard displays its report for clients with this IP only.
           </li>
           <li>
             Please clear all TYPO3 caches.
@@ -67,17 +67,17 @@
             alt="TYPO3 Browser online"
             title="TYPO3 Browser online"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser.gif"
-              width="90"
+            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser_80x80.gif"
+              width="80"
               height="80"
               alt="TYPO3 Browser online" /></a>
-          <a href="http://die-netzmacher.de/" 
+          <a href="http://die-netzmacher.de/"
             alt="Die Netzmacher - Internet is trade"
             title="Die Netzmacher - Internet is trade"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif" 
-              width="200" 
-              height="80" 
+            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif"
+              width="200"
+              height="80"
               alt="Die Netzmacher - Internet is trade" /></a>
         </div>
         <ul style="list-style:inside;">
@@ -91,7 +91,7 @@
           </li>
           <li>
             TYPO3-Browser forum<br />
-            <a href="http://typo3-browser.de/forum/" 
+            <a href="http://typo3-browser.de/forum/"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="TYPO3-Browser - Forum"
               title="TYPO3-Browser - Forum"
@@ -99,7 +99,7 @@
           </li>
           <li>
             TYPO3-Browser developer<br />
-            <a href="http://die-netzmacher.de/" 
+            <a href="http://die-netzmacher.de/"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Die Netzmacher - Internet is trade"
               title="Die Netzmacher - Internet is trade"
@@ -165,9 +165,9 @@
           alt="Your logo with your URL. 120 x 90 pixel."
           title="Your logo with your URL. 120 x 90 pixel."
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_default-grey.gif" 
-            width="120" 
-            height="90" 
+          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_default-grey.gif"
+            width="120"
+            height="90"
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
       ]]></label>
       <label index="promptGeodataDisabledByExttablesphp">Geoupdate is disabled by ext_tables.php</label>
@@ -216,14 +216,14 @@
               target="_blank">Radial Search on typo3.org</a>
           </li>
           <li style="margin-left:2em;">
-            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf" 
+            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Radial Search Manual"
               title="Radial Search Manual"
               target="_blank">Radial Search Manual (PDF)</a>
           </li>
           <li style="margin-left:2em;">
-            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf" 
+            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser Tutorial Search and Filter"
               title="Browser Tutorial Search and Filter"
@@ -262,7 +262,7 @@
         </ol>
         Solange der Fehler nicht behoben ist, kann es zu unerwarteten Ergebnissen im Frontend kommen.<br />
         Anzahl der Verbindungen: #%marker% Marker (POI), #%path% Pfad(e).<br />
-        Bitte &uuml;pr&uuml;fe die Verbindungen zu den Markern (POI) und zu den Pfaden. 
+        Bitte &uuml;pr&uuml;fe die Verbindungen zu den Markern (POI) und zu den Pfaden.
       ]]></label>
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
@@ -276,7 +276,7 @@
           </li>
         </ul>
         <br />
-        Mit dem aktuellen Update des Browsers werden TypoScript-Dateien 
+        Mit dem aktuellen Update des Browsers werden TypoScript-Dateien
         und das Browser Plugin (Flexform) aktualisiert!<br />
         <br />
         Mit dem Update-Assistenten kannst Du &uuml;berpr&uuml;fen, ob Deine Installation betroffen ist.<br />
@@ -305,23 +305,23 @@
             alt="TYPO3-Browser Online"
             title="TYPO3-Browser Online"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser.gif"
-              width="90"
+            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser_80x80.gif"
+              width="80"
               height="80"
               alt="TYPO3-Browser Online" /></a>
-          <a href="http://die-netzmacher.de/" 
+          <a href="http://die-netzmacher.de/"
             alt="Die Netzmacher - Internet ist Handwerk"
             title="Die Netzmacher - Internet ist Handwerk"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif" 
-              width="200" 
-              height="80" 
+            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif"
+              width="200"
+              height="80"
               alt="Die Netzmacher - Internet ist Handwerk" /></a>
         </div>
         <ul style="list-style:inside;">
           <li>
             TYPO3-Browser Homepage<br />
-            <a href="http://typo3-browser.de/" 
+            <a href="http://typo3-browser.de/"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser - TYPO3 ohne PHP"
               title="Browser - TYPO3 ohne PHP"
@@ -329,7 +329,7 @@
           </li>
           <li>
             TYPO3-Browser Forum<br />
-            <a href="http://typo3-browser.de/forum/" 
+            <a href="http://typo3-browser.de/forum/"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser - TYPO3 ohne PHP: Forum"
               title="Browser - TYPO3 ohne PHP: Forum"
@@ -337,7 +337,7 @@
           </li>
           <li>
             TYPO3-Browser Entwickler<br />
-            <a href="http://die-netzmacher.de/" 
+            <a href="http://die-netzmacher.de/"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Die Netzmacher - Internet ist Handwerk"
               title="Die Netzmacher - Internet ist Handwerk"
@@ -392,20 +392,20 @@
             alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt" /></a>
         <p style="padding:0 0 1em 0;">
           Du m&ouml;chtest das TYPO3-Browser-Projekt finanziell unterst&uuml;tzen?
-          <a href="http://typo3-browser.de/sponsoring/" 
+          <a href="http://typo3-browser.de/sponsoring/"
             style="background:none;border:none;float:none;text-decoration:underline;"
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
             title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
             target="_blank">
             Mehr Informationen</a>.
         </p>
-        <a href="http://typo3-browser.de/sponsoring/" 
+        <a href="http://typo3-browser.de/sponsoring/"
           alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_de-grey.gif" 
-            width="120" 
-            height="90" 
+          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_de-grey.gif"
+            width="120"
+            height="90"
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
       ]]></label>
       <label index="promptGeodataDisabledByExttablesphp">Geoupdate ist in der Datei ext_tables.php deaktiviert.</label>
@@ -454,14 +454,14 @@
               target="_blank">Radial Search auf typo3.org</a>
           </li>
           <li style="margin-left:2em;">
-            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf" 
+            <a href="http://typo3-browser-forum.de/typo3conf/ext/radialsearch/doc/manual.pdf"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Radial Search Handbuch"
               title="Radial Search Handbuch"
               target="_blank">Radial Search Handbuch (PDF)</a>
           </li>
           <li style="margin-left:2em;">
-            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf" 
+            <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_search_en/doc/manual.pdf"
               style="background:none;border:none;float:none;text-decoration:underline;"
               alt="Browser Tutorial Search and Filter"
               title="Browser Tutorial Search and Filter"

@@ -125,7 +125,7 @@ class tx_browser_pi1_seo
       case(TRUE):
         $htmlTitleTag = $this->pObj->pi_getLL($this->pObj->view.'_mode_'.$mode.'_titleTag');
         if ($htmlTitleTag != '') {
-          $htmlTitleTag = $boolSubstituteMarkers ? $this->pObj->objWrapper->wrapTableFields($htmlTitleTag, $elements) : $htmlTitleTag;
+          $htmlTitleTag = $boolSubstituteMarkers ? $this->pObj->objWrapper4x->wrapTableFields($htmlTitleTag, $elements) : $htmlTitleTag;
           if (is_array($tmpSeo['htmlHead.']['title.']))
           {
             $htmlTitleTag = $this->pObj->local_cObj->stdWrap($htmlTitleTag, $tmpSeo['htmlHead.']['title.']);
@@ -158,7 +158,7 @@ class tx_browser_pi1_seo
         if ($metaDescr != '') {
           if($boolSubstituteMarkers)
           {
-            $metaDescr = $this->pObj->objWrapper->wrapTableFields($metaDescr, $elements);
+            $metaDescr = $this->pObj->objWrapper4x->wrapTableFields($metaDescr, $elements);
           }
           if (is_array($tmpSeo['htmlHead.']['meta.']['description.']))
           {
@@ -195,7 +195,7 @@ class tx_browser_pi1_seo
         if ($metaKeywd != '') {
           if ($boolSubstituteMarkers)
           {
-            $metaKeywd = $this->pObj->objWrapper->wrapTableFields($metaKeywd, $elements);
+            $metaKeywd = $this->pObj->objWrapper4x->wrapTableFields($metaKeywd, $elements);
           }
           $arrKeywd = explode(',', $metaKeywd);
           foreach((array) $arrKeywd as $key => $value) {

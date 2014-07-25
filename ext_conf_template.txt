@@ -1,6 +1,6 @@
-  # cat=basic/100;             type=options[Engine 4.x (recommended),Engine 3.x (deprecated)]; label= Browser engine: 4.x has a high performance. Please use 3.x only, if you have any problem with 4.x.
-browserEngine = Engine 4.x (recommended)
-  # cat=basic/101;             type=options[Off (recommended),On]; label= Browser engine 4.x indicator: Enable the display of a label in the frontend. For development.
+  # cat=basic/100;             type=options[Engine 5.x (recommended),Engine 3.x (deprecated)]; label= Browser engine: 5.x has a high performance. Please use 3.x only, if you have any problem with 5.x.
+browserEngine = Engine 5.x (recommended)
+  # cat=basic/101;             type=options[Off (recommended),On]; label= Browser engine 5.x indicator: Enable the display of a label in the frontend. For development.
 browserEngineIndicator = Off (recommended)
   # cat=basic/999;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_01=0
@@ -10,7 +10,7 @@ LLstatic = English
   # cat=BE Language/999;       type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_02=0
 
-  # cat=Debugging/100;        type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,Realurl,Scheduler: Geoupdate,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+  # cat=Debugging/100;        type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,ORDER BY,Realurl,Scheduler: Geoupdate,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
   # cat=Debugging/999;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_03=0
@@ -20,8 +20,6 @@ showSampleTasks = 0
   # cat=Scheduler/999;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_04=0
 
-  # cat=Update Wizard/100;     type=options[I checked it,I didn't (frontend label is visible)]; label= Did you checked the Update?: Please confirm, that you have checked the update. The frontend label will disappear.
-checked_3.9.14 = I didn't (frontend label is visible)
   # cat=Update Wizard/101;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
 updateWizard=0
   # cat=Update Wizard/102;     type=boolean; label= Update Wizard Enabling

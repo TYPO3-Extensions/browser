@@ -9,9 +9,14 @@
 		  , items			: 'oxMap-filter-item'
 		  , getDataByAjax	: false
 		},
-		
+
 		filterCheckElements = (function(){
-			var filterWrapper = document.getElementById( config.wrapper );
+      var filterWrapper = document.getElementById( config.wrapper );
+      // #i0076, 140721, dwildt, 4+
+      if( filterWrapper === null)
+      {
+        return null;
+      }
 			return filterWrapper.getElementsByTagName('input');
 		})();
 
@@ -27,7 +32,7 @@
 		}
 		return true;
 	}
-	
+
 	function setVisibilityMarkerOnList( list, compare, visibility ){
 		var l = list.length,
 			c;
@@ -42,7 +47,7 @@
 	}
 
 	self.filterStack = [];
-	
+
 	self.sortMarkerByCategory = function( rml ){
 		var cat = [],
 			rm = rml.length,
@@ -78,7 +83,7 @@
 			x, y,
 			markerList, markerOnLayer, markerLayer, marker, m,
 			routeLayer;
-		
+
 		for (a = 0; a < b; a += 1 ) {
 			if (routes[a]['properties']['name'] === routeName) {
 				routes = routes[a];
@@ -123,7 +128,7 @@
     	var wrapper = document.getElementById( config.wrapper ),
     		itemsClass = config.items,
     		items;
-    	
+
     	if( !wrapper ){
    			new Error( 'filter', null, true );
   			return false;

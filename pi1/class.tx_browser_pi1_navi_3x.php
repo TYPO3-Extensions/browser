@@ -406,7 +406,7 @@ class tx_browser_pi1_navi_3x
     $int_key_defaultTab   = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
     $arr_defaultTab       = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
     $str_defaultTabLabel  = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$int_key_defaultTab];
-    $defaultAzTab         = $this->pObj->objWrapper->general_stdWrap($str_defaultTabLabel, $arr_defaultTab);
+    $defaultAzTab         = $this->pObj->objWrapper4x->general_stdWrap($str_defaultTabLabel, $arr_defaultTab);
     $bool_dontLinkDefaultTab = false;
     if ($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] == 0)
     {
@@ -621,7 +621,7 @@ class tx_browser_pi1_navi_3x
     // Process the markers, subpart and template
 
     unset($markerArray);
-    $markerArray                  = $this->pObj->objWrapper->constant_markers();
+    $markerArray                  = $this->pObj->objWrapper4x->constant_markers();
     $markerArray['###UL_MODE###'] = $this->mode;
     $markerArray['###UL_VIEW###'] = $this->view;
      // #35032, 120320
@@ -788,7 +788,7 @@ class tx_browser_pi1_navi_3x
       $conf_stdWrap = $conf_tab['stdWrap.'];
       if (is_array($conf_stdWrap))
       {
-        $str_label = $this->pObj->objWrapper->general_stdWrap($str_label, $conf_stdWrap);
+        $str_label = $this->pObj->objWrapper4x->general_stdWrap($str_label, $conf_stdWrap);
       }
       //$str_label  = htmlspecialchars($str_label);  // <span> wird maskiert!
       $lArrTabs[$key_lArrTab]['label'] = $str_label;
@@ -1540,7 +1540,7 @@ class tx_browser_pi1_navi_3x
       //
       // Build the template
 
-    $markerArray                            = $this->pObj->objWrapper->constant_markers();
+    $markerArray                            = $this->pObj->objWrapper4x->constant_markers();
     $markerArray['###RESULT_AND_ITEMS###']  = $res_items;
     $markerArray['###MODE###']              = $this->mode;
     $markerArray['###VIEW###']              = $this->view;
@@ -1765,7 +1765,7 @@ class tx_browser_pi1_navi_3x
       //
       // Building and Return the template
 
-    $markerArray               = $this->pObj->objWrapper->constant_markers();
+    $markerArray               = $this->pObj->objWrapper4x->constant_markers();
     $markerArray['###MODE###'] = $this->mode;
     $markerArray['###VIEW###'] = $this->view;
     $modeSelector = $this->pObj->cObj->getSubpart($template, '###MODESELECTOR###');

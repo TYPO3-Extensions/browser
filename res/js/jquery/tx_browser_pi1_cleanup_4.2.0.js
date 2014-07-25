@@ -14,7 +14,7 @@
 /**
  * cleanup_afterAJAXrequest( ): This method calls functions, which are needed
  *                              after an AJAX request.
- *                              * Reload of CSS styles 
+ *                              * Reload of CSS styles
  * @version 4.2.0
  */
 

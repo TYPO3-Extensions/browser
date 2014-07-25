@@ -196,12 +196,12 @@ class tx_browser_pi1_navi_indexBrowser
    * @version  3.9.9
    * @since    3.9.9
    */
-  public function __construct($parentObj)
+  public function __construct( $parentObj )
   {
     // Set the Parent Object
     $this->pObj = $parentObj;
     // 111023, uherrmann, #9912: t3lib_div::convUmlauts() is deprecated
-    $this->t3lib_cs_obj = t3lib_div::makeInstance('t3lib_cs');
+    $this->t3lib_cs_obj = t3lib_div::makeInstance( 't3lib_cs' );
   }
 
   /*   * *********************************************
@@ -218,63 +218,63 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.9
    */
-  public function get($content)
+  public function get( $content )
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     $this->content = $content;
 //    $arr_return['data']['content']  = $content;
     // RETURN: requirements aren't met
     $arr_return = $this->requirements_check();
-    if (!empty($arr_return))
+    if ( !empty( $arr_return ) )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // RETURN: requirements aren't met
     // RETURN : table is not the local table
     $arr_return = $this->tableField_check();
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // RETURN : table is not the local table
     // Backup $GLOBALS['TSFE']->id
-    $globalTsfeId = $GLOBALS['TSFE']->id;
+    $globalTsfeId = $GLOBALS[ 'TSFE' ]->id;
     // Setup $GLOBALS['TSFE']->id temporarily
-    if (!empty($this->pObj->objFlexform->int_viewsListPid))
+    if ( !empty( $this->pObj->objFlexform->int_viewsListPid ) )
     {
-      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
+      $GLOBALS[ 'TSFE' ]->id = $this->pObj->objFlexform->int_viewsListPid;
     }
     // Setup $GLOBALS['TSFE']->id temporarily
     // Init the tabs
     $arr_return = $this->tabs_init();
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       // Reset $GLOBALS['TSFE']->id
-      $GLOBALS['TSFE']->id = $globalTsfeId;
+      $GLOBALS[ 'TSFE' ]->id = $globalTsfeId;
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // Init the tabs
     // Render the tabs
     $arr_return = $this->subpart();
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       // Reset $GLOBALS['TSFE']->id
-      $GLOBALS['TSFE']->id = $globalTsfeId;
+      $GLOBALS[ 'TSFE' ]->id = $globalTsfeId;
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // Render the tabs
@@ -282,10 +282,10 @@ class tx_browser_pi1_navi_indexBrowser
     $this->tabs_initFindInSetForCurrentTab();
 
     // Reset $GLOBALS['TSFE']->id
-    $GLOBALS['TSFE']->id = $globalTsfeId;
+    $GLOBALS[ 'TSFE' ]->id = $globalTsfeId;
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
     return $arr_return;
   }
 
@@ -310,7 +310,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
 
     // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
-    if (!isset($this->int_localisation_mode))
+    if ( !isset( $this->int_localisation_mode ) )
     {
       $this->int_localisation_mode = $this->pObj->objLocalise->get_localisationMode();
       $this->pObj->objLocalise->init_typoscript();
@@ -367,10 +367,10 @@ class tx_browser_pi1_navi_indexBrowser
   private function localisation_consolidate()
   {
     // DRS
-    if ($this->pObj->b_drs_devTodo)
+    if ( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Method localisation_consolidate( ) seem\'s to be waste!';
-      t3lib_div::devlog('[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2);
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
     }
     // DRS
     return;
@@ -384,7 +384,7 @@ class tx_browser_pi1_navi_indexBrowser
     static $thisMethodIsUsed = false;
 
     // RETURN : method is called twice at least
-    if ($thisMethodIsUsed)
+    if ( $thisMethodIsUsed )
     {
       return;
     }
@@ -393,58 +393,58 @@ class tx_browser_pi1_navi_indexBrowser
     $thisMethodIsUsed = true;
 
     // SWITCH $int_localisation_mode
-    switch ($this->int_localisation_mode)
+    switch ( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
         // RETURN : nothing to do
-        if ($this->pObj->b_drs_localise || $this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE.';
-          t3lib_div::devlog('[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return false;
         break;
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        if ($this->pObj->b_drs_localise || $this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE_ONLY.';
-          t3lib_div::devlog('[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // RETURN : nothing to do
         return false;
         break;
       case( $this->pObj->objFltr4x->get_selectedFilters() ):
-        if ($this->pObj->b_drs_localise || $this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. A filter is selected.';
-          t3lib_div::devlog('[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // RETURN : nothing to do
         return false;
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        if ($this->pObj->b_drs_localise || $this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser: Hits of the default language will substracted.';
-          t3lib_div::devlog('[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // Store current localisation mode
         $curr_int_localisation_mode = $this->int_localisation_mode;
         // Set all to default language
         $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
         //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-        $this->pObj->objLocalise->setLocalisationMode(PI1_DEFAULT_LANGUAGE);
+        $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
         $this->bool_LLconsolidationMode = true;
         // Set all to default language
         // Substract of special char tabs the hits of default language
         $arr_return = $this->count_specialChars();
-        if (!( empty($arr_return) ))
+        if ( !( empty( $arr_return ) ) )
         {
           // Restore former localisation mode
           $this->bool_LLconsolidationMode = false;
           $this->int_localisation_mode = $curr_int_localisation_mode;
           //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-          $this->pObj->objLocalise->setLocalisationMode($curr_int_localisation_mode);
+          $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
           // Restore former localisation mode
           // RETURN : Array with error prompt in case of an error
           return $arr_return;
@@ -456,7 +456,7 @@ class tx_browser_pi1_navi_indexBrowser
         $this->bool_LLconsolidationMode = false;
         $this->int_localisation_mode = $curr_int_localisation_mode;
         //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-        $this->pObj->objLocalise->setLocalisationMode($curr_int_localisation_mode);
+        $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
         // Restore former localisation mode
         // RETURN : Array with error prompt in case of an error
         return $arr_return;
@@ -464,7 +464,7 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       default:
         // DIE
-        $this->pObj->objLocalise->zz_promptLLdie(__METHOD__, __LINE__);
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
         break;
     }
     // SWITCH $int_localisation_mode
@@ -484,18 +484,18 @@ class tx_browser_pi1_navi_indexBrowser
   private function requirements_check()
   {
     // RETURN true : index browser is disabled
-    if (!$this->pObj->objFlexform->bool_indexBrowser)
+    if ( !$this->pObj->objFlexform->bool_indexBrowser )
     {
-      if ($this->pObj->b_drs_navi)
+      if ( $this->pObj->b_drs_navi )
       {
         $prompt = 'display.indexBrowser is false.';
-        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return true;
     }
     // RETURN true : index browser is disabled
 
-    if ($this->requirementsRoute())
+    if ( $this->requirementsRoute() )
     {
       return true;
     }
@@ -503,24 +503,24 @@ class tx_browser_pi1_navi_indexBrowser
     $this->localisation_init();
 
     // RETURN true : index browser hasn't any configured tab
-    $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
-    if (!is_array($arr_conf_tabs))
+    $arr_conf_tabs = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'tabs.' ];
+    if ( !is_array( $arr_conf_tabs ) )
     {
       // The index browser isn't configured
-      if ($this->pObj->b_drs_navi)
+      if ( $this->pObj->b_drs_navi )
       {
         $prompt = 'navigation.indexBrowser.tabs hasn\'t any element.';
-        t3lib_div::devlog('[WARN/NAVIGATION] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/NAVIGATION] ' . $prompt, $this->pObj->extKey, 2 );
         $prompt = 'navigation.indexBrowser won\'t be processed.';
-        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
       $arr_return = array();
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = '<h1 style="color:red">Error Index Browser</h1>';
+      $arr_return[ 'error' ][ 'status' ] = true;
+      $arr_return[ 'error' ][ 'header' ] = '<h1 style="color:red">Error Index Browser</h1>';
       $prompt = 'Index browser is enabled by the flexform or by TypoScript. ' .
               'But the TypoScript navigation.indexBrowser.tabs hasn\'t any element. ' .
               'Please take care of a proper TypoScript or disable the index browser.';
-      $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
+      $arr_return[ 'error' ][ 'prompt' ] = '<p style="color:red">' . $prompt . '</p>';
       return $arr_return;
     }
     // RETURN true : index browser hasn't any configured tab
@@ -540,13 +540,13 @@ class tx_browser_pi1_navi_indexBrowser
   {
     // #i0042, 131225, dwildt, ~
     $this->pObj->objMap->init();
-    switch ($this->pObj->objMap->enabled)
+    switch ( $this->pObj->objMap->enabled )
     {
       case( 'Map +Routes' ) :
-        if ($this->pObj->b_drs_warn)
+        if ( $this->pObj->b_drs_warn )
         {
           $prompt = 'Sorry, indexBrowser isn\'t possible. Map +Routes is used.';
-          t3lib_div :: devLog('[WARN/MAP/NAVI] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div :: devLog( '[WARN/MAP/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
         }
         return true;
         break;
@@ -556,10 +556,10 @@ class tx_browser_pi1_navi_indexBrowser
       case( false ) :
       case( 'disabled' ) :
       default :
-        if ($this->pObj->b_drs_map || $this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_map || $this->pObj->b_drs_navi )
         {
           $prompt = 'indexBrowser is possible. Map status is "' . $this->pObj->objMap->enabled . '".';
-          t3lib_div :: devLog('[INFO/MAP/NAVI] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devLog( '[INFO/MAP/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return false;
         break;
@@ -582,10 +582,10 @@ class tx_browser_pi1_navi_indexBrowser
     // Init the table.field
     $this->tableField_init();
 
-    list( $table ) = explode('.', $this->indexBrowserTableField);
+    list( $table ) = explode( '.', $this->indexBrowserTableField );
 
     // RETURN : table is the local table
-    if ($table == $this->pObj->localTable)
+    if ( $table == $this->pObj->localTable )
     {
       return;
     }
@@ -595,22 +595,22 @@ class tx_browser_pi1_navi_indexBrowser
     $prompt_02 = 'Current table.field is: ' . $this->indexBrowserTableField;
     $prompt_03 = 'Local table is: ' . $this->pObj->localTable;
     $prompt_04 = 'Please configure: ' . $this->conf_path . 'indexBrowser.field = ' . $this->pObj->localTable . '... ';
-    if ($this->pObj->b_drs_navi)
+    if ( $this->pObj->b_drs_navi )
     {
-      t3lib_div::devlog('[ERROR/NAVIGATION] ' . $prompt_01, $this->pObj->extKey, 3);
-      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_02, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_03, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt_04, $this->pObj->extKey, 1);
+      t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt_01, $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt_02, $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt_03, $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[HELP/NAVIGATION] ' . $prompt_04, $this->pObj->extKey, 1 );
     }
 
     $arr_return = array();
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
+    $arr_return[ 'error' ][ 'status' ] = true;
+    $arr_return[ 'error' ][ 'header' ] = '<h1 style="color:red">Error Index-Browser</h1>';
     $prompt = $prompt_01 . '<br />' . PHP_EOL;
     $prompt = $prompt . $prompt_02 . '<br />' . PHP_EOL;
     $prompt = $prompt . $prompt_03 . '<br />' . PHP_EOL;
     $prompt = $prompt . $prompt_04 . '<br />' . PHP_EOL;
-    $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
+    $arr_return[ 'error' ][ 'prompt' ] = '<p style="color:red">' . $prompt . '</p>';
     // Error management
     // RETURN error message
     return $arr_return;
@@ -628,30 +628,30 @@ class tx_browser_pi1_navi_indexBrowser
   {
 
     // RETURN : table.field for the index browser form is set in the current view
-    if (isset($this->conf_view['navigation.']['indexBrowser.']['field']))
+    if ( isset( $this->conf_view[ 'navigation.' ][ 'indexBrowser.' ][ 'field' ] ) )
     {
-      $this->indexBrowserTableField = $this->conf_view['navigation.']['indexBrowser.']['field'];
-      if (!empty($this->indexBrowserTableField))
+      $this->indexBrowserTableField = $this->conf_view[ 'navigation.' ][ 'indexBrowser.' ][ 'field' ];
+      if ( !empty( $this->indexBrowserTableField ) )
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = $this->conf_path . 'indexBrowser.field is ' . $this->indexBrowserTableField;
-          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return;
       }
     }
     // RETURN : table.field for the index browser form is set in the current view
     // RETURN : table.field for the index browser form is set in global configuration
-    if (isset($this->conf['navigation.']['indexBrowser.']['field']))
+    if ( isset( $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'field' ] ) )
     {
-      $this->indexBrowserTableField = $this->conf['navigation.']['indexBrowser.']['field'];
-      if (!empty($this->indexBrowserTableField))
+      $this->indexBrowserTableField = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'field' ];
+      if ( !empty( $this->indexBrowserTableField ) )
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = 'indexBrowser.field is ' . $this->indexBrowserTableField;
-          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return;
       }
@@ -660,26 +660,28 @@ class tx_browser_pi1_navi_indexBrowser
     // The user hasn't defined a table.field element.
     // We take the first one of the field views.list.X.select
     // Get the first table of the global arr_realTables_arrFields
-    reset($this->pObj->arr_realTables_arrFields);
-    $table = key($this->pObj->arr_realTables_arrFields);
+    reset( $this->pObj->arr_realTables_arrFields );
+    $table = key( $this->pObj->arr_realTables_arrFields );
     // First field of the current table
-    $field = $this->pObj->arr_realTables_arrFields[$table][0];
+    $field = $this->pObj->arr_realTables_arrFields[ $table ][ 0 ];
     $this->indexBrowserTableField = $table . '.' . $field;
     // Get the first table of the global arr_realTables_arrFields
     // DIE : undefined error
-    if (empty($this->indexBrowserTableField))
+    if ( empty( $this->indexBrowserTableField ) )
     {
-      die(__METHOD__ . '(' . __LINE__ . '): undefined error!');
+      $header = 'FATAL ERROR!';
+      $text = 'indexBrowserTableField is empty.';
+      $this->pObj->drs_die( $header, $text );
     }
     // DIE : undefined error
     // DRS
-    if ($this->pObj->b_drs_navi)
+    if ( $this->pObj->b_drs_navi )
     {
       $prompt = 'indexBrowser.field is the first table.field from ' .
               $this->conf_path . 'select: ' . $this->indexBrowserTableField;
-      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       $prompt = 'If you need another table.field use ' . $this->conf_path . 'indexBrowser.field';
-      t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt, $this->pObj->extKey, 1);
+      t3lib_div::devlog( '[HELP/NAVIGATION] ' . $prompt, $this->pObj->extKey, 1 );
     }
     // DRS
   }
@@ -703,23 +705,23 @@ class tx_browser_pi1_navi_indexBrowser
 
     // Set class vars subpart and $arr_return
     $marker = $this->getMarkerIndexBrowser();
-    $this->subpart = $this->pObj->cObj->getSubpart($this->content, $marker);
+    $this->subpart = $this->pObj->cObj->getSubpart( $this->content, $marker );
     $markerTabs = $this->getMarkerIndexbrowserTabs();
-    $this->subpartTab = $this->pObj->cObj->getSubpart($this->subpart, $markerTabs);
+    $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
     // Set class vars subpart and $arr_return
 
-    if (empty($this->subpart))
+    if ( empty( $this->subpart ) )
     {
-      if ($this->b_drs_error)
+      if ( $this->b_drs_error )
       {
         $prompt = 'Current template doesn\'t contain the subpart marker ###' . $marker . '###';
-        t3lib_div::devLog('[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->pObj->extKey, 3);
+        t3lib_div::devLog( '[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->pObj->extKey, 3 );
       }
-      $str_header = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_readlog_h1') . '</h1>';
-      $str_prompt = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_template_indexbrowser_no_subpart') . '</p>';
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_header;
-      $arr_return['error']['prompt'] = $str_prompt;
+      $str_header = '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '</h1>';
+      $str_prompt = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL( 'error_template_indexbrowser_no_subpart' ) . '</p>';
+      $arr_return[ 'error' ][ 'status' ] = true;
+      $arr_return[ 'error' ][ 'header' ] = $str_header;
+      $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
       return $arr_return;
     }
 
@@ -728,23 +730,23 @@ class tx_browser_pi1_navi_indexBrowser
 
     // Set the subpart for the tabs
     $arr_return = $this->subpart_setTabs();
-    if (!( empty($arr_return) ))
+    if ( !( empty( $arr_return ) ) )
     {
       return $arr_return;
     }
     // Set the subpart for the tabs
     // Set the whole subpart
     $arr_return = $this->subpart_setContainer();
-    if (!( empty($arr_return) ))
+    if ( !( empty( $arr_return ) ) )
     {
       return $arr_return;
     }
     // Set the whole subpart
     // Replace the subpart tabs in the whole subpart
-    $content = $this->pObj->cObj->substituteSubpart($this->subpart, $markerTabs, $this->subpartTab, true);
+    $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true );
 
     // Retirn the content
-    $arr_return['data']['content'] = $content;
+    $arr_return[ 'data' ][ 'content' ] = $content;
     return $arr_return;
   }
 
@@ -758,14 +760,14 @@ class tx_browser_pi1_navi_indexBrowser
    */
   private function subpart_setContainer()
   {
-    $markerArray['###MODE###'] = $this->mode;
-    $markerArray['###VIEW###'] = $this->view;
-    $markerArray['###MODE###'] = $this->mode;
-    $markerArray['###UL_MODE###'] = $this->mode;
-    $markerArray['###VIEW###'] = $this->view;
-    $markerArray['###UL_VIEW###'] = $this->view;
+    $markerArray[ '###MODE###' ] = $this->mode;
+    $markerArray[ '###VIEW###' ] = $this->view;
+    $markerArray[ '###MODE###' ] = $this->mode;
+    $markerArray[ '###UL_MODE###' ] = $this->mode;
+    $markerArray[ '###VIEW###' ] = $this->view;
+    $markerArray[ '###UL_VIEW###' ] = $this->view;
 
-    $this->subpart = $this->pObj->cObj->substituteMarkerArray($this->subpart, $markerArray);
+    $this->subpart = $this->pObj->cObj->substituteMarkerArray( $this->subpart, $markerArray );
   }
 
   /**
@@ -781,31 +783,31 @@ class tx_browser_pi1_navi_indexBrowser
 
     $this->linkDefaultTab = $this->zz_tabDefaultLink();
     $bool_dontLinkDefaultTab = false;
-    if ($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] == 0)
+    if ( $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTab.' ][ 'display_in_url' ] == 0 )
     {
       $bool_dontLinkDefaultTab = true;
       // #7582, Bugfix, 100501
-      if ($this->pObj->objFlexform->bool_emptyAtStart)
+      if ( $this->pObj->objFlexform->bool_emptyAtStart )
       {
         $bool_dontLinkDefaultTab = false;
         // DRS - Development Reporting System
-        if ($this->pObj->b_drs_templating)
+        if ( $this->pObj->b_drs_templating )
         {
-          t3lib_div::devlog('[WARN/TEMPLATING] Empty list by start is true and the default tab of the index browser shouldn\'t linked with a piVar. ' .
-                  'This is not proper.', $this->pObj->extKey, 2);
-          t3lib_div::devlog('[INFO/TEMPLATING] The default tab of the index browser will be linked with a piVar by the system!', $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[WARN/TEMPLATING] Empty list by start is true and the default tab of the index browser shouldn\'t linked with a piVar. ' .
+                  'This is not proper.', $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[INFO/TEMPLATING] The default tab of the index browser will be linked with a piVar by the system!', $this->pObj->extKey, 0 );
         }
       }
     }
     // Get the tab array
-    (array) $arrTabs = $this->indexBrowserTab['tabIds'];
+    ( array ) $arrTabs = $this->indexBrowserTab[ 'tabIds' ];
     // get id of the last visible tab
     $lastTabId = $this->zz_tabLastId();
 
     // LOOP : tabs
-    foreach ((array) $this->indexBrowserTab['tabIds'] as $key => $tab)
+    foreach ( ( array ) $this->indexBrowserTab[ 'tabIds' ] as $key => $tab )
     {
-      if ($tab['sum'] < 1 && !$tab['displayWoItems'])
+      if ( $tab[ 'sum' ] < 1 && !$tab[ 'displayWoItems' ] )
       {
         continue;
       }
@@ -820,15 +822,15 @@ class tx_browser_pi1_navi_indexBrowser
       // #43558, 121203, dwildt, 6-
       // #43558, 121203, dwildt, 14+
       // Wrap the label
-      if (isset($tab['wrap']))
+      if ( isset( $tab[ 'wrap' ] ) )
       {
-        $tab['label'] = str_replace('|', $tab['label'], $tab['wrap']);
+        $tab[ 'label' ] = str_replace( '|', $tab[ 'label' ], $tab[ 'wrap' ] );
       }
-      if (!( isset($tab['wrap']) ))
+      if ( !( isset( $tab[ 'wrap' ] ) ) )
       {
-        $tab['label'] = str_replace
+        $tab[ 'label' ] = str_replace
                 (
-                '|', $tab['label'], $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap']
+                '|', $tab[ 'label' ], $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTabWrap' ]
         );
       }
       // #43558, 121203, dwildt, 14+
@@ -836,30 +838,30 @@ class tx_browser_pi1_navi_indexBrowser
 //        // Wrap the label
 //      $label  = $tab['label'];
       // Init the marker array
-      unset($markerArray);
+      unset( $markerArray );
 
       // Get class
-      $class = $this->zz_tabClass($lastTabId, $tab, $key);
-      $markerArray['###CLASS###'] = $class;
-      $markerArray['###LI_CLASS###'] = $class;
+      $class = $this->zz_tabClass( $lastTabId, $tab, $key );
+      $markerArray[ '###CLASS###' ] = $class;
+      $markerArray[ '###LI_CLASS###' ] = $class;
 
       // SWITCH : sum of hits of tab, display without items
-      switch (true)
+      switch ( true )
       {
-        case(!empty($tab['sum']) ):
+        case(!empty( $tab[ 'sum' ] ) ):
           // Tab with hits
-          $markerArray['###TAB###'] = $this->zz_tabLinkLabel($tab);
+          $markerArray[ '###TAB###' ] = $this->zz_tabLinkLabel( $tab );
           break;
-        case( $tab['displayWoItems'] ):
+        case( $tab[ 'displayWoItems' ] ):
           // Tab without hits
           // #43558, 121203, dwildt, 1-
           //$markerArray['###TAB###'] = $label;
           // #43558, 121203, dwildt, 1+
 #43732
           $class = 'class="ui-tabs-anchor without-href"';
-          $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
+          $tab[ 'label' ] = '<a ' . $class . '>' . $tab[ 'label' ] . '</a>';
 //$this->pObj->dev_var_dump( $tab['label'] );
-          $markerArray['###TAB###'] = $tab['label'];
+          $markerArray[ '###TAB###' ] = $tab[ 'label' ];
           break;
         default:
           continue;
@@ -882,7 +884,7 @@ class tx_browser_pi1_navi_indexBrowser
 //      }
 //        // #43558, 121203, dwildt, 14+
       // Set the content
-      $content = $content . $this->pObj->cObj->substituteMarkerArray($this->subpartTab, $markerArray);
+      $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
     }
     // LOOP : tabs
     // Set the class var subpartTab
@@ -906,52 +908,52 @@ class tx_browser_pi1_navi_indexBrowser
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     $arrCsvAttributes = array();
 
     // Get tabSpecial property default
-    $this->indexBrowserTab['tabSpecial']['default'] = null;
-    if (isset($this->conf['navigation.']['indexBrowser.']['defaultTab']))
+    $this->indexBrowserTab[ 'tabSpecial' ][ 'default' ] = null;
+    if ( isset( $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTab' ] ) )
     {
-      $this->indexBrowserTab['tabSpecial']['default'] = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
+      $this->indexBrowserTab[ 'tabSpecial' ][ 'default' ] = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTab' ];
     }
     // Get tabSpecial property default
     // Get default property display tabs without any item
-    $defaultDisplayWoItems = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
+    $defaultDisplayWoItems = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'display.' ][ 'tabWithoutItems' ];
 
     // LOOP tabs TS configuratione array
-    $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
-    foreach ((array) $conf_tabs as $tabId => $tabLabel)
+    $conf_tabs = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'tabs.' ];
+    foreach ( ( array ) $conf_tabs as $tabId => $tabLabel )
     {
       // CONTINUE : key is an array
-      if (substr($tabId, -1) == '.')
+      if ( substr( $tabId, -1 ) == '.' )
       {
         continue;
       }
       // CONTINUE : key is an array
       // Get attributes
-      $csvAttributes = $conf_tabs[$tabId . '.']['valuesCSV'];
-      $csvAttributes = str_replace(' ', null, $csvAttributes);
+      $csvAttributes = $conf_tabs[ $tabId . '.' ][ 'valuesCSV' ];
+      $csvAttributes = str_replace( ' ', null, $csvAttributes );
       $arrCsvAttributes[] = $csvAttributes;
 
       // Init tab attributes
-      $this->tabs_initAttributes($csvAttributes, $tabLabel, $tabId);
+      $this->tabs_initAttributes( $csvAttributes, $tabLabel, $tabId );
       // Init tab properties
-      $this->tabs_initProperties($conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems);
+      $this->tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
     }
     // LOOP tabs TS configuratione array
     // Init special chars
-    $this->tabs_initSpecialChars($arrCsvAttributes);
+    $this->tabs_initSpecialChars( $arrCsvAttributes );
 
     // Count special chars
     $arr_return = $this->count_specialChars();
     // RETURN : error prompt
-    if (!( empty($arr_return) ))
+    if ( !( empty( $arr_return ) ) )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // RETURN : error prompt
@@ -959,11 +961,11 @@ class tx_browser_pi1_navi_indexBrowser
     // Count chars
     $arr_return = $this->count_chars();
     // RETURN : error prompt
-    if (!( empty($arr_return) ))
+    if ( !( empty( $arr_return ) ) )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // RETURN : error prompt
@@ -973,7 +975,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
   }
 
   /**
@@ -986,38 +988,38 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.11
    * @since   3.9.10
    */
-  private function tabs_initAttributes($csvAttributes, $tabLabel, $tabId)
+  private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
   {
     // RETURN : no attributes
-    if (empty($csvAttributes))
+    if ( empty( $csvAttributes ) )
     {
       return;
     }
     // RETURN : no attributes
     // LOOP : attributes
-    $attributes = explode(',', $csvAttributes);
-    foreach ($attributes as $attribute)
+    $attributes = explode( ',', $csvAttributes );
+    foreach ( $attributes as $attribute )
     {
       // DRS : ERROR : attribute is part of two tabs at least
-      if (isset($this->indexBrowserTab['attributes'][$attribute]))
+      if ( isset( $this->indexBrowserTab[ 'attributes' ][ $attribute ] ) )
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = 'The tab attribute ' . $attribute . ' is part of two tabs at least!';
-          t3lib_div::devlog('[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3);
+          t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
           $prompt = 'You will get an unproper result for the index browser';
-          t3lib_div::devlog('[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2);
-          $prompt = $attribute . ' is part of tab[' . $this->indexBrowserTab['attributes'][$attribute]['tabLabel'] . '] ' .
+          t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
+          $prompt = $attribute . ' is part of tab[' . $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabLabel' ] . '] ' .
                   ' and of tab[' . $tabLabel . '] at least!';
-          t3lib_div::devlog('[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
           $prompt = 'Please take care of a proper TypoScript configuration!';
-          t3lib_div::devlog('[HELP/NAVI] ' . $prompt, $this->pObj->extKey, 1);
+          t3lib_div::devlog( '[HELP/NAVI] ' . $prompt, $this->pObj->extKey, 1 );
         }
       }
       // DRS : ERROR : attribute is part of two tabs at least
       // Set class var
-      $this->indexBrowserTab['attributes'][$attribute]['tabLabel'] = $tabLabel;
-      $this->indexBrowserTab['attributes'][$attribute]['tabId'] = $tabId;
+      $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabLabel' ] = $tabLabel;
+      $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ] = $tabId;
     }
     // LOOP : attributes
   }
@@ -1033,64 +1035,64 @@ class tx_browser_pi1_navi_indexBrowser
   private function tabs_initFindInSetForCurrentTab()
   {
     // RETURN : Any tab isn't selected
-    if (empty($this->pObj->piVars['indexBrowserTab']))
+    if ( empty( $this->pObj->piVars[ 'indexBrowserTab' ] ) )
     {
       return;
     }
     // RETURN : Any tab isn't selected
     // Get the array id of the selected tab
-    $labelAscii = $this->pObj->piVars['indexBrowserTab'];
-    $tabId = $this->indexBrowserTab['tabLabels'][$labelAscii];
+    $labelAscii = $this->pObj->piVars[ 'indexBrowserTab' ];
+    $tabId = $this->indexBrowserTab[ 'tabLabels' ][ $labelAscii ];
     // Get the array id of the selected tab
     // SWITCH : the special tab 'others'
-    switch ($this->indexBrowserTab['tabIds'][$tabId]['special'])
+    switch ( $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'special' ] )
     {
       case( 'others' ):
         // Get all defined attributes
-        $attributes = $this->indexBrowserTab['initials']['all'];
+        $attributes = $this->indexBrowserTab[ 'initials' ][ 'all' ];
         break;
       default:
         // Get the attributes of the selected tab
-        $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+        $attributes = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'attributes' ];
         break;
     }
     // SWITCH : the special tab 'others'
     // Get a row with the byte length og each attribute
-    $arrChars = explode(',', $attributes);
-    $arr_return = $this->zz_getSqlLengthAsRow($arrChars);
-    if ($arr_return['error']['status'])
+    $arrChars = explode( ',', $attributes );
+    $arr_return = $this->zz_getSqlLengthAsRow( $arrChars );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $row = $arr_return['data']['row'];
+    $row = $arr_return[ 'data' ][ 'row' ];
     // Get a row with the byte length og each attribute
     // RETURN : there isn't any SQL result
-    if (empty($row))
+    if ( empty( $row ) )
     {
       return;
     }
     // RETURN : there isn't any SQL result
     // Get an array with all FIND IN SET statements
-    $arrFindInSet = $this->zz_getFindInSetForAllByte($row);
-    if (empty($arrFindInSet))
+    $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
+    if ( empty( $arrFindInSet ) )
     {
       return;
     }
 
     // Get the SQL statement for all FIND IN SET
     $orFindInSet = array();
-    foreach ($arrFindInSet as $length)
+    foreach ( $arrFindInSet as $length )
     {
-      foreach ($length as $statement)
+      foreach ( $length as $statement )
       {
         $orFindInSet[] = $statement;
       }
     }
-    $findInSet = implode(' OR ', $orFindInSet);
+    $findInSet = implode( ' OR ', $orFindInSet );
     $findInSet = '( ' . $findInSet . ' )';
     // Get the SQL statement for all FIND IN SET
     // In case of special tab 'others' prepend a NOT
-    if ($this->indexBrowserTab['tabIds'][$tabId]['special'] == 'others')
+    if ( $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'special' ] == 'others' )
     {
       $findInSet = 'NOT ' . $findInSet;
     }
@@ -1111,50 +1113,50 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.11
    * @since   3.9.10
    */
-  private function tabs_initProperties($conf_tabs, $tabId, $tabLabel, $displayWoItems)
+  private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
   {
     // Overwrite tab label in case of stdWrap
-    if ($conf_tabs[$tabId . '.']['stdWrap.'])
+    if ( $conf_tabs[ $tabId . '.' ][ 'stdWrap.' ] )
     {
-      $stdWrap = $conf_tabs[$tabId . '.']['stdWrap.'];
-      $tabLabel = $this->pObj->objWrapper->general_stdWrap($tabLabel, $stdWrap);
+      $stdWrap = $conf_tabs[ $tabId . '.' ][ 'stdWrap.' ];
+      $tabLabel = $this->pObj->objWrapper4x->general_stdWrap( $tabLabel, $stdWrap );
     }
     // Overwrite tab label in case of stdWrap
     // Overwrite property display without items
-    if (isset($conf_tabs[$tabId . '.']['displayWithoutItems']))
+    if ( isset( $conf_tabs[ $tabId . '.' ][ 'displayWithoutItems' ] ) )
     {
-      $displayWoItems = $conf_tabs[$tabId . '.']['displayWithoutItems'];
+      $displayWoItems = $conf_tabs[ $tabId . '.' ][ 'displayWithoutItems' ];
     }
     // Overwrite property display without items
     // Set labelAscii. Label for using in the URL
-    $labelAscii = $this->zz_specCharsToASCII($tabLabel);
-    $attributes = $conf_tabs[$tabId . '.']['valuesCSV'];
-    $attributes = trim($attributes);
-    $attributes = str_replace(' ', null, $attributes);
+    $labelAscii = $this->zz_specCharsToASCII( $tabLabel );
+    $attributes = $conf_tabs[ $tabId . '.' ][ 'valuesCSV' ];
+    $attributes = trim( $attributes );
+    $attributes = str_replace( ' ', null, $attributes );
 
     // Set tab array
-    $this->indexBrowserTab['tabIds'][$tabId]['label'] = $tabLabel;
-    $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'] = $labelAscii;
-    $this->indexBrowserTab['tabIds'][$tabId]['displayWoItems'] = $displayWoItems;
-    $this->indexBrowserTab['tabIds'][$tabId]['attributes'] = $attributes;
-    $this->indexBrowserTab['tabIds'][$tabId]['sum'] = 0;
-    $this->indexBrowserTab['tabLabels'][$labelAscii] = $tabId;
+    $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'label' ] = $tabLabel;
+    $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'labelAscii' ] = $labelAscii;
+    $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'displayWoItems' ] = $displayWoItems;
+    $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'attributes' ] = $attributes;
+    $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = 0;
+    $this->indexBrowserTab[ 'tabLabels' ][ $labelAscii ] = $tabId;
     // Set tab selected
-    $this->zz_setTabClassSelected($tabId);
+    $this->zz_setTabClassSelected( $tabId );
     // Set tab array
     // RETURN : tab with special value 'all'
-    if ($conf_tabs[$tabId . '.']['special'] == 'all')
+    if ( $conf_tabs[ $tabId . '.' ][ 'special' ] == 'all' )
     {
-      $this->indexBrowserTab['tabIds'][$tabId]['special'] = 'all';
-      $this->indexBrowserTab['tabSpecial']['all'] = $tabId;
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'special' ] = 'all';
+      $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ] = $tabId;
       return;
     }
     // RETURN : tab with special value 'all'
     // RETURN : tab with special value 'others'
-    if ($conf_tabs[$tabId . '.']['special'] == 'others')
+    if ( $conf_tabs[ $tabId . '.' ][ 'special' ] == 'others' )
     {
-      $this->indexBrowserTab['tabIds'][$tabId]['special'] = 'others';
-      $this->indexBrowserTab['tabSpecial']['others'] = $tabId;
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'special' ] = 'others';
+      $this->indexBrowserTab[ 'tabSpecial' ][ 'others' ] = $tabId;
       return;
     }
     // RETURN : tab with special value 'others'
@@ -1168,36 +1170,36 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.11
    * @since   3.9.10
    */
-  private function tabs_initSpecialChars($arrCsvAttributes)
+  private function tabs_initSpecialChars( $arrCsvAttributes )
   {
     $matches = array();
 
     // Get initials unique
-    $arrCsvAttributes = array_unique((array) $arrCsvAttributes);
-    $csvInitials = implode(',', (array) $arrCsvAttributes);
+    $arrCsvAttributes = array_unique( ( array ) $arrCsvAttributes );
+    $csvInitials = implode( ',', ( array ) $arrCsvAttributes );
 
     // Init vars with all initials
-    $this->indexBrowserTab['initials']['all'] = $csvInitials;
-    $this->indexBrowserTab['initials']['specialChars'] = null;
-    $this->indexBrowserTab['initials']['alphaNum'] = null;
+    $this->indexBrowserTab[ 'initials' ][ 'all' ] = $csvInitials;
+    $this->indexBrowserTab[ 'initials' ][ 'specialChars' ] = null;
+    $this->indexBrowserTab[ 'initials' ][ 'alphaNum' ] = null;
 
     // UTF-8 decode
-    $subject = utf8_decode($csvInitials);
+    $subject = utf8_decode( $csvInitials );
 
     // Init var with special chars
     $pattern = '/[^0-9a-zA-Z,]/';
-    if (preg_match_all($pattern, $subject, $matches))
+    if ( preg_match_all( $pattern, $subject, $matches ) )
     {
-      $specialChars = implode(',', $matches[0]);
-      $this->indexBrowserTab['initials']['specialChars'] = utf8_encode($specialChars);
+      $specialChars = implode( ',', $matches[ 0 ] );
+      $this->indexBrowserTab[ 'initials' ][ 'specialChars' ] = utf8_encode( $specialChars );
     }
     // Init var with special chars
     // Init var with alpha numeric chars
     $pattern = '/[0-9a-zA-Z]/';
-    if (preg_match_all($pattern, $subject, $matches))
+    if ( preg_match_all( $pattern, $subject, $matches ) )
     {
-      $specialChars = implode(',', $matches[0]);
-      $this->indexBrowserTab['initials']['alphaNum'] = utf8_encode($specialChars);
+      $specialChars = implode( ',', $matches[ 0 ] );
+      $this->indexBrowserTab[ 'initials' ][ 'alphaNum' ] = utf8_encode( $specialChars );
     }
     // Init var with alpha numeric chars
   }
@@ -1220,28 +1222,28 @@ class tx_browser_pi1_navi_indexBrowser
     // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet();
     // Set SQL char set to latin1
-    $this->sqlCharsetSet('latin1');
+    $this->sqlCharsetSet( 'latin1' );
 
     // SQL result with sum for records with one byte chars as first character
-    $arr_return = $this->count_chars_resSqlCount($currSqlCharset);
-    if ($arr_return['error']['status'])
+    $arr_return = $this->count_chars_resSqlCount( $currSqlCharset );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $res = $arr_return['data']['res'];
+    $res = $arr_return[ 'data' ][ 'res' ];
     // SQL result with sum for records with one byte chars as first character
     // Add the sum to the tabs
-    $this->count_chars_addSumToTab($res);
+    $this->count_chars_addSumToTab( $res );
 
     // Free SQL result
-    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
     // Reset SQL char set
-    $this->sqlCharsetSet($currSqlCharset);
+    $this->sqlCharsetSet( $currSqlCharset );
 
-    $arrUids = explode(',', $this->uidListDefaultAndCurrentLL);
-    sort($arrUids, SORT_NUMERIC);
-    $this->uidListDefaultAndCurrentLL = implode(',', $arrUids);
+    $arrUids = explode( ',', $this->uidListDefaultAndCurrentLL );
+    sort( $arrUids, SORT_NUMERIC );
+    $this->uidListDefaultAndCurrentLL = implode( ',', $arrUids );
   }
 
   /**
@@ -1253,65 +1255,65 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.11
    */
-  private function count_chars_addSumToTab($res)
+  private function count_chars_addSumToTab( $res )
   {
     // WHILE $row
-    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+    while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
       // Get values from the SQL row
-      $attribute = $row['initial'];
-      $rowSum = $row['count'];
+      $attribute = $row[ 'initial' ];
+      $rowSum = $row[ 'count' ];
 
       // Set attributes sum
-      $sum = $this->indexBrowserTab['attributes'][$attribute]['sum'];
+      $sum = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'sum' ];
       // #36842, dwildt, 120504
-      if (!$this->bool_LLconsolidationMode)
+      if ( !$this->bool_LLconsolidationMode )
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $rowSum (#' . $rowSum . ')';
-          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // Rows of the default language and a localised language optionally
         $sum = $rowSum;
       }
       else
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' .
                   $sum . ' - #' . $rowSum . ' = #' . ( $sum - $rowSum ) . ')';
-          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // Substract rows of the default language
         $sum = $sum - $rowSum;
       }
-      $this->indexBrowserTab['attributes'][$attribute]['sum'] = $sum;
+      $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'sum' ] = $sum;
       // Set attributes sum
       // Get id of the tab for all attributes
-      $tabId = $this->indexBrowserTab['tabSpecial']['all'];
+      $tabId = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
       // Get sum of the current tab
-      $sum = $this->indexBrowserTab['tabIds'][$tabId]['sum'];
+      $sum = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
       // Add row sum to current sum
       // #36842, dwildt, 120504
-      if (!$this->bool_LLconsolidationMode)
+      if ( !$this->bool_LLconsolidationMode )
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' .
                   $sum . ' + #' . $rowSum . ' = #' . ( $sum + $rowSum ) . ')';
-          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // Rows of the default language and a localised language optionally
         $sum = $sum + $rowSum;
       }
       else
       {
-        if ($this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_navi )
         {
           $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' .
                   $sum . ' - #' . $rowSum . ' = #' . ( $sum - $rowSum ) . ')';
-          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // Substract rows of the default language
         $sum = $sum - $rowSum;
@@ -1320,23 +1322,23 @@ class tx_browser_pi1_navi_indexBrowser
 
 
       // Allocates result to the current tab
-      $this->indexBrowserTab['tabIds'][$tabId]['sum'] = $sum;
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
 
       // Get id of the tab others or of the tab with the current attribute
-      if (isset($this->indexBrowserTab['attributes'][$attribute]['tabId']))
+      if ( isset( $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ] ) )
       {
-        $tabId = $this->indexBrowserTab['attributes'][$attribute]['tabId'];
+        $tabId = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
       }
       else
       {
-        $tabId = $this->indexBrowserTab['tabSpecial']['others'];
+        $tabId = $this->indexBrowserTab[ 'tabSpecial' ][ 'others' ];
       }
       // Get id of the tab others or of the tab with the current attribute
       // Get sum of the current tab
-      $sum = $this->indexBrowserTab['tabIds'][$tabId]['sum'];
+      $sum = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
       // Add row sum to current sum
       // #36842, dwildt, 120504
-      if (!$this->bool_LLconsolidationMode)
+      if ( !$this->bool_LLconsolidationMode )
       {
 //        if( $this->pObj->b_drs_navi )
 //        {
@@ -1358,37 +1360,37 @@ class tx_browser_pi1_navi_indexBrowser
       }
       // Allocates result to the current tab
 
-      $this->indexBrowserTab['tabIds'][$tabId]['sum'] = $sum;
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
     }
     // WHILE $row
 
-    if ($this->pObj->b_drs_navi)
+    if ( $this->pObj->b_drs_navi )
     {
-      foreach ((array) $this->indexBrowserTab['attributes'] as $attribute => $arrAttribute)
+      foreach ( ( array ) $this->indexBrowserTab[ 'attributes' ] as $attribute => $arrAttribute )
       {
-        $sum = $arrAttribute['sum'];
+        $sum = $arrAttribute[ 'sum' ];
         $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
-        switch (true)
+        switch ( true )
         {
           case( $sum > 0 ) :
-            t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+            t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
             break;
           case( $sum < 0 ) :
-            t3lib_div::devlog('[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, 3);
+            t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, 3 );
             break;
         }
       }
-      foreach ((array) $this->indexBrowserTab['tabIds'] as $tabId => $arrTabId)
+      foreach ( ( array ) $this->indexBrowserTab[ 'tabIds' ] as $tabId => $arrTabId )
       {
-        $sum = $arrTabId['sum'];
+        $sum = $arrTabId[ 'sum' ];
         $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] = #' . $sum;
-        switch (true)
+        switch ( true )
         {
           case( $sum > 0 ) :
-            t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+            t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
             break;
           case( $sum < 0 ) :
-            t3lib_div::devlog('[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, 3);
+            t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, 3 );
             break;
         }
       }
@@ -1403,32 +1405,32 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.13
    * @since   3.9.11
    */
-  private function count_chars_resSqlCount($currSqlCharset)
+  private function count_chars_resSqlCount( $currSqlCharset )
   {
     // Build FIND IN SET
     $strFindInSet = null;
-    foreach ($this->findInSet as $arrfindInSet)
+    foreach ( $this->findInSet as $arrfindInSet )
     {
-      $strFindInSet = $strFindInSet . implode(" OR ", $arrfindInSet);
+      $strFindInSet = $strFindInSet . implode( " OR ", $arrfindInSet );
     }
-    if (!empty($strFindInSet))
+    if ( !empty( $strFindInSet ) )
     {
       $strFindInSet = "NOT (" . $strFindInSet . ")";
     }
     // Build FIND IN SET
     // SWITCH $int_localisation_mode
-    switch ($this->int_localisation_mode)
+    switch ( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $arr_return = $this->count_chars_resSqlCountDefLL($strFindInSet, $currSqlCharset);
+        $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset );
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        $arr_return = $this->count_chars_resSqlCountSelOrDefLL($strFindInSet, $currSqlCharset);
+        $arr_return = $this->count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset );
         break;
       default:
         // DIE
-        $this->pObj->objLocalise->zz_promptLLdie(__METHOD__, __LINE__);
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
         break;
     }
     // SWITCH $int_localisation_mode
@@ -1445,15 +1447,15 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 4.8.7
    * @since   3.9.11
    */
-  private function count_chars_resSqlCountDefLL($strFindInSet, $currSqlCharset)
+  private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
   {
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
     $tableUid = $table . ".uid";
 
-    $caseSensitive = $this->conf['navigation.']['indexBrowser.']['caseSensitive'];
-    switch ($caseSensitive)
+    $caseSensitive = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'caseSensitive' ];
+    switch ( $caseSensitive )
     {
       case( true ) :
         // 140227, dwildt, 1-
@@ -1487,8 +1489,8 @@ class tx_browser_pi1_navi_indexBrowser
     $select = "COUNT( DISTINCT " . $tableUid . " ) AS 'count', LEFT( " . $initial . ", 1 ) AS 'initial'";
     // #56329, 140226, dwildt, 1+
     $selectSubQuery = $tableUid . " AS '" . $tableUid . "'";
-    $from = $this->sqlStatement_from($table);
-    $where = $this->sqlStatement_where($table, $strFindInSet);
+    $from = $this->sqlStatement_from( $table );
+    $where = $this->sqlStatement_where( $table, $strFindInSet );
     // #44125, 121218, dwildt, 3-
 //    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT ( " . $initial . ", 1 ) AS 'initial'";
 //    $groupBy  = "LEFT ( " . $initial . ", 1 )";
@@ -1509,31 +1511,31 @@ class tx_browser_pi1_navi_indexBrowser
 //                    $limit
 //                  );
     // Get queries
-    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+    $query = $GLOBALS[ 'TYPO3_DB' ]->SELECTquery
             (
             $select, $from, $where, $groupBy, $orderBy, $limit
     );
     // #56329, 140226, dwildt, 6+
     $groupBy = null;
     $orderBy = null;
-    $subQueryTemplate = $GLOBALS['TYPO3_DB']->SELECTquery
-                        (
-                        $selectSubQuery, $from, $where, $groupBy, $orderBy, $limit
+    $subQueryTemplate = $GLOBALS[ 'TYPO3_DB' ]->SELECTquery
+            (
+            $selectSubQuery, $from, $where, $groupBy, $orderBy, $limit
     );
     // Get queries
     // #56329, 140226, dwildt, 1+
-    $query = $this->pObj->objViewlist->queryWiAndFilter($query, $limit, $subQueryTemplate);
+    $query = $this->pObj->objViewlist->queryWiAndFilter( $query, $limit, $subQueryTemplate );
     //$this->pObj->dev_var_dump(str_replace('\'', '"', $query));
     // Execute query
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
             'Don\'t use the query in a localised context.';
     $debugTrailLevel = 1;
-    $arr_return = $this->pObj->objSqlFun->sql_query($query, $promptOptimise, $debugTrailLevel);
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
     // Execute query
     // Error management
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
-      $this->sqlCharsetSet($currSqlCharset);
+      $this->sqlCharsetSet( $currSqlCharset );
     }
 
     return $arr_return;
@@ -1548,48 +1550,48 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.13
    * @since   3.9.11
    */
-  private function count_chars_resSqlCountSelOrDefLL($strFindInSet, $currSqlCharset)
+  private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
   {
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
 
     // Label of field with the uid of the record with the default language
-    $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $parentUid = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
 
     // RETURN : table isn't localised
-    if (empty($parentUid))
+    if ( empty( $parentUid ) )
     {
-      if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi)
+      if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
       {
         $prompt = 'Index browser won\'t be localised, because ' . $table . ' hasn\'t any transOrigPointerField.';
-        t3lib_div::devlog('[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      $arr_return = $this->count_chars_resSqlCountDefLL($strFindInSet, $currSqlCharset);
+      $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset );
     }
 
     // Get Ids of all (!) default language records
-    $arr_return = $this->zz_sqlIdsOfDefLL($strFindInSet, $currSqlCharset);
-    if ($arr_return['error']['status'])
+    $arr_return = $this->zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $arr_rows = $arr_return['data']['rows'];
-    $uidListOfDefLL = implode(',', (array) $arr_rows);
+    $arr_rows = $arr_return[ 'data' ][ 'rows' ];
+    $uidListOfDefLL = implode( ',', ( array ) $arr_rows );
 //    var_dump( __METHOD__, __LINE__, $uidListOfDefLL );
     // Get Ids of all (!) default language records
     // Get Ids of all (!) translated language records
-    $arr_return = $this->zz_sqlIdsOfTranslatedLL($strFindInSet, $uidListOfDefLL, $currSqlCharset);
-    if ($arr_return['error']['status'])
+    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $arr_rowsLL = $arr_return['data']['rows'];
+    $arr_rowsLL = $arr_return[ 'data' ][ 'rows' ];
 //    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
 //    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
     // Get Ids of all (!) translated language records
     // Substract uids of default language records, which are translated
-    $arr_rowsDefWoTranslated = array_diff((array) $arr_rows, (array) $arr_rowsLL[$parentUid]);
+    $arr_rowsDefWoTranslated = array_diff( ( array ) $arr_rows, ( array ) $arr_rowsLL[ $parentUid ] );
 
 
 //    var_dump( __METHOD__, __LINE__, 'array_diff' );
@@ -1597,21 +1599,21 @@ class tx_browser_pi1_navi_indexBrowser
 //    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
     // Add uids of translated recors
-    $arr_rowsDefWiCurr = array_merge((array) $arr_rowsDefWoTranslated, (array) $arr_rowsLL['uid']);
+    $arr_rowsDefWiCurr = array_merge( ( array ) $arr_rowsDefWoTranslated, ( array ) $arr_rowsLL[ 'uid' ] );
 
 //    var_dump( __METHOD__, __LINE__, 'array_merge' );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
     // Sort the array of uids
-    sort($arr_rowsDefWiCurr, SORT_NUMERIC);
+    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
 
     // Get list of uids from the array
-    $uidListDefAndCurr = implode(',', (array) $arr_rowsDefWiCurr);
+    $uidListDefAndCurr = implode( ',', ( array ) $arr_rowsDefWiCurr );
 
     // Count initials
     $length = 1;
-    $arr_return = $this->zz_sqlCountInitialsLL($length, $uidListDefAndCurr, $currSqlCharset);
+    $arr_return = $this->zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset );
 
     // RETURN : the sql result
     return $arr_return;
@@ -1633,24 +1635,24 @@ class tx_browser_pi1_navi_indexBrowser
   private function count_specialChars()
   {
     // RETURN : no special chars
-    if (empty($this->indexBrowserTab['initials']['specialChars']))
+    if ( empty( $this->indexBrowserTab[ 'initials' ][ 'specialChars' ] ) )
     {
       return;
     }
     // RETURN : no special chars
     // Get a row with the SQL length for each special char
-    $arrSpecialChars = explode(',', $this->indexBrowserTab['initials']['specialChars']);
-    $arr_return = $this->zz_getSqlLengthAsRow($arrSpecialChars);
-    if ($arr_return['error']['status'])
+    $arrSpecialChars = explode( ',', $this->indexBrowserTab[ 'initials' ][ 'specialChars' ] );
+    $arr_return = $this->zz_getSqlLengthAsRow( $arrSpecialChars );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $row = $arr_return['data']['row'];
-    unset($arr_return);
+    $row = $arr_return[ 'data' ][ 'row' ];
+    unset( $arr_return );
     // Get a row with the SQL length for each special char
     // Get the sum for each special char initial
-    $arr_return = $this->count_specialChars_addSum($row);
-    if ($arr_return['error']['status'])
+    $arr_return = $this->count_specialChars_addSum( $row );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
@@ -1665,36 +1667,36 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.10
    */
-  private function count_specialChars_addSum($row)
+  private function count_specialChars_addSum( $row )
   {
     // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet();
     // Set SQL char set to latin1
-    $this->sqlCharsetSet('latin1');
+    $this->sqlCharsetSet( 'latin1' );
 
     // Set class var findInSet
-    $this->findInSet = $this->zz_getFindInSetForMultibyte($row);
+    $this->findInSet = $this->zz_getFindInSetForMultibyte( $row );
     //$this->findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
     // LOOP : find in set for each special char length group
-    foreach ((array) $this->findInSet as $length => $arrfindInSet)
+    foreach ( ( array ) $this->findInSet as $length => $arrfindInSet )
     {
       // SQL result with sum for records with a sepecial char as first character
-      $arr_return = $this->count_specialChars_resSqlCount($length, $arrfindInSet, $currSqlCharset);
-      if ($arr_return['error']['status'])
+      $arr_return = $this->count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset );
+      if ( $arr_return[ 'error' ][ 'status' ] )
       {
         return $arr_return;
       }
-      $res = $arr_return['data']['res'];
+      $res = $arr_return[ 'data' ][ 'res' ];
       // SQL result with sum for records with a sepecial char as first character
       // Add the sum to the tab with the special char attribute
-      $this->count_chars_addSumToTab($res);
+      $this->count_chars_addSumToTab( $res );
 
       // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result($res);
+      $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
     }
     // LOOP : find in set for each special char length group
     // Reset SQL char set
-    $this->sqlCharsetSet($currSqlCharset);
+    $this->sqlCharsetSet( $currSqlCharset );
   }
 
   /**
@@ -1708,28 +1710,28 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 4.3.1
    * @since   3.9.10
    */
-  private function count_specialChars_resSqlCount($length, $arrfindInSet, $currSqlCharset)
+  private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
   {
     // 121218, dwildt, 3-
 //      // Get current table.field of the index browser
 //    $tableField     = $this->indexBrowserTableField;
 //    list( $table )  = explode( '.', $tableField );
 
-    $strFindInSet = "(" . implode(" OR ", $arrfindInSet) . ")";
+    $strFindInSet = "(" . implode( " OR ", $arrfindInSet ) . ")";
 
     // SWITCH $int_localisation_mode
-    switch ($this->int_localisation_mode)
+    switch ( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $arr_return = $this->count_specialChars_resSqlCountDefLL($length, $strFindInSet, $currSqlCharset);
+        $arr_return = $this->count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset );
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        $arr_return = $this->count_specialChars_resSqlCountSelOrDefLL($length, $strFindInSet, $currSqlCharset);
+        $arr_return = $this->count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset );
         break;
       default:
         // DIE
-        $this->pObj->objLocalise->zz_promptLLdie(__METHOD__, __LINE__);
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
         break;
     }
     // SWITCH $int_localisation_mode
@@ -1748,11 +1750,11 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 4.8.7
    * @since   3.9.13
    */
-  private function count_specialChars_resSqlCountDefLL($length, $strFindInSet, $currSqlCharset)
+  private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
   {
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
     $tableUid = $table . '.uid';
 
     // Query for all filter items
@@ -1761,11 +1763,11 @@ class tx_browser_pi1_navi_indexBrowser
 //                    "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
     // #44125, 121218, dwildt, 2+
     $select = "COUNT( DISTINCT " . $tableUid . " ) AS 'count', " .
-              "LEFT( " . $tableField . ", " . $length . " ) AS 'initial'";
+            "LEFT( " . $tableField . ", " . $length . " ) AS 'initial'";
     // #56329, 140226, dwildt, 1+
     $selectSubQuery = $tableUid . " AS '" . $tableUid . "'";
-    $from = $this->sqlStatement_from($table);
-    $where = $this->sqlStatement_where($table, $strFindInSet);
+    $from = $this->sqlStatement_from( $table );
+    $where = $this->sqlStatement_where( $table, $strFindInSet );
     // #44125, 121218, dwildt, 2-
 //    $groupBy      = "LEFT ( " . $tableField . ", " . $length . " )";
 //    $orderBy      = "LEFT ( " . $tableField . ", " . $length . " )";
@@ -1785,31 +1787,31 @@ class tx_browser_pi1_navi_indexBrowser
 //                    $limit
 //                  );
     // Get queries
-    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+    $query = $GLOBALS[ 'TYPO3_DB' ]->SELECTquery
             (
             $select, $from, $where, $groupBy, $orderBy, $limit
     );
     // #56329, 140226, dwildt, 6+
     $groupBy = null;
     $orderBy = null;
-    $subQueryTemplate = $GLOBALS['TYPO3_DB']->SELECTquery
-                        (
-                        $selectSubQuery, $from, $where, $groupBy, $orderBy, $limit
+    $subQueryTemplate = $GLOBALS[ 'TYPO3_DB' ]->SELECTquery
+            (
+            $selectSubQuery, $from, $where, $groupBy, $orderBy, $limit
     );
     // Get queries
     // #56329, 140226, dwildt, 1+
-    $query = $this->pObj->objViewlist->queryWiAndFilter($query, $limit, $subQueryTemplate);
+    $query = $this->pObj->objViewlist->queryWiAndFilter( $query, $limit, $subQueryTemplate );
     //$this->pObj->dev_var_dump(str_replace('\'', '"', $query));
     // Execute query
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
             'Don\'t use the query in a localised context.';
     $debugTrailLevel = 1;
-    $arr_return = $this->pObj->objSqlFun->sql_query($query, $promptOptimise, $debugTrailLevel);
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
     // Execute query
     // Error management
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
-      $this->sqlCharsetSet($currSqlCharset);
+      $this->sqlCharsetSet( $currSqlCharset );
     }
 
     return $arr_return;
@@ -1826,68 +1828,68 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.13
    * @since   3.9.13
    */
-  private function count_specialChars_resSqlCountSelOrDefLL($length, $strFindInSet, $currSqlCharset)
+  private function count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset )
   {
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
 
     // Label of field with the uid of the record with the default language
-    $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $parentUid = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
 
     // RETURN : table isn't localised
-    if (empty($parentUid))
+    if ( empty( $parentUid ) )
     {
-      if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi)
+      if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
       {
         $prompt = 'Index browser won\'t be localised, because ' . $table . ' hasn\'t any transOrigPointerField.';
-        t3lib_div::devlog('[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      $arr_return = $this->count_chars_resSqlCountDefLL($strFindInSet, $currSqlCharset);
+      $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset );
     }
 
     // Get Ids of all (!) default language records
-    $arr_return = $this->zz_sqlIdsOfDefLL($strFindInSet, $currSqlCharset);
-    if ($arr_return['error']['status'])
+    $arr_return = $this->zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $arr_rows = $arr_return['data']['rows'];
-    $uidListOfDefLL = implode(',', (array) $arr_rows);
+    $arr_rows = $arr_return[ 'data' ][ 'rows' ];
+    $uidListOfDefLL = implode( ',', ( array ) $arr_rows );
 //    var_dump( __METHOD__, __LINE__, $uidListOfDefLL );
     // Get Ids of all (!) default language records
     // Get Ids of all (!) translated language records
-    $arr_return = $this->zz_sqlIdsOfTranslatedLL($strFindInSet, $uidListOfDefLL, $currSqlCharset);
-    if ($arr_return['error']['status'])
+    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset );
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
     }
-    $arr_rowsLL = $arr_return['data']['rows'];
+    $arr_rowsLL = $arr_return[ 'data' ][ 'rows' ];
 //    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
 //    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
     // Get Ids of all (!) translated language records
     // Substract uids of default language records, which are translated
-    $arr_rowsDefWoTranslated = array_diff((array) $arr_rows, (array) $arr_rowsLL[$parentUid]);
+    $arr_rowsDefWoTranslated = array_diff( ( array ) $arr_rows, ( array ) $arr_rowsLL[ $parentUid ] );
 
 //    var_dump( __METHOD__, __LINE__, 'array_diff' );
 //    var_dump( __METHOD__, __LINE__, $arr_rows );
 //    var_dump( __METHOD__, __LINE__, ( array ) $arr_rowsLL[$parentUid] );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
     // Add uids of translated recors
-    $arr_rowsDefWiCurr = array_merge((array) $arr_rowsDefWoTranslated, (array) $arr_rowsLL['uid']);
+    $arr_rowsDefWiCurr = array_merge( ( array ) $arr_rowsDefWoTranslated, ( array ) $arr_rowsLL[ 'uid' ] );
 
 //    var_dump( __METHOD__, __LINE__, 'array_merge' );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
     // Sort the array of uids
-    sort($arr_rowsDefWiCurr, SORT_NUMERIC);
+    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
 
     // Get list of uids from the array
-    $uidListDefAndCurr = implode(',', (array) $arr_rowsDefWiCurr);
+    $uidListDefAndCurr = implode( ',', ( array ) $arr_rowsDefWiCurr );
 
     // Count initials
-    $arr_return = $this->zz_sqlCountInitialsLL($length, $uidListDefAndCurr, $currSqlCharset);
+    $arr_return = $this->zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset );
 
     // RETURN : the sql result
     return $arr_return;
@@ -1911,20 +1913,24 @@ class tx_browser_pi1_navi_indexBrowser
     // Query
     $query = "SHOW VARIABLES LIKE 'character_set_client';";
     // Execute
-    $res = $GLOBALS['TYPO3_DB']->sql_query($query);
+    $res = $GLOBALS[ 'TYPO3_DB' ]->sql_query( $query );
 
     // RETURN
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+    $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res );
 
-    if (empty($row))
+    if ( empty( $row ) )
     {
-      die(__METHOD__ . '(' . __LINE__ . '): row is empty. Query: ' . $query);
+      $header = 'FATAL ERROR!';
+      $text = 'row is empty. Query: ' . $query;
+      $this->pObj->drs_die( $header, $text );
     }
 
-    $charset = $row['Value'];
-    if (empty($charset))
+    $charset = $row[ 'Value' ];
+    if ( empty( $charset ) )
     {
-      die(__METHOD__ . '(' . __LINE__ . '): row[Value] is empty. Query: ' . $query);
+      $header = 'FATAL ERROR!';
+      $text = 'row[value] is empty. Query: ' . $query;
+      $this->pObj->drs_die( $header, $text );
     }
     return $charset;
   }
@@ -1937,23 +1943,23 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function sqlCharsetSet($sqlCharset)
+  private function sqlCharsetSet( $sqlCharset )
   {
     // #51494, 130911, dwildt, 5+
-    $workaround = $this->conf_view['navigation.']['indexBrowser.']['workaround.']['latin1'];
-    if (!$workaround)
+    $workaround = $this->conf_view[ 'navigation.' ][ 'indexBrowser.' ][ 'workaround.' ][ 'latin1' ];
+    if ( !$workaround )
     {
       return;
     }
 
     $query = "SET NAMES " . $sqlCharset . ";";
-    $GLOBALS['TYPO3_DB']->sql_query($query);
+    $GLOBALS[ 'TYPO3_DB' ]->sql_query( $query );
 
     // DRS
-    if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
+    if ( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
     {
       $prompt = $query;
-      t3lib_div::devlog('[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1);
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
     }
     // DRS
   }
@@ -1966,16 +1972,16 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.25
    * @since   3.9.12
    */
-  private function sqlStatement_from($table)
+  private function sqlStatement_from( $table )
   {
-    switch (true)
+    switch ( true )
     {
       // 3.9.25, 120506, dwildt+
-      case(!empty($this->pObj->conf_sql['andWhere']) ):
+      case(!empty( $this->pObj->conf_sql[ 'andWhere' ] ) ):
       case(!$this->pObj->objSqlAut->b_left_join ) :
-      case( isset($this->pObj->piVars['sword']) ):
+      case( isset( $this->pObj->piVars[ 'sword' ] ) ):
       case( $this->pObj->objFltr4x->get_selectedFilters() ):
-        $from = $this->pObj->objSqlInit->statements['listView']['from'];
+        $from = $this->pObj->objSqlInit->statements[ 'listView' ][ 'from' ];
         break;
       default:
         $from = $table;
@@ -1994,20 +2000,20 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.25
    * @since   3.9.12
    */
-  private function sqlStatement_where($table, $andWhereFindInSet)
+  private function sqlStatement_where( $table, $andWhereFindInSet )
   {
-    switch (true)
+    switch ( true )
     {
       // 3.9.25, 120506, dwildt+
-      case(!empty($this->pObj->conf_sql['andWhere']) ):
+      case(!empty( $this->pObj->conf_sql[ 'andWhere' ] ) ):
       case(!$this->pObj->objSqlAut->b_left_join ) :
-      case( isset($this->pObj->piVars['sword']) ):
+      case( isset( $this->pObj->piVars[ 'sword' ] ) ):
       case( $this->pObj->objFltr4x->get_selectedFilters() ):
-        $where = $this->pObj->objSqlInit->statements['listView']['where'];
-        $where = $this->sqlStatement_whereAndFindInSet($where, $andWhereFindInSet);
-        $llWhere = $this->pObj->objLocalise->localisationFields_where($table);
+        $where = $this->pObj->objSqlInit->statements[ 'listView' ][ 'where' ];
+        $where = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
+        $llWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         // 3.9.25, 120605, dwildt+
-        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd($where, $llWhere);
+        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $llWhere );
         // 3.9.25, 120605, dwildt-
 //        if( $llWhere )
 //        {
@@ -2017,19 +2023,19 @@ class tx_browser_pi1_navi_indexBrowser
         // 3.9.25, 120605, dwildt+
         $andWhere = $this->pObj->objFltr4x->andWhereFilter;
 //$this->pObj->dev_var_dump( $andWhere );
-        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd($where, $andWhere);
+        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         break;
       default:
         // 3.9.25, 120605: dwildt+
-        $where = $this->pObj->cObj->enableFields($table);
-        $andWhere = $this->pObj->objSqlFun->get_andWherePid($table);
-        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd($where, $andWhere);
+        $where = $this->pObj->cObj->enableFields( $table );
+        $andWhere = $this->pObj->objSqlFun->get_andWherePid( $table );
+        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         // 120703, dwildt, 1-
         //$andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
         // 120703, dwildt, 1+
-        $andWhere = $this->pObj->objLocalise->localisationFields_where($table);
-        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd($where, $andWhere);
-        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd($where, $andWhereFindInSet);
+        $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
+        $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereFindInSet );
         // 3.9.25, 120605: dwildt+
         // 3.9.25, 120605: dwildt-
         // 120421, dwildt, 1+
@@ -2064,21 +2070,21 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function sqlStatement_whereAndFindInSet($where, $findInSet)
+  private function sqlStatement_whereAndFindInSet( $where, $findInSet )
   {
     // RETURN : there isn't any FIND IN SET
-    if (!$findInSet)
+    if ( !$findInSet )
     {
       return $where;
     }
     // RETURN : there isn't any FIND IN SET
 
-    switch (true)
+    switch ( true )
     {
       case( $where ):
         $where = $where . " AND " . $findInSet;
         break;
-      case( empty($where) ):
+      case( empty( $where ) ):
       default:
         $where = $findInSet;
         break;
@@ -2106,27 +2112,27 @@ class tx_browser_pi1_navi_indexBrowser
   public function getMarkerIndexbrowser()
   {
     // DRS
-    if ($this->pObj->b_drs_devTodo)
+    if ( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTOR### from version 5.x';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // get th current content
     $template = $this->content;
 
     // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
-    $pos = strpos($template, '###AZSELECTOR###');
-    if (!( $pos === false ))
+    $pos = strpos( $template, '###AZSELECTOR###' );
+    if ( !( $pos === false ) )
     {
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_warn )
       {
         $prompt = 'The current template contains the marker ###AZSELECTOR###';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2 );
         $prompt = '###AZSELECTOR### won\'t supported from version 5.x';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div::devlog( '[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1 );
         $prompt = 'Please move it from ###AZSELECTOR### to ###INDEXBROWSER###';
-        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div::devlog( '[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1 );
       }
       return '###AZSELECTOR###';
     }
@@ -2148,27 +2154,27 @@ class tx_browser_pi1_navi_indexBrowser
   private function getMarkerIndexbrowserTabs()
   {
     // DRS
-    if ($this->pObj->b_drs_devTodo)
+    if ( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTORTABS### from version 5.x';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // get th current content
     $template = $this->content;
 
     // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
-    $pos = strpos($template, '###AZSELECTORTABS###');
-    if (!( $pos === false ))
+    $pos = strpos( $template, '###AZSELECTORTABS###' );
+    if ( !( $pos === false ) )
     {
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_warn )
       {
         $prompt = 'The current template contains the marker ###AZSELECTORTABS###';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2 );
         $prompt = '###AZSELECTORTABS### won\'t supported from version 5.x';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div::devlog( '[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1 );
         $prompt = 'Please move it from ###AZSELECTORTABS### to ###INDEXBROWSERTABS###';
-        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div::devlog( '[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1 );
       }
       return '###AZSELECTORTABS###';
     }
@@ -2191,11 +2197,11 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_specCharsToASCII($string)
+  private function zz_specCharsToASCII( $string )
   {
-    $ascii = strip_tags(html_entity_decode($string));
-    $ascii = $this->t3lib_cs_obj->specCharsToASCII($this->bool_utf8, $ascii);
-    $ascii = strtolower(preg_replace('/[^a-zA-Z0-9-_.]*/', null, $ascii));
+    $ascii = strip_tags( html_entity_decode( $string ) );
+    $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
+    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_.]*/', null, $ascii ) );
 
     return $ascii;
   }
@@ -2216,21 +2222,21 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 4.3.1
    * @since   3.9.11
    */
-  private function zz_sqlCountInitialsLL($length, $uidListDefAndCurr, $currSqlCharset)
+  private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
   {
-    if (empty($uidListDefAndCurr))
+    if ( empty( $uidListDefAndCurr ) )
     {
       // DRS
-      if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
+      if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
       {
         $prompt = '$uidListDefAndCurr is empty';
-        t3lib_div::devlog('[WARN/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, 2 );
       }
       // DRS
       return false;
     }
 
-    if (empty($this->uidListDefaultAndCurrentLL))
+    if ( empty( $this->uidListDefaultAndCurrentLL ) )
     {
       $this->uidListDefaultAndCurrentLL = $uidListDefAndCurr;
     }
@@ -2241,11 +2247,11 @@ class tx_browser_pi1_navi_indexBrowser
 
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
     $tableUid = $table . ".uid";
 
-    $caseSensitive = $this->conf['navigation.']['indexBrowser.']['caseSensitive'];
-    switch ($caseSensitive)
+    $caseSensitive = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'caseSensitive' ];
+    switch ( $caseSensitive )
     {
       case( true ) :
         $uid = $tableUid;
@@ -2298,9 +2304,9 @@ class tx_browser_pi1_navi_indexBrowser
     );
 
     // Error management
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
-      $this->sqlCharsetSet($currSqlCharset);
+      $this->sqlCharsetSet( $currSqlCharset );
     }
 
     return $arr_return;
@@ -2315,7 +2321,7 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.13
    * @since   3.9.13
    */
-  private function zz_sqlIdsOfDefLL($strFindInSet, $currSqlCharset)
+  private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
   {
 //    if( ! ( $this->idsOfAllDefaultLLrecords === null ) )
 //    {
@@ -2325,25 +2331,25 @@ class tx_browser_pi1_navi_indexBrowser
 //    }
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
 
     // Store current localisation mode
     $curr_int_localisation_mode = $this->int_localisation_mode;
     // Set localisation mode to default language
     //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-    $this->pObj->objLocalise->setLocalisationMode(PI1_DEFAULT_LANGUAGE);
+    $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
 
     // Configure the query
     $select = $table . ".uid";
-    $from = $this->sqlStatement_from($table);
-    $where = $this->sqlStatement_where($table, $strFindInSet);
+    $from = $this->sqlStatement_from( $table );
+    $where = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy = null;
     $orderBy = $table . ".uid";
     $limit = null;
 
     // Reset localisation mode to current language mode
     //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-    $this->pObj->objLocalise->setLocalisationMode($curr_int_localisation_mode);
+    $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
     // Execute the query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
             (
@@ -2351,24 +2357,24 @@ class tx_browser_pi1_navi_indexBrowser
     );
 
     // Error management
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
-      $this->sqlCharsetSet($currSqlCharset);
+      $this->sqlCharsetSet( $currSqlCharset );
       return $arr_return;
     }
 
-    $res = $arr_return['data']['res'];
-    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+    $res = $arr_return[ 'data' ][ 'res' ];
+    while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
       // Get values from the SQL row
 //      $this->idsOfAllDefaultLLrecords[] = $row['uid'];
-      $idsOfAllDefaultLLrecords[] = $row['uid'];
+      $idsOfAllDefaultLLrecords[] = $row[ 'uid' ];
     }
 
 
 //    $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
 //$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
-    $arr_return['data']['rows'] = $idsOfAllDefaultLLrecords;
+    $arr_return[ 'data' ][ 'rows' ] = $idsOfAllDefaultLLrecords;
 //$this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
     return $arr_return;
   }
@@ -2383,15 +2389,15 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.13
    * @since   3.9.11
    */
-  private function zz_sqlIdsOfTranslatedLL($strFindInSet, $uidListOfDefLL, $currSqlCharset)
+  private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
   {
-    if (empty($uidListOfDefLL))
+    if ( empty( $uidListOfDefLL ) )
     {
       // DRS
-      if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
+      if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
       {
         $prompt = '$uidListOfDefLL is empty';
-        t3lib_div::devlog('[INFO/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       // DRS
       return;
@@ -2404,37 +2410,35 @@ class tx_browser_pi1_navi_indexBrowser
 //    }
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
 
     // Label of field with the uid of the record with the default language
-    $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $parentUid = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
 
     // Store current localisation mode
     $curr_int_localisation_mode = $this->int_localisation_mode;
     // Set localisation mode to translated language
     //$this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-    $this->pObj->objLocalise->setLocalisationMode(PI1_SELECTED_LANGUAGE_ONLY);
+    $this->pObj->objLocalise->setLocalisationMode( PI1_SELECTED_LANGUAGE_ONLY );
     // Get where for localisation
-    $whereLL = $this->pObj->objLocalise->localisationFields_where($table);
-    if (empty($whereLL))
+    $whereLL = $this->pObj->objLocalise->localisationFields_where( $table );
+    if ( empty( $whereLL ) )
     {
-      $prompt = 'Sorry, this error shouldn\'t happen.<br />
-        Method: ' . __METHOD__ . '<br />
-        Line: ' . __METHOD__ . '<br />
-        Extension: TYPO3 Browser.';
-      die($prompt);
+      $header = 'FATAL ERROR!';
+      $text = 'whereLL is empty. ';
+      $this->pObj->drs_die( $header, $text );
     }
     // Get where for localisation
     // Reset localisation mode to current language mode
     //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-    $this->pObj->objLocalise->setLocalisationMode($curr_int_localisation_mode);
+    $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
 
     // Configure the query
     $select = $table . ".uid, " . $table . "." . $parentUid;
-    $from = $this->sqlStatement_from($table);
+    $from = $this->sqlStatement_from( $table );
     $where = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL;
-    $where = $this->sqlStatement_whereAndFindInSet($where, $strFindInSet);
-    $andEnableFields = $this->pObj->cObj->enableFields($table);
+    $where = $this->sqlStatement_whereAndFindInSet( $where, $strFindInSet );
+    $andEnableFields = $this->pObj->cObj->enableFields( $table );
     $where = $where . $andEnableFields;
     $groupBy = null;
     $orderBy = $table . ".uid";
@@ -2447,25 +2451,25 @@ class tx_browser_pi1_navi_indexBrowser
     );
 
     // Error management
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
-      $this->sqlCharsetSet($currSqlCharset);
+      $this->sqlCharsetSet( $currSqlCharset );
       return $arr_return;
     }
 
-    $res = $arr_return['data']['res'];
-    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+    $res = $arr_return[ 'data' ][ 'res' ];
+    while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
       // Get values from the SQL row
 //      $this->idsOfAllTranslatedLLrecords['uid'][]       = $row['uid'];
 //      $this->idsOfAllTranslatedLLrecords[$parentUid][]  = $row[$parentUid];
-      $idsOfAllTranslatedLLrecords['uid'][] = $row['uid'];
-      $idsOfAllTranslatedLLrecords[$parentUid][] = $row[$parentUid];
+      $idsOfAllTranslatedLLrecords[ 'uid' ][] = $row[ 'uid' ];
+      $idsOfAllTranslatedLLrecords[ $parentUid ][] = $row[ $parentUid ];
     }
 
 //    $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
 //$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
-    $arr_return['data']['rows'] = $idsOfAllTranslatedLLrecords;
+    $arr_return[ 'data' ][ 'rows' ] = $idsOfAllTranslatedLLrecords;
 //$this->pObj->dev_var_dump( $idsOfAllTranslatedLLrecords );
     return $arr_return;
   }
@@ -2486,11 +2490,11 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.10
    */
-  private function zz_getFindInSetForAllByte($row)
+  private function zz_getFindInSetForAllByte( $row )
   {
     // Chars from one byte to unlimited bytes
     $fromLength = 1;
-    return $this->zz_getFindInSetFromLength($row, $fromLength);
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
   }
 
   /**
@@ -2503,11 +2507,11 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.10
    */
-  private function zz_getFindInSetForMultibyte($row)
+  private function zz_getFindInSetForMultibyte( $row )
   {
     // Chars from two bytes only to unlimited bytes
     $fromLength = 2;
-    return $this->zz_getFindInSetFromLength($row, $fromLength);
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
   }
 
   /**
@@ -2521,23 +2525,23 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 4.3.1
    * @since   3.9.10
    */
-  private function zz_getFindInSetFromLength($row, $fromLength)
+  private function zz_getFindInSetFromLength( $row, $fromLength )
   {
     // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
 
     // LOOP : generate a find in set statement for each special char
     $findInSet = null;
-    foreach ($row as $char => $length)
+    foreach ( $row as $char => $length )
     {
-      if ($length < $fromLength)
+      if ( $length < $fromLength )
       {
         continue;
       }
       // #44125, 121218, dwildt, 1-
 //      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
       // #44125, 121218, dwildt, 1-
-      $findInSet[$length][] = "FIND_IN_SET( LEFT( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+      $findInSet[ $length ][] = "FIND_IN_SET( LEFT( " . $tableField . ", " . $length . " ), '" . $char . "' )";
     }
     // LOOP : generate a find in set statement for each special char
 
@@ -2552,17 +2556,17 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 4.3.1
    * @since   3.9.10
    */
-  private function zz_getSqlLengthAsRow($arrChars)
+  private function zz_getSqlLengthAsRow( $arrChars )
   {
     // RETURN : $arrChars is empty
-    if (empty($arrChars))
+    if ( empty( $arrChars ) )
     {
       return;
     }
     // RETURN : $arrChars is empty
     // Build the select statement parts for the length of each special char
     $arrStatement = array();
-    foreach ((array) $arrChars as $specialChar)
+    foreach ( ( array ) $arrChars as $specialChar )
     {
       // #44125, 121218, dwildt, 1-
 //      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
@@ -2571,37 +2575,39 @@ class tx_browser_pi1_navi_indexBrowser
     }
     // Build the select statement parts for the length of each special char
     // DIE : undefined error
-    if (empty($arrStatement))
+    if ( empty( $arrStatement ) )
     {
-      die(__METHOD__ . '(' . __LINE__ . '): undefined error.');
+      $header = 'FATAL ERROR!';
+      $text = '$arrStatement is empty. ';
+      $this->pObj->drs_die( $header, $text );
     }
     // DIE : undefined error
     // Execute query for the length of each special char
-    $query = "SELECT " . implode(', ', $arrStatement);
-    $res = $GLOBALS['TYPO3_DB']->sql_query($query);
+    $query = "SELECT " . implode( ', ', $arrStatement );
+    $res = $GLOBALS[ 'TYPO3_DB' ]->sql_query( $query );
 
     // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error();
-    if ($error)
+    $error = $GLOBALS[ 'TYPO3_DB' ]->sql_error();
+    if ( $error )
     {
       $level = 1;
-      $arr_return = $this->pObj->objSqlFun->prompt_error($query, $error, $level);
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
       return $arr_return;
     }
     // Error management
     // DRS
-    if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
+    if ( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
     {
       $prompt = $query;
-      t3lib_div::devlog('[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1);
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
     }
     // DRS
     // Get the row
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+    $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res );
     // SQL free result
-    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
-    $arr_return['data']['row'] = $row;
+    $arr_return[ 'data' ][ 'row' ] = $row;
     return $arr_return;
   }
 
@@ -2620,29 +2626,29 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_setTabClassSelected($tabId)
+  private function zz_setTabClassSelected( $tabId )
   {
 //$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
 //$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
     // IF : piVar
-    if ($this->pObj->piVar_indexBrowserTab)
+    if ( $this->pObj->piVar_indexBrowserTab )
     {
-      $label = $this->indexBrowserTab['tabIds'][$tabId]['label'];
-      $labelAscii = $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'];
+      $label = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'label' ];
+      $labelAscii = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'labelAscii' ];
 
       // IF : current tab is selected
-      if ($label == $this->pObj->piVar_indexBrowserTab)
+      if ( $label == $this->pObj->piVar_indexBrowserTab )
       {
-        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-        $this->indexBrowserTab['tabSpecial']['selected'] = $tabId;
+        $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'selected' ] = true;
+        $this->indexBrowserTab[ 'tabSpecial' ][ 'selected' ] = $tabId;
         return;
       }
       // IF : current tab is selected
       // IF : current tab is selected
-      if ($labelAscii == $this->pObj->piVar_indexBrowserTab)
+      if ( $labelAscii == $this->pObj->piVar_indexBrowserTab )
       {
-        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-        $this->indexBrowserTab['tabSpecial']['selected'] = $tabId;
+        $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'selected' ] = true;
+        $this->indexBrowserTab[ 'tabSpecial' ][ 'selected' ] = $tabId;
         return;
       }
       // IF : current tab is selected
@@ -2651,10 +2657,10 @@ class tx_browser_pi1_navi_indexBrowser
     }
     // IF : piVar
     // no piVar
-    if ($tabId == $this->indexBrowserTab['tabSpecial']['default'])
+    if ( $tabId == $this->indexBrowserTab[ 'tabSpecial' ][ 'default' ] )
     {
-      $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-      $this->indexBrowserTab['tabSpecial']['selected'] = $tabId;
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'selected' ] = true;
+      $this->indexBrowserTab[ 'tabSpecial' ][ 'selected' ] = $tabId;
     }
   }
 
@@ -2668,23 +2674,23 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_setTabPiVars($labelAscii, $label)
+  private function zz_setTabPiVars( $labelAscii, $label )
   {
     // Backup piVars
     $this->piVarsBak = $this->pObj->piVars;
 
     // Unset the pointer
-    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
-    if (isset($this->pObj->piVars[$pageBrowserPointerLabel]))
+    $pageBrowserPointerLabel = $this->conf[ 'navigation.' ][ 'pageBrowser.' ][ 'pointer' ];
+    if ( isset( $this->pObj->piVars[ $pageBrowserPointerLabel ] ) )
     {
-      unset($this->pObj->piVars[$pageBrowserPointerLabel]);
+      unset( $this->pObj->piVars[ $pageBrowserPointerLabel ] );
     }
 
     // Set indexBrowserTab
-    $this->pObj->piVars['indexBrowserTab'] = $labelAscii;
+    $this->pObj->piVars[ 'indexBrowserTab' ] = $labelAscii;
 
     // Handle default tab
-    $this->zz_setTabPiVarsDefaultTab($label);
+    $this->zz_setTabPiVarsDefaultTab( $label );
   }
 
   /**
@@ -2697,24 +2703,24 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_setTabPiVarsDefaultTab($label)
+  private function zz_setTabPiVarsDefaultTab( $label )
   {
     // RETURN : default tab should get a link
-    if ($this->linkDefaultTab)
+    if ( $this->linkDefaultTab )
     {
       return;
     }
 
     // RETURN : current tab isn't the default tab
-    if ($label != $this->tabDefaultLabel)
+    if ( $label != $this->tabDefaultLabel )
     {
       return;
     }
 
     // Unset piVars['indexBrowserTab']
-    if (isset($this->pObj->piVars['indexBrowserTab']))
+    if ( isset( $this->pObj->piVars[ 'indexBrowserTab' ] ) )
     {
-      unset($this->pObj->piVars['indexBrowserTab']);
+      unset( $this->pObj->piVars[ 'indexBrowserTab' ] );
     }
   }
 
@@ -2728,22 +2734,22 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_tabClass($lastTabId, $tab, $key)
+  private function zz_tabClass( $lastTabId, $tab, $key )
   {
 #43732
     // Default class
     //$class = 'tab-' . $tab['labelAscii'] . ' tab-' . $key;
-    $class = 'ui-state-default ui-corner-top tab-' . $tab['labelAscii'] . ' tab-' . $key;
+    $class = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
 
     // Selected tab
-    if (!empty($tab['selected']))
+    if ( !empty( $tab[ 'selected' ] ) )
     {
       //$class = $class . ' selected';
       $class = $class . ' ui-tabs-active ui-state-active selected';
     }
     // Selected tab
     // Last visible tab
-    if ($key == $lastTabId)
+    if ( $key == $lastTabId )
     {
       $class = $class . ' last';
     }
@@ -2763,10 +2769,10 @@ class tx_browser_pi1_navi_indexBrowser
    */
   private function zz_tabDefaultLabel()
   {
-    $defaultTab_key = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
-    $defaultTab_label = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key];
-    $defaultTab_stdWrap = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key . '.']['stdWrap.'];
-    $this->tabDefaultLabel = $this->pObj->objWrapper->general_stdWrap($defaultTab_label, $defaultTab_stdWrap);
+    $defaultTab_key = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTab' ];
+    $defaultTab_label = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'tabs.' ][ $defaultTab_key ];
+    $defaultTab_stdWrap = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'tabs.' ][ $defaultTab_key . '.' ][ 'stdWrap.' ];
+    $this->tabDefaultLabel = $this->pObj->objWrapper4x->general_stdWrap( $defaultTab_label, $defaultTab_stdWrap );
   }
 
   /**
@@ -2782,23 +2788,23 @@ class tx_browser_pi1_navi_indexBrowser
     $boolLink = true;
 
     // IF don't display in URL
-    if (empty($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url']))
+    if ( empty( $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTab.' ][ 'display_in_url' ] ) )
     {
       $boolLink = false;
 
       // IF empty list at start
       // #7582, Bugfix, 100501
-      if ($this->pObj->objFlexform->bool_emptyAtStart)
+      if ( $this->pObj->objFlexform->bool_emptyAtStart )
       {
         $boolLink = true;
         // DRS - Development Reporting System
-        if ($this->pObj->b_drs_templating || $this->pObj->b_drs_navi)
+        if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_navi )
         {
           $prompt = 'Empty list by start is true and the default tab of the index browser ' .
                   'shouldn\'t linked with a piVar. This is not proper.';
-          t3lib_div::devlog('[WARN/TEMPLATING+NAVI] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div::devlog( '[WARN/TEMPLATING+NAVI] ' . $prompt, $this->pObj->extKey, 2 );
           $prompt = 'The default tab of the index browser will be linked with a piVar by the system!';
-          t3lib_div::devlog('[INFO/TEMPLATING+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/TEMPLATING+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // DRS - Development Reporting System
       }
@@ -2817,26 +2823,26 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_tabLinkLabel($tab)
+  private function zz_tabLinkLabel( $tab )
   {
     // Init typolink
-    $typolink['parameter'] = $GLOBALS['TSFE']->id;
+    $typolink[ 'parameter' ] = $GLOBALS[ 'TSFE' ]->id;
 
     // Get the property title
-    $title = $this->zz_tabTitle($tab['sum']);
-    if ($title)
+    $title = $this->zz_tabTitle( $tab[ 'sum' ] );
+    if ( $title )
     {
       #43732
       $class = '"ui-tabs-anchor"';
-      $typolink['parameter'] = $typolink['parameter'] . ' - ' . $class . ' "' . $title . '"';
+      $typolink[ 'parameter' ] = $typolink[ 'parameter' ] . ' - ' . $class . ' "' . $title . '"';
     }
     // Get the property title
     // Set piVars
-    $this->zz_setTabPiVars($tab['labelAscii'], $tab['label']);
+    $this->zz_setTabPiVars( $tab[ 'labelAscii' ], $tab[ 'label' ] );
     // Init array with piVars
     $tabLinkedLabel = $this->pObj->objZz->linkTP_keepPIvars
             (
-            $tab['label'], $typolink, $this->pObj->piVars, $this->pObj->boolCache
+            $tab[ 'label' ], $typolink, $this->pObj->piVars, $this->pObj->boolCache
     );
 
     // RESET piVars
@@ -2857,9 +2863,9 @@ class tx_browser_pi1_navi_indexBrowser
   private function zz_tabLastId()
   {
     // Get tab array
-    $arrTabs = $this->indexBrowserTab['tabIds'];
+    $arrTabs = $this->indexBrowserTab[ 'tabIds' ];
     // Get last tab
-    end($arrTabs);
+    end( $arrTabs );
 
     // Security counter
     $i = 0;
@@ -2868,30 +2874,31 @@ class tx_browser_pi1_navi_indexBrowser
     do
     {
       // Get key
-      $id = key($arrTabs);
+      $id = key( $arrTabs );
 
       // DIE : undefined error - key doesn't exist
-      if (!isset($arrTabs[$id]))
+      if ( !isset( $arrTabs[ $id ] ) )
       {
-        $prompt = __METHOD__ . ' (' . __LINE__ . ') undefined key for index browser tabs!';
-        die($prompt);
+        $header = 'FATAL ERROR!';
+        $text = 'Undefined key for index browser tabs!';
+        $this->pObj->drs_die( $header, $text );
       }
       // DIE : undefined error - key doesn't exist
       // SWITCH display without items or one item at least
-      switch (true)
+      switch ( true )
       {
-        case( $arrTabs[$id]['displayWoItems'] ):
-        case( $arrTabs[$id]['sum'] > 0 ):
+        case( $arrTabs[ $id ][ 'displayWoItems' ] ):
+        case( $arrTabs[ $id ][ 'sum' ] > 0 ):
           break 2;
         default:
       }
       // SWITCH display without items or one item at least
       // Go to the rpevious tab
-      prev($arrTabs);
+      prev( $arrTabs );
       // Security counter
       $i++;
     }
-    while ($i < $iMax);
+    while ( $i < $iMax );
     // DO WHILE : a tab should displayed without items or a tab has a hit at least
     // RETURN : id of last visible tab
     return $id;
@@ -2906,37 +2913,37 @@ class tx_browser_pi1_navi_indexBrowser
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_tabTitle($sum)
+  private function zz_tabTitle( $sum )
   {
     // DRS
     static $drsPrompt_01 = true;
     static $drsPrompt_02 = true;
 
     // RETURN : title shouldn't displayed
-    $displayTitle = $this->conf['navigation.']['indexBrowser.']['display.']['tabHrefTitle'];
-    if (!$displayTitle)
+    $displayTitle = $this->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'display.' ][ 'tabHrefTitle' ];
+    if ( !$displayTitle )
     {
       return;
     }
     // RETURN : title shouldn't displayed
     // SWITCH : sum of hits
-    switch (true)
+    switch ( true )
     {
       case( $sum > 1 ):
         // Get localised title for more than one item
-        $title = htmlspecialchars($this->pObj->pi_getLL('browserItems', 'Items', true));
+        $title = htmlspecialchars( $this->pObj->pi_getLL( 'browserItems', 'Items', true ) );
         // DRS
-        if ($drsPrompt_02)
+        if ( $drsPrompt_02 )
         {
-          if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi)
+          if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
           {
             // Get the current language key
-            $langKey = $GLOBALS['TSFE']->lang;
+            $langKey = $GLOBALS[ 'TSFE' ]->lang;
             $prompt = 'Label for a tab with items is: ' . $title;
-            t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+            t3lib_div::devlog( '[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
             $prompt = 'If you want another label, please configure ' .
                     '_LOCAL_LANG.' . $langKey . '.browserItems';
-            t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
+            t3lib_div::devlog( '[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1 );
             $drsPrompt_02 = false;
           }
         }
@@ -2944,19 +2951,19 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       default:
         // Get localised title for one item exactly
-        $title = htmlspecialchars($this->pObj->pi_getLL('browserItem', 'Item', true));
+        $title = htmlspecialchars( $this->pObj->pi_getLL( 'browserItem', 'Item', true ) );
         // DRS
-        if ($drsPrompt_01)
+        if ( $drsPrompt_01 )
         {
-          if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi)
+          if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
           {
             // Get the current language key
-            $langKey = $GLOBALS['TSFE']->lang;
+            $langKey = $GLOBALS[ 'TSFE' ]->lang;
             $prompt = 'Label for a tab with one item is: ' . $title;
-            t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+            t3lib_div::devlog( '[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
             $prompt = 'If you want another label, please configure ' .
                     '_LOCAL_LANG.' . $langKey . '.browserItem';
-            t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
+            t3lib_div::devlog( '[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1 );
             $drsPrompt_01 = false;
           }
         }
@@ -2971,8 +2978,8 @@ class tx_browser_pi1_navi_indexBrowser
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_indexBrowser.php'])
+if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_navi_indexBrowser.php' ] )
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_indexBrowser.php']);
+  include_once($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_navi_indexBrowser.php' ]);
 }
 ?>

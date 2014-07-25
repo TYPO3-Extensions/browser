@@ -57,10 +57,10 @@ class tx_browser_map
   public function fillBoundList( $coordinates )
   {
     if
-    ( 
-          count( $this->n ) == 0 
-      &&  count( $this->e ) == 0 
-      &&  count( $this->s ) == 0 
+    (
+          count( $this->n ) == 0
+      &&  count( $this->e ) == 0
+      &&  count( $this->s ) == 0
       &&  count( $this->w ) == 0
     )
     {
@@ -69,18 +69,35 @@ class tx_browser_map
       $this->s = $coordinates;
       $this->w = $coordinates;
       //var_dump( __METHOD__, __LINE__, $this->n, $this->e, $this->s, $this->w );
-      return;			
+      return;
     }
 
     if( abs( $this->n[1] ) < abs( $coordinates[1] ) )
+    {
       $this->n = $coordinates;
+    }
     if( abs( $this->e[0] ) < abs( $coordinates[0] ) )
+    {
       $this->e = $coordinates;
+    }
     if( abs( $this->s[1] ) > abs( $coordinates[1] ) )
+    {
       $this->s = $coordinates;
+    }
     if( abs( $this->w[0] ) > abs( $coordinates[0] ) )
+    {
       $this->w = $coordinates;
+    }
+
+    // #i0057, 140712, dwildt+
+    $arrReturn = array(
+      'n' => $this->n,
+      'e' => $this->e,
+      's' => $this->s,
+      'w' => $this->w,
+    );
     //var_dump( __METHOD__, __LINE__, $this->n, $this->e, $this->s, $this->w );
+    return $arrReturn;
   }
 
   public function centerCoor( )

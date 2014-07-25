@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.8.7
+ * @version      5.0.0
  * @since        3.9.9
  */
 
@@ -255,7 +255,7 @@ class tx_browser_pi1_filter_4x
    * @param	object		The parent object
    * @return	void
    */
-  function __construct($pObj)
+  function __construct( $pObj )
   {
     $this->pObj = $pObj;
   }
@@ -277,10 +277,10 @@ class tx_browser_pi1_filter_4x
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     // DRS
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       $b_drs_sql = $this->pObj->b_drs_sql;
       $this->pObj->b_drs_sql = true;
@@ -288,16 +288,16 @@ class tx_browser_pi1_filter_4x
     // DRS
     // Default return value
     $arr_return = array();
-    $arr_return['data']['marker'] = array();
+    $arr_return[ 'data' ][ 'marker' ] = array();
 
     // RETURN there isn't any filter
-    if (!is_array($this->conf_view['filter.']))
+    if ( !is_array( $this->conf_view[ 'filter.' ] ) )
     {
       // DRS
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = $this->conf_path . 'filters isn\'t an array. There isn\'t any filter for processing.';
-        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         $this->pObj->b_drs_sql = $b_drs_sql;
       }
       // DRS
@@ -310,29 +310,29 @@ class tx_browser_pi1_filter_4x
 
     // #52486, 131002, dwildt, 7+
     $arr_filterRadialsearch = $this->get_filterRadialsearch();
-    if (!empty($arr_filterRadialsearch))
+    if ( !empty( $arr_filterRadialsearch ) )
     {
-      $arr_return['data']['filter'] = (array) $arr_return['data']['filter'] + (array) $arr_filterRadialsearch
+      $arr_return[ 'data' ][ 'filter' ] = ( array ) $arr_return[ 'data' ][ 'filter' ] + ( array ) $arr_filterRadialsearch
       ;
     }
     // #52486, 131002, dwildt, 7+
     // LOOP each filter
-    foreach ((array) $this->conf_view['filter.'] as $table => $fields)
+    foreach ( ( array ) $this->conf_view[ 'filter.' ] as $table => $fields )
     {
-      if (substr($table, -1) != '.')
+      if ( substr( $table, -1 ) != '.' )
       {
         continue;
       }
 
-      if ($table == $this->radialsearchTable . '.')
+      if ( $table == $this->radialsearchTable . '.' )
       {
         continue;
       }
 
-      foreach (array_keys((array) $fields) as $field)
+      foreach ( array_keys( ( array ) $fields ) as $field )
       {
         // CONTINUE : field hasn't any dot
-        if (rtrim($field, '.') != $field)
+        if ( rtrim( $field, '.' ) != $field )
         {
           continue;
         }
@@ -344,30 +344,30 @@ class tx_browser_pi1_filter_4x
         //  // Get table
         //list( $table ) = explode( '.', $this->curr_tableField );
         // CONTINUE : marker is missing in the HTML template
-        if (!$this->requiredMarker($this->curr_tableField))
+        if ( !$this->requiredMarker( $this->curr_tableField ) )
         {
           continue;
         }
         // CONTINUE : marker is missing in the HTML template
         // Load TCA
-        $this->pObj->objZz->loadTCA($table);
+        $this->pObj->objZz->loadTCA( $table );
 
         $arr_result = $this->get_filter();
 
-        if ($arr_result['error']['status'])
+        if ( $arr_result[ 'error' ][ 'status' ] )
         {
           $debugTrailLevel = 1;
-          $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+          $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
           // DRS
-          if ($this->pObj->b_drs_filter)
+          if ( $this->pObj->b_drs_filter )
           {
             $this->pObj->b_drs_sql = $b_drs_sql;
           }
           // DRS
           return $arr_result;
         }
-        $arr_return['data']['filter'] = (array) $arr_return['data']['filter'] + $arr_result['data']['marker'];
-        unset($arr_result);
+        $arr_return[ 'data' ][ 'filter' ] = ( array ) $arr_return[ 'data' ][ 'filter' ] + $arr_result[ 'data' ][ 'marker' ];
+        unset( $arr_result );
       }
     }
     // LOOP each filter
@@ -375,14 +375,14 @@ class tx_browser_pi1_filter_4x
     $this->init_reset();
 
     // DRS
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       $this->pObj->b_drs_sql = $b_drs_sql;
     }
     // DRS
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
 
     return $arr_return;
   }
@@ -414,7 +414,7 @@ class tx_browser_pi1_filter_4x
     $this->init_radialsearch();
 
     // RETURN: if there isn't any filter array
-    if (!$this->init_boolIsFilter())
+    if ( !$this->init_boolIsFilter() )
     {
       return;
     }
@@ -455,13 +455,13 @@ class tx_browser_pi1_filter_4x
   private function init_andWhereFilter()
   {
     // RETURN : $this->andWhereFilter was set before
-    if (!( $this->andWhereFilter === null ))
+    if ( !( $this->andWhereFilter === null ) )
     {
       return $this->andWhereFilter;
     }
     // RETURN : $this->andWhereFilter was set before
     // RETURN : there isn't any filter
-    if (!$this->bool_isFilter)
+    if ( !$this->bool_isFilter )
     {
       $this->andWhereFilter = false;
       return $this->andWhereFilter;
@@ -474,33 +474,33 @@ class tx_browser_pi1_filter_4x
     $this->pObj->objCal->area_init();
     $conf = $this->pObj->conf;
     $viewWiDot = $this->view . '.';
-    $conf_view = $conf['views.'][$viewWiDot][$this->mode . '.'];
+    $conf_view = $conf[ 'views.' ][ $viewWiDot ][ $this->mode . '.' ];
     // Init area
     // LOOP: filter tableFields
 //$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
-    foreach ($this->arr_tsFilterTableFields as $tableField)
+    foreach ( $this->arr_tsFilterTableFields as $tableField )
     {
-      list( $table, $field ) = explode('.', $tableField);
+      list( $table, $field ) = explode( '.', $tableField );
       $str_andWhere = null;
 
       // Get nice_piVar
-      $arr_result = $this->zz_getNicePiVar($tableField);
-      $arr_piVar = $arr_result['data']['arr_piVar'];
+      $arr_result = $this->zz_getNicePiVar( $tableField );
+      $arr_piVar = $arr_result[ 'data' ][ 'arr_piVar' ];
 //$this->pObj->dev_var_dump( $arr_piVar );
-      unset($arr_result);
+      unset( $arr_result );
       // Get nice_piVar
       // CONTINUE : There isn't any piVar
-      if (empty($arr_piVar))
+      if ( empty( $arr_piVar ) )
       {
         continue;
       }
       // CONTINUE : There isn't any piVar
       // SWITCH : manual mode versus auto mode
-      switch (true)
+      switch ( true )
       {
         case( $this->pObj->b_sql_manual ):
           // SQL manual mode
-          $str_andWhere = $this->init_andWhereFilter_manualMode($arr_piVar, $tableField, $conf_view);
+          $str_andWhere = $this->init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view );
 //$this->pObj->dev_var_dump( $str_andWhere );
           break;
         // SQL manual mode
@@ -508,15 +508,15 @@ class tx_browser_pi1_filter_4x
         default:
           // SQL auto mode
           // SWITCH : local table versus foreign table
-          switch (true)
+          switch ( true )
           {
             case( $table == $this->pObj->localTable ):
-              $str_andWhere = $this->init_andWhereFilter_localTable($arr_piVar, $tableField);
+              $str_andWhere = $this->init_andWhereFilter_localTable( $arr_piVar, $tableField );
 //$this->pObj->dev_var_dump( $str_andWhere );
               break;
             case( $table != $this->pObj->localTable ):
             default:
-              $str_andWhere = $this->init_andWhereFilter_foreignTable($arr_piVar, $tableField);
+              $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField );
 //$this->pObj->dev_var_dump( $str_andWhere );
               break;
           }
@@ -526,20 +526,20 @@ class tx_browser_pi1_filter_4x
       }
       // SWITCH : manual mode versus auto mode
 
-      if (!empty($str_andWhere))
+      if ( !empty( $str_andWhere ) )
       {
-        $arr_andWhereFilter[$tableField] = $str_andWhere;
+        $arr_andWhereFilter[ $tableField ] = $str_andWhere;
         // #56329, 140227, dwildt, 1+
-        $this->arr_andWhereFilter[$tableField] = " AND " . $str_andWhere;
+        $this->arr_andWhereFilter[ $tableField ] = " AND " . $str_andWhere;
       }
       // Build the andWhere statement
     }
     // LOOP: filter tableFields
     // andWhere statement
-    $strAndWhere = implode(" AND ", (array) $arr_andWhereFilter);
+    $strAndWhere = implode( " AND ", ( array ) $arr_andWhereFilter );
 
     // #52486, 131002, dwildt, 6+
-    if ($this->radialsearchTable)
+    if ( $this->radialsearchTable )
     {
       $strAndWhere = $strAndWhere
               . $this->init_andWhereFilter_radialsearch()
@@ -547,7 +547,7 @@ class tx_browser_pi1_filter_4x
     }
     // #52486, 131002, dwildt, 6+
     // RETURN : there isn't any andWhere statement
-    if (empty($strAndWhere))
+    if ( empty( $strAndWhere ) )
     {
       $this->andWhereFilter = false;
       return $this->andWhereFilter;
@@ -557,12 +557,12 @@ class tx_browser_pi1_filter_4x
     $this->andWhereFilter = " AND " . $strAndWhere;
 
     // DRS
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
+    if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
     {
-      if (is_array($arr_andWhereFilter))
+      if ( is_array( $arr_andWhereFilter ) )
       {
         $prompt = 'andWhere statement: ' . $this->andWhereFilter;
-        t3lib_div :: devlog('[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
     // DRS
@@ -583,32 +583,32 @@ class tx_browser_pi1_filter_4x
    * @version 4.5.7
    * @since   3.6.0
    */
-  private function init_andWhereFilter_foreignTable($arr_piVar, $tableField)
+  private function init_andWhereFilter_foreignTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
 
     // SWITCH  : area filter versus default filter
-    switch (true)
+    switch ( true )
     {
-      case( is_array($this->pObj->objCal->arr_area[$tableField]) ):
+      case( is_array( $this->pObj->objCal->arr_area[ $tableField ] ) ):
         // Handle area filter
-        $str_andWhere = $this->init_andWhereFilter_foreignTableArea($arr_piVar, $tableField);
+        $str_andWhere = $this->init_andWhereFilter_foreignTableArea( $arr_piVar, $tableField );
         break;
       default:
         // Handle default filter (without area)
         // #48859, 130528, dwildt: make SQL query safe, 4+
-        foreach ((array) $arr_piVar as $key => $value)
+        foreach ( ( array ) $arr_piVar as $key => $value )
         {
-          $arr_piVar[$key] = (int) $value;
+          $arr_piVar[ $key ] = ( int ) $value;
         }
         // #48859, 130528, dwildt: make SQL query safe, 4+
-        $str_uidList = implode(', ', (array) $arr_piVar);
+        $str_uidList = implode( ', ', ( array ) $arr_piVar );
 //$this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
         $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
+        $this->arr_filter_condition[ $table . '.uid' ][ 'uid_in_list' ] = $arr_piVar;
         break;
     }
     // SWITCH  : area filter versus default filter
@@ -626,7 +626,7 @@ class tx_browser_pi1_filter_4x
    * @version 4.4.7
    * @since   3.6.0
    */
-  private function init_andWhereFilter_foreignTableArea($arr_piVar, $tableField)
+  private function init_andWhereFilter_foreignTableArea( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
@@ -634,18 +634,18 @@ class tx_browser_pi1_filter_4x
 //      // #46776, 130329, dwildt, +
 //    switch( $this->pObj->objCal->is_loaded )
     // #56088, 140219, dwildt, 1+
-    switch ($this->pObj->objCal->getVarRequirements())
+    switch ( $this->pObj->objCal->getVarRequirements() )
     {
       case( true ):
 //$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
         // +Browser Calendar is loaded
-        $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWiCal($arr_piVar, $tableField);
+        $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
 //$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
         // +Browser Calendar isn't loaded
-        $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWoCal($arr_piVar, $tableField);
+        $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField );
         break;
     }
     // #46776, 130329, dwildt, +
@@ -663,7 +663,7 @@ class tx_browser_pi1_filter_4x
    * @version 4.4.7
    * @since   3.6.0
    */
-  private function init_andWhereFilter_foreignTableAreaWiCal($arr_piVar, $tableField)
+  private function init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
@@ -672,51 +672,33 @@ class tx_browser_pi1_filter_4x
     $sheet_extend_cal_field_end = $this->pObj->objFlexform->sheet_extend_cal_field_end;
 
     // #45422, 130212, dwildt, +
-    if ($tableField != $sheet_extend_cal_field_start)
+    if ( $tableField != $sheet_extend_cal_field_start )
     {
-      $prompt = '
-        <div style="border:red solid 1em;color:red;padding:1em;text-align:center;">
-          <h1>
-            ERROR
-          </h1>
-          <h2>
-            tableField has an unexpected value
-          </h2>
-          <p>
-            tableField is ' . $tableField . ' but
-            $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start . '
-          </p>
-          <p>
-            Browser - TYPO3 without PHP<br />
-            ' . __METHOD__ . ' (line ' . __LINE__ . ')
-          </p>
-          <p>
-            Sorry for the trouble.
-          </p>
-        </div>
-        ';
-      die($prompt);
+      $header = 'FATAL ERROR!';
+      $text = 'tableField is ' . $tableField . ' but
+              $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start;
+      $this->pObj->drs_die( $header, $text );
     }
     // #45422, 130212, dwildt, +
 
-    list ($table, $field) = explode('.', $tableField);
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    list ($table, $field) = explode( '.', $tableField );
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // LOOP : each piVar
-    foreach ((array) $arr_piVar as $str_piVar)
+    foreach ( ( array ) $arr_piVar as $str_piVar )
     {
       // 13920, 110319, dwildt
       // Move url value to tsKey
-      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod( $tableField, $str_piVar );
 
       $arr_item = null;
-      $str_key = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
-      $arr_currField = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+      $str_key = $this->pObj->objCal->arr_area[ $tableField ][ 'key' ]; // I.e strings
+      $arr_currField = $conf_array[ 'area.' ][ $str_key . '.' ][ 'options.' ][ 'fields.' ][ $str_piVar . '.' ];
 
-      $from = $arr_currField['valueFrom_stdWrap.']['value'];
-      $from_conf = $arr_currField['valueFrom_stdWrap.'];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
-      $from = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
+      $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
+      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #45422, 130212, dwildt, 6-
 //      if( ! empty( $from ) )
 //      {
@@ -725,19 +707,19 @@ class tx_browser_pi1_filter_4x
 //        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
 //      }
       // #45422, 130212, dwildt, 8+
-      $from = mysql_real_escape_string($from);
-      if (!empty($from))
+      $from = mysql_real_escape_string( $from );
+      if ( !empty( $from ) )
       {
-        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date('Y-m-d H:i:s', $from) . "') " .
+        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
                 "OR " . $sheet_extend_cal_field_end . " IS NULL";
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$sheet_extend_cal_field_end]['from'] = $from;
+        $this->arr_filter_condition[ $sheet_extend_cal_field_end ][ 'from' ] = $from;
       }
 
-      $to = $arr_currField['valueTo_stdWrap.']['value'];
-      $to_conf = $arr_currField['valueTo_stdWrap.'];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
-      $to = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
+      $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
+      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #45422, 130212, dwildt, 6-
 //      if( ! empty( $to ) )
 //      {
@@ -746,27 +728,27 @@ class tx_browser_pi1_filter_4x
 //        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
 //      }
       // #45422, 130212, dwildt, 8+
-      $to = mysql_real_escape_string($to);
-      if (!empty($to))
+      $to = mysql_real_escape_string( $to );
+      if ( !empty( $to ) )
       {
-        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date('Y-m-d H:i:s', $to) . "') " .
+        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
                 "OR " . $sheet_extend_cal_field_start . " IS NULL";
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$sheet_extend_cal_field_start]['to'] = $to;
+        $this->arr_filter_condition[ $sheet_extend_cal_field_start ][ 'to' ] = $to;
       }
 
-      if (is_array($arr_item))
+      if ( is_array( $arr_item ) )
       {
         // #45422, 130212, 1-
 //        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
         // #45422, 130212, 1+
-        $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
+        $arr_orValues[] = '(' . implode( ') AND (', $arr_item ) . ') ';
       }
     }
     // LOOP : each piVar
 
-    $str_andWhere = implode(' OR ', $arr_orValues);
-    if (!empty($str_andWhere))
+    $str_andWhere = implode( ' OR ', $arr_orValues );
+    if ( !empty( $str_andWhere ) )
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
@@ -783,34 +765,34 @@ class tx_browser_pi1_filter_4x
    * @version 4.4.7
    * @since   3.6.0
    */
-  private function init_andWhereFilter_foreignTableAreaWoCal($arr_piVar, $tableField)
+  private function init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
-    list ($table, $field) = explode('.', $tableField);
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    list ($table, $field) = explode( '.', $tableField );
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // LOOP : each piVar
-    foreach ((array) $arr_piVar as $str_piVar)
+    foreach ( ( array ) $arr_piVar as $str_piVar )
     {
       // 13920, 110319, dwildt
       // Move url value to tsKey
-      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod( $tableField, $str_piVar );
 
       $arr_item = null;
-      $str_key = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
-      $arr_currField = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+      $str_key = $this->pObj->objCal->arr_area[ $tableField ][ 'key' ]; // I.e strings
+      $arr_currField = $conf_array[ 'area.' ][ $str_key . '.' ][ 'options.' ][ 'fields.' ][ $str_piVar . '.' ];
 
-      $from = $arr_currField['valueFrom_stdWrap.']['value'];
-      $from_conf = $arr_currField['valueFrom_stdWrap.'];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
-      $from = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
+      $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
+      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #45422, 130212, dwildt, 6-
-      if (!empty($from))
+      if ( !empty( $from ) )
       {
-        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string($from);
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $from = mysql_real_escape_string( $from );
@@ -822,16 +804,16 @@ class tx_browser_pi1_filter_4x
 //        $this->arr_filter_condition[$sheet_extend_cal_field_end]['from'] = $from;
 //      }
 
-      $to = $arr_currField['valueTo_stdWrap.']['value'];
-      $to_conf = $arr_currField['valueTo_stdWrap.'];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
-      $to = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
+      $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
+      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #45422, 130212, dwildt, 6-
-      if (!empty($to))
+      if ( !empty( $to ) )
       {
-        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string($to);
+        $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $to         = mysql_real_escape_string( $to );
@@ -843,18 +825,18 @@ class tx_browser_pi1_filter_4x
 //        $this->arr_filter_condition[$sheet_extend_cal_field_start]['to'] = $to;
 //      }
 
-      if (is_array($arr_item))
+      if ( is_array( $arr_item ) )
       {
         // #45422, 130212, 1-
-        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+        $arr_orValues[] = '(' . implode( ' AND ', $arr_item ) . ') ';
 //         // #45422, 130212, 1+
 //        $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
       }
     }
     // LOOP : each piVar
 
-    $str_andWhere = implode(' OR ', $arr_orValues);
-    if (!empty($str_andWhere))
+    $str_andWhere = implode( ' OR ', $arr_orValues );
+    if ( !empty( $str_andWhere ) )
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
@@ -874,29 +856,29 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   2.x
    */
-  private function init_andWhereFilter_localTable($arr_piVar, $tableField)
+  private function init_andWhereFilter_localTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
     // SWITCH  : area filter versus default filter
-    switch (true)
+    switch ( true )
     {
-      case( is_array($this->pObj->objCal->arr_area[$tableField]) ):
+      case( is_array( $this->pObj->objCal->arr_area[ $tableField ] ) ):
         // Handle area filter
-        $str_andWhere = $this->init_andWhereFilter_localTableArea($arr_piVar, $tableField);
+        $str_andWhere = $this->init_andWhereFilter_localTableArea( $arr_piVar, $tableField );
         break;
       default:
         // Handle default filter (without area)
-        foreach ($arr_piVar as $str_value)
+        foreach ( $arr_piVar as $str_value )
         {
-          $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string($str_value) . "'";
+          $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
           // #30912, 120127, dwildt+
           // #30912, 120202, dwildt+
-          $strtolower_value = "'" . mb_strtolower(mysql_real_escape_string($str_value)) . "'";
-          $this->arr_filter_condition[$tableField]['like'][] = $strtolower_value;
+          $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'like' ][] = $strtolower_value;
         }
-        $str_andWhere = implode(' OR ', $arr_orValues);
-        if (!empty($str_andWhere))
+        $str_andWhere = implode( ' OR ', $arr_orValues );
+        if ( !empty( $str_andWhere ) )
         {
           $str_andWhere = ' (' . $str_andWhere . ')';
         }
@@ -917,7 +899,7 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   2.x
    */
-  private function init_andWhereFilter_localTableArea($arr_piVar, $tableField)
+  private function init_andWhereFilter_localTableArea( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
@@ -925,18 +907,18 @@ class tx_browser_pi1_filter_4x
 //      // #46776, 130329, dwildt, +
 //    switch( $this->pObj->objCal->is_loaded )
     // #56088, 140219, dwildt, 1+
-    switch ($this->pObj->objCal->getVarRequirements())
+    switch ( $this->pObj->objCal->getVarRequirements() )
     {
       case( true ):
 //$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
         // +Browser Calendar is loaded
-        $str_andWhere = $this->init_andWhereFilter_localTableAreaWiCal($arr_piVar, $tableField);
+        $str_andWhere = $this->init_andWhereFilter_localTableAreaWiCal( $arr_piVar, $tableField );
         break;
       case( false ):
       default:
 //$this->pObj->dev_var_dump( $this->pObj->objCal->getVarRequirements( ) );
         // +Browser Calendar isn't loaded
-        $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal($arr_piVar, $tableField);
+        $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
         break;
     }
     // #46776, 130329, dwildt, +
@@ -954,7 +936,7 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   2.x
    */
-  private function init_andWhereFilter_localTableAreaWiCal($arr_piVar, $tableField)
+  private function init_andWhereFilter_localTableAreaWiCal( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
@@ -963,54 +945,36 @@ class tx_browser_pi1_filter_4x
     $sheet_extend_cal_field_end = $this->pObj->objFlexform->sheet_extend_cal_field_end;
 
     // #45422, 130212, dwildt, +
-    if ($tableField != $sheet_extend_cal_field_start)
+    if ( $tableField != $sheet_extend_cal_field_start )
     {
-      $prompt = '
-        <div style="border:red solid 1em;color:red;padding:1em;text-align:center;">
-          <h1>
-            ERROR
-          </h1>
-          <h2>
-            tableField has an unexpected value
-          </h2>
-          <p>
-            tableField is ' . $tableField . ' but
-            $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start . '
-          </p>
-          <p>
-            Browser - TYPO3 without PHP<br />
-            ' . __METHOD__ . ' (line ' . __LINE__ . ')
-          </p>
-          <p>
-            Sorry for the trouble.
-          </p>
-        </div>
-        ';
-      die($prompt);
+      $header = 'FATAL ERROR!';
+      $text = 'tableField is ' . $tableField . ' but
+              $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start;
+      $this->pObj->drs_die( $header, $text );
     }
     // #45422, 130212, dwildt, +
 
-    list ($table, $field) = explode('.', $tableField);
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    list ($table, $field) = explode( '.', $tableField );
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // LOOP : each piVar
-    foreach ($arr_piVar as $str_piVar)
+    foreach ( $arr_piVar as $str_piVar )
     {
       // 13920, 110319, dwildt
       // Move url value to tsKey
-      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod( $tableField, $str_piVar );
 
       $arr_item = null;
-      $str_key = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
-      $arr_currField = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+      $str_key = $this->pObj->objCal->arr_area[ $tableField ][ 'key' ]; // I.e strings
+      $arr_currField = $conf_array[ 'area.' ][ $str_key . '.' ][ 'options.' ][ 'fields.' ][ $str_piVar . '.' ];
 
-      $from = $arr_currField['valueFrom_stdWrap.']['value'];
-      $from_conf = $arr_currField['valueFrom_stdWrap.'];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
-      $from = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
+      $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
+      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #45422, 130212, dwildt, 1+
-      $from = mysql_real_escape_string($from);
-      if (!empty($from))
+      $from = mysql_real_escape_string( $from );
+      if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
 //        $arr_item[] = $tableField . " >= '" . $from . "'";
@@ -1018,23 +982,23 @@ class tx_browser_pi1_filter_4x
 //          // #45422, 130212, dwildt, 1+
 //        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
         // #45422, 130212, dwildt, 2+
-        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date('Y-m-d H:i:s', $from) . "') " .
+        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
                 "OR " . $sheet_extend_cal_field_end . " IS NULL";
         // #45422, 130212, dwildt, 2-
 //          // #30912, 120127, dwildt+
 //        $this->arr_filter_condition[$tableField]['from'] = $from;
         // #45422, 130212, dwildt, 2+
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$sheet_extend_cal_field_end]['from'] = $from;
+        $this->arr_filter_condition[ $sheet_extend_cal_field_end ][ 'from' ] = $from;
       }
 
-      $to = $arr_currField['valueTo_stdWrap.']['value'];
-      $to_conf = $arr_currField['valueTo_stdWrap.'];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
-      $to = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
+      $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
+      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #45422, 130212, dwildt, 1+
-      $to = mysql_real_escape_string($to);
-      if (!empty($to))
+      $to = mysql_real_escape_string( $to );
+      if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
 //        $arr_item[] = $tableField . " <= '" . $to . "'";
@@ -1042,28 +1006,28 @@ class tx_browser_pi1_filter_4x
 //          // #45422, 130212, dwildt, 1+
 //        $arr_item[] = $tableField . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
         // #45422, 130212, dwildt, 2+
-        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date('Y-m-d H:i:s', $to) . "') " .
+        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
                 "OR " . $sheet_extend_cal_field_start . " IS NULL";
         // #45422, 130212, dwildt, 2-
 //          // #30912, 120127, dwildt+
 //        $this->arr_filter_condition[$tableField]['to'] = $to;
         // #45422, 130212, dwildt, 2+
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$sheet_extend_cal_field_start]['to'] = $to;
+        $this->arr_filter_condition[ $sheet_extend_cal_field_start ][ 'to' ] = $to;
       }
 
-      if (is_array($arr_item))
+      if ( is_array( $arr_item ) )
       {
         // #45422, 130212, 1-
 //        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
         // #45422, 130212, 1+
-        $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
+        $arr_orValues[] = '(' . implode( ') AND (', $arr_item ) . ') ';
       }
     }
     // LOOP : each piVar
 
-    $str_andWhere = implode(' OR ', (array) $arr_orValues);
-    if (!empty($str_andWhere))
+    $str_andWhere = implode( ' OR ', ( array ) $arr_orValues );
+    if ( !empty( $str_andWhere ) )
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
@@ -1081,31 +1045,31 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   2.x
    */
-  private function init_andWhereFilter_localTableAreaWoCal($arr_piVar, $tableField)
+  private function init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
-    list ($table, $field) = explode('.', $tableField);
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    list ($table, $field) = explode( '.', $tableField );
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // LOOP : each piVar
-    foreach ($arr_piVar as $str_piVar)
+    foreach ( $arr_piVar as $str_piVar )
     {
       // 13920, 110319, dwildt
       // Move url value to tsKey
-      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+      $str_piVar = $this->pObj->objCal->area_get_tsKey_from_urlPeriod( $tableField, $str_piVar );
 
       $arr_item = null;
-      $str_key = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
-      $arr_currField = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+      $str_key = $this->pObj->objCal->arr_area[ $tableField ][ 'key' ]; // I.e strings
+      $arr_currField = $conf_array[ 'area.' ][ $str_key . '.' ][ 'options.' ][ 'fields.' ][ $str_piVar . '.' ];
 
-      $from = $arr_currField['valueFrom_stdWrap.']['value'];
-      $from_conf = $arr_currField['valueFrom_stdWrap.'];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
-      $from = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
+      $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
+      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #45422, 130212, dwildt, 1+
-      $from = mysql_real_escape_string($from);
-      if (!empty($from))
+      $from = mysql_real_escape_string( $from );
+      if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
         $arr_item[] = $tableField . " >= '" . $from . "'";
@@ -1114,16 +1078,16 @@ class tx_browser_pi1_filter_4x
 //        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
         // #45422, #i0036, 130212, dwildt, 2-
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['from'] = $from;
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $from;
       }
 
-      $to = $arr_currField['valueTo_stdWrap.']['value'];
-      $to_conf = $arr_currField['valueTo_stdWrap.'];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
-      $to = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
+      $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
+      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #45422, 130212, dwildt, 1+
-      $to = mysql_real_escape_string($to);
-      if (!empty($to))
+      $to = mysql_real_escape_string( $to );
+      if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
         $arr_item[] = $tableField . " <= '" . $to . "'";
@@ -1132,19 +1096,19 @@ class tx_browser_pi1_filter_4x
 //        $arr_item[] = $tableField . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
         // #45422, #i0036, 130212, dwildt, 2-
         // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['to'] = $to;
+        $this->arr_filter_condition[ $tableField ][ 'to' ] = $to;
       }
 
-      if (is_array($arr_item))
+      if ( is_array( $arr_item ) )
       {
         // #45422, 130212, 1-
-        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+        $arr_orValues[] = '(' . implode( ' AND ', $arr_item ) . ') ';
       }
     }
     // LOOP : each piVar
 
-    $str_andWhere = implode(' OR ', (array) $arr_orValues);
-    if (!empty($str_andWhere))
+    $str_andWhere = implode( ' OR ', ( array ) $arr_orValues );
+    if ( !empty( $str_andWhere ) )
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
@@ -1162,26 +1126,26 @@ class tx_browser_pi1_filter_4x
    * @version 4.5.7
    * @since   4.1.21
    */
-  private function init_andWhereFilter_manualMode($arr_piVar, $tableField, $conf_view)
+  private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
   {
-    list( $table ) = explode('.', $tableField);
+    list( $table ) = explode( '.', $tableField );
 
     // #48859, 130528, dwildt: make SQL query safe, 4+
-    foreach ((array) $arr_piVar as $key => $value)
+    foreach ( ( array ) $arr_piVar as $key => $value )
     {
-      $arr_piVar[$key] = (int) $value;
+      $arr_piVar[ $key ] = ( int ) $value;
     }
     // #48859, 130528, dwildt: make SQL query safe, 4+
     // List of record uids
-    $csvUids = implode(', ', $arr_piVar);
+    $csvUids = implode( ', ', $arr_piVar );
 
     // Get table alias
-    $arrTableAliases = $conf_view['aliases.']['tables.'];
-    $arrTableAliases = array_flip($arrTableAliases);
-    $strTableAlias = $arrTableAliases[$table];
+    $arrTableAliases = $conf_view[ 'aliases.' ][ 'tables.' ];
+    $arrTableAliases = array_flip( $arrTableAliases );
+    $strTableAlias = $arrTableAliases[ $table ];
     // Get table alias
 
-    if ($strTableAlias)
+    if ( $strTableAlias )
     {
       $strAndWhere = $strTableAlias . '.uid IN (' . $csvUids . ')' . PHP_EOL;
       return $strAndWhere;
@@ -1189,11 +1153,11 @@ class tx_browser_pi1_filter_4x
 
     // DRS
     $prompt = 'There is no alias for table \'' . $table . '\'';
-    t3lib_div :: devlog('[ERROR/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 3);
+    t3lib_div :: devlog( '[ERROR/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 3 );
     $prompt = 'Browser is in SQL manual mode.';
-    t3lib_div :: devlog('[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0);
+    t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
     $prompt = 'Please configure aliases.tables of this view.';
-    t3lib_div :: devlog('[HELP/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 1);
+    t3lib_div :: devlog( '[HELP/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 1 );
     // DRS
 
     echo '<h1>ERROR</h1>
@@ -1231,7 +1195,7 @@ class tx_browser_pi1_filter_4x
   private function init_boolIsFilter()
   {
     // RETURN : $this->bool_isFilter was set before
-    if (!( $this->bool_isFilter === null ))
+    if ( !( $this->bool_isFilter === null ) )
     {
       return $this->bool_isFilter;
     }
@@ -1240,13 +1204,13 @@ class tx_browser_pi1_filter_4x
     $this->bool_isFilter = true;
 
     // FALSE: if there isn't any filter array
-    if (!$this->init_consolidationAndSelect_isFilterArray())
+    if ( !$this->init_consolidationAndSelect_isFilterArray() )
     {
       $this->bool_isFilter = false;
     }
     // FALSE: if there isn't any filter array
     // FALSE: if there isn't any table.field configured
-    if (!$this->init_consolidationAndSelect_isTableFields())
+    if ( !$this->init_consolidationAndSelect_isTableFields() )
     {
       $this->bool_isFilter = false;
     }
@@ -1271,7 +1235,7 @@ class tx_browser_pi1_filter_4x
 
     // Reinit class vars $conf and $conf_view
     $this->conf = $this->pObj->conf;
-    $this->conf_view = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
+    $this->conf_view = $this->conf[ 'views.' ][ $this->view . '.' ][ $this->mode . '.' ];
     // Reinit class vars $conf and $conf_view
 
     return;
@@ -1288,7 +1252,7 @@ class tx_browser_pi1_filter_4x
   private function init_consolidationAndSelect()
   {
     // RETURN : there isn't any filter
-    if (!$this->bool_isFilter)
+    if ( !$this->bool_isFilter )
     {
       return;
     }
@@ -1311,13 +1275,13 @@ class tx_browser_pi1_filter_4x
   private function init_consolidationAndSelect_setArrayConsolidation()
   {
     // LOOP : each filter (table.field)
-    foreach ((array) $this->arr_tsFilterTableFields as $tableField)
+    foreach ( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
-      list( $table ) = explode('.', $tableField);
+      list( $table ) = explode( '.', $tableField );
       $tableUid = $table . '.uid';
 
       // CONTINUE : $arrConsolidation contains the current tableUid
-      if (in_array($tableUid, (array) $this->pObj->arrConsolidate['addedTableFields']))
+      if ( in_array( $tableUid, ( array ) $this->pObj->arrConsolidate[ 'addedTableFields' ] ) )
       {
         continue;
       }
@@ -1327,20 +1291,20 @@ class tx_browser_pi1_filter_4x
       // #50214, 130720, dwildt, 1-
       //$pos = strpos( $this->pObj->conf_sql, $tableUid );
       // #50214, 130720, dwildt, 1+
-      $pos = strpos($this->pObj->conf_sql['select'], $tableUid);
-      if (!( $pos === false ))
+      $pos = strpos( $this->pObj->conf_sql[ 'select' ], $tableUid );
+      if ( !( $pos === false ) )
       {
         continue;
       }
       // CONTINUE : select clause contains the current tableUid
       // #47089, 120410, dwildt
       // Add current tableUid
-      $this->pObj->arrConsolidate['addedTableFields'][] = $tableUid;
+      $this->pObj->arrConsolidate[ 'addedTableFields' ][] = $tableUid;
 
       // DRS
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
-        t3lib_div :: devlog('[INFO/FILTER] Table ' . $tableUid . ' is added to arrConsolidate[addedTableFields].', $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/FILTER] Table ' . $tableUid . ' is added to arrConsolidate[addedTableFields].', $this->pObj->extKey, 0 );
       }
       // DRS
     }
@@ -1358,33 +1322,33 @@ class tx_browser_pi1_filter_4x
   private function init_consolidationAndSelect_setTsSelect()
   {
     // LOOP : each filter (table.field)
-    foreach ((array) $this->arr_tsFilterTableFields as $tableField)
+    foreach ( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
       // IF : $conf_sql['select'] doesn't contain the current tableField
-      if (strpos($this->pObj->conf_sql['select'], $tableField) === false)
+      if ( strpos( $this->pObj->conf_sql[ 'select' ], $tableField ) === false )
       {
         // Add tableField to ts property SELECT
         $csvStatement = ', ' . $tableField . ' AS \'' . $tableField . '\'';
-        $this->pObj->conf_sql['select'] = $this->pObj->conf_sql['select'] . ', ' . $csvStatement;
+        $this->pObj->conf_sql[ 'select' ] = $this->pObj->conf_sql[ 'select' ] . ', ' . $csvStatement;
         // Add tableField to ts property SELECT
         // DRS
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
           $prompt = $tableField . ' is added to $this->pObj->conf_sql[select].';
-          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // DRS
       }
       // IF : $conf_sql['select'] doesn't contain the current tableField
       // IF : $csvSelectWoFunc doesn't contain the current tableField
-      if (strpos($this->pObj->csvSelectWoFunc, $tableField) === false)
+      if ( strpos( $this->pObj->csvSelectWoFunc, $tableField ) === false )
       {
         $this->pObj->csvSelectWoFunc = $this->pObj->csvSelectWoFunc . ', ' . $tableField;
         // DRS
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
           $prompt = $tableField . ' is added to $this->pObj->csvSelectWoFunc.';
-          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // DRS
       }
@@ -1404,17 +1368,17 @@ class tx_browser_pi1_filter_4x
   private function init_consolidationAndSelect_isFilterArray()
   {
     // RETURN: true, there is a filter array
-    if (is_array($this->conf_view['filter.']))
+    if ( is_array( $this->conf_view[ 'filter.' ] ) )
     {
       return true;
     }
     // RETURN: true, there is a filter array
     // DRS
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       $viewWiDot = $this->view . '.';
       $prompt = $viewWiDot . $this->mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
-      t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // RETURN: true, there is a filter array
@@ -1435,14 +1399,14 @@ class tx_browser_pi1_filter_4x
     $radialsearchTable = null;
 
     // LOOP each table
-    foreach ((array) $this->conf_view['filter.'] as $table => $fields)
+    foreach ( ( array ) $this->conf_view[ 'filter.' ] as $table => $fields )
     {
       // 131004, dwildt, 4+
-      if (substr($table, -1) != '.')
+      if ( substr( $table, -1 ) != '.' )
       {
         #52486, 131004, dwildt, 5+
-        $name = $this->conf_view['filter.'][$table];
-        if ($name == 'RADIALSEARCH')
+        $name = $this->conf_view[ 'filter.' ][ $table ];
+        if ( $name == 'RADIALSEARCH' )
         {
           $radialsearchTable = $table . '.';
         }
@@ -1452,19 +1416,19 @@ class tx_browser_pi1_filter_4x
 
       #52486, 131004, dwildt, 5+
       // CONTINUE : current filter is RADIALSEARCH
-      if ($radialsearchTable == $table)
+      if ( $radialsearchTable == $table )
       {
         $radialsearchTable = null;
         continue;
       }
       #52486, 131004, dwildt, 5+
       // LOOP each field
-      foreach (array_keys($fields) as $field)
+      foreach ( array_keys( $fields ) as $field )
       {
         // IF : add field without a dot to $arr_tsFilterTableFields
-        if (substr($field, -1) != '.')
+        if ( substr( $field, -1 ) != '.' )
         {
-          $this->arr_tsFilterTableFields[] = trim($table) . $field;
+          $this->arr_tsFilterTableFields[] = trim( $table ) . $field;
         }
         // IF : add field without a dot to $arr_tsFilterTableFields
       }
@@ -1475,17 +1439,17 @@ class tx_browser_pi1_filter_4x
     $this->init_consolidationAndSelect_isTableFieldsRadialsearch();
 
     // RETURN : true, there is one table.field at least
-    if (is_array($this->arr_tsFilterTableFields))
+    if ( is_array( $this->arr_tsFilterTableFields ) )
     {
       return true;
     }
     // RETURN : true, there is one table.field at least
     // DRS
-    if ($this->pObj->b_drs_error)
+    if ( $this->pObj->b_drs_error )
     {
       $viewWiDot = $this->view . '.';
       $prompt = $viewWiDot . $this->mode . '.filters hasn\'t any table.field syntax.';
-      t3lib_div :: devlog('[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3);
+      t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
     }
     // DRS
     // RETURN : false, there is any table.field
@@ -1506,39 +1470,27 @@ class tx_browser_pi1_filter_4x
    */
   private function init_consolidationAndSelect_isTableFieldsRadialsearch()
   {
-    if (!$this->radialsearchTable)
+    if ( !$this->radialsearchTable )
     {
       return false;
     }
 
     $table = $this->radialsearchTable;
 
-    $conf = $this->conf_view['filter.'][$table . '.']['conf.'];
-    $lat = $conf['constanteditor.']['lat'];
+    $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ];
+    $lat = $conf[ 'constanteditor.' ][ 'lat' ];
     // #i0035, 131114, dwildt, lat -> lon
-    $lon = $conf['constanteditor.']['lon'];
+    $lon = $conf[ 'constanteditor.' ][ 'lon' ];
 
-    switch (true)
+    switch ( true )
     {
-      case( empty($lat) ):
-      case( empty($lon) ):
-        $prompt = '
-<h1>
-  ERROR: radial search (Umkreissuche)
-</h1>
-<p>
-  The configuration of your radial search filter isn\'t proper.<br />
-  Please enter the tableField label for the latitude and the longitude!<br />
-  See Constant Editor of the current page. Category [BROWSER - RADIAL SEARCH].
-</p>
-<p>
-  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
-</p>
-<p>
-  Sorry for the trouble. Browser - TYPO3 without PHP.
-</p>
-';
-        die($prompt);
+      case( empty( $lat ) ):
+      case( empty( $lon ) ):
+        $header = 'FATAL ERROR!';
+        $text = 'The configuration of your radial search filter isn\'t proper.<br />
+                Please enter the tableField label for the latitude and the longitude!<br />
+                See Constant Editor of the current page. Category [BROWSER - RADIAL SEARCH].';
+        $this->pObj->drs_die( $header, $text );
       default:
         // Follow the workflow
         break;
@@ -1564,7 +1516,7 @@ class tx_browser_pi1_filter_4x
   {
 
     // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
-    if (!isset($this->int_localisation_mode))
+    if ( !isset( $this->int_localisation_mode ) )
     {
       $this->int_localisation_mode = $this->pObj->objLocalise->get_localisationMode();
       $this->pObj->objLocalise->init_typoscript();
@@ -1572,7 +1524,7 @@ class tx_browser_pi1_filter_4x
 
     // Set class var $bool_dontLocalise
     // SWITCH $int_localisation_mode
-    switch ($this->int_localisation_mode)
+    switch ( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
         // #44621, 130118, dwildt, 1-
@@ -1593,9 +1545,9 @@ class tx_browser_pi1_filter_4x
     // SWITCH $int_localisation_mode
     // Set class var $bool_dontLocalise
     // DRS
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation)
+    if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
     {
-      t3lib_div::devlog('[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
 
@@ -1614,7 +1566,7 @@ class tx_browser_pi1_filter_4x
   private function init_radialsearch()
   {
     // RETURN : There isn't any radialsearch filter
-    if (!$this->init_radialsearchFilter())
+    if ( !$this->init_radialsearchFilter() )
     {
       return;
     }
@@ -1640,29 +1592,17 @@ class tx_browser_pi1_filter_4x
     $key = 'radialsearch';
 
     // RETURN : extension is installed
-    if (t3lib_extMgm::isLoaded($key))
+    if ( t3lib_extMgm::isLoaded( $key ) )
     {
       return true;
     }
     // RETURN : extension is installed
 
-    $prompt = '
-<h1>
-  ERROR: radial search (Umkreissuche)
-</h1>
-<p>
-  You are using a radial search filter in the current view.<br />
-  But the extension Radial Search (Umkreissuche) (extension key: radialsearch) isn\'t loaded.<br />
-  Please remove the radialsearch filter or install and enable the extension radialsearch.
-</p>
-<p>
-  Error occured at ' . __METHOD__ . ' (line #' . __LINE__ . ')
-</p>
-<p>
-  Sorry for the trouble. Browser - TYPO3 without PHP.
-</p>
-';
-    die($prompt);
+    $header = 'FATAL ERROR!';
+    $text = 'You are using a radial search filter in the current view.<br />
+                But the extension Radial Search (Umkreissuche) (extension key: radialsearch) isn\'t loaded.<br />
+                Please remove the radialsearch filter or install and enable the extension radialsearch.';
+    $this->pObj->drs_die( $header, $text );
   }
 
   /**
@@ -1683,32 +1623,32 @@ class tx_browser_pi1_filter_4x
   private function init_radialsearchFilter()
   {
     // LOOP each table
-    foreach (array_keys((array) $this->conf_view['filter.']) as $table)
+    foreach ( array_keys( ( array ) $this->conf_view[ 'filter.' ] ) as $table )
     {
-      if (substr($table, -1) == '.')
+      if ( substr( $table, -1 ) == '.' )
       {
         continue;
       }
 
       // Name (COA object) of the current filter table
-      $name = $this->conf_view['filter.'][$table];
+      $name = $this->conf_view[ 'filter.' ][ $table ];
 
       // CONTINUE : Name (COA object) isn't RADIALSEARCH
-      if ($name != 'RADIALSEARCH')
+      if ( $name != 'RADIALSEARCH' )
       {
         continue;
       }
 
       // RETURN true : Name (COA object) is RADIALSEARCH
-      if ($name == 'RADIALSEARCH')
+      if ( $name == 'RADIALSEARCH' )
       {
         // Set the radialsearch "table". Example: radialsearch
         $this->radialsearchTable = $table;
         // DRS
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
           $prompt = 'filter RADIALSEARCH is set and has the name ' . $table;
-          t3lib_div::devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         }
         // DRS
         return true;
@@ -1717,10 +1657,10 @@ class tx_browser_pi1_filter_4x
     }
     // LOOP each table
     // DRS
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       $prompt = 'There isn\'t any filter with the name RADIALSEARCH.';
-      t3lib_div::devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // RETURN false : any radialsearch filter isn't used
@@ -1778,17 +1718,17 @@ class tx_browser_pi1_filter_4x
 
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     // Set marker label
-    $markerLabel = '###' . strtoupper($this->curr_tableField) . '###';
+    $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
 
     // RETURN condition isn't met
-    if (!$this->ts_getCondition())
+    if ( !$this->ts_getCondition() )
     {
-      $arr_return['data']['marker'][$markerLabel] = null;
+      $arr_return[ 'data' ][ 'marker' ][ $markerLabel ] = null;
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // RETURN condition isn't met
@@ -1797,14 +1737,14 @@ class tx_browser_pi1_filter_4x
 
     // Get filter rows
     $arr_return = $this->get_rows();
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
-    $rows = $arr_return['data']['rows'];
-    unset($arr_return);
+    $rows = $arr_return[ 'data' ][ 'rows' ];
+    unset( $arr_return );
     // Get filter rows
     // Set class var $rows
     $this->rows = $rows;
@@ -1814,13 +1754,13 @@ class tx_browser_pi1_filter_4x
 
     // Render the filter rows
     $arr_return = $this->get_filterItems();
-    $items = $arr_return['data']['items'];
-    unset($arr_return);
-    $arr_return['data']['marker'][$markerLabel] = $items;
+    $items = $arr_return[ 'data' ][ 'items' ];
+    unset( $arr_return );
+    $arr_return[ 'data' ][ 'marker' ][ $markerLabel ] = $items;
     // Render the filter rows
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
     return $arr_return;
   }
 
@@ -1837,10 +1777,10 @@ class tx_browser_pi1_filter_4x
     $arr_return = array();
 
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Default return value
-    $arr_return['data']['items'] = null;
+    $arr_return[ 'data' ][ 'items' ] = null;
 
     // Set rows, if current filter is with areas
     $this->areas_toRows();
@@ -1861,7 +1801,7 @@ class tx_browser_pi1_filter_4x
 //      // RETURN rows are empty
 // 4.1.16, 120927, dwildt, -
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Set nice_piVar
     $this->set_nicePiVar();
@@ -1877,7 +1817,7 @@ class tx_browser_pi1_filter_4x
 //      // @todo: 120518, objFltr4x instead of 3x
 //    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
     // #41776, dwildt, 1+
-    switch (in_array($table, $this->arr_tablesWiTreeparentfield))
+    switch ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree();
@@ -1885,10 +1825,10 @@ class tx_browser_pi1_filter_4x
       case( false ):
       default:
         $arr_return = $this->get_filterItemsDefault();
-        if (!empty($arr_return))
+        if ( !empty( $arr_return ) )
         {
-          $items = $arr_return['data']['items'];
-          $arr_return = $this->get_filterItemsWrap($items);
+          $items = $arr_return[ 'data' ][ 'items' ];
+          $arr_return = $this->get_filterItemsWrap( $items );
         }
         break;
     }
@@ -1909,23 +1849,23 @@ class tx_browser_pi1_filter_4x
   {
     // Default return value
     $arr_return = array();
-    $arr_return['data']['items'] = null;
+    $arr_return[ 'data' ][ 'items' ] = null;
 
     // RETURN rows are empty
-    if (empty($this->rows))
+    if ( empty( $this->rows ) )
     {
       // DRS
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_warn )
       {
         $prompt = 'Rows are empty. Filter: ' . $this->curr_tableField . '.';
-        t3lib_div::devlog('[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
       }
       // DRS
       return $arr_return;
     }
     // RETURN rows are empty
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
 
     // Set nice_piVar
     $this->set_nicePiVar();
@@ -1941,7 +1881,7 @@ class tx_browser_pi1_filter_4x
 //      // @todo: 121019, dwildt: 3x -> 4x
 //    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
     // #41776, dwildt, 1+
-    switch (in_array($table, $this->arr_tablesWiTreeparentfield))
+    switch ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree();
@@ -1949,8 +1889,8 @@ class tx_browser_pi1_filter_4x
       case( false ):
       default:
         $arr_return = $this->get_filterItemsDefault();
-        $items = $arr_return['data']['items'];
-        $arr_return = $this->get_filterItemsWrap($items);
+        $items = $arr_return[ 'data' ][ 'items' ];
+        $arr_return = $this->get_filterItemsWrap( $items );
         break;
     }
     // SWITCH current filter is a tree view
@@ -1973,11 +1913,11 @@ class tx_browser_pi1_filter_4x
 
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     // Default return value
     $items = null;
-    $arr_return['data']['items'] = $items;
+    $arr_return[ 'data' ][ 'items' ] = $items;
 
     // Add the first item to the rows
     $this->set_firstItem();
@@ -1985,40 +1925,40 @@ class tx_browser_pi1_filter_4x
     // LOOP rows
     $this->row_number = 0;
 
-    foreach ((array) $this->rows as $uid => $row)
+    foreach ( ( array ) $this->rows as $uid => $row )
     {
-      $key = $this->sql_filterFields[$this->curr_tableField]['value'];
-      $value = $row[$key];
+      $key = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+      $value = $row[ $key ];
 
       // #56339, dwildt, +
-      list( $table ) = explode('.', $this->curr_tableField);
-      switch (true)
+      list( $table ) = explode( '.', $this->curr_tableField );
+      switch ( true )
       {
         case( $this->pObj->localTable == $table ):
-          $items = $this->get_filterItemLocaltable($uid, $value, $items);
+          $items = $this->get_filterItemLocaltable( $uid, $value, $items );
           break;
         default:
-          $items = $this->get_filterItemForeigntable($uid, $value, $items);
+          $items = $this->get_filterItemForeigntable( $uid, $value, $items );
           break;
       }
       $this->row_number++;
     }
     // LOOP rows
 
-    $items = $this->get_maxItemsWrapBeginEnd($items);
+    $items = $this->get_maxItemsWrapBeginEnd( $items );
 
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
 
-    $trimItems = trim($items);
-    if (!empty($trimItems))
+    $trimItems = trim( $items );
+    if ( !empty( $trimItems ) )
     {
-      $arr_return['data']['items'] = $items;
+      $arr_return[ 'data' ][ 'items' ] = $items;
     }
     else
     {
-      unset($arr_return);
+      unset( $arr_return );
     }
     return $arr_return;
   }
@@ -2038,12 +1978,12 @@ class tx_browser_pi1_filter_4x
 
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     // Set cObj->data treeview
     $this->cObjData_setFlagTreeview();
     // Set marker treeview
-    $this->markerArray['###TREEVIEW###'] = 1;
+    $this->markerArray[ '###TREEVIEW###' ] = 1;
 
     // Get table and field
     //list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2056,12 +1996,12 @@ class tx_browser_pi1_filter_4x
     // Removes all rows with a null key
     // @todo: 120521, dwildt  : rows with key null should removed before counting hits!
     //                          sum of hits can be wrong
-    unset($this->arr_rowsTablefield[null]);
+    unset( $this->arr_rowsTablefield[ null ] );
 
     // Get the labels for the fields uid, value and treeParentField
-    $this->uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $this->valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $this->treeParentField = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
+    $this->uidField = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
+    $this->valueField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+    $this->treeParentField = $this->sql_filterFields[ $this->curr_tableField ][ 'treeParentField' ];
 
 
 
@@ -2093,37 +2033,37 @@ class tx_browser_pi1_filter_4x
 //    array_multisort( $arr_value, $order, $this->arr_rowsTablefield );
 //      // Order the values
 
-    unset($this->tmpOneDim);
+    unset( $this->tmpOneDim );
     // Parent uid of the root records: 0 of course
     $uid_parent = 0;
     // Set rows of the current tablefield to a one dimensional array
-    $this->tree_setOneDim($uid_parent);
+    $this->tree_setOneDim( $uid_parent );
     // Get the renderd tree. Each element of the returned array contains HTML tags.
     $arr_tableFields = $this->tree_getRendered();
-    $items = implode(null, $arr_tableFields);
-    unset($this->tmpOneDim);
+    $items = implode( null, $arr_tableFields );
+    unset( $this->tmpOneDim );
 
 
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
 
-    $items = $this->get_filterWrap($items);
+    $items = $this->get_filterWrap( $items );
 
     // Unset cObj->data treeview
     $this->cObjData_unsetFlagTreeview();
     // Unset marker treeview
-    unset($this->markerArray['###TREEVIEW###']);
+    unset( $this->markerArray[ '###TREEVIEW###' ] );
 
     // RETURN
-    $trimItems = trim($items);
-    if (!empty($trimItems))
+    $trimItems = trim( $items );
+    if ( !empty( $trimItems ) )
     {
-      $arr_return['data']['items'] = $items;
+      $arr_return[ 'data' ][ 'items' ] = $items;
     }
     else
     {
-      unset($arr_return);
+      unset( $arr_return );
     }
     return $arr_return;
   }
@@ -2136,16 +2076,16 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   3.9.9
    */
-  private function get_filterItemsWrap($items)
+  private function get_filterItemsWrap( $items )
   {
     $arr_return = array();
 
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
-    $conf_name = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // IF NOT CATEGORY_MENU ajax class onchange
     // #41753.01, 121010, dwildt, 4-
@@ -2154,36 +2094,36 @@ class tx_browser_pi1_filter_4x
 //      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
 //    }
     // #41753.01, 121010, dwildt, 11+
-    switch (true)
+    switch ( true )
     {
       case( $conf_name == 'CATEGORY_MENU' ):
       case( $conf_name == 'TREEMENU' ):
         // Follow the workflow
         break;
       default:
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+        $conf_array = $this->pObj->objJss->class_onchange( $conf_name, $conf_array, $this->row_number );
         break;
     }
     // IF NOT CATEGORY_MENU ajax class onchange
     // DRS :TODO:
-    if ($this->pObj->b_drs_devTodo)
+    if ( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Check multiple!';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS :TODO:
     // Set multiple property
     // SWITCH type of filter
-    switch ($conf_name)
+    switch ( $conf_name )
     {
       case ( 'SELECTBOX' ) :
-        $size = $conf_array['size'];
+        $size = $conf_array[ 'size' ];
         $multiple = null;
-        if ($size >= 2)
+        if ( $size >= 2 )
         {
-          if ($conf_array['multiple'] == 1)
+          if ( $conf_array[ 'multiple' ] == 1 )
           {
-            $multiple = ' ' . $conf_array['multiple.']['selected'];
+            $multiple = ' ' . $conf_array[ 'multiple.' ][ 'selected' ];
           }
         }
         break;
@@ -2199,10 +2139,10 @@ class tx_browser_pi1_filter_4x
         $multiple = true;
         break;
       default :
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
           $prompt = 'undefined value in switch: \'';
-          t3lib_div :: devlog('[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3);
+          t3lib_div :: devlog( '[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3 );
         }
         echo '<h1>Undefined value</h1>
           <h2>' . $conf_name . ' is not defined</h2>
@@ -2216,28 +2156,28 @@ class tx_browser_pi1_filter_4x
     // SWITCH type of filter
     // Set multiple property
     // Get the all items wrap
-    $itemsWrap = $this->htmlSpaceLeft . $conf_array['wrap.']['object'];
+    $itemsWrap = $this->htmlSpaceLeft . $conf_array[ 'wrap.' ][ 'object' ];
     // Remove empty class
-    $itemsWrap = str_replace(' class=""', null, $itemsWrap);
+    $itemsWrap = str_replace( ' class=""', null, $itemsWrap );
 
     // Get nice piVar
-    $key_piVar = $this->nicePiVar['key_piVar'];
+    $key_piVar = $this->nicePiVar[ 'key_piVar' ];
     //$arr_piVar      = $this->nicePiVar['arr_piVar'];
-    $str_nicePiVar = $this->nicePiVar['nice_piVar'];
+    $str_nicePiVar = $this->nicePiVar[ 'nice_piVar' ];
 
     // Get ID
     $id = $this->pObj->prefixId . '_' . $str_nicePiVar;
-    $id = str_replace('.', '_', $id);
+    $id = str_replace( '.', '_', $id );
 
     // Replace marker
-    $itemsWrap = str_replace('###TABLE.FIELD###', $key_piVar, $itemsWrap);
-    $itemsWrap = str_replace('###ID###', $id, $itemsWrap);
-    $itemsWrap = str_replace('###SIZE###', $size, $itemsWrap);
-    $itemsWrap = str_replace('###MULTIPLE###', $multiple, $itemsWrap);
+    $itemsWrap = str_replace( '###TABLE.FIELD###', $key_piVar, $itemsWrap );
+    $itemsWrap = str_replace( '###ID###', $id, $itemsWrap );
+    $itemsWrap = str_replace( '###SIZE###', $size, $itemsWrap );
+    $itemsWrap = str_replace( '###MULTIPLE###', $multiple, $itemsWrap );
     // Replace marker
     // Wrap all items
     $items = PHP_EOL . $items . $this->htmlSpaceLeft;
-    $items = str_replace('|', $items, $itemsWrap);
+    $items = str_replace( '|', $items, $itemsWrap );
     // Wrap all items
     // IF CATEGORY_MENU ajax class onchange
     // #41753.01, 121010, dwildt, 4-
@@ -2246,11 +2186,11 @@ class tx_browser_pi1_filter_4x
 //      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
 //    }
     // #41753.01, 121010, dwildt, 10+
-    switch (true)
+    switch ( true )
     {
       case( $conf_name == 'CATEGORY_MENU' ):
       case( $conf_name == 'TREEVIEW' ):
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+        $conf_array = $this->pObj->objJss->class_onchange( $conf_name, $conf_array, $this->row_number );
         break;
       default:
         // Follow the workflow
@@ -2258,10 +2198,10 @@ class tx_browser_pi1_filter_4x
     }
     // IF CATEGORY_MENU ajax class onchange
     // Wrap the filter
-    $items = $this->get_filterWrap($items);
+    $items = $this->get_filterWrap( $items );
 
     // RETURN content
-    $arr_return['data']['items'] = $items;
+    $arr_return[ 'data' ][ 'items' ] = $items;
     return $arr_return;
   }
 
@@ -2274,93 +2214,89 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function get_filterItem($uid, $value)
+  private function get_filterItem( $uid, $value )
   {
     static $loop = array();
 
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    if (!isset($loop[$this->curr_tableField]))
+    if ( !isset( $loop[ $this->curr_tableField ] ) )
     {
-      $loop[$this->curr_tableField] = 0;
+      $loop[ $this->curr_tableField ] = 0;
     }
     else
     {
-      $loop[$this->curr_tableField] ++;
+      $loop[ $this->curr_tableField ] ++;
     }
 
-    if ($loop[$this->curr_tableField] < 2)
+    if ( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
     }
 
     // Get TS configuration of the current filter / tableField
-    $conf_name = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Make a backup
     $cObjDataBak = $this->pObj->cObj->data;
     // Add elements of current row to cObj->data
-    $this->cObjData_updateRow($uid);
+    $this->cObjData_updateRow( $uid );
 
-    $this->set_markerArrayUpdateRow($uid);
+    $this->set_markerArrayUpdateRow( $uid );
 
     // IF first_item, set the first item tree view
-    if ($uid == $conf_array['first_item.']['option_value'])
+    if ( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] )
     {
       $this->set_firstItemTreeView();
     }
     // IF first_item, set the first item tree view
     // DEVELOPMENT: Browser engine 4.x
-    switch ($this->pObj->dev_browserEngine)
+    switch ( $this->pObj->dev_browserEngine )
     {
       case( 4 ):
         // Wrap the current value by the cObject
-        $this->updateWizard('filter_cObject');
-        if ($loop[$this->curr_tableField] < 2)
+        $this->updateWizard( 'filter_cObject' );
+        if ( $loop[ $this->curr_tableField ] < 2 )
         {
           $debugTrailLevel = 1;
-          $this->pObj->timeTracking_log($debugTrailLevel, '### 1');
+          $this->pObj->timeTracking_log( $debugTrailLevel, '### 1' );
         }
-        $item = $this->get_filterItemCObj($uid, $value);
-        if ($loop[$this->curr_tableField] < 2)
+        $item = $this->get_filterItemCObj( $uid, $value );
+        if ( $loop[ $this->curr_tableField ] < 2 )
         {
           $debugTrailLevel = 1;
-          $this->pObj->timeTracking_log($debugTrailLevel, '### 2');
+          $this->pObj->timeTracking_log( $debugTrailLevel, '### 2' );
         }
         break;
       case( 3 ):
         // stdWrap the current value
-        $item = $this->get_filterItemValueStdWrap($conf_name, $conf_array, $uid, $value);
+        $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
         break;
       default:
-        $prompt = 'Sorry, this filter shouldn\'t occure: case is undefined.<br />
-                  <br />
-                  Method: ' . __METHOD__ . '<br />
-                  Line: ' . __LINE__ . '<br />
-                  <br />
-                  Browser - TYPO3 without PHP';
-        die($prompt);
+        $header = 'FATAL ERROR!';
+        $text = 'Sorry, this filter shouldn\'t occure: case is undefined.';
+        $this->pObj->drs_die( $header, $text );
         break;
     }
     // DEVELOPMENT: Browser engine 4.x
 
 
     $this->set_itemCurrentNumber();
-    if ($loop[$this->curr_tableField] < 2)
+    if ( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, '### 3');
+      $this->pObj->timeTracking_log( $debugTrailLevel, '### 3' );
     }
 
     // Reset cObj->data
     $this->pObj->cObj->data = $cObjDataBak;
 
-    if ($loop[$this->curr_tableField] < 2)
+    if ( $loop[ $this->curr_tableField ] < 2 )
     {
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
     }
     return $item;
   }
@@ -2375,9 +2311,9 @@ class tx_browser_pi1_filter_4x
    * @version 4.8.7
    * @since   4.8.7
    */
-  private function get_filterItemForeigntable($uid, $value, $items)
+  private function get_filterItemForeigntable( $uid, $value, $items )
   {
-    $item = $this->get_filterItem($uid, $value);
+    $item = $this->get_filterItem( $uid, $value );
     $items = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL;
     return $items;
   }
@@ -2392,9 +2328,9 @@ class tx_browser_pi1_filter_4x
    * @version 4.8.7
    * @since   4.8.7
    */
-  private function get_filterItemLocaltable($uid, $value, $items)
+  private function get_filterItemLocaltable( $uid, $value, $items )
   {
-    return $this->get_filterItemForeigntable($uid, $value, $items);
+    return $this->get_filterItemForeigntable( $uid, $value, $items );
 
     //  Following code is based on an unproper concept, because of
     //  * the local table stores multiple choices like a value "en,de"
@@ -2425,42 +2361,42 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   3.9.9
    */
-  private function get_filterItemValueStdWrap($conf_name, $conf_array, $uid, $value)
+  private function get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value )
   {
     static $firstLoop = true;
 
     // Get the stdWrap for the value
     // SWITCH first item
-    switch (true)
+    switch ( true )
     {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $stdWrap = $conf_array['first_item.']['value_stdWrap.'];
+      case( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] ):
+        $stdWrap = $conf_array[ 'first_item.' ][ 'value_stdWrap.' ];
         break;
       default:
-        $stdWrap = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+        $stdWrap = $conf_array[ 'wrap.' ][ 'item.' ][ 'wraps.' ][ 'value.' ][ 'stdWrap.' ];
         break;
     }
     // SWITCH first item
     // Get the stdWrap for the value
     // stdWrap the current value
-    $item = $this->pObj->local_cObj->stdWrap($value, $stdWrap);
+    $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
 
     // Prepend or append hits
-    $item = $this->set_hits($uid, $item, $this->rows[$uid]);
+    $item = $this->set_hits( $uid, $item, $this->rows[ $uid ] );
 
     // stdWrap the current item
-    $stdWrap = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-    $item = $this->pObj->local_cObj->stdWrap($item, $stdWrap);
+    $stdWrap = $conf_array[ 'wrap.' ][ 'item.' ][ 'wraps.' ][ 'item.' ][ 'stdWrap.' ];
+    $item = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
     // stdWrap the current item
     // DRS :TODO:
-    if ($firstLoop && $this->pObj->b_drs_devTodo)
+    if ( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Check maxItemsPerRow!';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS :TODO:
 
-    $item = $this->get_maxItemsTagEndBegin($item);
+    $item = $this->get_maxItemsTagEndBegin( $item );
 
     // Item class
     // #41753.01, 121010, dwildt, 4-
@@ -2469,11 +2405,11 @@ class tx_browser_pi1_filter_4x
 //      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
 //    }
     // #41753.01, 121010, dwildt, 10+
-    switch (true)
+    switch ( true )
     {
       case( $conf_name == 'CATEGORY_MENU' ):
       case( $conf_name == 'TREEVIEW' ):
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+        $conf_array = $this->pObj->objJss->class_onchange( $conf_name, $conf_array, $this->row_number );
         break;
       default:
         // Follow the workflow
@@ -2481,31 +2417,31 @@ class tx_browser_pi1_filter_4x
     }
 
     // DRS :TODO:
-    if ($firstLoop && $this->pObj->b_drs_devTodo)
+    if ( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Check AJAX ###ONCHANGE###';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS :TODO:
-    $item = $this->replace_itemClass($conf_array, $item);
+    $item = $this->replace_itemClass( $conf_array, $item );
     // Item class
     // Item style
-    $item = $this->replace_itemStyle($conf_array, $item);
+    $item = $this->replace_itemStyle( $conf_array, $item );
     // Item title
-    $item = $this->replace_itemTitle($item);
+    $item = $this->replace_itemTitle( $item );
     // Item uid
-    $item = $this->replace_itemUid($uid, $item);
+    $item = $this->replace_itemUid( $uid, $item );
     // Item URL
-    $item = $this->replace_itemUrl($conf_array, $uid, $item);
+    $item = $this->replace_itemUrl( $conf_array, $uid, $item );
     // Item selected
-    $item = $this->replace_itemSelected($conf_array, $uid, $value, $item);
+    $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
 
     // Workaround: remove ###ONCHANGE###
-    $item = str_replace(' class=" ###ONCHANGE###"', null, $item);
-    if ($firstLoop && $this->pObj->b_drs_devTodo)
+    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
+    if ( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
-      t3lib_div::devlog('[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2);
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
     }
     // Workaround: remove ###ONCHANGE###
 
@@ -2523,7 +2459,7 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.20
    * @since   3.9.9
    */
-  private function get_filterItemCObj($uid, $value)
+  private function get_filterItemCObj( $uid, $value )
   {
     static $firstLoop = true;
     static $loop = array();
@@ -2533,37 +2469,37 @@ class tx_browser_pi1_filter_4x
 //$this->pObj->dev_var_dump( $uid, $this->markerArray['###UID###'] );
 //$this->pObj->dev_var_dump( $uid, $value );
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    if (!isset($loop[$this->curr_tableField]))
+    if ( !isset( $loop[ $this->curr_tableField ] ) )
     {
-      $loop[$this->curr_tableField] = 0;
+      $loop[ $this->curr_tableField ] = 0;
     }
     else
     {
-      $loop[$this->curr_tableField] ++;
+      $loop[ $this->curr_tableField ] ++;
     }
-    if ($loop[$this->curr_tableField] < 2)
+    if ( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
     }
 
     // Item class
     // Get TS configuration of the current filter / tableField
-    $conf_name = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
     // #41753.01, 121010, dwildt, 4-
 //    if($conf_name == 'CATEGORY_MENU')
 //    {
 //      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
 //    }
     // #41753.01, 121010, dwildt, 10+
-    switch (true)
+    switch ( true )
     {
       case( $conf_name == 'CATEGORY_MENU' ):
       case( $conf_name == 'TREEVIEW' ):
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+        $conf_array = $this->pObj->objJss->class_onchange( $conf_name, $conf_array, $this->row_number );
         break;
       default:
         // Follow the workflow
@@ -2572,35 +2508,35 @@ class tx_browser_pi1_filter_4x
 
 //var_dump( __METHOD__, __LINE__, $value, $conf_array );
     // DRS :TODO:
-    if ($firstLoop && $this->pObj->b_drs_devTodo)
+    if ( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Check AJAX ###ONCHANGE###';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS :TODO:
 
-    $this->markerArray['###CLASS###'] = $this->replace_itemClass($conf_array, '###CLASS###');
-    $this->markerArray['###STYLE###'] = $this->replace_itemStyle($conf_array, '###STYLE###');
-    $this->markerArray['###TITLE###'] = $this->replace_itemTitle('###TITLE###');
-    $this->markerArray['###URL###'] = $this->replace_itemUrl($conf_array, $uid, '###URL###');
-    $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected($conf_array, $uid, $value, '###ITEM_SELECTED###');
+    $this->markerArray[ '###CLASS###' ] = $this->replace_itemClass( $conf_array, '###CLASS###' );
+    $this->markerArray[ '###STYLE###' ] = $this->replace_itemStyle( $conf_array, '###STYLE###' );
+    $this->markerArray[ '###TITLE###' ] = $this->replace_itemTitle( '###TITLE###' );
+    $this->markerArray[ '###URL###' ] = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+    $this->markerArray[ '###ITEM_SELECTED###' ] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
     // #40354, #40354, 4.1.7, 1+
-    $this->markerArray['###TABLE.FIELD###'] = $this->nicePiVar['key_piVar'];
+    $this->markerArray[ '###TABLE.FIELD###' ] = $this->nicePiVar[ 'key_piVar' ];
 
     // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a
     //          performance problem in case of a lot records!
     //$conf_array = $this->replace_marker( $conf_array );
     // Get the COA configuration for the value
     // SWITCH first item
-    switch (true)
+    switch ( true )
     {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $cObj_name = $conf_array['first_item.']['cObject'];
-        $cObj_conf = $conf_array['first_item.']['cObject.'];
+      case( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] ):
+        $cObj_name = $conf_array[ 'first_item.' ][ 'cObject' ];
+        $cObj_conf = $conf_array[ 'first_item.' ][ 'cObject.' ];
         break;
       default:
-        $cObj_name = $conf_array['wrap.']['item.']['cObject'];
-        $cObj_conf = $conf_array['wrap.']['item.']['cObject.'];
+        $cObj_name = $conf_array[ 'wrap.' ][ 'item.' ][ 'cObject' ];
+        $cObj_conf = $conf_array[ 'wrap.' ][ 'item.' ][ 'cObject.' ];
         break;
     }
     // SWITCH first item
@@ -2608,20 +2544,20 @@ class tx_browser_pi1_filter_4x
 
     $this->cObjData_setFlagDisplayInCaseOfNoCounting();
 
-    $item = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $item = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
     // 3.9.20
     // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a
     //          performance problem in case of a lot records!
-    $item = $this->pObj->cObj->substituteMarkerArray($item, $this->markerArray);
+    $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
 
     // 3.9.20: Code is moved from above
     // Workaround: remove ###ONCHANGE###
-    $item = str_replace(' class=" ###ONCHANGE###"', null, $item);
-    if ($firstLoop && $this->pObj->b_drs_devTodo)
+    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
+    if ( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
-      t3lib_div::devlog('[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2);
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
     }
     // Workaround: remove ###ONCHANGE###
 
@@ -2629,22 +2565,22 @@ class tx_browser_pi1_filter_4x
 
     // maxItemsTagEndBegin
     // DRS :TODO:
-    if ($firstLoop && $this->pObj->b_drs_devTodo)
+    if ( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Check maxItemsPerRow!';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS :TODO:
-    $item = $this->get_maxItemsTagEndBegin($item);
+    $item = $this->get_maxItemsTagEndBegin( $item );
     // maxItemsTagEndBegin
 
 
     $firstLoop = false;
 
-    if ($loop[$this->curr_tableField] < 2)
+    if ( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
     }
     return $item;
   }
@@ -2660,8 +2596,9 @@ class tx_browser_pi1_filter_4x
    */
   private function get_filterRadialsearch()
   {
+//var_dump(__METHOD__, __LINE__, $this->radialsearchTable);
     // RETURN : there isn't any radialsearch filter
-    if (!$this->radialsearchTable)
+    if ( !$this->radialsearchTable )
     {
       return null;
     }
@@ -2670,20 +2607,22 @@ class tx_browser_pi1_filter_4x
     $arrReturn = array();
     $table = $this->radialsearchTable;
 
-    $name = $this->conf_view['filter.'][$table . '.']['content'];
-    $conf = $this->conf_view['filter.'][$table . '.']['content.'];
-    $html = $this->pObj->cObj->cObjGetSingle($name, $conf);
+    $name = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content' ];
+    $conf = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'content.' ];
+    $html = $this->pObj->cObj->cObjGetSingle( $name, $conf );
 
     // DIE  : unexpected result
-    if (!$html)
+    if ( !$html )
     {
-      $prompt = __METHOD__ . ' (line #' . __LINE__ . '): html is empty!';
-      die($prompt);
+      $header = 'FATAL ERROR!';
+      $text = 'html is empty!';
+      $this->pObj->drs_die( $header, $text );
     }
     // DIE  : unexpected result
 
-    $key = '###' . strtoupper($table) . '###';
-    $arrReturn[$key] = $html;
+    $key = '###' . strtoupper( $table ) . '###';
+    $arrReturn[ $key ] = $html;
+//var_dump(__METHOD__, __LINE__, $key, $html);
 
     return $arrReturn;
   }
@@ -2698,11 +2637,11 @@ class tx_browser_pi1_filter_4x
   private function get_filterTitle()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
 
 
@@ -2710,15 +2649,15 @@ class tx_browser_pi1_filter_4x
     //
       // RETURN no title_stdWrap
 
-    if (!is_array($conf_array['wrap.']['title_stdWrap.']))
+    if ( !is_array( $conf_array[ 'wrap.' ][ 'title_stdWrap.' ] ) )
     {
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = 'There is no title_stdWrap. The object won\'t get a title.';
-        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you want a title, please configure ' .
                 $this->conf_path . $this->curr_tableField . '.wrap.title_stdWrap.';
-        t3lib_div :: devLog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
       }
       return null;
     }
@@ -2727,31 +2666,31 @@ class tx_browser_pi1_filter_4x
     //
       // Get the local or global autoconfig array
     // Get the local autoconfig array
-    $lAutoconf = $this->conf_view['autoconfig.'];
+    $lAutoconf = $this->conf_view[ 'autoconfig.' ];
     $lAutoconfPath = $this->conf_path;
-    if (!is_array($lAutoconf))
+    if ( !is_array( $lAutoconf ) )
     {
-      if ($this->pObj->b_drs_sql)
+      if ( $this->pObj->b_drs_sql )
       {
-        t3lib_div :: devlog('[INFO/SQL] ' . $this->conf_path . ' hasn\'t any autoconf array.<br />
-                    We take the global one.', $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/SQL] ' . $this->conf_path . ' hasn\'t any autoconf array.<br />
+                    We take the global one.', $this->pObj->extKey, 0 );
       }
       // Get the global autoconfig array
-      $lAutoconf = $this->conf['autoconfig.'];
+      $lAutoconf = $this->conf[ 'autoconfig.' ];
       $lAutoconfPath = null;
     }
     // Get the local or global autoconfig array
     // Don't replace markers recursive
-    if (!$lAutoconf['marker.']['typoScript.']['replacement'])
+    if ( !$lAutoconf[ 'marker.' ][ 'typoScript.' ][ 'replacement' ] )
     {
       // DRS
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = 'Replacement for markers in TypoScript is deactivated.';
-        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you want a replacement, please configure ' .
                 $lAutoconfPath . 'autoconfig.marker.typoScript.replacement.';
-        t3lib_div :: devLog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
       }
       // DRS
     }
@@ -2760,39 +2699,39 @@ class tx_browser_pi1_filter_4x
     //
       // Wrap the title
     // Get the title
-    $title_stdWrap = $conf_array['wrap.']['title_stdWrap.'];
+    $title_stdWrap = $conf_array[ 'wrap.' ][ 'title_stdWrap.' ];
 
     // Replace ###TABLE.FIELD### recursive
-    $value_marker = $this->pObj->objZz->getTableFieldLL($this->curr_tableField);
-    if ($lAutoconf['marker.']['typoScript.']['replacement'])
+    $value_marker = $this->pObj->objZz->getTableFieldLL( $this->curr_tableField );
+    if ( $lAutoconf[ 'marker.' ][ 'typoScript.' ][ 'replacement' ] )
     {
       $key_marker = '###TABLE.FIELD###';
-      $markerArray[$key_marker] = $value_marker;
-      $key_marker = '###' . strtoupper($this->curr_tableField) . '###';
-      $markerArray[$key_marker] = $value_marker;
+      $markerArray[ $key_marker ] = $value_marker;
+      $key_marker = '###' . strtoupper( $this->curr_tableField ) . '###';
+      $markerArray[ $key_marker ] = $value_marker;
       // #44316, 130104, dwildt, 1-
       //$title_stdWrap = $this->pObj->objMarker->substitute_marker_recurs( $title_stdWrap, $markerArray );
       // #44316, 130104, dwildt, 4+
       $currElements = $this->pObj->elements;
 //      $this->pObj->elements = ( array ) $this->pObj->elements + $markerArray;
       $this->pObj->elements = $markerArray;
-      $title_stdWrap = $this->pObj->objMarker->substitute_tablefield_marker($title_stdWrap);
+      $title_stdWrap = $this->pObj->objMarker->substitute_tablefield_marker( $title_stdWrap );
       $this->pObj->elements = $currElements;
       // DRS
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = $key_marker . ' will replaced with the localised value of ' .
                 '\'' . $this->curr_tableField . '\': \'' . $value_marker . '\'.';
-        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you want another replacement, please configure ' .
                 $this->conf_view_path . $this->curr_tableField . '.wrap.title_stdWrap';
-        t3lib_div :: devLog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
       }
       // DRS
     }
     // Replace ###TABLE.FIELD### recursive
     // stdWrap the title
-    $title = $this->pObj->local_cObj->stdWrap($value_marker, $title_stdWrap);
+    $title = $this->pObj->local_cObj->stdWrap( $value_marker, $title_stdWrap );
 
     // RETURN the title
     return $title;
@@ -2806,32 +2745,32 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function get_filterWrap($items)
+  private function get_filterWrap( $items )
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Get the items title
     $itemsTitle = $this->get_filterTitle();
 
     // Get the items wrap
-    $itemsWrap = $conf_array['wrap'];
-    $itemsWrap = str_replace('###TITLE###', $itemsTitle, $itemsWrap);
+    $itemsWrap = $conf_array[ 'wrap' ];
+    $itemsWrap = str_replace( '###TITLE###', $itemsTitle, $itemsWrap );
 
     // Nice Html
-    $arr_itemsWrap = explode('|', $itemsWrap);
-    $itemsWrap = $this->htmlSpaceLeft . $arr_itemsWrap[0] . PHP_EOL .
+    $arr_itemsWrap = explode( '|', $itemsWrap );
+    $itemsWrap = $this->htmlSpaceLeft . $arr_itemsWrap[ 0 ] . PHP_EOL .
             $this->htmlSpaceLeft . '  |' . PHP_EOL .
-            $this->htmlSpaceLeft . $arr_itemsWrap[1] . PHP_EOL;
+            $this->htmlSpaceLeft . $arr_itemsWrap[ 1 ] . PHP_EOL;
 
     // Wrap the items
-    if ($itemsWrap)
+    if ( $itemsWrap )
     {
-      $items = str_replace('|', $items, $itemsWrap);
+      $items = str_replace( '|', $items, $itemsWrap );
     }
 
     return $items;
@@ -2854,7 +2793,7 @@ class tx_browser_pi1_filter_4x
   private function areas_toRows()
   {
     // RETURN filter hasn't areas
-    if (!$this->bool_currFilterIsArea)
+    if ( !$this->bool_currFilterIsArea )
     {
       return;
     }
@@ -2862,13 +2801,13 @@ class tx_browser_pi1_filter_4x
     // Get areas from TS
     $areas = $this->ts_getAreas();
     // Convert areas to rows
-    $rows = $this->areas_toRowsConverter($areas);
+    $rows = $this->areas_toRowsConverter( $areas );
     $this->rowsFromAreaWoHits = $rows;
 
     // Count the hits for each area row
-    $rows = $this->areas_countHits($rows);
+    $rows = $this->areas_countHits( $rows );
     // Remove area rows without hits, if it's needed
-    $rows = $this->areas_wiHitsOnly($rows);
+    $rows = $this->areas_wiHitsOnly( $rows );
 
     // Override class var rows
     $this->rows = $rows;
@@ -2884,34 +2823,34 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function areas_toRowsConverter($areas)
+  private function areas_toRowsConverter( $areas )
   {
     $rows = array();
 
     // Get the labels for the fields uid and hits
-    $uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $uidField = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
+    $valueField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
 
-    foreach ($areas as $uid => $value)
+    foreach ( $areas as $uid => $value )
     {
       // LOOP all fields of current filter / tableField
-      foreach ($this->sql_filterFields[$this->curr_tableField] as $field)
+      foreach ( $this->sql_filterFields[ $this->curr_tableField ] as $field )
       {
         // SWITCH field
-        switch (true)
+        switch ( true )
         {
           case( $field == $uidField ):
-            $rows[$uid][$uidField] = $uid;
+            $rows[ $uid ][ $uidField ] = $uid;
             break;
           case( $field == $valueField ):
-            $rows[$uid][$valueField] = $value;
+            $rows[ $uid ][ $valueField ] = $value;
             break;
           case( $field == $hitsField ):
-            $rows[$uid][$hitsField] = 0;
+            $rows[ $uid ][ $hitsField ] = 0;
             break;
           default:
-            $rows[$uid][$field] = null;
+            $rows[ $uid ][ $field ] = null;
             break;
         }
         // SWITCH field
@@ -2932,58 +2871,58 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   3.9.9
    */
-  private function areas_countHits($areas)
+  private function areas_countHits( $areas )
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS configuration of the current filter / tableField
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Get labels for the fields hits and value
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
+    $valueField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
 
     // Get the key of the area of the current filter: 'strings' or 'interval'
-    $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
+    $area_key = $this->pObj->objCal->arr_area[ $this->curr_tableField ][ 'key' ];
 
     // LOOP each area
-    foreach (array_keys((array) $areas) as $areas_uid)
+    foreach ( array_keys( ( array ) $areas ) as $areas_uid )
     {
       // Short var
-      $conf_area = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
+      $conf_area = $conf_array[ 'area.' ][ $area_key . '.' ][ 'options.' ][ 'fields.' ][ $areas_uid . '.' ];
 
       // Get from
-      $from = $conf_area['valueFrom_stdWrap.']['value'];
-      $from_conf = $conf_area['valueFrom_stdWrap.'];
-      $from = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      $from = $conf_area[ 'valueFrom_stdWrap.' ][ 'value' ];
+      $from_conf = $conf_area[ 'valueFrom_stdWrap.' ];
+      $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
 
       // #41814, dwildt, +
-      if (empty($from))
+      if ( empty( $from ) )
       {
         $from = $value;
       }
       // #41814, dwildt, +
       // Get to
-      $to = $conf_area['valueTo_stdWrap.']['value'];
-      $to_conf = $conf_area['valueTo_stdWrap.'];
-      $to = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      $to = $conf_area[ 'valueTo_stdWrap.' ][ 'value' ];
+      $to_conf = $conf_area[ 'valueTo_stdWrap.' ];
+      $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
 
       // #41814, dwildt, +
-      if (empty($to))
+      if ( empty( $to ) )
       {
         $to = $value;
       }
       // #41814, dwildt, +
       // LOOP rows
-      foreach ($this->rows as $rows_uid => $rows_row)
+      foreach ( $this->rows as $rows_uid => $rows_row )
       {
-        $value = $rows_row[$valueField];
+        $value = $rows_row[ $valueField ];
         // Count the hits, if row value match from to condition
-        if ($value >= $from && $value <= $to)
+        if ( $value >= $from && $value <= $to )
         {
-          $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
+          $areas[ $areas_uid ][ $hitsField ] = $areas[ $areas_uid ][ $hitsField ] + $this->rows[ $rows_uid ][ $hitsField ];
         }
       }
       // LOOP rows
@@ -3003,28 +2942,28 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function areas_wiHitsOnly($areas)
+  private function areas_wiHitsOnly( $areas )
   {
     // RETURN all areas
     // #41814: 121010, dwildt, 1-
 //    if( $this->ts_countHits( ) )
     // #41814: 121010, dwildt, 1+
-    if (!$this->ts_countHits())
+    if ( !$this->ts_countHits() )
     {
       return $areas;
     }
     // RETURN all areas
     // Get label for the field hits
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
 
     // LOOP each area
     // Remove areas without any hit
-    foreach (array_keys((array) $areas) as $areas_uid)
+    foreach ( array_keys( ( array ) $areas ) as $areas_uid )
 //    foreach( $areas as $areas_uid => $areas_row )
     {
-      if ($areas[$areas_uid][$hitsField] < 1)
+      if ( $areas[ $areas_uid ][ $hitsField ] < 1 )
       {
-        unset($areas[$areas_uid]);
+        unset( $areas[ $areas_uid ] );
       }
     }
     // Remove areas without any hit
@@ -3050,23 +2989,23 @@ class tx_browser_pi1_filter_4x
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     // IF : hits should counted
-    if ($this->ts_countHits())
+    if ( $this->ts_countHits() )
     {
       // 1. step: filter items with one hit at least
       $arr_return = $this->get_rowsWiHits();
-      if ($arr_return['error']['status'])
+      if ( $arr_return[ 'error' ][ 'status' ] )
       {
         return $arr_return;
       }
-      $rows = $arr_return['data']['rows'];
+      $rows = $arr_return[ 'data' ][ 'rows' ];
       // 1. step: filter items with one hit at least
     }
     // IF : hits should counted
     // 2. step: all filter items, hits will be taken from $rows
-    $arr_return = $this->get_rowsAllItems($rows);
+    $arr_return = $this->get_rowsAllItems( $rows );
 
     return $arr_return;
   }
@@ -3082,20 +3021,20 @@ class tx_browser_pi1_filter_4x
   {
     // Get SQL ressource for filter items with one hit at least
     $arr_return = $this->sql_resWiHits();
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
-    $res = $arr_return['data']['res'];
-    unset($arr_return);
+    $res = $arr_return[ 'data' ][ 'res' ];
+    unset( $arr_return );
     // Get SQL ressource for filter items with one hit at least
     // Get rows from SQL ressource
-    $arr_return['data']['rows'] = $this->sql_resToRows($res);
+    $arr_return[ 'data' ][ 'rows' ] = $this->sql_resToRows( $res );
 
     // Count all hits
-    $this->sum_hits($arr_return['data']['rows']);
+    $this->sum_hits( $arr_return[ 'data' ][ 'rows' ] );
 
     // RETURN rows
     return $arr_return;
@@ -3113,42 +3052,42 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function get_rowsAllItems($rows_wiHits)
+  private function get_rowsAllItems( $rows_wiHits )
   {
     $arr_return = array();
 
     // RETURN IF : hits should counted
-    if ($this->ts_countHits())
+    if ( $this->ts_countHits() )
     {
-      $arr_return['data']['rows'] = $rows_wiHits;
+      $arr_return[ 'data' ][ 'rows' ] = $rows_wiHits;
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
     // RETURN IF : hits should counted
     // Get SQL ressource for all filter items
     $arr_return = $this->sql_resAllItems();
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
-    $res = $arr_return['data']['res'];
-    unset($arr_return);
+    $res = $arr_return[ 'data' ][ 'res' ];
+    unset( $arr_return );
     // Get SQL ressource for all filter items
     // Get rows
-    $rows = $this->sql_resToRows_allItemsWiHits($res, $rows_wiHits);
+    $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
 
     // RETURN rows
-    $arr_return['data']['rows'] = $rows;
+    $arr_return[ 'data' ][ 'rows' ] = $rows;
     return $arr_return;
   }
 
   /**
    * get_selectedFilters( ) : Sets the class var $arr_selectedFilters. The $tableField
-   *                          of afilter is added to $arr_selectedFilters, if the filter
+   *                          of a filter is added to $arr_selectedFilters, if the filter
    *                          is an element of the piVars.
    *
    * @return	array       $arr_selectedFilters: contains $tableFields of selected filters
@@ -3158,13 +3097,13 @@ class tx_browser_pi1_filter_4x
   public function get_selectedFilters()
   {
     // RETURN : var is initialised
-    if (!$this->arr_selectedFilters === null)
+    if ( !$this->arr_selectedFilters === null )
     {
       return $this->arr_selectedFilters;
     }
     // RETURN : var is initialised
     // RETURN : no piVars, set var to false
-    if (empty($this->pObj->piVars))
+    if ( empty( $this->pObj->piVars ) )
     {
       $this->arr_selectedFilters = false;
       return $this->arr_selectedFilters;
@@ -3174,24 +3113,24 @@ class tx_browser_pi1_filter_4x
     $this->arr_selectedFilters = false;
 
     // LOOP : each filter table
-    foreach ((array) $this->conf_view['filter.'] as $table => $fields)
+    foreach ( ( array ) $this->conf_view[ 'filter.' ] as $table => $fields )
     {
       // CONTINUE : table hasn't any dot
-      if (rtrim($table, '.') == $table)
+      if ( rtrim( $table, '.' ) == $table )
       {
         continue;
       }
       // CONTINUE : table hasn't any dot
       // LOOP : each filter field
-      foreach (array_keys((array) $fields) as $fieldWiDot)
+      foreach ( array_keys( ( array ) $fields ) as $fieldWiDot )
       {
-        if (substr($fieldWiDot, -1) != '.')
+        if ( substr( $fieldWiDot, -1 ) != '.' )
         {
           continue;
         }
-        $field = substr($fieldWiDot, 0, -1);
+        $field = substr( $fieldWiDot, 0, -1 );
         $tableField = $table . $field;
-        if (isset($this->pObj->piVars[$tableField]))
+        if ( isset( $this->pObj->piVars[ $tableField ] ) )
         {
           // #41754.02, 121010, dwildt, 2-
 //          $this->arr_selectedFilters = true;
@@ -3225,7 +3164,7 @@ class tx_browser_pi1_filter_4x
     $arr_return = null;
 
     // SWITCH : filter without any relation versus filter with relation
-    switch (true)
+    switch ( true )
     {
       case( $this->ts_countHits() ):
 //      case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
@@ -3254,7 +3193,7 @@ class tx_browser_pi1_filter_4x
     $bool_count = false;
 
     // Query for all filter items
-    $select = $this->sql_select($bool_count);
+    $select = $this->sql_select( $bool_count );
     $from = $this->sql_from();
     $where = $this->sql_whereAllItems();
     $groupBy = $this->curr_tableField;
@@ -3291,13 +3230,13 @@ class tx_browser_pi1_filter_4x
    */
   private function sql_resAllItemsFilterWoRelation()
   {
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
     $tableField = $this->curr_tableField;
     $tableUid = $table . '.uid';
 
-    $this->sql_filterFields[$this->curr_tableField]['hits'] = 'hits';
-    $this->sql_filterFields[$this->curr_tableField]['uid'] = $table . '.uid';
-    $this->sql_filterFields[$this->curr_tableField]['value'] = $this->curr_tableField;
+    $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ] = 'hits';
+    $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ] = $table . '.uid';
+    $this->sql_filterFields[ $this->curr_tableField ][ 'value' ] = $this->curr_tableField;
 
     // Query for all filter items
     $select = "0 AS 'hits', " .
@@ -3351,26 +3290,26 @@ class tx_browser_pi1_filter_4x
     $arr_return = array();
 
     // RETURN : there isn't any row
-    if (empty($this->rows))
+    if ( empty( $this->rows ) )
     {
       return $arr_return;
     }
     // RETURN : there isn't any row
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
 
     // Get ids
-    $uids_arr = array_keys($this->rows);
+    $uids_arr = array_keys( $this->rows );
     // #48859, 130528, dwildt: make SQL query safe, 4+
-    foreach ((array) $uids_arr as $key => $value)
+    foreach ( ( array ) $uids_arr as $key => $value )
     {
-      $uids_arr[$key] = (int) $value;
+      $uids_arr[ $key ] = ( int ) $value;
     }
     // #48859, 130528, dwildt: make SQL query safe, 4+
-    $uids_csv = implode(',', $uids_arr);
+    $uids_csv = implode( ',', $uids_arr );
 
     // transOrigPointerField
-    $transOrigPointerField = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+    $transOrigPointerField = $this->sql_filterFields[ $this->curr_tableField ][ 'transOrigPointerField' ];
 
     // Query for all filter items
     $select = $table . ".uid AS '" . $table . ".uid', " .
@@ -3406,7 +3345,7 @@ class tx_browser_pi1_filter_4x
     $bool_count = true;
 
     // Get query parts
-    $select = $this->sql_select($bool_count);
+    $select = $this->sql_select( $bool_count );
     $from = $this->sql_from();
     $where = $this->sql_whereWiHits();
     $groupBy = $this->sql_groupBy();
@@ -3447,24 +3386,24 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.25
    * @since   3.9.9
    */
-  private function sql_resToRows($res)
+  private function sql_resToRows( $res )
   {
     $rows = array();
 
     // Get the field label of the uid
-    $uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $uidField = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
 
     // LOOP build the rows
-    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+    while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
-      $rows[(string) $row[$uidField]] = $row;
+      $rows[ ( string ) $row[ $uidField ] ] = $row;
     }
     // LOOP build the rows
     // Free SQL result
     // #42302, dwildt, 1-
     //$GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
     // #42302, dwildt, 1+
-    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
     // RETURN rows
     return $rows;
@@ -3481,35 +3420,35 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function sql_resToRows_allItemsWiHits($res, $rows_wiHits)
+  private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
   {
     // Get all rows - get all filter items
-    $rows_wiAllItems = $this->sql_resToRows($res);
+    $rows_wiAllItems = $this->sql_resToRows( $res );
 //$this->pObj->dev_var_dump( $rows_wiAllItems );
     // RETURN all rows are empty
-    if (empty($rows_wiAllItems))
+    if ( empty( $rows_wiAllItems ) )
     {
       return null;
     }
     // RETURN all rows are empty
     // RETURN all rows, there isn't any row with a hit
-    if (empty($rows_wiHits))
+    if ( empty( $rows_wiHits ) )
     {
       return $rows_wiAllItems;
     }
     // RETURN all rows, there isn't any row with a hit
     // Get label of the hits field
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
 
     // LOOP all items
-    foreach (array_keys((array) $rows_wiAllItems) as $uid)
+    foreach ( array_keys( ( array ) $rows_wiAllItems ) as $uid )
 //    foreach( ( array ) $rows_wiAllItems as $uid => $row )
     {
       // If there is an hit, take it over
-      if (isset($rows_wiHits[$uid]))
+      if ( isset( $rows_wiHits[ $uid ] ) )
       {
-        $hits = $rows_wiHits[$uid][$hitsField];
-        $rows_wiAllItems[$uid][$hitsField] = $hits;
+        $hits = $rows_wiHits[ $uid ][ $hitsField ];
+        $rows_wiAllItems[ $uid ][ $hitsField ] = $hits;
       }
       // If there is an hit, take it over
     }
@@ -3534,14 +3473,14 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function sql_select($bool_count)
+  private function sql_select( $bool_count )
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // EXIT wrong TS configuration
     $conf_view = $this->conf_view;
-    if (!empty($conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select']))
+    if ( !empty( $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'sql.' ][ 'select' ] ) )
     {
       $prompt = '
                   <h1 style="color:red;">
@@ -3560,10 +3499,10 @@ class tx_browser_pi1_filter_4x
     }
     // EXIT wrong TS configuration
     // select
-    switch ($bool_count)
+    switch ( $bool_count )
     {
       case( true ):
-        $localTableUid = $this->pObj->arrLocalTable['uid'];
+        $localTableUid = $this->pObj->arrLocalTable[ 'uid' ];
         $count = "COUNT( DISTINCT " . $localTableUid . " )";
         break;
       case( false ):
@@ -3576,9 +3515,9 @@ class tx_browser_pi1_filter_4x
             $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
     // select
     // Set class var sql_filterFields
-    $this->sql_filterFields[$this->curr_tableField]['hits'] = 'hits';
-    $this->sql_filterFields[$this->curr_tableField]['uid'] = $table . '.uid';
-    $this->sql_filterFields[$this->curr_tableField]['value'] = $this->curr_tableField;
+    $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ] = 'hits';
+    $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ] = $table . '.uid';
+    $this->sql_filterFields[ $this->curr_tableField ][ 'value' ] = $this->curr_tableField;
     // Set class var sql_filterFields
     // Add treeview field to select
     $select = $select . $this->sql_select_addTreeview();
@@ -3633,34 +3572,34 @@ class tx_browser_pi1_filter_4x
   private function sql_select_addLL_sysLanguage()
   {
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
 
     // RETURN no languageField
-    if (!isset($GLOBALS['TCA'][$table]['ctrl']['languageField']))
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField' ] ) )
     {
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation)
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
       {
         $prompt = $table . ' isn\'t a localised localTable: TCA.' . $table . 'ctrl.languageField is missing.';
-        t3lib_div::devlog('[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
     // RETURN no languageField
     // RETURN no transOrigPointerField
-    if (!isset($GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']))
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ] ) )
     {
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation)
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
       {
         $prompt = $table . ' isn\'t a localised localTable: TCA.' . $table . 'ctrl.transOrigPointerField is missing.';
-        t3lib_div::devlog('[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
     // RETURN no transOrigPointerField
     // Get field labels
-    $languageField = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $languageField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField' ];
     $languageField = $table . '.' . $languageField;
-    $transOrigPointerField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $transOrigPointerField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
     $transOrigPointerField = $table . '.' . $transOrigPointerField;
     // Get field labels
     // addSelect
@@ -3669,14 +3608,14 @@ class tx_browser_pi1_filter_4x
             $transOrigPointerField . " AS '" . $transOrigPointerField . "'";
     // addSelect
     // Add $languageField and $transOrigPointerField to the class var sql_filterFields
-    $this->sql_filterFields[$this->curr_tableField]['languageField'] = $languageField;
-    $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'] = $transOrigPointerField;
+    $this->sql_filterFields[ $this->curr_tableField ][ 'languageField' ] = $languageField;
+    $this->sql_filterFields[ $this->curr_tableField ][ 'transOrigPointerField' ] = $transOrigPointerField;
 
     // DRS
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation)
+    if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
     {
       $prompt = $table . ' is a localised localTable. SELECT is localised.';
-      t3lib_div::devlog('[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // RETURN addSelect
@@ -3695,26 +3634,26 @@ class tx_browser_pi1_filter_4x
   private function sql_select_addLL_langOl()
   {
     // get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Load TCA
-    $this->pObj->objZz->loadTCA($table);
+    $this->pObj->objZz->loadTCA( $table );
 
     // Get language overlay appendix
-    $lang_ol = $this->pObj->objLocalise->conf_localisation['TCA.']['field.']['appendix'];
+    $lang_ol = $this->pObj->objLocalise->conf_localisation[ 'TCA.' ][ 'field.' ][ 'appendix' ];
 
     // Label of the  field for language overlay
     $field_lang_ol = $field . $lang_ol;
 
     // RETURN no field for language overlay
-    if (!isset($GLOBALS['TCA'][$table]['columns'][$field_lang_ol]))
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $field_lang_ol ] ) )
     {
       // DRS
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation)
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
       {
         $prompt = $table . ' isn\'t a localised foreignTable: ' .
                 'TCA.' . $table . 'columns.' . $field_lang_ol . ' is missing.';
-        t3lib_div::devlog('[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
       // DRS
       return;
@@ -3725,13 +3664,13 @@ class tx_browser_pi1_filter_4x
     $addSelect = ", " . $tableField_ol . " AS '" . $tableField_ol . "'";
     // addSelect
     // Add field to the class var sql_filterFields
-    $this->sql_filterFields[$this->curr_tableField]['lang_ol'] = $tableField_ol;
+    $this->sql_filterFields[ $this->curr_tableField ][ 'lang_ol' ] = $tableField_ol;
 
     // DRS
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation)
+    if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
     {
       $prompt = $table . ' is a localised foreignTable. SELECT is localised.';
-      t3lib_div::devlog('[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // RETURN addSelect
@@ -3750,59 +3689,59 @@ class tx_browser_pi1_filter_4x
   private function sql_select_addTreeview()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // #32223, 120120, dwildt+
     // Get $treeviewEnabled
     $conf_view = $this->conf_view;
-    $cObj_name = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
-    $cObj_conf = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
-    $treeviewEnabled = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $cObj_name = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled' ];
+    $cObj_conf = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled.' ];
+    $treeviewEnabled = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
     // Get $treeviewEnabled
     // RETURN no treeview
-    if (!$treeviewEnabled)
+    if ( !$treeviewEnabled )
     {
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = 'treeview is disabled. Has an effect only in case of cps_tcatree and a proper TCA configuration.';
-        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
     // RETURN no treeview
     // DRS
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       $prompt = 'treeview is enabled. Has an effect only in case of cps_tcatree and a proper TCA configuration.';
-      t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // Load the TCA for the current table
-    $this->pObj->objZz->loadTCA($table);
+    $this->pObj->objZz->loadTCA( $table );
 
     // RETURN table hasn't any treeParentField in the TCA
-    if (!isset($GLOBALS['TCA'][$table]['ctrl']['treeParentField']))
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'treeParentField' ] ) )
     {
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = 'TCA.' . $table . '.ctrl.treeParentField isn\'t set.';
-        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
       }
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return;
     }
     // RETURN table hasn't any treeParentField in the TCA
     // Get $tableTreeParentField
-    $treeParentField = $GLOBALS['TCA'][$table]['ctrl']['treeParentField'];
+    $treeParentField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'treeParentField' ];
     $tableTreeParentField = $table . "." . $treeParentField;
 
     // Add $tableTreeParentField to the SELECT statement
     $addSelect = ", " . $tableTreeParentField . " AS '" . $tableTreeParentField . "'";
 
     // Add $tableTreeParentField to the class var array
-    $this->sql_filterFields[$this->curr_tableField]['treeParentField'] = $tableTreeParentField;
+    $this->sql_filterFields[ $this->curr_tableField ][ 'treeParentField' ] = $tableTreeParentField;
 
     // #41776, dwildt, 2-
 //      // Add table to arr_tablesWiTreeparentfield
@@ -3812,10 +3751,10 @@ class tx_browser_pi1_filter_4x
     $this->arr_tablesWiTreeparentfield[] = $table;
 
     // DRS
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       $prompt = 'TCA.' . $table . '.ctrl.treeParentField is set. ' . $table . ' is configured for a tree view.';
-      t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
 
@@ -3852,26 +3791,27 @@ class tx_browser_pi1_filter_4x
   private function sql_from()
   {
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
     // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
     // SWITCH
-    switch (true)
+    switch ( true )
     {
       // 3.9.25, 120506, dwildt+
-      case(!empty($this->pObj->conf_sql['andWhere']) ):
+      case(!empty( $this->pObj->conf_sql[ 'andWhere' ] ) ):
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
-      case( isset($this->pObj->piVars['sword']) ):
-        $from = $this->pObj->objSqlInit->statements['listView']['from'];
+      case( isset( $this->pObj->piVars[ 'sword' ] ) ):
+        $from = $this->pObj->objSqlInit->statements[ 'listView' ][ 'from' ];
         break;
       case( $conf_flexform == 'independent' ) :
         $from = $table;
         break;
       default;
-        $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
-        die($prompt);
+        $header = 'FATAL ERROR!';
+        $text = 'Undefined value: "' . $conf_flexform . '".';
+        $this->pObj->drs_die( $header, $text );
         break;
     }
     // SWITCH
@@ -3922,31 +3862,31 @@ class tx_browser_pi1_filter_4x
   private function sql_orderBy()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Short var
     $arr_order = null;
-    $arr_order = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
+    $arr_order = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'order.' ];
 
     // Order field
-    switch (true)
+    switch ( true )
     {
-      case( $arr_order['field'] == 'uid' ):
-        $orderField = $this->sql_filterFields[$this->curr_tableField]['uid'];
+      case( $arr_order[ 'field' ] == 'uid' ):
+        $orderField = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
         break;
-      case( $arr_order['field'] == 'value' ):
+      case( $arr_order[ 'field' ] == 'value' ):
       default:
-        $orderField = $this->sql_filterFields[$this->curr_tableField]['value'];
+        $orderField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
         break;
     }
     // Order field
     // Order flag
-    switch (true)
+    switch ( true )
     {
-      case( $arr_order['orderFlag'] == 'DESC' ):
+      case( $arr_order[ 'orderFlag' ] == 'DESC' ):
         $orderFlag = 'DESC';
         break;
-      case( $arr_order['orderFlag'] == 'ASC' ):
+      case( $arr_order[ 'orderFlag' ] == 'ASC' ):
       default:
         $orderFlag = 'ASC';
         break;
@@ -4013,11 +3953,11 @@ class tx_browser_pi1_filter_4x
   private function sql_whereWiHits()
   {
     // Get WHERE statement
-    $where = $this->pObj->objSqlInit->statements['listView']['where'] .
+    $where = $this->pObj->objSqlInit->statements[ 'listView' ][ 'where' ] .
             $this->sql_whereAnd_Filter() .
             $this->sql_whereAnd_fromTS();
     // Localise the WHERE statement
-    $where = $this->sql_whereWiHitsLL($where);
+    $where = $this->sql_whereWiHitsLL( $where );
 //$this->pObj->dev_var_dump( $where );
     // RETURN WHERE statement without a WHERE
     return $where;
@@ -4034,7 +3974,7 @@ class tx_browser_pi1_filter_4x
    * @version   3.9.13
    * @since     3.9.13
    */
-  private function sql_whereWiHitsLL($where)
+  private function sql_whereWiHitsLL( $where )
   {
     // Short var
     $table = $this->pObj->localTable;
@@ -4043,18 +3983,18 @@ class tx_browser_pi1_filter_4x
     $curr_int_localisation_mode = $this->pObj->objLocalise->get_localisationMode();
     // Set localisation mode to default language
     //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-    $this->pObj->objLocalise->setLocalisationMode(PI1_DEFAULT_LANGUAGE);
+    $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
 
     // Get where localisation
-    $llWhere = $this->pObj->objLocalise->localisationFields_where($table);
-    if ($llWhere)
+    $llWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+    if ( $llWhere )
     {
       $where = $where . " AND " . $llWhere;
     }
     // Get where localisation
     // Reset localisation mode
     //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-    $this->pObj->objLocalise->setLocalisationMode($curr_int_localisation_mode);
+    $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
 
     // RETURN
     return $where;
@@ -4070,9 +4010,9 @@ class tx_browser_pi1_filter_4x
   private function sql_whereAnd_enableFields()
   {
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
 
-    $andWhere = $this->pObj->cObj->enableFields($table);
+    $andWhere = $this->pObj->cObj->enableFields( $table );
 
     // RETURN AND WHERE statement
     return $andWhere;
@@ -4088,31 +4028,33 @@ class tx_browser_pi1_filter_4x
   private function sql_whereAnd_Filter()
   {
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
     // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
     // SWITCH : independent versus controlled among others
-    switch (true)
+    switch ( true )
     {
       case( $conf_flexform == 'independent' ) :
         return false;
       //break;
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
-      case( isset($this->pObj->piVars['sword']) ):
+      case( isset( $this->pObj->piVars[ 'sword' ] ) ):
         return $this->andWhereFilter;
       //break;
       default;
-        $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
-        die($prompt);
+        $header = 'FATAL ERROR!';
+        $text = 'Undefined value: "' . $conf_flexform . '".';
+        $this->pObj->drs_die( $header, $text );
         break;
     }
-    unset($table);
+    unset( $table );
     // SWITCH : independent versus controlled among others
     // DIE : undefined value
-    $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
-    die($prompt);
+    $header = 'FATAL ERROR!';
+    $text = 'Undefined value: "' . $conf_flexform . '".';
+    $this->pObj->drs_die( $header, $text );
   }
 
   /**
@@ -4126,12 +4068,12 @@ class tx_browser_pi1_filter_4x
   private function sql_whereAnd_fromTS()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS value
-    $andWhere = $this->conf_view['filter.'][$table . '.'][$field . '.']['sql.']['andWhere'];
+    $andWhere = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'sql.' ][ 'andWhere' ];
 
-    if (!empty($andWhere))
+    if ( !empty( $andWhere ) )
     {
       $andWhere = " AND " . $andWhere;
     }
@@ -4150,28 +4092,28 @@ class tx_browser_pi1_filter_4x
   private function sql_whereAnd_pidList()
   {
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
 
-    if (empty($this->pObj->pidList))
+    if ( empty( $this->pObj->pidList ) )
     {
       // DRS
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_warn )
       {
         $prompt = 'There isn\'t any pid list for the records of ' . $table . '. Maybe this is an error.';
-        t3lib_div::devlog('[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
       }
       // DRS
       return;
     }
 
-    $fieldsOfTable = $this->pObj->arr_realTables_arrFields[$table];
-    if (!in_array('pid', $fieldsOfTable))
+    $fieldsOfTable = $this->pObj->arr_realTables_arrFields[ $table ];
+    if ( !in_array( 'pid', $fieldsOfTable ) )
     {
       // DRS
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_warn )
       {
         $prompt = $table . ' shouldn\'t have any pid field. Maybe this is an error.';
-        t3lib_div::devlog('[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
       }
       // DRS
       return;
@@ -4194,23 +4136,23 @@ class tx_browser_pi1_filter_4x
    */
   private function sql_whereAnd_sysLanguage()
   {
-    if (!isset($this->sql_filterFields[$this->curr_tableField]['languageField']))
+    if ( !isset( $this->sql_filterFields[ $this->curr_tableField ][ 'languageField' ] ) )
     {
       return;
     }
 
-    $languageField = $this->sql_filterFields[$this->curr_tableField]['languageField'];
-    $languageId = $GLOBALS['TSFE']->sys_language_content;
+    $languageField = $this->sql_filterFields[ $this->curr_tableField ][ 'languageField' ];
+    $languageId = $GLOBALS[ 'TSFE' ]->sys_language_content;
 
     // DRS :TODO:
-    if ($this->pObj->b_drs_devTodo)
+    if ( $this->pObj->b_drs_devTodo )
     {
       $prompt = '$this->int_localisation_mode PI1_SELECTED_OR_DEFAULT_LANGUAGE: for each language a query!';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS :TODO:
 
-    switch ($this->int_localisation_mode)
+    switch ( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
         $andWhere = " AND " . $languageField . " <= 0 ";
@@ -4218,11 +4160,11 @@ class tx_browser_pi1_filter_4x
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         $andWhere = " AND ( " .
                 $languageField . " <= 0 OR " .
-                $languageField . " = " . intval($languageId) .
+                $languageField . " = " . intval( $languageId ) .
                 " ) ";
         break;
       case( PI1_SELECTED_LANGUAGE_ONLY ):
-        $andWhere = " AND " . $languageField . " = " . intval($languageId) . " ";
+        $andWhere = " AND " . $languageField . " = " . intval( $languageId ) . " ";
         break;
       default:
         $andWhere = null;
@@ -4256,25 +4198,25 @@ class tx_browser_pi1_filter_4x
     $this->cObjDataBak = $this->pObj->cObj->data;
 
     // DRS
-    if ($this->pObj->b_drs_cObjData)
+    if ( $this->pObj->b_drs_cObjData )
     {
-      $prompt = implode(', ', array_keys($this->pObj->cObj->data));
+      $prompt = implode( ', ', array_keys( $this->pObj->cObj->data ) );
       $prompt = 'cObj-data had this elements: ' . $prompt;
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // Remove all data
     $this->pObj->cObj->data = null;
 
     // Add mode and view
-    $this->pObj->cObj->data[$this->pObj->prefixId . '.mode'] = $this->pObj->piVar_mode;
-    $this->pObj->cObj->data[$this->pObj->prefixId . '.view'] = $this->pObj->view;
+    $this->pObj->cObj->data[ $this->pObj->prefixId . '.mode' ] = $this->pObj->piVar_mode;
+    $this->pObj->cObj->data[ $this->pObj->prefixId . '.view' ] = $this->pObj->view;
 
     // DRS
-    if ($this->pObj->b_drs_cObjData)
+    if ( $this->pObj->b_drs_cObjData )
     {
-      $prompt = 'Init - cObj->data has now this elements: ' . implode(', ', array_keys($this->pObj->cObj->data));
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      $prompt = 'Init - cObj->data has now this elements: ' . implode( ', ', array_keys( $this->pObj->cObj->data ) );
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
   }
@@ -4292,11 +4234,11 @@ class tx_browser_pi1_filter_4x
     $this->pObj->cObj->data = $this->cObjDataBak;
 
     // DRS
-    if ($this->pObj->b_drs_cObjData)
+    if ( $this->pObj->b_drs_cObjData )
     {
-      $prompt = implode(', ', array_keys($this->pObj->cObj->data));
+      $prompt = implode( ', ', array_keys( $this->pObj->cObj->data ) );
       $prompt = 'Reset - cObj-data became this elements: ' . $prompt;
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
   }
@@ -4312,7 +4254,7 @@ class tx_browser_pi1_filter_4x
   {
     static $bool_DRSprompt = true;
 
-    if (!$this->ts_getDisplayInCaseOfNoCounting())
+    if ( !$this->ts_getDisplayInCaseOfNoCounting() )
     {
       return;
     }
@@ -4322,13 +4264,13 @@ class tx_browser_pi1_filter_4x
     $value = 1;
 
     // Set treeview field
-    $this->pObj->cObj->data[$key] = $value;
+    $this->pObj->cObj->data[ $key ] = $value;
 
     // DRS
-    if ($this->pObj->b_drs_cObjData && $bool_DRSprompt)
+    if ( $this->pObj->b_drs_cObjData && $bool_DRSprompt )
     {
       $prompt = 'cObj->data[ ' . $key . '] = ' . $value;
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
       $bool_DRSprompt = false;
     }
     // DRS
@@ -4345,20 +4287,20 @@ class tx_browser_pi1_filter_4x
   {
     static $bool_DRSprompt = true;
 
-    if (!$this->ts_getDisplayInCaseOfNoCounting())
+    if ( !$this->ts_getDisplayInCaseOfNoCounting() )
     {
       return;
     }
 
     // Unset the treeview field
     $key = $this->pObj->prefixId . '.flag_displayInCaseOfNoCounting';
-    unset($this->pObj->cObj->data[$key]);
+    unset( $this->pObj->cObj->data[ $key ] );
 
     // DRS
-    if ($this->pObj->b_drs_cObjData && $bool_DRSprompt)
+    if ( $this->pObj->b_drs_cObjData && $bool_DRSprompt )
     {
       $prompt = 'cObj->data[ ' . $key . '] is unset.';
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
       $bool_DRSprompt = false;
     }
     // DRS
@@ -4378,13 +4320,13 @@ class tx_browser_pi1_filter_4x
     $value = 1;
 
     // Set treeview field
-    $this->pObj->cObj->data[$key] = $value;
+    $this->pObj->cObj->data[ $key ] = $value;
 
     // DRS
-    if ($this->pObj->b_drs_cObjData)
+    if ( $this->pObj->b_drs_cObjData )
     {
       $prompt = 'cObj->data[ ' . $key . '] = ' . $value;
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
   }
@@ -4400,13 +4342,13 @@ class tx_browser_pi1_filter_4x
   {
     // UNset the treeview field
     $key = $this->pObj->prefixId . '.flag_treeview';
-    unset($this->pObj->cObj->data[$key]);
+    unset( $this->pObj->cObj->data[ $key ] );
 
     // DRS
-    if ($this->pObj->b_drs_cObjData)
+    if ( $this->pObj->b_drs_cObjData )
     {
       $prompt = 'cObj->data[ ' . $key . '] is unset.';
-      t3lib_div::devlog('[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
   }
@@ -4424,50 +4366,50 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function cObjData_updateRow($uid)
+  private function cObjData_updateRow( $uid )
   {
     static $firstVisit = true;
 
     // RETURN: empty row
-    if (empty($this->rows[$uid]))
+    if ( empty( $this->rows[ $uid ] ) )
     {
       return;
     }
     // RETURN: empty row
     // Add each element of the row to cObj->data
-    foreach ((array) $this->rows[$uid] as $key => $value)
+    foreach ( ( array ) $this->rows[ $uid ] as $key => $value )
     {
-      $this->pObj->cObj->data[$key] = $value;
+      $this->pObj->cObj->data[ $key ] = $value;
     }
 
     // Add the field uid with the uid of the current row
-    $key = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $value = $this->rows[$uid][$key];
-    $this->pObj->cObj->data['uid'] = $value;
+    $key = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
+    $value = $this->rows[ $uid ][ $key ];
+    $this->pObj->cObj->data[ 'uid' ] = $value;
 
     // Add the field value with the value of the current row
-    $key = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $value = $this->rows[$uid][$key];
-    $this->pObj->cObj->data['value'] = $value;
+    $key = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+    $value = $this->rows[ $uid ][ $key ];
+    $this->pObj->cObj->data[ 'value' ] = $value;
 
     // Add the field hits with the hits of the filter item
-    $key = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $value = $this->rows[$uid][$key];
-    $this->pObj->cObj->data['hits'] = $value;
+    $key = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
+    $value = $this->rows[ $uid ][ $key ];
+    $this->pObj->cObj->data[ 'hits' ] = $value;
 //$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
     // Add the field rowNumber with the number of the current row
     $key = $this->pObj->prefixId . '.rowNumber';
-    $value = $this->itemsPerHtmlRow['currItemNumberInRow'];
+    $value = $this->itemsPerHtmlRow[ 'currItemNumberInRow' ];
 
     // DRS
-    if ($firstVisit && $this->pObj->b_drs_cObjData)
+    if ( $firstVisit && $this->pObj->b_drs_cObjData )
     {
-      foreach ((array) $this->pObj->cObj->data as $key => $value)
+      foreach ( ( array ) $this->pObj->cObj->data as $key => $value )
       {
         $arr_prompt[] = '\'' . $key . '\' => \'' . $value . '\'';
       }
-      $prompt = 'cObj->data of the first row: ' . implode('; ', (array) $arr_prompt);
-      t3lib_div::devlog('[OK/COBJ] ' . $prompt, $this->pObj->extKey, -1);
+      $prompt = 'cObj->data of the first row: ' . implode( '; ', ( array ) $arr_prompt );
+      t3lib_div::devlog( '[OK/COBJ] ' . $prompt, $this->pObj->extKey, -1 );
     }
     // DRS
 
@@ -4493,19 +4435,19 @@ class tx_browser_pi1_filter_4x
     static $bool_drsFirstPrompt = true;
 
     // LOOP each filter
-    foreach ((array) $this->conf_view['filter.'] as $table => $fields)
+    foreach ( ( array ) $this->conf_view[ 'filter.' ] as $table => $fields )
     {
       // CONTINUE : table hasn't any dot
-      if (rtrim($table, '.') == $table)
+      if ( rtrim( $table, '.' ) == $table )
       {
         continue;
       }
       // CONTINUE : table hasn't any dot
 
-      foreach (array_keys((array) $fields) as $field)
+      foreach ( array_keys( ( array ) $fields ) as $field )
       {
         // CONTINUE : field has an dot
-        if (rtrim($field, '.') != $field)
+        if ( rtrim( $field, '.' ) != $field )
         {
           continue;
         }
@@ -4514,71 +4456,61 @@ class tx_browser_pi1_filter_4x
         $tableField = $table . $field;
 
         $conf_view = $this->conf_view;
-        $cObj_name = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
-        $cObj_conf = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
-        $treeviewEnabled = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+        $cObj_name = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled' ];
+        $cObj_conf = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled.' ];
+        $treeviewEnabled = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
         // CONTINUE : field has an dot
-        if (!$treeviewEnabled)
+        if ( !$treeviewEnabled )
         {
           continue;
         }
         // CONTINUE : field has an dot
         // DRS
-        if ($this->pObj->b_drs_warn)
+        if ( $this->pObj->b_drs_warn )
         {
-          if ($bool_drsFirstPrompt)
+          if ( $bool_drsFirstPrompt )
           {
             $prompt = 'DON\'T USE AJAX: The treeview of ' . $tableField . ' is enabled. ' .
                     'You will get unexpected effects!';
-            t3lib_div :: devLog('[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2);
+            t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
             $bool_drsFirstPrompt = false;
           }
         }
         // DRS
 
-        switch ($this->conf_view['filter.'][$table . '.'][$field])
+        switch ( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] )
         {
           case( 'CATEGORY_MENU' ):
-            $this->eval_treeviewCategoryMenu($tableField);
+            $this->eval_treeviewCategoryMenu( $tableField );
             break;
           case( 'TREEVIEW' ):
-            $this->eval_treeviewCheckbox($tableField);
+            $this->eval_treeviewCheckbox( $tableField );
             // #43692, 121206, dwildt, 13+
             // Adding jQuery
             $bool_success_jQuery = $this->pObj->objJss->load_jQuery();
-            if ($bool_success_jQuery)
+            if ( $bool_success_jQuery )
             {
-              if ($this->pObj->b_drs_javascript)
+              if ( $this->pObj->b_drs_javascript )
               {
                 $prompt = 'Current filter is a treeview.';
-                t3lib_div::devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
+                t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0 );
                 $prompt = 'jQuery will be loaded.';
-                t3lib_div::devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
+                t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0 );
               }
             }
             // Adding jQuery
             // #43692, 121206, dwildt, 13+
             break;
           default:
-            $prompt = '<h1>Evaluation of treeview filter failed!</h1>
-                      <h2>Filter ' . $tableField . '</h2>
-                      <p>
-                        ' . $tableField . ' is configured as ' . $this->conf_view['filter.'][$table . '.'][$field] . '<br />
-                        But ' . $tableField . '.treeview.enabled is true. This isn\'t proper.
-                      </p>
-                      <p>
-                        Please take care of a proper TypoScript configuration.<br />
-                        Remove ' . $tableField . '.treeview.enabled or set it to false.
-                      </p>
-                      <p>
-                        Method: ' . __METHOD__ . '<br />
-                        Line: ' . __LINE__ . '<br />
+            $header = 'Evaluation of treeview filter failed!';
+            $text = '' . $tableField . ' is configured as ' . $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] . '
                         <br />
-                        Browser - TYPO3 without PHP
-                      </p>
-                      ';
-            die($prompt);
+                        But ' . $tableField . '.treeview.enabled is true. This isn\'t proper.
+                        <br />
+                        Please take care of a proper TypoScript configuration.<br />
+                        Remove ' . $tableField . '.treeview.enabled or set it to false.';
+            $this->pObj->drs_die( $header, $text );
             break;
         }
       }
@@ -4596,23 +4528,23 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   4.1.21
    */
-  private function eval_treeviewCategoryMenu($tableField)
+  private function eval_treeviewCategoryMenu( $tableField )
   {
     // Get table
-    list( $table, $field ) = explode('.', $tableField);
+    list( $table, $field ) = explode( '.', $tableField );
 
-    $type = $this->conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
+    $type = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'type' ];
 
-    switch ($type)
+    switch ( $type )
     {
       case( 'category_menu' ):
         // Configuration is proper.
         // DRS
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
-          $prompt = $tableField . ' =  ' . $this->conf_view['filter.'][$table . '.'][$field] .
+          $prompt = $tableField . ' =  ' . $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] .
                   ' and ' . $tableField . '.treeview.type is ' . $type . '. This is proper.';
-          t3lib_div :: devLog('[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1);
+          t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
         }
         // DRS
         break;
@@ -4621,7 +4553,7 @@ class tx_browser_pi1_filter_4x
         $prompt = '<h1>Evaluation of treeview filter failed!</h1>
                       <h2>Filter ' . $tableField . '</h2>
                       <p>
-                        ' . $tableField . ' is configured as ' . $this->conf_view['filter.'][$table . '.'][$field] . '<br />
+                        ' . $tableField . ' is configured as ' . $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] . '<br />
                         But ' . $tableField . '.treeview.type is ' . $type . '. This isn\'t proper.
                       </p>
                       <p>
@@ -4647,14 +4579,10 @@ class tx_browser_pi1_filter_4x
                           Set filter. ' . $tableField . ' to TREEVIEW by copying the master template for a TREEVIEW.
                         </li>
                       </ul>
-                      <p>
-                        Method: ' . __METHOD__ . '<br />
-                        Line: ' . __LINE__ . '<br />
-                        <br />
-                        Browser - TYPO3 without PHP
-                      </p>
                       ';
-        die($prompt);
+        $header = null;
+        $text = null;
+        $this->pObj->drs_die( $header, $text, $prompt );
         break;
     }
 
@@ -4669,23 +4597,23 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   4.1.21
    */
-  private function eval_treeviewCheckbox($tableField)
+  private function eval_treeviewCheckbox( $tableField )
   {
     // Get table
-    list( $table, $field ) = explode('.', $tableField);
+    list( $table, $field ) = explode( '.', $tableField );
 
-    $type = $this->conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
+    $type = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'type' ];
 
-    switch ($type)
+    switch ( $type )
     {
       case( 'checkbox' ):
         // Configuration is proper.
         // DRS
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
-          $prompt = $tableField . ' =  ' . $this->conf_view['filter.'][$table . '.'][$field] .
+          $prompt = $tableField . ' =  ' . $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] .
                   ' and ' . $tableField . '.treeview.type is ' . $type . '. This is proper.';
-          t3lib_div :: devLog('[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1);
+          t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
         }
         // DRS
         break;
@@ -4694,7 +4622,7 @@ class tx_browser_pi1_filter_4x
         $prompt = '<h1>Evaluation of treeview filter failed!</h1>
                       <h2>Filter ' . $tableField . '</h2>
                       <p>
-                        ' . $tableField . ' is configured as ' . $this->conf_view['filter.'][$table . '.'][$field] . '<br />
+                        ' . $tableField . ' is configured as ' . $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] . '<br />
                         But ' . $tableField . '.treeview.type is ' . $type . '. This isn\'t proper.
                       </p>
                       <p>
@@ -4719,14 +4647,10 @@ class tx_browser_pi1_filter_4x
                           Set filter. ' . $tableField . ' to CATEGORY_MENU by copying the master template for a CATEGORY_MENU.
                         </li>
                       </ul>
-                      <p>
-                        Method: ' . __METHOD__ . '<br />
-                        Line: ' . __LINE__ . '<br />
-                        <br />
-                        Browser - TYPO3 without PHP
-                      </p>
                       ';
-        die($prompt);
+        $header = null;
+        $text = null;
+        $this->pObj->drs_die( $header, $text, $prompt );
         break;
     }
 
@@ -4750,7 +4674,7 @@ class tx_browser_pi1_filter_4x
   {
     // SWITCH localisation mode
     // RETURN value
-    switch ($this->int_localisation_mode)
+    switch ( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
         return;
@@ -4766,12 +4690,12 @@ class tx_browser_pi1_filter_4x
     // RETURN value
     // SWITCH localisation mode
     // SWITCH language overlay or sys language
-    switch (true)
+    switch ( true )
     {
-      case( $this->sql_filterFields[$this->curr_tableField]['lang_ol'] ):
+      case( $this->sql_filterFields[ $this->curr_tableField ][ 'lang_ol' ] ):
         $this->localise_langOl();
         break;
-      case( $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'] ):
+      case( $this->sql_filterFields[ $this->curr_tableField ][ 'transOrigPointerField' ] ):
         $this->localise_sysLanguage();
         break;
       default:
@@ -4788,9 +4712,9 @@ class tx_browser_pi1_filter_4x
    */
   private function localise_langOl()
   {
-    $boolOlPrefix = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['langPrefix'];
+    $boolOlPrefix = $this->pObj->objLocalise->conf_localisation[ 'TCA.' ][ 'value.' ][ 'langPrefix' ];
 
-    switch ($boolOlPrefix)
+    switch ( $boolOlPrefix )
     {
       case( true ):
         $this->localise_langOlWiPrefix();
@@ -4812,19 +4736,19 @@ class tx_browser_pi1_filter_4x
   private function localise_langOlWiPrefix()
   {
     // Get the labels for the value field and the lang_ol field
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $langOlField = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+    $valueField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+    $langOlField = $this->sql_filterFields[ $this->curr_tableField ][ 'lang_ol' ];
 
     // Get the language devider
-    $devider = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
+    $devider = $this->pObj->objLocalise->conf_localisation[ 'TCA.' ][ 'value.' ][ 'devider' ];
 
     // Get the language prefix
-    $prefix = $GLOBALS['TSFE']->lang . ':'; // Value i.e.: 'de:'
+    $prefix = $GLOBALS[ 'TSFE' ]->lang . ':'; // Value i.e.: 'de:'
     // LOOP rows
-    foreach ($this->rows as $uid => $row)
+    foreach ( $this->rows as $uid => $row )
     {
       // Get the language overlay value
-      $langOlValue = $row[$langOlField];
+      $langOlValue = $row[ $langOlField ];
 
       ///////////////////////////////////////////////////////
       //
@@ -4841,26 +4765,26 @@ class tx_browser_pi1_filter_4x
       $pattern = '~(\A' . $prefix . '|\\' . $devider . $prefix . ')(.*)(\\' . $devider . '|\\z)~U';
       // Build the pattern
       // IF: Override default language with language overlay value
-      if (preg_match($pattern, $langOlValue, $matches))
+      if ( preg_match( $pattern, $langOlValue, $matches ) )
       {
-        $this->rows[$uid][$valueField] = $matches[2];
+        $this->rows[ $uid ][ $valueField ] = $matches[ 2 ];
       }
       // IF: Override default language with language overlay value
       // Get language overlay value for the current language
       // DRS
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
-        if (isset($matches[2]))
+        if ( isset( $matches[ 2 ] ) )
         {
           $prompt = 'preg_match( ' . $pattern . ', \'' . $langOlValue . '\', $matches )';
-          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
-          $prompt = 'result of $matches[2] : ' . $matches[2];
-          t3lib_div :: devLog('[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1);
+          t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'result of $matches[2] : ' . $matches[ 2 ];
+          t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
         }
-        if (!isset($matches[2]))
+        if ( !isset( $matches[ 2 ] ) )
         {
           $prompt = 'preg_match( ' . $pattern . ', \'' . $langOlValue . '\', $matches ) hasn\'t any result!';
-          t3lib_div :: devLog('[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
         }
       }
       // DRS
@@ -4878,29 +4802,29 @@ class tx_browser_pi1_filter_4x
   private function localise_langOlWoPrefix()
   {
     // Get the labels for the value field and the lang_ol field
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $langOlField = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+    $valueField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+    $langOlField = $this->sql_filterFields[ $this->curr_tableField ][ 'lang_ol' ];
 
     // Get the language devider
-    $devider = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
+    $devider = $this->pObj->objLocalise->conf_localisation[ 'TCA.' ][ 'value.' ][ 'devider' ];
     // Get position (language id)
-    $lang_pos = $GLOBALS['TSFE']->sys_language_content - 1;
+    $lang_pos = $GLOBALS[ 'TSFE' ]->sys_language_content - 1;
 
     // LOOP rows
-    foreach ($this->rows as $uid => $row)
+    foreach ( $this->rows as $uid => $row )
     {
       // Get the language overlay value
-      $langOlValue = $row[$langOlField];
+      $langOlValue = $row[ $langOlField ];
       // Devide language overlays to an array
-      $langOlValues = explode($devider, $langOlValue);
+      $langOlValues = explode( $devider, $langOlValue );
       // Get element with the language position
-      $langValue = $langOlValues[$lang_pos];
+      $langValue = $langOlValues[ $lang_pos ];
 
       // IF there is a language value
       // Override current value
-      if (!empty($langValue))
+      if ( !empty( $langValue ) )
       {
-        $this->rows[$uid][$valueField] = $langValue;
+        $this->rows[ $uid ][ $valueField ] = $langValue;
       }
       // Override current value
       // IF there is a language value
@@ -4918,19 +4842,19 @@ class tx_browser_pi1_filter_4x
   private function localise_sysLanguage()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get localisation configuration
     $l10n_mode = null;
-    $l10n_mode = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
-    $l10n_displayCsv = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_display'];
+    $l10n_mode = $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $field ][ 'l10n_mode' ];
+    $l10n_displayCsv = $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $field ][ 'l10n_display' ];
     $l10n_displayArr = null;
-    $l10n_displayArr = $this->pObj->objZz->getCSVasArray($l10n_displayCsv);
+    $l10n_displayArr = $this->pObj->objZz->getCSVasArray( $l10n_displayCsv );
     // Get localisation configuration
     // RETURN current field isn't localised
-    switch (true)
+    switch ( true )
     {
-      case( in_array('defaultAsReadonly', $l10n_displayArr) ):
+      case( in_array( 'defaultAsReadonly', $l10n_displayArr ) ):
         return;
       //break;
       case( $l10n_mode == 'exclude' ):
@@ -4940,38 +4864,41 @@ class tx_browser_pi1_filter_4x
     // RETURN current field isn't localised
     // Get SQL ressource for localised records
     $arr_return = $this->sql_resSysLanguageRows();
-    $res = $arr_return['data']['res'];
+    $res = $arr_return[ 'data' ][ 'res' ];
 
-    if ($arr_return['error']['status'])
+    if ( $arr_return[ 'error' ][ 'status' ] )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end');
-      die($arr_return['error']['header'] . $arr_return['error']['prompt']);
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
+      $header = null;
+      $text = null;
+      $prompt = $arr_return[ 'error' ][ 'header' ] . $arr_return[ 'error' ][ 'prompt' ];
+      $this->pObj->drs_die( $header, $text, $prompt );
     }
-    $res = $arr_return['data']['res'];
-    unset($arr_return);
+    $res = $arr_return[ 'data' ][ 'res' ];
+    unset( $arr_return );
     // Get SQL ressource for all filter items
     // Get rows
-    $rows_sysLanguage = $this->sql_resToRows($res);
+    $rows_sysLanguage = $this->sql_resToRows( $res );
 
     // Get label for gthe field with the language record pid
-    $transOrigPointerField = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+    $transOrigPointerField = $this->sql_filterFields[ $this->curr_tableField ][ 'transOrigPointerField' ];
 
     // Override class var $rows
-    foreach ($rows_sysLanguage as $row_sysLanguage)
+    foreach ( $rows_sysLanguage as $row_sysLanguage )
     {
-      if (!empty($row_sysLanguage[$this->curr_tableField]))
+      if ( !empty( $row_sysLanguage[ $this->curr_tableField ] ) )
       {
-        $pidLl = $row_sysLanguage[$transOrigPointerField];
-        $this->rows[$pidLl][$this->curr_tableField] = $row_sysLanguage[$this->curr_tableField];
+        $pidLl = $row_sysLanguage[ $transOrigPointerField ];
+        $this->rows[ $pidLl ][ $this->curr_tableField ] = $row_sysLanguage[ $this->curr_tableField ];
       }
     }
     // Override class var $rows
     //:TODO:
-    if ($this->pObj->b_drs_devTodo)
+    if ( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'sys_language: order rows!';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
   }
 
@@ -4991,57 +4918,57 @@ class tx_browser_pi1_filter_4x
   private function ts_getAreas()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // #41811, dwildt, 1+
-    $currHitsSum = $this->hits_sum[$this->curr_tableField];
+    $currHitsSum = $this->hits_sum[ $this->curr_tableField ];
 
     // Get TS configuration of the current filter / tableField
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Get areas from TS
     // SWITCH area key
-    switch ($this->pObj->objCal->arr_area[$this->curr_tableField]['key'])
+    switch ( $this->pObj->objCal->arr_area[ $this->curr_tableField ][ 'key' ] )
     {
       case ('strings') :
-        $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
+        $arr_result = $this->pObj->objCal->area_strings( $conf_array, null, $this->curr_tableField );
         break;
       case ('interval') :
-        $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
+        $arr_result = $this->pObj->objCal->area_interval( $conf_array, null, $this->curr_tableField );
         break;
 //        case ('from_to_fields') :
 //          break;
       default:
         // DRS - Development Reporting System
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
           $prompt = 'undefined value in switch: ' .
-                  '\'' . $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] . '\'.';
-          t3lib_div :: devLog('[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3);
+                  '\'' . $this->pObj->objCal->arr_area[ $this->curr_tableField ][ 'key' ] . '\'.';
+          t3lib_div :: devLog( '[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3 );
           $prompt = 'Areas won\'t handled!';
-          t3lib_div :: devLog('[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div :: devLog( '[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2 );
         }
         // DRS - Development Reporting System
         return;
     }
     // SWITCH area key
-    $areas = $arr_result['data']['values'];
-    unset($arr_result);
+    $areas = $arr_result[ 'data' ][ 'values' ];
+    unset( $arr_result );
     // Get areas from TS
     // #41811, dwildt, 1+
-    $this->hits_sum[$this->curr_tableField] = $currHitsSum;
+    $this->hits_sum[ $this->curr_tableField ] = $currHitsSum;
 
     // DRS
-    if ($this->pObj->b_drs_cal || $this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
     {
       $arr_prompt = null;
-      foreach ((array) $areas as $key => $value)
+      foreach ( ( array ) $areas as $key => $value )
       {
         $arr_prompt[] = '[' . $key . '] = ' . $value;
       }
-      $prompt = 'values are: ' . implode(', ', (array) $arr_prompt);
-      t3lib_div :: devLog('[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0);
+      $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
+      t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
     // RETURN areas
@@ -5058,43 +4985,43 @@ class tx_browser_pi1_filter_4x
   private function ts_getCondition()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
     $tableField = $this->curr_tableField;
 
     // Get TS configuration array
-    $conf_name = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition'];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition.'];
+    $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'condition' ];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'condition.' ];
 
     // RETURN true: any condition isn't defined
-    if (empty($conf_name))
+    if ( empty( $conf_name ) )
     {
-      if ($this->pObj->b_drs_filter)
+      if ( $this->pObj->b_drs_filter )
       {
         $prompt = $tableField . ' hasn\'t any condition. Filter will displayed.';
-        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return true;
     }
     // RETURN true: any condition isn't defined
     // Get condition result
-    $value = $this->pObj->cObj->cObjGetSingle($conf_name, $conf_array);
-    switch ($value)
+    $value = $this->pObj->cObj->cObjGetSingle( $conf_name, $conf_array );
+    switch ( $value )
     {
       case( false ):
         $bool_condition = false;
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
           $prompt = 'Condition of ' . $tableField . ' is false. Filter won\'t displayed.';
-          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         }
         break;
       case( true ):
       default;
         $bool_condition = true;
-        if ($this->pObj->b_drs_filter)
+        if ( $this->pObj->b_drs_filter )
         {
           $prompt = 'Condition of ' . $tableField . ' is true. Filter will displayed.';
-          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         }
         break;
     }
@@ -5113,13 +5040,13 @@ class tx_browser_pi1_filter_4x
   private function ts_getDisplayHits()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Short var
-    $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+    $currFilterWrap = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'wrap.' ];
 
     // Get TS value
-    $display_hits = $currFilterWrap['item.']['display_hits'];
+    $display_hits = $currFilterWrap[ 'item.' ][ 'display_hits' ];
 
     // RETURN TS value
     return $display_hits;
@@ -5135,13 +5062,13 @@ class tx_browser_pi1_filter_4x
   private function ts_getDisplayInCaseOfNoCounting()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
-    $displayInCaseOfNoCounting = $conf_array['wrap.']['item.']['displayInCaseOfNoCounting'];
+    $displayInCaseOfNoCounting = $conf_array[ 'wrap.' ][ 'item.' ][ 'displayInCaseOfNoCounting' ];
 
     // RETURN TS value
     return $displayInCaseOfNoCounting;
@@ -5157,28 +5084,28 @@ class tx_browser_pi1_filter_4x
   private function ts_countHits()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    if ($this->count_hits[$this->curr_tableField] != null)
+    if ( $this->count_hits[ $this->curr_tableField ] != null )
     {
-      return $this->count_hits[$this->curr_tableField];
+      return $this->count_hits[ $this->curr_tableField ];
     }
 
 
     // Short var
-    $count_hits = $this->conf_view['filter.'][$table . '.'][$field . '.']['count_hits'];
-    switch ($count_hits)
+    $count_hits = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'count_hits' ];
+    switch ( $count_hits )
     {
       case( true ):
-        $this->count_hits[$this->curr_tableField] = true;
+        $this->count_hits[ $this->curr_tableField ] = true;
         break;
       default:
-        $this->count_hits[$this->curr_tableField] = false;
+        $this->count_hits[ $this->curr_tableField ] = false;
         break;
     }
 
     // RETURN
-    return $this->count_hits[$this->curr_tableField];
+    return $this->count_hits[ $this->curr_tableField ];
   }
 
   /*   * *********************************************
@@ -5201,23 +5128,23 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.16
    * @since   3.9.9
    */
-  private function tree_setOneDim($uid_parent)
+  private function tree_setOneDim( $uid_parent )
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
-    switch (true)
+    switch ( true )
     {
-      case( count($this->arr_rowsTablefield) == 1 ):
-        $this->tree_setOneDimOneRow($uid_parent);
+      case( count( $this->arr_rowsTablefield ) == 1 ):
+        $this->tree_setOneDimOneRow( $uid_parent );
         break;
       default:
-        $this->tree_setOneDimDefault($uid_parent);
+        $this->tree_setOneDimDefault( $uid_parent );
         break;
     }
 
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
   }
 
   /**
@@ -5231,21 +5158,21 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.7
    * @since   3.9.9
    */
-  private function tree_setOneDimOneRow($uid_parent)
+  private function tree_setOneDimOneRow( $uid_parent )
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
-    foreach ($this->arr_rowsTablefield as $row)
+    foreach ( $this->arr_rowsTablefield as $row )
     {
       $tsPath = $uid_parent . '.';
-      $this->tmpOneDim[$tsPath . 'uid'] = $row[$this->uidField];
-      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+      $this->tmpOneDim[ $tsPath . 'uid' ] = $row[ $this->uidField ];
+      $this->tmpOneDim[ $tsPath . 'value' ] = $row[ $this->valueField ];
       break;
     }
 
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
   }
 
   /**
@@ -5262,24 +5189,24 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.16
    * @since   3.9.9
    */
-  private function tree_setOneDimDefault($uid_parent)
+  private function tree_setOneDimDefault( $uid_parent )
   {
     static $tsPath = null;
     static $level = 0;
     static $loops = 0;
 
     // Prompt the expired time to devlog
-    if ($level == 0)
+    if ( $level == 0 )
     {
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
     }
 
     // LOOP rows
-    foreach ($this->arr_rowsTablefield as $key => $row)
+    foreach ( $this->arr_rowsTablefield as $key => $row )
     {
       // CONTINUE current row isn't row with current $uid_parent
-      if ($row[$this->treeParentField] != $uid_parent)
+      if ( $row[ $this->treeParentField ] != $uid_parent )
       {
         continue;
       }
@@ -5287,20 +5214,20 @@ class tx_browser_pi1_filter_4x
 
       $lastPath = $tsPath;
       $tsPath = $tsPath . $key . '.';
-      $this->tmpOneDim[$tsPath . 'uid'] = $row[$this->uidField];
-      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+      $this->tmpOneDim[ $tsPath . 'uid' ] = $row[ $this->uidField ];
+      $this->tmpOneDim[ $tsPath . 'value' ] = $row[ $this->valueField ];
       $level++;
       $loops++;
-      $this->tree_setOneDimDefault($row[$this->uidField]);
+      $this->tree_setOneDimDefault( $row[ $this->uidField ] );
       $level--;
       $tsPath = $lastPath;
     }
     // LOOP rows
     //
       // Prompt the expired time to devlog
-    if ($level == 0)
+    if ( $level == 0 )
     {
-      $this->pObj->timeTracking_log($debugTrailLevel, 'end ( loops: ' . $loops . ')');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end ( loops: ' . $loops . ')' );
     }
   }
 
@@ -5318,42 +5245,40 @@ class tx_browser_pi1_filter_4x
   {
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log($debugTrailLevel, 'begin');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
     $arr_result = array();
 
     static $firstCallDrsTreeview = true;
 
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
 
 
     // Add first item
     // SWITCH display first item
-    switch ($conf_array['first_item'])
+    switch ( $conf_array[ 'first_item' ] )
     {
       case( true ):
         // Set hits
-        $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
-        $sum_hits = (int) $this->hits_sum[$this->curr_tableField];
-        $this->pObj->cObj->data[$hitsField] = $sum_hits;
+        $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
+        $sum_hits = ( int ) $this->hits_sum[ $this->curr_tableField ];
+        $this->pObj->cObj->data[ $hitsField ] = $sum_hits;
         // Set hits
         // Render uid and value of the first item
-        $first_item_uid = $conf_array['first_item.']['option_value'];
-        $tsValue = $conf_array['first_item.']['cObject'];
-        $tsConf = $conf_array['first_item.']['cObject.'];
-        $first_item_value = $this->pObj->cObj->cObjGetSingle($tsValue, $tsConf);
+        $first_item_uid = $conf_array[ 'first_item.' ][ 'option_value' ];
+        $tsValue = $conf_array[ 'first_item.' ][ 'cObject' ];
+        $tsConf = $conf_array[ 'first_item.' ][ 'cObject.' ];
+        $first_item_value = $this->pObj->cObj->cObjGetSingle( $tsValue, $tsConf );
         // Render uid and value of the first item
-        $tmpOneDim = array('uid' => $first_item_uid) +
-                array('value' => $first_item_value);
-//                      array( 'value' => $first_item_value ) +
-//                      $this->tmpOneDim;
-        if (!empty($this->tmpOneDim))
+        $tmpOneDim = array( 'uid' => $first_item_uid ) +
+                array( 'value' => $first_item_value );
+        if ( !empty( $this->tmpOneDim ) )
         {
           $tmpOneDim = $tmpOneDim +
                   $this->tmpOneDim;
@@ -5368,21 +5293,21 @@ class tx_browser_pi1_filter_4x
     // SWITCH display first item
     // Add first item
     // Move one dimensional array to an iterator
-    $tmpArray = $this->pObj->objTyposcript->oneDim_to_tree($tmpOneDim);
-    $rcrsArrIter = new RecursiveArrayIterator($tmpArray);
-    $iterator = new RecursiveIteratorIterator($rcrsArrIter);
+    $tmpArray = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
+    $rcrsArrIter = new RecursiveArrayIterator( $tmpArray );
+    $iterator = new RecursiveIteratorIterator( $rcrsArrIter );
     // Move one dimensional array to an iterator
     // HTML id
-    $cObj_name = $conf_array['treeview.']['html_id'];
-    $cObj_conf = $conf_array['treeview.']['html_id.'];
-    $html_id = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $cObj_name = $conf_array[ 'treeview.' ][ 'html_id' ];
+    $cObj_conf = $conf_array[ 'treeview.' ][ 'html_id.' ];
+    $html_id = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
     // HTML id
     //////////////////////////////////////////////////////
     //
       // Loop values
     // Initial depth
     // SWITCH display first item
-    switch ($conf_array['first_item'])
+    switch ( $conf_array[ 'first_item' ] )
     {
       case( true ):
         $last_depth = -1;
@@ -5397,24 +5322,24 @@ class tx_browser_pi1_filter_4x
     // LOOP
     $bool_firstLoop = true;
     $loops = 0;
-    foreach ($iterator as $key => $value)
+    foreach ( $iterator as $key => $value )
     {
       // CONTINUE $key is the uid. Save the uid.
-      if ($key == 'uid')
+      if ( $key == 'uid' )
       {
         $curr_uid = $value;
         continue;
       }
       // CONTINUE $key is the uid. Save the uid.
 
-      if ($bool_firstLoop)
+      if ( $bool_firstLoop )
       {
         $first_item_uid = $curr_uid;
       }
 
 
       // CONTINUE ERROR $key isn't value
-      if ($key != 'value')
+      if ( $key != 'value' )
       {
         echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
         continue;
@@ -5422,23 +5347,23 @@ class tx_browser_pi1_filter_4x
       // CONTINUE ERROR $key isn't value
       // Render the value
 //$this->pObj->dev_var_dump( $value )
-      $item = $this->get_filterItem($curr_uid, $value);
+      $item = $this->get_filterItem( $curr_uid, $value );
       //$item = '<a href="leglis-bid/?tx_browser_pi1%5Btx_leglisbasis_sector.brc_text%5D=1657&cHash=579a339049d1ca24815eadf0cd53371d">
       //          Baugewerbe (132)
       //        </a>';
 //$this->pObj->dev_var_dump( $item );
       // CONTINUE: item is empty
-      if (empty($item))
+      if ( empty( $item ) )
       {
         // DRS
-        if ($firstCallDrsTreeview && ( $this->pObj->b_drs_filter || $this->pObj->b_drs_cObjData ))
+        if ( $firstCallDrsTreeview && ( $this->pObj->b_drs_filter || $this->pObj->b_drs_cObjData ) )
         {
           $prompt = 'No value: [' . $key . '] won\'t displayed! Be aware: this log won\'t displayed never again.';
-          t3lib_div :: devlog('[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
           $prompt = 'Maybe TS configuration for [' . $key . '] is: display it only with a hit at least.';
-          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = 'There is a workaround: please take a look in the manual for ' . $this->pObj->prefixId . '.flag_treeview.';
-          t3lib_div :: devlog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+          t3lib_div :: devlog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
           $firstCallDrsTreeview = false;
         }
         // DRS
@@ -5450,10 +5375,10 @@ class tx_browser_pi1_filter_4x
 
       // Vars
       $curr_depth = $iterator->getDepth();
-      $indent = str_repeat('  ', ( $iterator->getDepth() + 1));
+      $indent = str_repeat( '  ', ( $iterator->getDepth() + 1 ) );
       // Vars
       // Render the start tag
-      switch (true)
+      switch ( true )
       {
         case( $curr_depth > $last_depth ):
           // Start of sublevel
@@ -5488,7 +5413,7 @@ class tx_browser_pi1_filter_4x
       }
       // Render the start tag
       // Result array
-      $arr_result[$curr_uid] = $startTag . $item;
+      $arr_result[ $curr_uid ] = $startTag . $item;
 
       $bool_firstLoop = false;
     }
@@ -5503,13 +5428,13 @@ class tx_browser_pi1_filter_4x
             ) .
             PHP_EOL .
             $this->htmlSpaceLeft . $indent . '</ul>';
-    $arr_result[$curr_uid] = $arr_result[$curr_uid] . $endTag . PHP_EOL .
+    $arr_result[ $curr_uid ] = $arr_result[ $curr_uid ] . $endTag . PHP_EOL .
             $this->htmlSpaceLeft . '</div>';
     // Render the end tag of the last item
 
-    $arr_result[$first_item_uid] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
+    $arr_result[ $first_item_uid ] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[ $first_item_uid ];
 
-    $this->pObj->timeTracking_log($debugTrailLevel, 'end');
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
 
     // RETURN the result
     return $arr_result;
@@ -5530,24 +5455,24 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.0.0
    */
-  private function replace_itemClass($conf_array, $item)
+  private function replace_itemClass( $conf_array, $item )
   {
 
     // Get TS value
-    if (empty($conf_array['wrap.']['item.']['class']))
+    if ( empty( $conf_array[ 'wrap.' ][ 'item.' ][ 'class' ] ) )
     {
       $class = null;
     }
     else
     {
-      $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
+      $class = ' class="' . $conf_array[ 'wrap.' ][ 'item.' ][ 'class' ] . '"';
     }
     // Get TS value
     // Replace the marker
-    $item = str_replace('###CLASS###', $class, $item);
+    $item = str_replace( '###CLASS###', $class, $item );
 
     // Workaround: Remove space
-    $item = str_replace('class=" ', 'class="', $item);
+    $item = str_replace( 'class=" ', 'class="', $item );
 
 
     // RETURN content
@@ -5565,7 +5490,7 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.0.0
    */
-  private function replace_itemSelected($conf_array, $uid, $value, $item)
+  private function replace_itemSelected( $conf_array, $uid, $value, $item )
   {
     //////////////////////////////////////////////////////////
     //
@@ -5573,35 +5498,35 @@ class tx_browser_pi1_filter_4x
     // dwildt, 110102
     // Workaround: Because of new feature to filter a local table field
     $bool_piVar = false;
-    if ($uid)
+    if ( $uid )
     {
-      if (in_array($uid, $this->nicePiVar['arr_piVar']))
+      if ( in_array( $uid, $this->nicePiVar[ 'arr_piVar' ] ) )
       {
         $bool_piVar = true;
       }
     }
 
-    if ($value)
+    if ( $value )
     {
-      if (in_array($value, $this->nicePiVar['arr_piVar']))
+      if ( in_array( $value, $this->nicePiVar[ 'arr_piVar' ] ) )
       {
         $bool_piVar = true;
       }
     }
     // #29444: 110902, dwildt+
-    $value_from_ts_area = $conf_array['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'];
-    if ($value_from_ts_area)
+    $value_from_ts_area = $conf_array[ 'area.' ][ 'interval.' ][ 'options.' ][ 'fields.' ][ $uid . '.' ][ 'value_stdWrap.' ][ 'value' ];
+    if ( $value_from_ts_area )
     {
-      if (in_array($value_from_ts_area, $this->nicePiVar['arr_piVar']))
+      if ( in_array( $value_from_ts_area, $this->nicePiVar[ 'arr_piVar' ] ) )
       {
         $bool_piVar = true;
       }
     }
-    if (empty($this->nicePiVar['arr_piVar']))
+    if ( empty( $this->nicePiVar[ 'arr_piVar' ] ) )
     {
-      if ($this->pObj->objCal->selected_period)
+      if ( $this->pObj->objCal->selected_period )
       {
-        if ($this->pObj->objCal->selected_period == $value_from_ts_area)
+        if ( $this->pObj->objCal->selected_period == $value_from_ts_area )
         {
           $bool_piVar = true;
         }
@@ -5610,19 +5535,19 @@ class tx_browser_pi1_filter_4x
     // Set bool_piVar
     // #29444: 110902, dwildt+
     // SWITCH bool_piVar
-    switch ($bool_piVar)
+    switch ( $bool_piVar )
     {
       case( false ):
         $conf_selected = null;
         break;
       case( true ):
       default:
-        $conf_selected = ' ' . $conf_array['wrap.']['item.']['selected'];
+        $conf_selected = ' ' . $conf_array[ 'wrap.' ][ 'item.' ][ 'selected' ];
         break;
     }
     // SWITCH bool_piVar
     // Replave marker
-    $item = str_replace('###ITEM_SELECTED###', $conf_selected, $item);
+    $item = str_replace( '###ITEM_SELECTED###', $conf_selected, $item );
 
     // RETURN content
     return $item;
@@ -5637,20 +5562,20 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.0.0
    */
-  private function replace_itemStyle($conf_array, $item)
+  private function replace_itemStyle( $conf_array, $item )
   {
     // Get TS value
-    if (empty($conf_array['wrap.']['item.']['style']))
+    if ( empty( $conf_array[ 'wrap.' ][ 'item.' ][ 'style' ] ) )
     {
       $style = null;
     }
     else
     {
-      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
+      $style = ' style="' . $conf_array[ 'wrap.' ][ 'item.' ][ 'style' ] . '"';
     }
     // Get TS value
     // Replace the marker
-    $item = str_replace('###STYLE###', $style, $item);
+    $item = str_replace( '###STYLE###', $style, $item );
 
     // RETURN content
     return $item;
@@ -5666,7 +5591,7 @@ class tx_browser_pi1_filter_4x
    * @since   3.0.0
    * @todo    dwildt, 120504: $conf_array isn't used in the method. Has the method sense?
    */
-  private function replace_itemTitle($item)
+  private function replace_itemTitle( $item )
   {
     static $firstLoop = true;
 
@@ -5674,15 +5599,15 @@ class tx_browser_pi1_filter_4x
     $title = null;
     // Get TS value
     // Replace the marker
-    $item = str_replace(' ###TITLE###', $title, $item);
-    $item = str_replace('###TITLE###', $title, $item);
+    $item = str_replace( ' ###TITLE###', $title, $item );
+    $item = str_replace( '###TITLE###', $title, $item );
 
-    if ($firstLoop)
+    if ( $firstLoop )
     {
-      if ($this->pObj->b_drs_devTodo)
+      if ( $this->pObj->b_drs_devTodo )
       {
         $prompt = '###TITLE### is removed. It is the marker for a href title. Develope the code!';
-        t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
     $firstLoop = false;
@@ -5700,10 +5625,10 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.0.0
    */
-  private function replace_itemUid($uid, $item)
+  private function replace_itemUid( $uid, $item )
   {
     // Replace the marker
-    $item = str_replace('###UID###', $uid, $item);
+    $item = str_replace( '###UID###', $uid, $item );
 
     // RETURN content
     return $item;
@@ -5719,24 +5644,24 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.6.1
    */
-  private function replace_itemUrl($conf_array, $uid, $item)
+  private function replace_itemUrl( $conf_array, $uid, $item )
   {
 
     // RETURN no marker
-    $pos = strpos($item, '###URL###');
-    if ($pos === false)
+    $pos = strpos( $item, '###URL###' );
+    if ( $pos === false )
     {
       return $item;
     }
     // RETURN no marker
     // Set value of the first item to null: it won't become an additional parameter below
-    if ($uid == $conf_array['first_item.']['option_value'])
+    if ( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] )
     {
       $uid = null;
     }
     // Set value of the first item to null: it won't become an additional parameter below
     // Move value (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
-    $uid = $this->pObj->objCal->area_get_urlPeriod($conf_array, $this->curr_tableField, $uid);
+    $uid = $this->pObj->objCal->area_get_urlPeriod( $conf_array, $this->curr_tableField, $uid );
 
 
 
@@ -5747,21 +5672,21 @@ class tx_browser_pi1_filter_4x
     $arr_currPiVars = $this->pObj->piVars;
 
     // Remove sort and pointer
-    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
-    $arr_removePiVars = array('sort', $pageBrowserPointerLabel);
+    $pageBrowserPointerLabel = $this->conf[ 'navigation.' ][ 'pageBrowser.' ][ 'pointer' ];
+    $arr_removePiVars = array( 'sort', $pageBrowserPointerLabel );
 
     // Remove 'plugin', if current plugin is the default plugin
-    if (!$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin)
+    if ( !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
     {
       $arr_removePiVars[] = 'plugin';
     }
     // Remove 'plugin', if current plugin is the default plugin
     // LOOP piVars for removing
-    foreach ((array) $arr_removePiVars as $piVar)
+    foreach ( ( array ) $arr_removePiVars as $piVar )
     {
-      if (isset($this->pObj->piVars[$piVar]))
+      if ( isset( $this->pObj->piVars[ $piVar ] ) )
       {
-        unset($this->pObj->piVars[$piVar]);
+        unset( $this->pObj->piVars[ $piVar ] );
       }
     }
     // LOOP piVars for removing
@@ -5770,10 +5695,10 @@ class tx_browser_pi1_filter_4x
     //
       // Change $GLOBALS['TSFE']->id temporarily
 
-    $int_tsfeId = $GLOBALS['TSFE']->id;
-    if (!empty($this->pObj->objFlexform->int_viewsListPid))
+    $int_tsfeId = $GLOBALS[ 'TSFE' ]->id;
+    if ( !empty( $this->pObj->objFlexform->int_viewsListPid ) )
     {
-      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
+      $GLOBALS[ 'TSFE' ]->id = $this->pObj->objFlexform->int_viewsListPid;
     }
     // Change $GLOBALS['TSFE']->id temporarily
     /////////////////////////////////////////////////////////
@@ -5782,7 +5707,7 @@ class tx_browser_pi1_filter_4x
     // #9495, fsander
     $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars
             (
-            $this->pObj->piVars, $this->conf_view['filter.']
+            $this->pObj->piVars, $this->conf_view[ 'filter.' ]
     );
     // Remove the filter fields temporarily
     /////////////////////////////////////////////////////////
@@ -5790,15 +5715,15 @@ class tx_browser_pi1_filter_4x
       // Calculate additional params for the typolink
 
     $additionalParams = null;
-    foreach ((array) $this->pObj->piVars as $paramKey => $paramValue)
+    foreach ( ( array ) $this->pObj->piVars as $paramKey => $paramValue )
     {
-      if (!empty($paramValue))
+      if ( !empty( $paramValue ) )
       {
         $additionalParams = $additionalParams . '&' .
                 $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
       }
     }
-    if ($uid)
+    if ( $uid )
     {
       $additionalParams = $additionalParams . '&' .
               $this->pObj->prefixId . '[' . $this->curr_tableField . ']=' . $uid;
@@ -5808,12 +5733,12 @@ class tx_browser_pi1_filter_4x
     //
       // Build and render the typolink
 
-    $arr_typolink['parameter'] = $GLOBALS['TSFE']->id;
-    $arr_typolink['additionalParams'] = $additionalParams;
-    $arr_typolink['useCacheHash'] = 1;
-    $arr_typolink['returnLast'] = 'URL';
+    $arr_typolink[ 'parameter' ] = $GLOBALS[ 'TSFE' ]->id;
+    $arr_typolink[ 'additionalParams' ] = $additionalParams;
+    $arr_typolink[ 'useCacheHash' ] = 1;
+    $arr_typolink[ 'returnLast' ] = 'URL';
 
-    $typolink = $this->pObj->local_cObj->typoLink_URL($arr_typolink);
+    $typolink = $this->pObj->local_cObj->typoLink_URL( $arr_typolink );
     // Build and render the typolink
     /////////////////////////////////////////////////////////
     //
@@ -5821,10 +5746,10 @@ class tx_browser_pi1_filter_4x
     // Reset $this->pObj->piVars
     $this->pObj->piVars = $arr_currPiVars;
     // Reset $GLOBALS['TSFE']->id
-    $GLOBALS['TSFE']->id = $int_tsfeId;
+    $GLOBALS[ 'TSFE' ]->id = $int_tsfeId;
     // Cleanup piVars and id
     // Replace the marker
-    $item = str_replace('###URL###', $typolink, $item);
+    $item = str_replace( '###URL###', $typolink, $item );
 
     // Return the item
     return $item;
@@ -5841,16 +5766,16 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function replace_marker($coa_conf)
+  private function replace_marker( $coa_conf )
   {
     // Keep $coa_conf!
-    $serialized_conf = serialize($coa_conf);
+    $serialized_conf = serialize( $coa_conf );
 
     // Substitute marker recursive
-    $return_conf = $this->pObj->cObj->substituteMarkerInObject($coa_conf, $this->markerArray);
+    $return_conf = $this->pObj->cObj->substituteMarkerInObject( $coa_conf, $this->markerArray );
 
     // Reinit $return_conf
-    $coa_conf = unserialize($serialized_conf);
+    $coa_conf = unserialize( $serialized_conf );
 
     return $return_conf;
   }
@@ -5872,11 +5797,11 @@ class tx_browser_pi1_filter_4x
   private function set_maxItemsPerHtmlRow()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
-    $conf_name = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Set default values
     $maxItemsPerHtmlRow = false;
@@ -5886,18 +5811,18 @@ class tx_browser_pi1_filter_4x
     // Set default values
     // SWITCH $conf_name
     // Set values
-    switch ($conf_name)
+    switch ( $conf_name )
     {
       case( 'CHECKBOX' ) :
       case( 'RADIOBUTTONS' ) :
       // #56332, 140227, dwildt, 1+
       case( 'SELECTBOX' ) :
-        $maxItemsPerHtmlRow = (int) $conf_array['wrap.']['itemsPerRow'];
-        if ($maxItemsPerHtmlRow > 0)
+        $maxItemsPerHtmlRow = ( int ) $conf_array[ 'wrap.' ][ 'itemsPerRow' ];
+        if ( $maxItemsPerHtmlRow > 0 )
         {
-          $str_row_wrap = $conf_array['wrap.']['itemsPerRow.']['wrap'];
-          list( $rowBegin, $rowEnd ) = explode('|', $str_row_wrap);
-          $noItemValue = $conf_array['wrap.']['itemsPerRow.']['noItemValue'];
+          $str_row_wrap = $conf_array[ 'wrap.' ][ 'itemsPerRow.' ][ 'wrap' ];
+          list( $rowBegin, $rowEnd ) = explode( '|', $str_row_wrap );
+          $noItemValue = $conf_array[ 'wrap.' ][ 'itemsPerRow.' ][ 'noItemValue' ];
         }
         break;
       case( 'CATEGORY_MENU' ) :
@@ -5908,10 +5833,10 @@ class tx_browser_pi1_filter_4x
         // Do nothing
         break;
       default :
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
           $prompt = 'undefined value in switch: \'';
-          t3lib_div :: devlog('[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3);
+          t3lib_div :: devlog( '[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3 );
         }
         echo '<h1>Undefined value</h1>
           <h2>' . $conf_name . ' is not defined</h2>
@@ -5924,14 +5849,14 @@ class tx_browser_pi1_filter_4x
     }
     // SWITCH $conf_name
     // Set class var $htmlSpaceLeft
-    $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] = $maxItemsPerHtmlRow;
-    $this->itemsPerHtmlRow['rowBegin'] = $rowBegin;
-    $this->itemsPerHtmlRow['rowEnd'] = $rowEnd;
-    $this->itemsPerHtmlRow['noItemValue'] = $noItemValue;
-    $this->itemsPerHtmlRow['currRowNumber'] = 0;
+    $this->itemsPerHtmlRow[ 'maxItemsPerHtmlRow' ] = $maxItemsPerHtmlRow;
+    $this->itemsPerHtmlRow[ 'rowBegin' ] = $rowBegin;
+    $this->itemsPerHtmlRow[ 'rowEnd' ] = $rowEnd;
+    $this->itemsPerHtmlRow[ 'noItemValue' ] = $noItemValue;
+    $this->itemsPerHtmlRow[ 'currRowNumber' ] = 0;
     // #40354, #40354, 4.1.7, 1+
-    $this->itemsPerHtmlRow['currItemNumberAbsolute'] = 0;
-    $this->itemsPerHtmlRow['currItemNumberInRow'] = 0;
+    $this->itemsPerHtmlRow[ 'currItemNumberAbsolute' ] = 0;
+    $this->itemsPerHtmlRow[ 'currItemNumberInRow' ] = 0;
 
     return;
   }
@@ -5947,15 +5872,15 @@ class tx_browser_pi1_filter_4x
   private function set_itemCurrentNumber()
   {
     // RETURN maxItemsPerHtmlRow is false
-    if ($this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false)
+    if ( $this->itemsPerHtmlRow[ 'maxItemsPerHtmlRow' ] === false )
     {
       return;
     }
     // RETURN maxItemsPerHtmlRow is false
     // Increase item number
     // #40354, #40354, 4.1.7, 1+
-    $this->itemsPerHtmlRow['currItemNumberAbsolute'] ++;
-    $this->itemsPerHtmlRow['currItemNumberInRow'] ++;
+    $this->itemsPerHtmlRow[ 'currItemNumberAbsolute' ] ++;
+    $this->itemsPerHtmlRow[ 'currItemNumberInRow' ] ++;
   }
 
   /**
@@ -5967,10 +5892,10 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.9.9
    */
-  private function get_maxItemsTagEndBegin($item)
+  private function get_maxItemsTagEndBegin( $item )
   {
     // RETURN maxItemsPerHtmlRow is false
-    if ($this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false)
+    if ( $this->itemsPerHtmlRow[ 'maxItemsPerHtmlRow' ] === false )
     {
       return $item;
     }
@@ -5979,28 +5904,28 @@ class tx_browser_pi1_filter_4x
 //{
 //  $this->pObj->dev_var_dump( $this->itemsPerHtmlRow, $this->rows );
 //}
-    $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
-    $currItemNumber = $this->itemsPerHtmlRow['currItemNumberInRow'];
+    $maxItemsPerHtmlRow = $this->itemsPerHtmlRow[ 'maxItemsPerHtmlRow' ];
+    $currItemNumber = $this->itemsPerHtmlRow[ 'currItemNumberInRow' ];
     // #40354, 4.1.7, 1+
-    $currItemNumberAbsolute = $this->itemsPerHtmlRow['currItemNumberAbsolute'];
+    $currItemNumberAbsolute = $this->itemsPerHtmlRow[ 'currItemNumberAbsolute' ];
 
     // #40354, 4.1.7, 4+
-    if ($currItemNumberAbsolute >= ( count($this->rows) - 1 ))
+    if ( $currItemNumberAbsolute >= ( count( $this->rows ) - 1 ) )
     {
       return $item;
     }
     // #40354, 4.1.7, 4+
 
-    if ($currItemNumber >= ( $maxItemsPerHtmlRow - 1 ))
+    if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
     {
       $item = $item . PHP_EOL .
-              $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
-              $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'];
-      $this->itemsPerHtmlRow['currRowNumber'] ++;
-      $str_evenOdd = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
-      $item = str_replace('###EVEN_ODD###', $str_evenOdd, $item);
+              $this->htmlSpaceLeft . $this->itemsPerHtmlRow[ 'rowEnd' ] . PHP_EOL .
+              $this->htmlSpaceLeft . $this->itemsPerHtmlRow[ 'rowBegin' ];
+      $this->itemsPerHtmlRow[ 'currRowNumber' ] ++;
+      $str_evenOdd = $this->itemsPerHtmlRow[ 'currRowNumber' ] % 2 ? 'odd' : 'even';
+      $item = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
       // #40354, 4.1.7, 1+
-      $this->itemsPerHtmlRow['currItemNumberInRow'] = -1;
+      $this->itemsPerHtmlRow[ 'currItemNumberInRow' ] = -1;
     }
     // #40354, 4.1.7, 1-
     //$this->itemsPerHtmlRow['currItemNumberInRow']++;
@@ -6019,21 +5944,21 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.7
    * @since   3.9.9
    */
-  private function get_maxItemsWrapBeginEnd($items)
+  private function get_maxItemsWrapBeginEnd( $items )
   {
     // RETURN maxItemsPerHtmlRow is false
-    if ($this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false)
+    if ( $this->itemsPerHtmlRow[ 'maxItemsPerHtmlRow' ] === false )
     {
       return $items;
     }
     // RETURN maxItemsPerHtmlRow is false
     // Wrap $items
-    $items = $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'] . PHP_EOL .
+    $items = $this->htmlSpaceLeft . $this->itemsPerHtmlRow[ 'rowBegin' ] . PHP_EOL .
             $items . PHP_EOL .
-            $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
+            $this->htmlSpaceLeft . $this->itemsPerHtmlRow[ 'rowEnd' ] . PHP_EOL;
     // Wrap $items
     // #40354, 4.1.7, 1+
-    $items = str_replace('###EVEN_ODD###', 'even', $items);
+    $items = str_replace( '###EVEN_ODD###', 'even', $items );
 
     // RETURN content
     return $items;
@@ -6057,44 +5982,44 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.9
    * @since   3.0.0
    */
-  private function set_hits($uid, $value, $row)
+  private function set_hits( $uid, $value, $row )
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Set display hits flag
     // SWITCH first item
-    switch (true)
+    switch ( true )
     {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $bool_displayHits = $conf_array['first_item.']['display_hits'];
-        $bool_displayEmptyHits = $conf_array['first_item.']['display_hits.']['display_empty_hits'];
+      case( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] ):
+        $bool_displayHits = $conf_array[ 'first_item.' ][ 'display_hits' ];
+        $bool_displayEmptyHits = $conf_array[ 'first_item.' ][ 'display_hits.' ][ 'display_empty_hits' ];
         break;
       default:
-        $bool_displayHits = $conf_array['wrap.']['item.']['display_hits'];
-        $bool_displayEmptyHits = $conf_array['wrap.']['item.']['display_hits.']['display_empty_hits'];
+        $bool_displayHits = $conf_array[ 'wrap.' ][ 'item.' ][ 'display_hits' ];
+        $bool_displayEmptyHits = $conf_array[ 'wrap.' ][ 'item.' ][ 'display_hits.' ][ 'display_empty_hits' ];
         break;
     }
     // SWITCH first item
     // Set display hits flag
     // RETURN hit shouldn't displayed
-    if (!$bool_displayHits)
+    if ( !$bool_displayHits )
     {
       return $value;
     }
     // RETURN hit shouldn't displayed
     // Get the label for the hit field
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
     // Get the hit
-    $hits = $row[$hitsField];
+    $hits = $row[ $hitsField ];
 
     // IF there is no hit and empty hits shouldn't displayed
     // RETURN item without any hit stdWrap
-    if ($hits < 1 && (!$bool_displayEmptyHits ))
+    if ( $hits < 1 && (!$bool_displayEmptyHits ) )
     {
       return $value;
     }
@@ -6102,33 +6027,33 @@ class tx_browser_pi1_filter_4x
     // IF there is no hit and empty hits shouldn't displayed
     // stdWrap the hit
     // SWITCH first item
-    switch (true)
+    switch ( true )
     {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $stdWrap = $conf_array['first_item.']['display_hits.']['stdWrap.'];
+      case( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] ):
+        $stdWrap = $conf_array[ 'first_item.' ][ 'display_hits.' ][ 'stdWrap.' ];
         break;
       default:
-        $stdWrap = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
+        $stdWrap = $conf_array[ 'wrap.' ][ 'item.' ][ 'display_hits.' ][ 'stdWrap.' ];
         break;
     }
     // SWITCH first item
-    $hits = $this->pObj->objWrapper->general_stdWrap($hits, $stdWrap);
+    $hits = $this->pObj->objWrapper4x->general_stdWrap( $hits, $stdWrap );
     // stdWrap the hit
     // Get behind flag
     // SWITCH first item
-    switch (true)
+    switch ( true )
     {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $bool_behindItem = $conf_array['first_item.']['display_hits.']['behindItem'];
+      case( $uid == $conf_array[ 'first_item.' ][ 'option_value' ] ):
+        $bool_behindItem = $conf_array[ 'first_item.' ][ 'display_hits.' ][ 'behindItem' ];
         break;
       default:
-        $bool_behindItem = $conf_array['wrap.']['item.']['display_hits.']['behindItem'];
+        $bool_behindItem = $conf_array[ 'wrap.' ][ 'item.' ][ 'display_hits.' ][ 'behindItem' ];
         break;
     }
     // SWITCH first item
     // Get behind flag
     // SWITCH behind flag
-    switch ($bool_behindItem)
+    switch ( $bool_behindItem )
     {
       case( true ):
         $value = $value . $hits;
@@ -6139,7 +6064,7 @@ class tx_browser_pi1_filter_4x
     }
     // SWITCH behind flag
 
-    unset($uid);
+    unset( $uid );
     return $value;
   }
 
@@ -6153,65 +6078,65 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   3.0.0
    */
-  private function sum_hits($rows)
+  private function sum_hits( $rows )
   {
     // Get the label for the hit field
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
 
     // Init sum hits
     $sum_hits = 0;
 
     // Tree view flag
     $bTreeView = false;
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
     // #41776, dwildt, 1-
 //    if( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
     // #41776, dwildt, 1+
-    if (in_array($table, $this->arr_tablesWiTreeparentfield))
+    if ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       $bTreeView = true;
     }
     // Tree view flag
     // Tree view  : get lowest uid_parent
-    if ($bTreeView)
+    if ( $bTreeView )
     {
       // Get the field label
-      $treeParentField = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
+      $treeParentField = $this->sql_filterFields[ $this->curr_tableField ][ 'treeParentField' ];
       // Set lowest uid_parent 'unlimited'
       $lowestPid = 9999999;
       // LOOP all rows : set lowest pid
-      foreach ((array) $rows as $row)
+      foreach ( ( array ) $rows as $row )
       {
-        if (( $row[$treeParentField] < $lowestPid ) && ( $row[$treeParentField] !== null ))
+        if ( ( $row[ $treeParentField ] < $lowestPid ) && ( $row[ $treeParentField ] !== null ) )
         {
-          $lowestPid = $row[$treeParentField];
+          $lowestPid = $row[ $treeParentField ];
         }
       }
       // LOOP all rows : set lowest pid
     }
     // Tree view  : get lowest uid_parent
     // LOOP all rows  : count hits
-    foreach ((array) $rows as $row)
+    foreach ( ( array ) $rows as $row )
     {
       // Default case : count each row
-      if (!$bTreeView)
+      if ( !$bTreeView )
       {
-        $sum_hits = $sum_hits + $row[$hitsField];
+        $sum_hits = $sum_hits + $row[ $hitsField ];
       }
       // Default case : count each row
       // Tree view  case  : count top level rows only
-      if ($bTreeView)
+      if ( $bTreeView )
       {
-        if ($row[$treeParentField] == $lowestPid)
+        if ( $row[ $treeParentField ] == $lowestPid )
         {
-          $sum_hits = $sum_hits + $row[$hitsField];
+          $sum_hits = $sum_hits + $row[ $hitsField ];
         }
       }
       // Tree view  case  : count top level rows only
     }
     // LOOP all rows  : count hits
     // Set class var $this->hits_sum
-    $this->hits_sum[$this->curr_tableField] = (int) $sum_hits;
+    $this->hits_sum[ $this->curr_tableField ] = ( int ) $sum_hits;
 
     return;
   }
@@ -6222,18 +6147,22 @@ class tx_browser_pi1_filter_4x
    * @param	integer		$uid        : uid of the current item / row
    * @param	string		$value      : value of the current item / row
    * @return	string		$item       : The rendered item
-   * @version 3.9.9
+   * @version 5.0.0
    * @since   3.9.9
+   * @internal #59669
    */
   private function set_markerArray()
   {
-    // Add mode and view
-    $this->markerArray['###MODE###'] = $this->pObj->piVar_mode;
-    $this->markerArray['###VIEW###'] = $this->pObj->view;
+    $markerArray = $this->pObj->objMarker->extend_marker();
+    $this->markerArray = $markerArray;
 
-    // Add cObj->data and piVars
-    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($this->markerArray);
-    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($this->markerArray);
+//    // Add mode and view
+//    $this->markerArray['###MODE###'] = $this->pObj->piVar_mode;
+//    $this->markerArray['###VIEW###'] = $this->pObj->view;
+//
+//    // Add cObj->data and piVars
+//    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($this->markerArray);
+//    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($this->markerArray);
   }
 
   /**
@@ -6245,48 +6174,48 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.12
    * @since   3.9.9
    */
-  private function set_markerArrayUpdateRow($uid)
+  private function set_markerArrayUpdateRow( $uid )
   {
     // #41754.04, 121010: this foreach seems to be proper in context with performance
-    foreach ((array) $this->rows[$uid] as $key => $value)
+    foreach ( ( array ) $this->rows[ $uid ] as $key => $value )
     {
-      $marker = '###' . strtoupper($key) . '###';
-      $this->markerArray[$marker] = $value;
+      $marker = '###' . strtoupper( $key ) . '###';
+      $this->markerArray[ $marker ] = $value;
     }
 
     $marker = '###VALUE###';
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $this->markerArray[$marker] = $this->rows[$uid][$valueField];
+    $valueField = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
+    $this->markerArray[ $marker ] = $this->rows[ $uid ][ $valueField ];
 
     $marker = '###UID###';
-    $uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $uidField = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
     // #11401, 120918, dwildt, +
     // SWITCH : Value of uid depends on localtable or foreigntable
-    list( $table ) = explode('.', $uidField);
-    switch ($table)
+    list( $table ) = explode( '.', $uidField );
+    switch ( $table )
     {
       case( $this->pObj->localTable ):
         // Localtable: ###UID### will replaced by the value
-        $this->markerArray[$marker] = $this->rows[$uid][$valueField];
+        $this->markerArray[ $marker ] = $this->rows[ $uid ][ $valueField ];
         // #41372, 4.1.15, 120925, dwildt
         // Overwrite in case of the current filter is an area and type is 'strings'
-        if ($this->pObj->objCal->arr_area[$this->curr_tableField]['key'] == 'strings')
+        if ( $this->pObj->objCal->arr_area[ $this->curr_tableField ][ 'key' ] == 'strings' )
         {
-          $this->markerArray[$marker] = $this->rows[$uid][$uidField];
+          $this->markerArray[ $marker ] = $this->rows[ $uid ][ $uidField ];
         }
         // #41372, 4.1.15, 120925, dwildt
         break;
       default:
         // Foreigntable: ###UID### will replaced by the uid
-        $this->markerArray[$marker] = $this->rows[$uid][$uidField];
+        $this->markerArray[ $marker ] = $this->rows[ $uid ][ $uidField ];
         break;
     }
     // SWITCH : Value of uid depends on localtable or foreigntable
     // #11401, 120918, dwildt, +
 
     $marker = '###HITS###';
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $this->markerArray[$marker] = $this->rows[$uid][$hitsField];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
+    $this->markerArray[ $marker ] = $this->rows[ $uid ][ $hitsField ];
   }
 
   /*   * *********************************************
@@ -6303,27 +6232,26 @@ class tx_browser_pi1_filter_4x
    * @version   3.9.9
    * @since     3.9.9
    */
-  private function requiredMarker($tableField)
+  private function requiredMarker( $tableField )
   {
 
-    if ($this->subpart === null)
+    if ( $this->subpart === null )
     {
-      $this->subpart = $this->pObj->cObj->getSubpart($this->pObj->str_template_raw, '###SEARCHFORM###');
+      $this->subpart = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
     }
-
     // Convert table.field to HTML marker
-    $htmlMarker = '###' . strtoupper($tableField) . '###';
+    $htmlMarker = '###' . strtoupper( $tableField ) . '###';
 
     // RETURN false : HTML marker isn't a part of the current HTML subpart
-    $pos = strpos($this->subpart, $htmlMarker);
-    if ($pos === false)
+    $pos = strpos( $this->subpart, $htmlMarker );
+    if ( $pos === false )
     {
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_warn )
       {
         $prompt = $tableField . ' hasn\'t the correspondending HTML marker ' . $htmlMarker . '.';
-        t3lib_div :: devlog('[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2);
+        t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
         $prompt = 'Please add ' . $htmlMarker . ' to the subpart ###SEARCHFORM###.';
-        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return false;
     }
@@ -6348,7 +6276,7 @@ class tx_browser_pi1_filter_4x
   private function set_currFilterIsArea()
   {
     // 3.9.24, 120604, dwildt+
-    if (empty($this->pObj->objCal->arr_area))
+    if ( empty( $this->pObj->objCal->arr_area ) )
     {
       $this->bool_currFilterIsArea = false;
       return;
@@ -6356,7 +6284,7 @@ class tx_browser_pi1_filter_4x
     // 3.9.24, 120604, dwildt+
     // SWITCH current tableField is a filter with areas
     // Set class var $bool_currFilterIsArea
-    switch (in_array($this->curr_tableField, array_keys($this->pObj->objCal->arr_area)))
+    switch ( in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
     {
       case( true ):
         $this->bool_currFilterIsArea = true;
@@ -6384,55 +6312,55 @@ class tx_browser_pi1_filter_4x
   private function set_firstItem()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // RETURN first item shouldn't displayed
-    if (!$conf_array['first_item'])
+    if ( !$conf_array[ 'first_item' ] )
     {
       return;
     }
     // RETURN first item shouldn't displayed
     // RETURN first item shouldn't displayed
-    if (!$conf_array['first_item.']['display_wo_items'])
+    if ( !$conf_array[ 'first_item.' ][ 'display_wo_items' ] )
     {
-      if ((int) $this->hits_sum[$this->curr_tableField] < 1)
+      if ( ( int ) $this->hits_sum[ $this->curr_tableField ] < 1 )
       {
         return;
       }
     }
     // RETURN first item shouldn't displayed
     // Get the labels for the fields uid and hits
-    $uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $uidField = $this->sql_filterFields[ $this->curr_tableField ][ 'uid' ];
+    $hitsField = $this->sql_filterFields[ $this->curr_tableField ][ 'hits' ];
 
     // Get the uid of the first item
-    $uid = $conf_array['first_item.']['option_value'];
+    $uid = $conf_array[ 'first_item.' ][ 'option_value' ];
 
     // LOOP all fields of current filter / tableField
-    foreach ($this->sql_filterFields[$this->curr_tableField] as $field)
+    foreach ( $this->sql_filterFields[ $this->curr_tableField ] as $field )
     {
       // SWITCH field
-      switch (true)
+      switch ( true )
       {
         case( $field == $uidField ):
-          $firstItem[$uid][$uidField] = $uid;
+          $firstItem[ $uid ][ $uidField ] = $uid;
           break;
         case( $field == $hitsField ):
-          $firstItem[$uid][$hitsField] = (int) $this->hits_sum[$this->curr_tableField];
+          $firstItem[ $uid ][ $hitsField ] = ( int ) $this->hits_sum[ $this->curr_tableField ];
           break;
         default:
-          $firstItem[$uid][$field] = null;
+          $firstItem[ $uid ][ $field ] = null;
           break;
       }
       // SWITCH field
     }
     // LOOP all fields of current filter / tableField
     // Add first item to the rows of the current filter
-    $this->rows = (array) $firstItem + (array) $this->rows;
+    $this->rows = ( array ) $firstItem + ( array ) $this->rows;
 
     return;
   }
@@ -6449,14 +6377,14 @@ class tx_browser_pi1_filter_4x
   private function set_firstItemTreeView()
   {
     // Get table and field
-    list( $table ) = explode('.', $this->curr_tableField);
+    list( $table ) = explode( '.', $this->curr_tableField );
 
     // RETURN current filter isn't a tree view
     // #41776, dwildt, 2-
 //      // @todo: 3x -> 4x
 //    if( ! in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
     // #41776, dwildt, 1+
-    if (!in_array($table, $this->arr_tablesWiTreeparentfield))
+    if ( !in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       return;
     }
@@ -6477,17 +6405,17 @@ class tx_browser_pi1_filter_4x
   private function set_htmlSpaceLeft()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
     // Get TS value
-    $int_space_left = $conf_array['wrap.']['item.']['nice_html_spaceLeft'];
+    $int_space_left = $conf_array[ 'wrap.' ][ 'item.' ][ 'nice_html_spaceLeft' ];
 
     // Set class var $htmlSpaceLeft
-    $this->htmlSpaceLeft = str_repeat(' ', $int_space_left);
+    $this->htmlSpaceLeft = str_repeat( ' ', $int_space_left );
 
     return;
   }
@@ -6502,22 +6430,22 @@ class tx_browser_pi1_filter_4x
   private function set_nicePiVar()
   {
     // Get table and field
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // Get TS filter configuration
-    $conf_name = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ];
+    $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
 
 
     // Get nice_piVar from TS
-    $str_nicePiVar = $conf_array['nice_piVar'];
-    if (empty($str_nicePiVar))
+    $str_nicePiVar = $conf_array[ 'nice_piVar' ];
+    if ( empty( $str_nicePiVar ) )
     {
       $str_nicePiVar = $this->curr_tableField;
     }
     // Get nice_piVar from TS
     // Set multiple flag
-    switch ($conf_name)
+    switch ( $conf_name )
     {
       case( 'CHECKBOX' ) :
       // #41753.01, 121010, dwildt, 1+
@@ -6529,13 +6457,13 @@ class tx_browser_pi1_filter_4x
         $bool_multiple = false;
         break;
       case( 'SELECTBOX' ) :
-        $bool_multiple = $conf_array['multiple'];
+        $bool_multiple = $conf_array[ 'multiple' ];
         break;
       default :
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
           $prompt = 'undefined value in switch: \'';
-          t3lib_div :: devlog('[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3);
+          t3lib_div :: devlog( '[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3 );
         }
         echo '<h1>Undefined value</h1>
           <h2>' . $conf_name . ' is not defined</h2>
@@ -6548,32 +6476,32 @@ class tx_browser_pi1_filter_4x
     }
     // Set multiple flag
     // SWITCH multiple flag
-    switch ($bool_multiple)
+    switch ( $bool_multiple )
     {
       case( false ):
         $key_piVar = $this->pObj->prefixId . '[' . $str_nicePiVar . ']';
-        $arr_piVar[0] = $this->pObj->piVars[$str_nicePiVar];
+        $arr_piVar[ 0 ] = $this->pObj->piVars[ $str_nicePiVar ];
         break;
       case( true ):
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $str_nicePiVar . '][]';
-        $arr_piVar = (array) $this->pObj->piVars[$str_nicePiVar];
+        $arr_piVar = ( array ) $this->pObj->piVars[ $str_nicePiVar ];
         break;
     }
     // SWITCH multiple flag
     // Remove empty piVars in $arr_piVar
-    foreach ((array) $arr_piVar as $key => $value)
+    foreach ( ( array ) $arr_piVar as $key => $value )
     {
-      if (!$value)
+      if ( !$value )
       {
-        unset($arr_piVar[$key]);
+        unset( $arr_piVar[ $key ] );
       }
     }
     // Remove empty piVars in $arr_piVar
     // Set class var nicePiVar
-    $this->nicePiVar['key_piVar'] = $key_piVar;
-    $this->nicePiVar['arr_piVar'] = $arr_piVar;
-    $this->nicePiVar['nice_piVar'] = $str_nicePiVar;
+    $this->nicePiVar[ 'key_piVar' ] = $key_piVar;
+    $this->nicePiVar[ 'arr_piVar' ] = $arr_piVar;
+    $this->nicePiVar[ 'nice_piVar' ] = $str_nicePiVar;
     // Set class var nicePiVar
 
     return;
@@ -6589,32 +6517,32 @@ class tx_browser_pi1_filter_4x
    * @version 3.9.13
    * @since   3.9.13
    */
-  private function updateWizard($check)
+  private function updateWizard( $check )
   {
     static $loop_filterObject = false;
 
-    if (!$this->pObj->arr_extConf['updateWizardEnable'])
+    if ( !$this->pObj->arr_extConf[ 'updateWizardEnable' ] )
     {
       return;
     }
     // Current IP has access
-    if (!$this->pObj->bool_accessByIP)
+    if ( !$this->pObj->bool_accessByIP )
     {
       return;
     }
 
-    list( $table, $field ) = explode('.', $this->curr_tableField);
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    switch ($check)
+    switch ( $check )
     {
       case( 'filter_cObject' ):
-        if ($loop_filterObject)
+        if ( $loop_filterObject )
         {
           return;
         }
         $loop_filterObject = true;
 
-        if ($this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['display_without_any_hit'])
+        if ( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'first_item.' ][ 'display_without_any_hit' ] )
         {
           $prompt_01 = '
             filter.' . $table . '.' . $field . '.first_item.display_without_any_hit is deprecated. <br />
@@ -6622,7 +6550,7 @@ class tx_browser_pi1_filter_4x
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if ($this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['display_hits.'])
+        if ( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'first_item.' ][ 'display_hits.' ] )
         {
           $prompt_02 = '
             filter.' . $table . '.' . $field . '.first_item.display_hits is deprecated. <br />
@@ -6630,7 +6558,7 @@ class tx_browser_pi1_filter_4x
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if ($this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['stdWrap.'])
+        if ( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'first_item.' ][ 'stdWrap.' ] )
         {
           $prompt_03 = '
             filter.' . $table . '.' . $field . '.first_item.stdWrap is deprecated. <br />
@@ -6638,7 +6566,7 @@ class tx_browser_pi1_filter_4x
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if ($this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['value_stdWrap.'])
+        if ( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'first_item.' ][ 'value_stdWrap.' ] )
         {
           $prompt_04 = '
             filter.' . $table . '.' . $field . '.first_item.value_stdWrap is deprecated. <br />
@@ -6646,13 +6574,13 @@ class tx_browser_pi1_filter_4x
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if ($prompt_01 . $prompt_02 . $prompt_03 . $prompt_04)
+        if ( $prompt_01 . $prompt_02 . $prompt_03 . $prompt_04 )
         {
           echo '
             <div style="border:1em solid red;padding:2em;background:white;">
               <h1>TYPO3 Browser Update Wizard</h1>
             ';
-          if ($prompt_01)
+          if ( $prompt_01 )
           {
             echo '
                 <p>
@@ -6660,7 +6588,7 @@ class tx_browser_pi1_filter_4x
                 </p>
               ';
           }
-          if ($prompt_02)
+          if ( $prompt_02 )
           {
             echo '
                 <p>
@@ -6668,7 +6596,7 @@ class tx_browser_pi1_filter_4x
                 </p>
               ';
           }
-          if ($prompt_03)
+          if ( $prompt_03 )
           {
             echo '
                 <p>
@@ -6676,7 +6604,7 @@ class tx_browser_pi1_filter_4x
                 </p>
               ';
           }
-          if ($prompt_04)
+          if ( $prompt_04 )
           {
             echo '
                 <p>
@@ -6700,45 +6628,45 @@ class tx_browser_pi1_filter_4x
    * @version 4.1.21
    * @since   2.x
    */
-  function zz_getNicePiVar($tableField)
+  function zz_getNicePiVar( $tableField )
   {
     $arr_piVar = null;
     $arr_return = null;
 
-    list ($table, $field) = explode('.', $tableField);
+    list ($table, $field) = explode( '.', $tableField );
 
     // #52486, 131005, dwildt, 10+
     // RETURN : there isn't any radialsearch filter
-    switch (true)
+    switch ( true )
     {
-      case(!isset($this->conf_view['filter.'][$table . '.']) ):
+      case(!isset( $this->conf_view[ 'filter.' ][ $table . '.' ] ) ):
       // #i0035, 131114, dwildt, 1+
-      case(!isset($this->conf_view['filter.'][$table . '.'][$field . '.']) ):
-        $arr_return['data']['key_piVar'] = 'no_filter';
-        $arr_return['data']['arr_piVar'] = null;
-        $arr_return['data']['nice_piVar'] = 'no_filter';
+      case(!isset( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ] ) ):
+        $arr_return[ 'data' ][ 'key_piVar' ] = 'no_filter';
+        $arr_return[ 'data' ][ 'arr_piVar' ] = null;
+        $arr_return[ 'data' ][ 'nice_piVar' ] = 'no_filter';
         return $arr_return;
     }
     // RETURN : there isn't any radialsearch filter
     // #52486, 131005, dwildt, 10+
     // SWITCH : default $tableField versus 'orderBy'
-    switch ($tableField)
+    switch ( $tableField )
     {
       case( 'orderBy' ):
-        $conf_name = $this->pObj->objTemplate->lDisplayList['selectBox_orderBy.']['selectbox'];
-        $conf_array = $this->pObj->objTemplate->lDisplayList['selectBox_orderBy.']['selectbox.'];
+        $conf_name = $this->pObj->objTemplate->lDisplayList[ 'selectBox_orderBy.' ][ 'selectbox' ];
+        $conf_array = $this->pObj->objTemplate->lDisplayList[ 'selectBox_orderBy.' ][ 'selectbox.' ];
         break;
       default:
-        $conf_name = $this->conf_view['filter.'][$table . '.'][$field];
-        $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+        $conf_name = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ];
+        $conf_array = $this->conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ];
         break;
     }
     // SWITCH : default $tableField versus 'orderBy'
     // SWITCH : set default $strNicePiVar
-    switch ($conf_array['nice_piVar'])
+    switch ( $conf_array[ 'nice_piVar' ] )
     {
       case( true ):
-        $strNicePiVar = $conf_array['nice_piVar'];
+        $strNicePiVar = $conf_array[ 'nice_piVar' ];
         break;
       case( false ):
       default:
@@ -6747,7 +6675,7 @@ class tx_browser_pi1_filter_4x
     }
     // SWITCH : set default $strNicePiVar
     // SWITCH : set multiple
-    switch ($conf_name)
+    switch ( $conf_name )
     {
       case ('CHECKBOX') :
       // #41753.01, 121010, dwildt, 1+
@@ -6759,13 +6687,13 @@ class tx_browser_pi1_filter_4x
         $bool_multiple = false;
         break;
       case ('SELECTBOX') :
-        $bool_multiple = $conf_array['multiple'];
+        $bool_multiple = $conf_array[ 'multiple' ];
         break;
       default :
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
           $prompt = 'undefined value in switch: \'';
-          t3lib_div :: devlog('[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3);
+          t3lib_div :: devlog( '[ERROR/JSS] ' . $prompt . $conf_name . '\'', $this->pObj->extKey, 3 );
         }
         // #i0034, 131114, dwildt, ~
         echo '<h1>Undefined value</h1>
@@ -6780,48 +6708,40 @@ class tx_browser_pi1_filter_4x
     }
     // SWITCH : set multiple
     // SWITCH : set piVar depending on multiple
-    switch ($bool_multiple)
+    switch ( $bool_multiple )
     {
       case( false ):
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
-        $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
-        if (is_array($arr_piVar[0]))
+        $arr_piVar[ 0 ] = $this->pObj->piVars[ $strNicePiVar ];
+        if ( is_array( $arr_piVar[ 0 ] ) )
         {
-          $prompt = '<h1>FATAL ERROR</h1>
-            <h2>tx_browser_pi1[' . $strNicePiVar . '][] is an array</h2>
-            <p>But piVar has to be a string or an integer.</p>
-            <p>Sorry, this error shouldn\'t occured.</p>
-            <p></p>
-            <p>
-              Browser - TYPO3 without PHP<br />
-              Method ' . __METHOD__ . ' (line ' . __LINE__ . ')
-            </p>
-            ';
-          die($prompt);
+          $header = 'FATAL ERROR';
+          $text = 'tx_browser_pi1[' . $strNicePiVar . '][] is an array. But piVar has to be a string or an integer.';
+          $this->pObj->drs_die( $header, $text );
         }
 //$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
       case( true ):
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
-        $arr_piVar = $this->pObj->piVars[$strNicePiVar];
+        $arr_piVar = $this->pObj->piVars[ $strNicePiVar ];
 //$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
     }
     // SWITCH : set piVar depending on multiple
     // LOOP : each piVar
-    foreach ((array) $arr_piVar as $key => $value)
+    foreach ( ( array ) $arr_piVar as $key => $value )
     {
-      if (!$value)
+      if ( !$value )
       {
-        unset($arr_piVar[$key]);
+        unset( $arr_piVar[ $key ] );
       }
     }
     // LOOP : each piVar
 
-    $arr_return['data']['key_piVar'] = $key_piVar;
-    $arr_return['data']['arr_piVar'] = $arr_piVar;
-    $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
+    $arr_return[ 'data' ][ 'key_piVar' ] = $key_piVar;
+    $arr_return[ 'data' ][ 'arr_piVar' ] = $arr_piVar;
+    $arr_return[ 'data' ][ 'nice_piVar' ] = $strNicePiVar; // Bugfix #7159, 100429
 //$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
@@ -6829,8 +6749,8 @@ class tx_browser_pi1_filter_4x
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter_4x.php'])
+if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_filter_4x.php' ] )
 {
-  include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter_4x.php']);
+  include_once ($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_filter_4x.php' ]);
 }
 ?>

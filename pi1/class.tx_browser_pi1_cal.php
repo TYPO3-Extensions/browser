@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.8.7
+* @version 5.0.0
 * @since 3.6.0
 */
 
@@ -208,7 +208,7 @@ class tx_browser_pi1_cal
   public function cal( $rows, $template )
   {
 //$this->pObj->dev_var_dump( $rows );
-    
+
       ///////////////////////////////////////////////////////////////////////////////
       //
       // Set default values
@@ -236,7 +236,7 @@ class tx_browser_pi1_cal
     }
       // RETURN : Browser Calendar doesn't match the requirements
 
-    
+
       // Update vars
     $this->cal_initVars( );
 
@@ -342,7 +342,7 @@ class tx_browser_pi1_cal
     $cObj_name        = $conf_flexform_pi5[$sheet . '.'][$field . '.']['stdWrap'];
     $cObj_conf        = $conf_flexform_pi5[$sheet . '.'][$field . '.']['stdWrap.'];
     $sDEF_initialView = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-    
+
     switch( $sDEF_initialView )
     {
       case('day'):
@@ -357,9 +357,9 @@ class tx_browser_pi1_cal
       case('week'):
       default:
           // Do noting. Current initial view isn't supported
-        if ($this->pObj->b_drs_error)
+        if ($this->pObj->b_drs_warn)
         {
-          t3lib_div :: devLog('[ERROR/CAL/UI] Initial view: \'' . $sDEF_initialView . '\' won\'t be supported in the current Browser version.', $this->pObj->extKey, 3);
+          t3lib_div :: devLog('[WARN/CAL/UI] Initial view: \'' . $sDEF_initialView . '\' won\'t be supported in the current Browser version.', $this->pObj->extKey, 2);
           t3lib_div :: devLog('[HELP/CAL/UI] Initial view: please use \'day\' instead.', $this->pObj->extKey, 1);
         }
         break;
@@ -632,9 +632,9 @@ class tx_browser_pi1_cal
   **********************************************/
 
 /**
- * cal_requirements( ) :  
+ * cal_requirements( ) :
  *
- * @return	boolean		
+ * @return	boolean
  * @access      private
  * @internal    #56088
  * @version 4.8.7
@@ -642,13 +642,13 @@ class tx_browser_pi1_cal
  */
   private function cal_requirements( )
   {
-    
+
     if( $this->requirements !== null )
     {
 //$this->pObj->dev_var_dump( $this->requirements );
       return $this->requirements;
     }
-    
+
     $this->cal_initVars( );
 
       ///////////////////////////////////////////////////////////////////////////////
@@ -773,7 +773,7 @@ class tx_browser_pi1_cal
     $this->markerArray['###SUMMARY###'] = $summary;
       // Set marker
       // Get fields and set marker
-    
+
 
 
       // Initial group
@@ -854,7 +854,7 @@ class tx_browser_pi1_cal
     $markerArray['###CAL_PERIOD###']  = $cal_period;
     $this->markerArray = (array) $this->markerArray + (array) $markerArray;
     // 110827, dwildt
-    //$this->markerArray = (array) $this->markerArray + (array) $this->pObj->objWrapper->constant_markers();
+    //$this->markerArray = (array) $this->markerArray + (array) $this->pObj->objWrapper4x->constant_markers();
       // Set marker
 
 
@@ -1056,7 +1056,7 @@ class tx_browser_pi1_cal
           $counter_td++;
         }
           // 140219, dwildt, 1+
-        unset( $max_td );        
+        unset( $max_td );
         $counter_td = 0;
         $markerArray['###TD_COUNTER###']      = 0;
         $markerArray['###TD_FIRST_LAST###']   = 'first';
@@ -1075,7 +1075,7 @@ class tx_browser_pi1_cal
     }
       // 140219, dwildt, 1+
     unset( $max_tr );
-    
+
       // LOOP periods
 
 
@@ -1962,7 +1962,7 @@ class tx_browser_pi1_cal
   }
 
 /**
- * cal_initVars( )  : 
+ * cal_initVars( )  :
  *
  * @return      void
  * @access      private
@@ -1995,7 +1995,7 @@ class tx_browser_pi1_cal
   }
 
 /**
- * cal_initVarsSinglePid( )  : 
+ * cal_initVarsSinglePid( )  :
  *
  * @param	array		$rows: Consolidated rows
  * @param	array		$template: Current HTML template
@@ -2021,21 +2021,25 @@ class tx_browser_pi1_cal
  * cal_marker(): Set some global marker
  *
  * @return	void
- * @version 4.0.0
+ * @version 5.0.0
  * @since 4.0.0
+ * @internal #59669
  */
   private function cal_marker( )
   {
-      // Set marker
-    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
-    $this->markerArray['###VIEW###']  = $this->pObj->view;
-    $this->markerArray                = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
-    $markerArray                      = $this->pObj->objWrapper->constant_markers( );
-    foreach( (array) $markerArray as $key => $value)
-    {
-      $this->markerArray[$key] = $value;
-    }
-      // Set marker
+    $markerArray = $this->pObj->objMarker->extend_marker( );
+    $this->markerArray = $markerArray;
+
+//    // Set marker
+//    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
+//    $this->markerArray['###VIEW###']  = $this->pObj->view;
+//    $this->markerArray                = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
+//    $markerArray                      = $this->pObj->objWrapper4x->constant_markers( );
+//    foreach( (array) $markerArray as $key => $value)
+//    {
+//      $this->markerArray[$key] = $value;
+//    }
+//      // Set marker
   }
 
 
@@ -2230,7 +2234,7 @@ class tx_browser_pi1_cal
   function area_interval($arr_ts, $arr_values, $tableField)
   {
     $arr_return = array( );
-    
+
       // 140219, dwildt, 1-
 //    list ($table, $field) = explode('.', $tableField);
 
@@ -2466,7 +2470,7 @@ class tx_browser_pi1_cal
   private function area_set_hits($arr_ts, $arr_values, $tableField)
   {
     $arr_values_new = null;
-    
+
     list ( $table ) = explode('.', $tableField);
     $str_case       = $this->arr_area[$tableField]['key'];
 
@@ -2846,15 +2850,15 @@ class tx_browser_pi1_cal
         if( $fromValue != $fromUrl )
         {
           $prompt = 'value_stdWrap and url_stdWrap hasn\'t the same configuration. Filter won\'t run proper!';
-          t3lib_div :: devLog('[INFO/ERROR] ' . $prompt, $this->pObj->extKey, 3 );        
+          t3lib_div :: devLog('[INFO/ERROR] ' . $prompt, $this->pObj->extKey, 3 );
           $prompt = 'Take care of proper properties in the area configuration of your filter!';
-          t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );        
+          t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );
           $prompt = 'See: http://forge.typo3.org/issues/46783';
-          t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );        
-        }  
+          t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );
+        }
       }
         // DRS - Development Reporting System
-      
+
     }
       // Set fields array
 
@@ -2913,7 +2917,7 @@ class tx_browser_pi1_cal
  *
  * @access  public
  * @internal  #56088
- * @return	boolan      
+ * @return	boolan
  * @version 4.8.7
  * @since 4.8.7
  */
@@ -2921,9 +2925,9 @@ class tx_browser_pi1_cal
   {
     return $this->cal_requirements( );
   }
-  
-  
-  
+
+
+
   /***********************************************
   *
   * Helper
@@ -3094,10 +3098,15 @@ class tx_browser_pi1_cal
             // Attach piVars
 
             // Build the typolink
-          $cHash_calc = $this->pObj->objZz->get_cHash( '&id='.$singlePid.$additionalParams );
           $cObj_conf['typolink.']['parameter']         = $singlePid;
-          $cObj_conf['typolink.']['additionalParams']  = $additionalParams.'&cHash='.$cHash_calc;
+          // #54983, 140624, dwildt, 2-
+          //$cHash_calc = $this->pObj->objZz->get_cHash( '&id='.$singlePid.$additionalParams );
+          //$cObj_conf['typolink.']['additionalParams']  = $additionalParams.'&cHash='.$cHash_calc;
+          // #54983, 140624, dwildt, 1+
+          $cObj_conf['typolink.']['additionalParams']  = $additionalParams;
           $cObj_conf['typolink.']['ATagParams']        = 'class="linktosingle"';  // Needed for AJAX
+          // #54983, 140624, dwildt, 1+
+          $cObj_conf['typolink.']['useCacheHash'] = '1';
             // Build the typolink
 
           $this->pObj->piVars = $curr_piVars;

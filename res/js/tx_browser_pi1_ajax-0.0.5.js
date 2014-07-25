@@ -1,19 +1,19 @@
 /*
- * AJAX methods for the TYPO3 extension Browser 
+ * AJAX methods for the TYPO3 extension Browser
  * powered by jQuery (http://www.jquery.com)
- * powered by TYPO3 (http://www.typo3.org) 
+ * powered by TYPO3 (http://www.typo3.org)
  *
  * written by Frank Sander (http://www.wilder-jaeger.de)
  * Browser main development by Dirk Wildt (http://wildt.at.die-netzmacher.de)
  *
  * for more info visit http://typo3-browser-forum.de/
- * 
+ *
  * status: 09.12.2012
  * version: 0.0.5
  *
  */
- 
- 
+
+
 
   // [integer] milliseconds
 var ajaxTimeout = 60000; // 60 seconds
@@ -21,24 +21,24 @@ var typeNum = 0;
 
 var debugColor = '#ee6600';
 
- 
 
- 
+
+
 function initFirebug() {
 // initialize some objects to avoid errors without Firebug
   if (!window.console || !console.firebug) {
     var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
- 
+
     window.console = {};
     for (var i = 0; i < names.length; i++) {
       window.console[names[i]] = function(){};
     }
   }
 }
-  
-  
-  
-  
+
+
+
+
 function setFocusTo(obj, pObj) {
 // sets focus to changed objects for screen readers (for accessibility)
   if (!pObj.hasClass('nofocus')) {
@@ -46,7 +46,7 @@ function setFocusTo(obj, pObj) {
     obj.attr('tabindex', -1);
     obj.focus();
   }
-} 
+}
 
 
 
@@ -67,7 +67,7 @@ function showAjaxError(obj, error) {
 
 function insertParam(url, key, value) {
 // inserts a parameter to a datastring query
-  key = escape(key); 
+  key = escape(key);
   value = escape(value);
   var kvp = url.substr(0).split('&');
   url = '';
@@ -75,8 +75,8 @@ function insertParam(url, key, value) {
     url = key + '=' + value;
   }
   else {
-    var i = kvp.length; 
-    var x = []; 
+    var i = kvp.length;
+    var x = [];
     while (i--) {
       x = kvp[i].split('=');
       if (x[0] == key) {
@@ -85,8 +85,8 @@ function insertParam(url, key, value) {
         break;
             }
         }
-    if (i < 0) { 
-      kvp[kvp.length] = [key, value].join('='); 
+    if (i < 0) {
+      kvp[kvp.length] = [key, value].join('=');
     }
     url = kvp.join('&');
     }
@@ -101,7 +101,7 @@ function ajaxifyResetButton(pObj) {
   if (pObj.hasClass('debugjss')) {
     pObj.find('.searchbox .reset').css('border', '2px solid ' + debugColor);
   }
-  pObj.find('.searchbox .reset').removeAttr('onclick').unbind('click').click(function() { 
+  pObj.find('.searchbox .reset').removeAttr('onclick').unbind('click').click(function() {
     var targetObj = pObj.find('.searchbox');
     targetObj.addClass('loading');
     targetObj.prepend("\t<div class='txbrowserpi1loader'></div>\n");
@@ -120,14 +120,14 @@ function ajaxifyResetButton(pObj) {
       context: pObj,
       url: url,
       dataType: 'html',
-      data: dataString,        
+      data: dataString,
       timeout: ajaxTimeout,
       success: function(d, s) {
 	  var pObj = $(this);
         // taking care of dynamically added single views (.byjs)
         pObj.find('.searchbox').add('.listarea', pObj).add('.byjs', pObj).wrapAll('<div class="browser_ajax_temp" />');
         pObj.find('.singleview').not('.byjs').empty();
-                                    
+
         var targetObj = $(this).find('.browser_ajax_temp');
         pObj.find('.searchbox').removeClass('loading');
         $(this).find('.txbrowserpi1loader').fadeOut(500, function() {
@@ -152,10 +152,10 @@ function ajaxifyResetButton(pObj) {
           targetObj.empty().html(d);
           ext_funcCleanup( );
           ajaxifySearchBox(pObj);
-          ajaxifyList(pObj);  
+          ajaxifyList(pObj);
           pObj.find('.searchbox').unwrap();
-          setFocusTo(pObj.find('.searchbox'), pObj);                            
-        }        
+          setFocusTo(pObj.find('.searchbox'), pObj);
+        }
         // re-initialize single view if needed
         if (pObj.hasClass('ajax_single')) {
           if (pObj.find('.singleview').length < 1) {
@@ -190,8 +190,8 @@ function ajaxifySearchFormSubmit( pObj )
       // 120124, dwildt+
     if( bool_sendAjaxRequest != true )
     {
-      //alert( e.target.id + ' ' + e.currentTarget.id + ' ' + e.type ); 
-      //alert( true ); 
+      //alert( e.target.id + ' ' + e.currentTarget.id + ' ' + e.type );
+      //alert( true );
       //searchform.submit( );
       return true;
     }
@@ -219,7 +219,7 @@ function ajaxifySearchFormSubmit( pObj )
       success: function(d, s) {
         var pObj = $(this);
         var targetObj = $(this).find('.listarea');
-        targetObj.removeClass('loading');        
+        targetObj.removeClass('loading');
         targetObj.find('.txbrowserpi1loader').fadeOut(500, function() {
           $(this).remove();
         });
@@ -229,10 +229,10 @@ function ajaxifySearchFormSubmit( pObj )
               ext_funcCleanup( );
             });
             pObj.find('.listarea').slideUp(1, function() {
-              ajaxifyList(pObj);  
+              ajaxifyList(pObj);
               setFocusTo(pObj.find('.listarea'), pObj);
               $(this).slideDown(300);
-            });                          
+            });
           });
         }
         else {
@@ -240,8 +240,8 @@ function ajaxifySearchFormSubmit( pObj )
           targetObj.replaceWith(d).queue( function () {
             ext_funcCleanup( );
           });
-          ajaxifyList(pObj);  
-        }                            
+          ajaxifyList(pObj);
+        }
       },
       error: function(req, error) {
         showAjaxError($(this).find('.listarea'), error);
@@ -257,11 +257,11 @@ function ajaxifySearchFormSubmit( pObj )
 function ajaxifyDynamicFilters(pObj) {
   if (pObj.hasClass('dynamicFilters')) {
     var searchform = pObj.find('.searchbox form');
-        
+
     if (pObj.hasClass('debugjss')) {
       searchform.find('.onchange').css('border', '2px solid ' + debugColor);
     }
-    searchform.find('.onchange').change( function () { 
+    searchform.find('.onchange').change( function () {
       var baseUrl = $('base').attr('href');
       var action = baseUrl + searchform.attr('action');
       var dataString = insertParam(searchform.serialize(), 'tx_browser_pi1[segment]','searchform');
@@ -277,16 +277,16 @@ function ajaxifyDynamicFilters(pObj) {
         context: pObj,
         url: action,
         dataType: 'html',
-        data: dataString,        
+        data: dataString,
         timeout: ajaxTimeout,
         success: function(d, s) {
-          var pObj = $(this);          
+          var pObj = $(this);
 		  $(this).find('.searchbox').add('.listarea', pObj).add('.listarea', pObj).wrapAll('<div class="browser_ajax_temp" />');
-          pObj.find('.searchbox').removeClass('loading');    
+          pObj.find('.searchbox').removeClass('loading');
           $(this).find('.txbrowserpi1loader').fadeOut(500, function() {
             $(this).remove();
           });
-          // Removing of disabled attribute needed due to a bug in Firefox 3.6: 
+          // Removing of disabled attribute needed due to a bug in Firefox 3.6:
           pObj.find('.searchbox form').find(':input').add(':checkbox').add(':radio').add('button').removeAttr("disabled");
           if (pObj.hasClass('ajaxltcollapse')) {
             var listarea = pObj.find('.listarea');
@@ -307,8 +307,8 @@ function ajaxifyDynamicFilters(pObj) {
               ext_funcCleanup( );
             });
             ajaxifySearchBox(pObj);
-            ajaxifyList(pObj);  
-            setFocusTo(pObj.find('.searchbox'), pObj);                            
+            ajaxifyList(pObj);
+            setFocusTo(pObj.find('.searchbox'), pObj);
           }
         },
         error: function(req, error) {
@@ -326,7 +326,7 @@ function ajaxifySingleLinks(pObj) {
   if (pObj.hasClass('debugjss')) {
     pObj.find('.listarea .linktosingle').css('color', debugColor);
   }
-  pObj.find('.listarea .linktosingle').click( function() { 
+  pObj.find('.listarea .linktosingle').click( function() {
     var targetObj = pObj.find('.singleview');
     targetObj.addClass('loading');
     targetObj.prepend("\t<div class='txbrowserpi1loader'></div>\n");
@@ -341,7 +341,7 @@ function ajaxifySingleLinks(pObj) {
       context: pObj,
       url: url,
       dataType: 'html',
-      data: dataString,        
+      data: dataString,
       timeout: ajaxTimeout,
       success: function(d, s) {
         var pObj = $(this);
@@ -380,7 +380,7 @@ function ajaxifySingleLinks(pObj) {
             pObj.find('.singleview').slideUp(1, function() {
               $(this).slideDown(300);
               setFocusTo($(this), pObj);
-            });                            
+            });
           });
         }
         else {
@@ -388,8 +388,8 @@ function ajaxifySingleLinks(pObj) {
           targetObj.replaceWith(d).queue( function () {
             ext_funcCleanup( );
           });
-          setFocusTo(pObj.find('.listarea'), pObj);  
-        }                                    
+          setFocusTo(pObj.find('.listarea'), pObj);
+        }
       },
       error: function(req, error) {
         showAjaxError($(this).find('.listarea'), error);
@@ -407,16 +407,16 @@ function ajaxifyListViewLinks(pObj) {
     pObj.find('.listarea')
     .find('a')
     .not('.listview a')
-    .add('.listview .browsebox a')
+    .add('.listview .pageBrowser a')
     .add('.ajaxifyme', pObj)
     .css('color', debugColor);
   }
   pObj.find('.listarea')
   .find('a')
   .not('.listview a')
-  .add('.listview .browsebox a')
+  .add('.listview .pageBrowser a')
   .add('.ajaxifyme', pObj)
-  .click( function() { 
+  .click( function() {
     var targetObj = pObj.find('.listarea');
     targetObj.addClass('loading');
     targetObj.prepend("\t<div class='txbrowserpi1loader'></div>\n");
@@ -432,7 +432,7 @@ function ajaxifyListViewLinks(pObj) {
       context: pObj,
       url: url,
       dataType: 'html',
-      data: dataString,        
+      data: dataString,
       timeout: ajaxTimeout,
       success: function(d, s) {
         var pObj = $(this);
@@ -447,10 +447,10 @@ function ajaxifyListViewLinks(pObj) {
               ext_funcCleanup( );
             });
             pObj.find('.listarea').slideUp(1, function() {
-              ajaxifyList(pObj);  
+              ajaxifyList(pObj);
               setFocusTo(pObj.find('.listarea'), pObj);
               $(this).slideDown(300);
-            });                          
+            });
           });
         }
         else {
@@ -459,8 +459,8 @@ function ajaxifyListViewLinks(pObj) {
             ext_funcCleanup( );
           });
           ajaxifyList(pObj);
-          setFocusTo(pObj.find('.listarea'), pObj);  
-        }                            
+          setFocusTo(pObj.find('.listarea'), pObj);
+        }
       },
       error: function(req, error) {
         showAjaxError($(this).find('.listarea'), error);
@@ -474,9 +474,9 @@ function ajaxifyListViewLinks(pObj) {
 
 
 function ajaxifyList(pObj) {
-  ajaxifyListViewLinks(pObj);  
-  if (window.initOrderBy) {initOrderBy(pObj);}  
-    
+  ajaxifyListViewLinks(pObj);
+  if (window.initOrderBy) {initOrderBy(pObj);}
+
   if (pObj.hasClass('ajax_single')) {
     ajaxifySingleLinks(pObj);
   }
@@ -516,16 +516,16 @@ function ext_funcCleanup( )
 }
 
 // =========================================================
- 
- 
- 
+
+
+
 
 function ajaxifyOrderBy(pObj) {
   var orderByForm = pObj.find('.selectboxorderby');
   if (pObj.hasClass('debugjss')) {
     orderByForm.find('select').css('border', '2px solid ' + debugColor);
   }
-  orderByForm.removeAttr('onSubmit').unbind('submit').submit( function () { 
+  orderByForm.removeAttr('onSubmit').unbind('submit').submit( function () {
     var listarea = pObj.find('.listarea');
     var baseUrl = $('base').attr('href');
     var action = baseUrl + $(this).attr('action');
@@ -557,10 +557,10 @@ function ajaxifyOrderBy(pObj) {
               ext_funcCleanup( );
             });
             pObj.find('.listarea').slideUp(1, function() {
-              ajaxifyList(pObj);  
+              ajaxifyList(pObj);
               setFocusTo(pObj.find('.listarea'), pObj);
               $(this).slideDown(300);
-            });                          
+            });
           });
         }
         else {
@@ -568,15 +568,15 @@ function ajaxifyOrderBy(pObj) {
           pObj.find('.listarea').replaceWith(d).queue( function () {
             ext_funcCleanup( );
           });
-          ajaxifyList(pObj);  
-        }                            
+          ajaxifyList(pObj);
+        }
       },
       error: function(req, error) {
         showAjaxError($(this).find('.listarea'), error);
       }
     });
     return false;
-  });  
+  });
 }
 
 
@@ -587,16 +587,16 @@ function ajaxifyOrderBy(pObj) {
 
 
 
-this.setup_browserAJAX = function() {  
+this.setup_browserAJAX = function() {
   // only for ajaxified browsers content objects:
   $('.ajax').each( function(i) {
     if ($(this).hasClass('debugjss')) {
       var debugLang = $(this).attr('lang');
-      console.info('[tx_browser_pi1 [' + i + ']] AJAX initialisation started\n\tdetected language: ' + debugLang + '\n\ttime out settings: ' + ajaxTimeout + ' ms');     
-      console.time('[tx_browser_pi1 [' + i + ']] AJAX initialisation');     
+      console.info('[tx_browser_pi1 [' + i + ']] AJAX initialisation started\n\tdetected language: ' + debugLang + '\n\ttime out settings: ' + ajaxTimeout + ' ms');
+      console.time('[tx_browser_pi1 [' + i + ']] AJAX initialisation');
     }
     var browser = $(this);
-    
+
     // initialize single view if needed
     if ($(this).hasClass('ajax_single')) {
       if ($(this).find('.singleview').length < 1) {
@@ -608,23 +608,23 @@ this.setup_browserAJAX = function() {
     ajaxifySearchBox(browser);
 
     if ($(this).hasClass('debugjss')) {
-      console.timeEnd('[tx_browser_pi1 ['  + i + ']] AJAX initialisation');     
+      console.timeEnd('[tx_browser_pi1 ['  + i + ']] AJAX initialisation');
     }
 
-  }); 
+  });
 };
- 
+
 
 
 
 // =========================================================
- 
- 
+
+
   // [Boolean] true (default) || false: Send an AJAX request. Variable can changed by external methods.
   //                                    Example: the export button can't need any ajax request
   // 120124, dwildt+
 var bool_sendAjaxRequest = true;
- 
+
 // starting the script on page load
 $(document).ready( function() {
   initFirebug();

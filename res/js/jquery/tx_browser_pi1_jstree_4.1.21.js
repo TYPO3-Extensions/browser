@@ -16,7 +16,7 @@
 /**
  *
  * BE AWARE
- * - Any changing must handled in both 
+ * - Any changing must handled in both
  *   - tx_browser_pi1_jstree_x.x.x.js
  *   - tx_browser_pi1_cleanup_x.x.x.js
  */
@@ -123,7 +123,7 @@ $( document ).ready( function( )
 
 });
 
-function generateHiddenFieldsForTree( treeId, tableField ) 
+function generateHiddenFieldsForTree( treeId, tableField )
 {
     // RETURN : there isn't any treeId
   if( ! $( treeId ).length )
@@ -138,9 +138,9 @@ function generateHiddenFieldsForTree( treeId, tableField )
     alert( prompt );
     return;
   }
-  
+
   var checked_ids = [];
-  var name = "tx_browser_pi1[" + tableField + "][]"; 
+  var name = "tx_browser_pi1[" + tableField + "][]";
   //alert( treeId + ": " + name );
 
     // Append an input field for each selected <li>-item to the current form

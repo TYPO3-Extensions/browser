@@ -1,5 +1,199 @@
+:ToDo:
+  * #i0063: OpenStreetMap doesn't work proper
+  * #i0049: typoscript 5x: default template: ###TITLE### should placed in the table head.
+  * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
+  * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
+
+5.0.16
+  14-07-24
+  Feature
+  * #60530: HTML-Template for newsletter
+  Improvement
+  * #i0079: Improve arrDataQuery
+
+5.0.15
+  14-07-20
+  Features
+  * #i0078: New master template for the search box
+            * displayList.master_templates.subparts.listview.searchform.simpleMapOrderFilter
+  * #i0077: New founfation templates:
+            * main_02.html
+            * table_02.html
+  * #60426: Display the pageBrowser even if there isn't any page or one page only
+            New TypoScript property: navigation.pageBrowser.forceOutput
+
+5.0.14
+  14-07-20
+  Improvement
+  * #i0076: map has an JSS error, if there is a category without any proper record (a record without lat or lon)
+  * #i0075: fields with a null value weren't wrapped
+  * #i0074: Search form should not send the page pointer of the page browser
+  * #i0073: Sword: Phrases are concatenated with OR and AND
+  * #i0072: Treeview reset:
+            * cookies will removed now
+
+5.0.13
+  14-07-17
+  Improvement
+  * #i0071: Pagebrowser:
+            * _LOCAL_LANG.default.pi_list_browseresults_displays is moved
+              from "###FROM### to ###TO### out of ###OUT_OF### records" to "Page ###CURRENT_PAGE### of ###TOTAL_PAGES###"
+            * navigation.pageBrowser.showRange is moved from 1 to 0
+
+5.0.12
+  14-07-16
+  Improvement
+  * #i0070: Map in mobile mode: OpenLayers Version is moved from 2.12 (buggy) to 2.13 (proper)
+  * #i0069: Treeview filter: exhausetd filter resets the input fields of the form proper.
+  * #i0067: Sword: Phrases are concatenated with OR but it must be AND
+
+5.0.11
+  14-07-15
+  Improvement
+  * #i0066: Don't display an 'empty' pageBrowser
+  * #i0065: CSS class browsebox is renamed to pageBrowser
+
+5.0.10
+  14-07-14
+  Feature
+  * #i0064: displayList.templateMarker.oddClass is replaced by displayList.templateMarker.cssClass
+  Bugfix
+  * #i0062: Default icon for record without any category
+  * #i0061: Map zoomLevel: zoomLevel is set to 1, if there isn't any POI
+  * #i0060: Map jsonData: if there isn't any data, jsonData doesn't return null any longer but {}
+  * #i0059: Map zoomlevel doesn't return -INF any longer but 18.
+
+5.0.9
+  14-07-13
+  Feature
+  * #i0058: Foundation
+            Effected files:
+            * res/foundation-5.3.0.custom   ( new )
+
+5.0.8
+  14-07-07
+  Improvement
+  * #i0057: map zoom level calculation respects the ratio of the map
+  * #i0056: Input field for full text search got a placeholder. Javascript onfocus is removed.
+  * #i0055: htmlSnippets:
+            * viewlist: will redner earlier in the workflow
+            * subparts will rendered before the rendering of the marker
+            * success: searchform can be part of the htmlSnippets.
+
+5.0.7
+  14-07-07
+  Feature
+  * #60142: Templating: new type notype
+
+5.0.6
+  14-07-07
+  Feature
+  * #i0054: A 2nd and 3rd image and url template
+
+5.0.5
+  14-07-05
+  Bugfixes
+  * #i0053: noItemMessage
+  * #i0052: Children relation in case of opposite field
+
+5.0.4
+  14-07-05
+  Feature
+  * #60107: Consolidate Search
+              * pi1/class.tx_browser_pi1_zz_sword.php   ( new ) [NOT USED!]
+              * TypoScript
+                * Searchform elements got the Typoscript property TEXT
+                  * and
+                  * or
+                  * not
+                * plugin.tx_browser_pi1.displayList.display.searchform.noResult is removed, because it was deprecated
+              * CSS
+                * Wrap of noItemMessage is moved from <p class="noItemMessage">|</p> to <p style="padding:2em 0;">|</p>
+
+5.0.3
+  14-07-04
+  Feature
+  * #60089: tableField templates 2/2
+            New template
+            * plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolink
+              is used in
+              * plugin.tx_browser_pi1.navigation.map.marker.variables.system.url
+              * plugin.tx_browser_pi1.displayList.master_templates.tableFields.header
+              * plugin.tx_browser_pi1.displayList.master_templates.tableFields.text
+              * plugin.tx_browser_pi1.displayList.master_templates.tableFields.image
+            Updated template
+            * plugin.tx_browser_pi1.navigation.map.marker.variables.system.description
+              Description was a text oit of a title. It is now a COA with image, header and text.
+
+5.0.2
+  14-07-04
+  Feature
+  * #i0051: Make TypoScript main file clear: map
+            Effcted files:
+            * static/includes/setup/plugin/tx_browser_pi1/navigation/map/* ( new )
+
+5.0.1
+  14-07-03
+  Feature
+  * #60089: tableField templates 1/2
+            New templates
+            * plugin.tx_browser_pi1.displayList.master_templates.tableFields.header
+            * plugin.tx_browser_pi1.displayList.master_templates.tableFields.text
+            * plugin.tx_browser_pi1.displayList.master_templates.tableFields.image
+            Effected files:
+            * static/includes
+              * constants/templates/listview/*                                          ( new )
+              * setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/*  ( new )
+  * #60076: Make TypoScript main file clear: Different files instead of one file
+            Effcted files:
+            * static
+              * constants.txt
+              * setup.txt
+              * includes/*    ( new )
+
+5.0.0
+  14-06-13
+  Feature
+  * #i0050: map form label got the CSS property display:inline-flex
+  * #60014: Consolidate table head
+  * #59953: Consolidate single view
+  * #59942: Devider for children per table.field (from Typoscript engine 5.x)
+ 	* #59669:	Consolidate Wrapper
+            * Typoscript engine is upgraded from 4.x to 5.x
+              * 5.x doesn't support
+                * GROUPBY
+                * handle as title, text, image
+              * If you need the former behaviour, please configure:
+                plugin.tx_browser_pi1.advanced.downgrade.5_0_0.typoscriptEngine4x = 1
+            * CSS
+              * class 'item' is moved to 'row'
+              * class 'cell' is moved to 'column'
+  * #59563: Enhance MM-relations for TCA MM_match_fields
+            * php code for LEFT JOIN consolidated
+            * php code for FULL JOIN consolidated
+            Effected files:
+            * pi1/class.tx_browser_pi1_sql_auto-php
+  * #59579: Children
+            * Feature : consolidate wrapAndLinkValue
+            * Feature : children are rendered before the parent is rendered, parent can use rendered
+                        children (from Typoscript engine 5.x)
+            * Bugfix  : The links of children records are unproper from second record
+            Effected Files:
+            * pi1/class.tx_browser_pi1_wrapper.php is moved to pi1/class.tx_browser_pi1_wrapper4x.php
+            * pi1/class.tx_browser_pi1_wrapper5x.php    (new)
+  * #52301: Optimise Search Box
+  * #12739: Asc/Desc-Marker to CSS-classify header fields in self defined list views
+  Improvement
+  * #i0051: MY_TITLE in flexform is set in default language in every case
+  Bugfix
+  * #i0050: $this->pObj->objWrapper4x->constant_markers() (from Typoscript engine 5.x)
+  * #60013: SQL error, if select box for ordering is empty
+  * #59729: Don't mark up search words within HTML tags
+  * #54983: cHash comparison failed
+  * #46200: SQL error when searching with "and"
+
 4.9.1
-  03-05-2014
+  14-05-03
   Bugfix
   * #i0046: var_dump in tx_browser_cssstyledcontent::render_uploads_per_language
 
