@@ -1,0 +1,12 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/header.0.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/header.1.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/header.2.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/image.0.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/image.1.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/image.2.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/text.0.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/text.1.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/url.0.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/url.1.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/url.2.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/url.3.ts">

@@ -1,0 +1,2 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/listview/_constants.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/templates/singleview/_constants.ts">
