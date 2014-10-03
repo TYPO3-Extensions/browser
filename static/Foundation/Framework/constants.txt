@@ -1,0 +1,2 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/Foundation/Framework/page/constants.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/Foundation/Framework/plugin/tx_browser_pi1/_constants.ts">
