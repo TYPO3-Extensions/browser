@@ -60,7 +60,7 @@ plugin.tx_browser_pi1 {
   autoconfig =
     // singlePid, seo, display, templateMarker, selectBox_orderBy, caption_stdWrap, imageCount, imageWrapIfAny, imageBoxWrap, image, master_templates
   displayList =
-    // seo, display, templateMarker, content_stdWrap, caption_stdWrap, imageCount, imageWrapIfAny, imageBoxWrap, image, firstImageIsPreview, forceFirstImageIsPreview, noItemMessage
+    // seo, display, templateMarker, content_stdWrap, caption_stdWrap, imageCount, imageWrapIfAny, imageBoxWrap, image, firstImageIsPreview, forceFirstImageIsPreview, noItemMessage, master_templates
   displaySingle =
     // page, mimetypes
   download =
@@ -86,7 +86,7 @@ plugin.tx_browser_pi1 {
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/advanced.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/autoconfig.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/displayList/_setup.ts">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/displaySingle.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/displaySingle/_setup.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/download.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/export.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/flexform/_setup.ts">

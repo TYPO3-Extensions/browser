@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2010-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage  browser
+ * @version 6.0.0
  * @since 4.0.0
  */
 
@@ -71,6 +72,9 @@ class tx_browser_pi5_backend
   // [Object] Current t3-page object
   var $obj_TypoScript = null;
   // [Object] TypoScript object of current page
+
+  private $typo3Version = null;
+  // [INTEGER] TYPO3 version. Sample: 4.7.7 -> 4007007
 
 
 
@@ -989,10 +993,19 @@ class tx_browser_pi5_backend
  */
   function init($arr_pluginConf)
   {
-      // Require classes
-    require_once(PATH_t3lib.'class.t3lib_page.php');
-    require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
-    require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
+    // #61520, 140911, dwildt, 4-
+//      // Require classes
+//    require_once(PATH_t3lib.'class.t3lib_page.php');
+//    require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
+//    require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
+
+    // #61520, 140911, dwildt, 6+
+    if ( $this->typo3Version < 6002000 )
+    {
+      require_once(PATH_t3lib . 'class.t3lib_page.php');
+      require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
+      require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
+    }
 
       // Init page id and the page object
     $this->init_pageUid($arr_pluginConf);
@@ -1126,6 +1139,42 @@ class tx_browser_pi5_backend
     return false;
   }
 
+  /**
+   * init_typo3version( ): Get the current TYPO3 version, move it to an integer
+   *                      and set the global $bool_typo3_43
+   *                      This method is independent from
+   *                        * t3lib_div::int_from_ver (upto 4.7)
+   *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
+   *
+   * @return	void
+   * @internal #61520
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function init_typo3version()
+  {
+    // #43108, 121212, dwildt, +
+    // RETURN : typo3Version is set
+    if ( $this->typo3Version !== null )
+    {
+      return;
+    }
+    // RETURN : typo3Version is set
+    // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+    list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+    $version = ( ( int ) $main ) * 1000000;
+    $version = $version + ( ( int ) $sub ) * 1000;
+    $version = $version + ( ( int ) $bugfix ) * 1;
+    $this->typo3Version = $version;
+    // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+    if ( $this->typo3Version < 3000000 )
+    {
+      $header = 'FATAL ERROR!';
+      $text = 'TYPO3 version is smaller than 3.0.0: ' . ( int ) $this->typo3Version;
+      $this->drs_die( $header, $text );
+    }
+  }
 
 
 

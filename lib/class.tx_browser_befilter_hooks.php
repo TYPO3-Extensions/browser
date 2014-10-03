@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2011-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is based on the TYPO3 extension browser
@@ -28,8 +28,33 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+/**
+ * The class tx_browser_befilter_hooks bundles methods for backend filters
+ *
+ * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
+ * @package    TYPO3
+ * @subpackage    browser
+ * @version 6.0.0
+ * @since 3.0.0
+ */
 
-require_once(PATH_t3lib.'class.t3lib_tceforms.php');
+
+
+// #61520, 140911, dwildt, 1-
+//require_once(PATH_t3lib.'class.t3lib_tceforms.php');
+
+// #61520, 140911, dwildt, +
+list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+$version = ( ( int ) $main ) * 1000000;
+$version = $version + ( ( int ) $sub ) * 1000;
+$version = $version + ( ( int ) $bugfix ) * 1;
+// Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+if ( $version < 6002000 )
+{
+  require_once(PATH_t3lib.'class.t3lib_tceforms.php');
+}
+// #61520, 140911, dwildt, +
 
 
  /**

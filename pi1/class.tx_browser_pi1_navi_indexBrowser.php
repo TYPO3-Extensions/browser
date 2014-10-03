@@ -570,7 +570,7 @@ class tx_browser_pi1_navi_indexBrowser
 
   /**
    * tableField_check( ): Checks, if the table.field of the index browser
-   *                      correspondends with the local table.
+   *                      corresponds with the local table.
    *                      Sets the class var $indexBrowserTableField.
    *
    * @return    array        $arr_return : Contains an error message in case of an error

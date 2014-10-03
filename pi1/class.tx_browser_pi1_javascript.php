@@ -358,7 +358,7 @@ class tx_browser_pi1_javascript
     // Set default
     $this->jqueryIsLoaded = false;
 
-    // name has to correspondend with similar code in tx_browser_pi1_template.php
+    // name has to correspond with similar code in tx_browser_pi1_template.php
     $name = 'jQuery';
 
     // #50069, 130716, dwildt, -
@@ -440,7 +440,7 @@ class tx_browser_pi1_javascript
     // RETURN, there isn't any jQuery for embedding
     // #13429, dwildt, 110519
     // if none of the previous is true, we need to include jQuery from external source
-    // name has to correspondend with similar code in tx_browser_pi1_template.php
+    // name has to correspond with similar code in tx_browser_pi1_template.php
     $name = 'jQuery';
     $path_tsConf = 'javascript.jquery.file';
     // #50069, 130716, dwildt, 4+
@@ -1117,7 +1117,7 @@ class tx_browser_pi1_javascript
     }
     // AJAX (modul I) is disabled
     // AJAX (modul I) is enabled
-    // name has to correspondend with similar code in tx_browser_pi1_template.php
+    // name has to correspond with similar code in tx_browser_pi1_template.php
     $name = 'ajaxLL';
     $path = $this->pObj->conf['javascript.']['ajax.']['fileLL'];
     $inline = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['inline'];
@@ -1129,7 +1129,7 @@ class tx_browser_pi1_javascript
     unset($bool_success);
     // #50069, 130716, dwildt, 1-
     //$this->addCssFile($path, false, $name, $path_tsConf, 'jss', $inline);
-    // name has to correspondend with similar code in tx_browser_pi1_template.php
+    // name has to correspond with similar code in tx_browser_pi1_template.php
     $name = 'ajax';
     $path = $this->pObj->conf['javascript.']['ajax.']['file'];
     $inline = $this->pObj->conf['javascript.']['ajax.']['file.']['inline'];

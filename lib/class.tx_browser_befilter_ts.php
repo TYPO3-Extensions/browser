@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2011-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.8
+ * @version     6.0.0
  * @since       3.9.8
  */
 
@@ -58,11 +58,69 @@ class tx_browser_befilter_ts
  */
   public function init()
   {
-      // Require classes
-    require_once(PATH_t3lib.'class.t3lib_page.php');
-    require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
-    require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
+    // #61520, 140911, dwildt, 4-
+//      // Require classes
+//    require_once(PATH_t3lib.'class.t3lib_page.php');
+//    require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
+//    require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
 
+    // #61520, 140911, dwildt, 7+
+    $this->init_typo3version();
+    if ( $this->typo3Version < 6002000 )
+    {
+      require_once(PATH_t3lib.'class.t3lib_page.php');
+      require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
+      require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
+    }
+  }
+
+  /**
+   * init_typo3version( ): Get the current TYPO3 version, move it to an integer
+   *                      and set the global $bool_typo3_43
+   *                      This method is independent from
+   *                        * t3lib_div::int_from_ver (upto 4.7)
+   *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
+   *
+   * @internal  #61520
+   *
+   * @return    void
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function init_typo3version()
+  {
+    // RETURN : typo3Version is set
+    if ( $this->typo3Version !== null )
+    {
+      return;
+    }
+
+    // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+    list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+    $version = ( ( int ) $main ) * 1000000;
+    $version = $version + ( ( int ) $sub ) * 1000;
+    $version = $version + ( ( int ) $bugfix ) * 1;
+    $this->typo3Version = $version;
+    // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+    if ( $this->typo3Version < 3000000 )
+    {
+      $prompt = '<h1>ERROR</h1>
+        <h2>Unproper TYPO3 version</h2>
+        <ul>
+          <li>
+            TYPO3 version is smaller than 3.0.0
+          </li>
+          <li>
+            constant TYPO3_version: ' . TYPO3_version . '
+          </li>
+          <li>
+            integer $this->typo3Version: ' . ( int ) $this->typo3Version . '
+          </li>
+        </ul>
+          ';
+      die( $prompt );
+    }
   }
 
   /**

@@ -480,7 +480,7 @@ class tx_browser_pi1_filter_4x
 //$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields );
     foreach ( $this->arr_tsFilterTableFields as $tableField )
     {
-      list( $table, $field ) = explode( '.', $tableField );
+      list( $table ) = explode( '.', $tableField );
       $str_andWhere = null;
 
       // Get nice_piVar
@@ -707,7 +707,10 @@ class tx_browser_pi1_filter_4x
 //        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
 //      }
       // #45422, 130212, dwildt, 8+
-      $from = mysql_real_escape_string( $from );
+      // #61520, 140911, dwildt, 1-
+      //$from = mysql_real_escape_string( $from );
+      // #61520, 140911, dwildt, 1+
+      $from = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
@@ -728,7 +731,10 @@ class tx_browser_pi1_filter_4x
 //        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
 //      }
       // #45422, 130212, dwildt, 8+
-      $to = mysql_real_escape_string( $to );
+      // #61520, 140911, dwildt, 1-
+      //$to = mysql_real_escape_string( $to );
+      // #61520, 140911, dwildt, 1+
+      $to = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
@@ -790,9 +796,12 @@ class tx_browser_pi1_filter_4x
       // #45422, 130212, dwildt, 6-
       if ( !empty( $from ) )
       {
-        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
-        // #30912, 120127, dwildt+
-        $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
+        // #61520, 140911, dwildt, 2-
+//        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
+//        $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
+        // #61520, 140911, dwildt, 2+
+        $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $from = mysql_real_escape_string( $from );
@@ -811,9 +820,12 @@ class tx_browser_pi1_filter_4x
       // #45422, 130212, dwildt, 6-
       if ( !empty( $to ) )
       {
-        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
-        // #30912, 120127, dwildt+
-        $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
+        // #61520, 140911, dwildt, 2-
+//        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
+//        $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
+        // #61520, 140911, dwildt, 2+
+        $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $to         = mysql_real_escape_string( $to );
@@ -871,10 +883,18 @@ class tx_browser_pi1_filter_4x
         // Handle default filter (without area)
         foreach ( $arr_piVar as $str_value )
         {
-          $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
-          // #30912, 120127, dwildt+
+          // #i0082, 140811, dwildt, 3+
+          $str_value = str_replace("'", null, $str_value);
+          $str_value = str_replace('"', null, $str_value);
+          $arr_orValues[] = $tableField . " LIKE '" . $str_value . "'";
+          // #i0082, 140811, dwildt, 1-
+          //$arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
+          // #i0082, 140811, dwildt, 2-
+          //// #30912, 120202, dwildt+
+          //$strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+          // #i0082, 140811, dwildt, 2+
           // #30912, 120202, dwildt+
-          $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+          $strtolower_value = "'" . mb_strtolower( $str_value ) . "'";
           $this->arr_filter_condition[ $tableField ][ 'like' ][] = $strtolower_value;
         }
         $str_andWhere = implode( ' OR ', $arr_orValues );
@@ -885,7 +905,6 @@ class tx_browser_pi1_filter_4x
         break;
     }
     // SWITCH  : area filter versus default filter
-
     return $str_andWhere;
   }
 
@@ -972,8 +991,10 @@ class tx_browser_pi1_filter_4x
       $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
       $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
       $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
-      // #45422, 130212, dwildt, 1+
-      $from = mysql_real_escape_string( $from );
+      // #61520, 140911, dwildt, 1-
+      //$from = mysql_real_escape_string( $from );
+      // #61520, 140911, dwildt, 1+
+      $from = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -996,8 +1017,10 @@ class tx_browser_pi1_filter_4x
       $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
       $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
       $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
-      // #45422, 130212, dwildt, 1+
-      $to = mysql_real_escape_string( $to );
+      // #61520, 140911, dwildt, 1-
+      //$to = mysql_real_escape_string( $to );
+      // #61520, 140911, dwildt, 1+
+      $to = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1067,8 +1090,10 @@ class tx_browser_pi1_filter_4x
       $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
       $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
       $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
-      // #45422, 130212, dwildt, 1+
-      $from = mysql_real_escape_string( $from );
+      // #61520, 140911, dwildt, 1-
+      //$from = mysql_real_escape_string( $from );
+      // #61520, 140911, dwildt, 1+
+      $from = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1085,8 +1110,10 @@ class tx_browser_pi1_filter_4x
       $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
       $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
       $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
-      // #45422, 130212, dwildt, 1+
-      $to = mysql_real_escape_string( $to );
+      // #61520, 140911, dwildt, 1-
+      //$to = mysql_real_escape_string( $to );
+      // #61520, 140911, dwildt, 1+
+      $to = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -6234,7 +6261,6 @@ class tx_browser_pi1_filter_4x
    */
   private function requiredMarker( $tableField )
   {
-
     if ( $this->subpart === null )
     {
       $this->subpart = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
@@ -6248,7 +6274,7 @@ class tx_browser_pi1_filter_4x
     {
       if ( $this->pObj->b_drs_warn )
       {
-        $prompt = $tableField . ' hasn\'t the correspondending HTML marker ' . $htmlMarker . '.';
+        $prompt = $tableField . ' hasn\'t the corresponding HTML marker ' . $htmlMarker . '.';
         t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
         $prompt = 'Please add ' . $htmlMarker . ' to the subpart ###SEARCHFORM###.';
         t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
@@ -6311,6 +6337,8 @@ class tx_browser_pi1_filter_4x
    */
   private function set_firstItem()
   {
+    $firstItem = null;
+
     // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 

@@ -1,0 +1,2 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/displaySingle/setup.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/displaySingle/master_templates/_setup.ts">

@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     5.0.0
+ * @version     6.0.0
  * @since       1.0.0
  */
 
@@ -115,6 +115,8 @@ class tx_browser_pi1_viewlist
   var $bool_union = null;
   // [String] Current content
   var $content = null;
+  // [object] object of the search class
+  private $objSearch = null;
   // [Object] interface of extension radialsearch
   private $objRadialsearch = null;
   // [String] radialsearch "table"/filter. Example: radialsearch
@@ -168,10 +170,14 @@ class tx_browser_pi1_viewlist
 
     // Get HTML content
     $this->content = $this->pObj->str_template_raw;
+//var_dump( __METHOD__, __LINE__, $this->content );
+//die( ':(' );
 
     // Replace static html marker and subparts by typoscript marker and subparts
     // #43627, 1212105, dwildt, 5+
     $arr_return = $this->content_replaceStaticHtml();
+//var_dump( __METHOD__, __LINE__, $arr_return );
+//die( ':(' );
     if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
@@ -217,6 +223,8 @@ class tx_browser_pi1_viewlist
       // CASE no csv
     }
     $content = $this->content;
+//var_dump( __METHOD__, __LINE__, $this->content );
+//die( ':(' );
     // Get template for csv
     // csv export versus list view
     // #29370, 110831, dwildt+
@@ -397,6 +405,7 @@ class tx_browser_pi1_viewlist
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
 
+
     // RETURN content
     return $this->content;
   }
@@ -406,7 +415,7 @@ class tx_browser_pi1_viewlist
    *
    * @return    void
    * @access private
-   * @version 4.7.0
+   * @version 6.0.0
    * @since 1.0.0
    */
   private function init()
@@ -415,6 +424,9 @@ class tx_browser_pi1_viewlist
     $this->init_lDisplayList();
     $this->init_lDisplay();
     $this->init_localisation();
+
+    // #61594, 140915, 1+
+    $this->initSearch();
 
     // #52486, 131005, dwildt, 2+
     // Init radialsearch filter and object
@@ -565,6 +577,24 @@ class tx_browser_pi1_viewlist
     $this->objFilterRadialsearch = t3lib_div::makeInstance( 'tx_browser_pi1_filterRadialsearch' );
     $this->objFilterRadialsearch->setParentObject( $this->pObj );
     $this->objFilterRadialsearch->setConfView( $this->conf_view );
+  }
+
+  /**
+   * initSearch( )  :
+   *
+   * @return	void
+   * @internal  #61594
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function initSearch()
+  {
+    if ( is_object( $this->objSearch ) )
+    {
+      return;
+    }
+    require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_search.php');
+    $this->objSearch = new tx_browser_pi1_search( $this->pObj );
   }
 
   /**
@@ -2051,12 +2081,15 @@ class tx_browser_pi1_viewlist
    *                          by the template class. Replace filter marker.
    *
    * @return    array        $arr_return : Error message in case of an error
-   * @version 5.0.0
+   * @version 6.0.0
    * @since 1.0.0
    */
   private function subpart_setSearchbox()
   {
-    $this->content = $this->pObj->objTemplate->tmplSearchBox( $this->content );
+    // #61594, 140915, 1-
+    //$this->content = $this->pObj->objTemplate->tmplSearchBox( $this->content );
+    // #61594, 140915, 1+
+    $this->content = $this->objSearch->searchform( $this->content );
     $arr_return = $this->subpart_setSearchboxFilter();
 
     return $arr_return;

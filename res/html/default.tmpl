@@ -5,7 +5,7 @@
 <pre>
 <em>
 
-VERSION 3.9.6
+VERSION 6.0.0
   * #00000: Marker ###VIEW### is moved to list or single
   * #00000: Most tags got an id
   * #00000: Subpart ###MODESELECTORTABS###
@@ -72,8 +72,6 @@ This template is the default template for all list views.
             <fieldset class="ui-corner-all">
               <legend>###MY_SEARCH_LEGEND###</legend>
               ###HIDDEN###
-              <input type="hidden" name="no_cache" value="1" />
-              <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
               <input class="sword" type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
               <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
               <!-- ###BUTTON_CSV-EXPORT### begin -->
@@ -133,7 +131,7 @@ This template is the default template for all list views.
             </div> <!-- /listview -->
             <!-- ###LISTVIEW### end -->
           </div> <!-- /ui-tabs -->
-          ###MAP###
+          <!-- #61926, 140928, dwildt, 1-:  ### MAP ### -->
           <!-- ###LISTTABS### end -->
         </div> <!-- /listarea -->
       </div> <!-- /ui-widget -->

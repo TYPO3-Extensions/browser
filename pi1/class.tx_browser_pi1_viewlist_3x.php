@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2012-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
- * @version 3.9.8
+ * @version 6.0.0
  * @since 1.0
  */
 
@@ -94,6 +94,8 @@ class tx_browser_pi1_viewlist_3x
   var $bool_union = null;
   // [String] Current content
   var $content = null;
+  // [object] object of the search class
+  private $objSearch = null;
 
   /**
    * Constructor. The method initiate the parent object
@@ -739,7 +741,10 @@ class tx_browser_pi1_viewlist_3x
     // HTML search form
     // #9659, 101011, fsander
     //$bool_display = $this->pObj->objFlexform->bool_searchForm;
-    $template = $this->pObj->objTemplate->tmplSearchBox( $template );
+    // #61594, 140915, 1-
+    //$template = $this->pObj->objTemplate->tmplSearchBox( $template );
+    // #61594, 140915, 1+
+    $template = $this->objSearch->searchform( $template );
     // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( 1, 'after $this->pObj->objTemplate->tmplSearchBox( )' );
     // HTML search form
@@ -904,7 +909,7 @@ class tx_browser_pi1_viewlist_3x
    * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
    *
    * @return	void
-   * @version 3.9.8
+   * @version 6.0.0
    * @since 1.0.0
    */
   private function init()
@@ -937,6 +942,27 @@ class tx_browser_pi1_viewlist_3x
       $this->pObj->lDisplay = $this->conf[ 'displayList.' ][ 'display.' ];
     }
     // Get the local or global displayList.display
+
+    // #61594, 140915, 1+
+    $this->initSearch();
+  }
+
+  /**
+   * initSearch( )  :
+   *
+   * @return	void
+   * @internal  #61594
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function initSearch()
+  {
+    if ( is_object( $this->objSearch ) )
+    {
+      return;
+    }
+    require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_search.php');
+    $this->objSearch = new tx_browser_pi1_search( $this->pObj );
   }
 
   /**

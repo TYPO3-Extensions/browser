@@ -1,9 +1,12 @@
 plugin.tx_browser_pi1 {
   navigation {
-      // debugging, enabled, provider, template, configuration, marker
+      // 140703: empty statement: for proper comments only
+    map {
+    }
+      // marker
     map =
     map {
-        // addToCData, snippets, variables
+        // addToCData
       marker =
       marker {
           // system: Each item will be a part of the current record while runtime. You can create your own item in the system section

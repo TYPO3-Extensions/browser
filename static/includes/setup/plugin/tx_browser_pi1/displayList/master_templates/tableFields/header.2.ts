@@ -19,29 +19,30 @@ plugin.tx_browser_pi1 {
             key {
               field = {$plugin.tx_browser_pi1.templates.listview.url.2.key}
             }
-              // single view. 10: teaser_title, 20: title
+              // single view 
             default = TEXT
             default {
-              field = {$plugin.tx_browser_pi1.templates.listview.header.2.list} // {$plugin.tx_browser_pi1.templates.listview.header.2.single}
-              wrap  = <h2>|</h2>
+              field = {$plugin.tx_browser_pi1.templates.listview.header.2.field}
+              wrap  = <{$plugin.tx_browser_pi1.templates.listview.header.2.tag}>|</{$plugin.tx_browser_pi1.templates.listview.header.2.tag}>
               stdWrap {
                 stripHtml         = 1
                 htmlSpecialChars  = 1
-                crop              = {$plugin.tx_browser_pi1.templates.listview.header.2.crop} | ... | 1
+                crop              = {$plugin.tx_browser_pi1.templates.listview.header.2.crop}
               }
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.2.default
+              required = 1
             }
               // without any link (record is available only in list views)
             notype < .default
             notype {
               typolink >
             }
-              // link to an internal page. 10: teaser_title, 20: title
+              // link to an internal page 
             page < .default
             page {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.2.page
             }
-              // link to an external website. 10: teaser_title, 20: title
+              // link to an external website 
             url < .page
             url {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.2.url

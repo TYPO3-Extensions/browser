@@ -56,7 +56,7 @@ plugin.tx_browser_pi1 {
                     // title
                   40 = TEXT
                   40 {
-                    field = {$plugin.tx_browser_pi1.templates.listview.header.2.list} // {$plugin.tx_browser_pi1.templates.listview.header.2.single}
+                    field = {$plugin.tx_browser_pi1.templates.listview.header.2.field} // {$plugin.tx_browser_pi1.templates.listview.header.2.single}
                     stdWrap {
                       stripHtml = 1
                       htmlSpecialChars = 1
@@ -75,7 +75,7 @@ plugin.tx_browser_pi1 {
               }
               useCacheHash = 1
             }
-              // link to an internal page. 10: teaser_title, 20: title
+              // link to an internal page 
             page < .default
             page {
               parameter.cObject {
@@ -90,7 +90,7 @@ plugin.tx_browser_pi1 {
               }
               additionalParams >
             }
-              // link to an external website. 10: teaser_title, 20: title
+              // link to an external website 
             url < .page
             url {
               parameter.cObject {

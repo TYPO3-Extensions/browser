@@ -1,8 +1,102 @@
 :ToDo:
-  * #i0063: OpenStreetMap doesn't work proper
   * #i0049: typoscript 5x: default template: ###TITLE### should placed in the table head.
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
+
+6.0.0
+  14-09-15
+  Major Feature
+  * #61970: Templates for header, text and images
+            * #61971: Templates for header
+                      * plugin.tx_browser_pi1.displayList.master_templates.tableFields.header
+            * #61972: Templates for text
+                      * plugin.tx_browser_pi1.displayList.master_templates.tableFields.text
+            * #61973: Templates for images
+                      See:
+                      * plugin.tx_browser_pi1.displayList.master_templates.tableFields.image
+            * #61974: Templates for url
+                      See:
+                      * plugin.tx_browser_pi1.displayList.master_templates.tableFields.details
+                      * plugin.tx_browser_pi1.displayList.master_templates.tableFields.url
+            * #61986: Foundation clearing lightbox
+  * #61520: Update TYPO3 6.2: Compatibility with TYPO3 6.2
+            * move mysql_real_escape_string($str) to escapeStrForLike($str, $table)
+              Effected files:
+              * pi1
+                * class.tx_browser_pi1_filter_3x.php
+                * class.tx_browser_pi1_filter_4x.php
+                * class.tx_browser_pi1_zz.php
+            * remove require_once
+              Effected files:
+              * lib
+                * class.tx_browser_befilter_hooks.php
+                * class.tx_browser_befilter_ts.php
+                * class.tx_browser_geoupdate.php
+              * pi1
+                * class.tx_browser_pi1.php
+                * class.tx_browser_pi1_backend.php
+                * class.tx_browser_pi1_download.php
+  * #61594/#61664: TYPO3 6.2: &cHash empty / cHashExcludedParameters / pageNotFoundOnCHashError
+              * hidden fields are removed from the form
+                * no_cache
+                * tx_browser_pi1[plugin]
+              * hidden fields are rendered by PHP
+                * no_cache
+                * tx_browser_pi1[plugin]
+              Effected files:
+              * ext_conf_template.txt
+              * pi1
+                * class.tx_browser_pi1_backend.php
+                * class.tx_browser_pi1_search.php     ( new )
+                * class.tx_browser_pi1_template.php
+                * class.tx_browser_pi1_viewlist.php
+                * class.tx_browser_pi1_viewlist_3x.php
+                * locallang.xml
+                * locallang_flexform
+              * res
+                * html
+                  * default.tmpl
+                  * default_ul.tmpl
+                  * main.tmpl
+  * #61646: Replace the static method t3lib_div::intInRange
+            Effected files:
+            * lib/class.tx_browser_cssstyledcontent
+  * #i0083: Improvements for Foundation
+            * wrapInBaseIdClass
+  Feature
+  * #61938: BrowserMaps: Links depending on record type: record, page, noType, url
+            See #61937 at route
+  Bug
+  * #61926: ###MAP### marker in main template is removed (error with route. see: route ChangeLog)
+            Effected files:
+            * res/html
+              * default.tmpl
+              * main.tmpl
+  * #i0084: Treeview filter displays "Array" instead of a rendered HTML filter after sending a filter value
+
+5.0.18
+  14-08-11
+  Improvement
+  * #i0082: Filter local table: Replace mysql_real_escape_string
+  * #t0013: Additional themes for the zoom and the navigation of the map
+            Effected files:
+            * res/js/map/themes
+              * dark
+              * dark red
+              * orange
+  * #t0014: Page-Browser should dislayed twice: above the list and below the list
+            Effected files:
+            * res/html/foundation
+              * main_01.html
+              * main_02.html
+
+5.0.17
+  14-08-06
+  Feature
+  * #i0081: CSS multicolumns menu
+            * <ul> of a menu got the additional class "dropdown-{register:count_menuItems}"
+  Improvement
+  * #i0080: HTML foundation top bar
 
 5.0.16
   14-07-24

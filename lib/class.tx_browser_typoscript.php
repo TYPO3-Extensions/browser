@@ -24,7 +24,21 @@
 
 
 
-require_once(PATH_tslib . 'class.tslib_pibase.php');
+// #61520, 140911, dwildt, 1-
+//require_once(PATH_tslib . 'class.tslib_pibase.php');
+
+// #61520, 140911, dwildt, +
+list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+$version = ( ( int ) $main ) * 1000000;
+$version = $version + ( ( int ) $sub ) * 1000;
+$version = $version + ( ( int ) $bugfix ) * 1;
+// Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+if ( $version < 6002000 )
+{
+  require_once(PATH_tslib . 'class.tslib_pibase.php');
+}
+// #61520, 140911, dwildt, +
 
 
 
@@ -34,7 +48,7 @@ require_once(PATH_tslib . 'class.tslib_pibase.php');
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 4.8.6
+* @version 6.0.0
 * @since 3.6.1
 */
 

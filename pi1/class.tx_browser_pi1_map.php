@@ -273,6 +273,9 @@ class tx_browser_pi1_map
    */
   private function categoriesGet()
   {
+//var_dump(__METHOD__, __LINE__, array_keys($this->confMap));
+//var_dump(__METHOD__, __LINE__, array_keys( $this->confMap[ 'configuration.' ][ 'categories.' ][ 'colours.' ][ 'points.' ]));
+
     // RETURN : method is called twice at least
     if ( $this->arrCategories != null )
     {
@@ -329,6 +332,7 @@ class tx_browser_pi1_map
             t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 1 );
           }
           // DRS
+//var_dump(__METHOD__, __LINE__, $fieldForLabel);
           $this->arrCategories = array();
           return $this->arrCategories;
         // #47602, 130911, dwildt, 1+
@@ -340,6 +344,7 @@ class tx_browser_pi1_map
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
           }
           // DRS
+//var_dump(__METHOD__, __LINE__, $fieldForLabel, array_keys($row));
           $this->arrCategories = array();
           return $this->arrCategories;
         // #i0076, 140721, dwildt, +
@@ -389,6 +394,7 @@ class tx_browser_pi1_map
     // Get categories from the rows
     // Remove non unique category labels
     $categoryLabels = array_unique( $categoryLabels );
+//var_dump(__METHOD__, __LINE__);
 
     // Order the category labels
     $orderBy = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'orderBy' ];
@@ -418,9 +424,11 @@ class tx_browser_pi1_map
         break;
     }
     // Order the category labels
-    // Set the keys: keys should correspondend with keys of the item colours
+    // Set the keys: keys should correspond with keys of the item colours
     $maxItem = count( $categoryLabels );
     $counter = 0;
+//var_dump(__METHOD__, __LINE__);
+//var_dump(__METHOD__, __LINE__, array_keys($this->confMap));
     foreach ( array_keys( $this->confMap[ 'configuration.' ][ 'categories.' ][ 'colours.' ][ 'points.' ] ) as $catKey )
     {
       if ( substr( $catKey, -1 ) == '.' )
@@ -454,7 +462,7 @@ class tx_browser_pi1_map
         break;
       }
     }
-    // Set the keys: keys should correspondend with keys of the item colours
+    // Set the keys: keys should correspond with keys of the item colours
 
     $this->arrCategories[ 'labels' ] = $catLabels;
     if ( isset( $row[ $fieldForIcon ] ) )
@@ -466,6 +474,7 @@ class tx_browser_pi1_map
     {
       $this->arrCategories[ 'cssClass' ] = $catCss;
     }
+//var_dump(__METHOD__, __LINE__);
 
     return $this->arrCategories;
   }
@@ -865,7 +874,7 @@ class tx_browser_pi1_map
   private function pathDefaultIcon( $catKey )
   {
     $point = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'colours.' ][ 'points.' ][ $catKey . '.' ];
-
+//var_dump(__METHOD__, __LINE__, $point, $catKey);
     $name = $point[ 'pathToIcon' ];
     $conf = $point[ 'pathToIcon.' ];
     $value = $this->pObj->cObj->cObjGetSingle( $name, $conf );
@@ -957,7 +966,7 @@ class tx_browser_pi1_map
 //if( ! ( $pos === false ) )
 //{
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $template );
-//}
+//die( ':(' );
     $pos = strpos( $template, $str_mapMarker );
     if ( !( $pos === false ) )
     {
@@ -1115,6 +1124,7 @@ class tx_browser_pi1_map
       // global configuration
     }
     // Set the global $confMapLocal
+//var_dump(__METHOD__, __LINE__, array_keys($this->confMap));
 
     return;
   }
@@ -2507,7 +2517,7 @@ class tx_browser_pi1_map
       'offsetX' => 0,
       'offsetY' => 0
     );
-
+//var_dump(__METHOD__, __LINE__, $arrCategoriesFlipped, $catTitle );
     switch ( true )
     {
       case($arrCategoriesFlipped[ $catTitle ] == $this->arrWoCategories[ 'iconKey' ]):
@@ -4245,6 +4255,7 @@ class tx_browser_pi1_map
     }
     // LOOP rows
     // LOOP rows
+//var_dump(__METHOD__, __LINE__, $rowsTemp);
     foreach ( $rowsTemp as $row )
     {
       // unique array
@@ -4253,6 +4264,7 @@ class tx_browser_pi1_map
     }
     // LOOP rows
 //$this->pObj->dev_var_dump( $rowsOutput );
+//var_dump(__METHOD__, __LINE__, $rowsOutput);
     return $rowsOutput;
   }
 

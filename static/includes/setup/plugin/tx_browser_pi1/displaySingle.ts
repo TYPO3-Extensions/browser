@@ -23,7 +23,7 @@ plugin.tx_browser_pi1 {
       backbutton = 1
       backbutton {
         data = LLL:EXT:browser/pi1/locallang.xml:backbutton
-        wrap = <a class="backbutton" href="javascript:history.back()">|</a>
+        noTrimWrap = |<a class="backbutton" href="javascript:history.back()">&laquo; |</a>|
       }
       searchform {
           // [Boolean] 1: Wrap the Swords in the result, 0: Don't wrap it

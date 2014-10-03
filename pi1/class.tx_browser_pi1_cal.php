@@ -2537,7 +2537,7 @@ class tx_browser_pi1_cal
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)
             // 120202, dwildt+
-            // Line has to correspondend with similar code some lines below and code in filter::filter_fetch_rows()
+            // Line has to correspond with similar code some lines below and code in filter::filter_fetch_rows()
           if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
               // #41776: dwildt, 1-
@@ -2578,7 +2578,7 @@ class tx_browser_pi1_cal
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
             // 120202, dwildt+
-            // Line has to correspondend with similar code some lines above and code in filter::filter_fetch_rows()
+            // Line has to correspond with similar code some lines above and code in filter::filter_fetch_rows()
           if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
               // #41776: dwildt, 1-

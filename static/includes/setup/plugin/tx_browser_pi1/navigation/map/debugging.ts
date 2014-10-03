@@ -1,5 +1,10 @@
 plugin.tx_browser_pi1 {
   navigation {
+      // 140703: empty statement: for proper comments only
+    map {
+    }
+      // debugging
+    map =
     map {
         // 140704, dwildt, empty statement for proper comment only.
       debugging {

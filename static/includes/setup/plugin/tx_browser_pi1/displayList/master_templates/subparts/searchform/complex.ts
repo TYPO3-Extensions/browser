@@ -52,7 +52,7 @@ plugin.tx_browser_pi1 {
                   <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" type="reset" onclick="location = '###MY_URL###'" class="tiny reset" role="button">
                     ###MY_RESET###
                   </button>
-                  <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                  <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                   ###FILTER###
                 </fieldset>
               </form>

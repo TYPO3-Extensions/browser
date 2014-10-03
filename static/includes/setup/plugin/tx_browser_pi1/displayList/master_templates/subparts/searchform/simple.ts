@@ -16,7 +16,7 @@ plugin.tx_browser_pi1 {
             simple = TEXT
             simple {
               value (
-                <div class="columns small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
+                <div class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
                   <form action="###ACTION###" method="post" >
                     <fieldset>
                       <legend>
@@ -29,7 +29,7 @@ plugin.tx_browser_pi1 {
                       <button class="tiny expand hidesubmit" role="button">
                         ###MY_SEARCH###
                       </button>
-                      <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                      <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                       ###FILTER###
                       <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
                         ###MY_RESET###
@@ -64,7 +64,7 @@ plugin.tx_browser_pi1 {
                       <button class="tiny expand hidesubmit" role="button">
                         ###MY_SEARCH###
                       </button>
-                      <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                      <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                       ###FILTER###
                       <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
                         ###MY_RESET###
@@ -104,7 +104,7 @@ plugin.tx_browser_pi1 {
                       <button class="tiny expand hidesubmit" role="button">
                         ###MY_SEARCH###
                       </button>
-                      <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                      <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                       ###FILTER###
                       <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
                         ###MY_RESET###
@@ -138,7 +138,7 @@ plugin.tx_browser_pi1 {
                       <button class="tiny expand hidesubmit" role="button">
                         ###MY_SEARCH###
                       </button>
-                      <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                      <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                       ###FILTER###
                       <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
                         ###MY_RESET###

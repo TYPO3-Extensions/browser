@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage    browser
  *
- * @version 5.0.0
+ * @version 6.0.0
  * @since 3.0.0
  */
 
@@ -69,12 +69,12 @@ class tx_browser_pi1_wrapper4x
   // Array with fields from functions.clean_up.csvTableFields from TS
 
   /**
- * Constructor. The method initiate the parent object
- *
- * @param	object		The parent object
- * @return	void
- */
-  function __construct($parentObj)
+   * Constructor. The method initiate the parent object
+   *
+   * @param	object		The parent object
+   * @return	void
+   */
+  function __construct( $parentObj )
   {
     $this->pObj = $parentObj;
   }
@@ -86,12 +86,12 @@ class tx_browser_pi1_wrapper4x
    * ******************************************** */
 
   /**
- * constant_markers(): Generate the markerArray with self-defined markers out of the TypoScript. Return a markerArray, if there are values for replacement.
- *
- * @return	array		The markerArray. If there aren't any value, it returns FALSE.
- * @version 5.0.0
- */
-  public function constant_markers( $row = null)
+   * constant_markers(): Generate the markerArray with self-defined markers out of the TypoScript. Return a markerArray, if there are values for replacement.
+   *
+   * @return	array		The markerArray. If there aren't any value, it returns FALSE.
+   * @version 5.0.0
+   */
+  public function constant_markers( $row = null )
   {
 
     $conf = $this->pObj->conf;
@@ -99,10 +99,10 @@ class tx_browser_pi1_wrapper4x
     $view = $this->pObj->view;
 
     $viewWiDot = $view . '.';
-    $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
+    $conf_view = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ];
 
     // #i0050, 140630, dwildt, 4+
-    if( $row === null )
+    if ( $row === null )
     {
       $row = $this->pObj->elements;
     }
@@ -113,19 +113,19 @@ class tx_browser_pi1_wrapper4x
     //
       // Get the TypoScript marker array. RETURN, if there isn't any array.
 
-    $conf_marker = $conf_view['marker.'];
-    if (!is_array($conf_marker))
+    $conf_marker = $conf_view[ 'marker.' ];
+    if ( !is_array( $conf_marker ) )
     {
-      if ($this->pObj->b_drs_templating)
+      if ( $this->pObj->b_drs_templating )
       {
-        t3lib_div::devLog('[INFO/TEMPLATING] views.' . $viewWiDot . $mode . ' hasn\'t any marker array. We take the global one.', $this->pObj->extKey, 0);
+        t3lib_div::devLog( '[INFO/TEMPLATING] views.' . $viewWiDot . $mode . ' hasn\'t any marker array. We take the global one.', $this->pObj->extKey, 0 );
       }
-      $conf_marker = $conf['marker.'];
-      if (!is_array($conf_marker))
+      $conf_marker = $conf[ 'marker.' ];
+      if ( !is_array( $conf_marker ) )
       {
-        if ($this->pObj->b_drs_templating)
+        if ( $this->pObj->b_drs_templating )
         {
-          t3lib_div::devLog('[INFO/TEMPLATING] The plugin hasn\'t any marker array. Self defined markers in HTML templates won\'t be replaced.', $this->pObj->extKey, 0);
+          t3lib_div::devLog( '[INFO/TEMPLATING] The plugin hasn\'t any marker array. Self defined markers in HTML templates won\'t be replaced.', $this->pObj->extKey, 0 );
         }
         return false;
       }
@@ -141,30 +141,30 @@ class tx_browser_pi1_wrapper4x
 //    }
     // Replace database marker in case of a current row
     // 110301, dwildt: 13008
-    $conf_marker = $this->pObj->objMarker->substitute_tablefield_marker($conf_marker);
+    $conf_marker = $this->pObj->objMarker->substitute_tablefield_marker( $conf_marker );
 
 
     // One dimensional array of the tsConf markers
-    $conf_oneDim_marker = t3lib_BEfunc::implodeTSParams($conf_marker);
+    $conf_oneDim_marker = t3lib_BEfunc::implodeTSParams( $conf_marker );
     // Loop through all elements (real values)
     // #i0050, 140630, dwildt, 1-
     //foreach ((array) $this->pObj->elements as $key_tableField => $value_tableField)
     // #i0050, 140630, dwildt, 1+
-    foreach ((array) $row as $key_tableField => $value_tableField)
+    foreach ( ( array ) $row as $key_tableField => $value_tableField )
     {
       // Loop through one dimensional marker array
-      foreach ((array) $conf_oneDim_marker as $key => $value)
+      foreach ( ( array ) $conf_oneDim_marker as $key => $value )
       {
         // Replace constant marker with real value
-        $value = str_replace('###' . strtoupper($key_tableField) . '###', $value_tableField, $value);
+        $value = str_replace( '###' . strtoupper( $key_tableField ) . '###', $value_tableField, $value );
         // cHash marker
-        $pos = strpos($value, '&###CHASH###');
-        if (!($pos === false))
+        $pos = strpos( $value, '&###CHASH###' );
+        if ( !($pos === false) )
         {
-          $str_path = str_replace('&###CHASH###', '', $value);
-          $arr_url = parse_url($str_path);
-          $cHash_md5 = $this->pObj->objZz->get_cHash($arr_url['path']);
-          $value = str_replace('&###CHASH###', '&cHash=' . $cHash_md5, $value);
+          $str_path = str_replace( '&###CHASH###', '', $value );
+          $arr_url = parse_url( $str_path );
+          $cHash_md5 = $this->pObj->objZz->get_cHash( $arr_url[ 'path' ] );
+          $value = str_replace( '&###CHASH###', '&cHash=' . $cHash_md5, $value );
         }
         // cHash marker
         // session marker
@@ -174,14 +174,14 @@ class tx_browser_pi1_wrapper4x
 //          $elements = $this->session_marker($value_arr_curr, $elements);
 //        }
         // session marker
-        $conf_oneDim_marker[$key] = $value;
+        $conf_oneDim_marker[ $key ] = $value;
       }
       // Loop through one dimensional marker array
     }
     // Loop through all elements (real values)
-    unset($conf_marker);
+    unset( $conf_marker );
     // Rebild tsConf marker
-    $conf_marker = $this->pObj->objTyposcript->oneDim_to_tree($conf_oneDim_marker);
+    $conf_marker = $this->pObj->objTyposcript->oneDim_to_tree( $conf_oneDim_marker );
     // #12472, 110124, dwildt
     //////////////////////////////////////////////////////////
     //
@@ -189,21 +189,21 @@ class tx_browser_pi1_wrapper4x
     // 130104, dwildt, 1-
 //    foreach((array) $conf_marker as $key_marker => $arr_marker)
     // 130104, dwildt, 1+
-    foreach (array_keys((array) $conf_marker) as $key_marker)
+    foreach ( array_keys( ( array ) $conf_marker ) as $key_marker )
     {
-      if (substr($key_marker, -1, 1) == '.')
+      if ( substr( $key_marker, -1, 1 ) == '.' )
       {
         // I.e. $key_marker is 'title.', but we like the marker name without any dot
-        $str_marker = substr($key_marker, 0, strlen($key_marker) - 1);
-        $coa_name = $conf_marker[$str_marker];
-        if (empty($coa_name))
+        $str_marker = substr( $key_marker, 0, strlen( $key_marker ) - 1 );
+        $coa_name = $conf_marker[ $str_marker ];
+        if ( empty( $coa_name ) )
         {
           $coa_name = 'TEXT';
         }
-        $coa_conf = $conf_marker[$str_marker . '.'];
-        $value = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
-        $hashKeyMarker = '###' . strtoupper($str_marker) . '###';
-        $markerArray[$hashKeyMarker] = $value;
+        $coa_conf = $conf_marker[ $str_marker . '.' ];
+        $value = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+        $hashKeyMarker = '###' . strtoupper( $str_marker ) . '###';
+        $markerArray[ $hashKeyMarker ] = $value;
       }
     }
     // Building the marker array for replacement
@@ -211,13 +211,13 @@ class tx_browser_pi1_wrapper4x
     //
       // AJAX
     // #9659, 101010 fsander
-    if ($this->pObj->objFlexform->bool_ajax_enabled)
+    if ( $this->pObj->objFlexform->bool_ajax_enabled )
     {
-      $markerArray['###BROWSER_ID###'] = $this->pObj->cObj->data['uid'];
-      if ($this->pObj->b_drs_template || $this->pObj->b_drs_javascript)
+      $markerArray[ '###BROWSER_ID###' ] = $this->pObj->cObj->data[ 'uid' ];
+      if ( $this->pObj->b_drs_template || $this->pObj->b_drs_javascript )
       {
-        t3lib_div::devlog('[INFO/TEMPLATING+JSS] AJAX: marker_array is extended with ###BROWSER_ID###: ' .
-                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/TEMPLATING+JSS] AJAX: marker_array is extended with ###BROWSER_ID###: ' .
+                $this->pObj->cObj->data[ 'uid' ], $this->pObj->extKey, 0 );
       }
     }
     // AJAX
@@ -226,16 +226,16 @@ class tx_browser_pi1_wrapper4x
   }
 
   /**
- * wrapAndLinkValue(): Wraps a value and links it. Method uses the COA property and API function
- *
- * @param	string		$tableField: the field name in the format table.field
- * @param	string		$value: The value, which should be wrapped
- * @param	integer		$recordId: Id of the record, which should be displayed in a single view
- * @return	string		The wrapped and linked value
- * @version 5.0.0
- * @since 2.0.0
- */
-  public function wrapAndLinkValue($tableField, $value, $recordId = 0)
+   * wrapAndLinkValue(): Wraps a value and links it. Method uses the COA property and API function
+   *
+   * @param	string		$tableField: the field name in the format table.field
+   * @param	string		$value: The value, which should be wrapped
+   * @param	integer		$recordId: Id of the record, which should be displayed in a single view
+   * @return	string		The wrapped and linked value
+   * @version 5.0.0
+   * @since 2.0.0
+   */
+  public function wrapAndLinkValue( $tableField, $value, $recordId = 0 )
   {
     static $bool_firsttime = true;
 
@@ -244,17 +244,17 @@ class tx_browser_pi1_wrapper4x
 
     $view = $this->pObj->view;
     $viewWiDot = $view . '.';
-    $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
+    $conf_view = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ];
 
     // Flag for DRS prompting
     $boolPrompt = false;
-    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_discover)
+    if ( $this->pObj->boolFirstRow && $this->pObj->b_drs_discover )
     {
       $boolPrompt = true;
     }
 
     // Get table and field name
-    list($table, $field) = explode('.', $tableField);
+    list($table, $field) = explode( '.', $tableField );
 
     // Flags for link process management
     // Only one is possible
@@ -268,12 +268,11 @@ class tx_browser_pi1_wrapper4x
     // Wrap the value with the values of the typolink array, which were setted by the user in TypoScript
     // This has priority over all others
     // Flags for link process management
-
     // Flag for list views: Is there a single view?
     $boolSingleViewExist = false;
-    if ($view == 'list')
+    if ( $view == 'list' )
     {
-      if (is_array($conf['views.']['single.'][$mode . '.']))
+      if ( is_array( $conf[ 'views.' ][ 'single.' ][ $mode . '.' ] ) )
       {
         // We are in a list and it is possible to link on a single view
         $boolSingleViewExist = true;
@@ -281,37 +280,36 @@ class tx_browser_pi1_wrapper4x
     }
 
     // Do we have a typolink configuration in the TS?
-    $tsArrTypolink = $conf['views.'][$viewWiDot][$mode . '.'][$table . '.'][$field . '.']['typolink.'];
-    if (is_array($tsArrTypolink))
+    $tsArrTypolink = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ $table . '.' ][ $field . '.' ][ 'typolink.' ];
+    if ( is_array( $tsArrTypolink ) )
     {
       // We have a typolink configuration in the TS
       $boolDoTsTypolink = true;
-      if ($boolPrompt)
+      if ( $boolPrompt )
       {
-        t3lib_div::devLog('[INFO/DISCOVER] ' . $tableField . ' has a local typolink array.', $this->pObj->extKey, 0);
+        t3lib_div::devLog( '[INFO/DISCOVER] ' . $tableField . ' has a local typolink array.', $this->pObj->extKey, 0 );
       }
     }
     // Do we have a typolink configuration in the TS?
-
     // Should we set in list views an jssAlert, if there isn't a single view?
-    if ($view == 'list')
+    if ( $view == 'list' )
     {
       // We have a list view
-      if (in_array($tableField, $this->pObj->arrLinkToSingle))
+      if ( in_array( $tableField, $this->pObj->arrLinkToSingle ) )
       {
         // There should be a link to a single view
-        $lDisplayList = $conf['views.'][$viewWiDot][$mode . '.']['displayList.'];
-        if (!is_array($lDisplayList))
+        $lDisplayList = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ 'displayList.' ];
+        if ( !is_array( $lDisplayList ) )
         {
-          $lDisplayList = $conf['displayList.'];
+          $lDisplayList = $conf[ 'displayList.' ];
         }
-        $boolDoJssAlert = $lDisplayList['display.']['jssAlert'];
+        $boolDoJssAlert = $lDisplayList[ 'display.' ][ 'jssAlert' ];
       }
     }
 
     // Prepaire booleans for the link process management
     $arr_prompt_drs = null;
-    switch (true)
+    switch ( true )
     {
       // 110831, dwildt-
 //      case( empty ( $value ) ) :
@@ -328,10 +326,10 @@ class tx_browser_pi1_wrapper4x
       case($view == 'list') :
         // Current view is a list view
         $arr_prompt_drs[] = '$view == \'list\'';
-        switch (true)
+        switch ( true )
         {
           // Is the field an element in the array linkToSingle?
-          case(!in_array($tableField, $this->pObj->arrLinkToSingle)):
+          case(!in_array( $tableField, $this->pObj->arrLinkToSingle )):
             // The value shouldn't get any link to a single view
             // There isn't any link to set
             $arr_prompt_drs[] = '!in_array($tableField, $this->pObj->arrLinkToSingle)';
@@ -343,7 +341,7 @@ class tx_browser_pi1_wrapper4x
           default:
             $arr_prompt_drs[] = 'default';
             // Link to a single view
-            switch (true)
+            switch ( true )
             {
               case($boolSingleViewExist):
                 // There is a single view, link to it!
@@ -356,7 +354,7 @@ class tx_browser_pi1_wrapper4x
               default:
                 // There isn't any single view, link to a javascript alert?
                 $arr_prompt_drs[] = 'default';
-                switch (true)
+                switch ( true )
                 {
                   case($boolDoJssAlert):
                     // Link to a javascript alert
@@ -394,11 +392,11 @@ class tx_browser_pi1_wrapper4x
       // Current view is a single view
       default:
         // ERROR: undefined case!
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
-          t3lib_div::devLog('[ERROR/DRS] Method wrapAndLinkValue() has an undefined case in \'Prepaire process management\'.', $this->pObj->extKey, 3);
-          t3lib_div::devlog('[HELP/DRS] Please contact the developer:<br />' . $this->pObj->developer_contact, $this->pObj->extKey, 1);
-          t3lib_div::devLog('[WARN/DRS] ' . $tableField . ' will be wrapped not proper probably.', $this->pObj->extKey, 2);
+          t3lib_div::devLog( '[ERROR/DRS] Method wrapAndLinkValue() has an undefined case in \'Prepaire process management\'.', $this->pObj->extKey, 3 );
+          t3lib_div::devlog( '[HELP/DRS] Please contact the developer:<br />' . $this->pObj->developer_contact, $this->pObj->extKey, 1 );
+          t3lib_div::devLog( '[WARN/DRS] ' . $tableField . ' will be wrapped not proper probably.', $this->pObj->extKey, 2 );
         }
         $arr_prompt_drs[] = 'default';
         break;
@@ -412,12 +410,12 @@ class tx_browser_pi1_wrapper4x
       // csv export
     // #29370, 110831, dwildt+
     // Don't link to a single view in case of csv export
-    switch ($this->pObj->objExport->str_typeNum)
+    switch ( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
-        if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_export)
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div::devlog('[INFO/EXPORT] Don\'t link to a single view. All booleans are set to false!', $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/EXPORT] Don\'t link to a single view. All booleans are set to false!', $this->pObj->extKey, 0 );
         }
         $boolDoNotLink = false;
         $boolDoJssAlert = false;
@@ -433,18 +431,18 @@ class tx_browser_pi1_wrapper4x
     //
       // DRS - Performance
 
-    if ($bool_firsttime)
+    if ( $bool_firsttime )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'After prepaire link process');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After prepaire link process' );
     }
     // DRS - Performance
     //////////////////////////////////////////////////////////////
     //
       // If we need it, set the singlePid
 
-    if ($boolDoLinkToSingle)
+    if ( $boolDoLinkToSingle )
     {
       $singlePid = $this->pObj->objZz->get_singlePid_for_listview();
       $this->pObj->singlePid = $singlePid;
@@ -459,59 +457,59 @@ class tx_browser_pi1_wrapper4x
 
     // COA default type
     // Is there a COA array in the TypoScript setup?
-    if (is_array($conf['views.'][$viewWiDot][$mode . '.'][$table . '.'][$field . '.']))
+    if ( is_array( $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ $table . '.' ][ $field . '.' ] ) )
     {
       // Get the COA type, set it to 'TEXT', if there isn't any value
-      $lCObjType = $conf['views.'][$viewWiDot][$mode . '.'][$table . '.'][$field];
-      if (!$lCObjType)
+      $lCObjType = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ $table . '.' ][ $field ];
+      if ( !$lCObjType )
       {
         $lCObjType = 'TEXT';
       }
       // Get the COA array
-      $lConfCObj['10.'] = $conf['views.'][$viewWiDot][$mode . '.'][$table . '.'][$field . '.'];
+      $lConfCObj[ '10.' ] = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ $table . '.' ][ $field . '.' ];
     }
     // Is there a COA array in the TypoScript setup?
     ///////////////////////////////////
     //
       // Get the local or global autoconfig array - #9879
 
-    $lAutoconf = $conf_view['autoconfig.'];
+    $lAutoconf = $conf_view[ 'autoconfig.' ];
     $view_path = $viewWiDot . $mode;
-    if (!is_array($lAutoconf))
+    if ( !is_array( $lAutoconf ) )
     {
-      if ($bool_firsttime)
+      if ( $bool_firsttime )
       {
-        if ($this->pObj->b_drs_sql)
+        if ( $this->pObj->b_drs_sql )
         {
-          t3lib_div::devlog('[INFO/SQL] views.' . $view_path . ' hasn\'t any autoconf array.<br />
-            We take the global one.', $this->pObj->extKey, 0);
+          t3lib_div::devlog( '[INFO/SQL] views.' . $view_path . ' hasn\'t any autoconf array.<br />
+            We take the global one.', $this->pObj->extKey, 0 );
         }
       }
       $view_path = null;
-      $lAutoconf = $conf['autoconfig.'];
+      $lAutoconf = $conf[ 'autoconfig.' ];
     }
     // Get the local or global autoconfig array - #9879
 
-    $lConfCObj['10'] = $lCObjType;
-    $lConfCObj['10.']['value'] = $value;
-    if ($lAutoconf['marker.']['typoScript.']['replacement'])
+    $lConfCObj[ '10' ] = $lCObjType;
+    $lConfCObj[ '10.' ][ 'value' ] = $value;
+    if ( $lAutoconf[ 'marker.' ][ 'typoScript.' ][ 'replacement' ] )
     {
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
+      if ( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
         $prompt = 'Replacement for markers in TypoScript is activated.';
-        t3lib_div::devLog('[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devLog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you don\'t want a replacement, please configure ' .
                 $view_path . 'autoconfig.marker.typoScript.replacement.';
-        t3lib_div::devLog('[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1);
-        $prompt = '$lConfCObj: ' . var_export($lConfCObj, true);
-        t3lib_div::devLog('[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devLog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
+        $prompt = '$lConfCObj: ' . var_export( $lConfCObj, true );
+        t3lib_div::devLog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      if (!isset($this->pObj->elements))
+      if ( !isset( $this->pObj->elements ) )
       {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_warn)
+        if ( $this->pObj->boolFirstRow && $this->pObj->b_drs_warn )
         {
           $prompt = '$this->pObj->elements isn\'t set!';
-          t3lib_div::devLog('[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 2);
+          t3lib_div::devLog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 2 );
         }
       }
       // #44316, 130104, dwildt, 1-
@@ -523,19 +521,19 @@ class tx_browser_pi1_wrapper4x
 // Doesn't process children proper
 //if( $GLOBALS['TSFE']->id == 1278 )
 //{
-      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker($lConfCObj);
+      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
 //}
       //Replace all ###MARKER### in Typoscript with its values.
     }
-    if (!$lAutoconf['marker.']['typoScript.']['replacement'])
+    if ( !$lAutoconf[ 'marker.' ][ 'typoScript.' ][ 'replacement' ] )
     {
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
+      if ( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
         $prompt = 'Replacement for markers in TypoScript is deactivated.';
-        t3lib_div::devLog('[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devLog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you want a replacement, please configure ' .
                 $view_path . 'autoconfig.marker.typoScript.replacement.';
-        t3lib_div::devLog('[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1);
+        t3lib_div::devLog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
       }
     }
 
@@ -545,24 +543,24 @@ class tx_browser_pi1_wrapper4x
     //
       // DRS - Performance
 
-    if ($bool_firsttime)
+    if ( $bool_firsttime )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'After COA process');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After COA process' );
     }
     // DRS - Performance
     //////////////////////////////////////////////////////////////
     //
       // Process management
 
-    switch (true)
+    switch ( true )
     {
       case($boolDoTsTypolink):
         // There is a typolink array in the TS of the user. This has priority over all others
-        if ($boolPrompt)
+        if ( $boolPrompt )
         {
-          t3lib_div::devLog('[INFO/DISCOVER] ' . $tableField . ' has a local typolink array.', $this->pObj->extKey, 0);
+          t3lib_div::devLog( '[INFO/DISCOVER] ' . $tableField . ' has a local typolink array.', $this->pObj->extKey, 0 );
         }
         break;
       case($boolDoLinkToSingle):
@@ -571,30 +569,30 @@ class tx_browser_pi1_wrapper4x
         // #8368
         $this->pObj->objZz->advanced_remove_piVars_filter();
         // We have to set the link to the single view
-        if ($boolPrompt)
+        if ( $boolPrompt )
         {
-          t3lib_div::devLog('[INFO/DISCOVER] ' . $tableField . ' gets a link to single view.', $this->pObj->extKey, 0);
+          t3lib_div::devLog( '[INFO/DISCOVER] ' . $tableField . ' gets a link to single view.', $this->pObj->extKey, 0 );
         }
         // Building the URI parameters
         $additionalParams = '';
 
         // Alias for showUid? #9599
-        if (empty($this->pObj->piVar_alias_showUid))
+        if ( empty( $this->pObj->piVar_alias_showUid ) )
         {
-          $this->pObj->piVars['showUid'] = $recordId;
+          $this->pObj->piVars[ 'showUid' ] = $recordId;
         }
-        if (!empty($this->pObj->piVar_alias_showUid))
+        if ( !empty( $this->pObj->piVar_alias_showUid ) )
         {
-          unset($this->pObj->piVars['showUid']);
-          $this->pObj->objZz->tmp_piVars['showUid'] = null;
-          $this->pObj->piVars[$this->pObj->piVar_alias_showUid] = $recordId;
+          unset( $this->pObj->piVars[ 'showUid' ] );
+          $this->pObj->objZz->tmp_piVars[ 'showUid' ] = null;
+          $this->pObj->piVars[ $this->pObj->piVar_alias_showUid ] = $recordId;
         }
         // Alias for showUid? #9599
 
-        foreach ((array) $this->pObj->piVars as $paramKey => $paramValue)
+        foreach ( ( array ) $this->pObj->piVars as $paramKey => $paramValue )
         {
           // 110807, dwildt +
-          if (!empty($paramValue))
+          if ( !empty( $paramValue ) )
           {
             $additionalParams .= '&' . $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
           }
@@ -604,16 +602,16 @@ class tx_browser_pi1_wrapper4x
         }
 
         // #32676, 111218, dwildt+
-        if (count($conf['views.'][$viewWiDot]) > 1)
+        if ( count( $conf[ 'views.' ][ $viewWiDot ] ) > 1 )
         {
           // Get the key of the first view
-          reset($this->pObj->conf['views.'][$viewWiDot]);
-          $firstKeyWiDot = key($this->pObj->conf['views.'][$viewWiDot]);
-          $firstKeyWoDot = substr($firstKeyWiDot, 0, strlen($firstKeyWiDot) - 1);
+          reset( $this->pObj->conf[ 'views.' ][ $viewWiDot ] );
+          $firstKeyWiDot = key( $this->pObj->conf[ 'views.' ][ $viewWiDot ] );
+          $firstKeyWoDot = substr( $firstKeyWiDot, 0, strlen( $firstKeyWiDot ) - 1 );
           // Get the key of the first view
           //var_dump( __METHOD__ , __LINE__ , $this->pObj->piVar_mode, $firstKeyWoDot );
           // Add the parameter mode
-          if ($this->pObj->piVar_mode != $firstKeyWoDot)
+          if ( $this->pObj->piVar_mode != $firstKeyWoDot )
           {
             //$this->pObj->piVars['mode'] = $this->pObj->piVar_mode;
             $additionalParams .= '&' . $this->pObj->prefixId . '[mode]=' . $this->pObj->piVar_mode;
@@ -622,89 +620,87 @@ class tx_browser_pi1_wrapper4x
           //var_dump( __METHOD__ , __LINE__ , $additionalParams );
         }
         // #32676, 111218, dwildt+
-
-
         // Building the typolink array
-        if (is_array($lConfCObj['10.']['typolink.']))
+        if ( is_array( $lConfCObj[ '10.' ][ 'typolink.' ] ) )
         {
-          if ($this->pObj->b_drs_templating && $this->pObj->boolFirstRow)
+          if ( $this->pObj->b_drs_templating && $this->pObj->boolFirstRow )
           {
-            t3lib_div::devLog('[WARN/TEMPLATING] The array 10.typolink will be overriden!', $this->pObj->extKey, 2);
+            t3lib_div::devLog( '[WARN/TEMPLATING] The array 10.typolink will be overriden!', $this->pObj->extKey, 2 );
           }
         }
-        $lConfCObj['10.']['typolink.']['parameter'] = $singlePid;
+        $lConfCObj[ '10.' ][ 'typolink.' ][ 'parameter' ] = $singlePid;
         // #54983, 140624, dwildt, 2-
         //$cHash_calc = $this->pObj->objZz->get_cHash('&id=' . $singlePid . $additionalParams);
         //$lConfCObj['10.']['typolink.']['additionalParams'] = $additionalParams . '&cHash=' . $cHash_calc;
         // #54983, 140624, dwildt, 1+
-        $lConfCObj['10.']['typolink.']['additionalParams'] = $additionalParams;
+        $lConfCObj[ '10.' ][ 'typolink.' ][ 'additionalParams' ] = $additionalParams;
         // #9659, 101010 fsander
-        $lConfCObj['10.']['typolink.']['ATagParams'] = 'class="linktosingle"';
+        $lConfCObj[ '10.' ][ 'typolink.' ][ 'ATagParams' ] = 'class="linktosingle"';
         // #54983, 140624, dwildt, 1+
-        $lConfCObj['10.']['typolink.']['useCacheHash'] = '1';
+        $lConfCObj[ '10.' ][ 'typolink.' ][ 'useCacheHash' ] = '1';
 
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_warn)
+        if ( $this->pObj->boolFirstRow && $this->pObj->b_drs_warn )
         {
-          if (!isset($this->pObj->elements))
+          if ( !isset( $this->pObj->elements ) )
           {
-            t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
+            t3lib_div::devLog( '[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2 );
           }
         }
         // #44316, 130104, dwildt, 1-
 //        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
         // #44316, 130104, dwildt, 1+
-        $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker($lConfCObj);
+        $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
         // Replace all ###MARKER### in Typoscript with its values.
         // Recover piVars, if they weren't used in the realUrl path
-        if ($this->pObj->objZz->tmp_piVars)
+        if ( $this->pObj->objZz->tmp_piVars )
         {
           $this->pObj->piVars = $this->pObj->objZz->tmp_piVars;
-          if ($this->pObj->b_drs_templating && $this->pObj->boolFirstRow)
+          if ( $this->pObj->b_drs_templating && $this->pObj->boolFirstRow )
           {
-            $str_prompt = implode('], piVars[', array_keys($this->pObj->piVars));
+            $str_prompt = implode( '], piVars[', array_keys( $this->pObj->piVars ) );
             $str_prompt = 'piVars[' . $str_prompt . ']';
-            t3lib_div::devLog('[INFO/TEMPLATING] piVars are recovered:<br />
-              ' . $str_prompt . '.', $this->pObj->extKey, 0);
+            t3lib_div::devLog( '[INFO/TEMPLATING] piVars are recovered:<br />
+              ' . $str_prompt . '.', $this->pObj->extKey, 0 );
           }
-          unset($this->pObj->objZz->tmp_piVars);
+          unset( $this->pObj->objZz->tmp_piVars );
         }
         // Recover piVars, if they weren't used in the realUrl path
         break;
       case($boolDoJssAlert):
         // There is no single view. We have to set a link to a javascript alert
-        if ($boolPrompt)
+        if ( $boolPrompt )
         {
-          t3lib_div::devLog('[INFO/DISCOVER] ' . $tableField . ' gets a link with a javascript alert: No single view!', $this->pObj->extKey, 0);
+          t3lib_div::devLog( '[INFO/DISCOVER] ' . $tableField . ' gets a link with a javascript alert: No single view!', $this->pObj->extKey, 0 );
         }
-        $promptJSS = $this->pObj->pi_getLL('error_views_single_noview');
-        $promptJSS = t3lib_div::slashJS($promptJSS, false, "'");
+        $promptJSS = $this->pObj->pi_getLL( 'error_views_single_noview' );
+        $promptJSS = t3lib_div::slashJS( $promptJSS, false, "'" );
         // Bugfix #8589
         //$promptJSS = '\''.$promptJSS.'\'';
-        $promptJSS = rawurlencode('\'' . $promptJSS . '\'');
+        $promptJSS = rawurlencode( '\'' . $promptJSS . '\'' );
         // Bugfix #8589
         $aHrefJSSalert = '<a href="javascript:alert(' . $promptJSS . ')">';
         // Has COA array a wrap property?
-        switch (true)
+        switch ( true )
         {
-          case($lConfCObj['10.']['wrap']):
+          case($lConfCObj[ '10.' ][ 'wrap' ]):
             // There is a wrap
             // WARNING: Possible Error! If user changed the default sign '|' in TS
-            $arrLWrap = explode('|', $lConfCObj['10.']['wrap']);
+            $arrLWrap = explode( '|', $lConfCObj[ '10.' ][ 'wrap' ] );
             // Insert the javascript alert wrap
-            $lConfCObj['10.']['wrap'] = trim($arrLWrap[0]) . $aHrefJSSalert . '|</a>' . trim($arrLWrap[1]);
+            $lConfCObj[ '10.' ][ 'wrap' ] = trim( $arrLWrap[ 0 ] ) . $aHrefJSSalert . '|</a>' . trim( $arrLWrap[ 1 ] );
             break;
           default:
             // There isn't any wrap
             // Add the javascript alert wrap
-            $lConfCObj['10.']['wrap'] = $aHrefJSSalert . '|</a>';
+            $lConfCObj[ '10.' ][ 'wrap' ] = $aHrefJSSalert . '|</a>';
             break;
         }
         break;
       case($boolDoNotLink):
         // We don't have to process any link
-        if ($boolPrompt)
+        if ( $boolPrompt )
         {
-          t3lib_div::devLog('[INFO/DISCOVER] ' . $tableField . ' don\'t get any link.', $this->pObj->extKey, 0);
+          t3lib_div::devLog( '[INFO/DISCOVER] ' . $tableField . ' don\'t get any link.', $this->pObj->extKey, 0 );
         }
         break;
       default:
@@ -724,11 +720,11 @@ class tx_browser_pi1_wrapper4x
     //
       // DRS - Performance
 
-    if ($bool_firsttime)
+    if ( $bool_firsttime )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'After process management');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After process management' );
     }
     // DRS - Performance
     //////////////////////////////////////////////////////////////
@@ -737,32 +733,32 @@ class tx_browser_pi1_wrapper4x
 
     $bool_wrap_children = false;
 //var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->arr_children_to_devide);
-    if (is_array($this->pObj->arr_children_to_devide))
+    if ( is_array( $this->pObj->arr_children_to_devide ) )
     {
-      if (in_array($tableField, $this->pObj->arr_children_to_devide))
+      if ( in_array( $tableField, $this->pObj->arr_children_to_devide ) )
       {
         $bool_wrap_children = true;
       }
     }
-    if ($bool_wrap_children)
+    if ( $bool_wrap_children )
     {
-      $value = $this->wrapAndLinkValue_Children($value, $lConfCObj, $ext = '');
+      $value = $this->wrapAndLinkValue_Children( $value, $lConfCObj, $ext = '' );
     }
-    if (!$bool_wrap_children)
+    if ( !$bool_wrap_children )
     {
       // $ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
-      $value = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext = ''), false);
+      $value = $this->general_stdWrap( $this->pObj->local_cObj->COBJ_ARRAY( $lConfCObj, $ext = '' ), false );
     }
     // general_stdWrap
     //////////////////////////////////////////////////////////////
     //
       // DRS - Performance
 
-    if ($bool_firsttime)
+    if ( $bool_firsttime )
     {
       // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log($debugTrailLevel, 'After general stdWrap');
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After general stdWrap' );
     }
     // DRS - Performance
 
@@ -774,27 +770,27 @@ class tx_browser_pi1_wrapper4x
   }
 
   /**
- * wrapAndLinkValue_Children: Wraps the values and links of children records. Method is necessary because of the
- *                            workflow of the browser. Children records became a string. This method enables, to
- *                            wrap each child in the string seperately.
- *
- * @param	string		$xsv_value: Variable seperated values, which should be wrapped
- * @param	array		$lConfCObj: TypoScript configuration array
- * @param	string		$ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
- * @return	string		The wrapped and linked children values
- */
-  private function wrapAndLinkValue_Children($xsv_values, $lConfCObj, $ext)
+   * wrapAndLinkValue_Children: Wraps the values and links of children records. Method is necessary because of the
+   *                            workflow of the browser. Children records became a string. This method enables, to
+   *                            wrap each child in the string seperately.
+   *
+   * @param	string		$xsv_value: Variable seperated values, which should be wrapped
+   * @param	array		$lConfCObj: TypoScript configuration array
+   * @param	string		$ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
+   * @return	string		The wrapped and linked children values
+   */
+  private function wrapAndLinkValue_Children( $xsv_values, $lConfCObj, $ext )
   {
 
     //////////////////////////////////////////////////////////////
     //
     // Get the children devider configuration
 
-    if ($this->pObj->objTyposcript->str_sqlDeviderDisplay == false)
+    if ( $this->pObj->objTyposcript->str_sqlDeviderDisplay == false )
     {
       $this->pObj->objTyposcript->set_confSqlDevider();
     }
-    if ($this->pObj->objTyposcript->str_sqlDeviderWorkflow == false)
+    if ( $this->pObj->objTyposcript->str_sqlDeviderWorkflow == false )
     {
       $this->pObj->objTyposcript->set_confSqlDevider();
     }
@@ -806,13 +802,13 @@ class tx_browser_pi1_wrapper4x
     //
     // RETURN. We have the default TS configuration only
 
-    if (count($lConfCObj['10.']) < 2)
+    if ( count( $lConfCObj[ '10.' ] ) < 2 )
     {
       // Remove the workflow devider
-      $xsv_values = str_replace($str_sqlDeviderWorkflow, '', $xsv_values);
+      $xsv_values = str_replace( $str_sqlDeviderWorkflow, '', $xsv_values );
       // Replace value with value with removed workflow deviders
-      $lConfCObj['10.']['value'] = $xsv_values;
-      $value = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext), false);
+      $lConfCObj[ '10.' ][ 'value' ] = $xsv_values;
+      $value = $this->general_stdWrap( $this->pObj->local_cObj->COBJ_ARRAY( $lConfCObj, $ext ), false );
       return $value;
     }
     // RETURN. We have the default TS configuration only
@@ -822,17 +818,17 @@ class tx_browser_pi1_wrapper4x
     // Examples:
     //   $xsv_values: news, ;|;jobs, ;|;Juridat
 
-    $arr_values = explode($str_devider, $xsv_values);
+    $arr_values = explode( $str_devider, $xsv_values );
     $arr_confCObj = array();
-    foreach ((array) $arr_values as $key => $value)
+    foreach ( ( array ) $arr_values as $key => $value )
     {
       // Get for every child the TS configuration
-      $arr_confCObj[$key] = $this->pObj->objZz->children_tsconf_recurs($key, $lConfCObj, $str_devider);
+      $arr_confCObj[ $key ] = $this->pObj->objZz->children_tsconf_recurs( $key, $lConfCObj, $str_devider );
 
       // 010810, fsander, #8434
       // Remove outerWrap but safe it first for later processing
-      $finalConfCObj['outerWrap'] = $lConfCObj['10.']['outerWrap'];
-      unset($arr_confCObj[$key]['10.']['outerWrap']);
+      $finalConfCObj[ 'outerWrap' ] = $lConfCObj[ '10.' ][ 'outerWrap' ];
+      unset( $arr_confCObj[ $key ][ '10.' ][ 'outerWrap' ] );
       // Remove outerWrap but safe it first for later processing
       // 010810, fsander, #8434
     }
@@ -842,9 +838,9 @@ class tx_browser_pi1_wrapper4x
     // general_stdWrap for each child
 
     $arr_values = array();
-    foreach ((array) $arr_confCObj as $lConfCObj)
+    foreach ( ( array ) $arr_confCObj as $lConfCObj )
     {
-      $str_value = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext), false);
+      $str_value = $this->general_stdWrap( $this->pObj->local_cObj->COBJ_ARRAY( $lConfCObj, $ext ), false );
       $arr_values[] = $str_value;
     }
     // general_stdWrap for each child
@@ -852,24 +848,24 @@ class tx_browser_pi1_wrapper4x
     //
     // Implode the result array
 
-    $value = implode($str_sqlDeviderDisplay, $arr_values);
+    $value = implode( $str_sqlDeviderDisplay, $arr_values );
     // Implode the result array
     // 010810, fsander, #8434
     // Add outerWrap to the final result
-    $value = $this->pObj->local_cObj->stdWrap($value, $finalConfCObj);
+    $value = $this->pObj->local_cObj->stdWrap( $value, $finalConfCObj );
     // 010810, fsander, #8434
     return $value;
   }
 
   /**
- * Wrap images with the TYPO3 stdWrap method
- *
- * @param	array		$tsImage : the typoscript array of an image
- * @return	string		The wrapped image(s)
- * @version 4.5.0
- * @since 1.0
- */
-  public function wrapImage($tsImage)
+   * Wrap images with the TYPO3 stdWrap method
+   *
+   * @param	array		$tsImage : the typoscript array of an image
+   * @return	string		The wrapped image(s)
+   * @version 6.0.0
+   * @since 1.0
+   */
+  public function wrapImage( $tsImage )
   {
 
     static $bool_first = true;
@@ -880,37 +876,37 @@ class tx_browser_pi1_wrapper4x
     $viewWiDot = $view . '.';
 
     // If global array $handleAs has an uploadfolder overwrite $this->pObj->uploadFolder
-    if ($this->pObj->arrHandleAs['uploadfolder']['image'])
+    if ( $this->pObj->arrHandleAs[ 'uploadfolder' ][ 'image' ] )
     {
       // DRS - Development Reporting System
-      if ($bool_first)
+      if ( $bool_first )
       {
-        if ($this->pObj->b_drs_discover && $this->pObj->uploadFolder)
+        if ( $this->pObj->b_drs_discover && $this->pObj->uploadFolder )
         {
-          t3lib_div::devLog('[WARN/DISCOVER] The path to the upload folder ' . $this->pObj->uploadFolder . ' is overriden by Autodiscover.', $this->pObj->extKey, 2);
-          t3lib_div::devLog('[HELP/DISCOVER] If you don\'t like it, set autoconfig.autoDiscover.items.x.setUploadFolder to false.', $this->pObj->extKey, 1);
+          t3lib_div::devLog( '[WARN/DISCOVER] The path to the upload folder ' . $this->pObj->uploadFolder . ' is overriden by Autodiscover.', $this->pObj->extKey, 2 );
+          t3lib_div::devLog( '[HELP/DISCOVER] If you don\'t like it, set autoconfig.autoDiscover.items.x.setUploadFolder to false.', $this->pObj->extKey, 1 );
         }
       }
       // DRS - Development Reporting System
-      $this->pObj->uploadFolder = $this->pObj->arrHandleAs['uploadfolder']['image'] . '/';
+      $this->pObj->uploadFolder = $this->pObj->arrHandleAs[ 'uploadfolder' ][ 'image' ] . '/';
     }
 
 
 
     // DRS - Development Reporting System
-    if ($this->pObj->b_drs_error && !$this->pObj->uploadFolder)
+    if ( $this->pObj->b_drs_error && !$this->pObj->uploadFolder )
     {
-      t3lib_div::devLog('[WARN/DRS] Images should be displayed as image, but there is no upload folder.', $this->pObj->extKey, 2);
-      t3lib_div::devLog('[HELP/DRS] Isn\'t configured: plugin.' . $this->pObj->prefixId . '.autoconfig.autoDiscover.items.image.setUploadFolder', $this->pObj->extKey, 1);
-      t3lib_div::devLog('[HELP/DRS] Did you configured plugin.' . $this->pObj->prefixId . '.upload?', $this->pObj->extKey, 1);
+      t3lib_div::devLog( '[WARN/DRS] Images should be displayed as image, but there is no upload folder.', $this->pObj->extKey, 2 );
+      t3lib_div::devLog( '[HELP/DRS] Isn\'t configured: plugin.' . $this->pObj->prefixId . '.autoconfig.autoDiscover.items.image.setUploadFolder', $this->pObj->extKey, 1 );
+      t3lib_div::devLog( '[HELP/DRS] Did you configured plugin.' . $this->pObj->prefixId . '.upload?', $this->pObj->extKey, 1 );
       $tsPath = $this->pObj->prefixId . 'views.' . $viewWiDot . $mode . '.upload';
-      t3lib_div::devLog('[HELP/DRS] Did you configured ' . $tsPath . '?', $this->pObj->extKey, 1);
+      t3lib_div::devLog( '[HELP/DRS] Did you configured ' . $tsPath . '?', $this->pObj->extKey, 1 );
     }
     // DRS - Development Reporting System
 
 
 
-    switch ($view)
+    switch ( $view )
     {
       case('list'):
         $tsDisplay = 'displayList';
@@ -920,23 +916,23 @@ class tx_browser_pi1_wrapper4x
         break;
     }
 
-    if (is_array($this->pObj->conf['views.'][$view . '.'][$mode . '.'][$tsDisplay . '.']))
+    if ( is_array( $this->pObj->conf[ 'views.' ][ $view . '.' ][ $mode . '.' ][ $tsDisplay . '.' ] ) )
     {
-      $lConf = $this->pObj->conf['views.'][$view . '.'][$mode . '.'][$tsDisplay . '.'];
+      $lConf = $this->pObj->conf[ 'views.' ][ $view . '.' ][ $mode . '.' ][ $tsDisplay . '.' ];
     }
     else
     {
-      $lConf = $this->pObj->conf[$tsDisplay . '.'];
+      $lConf = $this->pObj->conf[ $tsDisplay . '.' ];
     }
 
 
 
     // dwildt, 101201, #11204
-    if (empty($tsImage['image']))
+    if ( empty( $tsImage[ 'image' ] ) )
     {
       // dwildt, 101201, #11204
       // return false;
-      if (empty($lConf['image.']['file']))
+      if ( empty( $lConf[ 'image.' ][ 'file' ] ) )
       {
         return false;
       }
@@ -946,97 +942,97 @@ class tx_browser_pi1_wrapper4x
 
 
     $imageNum = 1;
-    if (!empty($lConf['imageCount']))
+    if ( !empty( $lConf[ 'imageCount' ] ) )
     {
-      $imageNum = $lConf['imageCount'];
+      $imageNum = $lConf[ 'imageCount' ];
     }
     // #43108, 130222, dwildt, 1-
 //    $imageNum = t3lib_div::intInRange($imageNum, 0, 100);
     // #43108, 130222, dwildt, 9+
-    switch (true)
+    switch ( true )
     {
       // #49495, 130702, dwildt, 1-
       //case( $this->typo3Version < 6000000 ):
       // #49495, 130702, dwildt, 1+
-      case( $this->pObj->typo3Version < 6000000 ):
-        $imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+      case( $this->pObj->getTypo3Version() < 6000000 ):
+        $imageNum = t3lib_div::intInRange( $imageNum, 0, 100 );
         break;
       default:
-        $imageNum = t3lib_utility_Math::forceIntegerInRange($imageNum, 0, 100);
+        $imageNum = t3lib_utility_Math::forceIntegerInRange( $imageNum, 0, 100 );
         break;
     }
     // #43108, 130222, dwildt, 9+
     $theImgCode = '';
-    $imgs = t3lib_div::trimExplode(',', $tsImage['image'], 1);
-    $imgsCaptions = explode(chr(10), $tsImage['imagecaption']);
-    $imgsAltTexts = explode(chr(10), $tsImage['imagealttext']);
-    $imgsTitleTexts = explode(chr(10), $tsImage['imagetitletext']);
+    $imgs = t3lib_div::trimExplode( ',', $tsImage[ 'image' ], 1 );
+    $imgsCaptions = explode( chr( 10 ), $tsImage[ 'imagecaption' ] );
+    $imgsAltTexts = explode( chr( 10 ), $tsImage[ 'imagealttext' ] );
+    $imgsTitleTexts = explode( chr( 10 ), $tsImage[ 'imagetitletext' ] );
 
 
-    reset($imgs);
+    reset( $imgs );
 
     $boolRemoveFirstImage = false;
-    if ((count($imgs) > 1 && $lConf['firstImageIsPreview']) && $view == 'single')
+    if ( (count( $imgs ) > 1 && $lConf[ 'firstImageIsPreview' ]) && $view == 'single' )
     {
       $boolRemoveFirstImage = true;
     }
-    if ((count($imgs) >= 1 && $lConf['forceFirstImageIsPreview']) && $view == 'single')
+    if ( (count( $imgs ) >= 1 && $lConf[ 'forceFirstImageIsPreview' ]) && $view == 'single' )
     {
       $boolRemoveFirstImage = true;
     }
-    if ($boolRemoveFirstImage)
+    if ( $boolRemoveFirstImage )
     {
-      array_shift($imgs);
-      array_shift($imgsCaptions);
-      array_shift($imgsAltTexts);
-      array_shift($imgsTitleTexts);
+      array_shift( $imgs );
+      array_shift( $imgsCaptions );
+      array_shift( $imgsAltTexts );
+      array_shift( $imgsTitleTexts );
     }
     $cc = 0;
 
-    while (list(, $val) = each($imgs))
+    while ( list(, $val) = each( $imgs ) )
     {
-      if ($cc == $imageNum)
+      if ( $cc == $imageNum )
       {
         break;
       }
-      if (!empty($val))
+      if ( !empty( $val ) )
       {
-        $lConf['image.']['altText'] = $imgsAltTexts[$cc];
-        $lConf['image.']['titleText'] = $imgsTitleTexts[$cc];
+        $lConf[ 'image.' ][ 'altText' ] = $imgsAltTexts[ $cc ];
+        $lConf[ 'image.' ][ 'titleText' ] = $imgsTitleTexts[ $cc ];
         // #9419
         //$lConf['image.']['file']      = trim($this->pObj->uploadFolder).$val;
-        $lConf['image.']['file'] = rtrim(trim($this->pObj->uploadFolder), '/') . '/' . $val;
+        $lConf[ 'image.' ][ 'file' ] = rtrim( trim( $this->pObj->uploadFolder ), '/' ) . '/' . $val;
       }
-      $currImg = $this->pObj->local_cObj->IMAGE($lConf['image.']) . $this->pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
+      $currImg = $this->pObj->local_cObj->IMAGE( $lConf[ 'image.' ] ) . $this->pObj->local_cObj->stdWrap( $imgsCaptions[ $cc ], $lConf[ 'caption_stdWrap.' ] );
       // dwildt, 101201, #11211
-      $currBoxWrap = str_replace('###IMAGE_COUNT###', $cc + 1, $lConf['imageBoxWrap.']);
-      $currImg = $this->pObj->local_cObj->stdWrap($currImg, $currBoxWrap);
+      $currBoxWrap = str_replace( '###IMAGE_COUNT###', $cc + 1, $lConf[ 'imageBoxWrap.' ] );
+      $currImg = $this->pObj->local_cObj->stdWrap( $currImg, $currBoxWrap );
       $theImgCode .= $currImg;
       $cc++;
     }
     $wrappedImage = '';
-    if ($cc)
+    if ( $cc )
     {
-      $wrappedImage = $this->pObj->local_cObj->wrap(trim($theImgCode), $lConf['imageWrapIfAny']);
+      $wrappedImage = $this->pObj->local_cObj->wrap( trim( $theImgCode ), $lConf[ 'imageWrapIfAny' ] );
     }
     else
     {
       // dwildt, 101201, #11204
-      if (!empty($lConf['image.']['file']))
+      if ( !empty( $lConf[ 'image.' ][ 'file' ] ) )
       {
-        $lConf['image.']['altText'] = $this->pObj->pi_getLL('label_noImageFile', 'There isn\'t any image available.', true);
-        $lConf['image.']['titleText'] = $this->pObj->pi_getLL('label_noImageFile', 'There isn\'t any image available.', true);
-        $lConf['image.']['file'] = $this->pObj->objZz->get_pathWoEXT($lConf['image.']['file']);
-        $currImg = $this->pObj->local_cObj->IMAGE($lConf['image.']) . $this->pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
+        $lConf[ 'image.' ][ 'altText' ] = $this->pObj->pi_getLL( 'label_noImageFile', 'There isn\'t any image available.', true );
+        $lConf[ 'image.' ][ 'titleText' ] = $this->pObj->pi_getLL( 'label_noImageFile', 'There isn\'t any image available.', true );
+        $lConf[ 'image.' ][ 'file' ] = $this->pObj->objZz->get_pathWoEXT( $lConf[ 'image.' ][ 'file' ] );
+        $currImg = $this->pObj->local_cObj->IMAGE( $lConf[ 'image.' ] ) . $this->pObj->local_cObj->stdWrap( $imgsCaptions[ $cc ], $lConf[ 'caption_stdWrap.' ] );
         // dwildt, 101201, #11211
-        $currBoxWrap = str_replace('###IMAGE_COUNT###', $cc + 1, $lConf['imageBoxWrap.']);
-        $currImg = $this->pObj->local_cObj->stdWrap($currImg, $currBoxWrap);
+        $currBoxWrap = str_replace( '###IMAGE_COUNT###', $cc + 1, $lConf[ 'imageBoxWrap.' ] );
+        $currImg = $this->pObj->local_cObj->stdWrap( $currImg, $currBoxWrap );
         $theImgCode .= $currImg;
-        $wrappedImage = $this->pObj->local_cObj->wrap(trim($theImgCode), $lConf['imageWrapIfAny']);
+        $wrappedImage = $this->pObj->local_cObj->wrap( trim( $theImgCode ), $lConf[ 'imageWrapIfAny' ] );
       }
-      if (empty($lConf['image.']['file']))
+      if ( empty( $lConf[ 'image.' ][ 'file' ] ) )
       {
-        $wrappedImage = $this->pObj->local_cObj->stdWrap($wrappedImage, $lConf['image.']['noImage_stdWrap.']);
+        $wrappedImage = $this->pObj->local_cObj->stdWrap( $wrappedImage, $lConf[ 'image.' ][ 'noImage_stdWrap.' ] );
       }
       // dwildt, 101201, #11204
     }
@@ -1047,17 +1043,17 @@ class tx_browser_pi1_wrapper4x
   }
 
   /**
- * wrapInBaseIdClass: Wrap the given content with a div-tag and the properties id and class.
- *                    id i.e    : id="c2794-tx-browser-pi1"
- *                    class i.e : class="c2794-tx-browser-pi1"
- *                    Method is added with #28562
- *
- * @param	string		$content: the content which will be wrapped
- * @return	string		the wrapped content
- * @version 4.0.0
- * @since 3.7.0
- */
-  public function wrapInBaseIdClass($content)
+   * wrapInBaseIdClass: Wrap the given content with a div-tag and the properties id and class.
+   *                    id i.e    : id="c2794-tx-browser-pi1"
+   *                    class i.e : class="c2794-tx-browser-pi1"
+   *                    Method is added with #28562
+   *
+   * @param	string		$content: the content which will be wrapped
+   * @return	string		the wrapped content
+   * @version 6.0.0
+   * @since 3.7.0
+   */
+  public function wrapInBaseIdClass( $content )
   {
     // Rendering the id.  I.e. c1149-tx-browser-pi1-list-11083102
     //                    c1149:          uid in the tt_content table / uid of the plugin
@@ -1065,30 +1061,40 @@ class tx_browser_pi1_wrapper4x
     //                    view:           list
     //                    mode:           11083102
     //                    #29042
-    $uidPlugin = 'c' . $this->pObj->cObj->data['uid'];
-    $local_prefixId = str_replace('_', '-', $this->pObj->prefixId);
-    $id = ' id="' .
-            $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"';
-    $class = ' class="' .
-            $local_prefixId . ' ' .
-            $local_prefixId . '-' . $this->pObj->view . ' ' .
-            $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '"';
+    $uidPlugin = 'c' . $this->pObj->cObj->data[ 'uid' ];
+    $local_prefixId = str_replace( '_', '-', $this->pObj->prefixId );
+    // #i0083, 140920, dwildt, 6-
+//    $id = ' id="' .
+//            $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"';
+//    $class = ' class="' .
+//            $local_prefixId . ' ' .
+//            $local_prefixId . '-' . $this->pObj->view . ' ' .
+//            $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '"';
+    // #i0083, 140920, dwildt, 1+
+    $id = ' id="' . $uidPlugin . '-' . $local_prefixId . '"';
+    $class = ' class="'
+            . 'row '
+            . $this->pObj->piVar_mode . ' '
+            . $local_prefixId . ' '
+            . $local_prefixId . '-' . $this->pObj->view . ' '
+            . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"'
+            ;
 
-    $wrap['start'] = '<div' . $id . $class . '>';
-    $wrap['end'] = '</div>';
+    $wrap[ 'start' ] = '<div' . $id . $class . '>';
+    $wrap[ 'end' ] = '</div>';
 
-    $content = $wrap['start'] . $content . $wrap['end'];
+    $content = $wrap[ 'start' ] . $content . $wrap[ 'end' ];
 
     return $content;
   }
 
   /**
- * Wrap documents with the TYPO3 filelink method
- *
- * @param	string		$documents : the list of documents
- * @return	string		The wrapped document(s)
- */
-  public function wrapDocument($documents)
+   * Wrap documents with the TYPO3 filelink method
+   *
+   * @param	string		$documents : the list of documents
+   * @return	string		The wrapped document(s)
+   */
+  public function wrapDocument( $documents )
   {
 
     $mode = $this->pObj->piVar_mode;
@@ -1096,62 +1102,62 @@ class tx_browser_pi1_wrapper4x
     $view = $this->pObj->view;
     $viewWiDot = $view . '.';
 
-    if (!$documents)
+    if ( !$documents )
     {
       return false;
     }
 
     // If global array $handleAs has an uploadfolder overwrite $this->pObj->uploadFolder
     // Bugfix #6776, dwildt, 100310
-    if ($this->pObj->arrHandleAs['uploadfolder']['document'])
+    if ( $this->pObj->arrHandleAs[ 'uploadfolder' ][ 'document' ] )
     {
-      if ($this->pObj->b_drs_discover && $this->pObj->uploadFolder)
+      if ( $this->pObj->b_drs_discover && $this->pObj->uploadFolder )
       {
-        t3lib_div::devLog('[WARN/DISCOVER] The path to the upload folder ' . $this->pObj->uploadFolder . ' is overriden by Autodiscover.', $this->pObj->extKey, 2);
-        t3lib_div::devLog('[HELP/DISCOVER] If you don\'t like it, set autoconfig.autoDiscover.items.x.setUploadFolder to FALSE.', $this->pObj->extKey, 1);
+        t3lib_div::devLog( '[WARN/DISCOVER] The path to the upload folder ' . $this->pObj->uploadFolder . ' is overriden by Autodiscover.', $this->pObj->extKey, 2 );
+        t3lib_div::devLog( '[HELP/DISCOVER] If you don\'t like it, set autoconfig.autoDiscover.items.x.setUploadFolder to FALSE.', $this->pObj->extKey, 1 );
       }
-      $this->pObj->uploadFolder = $this->pObj->arrHandleAs['uploadfolder']['document'] . '/';
+      $this->pObj->uploadFolder = $this->pObj->arrHandleAs[ 'uploadfolder' ][ 'document' ] . '/';
     }
 
-    if ($this->pObj->b_drs_error && !$this->pObj->uploadFolder)
+    if ( $this->pObj->b_drs_error && !$this->pObj->uploadFolder )
     {
-      t3lib_div::devLog('[WARN/DRS] Documents should be displayed, but there is no upload folder.', $this->pObj->extKey, 2);
-      t3lib_div::devLog('[HELP/DRS] Isn\'t configured plugin.' . $this->pObj->prefixId . '.autoconfig.autoDiscover.items.documents.setUploadFolder', $this->pObj->extKey, 1);
-      t3lib_div::devLog('[HELP/DRS] Did you configured plugin.' . $this->pObj->prefixId . '.upload?', $this->pObj->extKey, 1);
+      t3lib_div::devLog( '[WARN/DRS] Documents should be displayed, but there is no upload folder.', $this->pObj->extKey, 2 );
+      t3lib_div::devLog( '[HELP/DRS] Isn\'t configured plugin.' . $this->pObj->prefixId . '.autoconfig.autoDiscover.items.documents.setUploadFolder', $this->pObj->extKey, 1 );
+      t3lib_div::devLog( '[HELP/DRS] Did you configured plugin.' . $this->pObj->prefixId . '.upload?', $this->pObj->extKey, 1 );
       $tsPath = $this->pObj->prefixId . 'views.' . $viewWiDot . $mode . '.upload';
-      t3lib_div::devLog('[HELP] Did you configured ' . $tsPath . '?', $this->pObj->extKey, 1);
+      t3lib_div::devLog( '[HELP] Did you configured ' . $tsPath . '?', $this->pObj->extKey, 1 );
     }
 
 
-    if (is_array($this->pObj->conf['views.'][$viewWiDot][$mode . '.']['document_stdWrap.']))
+    if ( is_array( $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ 'document_stdWrap.' ] ) )
     {
-      $lConf = $this->pObj->conf['views.'][$viewWiDot][$mode . '.']['document_stdWrap.'];
+      $lConf = $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ 'document_stdWrap.' ];
     }
     else
     {
-      $lConf = $this->pObj->conf['document_stdWrap.'];
+      $lConf = $this->pObj->conf[ 'document_stdWrap.' ];
     }
 
-    $fileArr = explode(',', $documents);
-    $lConf['path'] = trim($this->pObj->uploadFolder);
-    while (list(, $val) = each($fileArr))
+    $fileArr = explode( ',', $documents );
+    $lConf[ 'path' ] = trim( $this->pObj->uploadFolder );
+    while ( list(, $val) = each( $fileArr ) )
     {
-      $filelinks .= $this->pObj->local_cObj->filelink($val, $lConf);
+      $filelinks .= $this->pObj->local_cObj->filelink( $val, $lConf );
     }
     return $filelinks;
   }
 
   /**
- * Wrap string in the format YYYY-MM-DD. It is a special method for the extension ships.
- *
- * @param	string		$string : the string in the format YYYY-MM-DD
- * @param	string		$view : list or single
- * @return	string		The wrapped document(s)
- */
-  public function wrapYYYYMMDD($specialDate)
+   * Wrap string in the format YYYY-MM-DD. It is a special method for the extension ships.
+   *
+   * @param	string		$string : the string in the format YYYY-MM-DD
+   * @param	string		$view : list or single
+   * @return	string		The wrapped document(s)
+   */
+  public function wrapYYYYMMDD( $specialDate )
   {
 
-    if (!$specialDate)
+    if ( !$specialDate )
     {
       return false;
     }
@@ -1161,53 +1167,53 @@ class tx_browser_pi1_wrapper4x
     $view = $this->pObj->view;
     $viewWiDot = $view . '.';
 
-    if ($this->pObj->conf['views.'][$viewWiDot][$mode . '.']['format.']['date'] != '')
+    if ( $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ 'format.' ][ 'date' ] != '' )
     {
-      $dateFormat = $this->pObj->conf['views.'][$viewWiDot][$mode . '.']['format.']['date'];
+      $dateFormat = $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ][ 'format.' ][ 'date' ];
     }
     else
     {
-      $dateFormat = $this->pObj->conf['format.']['date'];
+      $dateFormat = $this->pObj->conf[ 'format.' ][ 'date' ];
     }
 
-    $arrDate = explode('-', $specialDate);
-    if (!$arrDate[0] || $arrDate[0] == 0 || $arrDate[0] == '')
+    $arrDate = explode( '-', $specialDate );
+    if ( !$arrDate[ 0 ] || $arrDate[ 0 ] == 0 || $arrDate[ 0 ] == '' )
     {
       return false;
     }
-    if (!$arrDate[1] || $arrDate[1] == 0 || $arrDate[1] == '')
+    if ( !$arrDate[ 1 ] || $arrDate[ 1 ] == 0 || $arrDate[ 1 ] == '' )
     {
-      $arrDate[1] = 1;
+      $arrDate[ 1 ] = 1;
     }
-    if (!$arrDate[2] || $arrDate[2] == 0 || $arrDate[2] == '')
+    if ( !$arrDate[ 2 ] || $arrDate[ 2 ] == 0 || $arrDate[ 2 ] == '' )
     {
-      $arrDate[2] = 1;
+      $arrDate[ 2 ] = 1;
     }
 
-    return date($dateFormat, mktime(0, 0, 0, $arrDate[1], $arrDate[2], $arrDate[0]));
+    return date( $dateFormat, mktime( 0, 0, 0, $arrDate[ 1 ], $arrDate[ 2 ], $arrDate[ 0 ] ) );
   }
 
   /**
- * Wraps the given string with general_stdWrap from configuration. If $arr_tsConf is an array, $arr_tsConf will be
- * processed instead of general_stdWrap.
- *
- * @param	string		$string to wrap
- * @param	array		$arr_tsConf: Array with a TS configuration
- * @return	string		Wrapped string
- */
-  public function general_stdWrap($str, $arr_tsConf)
+   * Wraps the given string with general_stdWrap from configuration. If $arr_tsConf is an array, $arr_tsConf will be
+   * processed instead of general_stdWrap.
+   *
+   * @param	string		$string to wrap
+   * @param	array		$arr_tsConf: Array with a TS configuration
+   * @return	string		Wrapped string
+   */
+  public function general_stdWrap( $str, $arr_tsConf )
   {
-    if (is_array($arr_tsConf))
+    if ( is_array( $arr_tsConf ) )
     {
       // $arr_tsConf is an array. RETURN $str, wrapped with this TS configuration array.
-      $str = $this->pObj->local_cObj->stdWrap($str, $arr_tsConf);
+      $str = $this->pObj->local_cObj->stdWrap( $str, $arr_tsConf );
       return $str;
     }
 
-    if (is_array($this->pObj->conf['general_stdWrap.']))
+    if ( is_array( $this->pObj->conf[ 'general_stdWrap.' ] ) )
     {
       // general_stdWrap is an array. RETURN $str, wrapped with general_stdWrap.
-      $str = $this->pObj->local_cObj->stdWrap($str, $this->pObj->conf['general_stdWrap.']);
+      $str = $this->pObj->local_cObj->stdWrap( $str, $this->pObj->conf[ 'general_stdWrap.' ] );
       return $str;
     }
 
@@ -1216,37 +1222,37 @@ class tx_browser_pi1_wrapper4x
   }
 
   /**
- * Return the table summary out of the locallang_db.xml
- *
- * @param	string		view: list or single
- * @return	string		summary
- */
-  public function tableSummary($view)
+   * Return the table summary out of the locallang_db.xml
+   *
+   * @param	string		view: list or single
+   * @return	string		summary
+   */
+  public function tableSummary( $view )
   {
 
     $mode = 'mode_' . $this->pObj->piVar_mode;
 
-    $langKey = $GLOBALS['TSFE']->lang;
-    if ($langKey == 'en')
+    $langKey = $GLOBALS[ 'TSFE' ]->lang;
+    if ( $langKey == 'en' )
     {
       $langKey = 'default';
     }
 
-    $displaySummary = $this->pObj->lDisplay['table.']['summary'];
-    switch (true)
+    $displaySummary = $this->pObj->lDisplay[ 'table.' ][ 'summary' ];
+    switch ( true )
     {
       case($displaySummary):
-        $summaryLL = $this->pObj->pi_getLL($view . '_' . $mode . '_summary', '[' . $view . '_' . $mode . '_summary]');
-        switch (true)
+        $summaryLL = $this->pObj->pi_getLL( $view . '_' . $mode . '_summary', '[' . $view . '_' . $mode . '_summary]' );
+        switch ( true )
         {
           case($summaryLL == '[' . $view . '_' . $mode . '_summary]'):
-            if ($this->pObj->b_drs_localisation)
+            if ( $this->pObj->b_drs_localisation )
             {
-              t3lib_div::devlog('[WARN/LOCALLANG] ' . $view . '_' . $mode . '_summary hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
-              t3lib_div::devlog('[INFO/LOCALISATION] If you use a table it won\'t have any summary.', $this->pObj->extKey, 0);
-              t3lib_div::devlog('[INFO/LOCALISATION] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0);
+              t3lib_div::devlog( '[WARN/LOCALLANG] ' . $view . '_' . $mode . '_summary hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2 );
+              t3lib_div::devlog( '[INFO/LOCALISATION] If you use a table it won\'t have any summary.', $this->pObj->extKey, 0 );
+              t3lib_div::devlog( '[INFO/LOCALISATION] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0 );
               $prompt = 'Please configure _LOCAL_LANG.' . $langKey . '.' . $view . '_' . $mode . '_summary.';
-              t3lib_div::devlog('[HELP/LOCALLANG] ' . $prompt, $this->pObj->extKey, 1);
+              t3lib_div::devlog( '[HELP/LOCALLANG] ' . $prompt, $this->pObj->extKey, 1 );
             }
             $summary = '';
             break;
@@ -1264,29 +1270,29 @@ class tx_browser_pi1_wrapper4x
   }
 
   /**
- * Return the table caption out of the locallang_db.xml
- *
- * @param	string		view: list or single
- * @return	string		summary
- */
-  public function tableCaption($view)
+   * Return the table caption out of the locallang_db.xml
+   *
+   * @param	string		view: list or single
+   * @return	string		summary
+   */
+  public function tableCaption( $view )
   {
 
     $mode = 'mode_' . $this->pObj->piVar_mode;
 
-    $displayCaption = $this->pObj->lDisplay['table.']['caption'];
-    switch (true)
+    $displayCaption = $this->pObj->lDisplay[ 'table.' ][ 'caption' ];
+    switch ( true )
     {
       case($displayCaption):
-        $captionLL = $this->pObj->pi_getLL($view . '_' . $mode . '_caption', '[' . $view . '_' . $mode . '_caption]');
-        switch (true)
+        $captionLL = $this->pObj->pi_getLL( $view . '_' . $mode . '_caption', '[' . $view . '_' . $mode . '_caption]' );
+        switch ( true )
         {
           case($captionLL == '[' . $view . '_' . $mode . '_caption]'):
-            if ($this->pObj->b_drs_localisation)
+            if ( $this->pObj->b_drs_localisation )
             {
-              t3lib_div::devlog('[WARN/LOCALLANG] ' . $view . '_' . $mode . '_caption hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
-              t3lib_div::devlog('[INFO/LOCALISATION] If you use a table it won\'t have any caption.', $this->pObj->extKey, 0);
-              t3lib_div::devlog('[INFO/LOCALISATION] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0);
+              t3lib_div::devlog( '[WARN/LOCALLANG] ' . $view . '_' . $mode . '_caption hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2 );
+              t3lib_div::devlog( '[INFO/LOCALISATION] If you use a table it won\'t have any caption.', $this->pObj->extKey, 0 );
+              t3lib_div::devlog( '[INFO/LOCALISATION] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0 );
             }
             $caption = '';
             break;
@@ -1304,32 +1310,32 @@ class tx_browser_pi1_wrapper4x
   }
 
   /**
- * Substitute marker ###TABLE.FIELD### with the value of table.field
- *
- * @param	string		String with one or more table field markers
- * @param	array		The single record
- * @return	string		String with one ore more table field values
- */
-  public function wrapTableFields($wrapThisString, $elements)
+   * Substitute marker ###TABLE.FIELD### with the value of table.field
+   *
+   * @param	string		String with one or more table field markers
+   * @param	array		The single record
+   * @return	string		String with one ore more table field values
+   */
+  public function wrapTableFields( $wrapThisString, $elements )
   {
 
-    if (!is_array($elements))
+    if ( !is_array( $elements ) )
     {
       return $wrapThisString;
     }
     // Marker Array
     // Tecklenborg-Werft: ###TX_SHIPS_MAIN.G2_NAME### - Geschichte und Bilder
-    foreach ((array) $elements as $key => $value)
+    foreach ( ( array ) $elements as $key => $value )
     {
-      $markerArray['###' . strtoupper($key) . '###'] = $value;
+      $markerArray[ '###' . strtoupper( $key ) . '###' ] = $value;
     }
-    return $this->pObj->cObj->substituteMarkerArray($wrapThisString, $markerArray);
+    return $this->pObj->cObj->substituteMarkerArray( $wrapThisString, $markerArray );
   }
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_wrapper4x.php'])
+if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_wrapper4x.php' ] )
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_wrapper4x.php']);
+  include_once($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_wrapper4x.php' ]);
 }
 ?>

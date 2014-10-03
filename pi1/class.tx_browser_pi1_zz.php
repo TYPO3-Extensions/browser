@@ -29,7 +29,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     5.0.12
+ * @version     6.0.0
  * @since       1.0.0
  */
 
@@ -125,6 +125,9 @@ class tx_browser_pi1_zz
   // #12528, dwildt, 110125
   // [Boolean] Empty marker in TypoScript will be removed
   public $bool_advanced_3_6_0_rmMarker = false;
+
+  private $typo3Version = null;
+  // [INTEGER] Current TYPO3 version as an integer like 4007007 for 4.7.7
 
   /**
    * Constructor. The method initiate the parent object
@@ -1443,7 +1446,7 @@ class tx_browser_pi1_zz
    * @param	string		$str_params: URL parameter string like &tx_browser_pi1[showUid]=12&&tx_browser_pi1[cat]=1
    * @return	string		$cHash_md5: md5 value like d218cfedf9
    *
-   * @version   4.5.8
+   * @version   6.0.0
    * @since     2.x
    */
   function get_cHash( $str_params )
@@ -1456,7 +1459,7 @@ class tx_browser_pi1_zz
       // #49495, 130702, dwildt, 1-
       //case( $this->typo3Version < 6000000 ):
       // #49495, 130702, dwildt, 1+
-      case( $this->pObj->typo3Version < 6000000 ):
+      case( $this->pObj->getTypo3Version() < 6000000 ):
         $cHash_array = t3lib_div::cHashParams( $str_params );
         break;
       default:
@@ -1713,7 +1716,18 @@ class tx_browser_pi1_zz
    */
   function initLang()
   {
-    require_once(PATH_typo3 . 'sysext/lang/lang.php');
+    // #61520, 140911, dwildt, 1-
+    //require_once(PATH_typo3 . 'sysext/lang/lang.php');
+
+    // #61520, 140911, dwildt, 1+
+    $this->init_typo3version();
+
+    // #61520, 140911, dwildt, 6+
+    if ( $this->typo3Version < 6002000 )
+    {
+      require_once(PATH_typo3 . 'sysext/lang/lang.php');
+    }
+
     $this->pObj->lang = t3lib_div::makeInstance( 'language' );
     $this->pObj->lang->init( $GLOBALS[ 'TSFE' ]->lang );
     if ( $this->pObj->b_drs_localisation )
@@ -1721,6 +1735,21 @@ class tx_browser_pi1_zz
       t3lib_div::devlog( '[INFO/LOCALISATION] Init a language object.', $this->pObj->extKey, 0 );
       t3lib_div::devlog( '[INFO/LOCALISATION] Value of $GLOBALS[TSFE]->lang :' . $GLOBALS[ 'TSFE' ]->lang, $this->pObj->extKey, 0 );
     }
+  }
+
+  /**
+   * init_typo3version( ): Get the current TYPO3 version
+   *
+   * @internal  #61520
+   *
+   * @return    integer
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function init_typo3version()
+  {
+    // #61520, 140911, dwildt, +
+    $this->typo3Version = $this->pObj->getTypo3Version();
   }
 
   /*   * *********************************************
@@ -2208,7 +2237,7 @@ class tx_browser_pi1_zz
   public function color_swords( $value )
   {
     /**
-     * This method correspondends with tx_browser_pi1_template::resultphrase()
+     * This method corresponds with tx_browser_pi1_template::resultphrase()
      */
     // RETURN : There isn't any sword.
     if ( !is_array( $this->pObj->arr_swordPhrasesTableField ) )
@@ -2240,9 +2269,11 @@ class tx_browser_pi1_zz
       //$value = str_ireplace( $str_sword, $str_colored, $value );
       // #59729, 140620, dwildt, 3+
       $pattern = '/' . $str_sword . '(?!([^<]+)?>)/i';
+      //$pattern = '/' . $str_sword . '(?!(?:[^<]+>|[^>]+<\/a>))/is';
       $replacement = $str_colored;
       $value = preg_replace( $pattern, $replacement, $value );
     }
+//var_dump( __METHOD__, __LINE__, $value );
     return $value;
   }
 
@@ -2284,33 +2315,46 @@ class tx_browser_pi1_zz
 
     // mysql_real_escape_string
     // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/function.mysql-real-escape-string.html
-    $str_value_out = mysql_real_escape_string( $str_value );
-    switch ( $str_value_out )
+    // #61520, 140911, dwildt, 1-
+//    $str_value_out = mysql_real_escape_string( $str_value );
+    // #61520, 140911, dwildt, -
+//    switch ( $str_value_out )
+//    {
+//      case( false ):
+//        // 140705, dwildt, 3-
+////        $str_value = str_replace( '\\', null, $str_value );
+////        $str_value = str_replace( '"', null, $str_value );
+////        $str_value = str_replace( "'", null, $str_value );
+//        // 140705, dwildt, 3+
+//        $str_value = stripslashes( $str_value );
+//        $str_value = str_replace( "'", "''", $str_value );
+//        $str_value = str_replace( "\0", "[NULL]", $str_value );
+//        if ( $this->pObj->b_drs_warn )
+//        {
+//          $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
+//          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
+//          $prompt = 'This signs are removed in the given piVar: \\, ", \' manually. Maybe this is a security risk.';
+//          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 2 );
+//        }
+//        break;
+//      case( true ):
+//      default:
+//        $str_value = $str_value_out;
+//        break;
+//    }
+//    // #50195, 130719, dwildt, +
+//    // mysql_real_escape_string
+    // #61520, 140911, dwildt, -
+    // #61520, 140911, dwildt, +
+    $str_value = $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $this->pObj->localTable );
+    if ( $this->pObj->b_drs_warn )
     {
-      case( false ):
-        // 140705, dwildt, 3-
-//        $str_value = str_replace( '\\', null, $str_value );
-//        $str_value = str_replace( '"', null, $str_value );
-//        $str_value = str_replace( "'", null, $str_value );
-        // 140705, dwildt, 3+
-        $str_value = stripslashes( $str_value );
-        $str_value = str_replace( "'", "''", $str_value );
-        $str_value = str_replace( "\0", "[NULL]", $str_value );
-        if ( $this->pObj->b_drs_warn )
-        {
-          $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
-          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
-          $prompt = 'This signs are removed in the given piVar: \\, ", \' manually. Maybe this is a security risk.';
-          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 2 );
-        }
-        break;
-      case( true ):
-      default:
-        $str_value = $str_value_out;
-        break;
+      $prompt = 'escapeStrForLike( ) is using the local table name. This doesn\'t seem to be proper in every case.';
+      t3lib_div::devlog( '[WARN/Development] ' . $prompt, $this->pObj->extKey, 3 );
+      $prompt = 'Maybe you get unwanted effect in context with secure piVars.';
+      t3lib_div::devlog( '[WARN/Development] ' . $prompt, $this->pObj->extKey, 2 );
     }
-    // #50195, 130719, dwildt, +
-    // mysql_real_escape_string
+
     ////////////////////////////////////
     //
       // Check Type

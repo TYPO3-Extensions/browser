@@ -81,20 +81,20 @@ This template is the default template for all list views.
 </em>
 
       <!-- ###TEMPLATE_LIST### begin -->
-      <div class="row ###MODE### listview-###MODE###">
-        <!-- ###SEARCHFORM### begin -->
-        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="columns small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE###">
-          LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.searchform while runtime ...<br />
-          Please use typoscript like:<br />
-          plugin.tx_browser_pi1.views.list.[list-id].htmlSnippets.subparts.searchform < plugin.tx_browser_pi1.displayList.master_templates.subparts.listview.searchform.simpleMapOrderFilter
-        </div><!-- /columns --><!-- ###SEARCHFORM### end -->
-        <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
-          <!-- ###LIST_TITLE### begin -->
-            ###MY_TITLE###
-          <!-- ###LIST_TITLE### end -->
-          <div class="listarea">
+      <!-- ###SEARCHFORM### begin -->
+      <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE###">
+        LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.searchform while runtime ...<br />
+        Please use typoscript like:<br />
+        plugin.tx_browser_pi1.views.list.[list-id].htmlSnippets.subparts.searchform < plugin.tx_browser_pi1.displayList.master_templates.subparts.listview.searchform.simpleMapOrderFilter
+      </div><!-- /columns --><!-- ###SEARCHFORM### end -->
+      <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
+        <!-- ###LIST_TITLE### begin -->
+          ###MY_TITLE###
+        <!-- ###LIST_TITLE### end -->
+        <div class="row listarea">
+          <div class="columns browser">
             <!-- ###INDEXBROWSER### begin -->
-            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="show-for-large-up indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
               <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE### "><!-- ###INDEXBROWSERTABS### begin -->
                 <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
               </ul>
@@ -111,15 +111,19 @@ This template is the default template for all list views.
                 <!-- ###MODESELECTORTABS### end -->
               </ul>
             </div><!-- ###MODESELECTOR### end -->
-            <!-- ###LISTVIEW### begin -->
-            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
-              LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
-            </div> <!-- /listview -->
-            <!-- ###LISTVIEW### end -->
-          </div> <!-- /listarea -->
-        </div><!-- /columns -->
-      </div><!-- /row --><!-- ###TEMPLATE_LIST### end -->
-
+          </div><!-- browser end -->
+          <!-- ###LISTVIEW### begin -->
+          <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="columns listview listview-content listview-###MODE### listview-content-###MODE###">
+            LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
+          </div> <!-- /listview -->
+          <!-- ###LISTVIEW### end -->
+          <!-- ###PAGEBROWSER### begin -->
+          <div id="c###TT_CONTENT.UID###-pageBrowser-###MODE###" class="pageBrowser pageBrowser-list-###MODE###">
+            ###RESULT_AND_ITEMS###
+          </div><!-- ###PAGEBROWSER### end -->
+        </div> <!-- /listarea -->
+      </div><!-- /columns -->
+      <!-- ###TEMPLATE_LIST### end -->
 
 
 
@@ -182,11 +186,9 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 </em>
 
 <!-- ###TEMPLATE_SINGLE### begin -->
-      <div class="###MODE### singleview-###MODE### ui-widget ui-corner-all">
-        <!-- ###SINGLEVIEW### begin -->
-          SINGLEVIEW subpart will replaced by plugin.tx_browser_pi1.views.single.###MODE###.htmlSnippets.subparts.singleview while runtime ...
-        <!-- ###SINGLEVIEW### end -->
-      </div> <!-- /ui-widget -->
+      <!-- ###SINGLEVIEW### begin -->
+        SINGLEVIEW subpart will replaced by plugin.tx_browser_pi1.views.single.###MODE###.htmlSnippets.subparts.singleview while runtime ...
+      <!-- ###SINGLEVIEW### end -->
 <!-- ###TEMPLATE_SINGLE### end -->
 
 
@@ -204,7 +206,7 @@ displayList.selectBox_orderBy.display = 0
 </em>
 
 <!-- ###TEMPLATE_SELECTBOX_VALID### begin -->
-            <div class="sortbox c###TT_CONTENT.UID###-###VIEW###view-###MODE###-sortbox">
+            <div class="sortbox c###TT_CONTENT.UID###-listview-###MODE###-sortbox">
               <form ###CLASS### action="###URL###" method="POST">
                 <fieldset>
                   <legend>###LEGEND###</legend>

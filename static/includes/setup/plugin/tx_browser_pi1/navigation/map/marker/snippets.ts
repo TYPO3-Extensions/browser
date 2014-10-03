@@ -1,12 +1,10 @@
 plugin.tx_browser_pi1 {
   navigation {
-      // debugging, enabled, provider, template, configuration, marker
-    map =
     map {
-        // addToCData, snippets, variables
+        // snippets
       marker =
       marker {
-          // jss, html: HTML code snippets and JSS code snippets. The properties correspondents with the markers of the HTML marker map
+          // jss, html: HTML code snippets and JSS code snippets. The properties correspond with the markers of the HTML marker map
         snippets =
         snippets {
             // dynamic
@@ -219,6 +217,20 @@ plugin.tx_browser_pi1 {
                     }
                     .tx-browser-pi1 .mapview-content form label {
                       display:inline-flex;
+                      /* #i0083, 140923, dwildt, 2+ */
+                      line-height:1em;
+                      padding-right:1em;
+                    }
+                    /* #i0083, 140923, dwildt, 3+ */
+                    .tx-browser-pi1 .mapview-content form label img {
+                      margin:0 0.3em;
+                    }
+                    /* #i0083, 140923, dwildt, + */
+                    .tx-browser-pi1 .mapview-content form label input[type="file"],
+                    .tx-browser-pi1 .mapview-content form label input[type="checkbox"],
+                    .tx-browser-pi1 .mapview-content form label input[type="radio"],
+                    .tx-browser-pi1 .mapview-content form label select {
+                        margin-bottom: 0px;
                     }
                     .tx-browser-pi1 .olControlAttribution {
                       background-color:white;

@@ -29,7 +29,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 5.0.15
+ * @version 6.0.0
  * @since 3.0.0
  */
 
@@ -87,6 +87,9 @@ class tx_browser_pi1_backend
   var $boolAjaxI = null;
   // [BOOLEAN] true: AJAX II (the record browser) is enabled; false: AJAX II is disbaled
   var $boolRecordBrowser = null;
+  private $typo3Version = null;
+
+  // [INTEGER] Current TYPO3 version as an integer like 4007007 for 4.7.7
 
   /*   * *********************************************
    *
@@ -279,6 +282,13 @@ class tx_browser_pi1_backend
       return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
     // RETURN : There isn't any record storage page and any permission on root level
+    // RETURN : Something went wrong with TYPO3 6.x
+    $str_prompt = $this->evaluate_pluginTYPO3_6x();
+    if ( $str_prompt )
+    {
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
+    }
+    // RETURN : Something went wrong with TYPO3 6.x
     // Evaluation result: default message in case of success
     $str_prompt = '
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
@@ -314,10 +324,10 @@ class tx_browser_pi1_backend
    * Tab [evaluate]
    *
    * @return	string		$str_prompt: HTML prompt
-   * @version 4.1.5
+   * @version 6.0.0
    * @since 4.1.5
    */
-  public function evaluate_pluginAjaxPageObjectII()
+  private function evaluate_pluginAjaxPageObjectII()
   {
     // RETURN OK  : No record browser, no AJAX page object II is needed
     if ( !$this->boolRecordBrowser )
@@ -379,10 +389,10 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
    * @return	string		$str_prompt: HTML prompt
-   * @version 4.1.5
+   * @version 6.0.0
    * @since 4.0.0
    */
-  public function evaluate_pluginCsvObject( $arr_pluginConf )
+  private function evaluate_pluginCsvObject( $arr_pluginConf )
   {
     // 4.1.7, dwildt, 5+
     // RETURN: plugin isn't never saved
@@ -469,10 +479,10 @@ class tx_browser_pi1_backend
    * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
    * @param	array		$obj_TCEform:     Current TCE form object
    * @return	string		$str_prompt: HTML prompt
-   * @version 4.1.5
+   * @version 6.0.0
    * @since 4.1.5
    */
-  public function evaluate_pluginInit( $arr_pluginConf )
+  private function evaluate_pluginInit( $arr_pluginConf )
   {
     $prompt = $this->evaluate_pluginInitAjaxI( $arr_pluginConf );
     if ( $prompt )
@@ -494,10 +504,10 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
    * @return	string
-   * @version 4.1.7
+   * @version 6.0.0
    * @since 4.1.5
    */
-  public function evaluate_pluginInitAjaxI( $arr_pluginConf )
+  private function evaluate_pluginInitAjaxI( $arr_pluginConf )
   {
 
     $this->boolAjaxI = false;
@@ -527,11 +537,9 @@ class tx_browser_pi1_backend
       case ('list_only') :
         $this->boolAjaxI = true;
         return;
-        break;
       case ('disabled') :
         $this->boolAjaxI = false;
         return;
-        break;
       default :
         $str_prompt = '
           <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
@@ -554,10 +562,10 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
    * @return	string
-   * @version 4.1.5
+   * @version 6.0.0
    * @since 4.1.5
    */
-  public function evaluate_pluginInitRecordBrowser( $arr_pluginConf )
+  private function evaluate_pluginInitRecordBrowser( $arr_pluginConf )
   {
 
     $this->boolRecordBrowser = false;
@@ -580,33 +588,14 @@ class tx_browser_pi1_backend
       case ('disabled') :
         $this->boolRecordBrowser = false;
         return;
-        break;
       case ('by_flexform') :
         $this->boolRecordBrowser = true;
         return;
-        break;
       case ('ts') :
       // #43530, 121202, dwildt, 1+
       default:
         $this->boolRecordBrowser = $this->obj_TypoScript->setup[ 'plugin.' ][ 'tx_browser_pi1.' ][ 'navigation.' ][ 'record_browser' ];
         return;
-        break;
-      // #43530, 121202, dwildt, -
-//      default :
-//        $str_prompt = '
-//          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-//            <div class="message-body">
-//              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $record_browser . '".
-//            </div>
-//          </div>
-//          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-//            <div class="message-body">
-//              The Browser team has to take care for a proper code!
-//            </div>
-//          </div>
-//          ';
-//        return $str_prompt;
-      // #43530, 121202, dwildt, -
     }
   }
 
@@ -620,10 +609,10 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
    * @return	string		$str_prompt: HTML prompt
-   * @version 4.1.5
+   * @version 6.0.0
    * @since 4.0.0
    */
-  public function evaluate_pluginMapObject()
+  private function evaluate_pluginMapObject()
   {
     // RETURN OK  : map isn't enabled
     $this->confMap = $this->obj_TypoScript->setup[ 'plugin.' ][ 'tx_browser_pi1.' ][ 'navigation.' ][ 'map.' ];
@@ -638,7 +627,6 @@ class tx_browser_pi1_backend
       case( empty( $this->confMap[ 'enabled' ] ) ):
       case( $this->confMap[ 'enabled' ] == 'disabled'):
         return;
-        break;
       default:
         // Follow the workflow
         break;
@@ -733,10 +721,10 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
    * @return	string
-   * @version 4.1.7
+   * @version 6.0.0
    * @since 4.1.7
    */
-  public function evaluate_pluginRecordStoragePage( $arr_pluginConf )
+  private function evaluate_pluginRecordStoragePage( $arr_pluginConf )
   {
     // RETURN : Record storage page is configured
     if ( !empty( $arr_pluginConf[ 'row' ][ 'pages' ] ) )
@@ -760,7 +748,6 @@ class tx_browser_pi1_backend
       case ( true ) :
         // RETURN : Record storage page isn't configured, but root level is enabled
         return;
-        break;
       case ( false ) :
         // RETURN : Record storage page isn't configured and root level isn't enabled
         $str_prompt = '
@@ -776,7 +763,6 @@ class tx_browser_pi1_backend
           </div>
           ';
         return $str_prompt;
-        break;
       default :
         $str_prompt = '
           <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
@@ -792,6 +778,66 @@ class tx_browser_pi1_backend
           ';
         return $str_prompt;
     }
+  }
+
+  /**
+   * evaluate_pluginTYPO3_6x( ):
+   *
+   * @return	string
+   * @internal #61594
+   * @version 6.0.0
+   * @since 4.1.7
+   */
+  private function evaluate_pluginTYPO3_6x()
+  {
+    global $TYPO3_CONF_VARS;
+
+    // RETURN : TYPO3 version is smaller than 6.x
+    if ( $this->typo3Version < 6000000 )
+    {
+      return;
+    }
+
+    //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
+    if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
+    {
+      $str_prompt = '
+            <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+              <div class="message-body">
+                ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.pageNotFoundOnCHashError' ) . '
+              </div>
+            </div>
+            <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+              <div class="message-body">
+                ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.pageNotFoundOnCHashError' ) . '
+              </div>
+            </div>
+            ';
+      return $str_prompt;
+    }
+
+    $cHashExcludedParameters = $TYPO3_CONF_VARS[ 'FE' ][ 'cHashExcludedParameters' ];
+    $cHashExcludedParameters = explode( ',', $cHashExcludedParameters );
+
+    //var_dump( __METHOD__, __LINE__, $swordKey, $cHashExcludedParameters );
+    if ( in_array( 'tx_browser_pi1[sword]', $cHashExcludedParameters ) )
+    {
+      return;
+    }
+
+    $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.cHashExcludedParameters' ) . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.cHashExcludedParameters' ) . '
+            </div>
+          </div>
+          ';
+    return $str_prompt;
   }
 
   /**
@@ -2158,18 +2204,29 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf: Current plugin/flexform configuration
    * @return	boolean		TRUE: success. FALSE: error.
+   * @version 6.0.0
    * @since 3.4.5
-   * @version 3.4.5
    */
   private function init( $arr_pluginConf )
   {
-    // Require classes
-    require_once(PATH_t3lib . 'class.t3lib_page.php');
-    require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
-    require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
-
+    // #61520, 140911, dwildt, 1+
     $this->init_typo3version();
 
+    // #61520, 140911, dwildt, 4-
+//    // Require classes
+//    require_once(PATH_t3lib . 'class.t3lib_page.php');
+//    require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
+//    require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
+    // #61520, 140911, dwildt, 6+
+    if ( $this->typo3Version < 6002000 )
+    {
+      require_once(PATH_t3lib . 'class.t3lib_page.php');
+      require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
+      require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
+    }
+
+    // #61520, 140911, dwildt, 1-
+    //$this->init_typo3version();
     // Init page id and the page object
     $this->init_pageUid( $arr_pluginConf );
     $this->init_pageObj( $arr_pluginConf );
@@ -2269,16 +2326,12 @@ class tx_browser_pi1_backend
   }
 
   /**
-   * init_typo3version( ): Get the current TYPO3 version, move it to an integer
-   *                      and set the global $bool_typo3_43
-   *                      This method is independent from
-   *                        * t3lib_div::int_from_ver (upto 4.7)
-   *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
+   * init_typo3version( ): Get the current TYPO3 version
    *
    * @internal  #i0022
    *
-   * @return    void
-   * @version 4.5.11
+   * @return    integer
+   * @version 6.0.0
    * @since   4.5.11
    */
   private function init_typo3version()
@@ -2316,18 +2369,6 @@ class tx_browser_pi1_backend
           ';
       die( $prompt );
     }
-
-    // Set the global $bool_typo3_43
-    if ( $this->typo3Version >= 4003000 )
-    {
-      $this->bool_typo3_43 = true;
-    }
-    if ( $this->typo3Version < 4003000 )
-    {
-      $this->bool_typo3_43 = false;
-    }
-    // Set the global $bool_typo3_43
-    // #43108, 121212, dwildt, +
   }
 
 }

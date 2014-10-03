@@ -71,7 +71,7 @@ plugin.tx_browser_pi1 {
           // [Integer] The minimum length of a word in the sword. Example: "I am searching for" becomes "searching for"
         minLenWord = 3
         addSlashes {
-            // [String/CSV] Comma seperated list of chars, which will get a slash in every mysql query. You don't need \x00, \n, \r, \, ', " and \x1a, because it will be processed by mysql_real_escape_string().
+            // [String/CSV] Comma seperated list of chars, which will get a slash in every mysql query. You don't need \x00, \n, \r, \, ', " and \x1a, because it will be processed by escapeStrForLike().
           csvChars = %
         }
       }

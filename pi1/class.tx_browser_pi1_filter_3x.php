@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 5.0.0
+ * @version 6.0.0
  * @since 3.0.1
  */
 
@@ -382,7 +382,7 @@ class tx_browser_pi1_filter_3x
         {
           case( 'from' ):
           case( 'to' ):
-            // Line has to correspondend with similar code some lines above and code in cal::area_set_hits()
+            // Line has to correspond with similar code some lines above and code in cal::area_set_hits()
             if ( !( $row[ $tableField ] >= $condition[ 'from' ] ) )
             {
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['from'] ) );
@@ -390,7 +390,7 @@ class tx_browser_pi1_filter_3x
               unset( $this->rows_wo_limit[ $key ] );
               continue 2;
             }
-            // Line has to correspondend with similar code some lines above and code in cal::area_set_hits()
+            // Line has to correspond with similar code some lines above and code in cal::area_set_hits()
             if ( !( $row[ $tableField ] < $condition[ 'to' ] ) )
             {
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );
@@ -917,12 +917,15 @@ class tx_browser_pi1_filter_3x
    * @param	string		$tableField   Current table.field
    * @return	array		arr_andWhereFilter: NULL if there isn' any filter
    * @internal              #30912: Filter: count items with no relation to category:
-   * @version 3.6.0
+   * @version 6.0.0
+   * @since   3.0.0
    */
   function andWhere_localTable( $obj_ts, $arr_ts, $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
+    // #61520, 140911, dwildt, 1+
+    list ($table) = explode( '.', $tableField );
 
 
     /////////////////////////////////////////////////////////////////
@@ -947,9 +950,12 @@ class tx_browser_pi1_filter_3x
         $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
         if ( !empty( $from ) )
         {
-          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
-          // #30912, 120127, dwildt+
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
+          // #61520, 140911, dwildt, 2-
+          //$arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
+          //$this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
+          // #61520, 140911, dwildt, 2+
+          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
         }
 
         $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
@@ -958,9 +964,12 @@ class tx_browser_pi1_filter_3x
         $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
         if ( !empty( $to ) )
         {
-          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
-          // #30912, 120127, dwildt+
-          $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
+          // #61520, 140911, dwildt, 2-
+//          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
+//          $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
+          // #61520, 140911, dwildt, 2+
+          $arr_item[] = $tableField . " <= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
         }
 
         if ( is_array( $arr_item ) )
@@ -983,10 +992,12 @@ class tx_browser_pi1_filter_3x
     {
       foreach ( $arr_piVar as $str_value )
       {
-        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
-        // #30912, 120127, dwildt+
-        // #30912, 120202, dwildt+
-        $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+        // #61520, 140911, dwildt, 2+
+//        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
+//        $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+        // #61520, 140911, dwildt, 2-
+        $arr_orValues[] = $tableField . " LIKE '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) . "'";
+        $strtolower_value = "'" . mb_strtolower( $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) ) . "'";
         $this->arr_filter_condition[ $tableField ][ 'like' ][] = $strtolower_value;
       }
       $str_andWhere = implode( ' OR ', $arr_orValues );
@@ -1048,9 +1059,12 @@ class tx_browser_pi1_filter_3x
         $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
         if ( !empty( $from ) )
         {
-          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
-          // #30912, 120127, dwildt+
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
+          // #61520, 140911, dwildt, 2-
+//          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
+//          $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
+          // #61520, 140911, dwildt, 2+
+          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
         }
 
         $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
@@ -1059,9 +1073,12 @@ class tx_browser_pi1_filter_3x
         $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
         if ( !empty( $to ) )
         {
-          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
-          // #30912, 120127, dwildt+
-          $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
+          // #61520, 140911, dwildt, 2-
+//          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
+//          $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
+          // #61520, 140911, dwildt, 2+
+          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
         }
 
         if ( is_array( $arr_item ) )

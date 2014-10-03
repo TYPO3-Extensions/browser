@@ -632,7 +632,7 @@ plugin.tx_browser_pi1 {
             y = 0
           }
             // Labels of category fields
-          fields = 
+          fields =
           fields {
               // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
             category = {$plugin.tx_browser_pi1.map.field.category}
@@ -650,21 +650,21 @@ plugin.tx_browser_pi1 {
           form_input {
             value = <label for="###CAT_WO_SPC###"><input id="###CAT_WO_SPC###" class="oxMapFilter" type="checkbox" name="###CAT_WO_SPC###" value="1" checked="checked" /> ###IMG### ###CAT###</label>
           }
-            // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
+            // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING
           orderBy = SORT_STRING
         }
         centerCoordinates {
-            // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
+            // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript
           mode          = auto
             // [STRING] marker for the center in the HTML code. Example: oxMapConfigCenter
           dynamicMarker = oxMapConfigCenter
         }
         00Coordinates {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
-          dontHandle = true  
+          dontHandle = true
         }
         zoomLevel {
-            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel 
+            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel
           mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}
             // [STRING] marker for the center in the HTML code. Example: oxMapConfigStartLevel
           dynamicMarker = oxMapConfigStartLevel
@@ -739,7 +739,7 @@ plugin.tx_browser_pi1 {
             }
           }
         }
-          // HTML code snippets and JSS code snippets. The properties correspondents with the markers of the HTML marker map
+          // HTML code snippets and JSS code snippets. The properties correspond with the markers of the HTML marker map
         snippets =
         snippets {
           html {
@@ -1676,17 +1676,17 @@ plugin.tx_browser_pi1 {
         current < .icons
       }
       enable {
-          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_LISTVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_LISTVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case!
         pivars_for_listview = 0
         pivars_for_listview {
             // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
-          csvDontRenderPiVars = 
+          csvDontRenderPiVars =
         }
-          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_SINGLEVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_SINGLEVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case!
         pivars_for_singleview = 0
         pivars_for_singleview {
             // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
-          csvDontRenderPiVars = 
+          csvDontRenderPiVars =
         }
       }
       special {
@@ -2201,7 +2201,7 @@ plugin.tx_browser_pi1 {
         count_hits = 1
           // [Boolean] Should be added a default item?
         first_item = 1
-        first_item { 
+        first_item {
             // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
           display_wo_items = 1
             // Wrap the first filter item
@@ -3126,7 +3126,7 @@ plugin.tx_browser_pi1 {
           30 = TEXT
           30 {
             if {
-              value   = '{$plugin.tx_browser_pi1.map.popup.behaviour}' 
+              value   = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
               equals  = 'click'
             }
             value = In detail &raquo;
@@ -3170,7 +3170,7 @@ plugin.tx_browser_pi1 {
                 data = register:linkedIcon
                 wrap (
                   <div class="csc-uploads-thumbnail csc-uploads-thumbnail-first">|</div>
-                  |*| 
+                  |*|
                   <div class="csc-uploads-thumbnail csc-uploads-thumbnail-even">|</div>
                   ||
                   <div class="csc-uploads-thumbnail">|</div>
@@ -3384,7 +3384,7 @@ plugin.tx_browser_pi1 {
   }
 }
   // plugin.tx_browser_pi1: cObjDataFieldWrapper
- 
+
 
 
   ///////////////////////////////////////////////////////////////
@@ -3599,7 +3599,7 @@ plugin.tx_browser_pi1 {
       }
     }
       // #43741, 121207, dwildt
-    javascript = 
+    javascript =
     javascript {
         // [Boolean] 0: don't embed the jquery ui library (default), 1: embed it.
       jquery_ui = 0
@@ -4075,27 +4075,27 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
             marker {
-                // Id 1 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 1 of the div-wrap of the treeview (selector). Should correspond with displayList.master_templates.category_menu.treeview.html_id
               selector_01 = TEXT
               selector_01 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
               }
-                // Id 2 of the div-wrap of the 2nd treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 2 of the div-wrap of the 2nd treeview (selector). Should correspond with displayList.master_templates.category_menu.treeview.html_id
               selector_02 = TEXT
               selector_02 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_02}
               }
-                // Id 3 of the div-wrap of the 3rd treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 3 of the div-wrap of the 3rd treeview (selector). Should correspond with displayList.master_templates.category_menu.treeview.html_id
               selector_03 = TEXT
               selector_03 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_03}
               }
-                // Id 4 of the div-wrap of the 4th treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 4 of the div-wrap of the 4th treeview (selector). Should correspond with displayList.master_templates.category_menu.treeview.html_id
               selector_04 = TEXT
               selector_04 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_04}
               }
-                // Id 5 of the div-wrap of the 5th treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 5 of the div-wrap of the 5th treeview (selector). Should correspond with displayList.master_templates.category_menu.treeview.html_id
               selector_05 = TEXT
               selector_05 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_05}
@@ -5016,7 +5016,7 @@ plugin.tx_browser_pi1 {
           // [Integer] The minimum length of a word in the sword. Example: "I am searching for" becomes "searching for"
         minLenWord = 3
         addSlashes {
-            // [String/CSV] Comma seperated list of chars, which will get a slash in every mysql query. You don't need \x00, \n, \r, \, ', " and \x1a, because it will be processed by mysql_real_escape_string().
+            // [String/CSV] Comma seperated list of chars, which will get a slash in every mysql query. You don't need \x00, \n, \r, \, ', " and \x1a, because it will be processed by escapeStrForLike().
           csvChars = %
         }
       }

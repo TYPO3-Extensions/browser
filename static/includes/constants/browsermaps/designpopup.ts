@@ -5,8 +5,8 @@ plugin.tx_browser_pi1 {
   map.popup.image.height     = 40c
   # cat=BrowserMaps - Design Popup//111;   type=string;     label= Image width:Width of the image in pixel. The samples at property height above.
   map.popup.image.width      = 40c
-  # cat=BrowserMaps - Design Popup//200;   type=int+;       label= Text cropping:Crop the text after x chars. Leave it empty, if you don't want any cropping. I.e: 120
-  map.popup.text.crop   = 60
+  # cat=BrowserMaps - Design Popup//200;   type=string;       label= Text cropping:Crop the text after x chars. Leave it empty, if you don't want any cropping. I.e: 120|...|1
+  map.popup.text.crop   = 60|...|1
   # cat=BrowserMaps - Design Popup/others/999;      type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   map.popup.controlling.links = Click me!
 }

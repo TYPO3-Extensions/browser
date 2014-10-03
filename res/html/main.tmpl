@@ -5,7 +5,7 @@
 <pre>
 <em>
 
-VERSION 4.3.1
+VERSION 6.0.0
 
 
 
@@ -70,7 +70,7 @@ This template is the default template for all list views.
 </em>
 
 <!-- ###TEMPLATE_LIST### begin -->
-      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
+      <div class="columns ###MODE### listview-###MODE### ui-widget ui-corner-all">
 <!-- ###LIST_TITLE### begin -->
         ###MY_TITLE###
 <!-- ###LIST_TITLE### end -->
@@ -80,8 +80,6 @@ This template is the default template for all list views.
             <fieldset class="ui-corner-all">
               <legend>###MY_SEARCH_LEGEND###</legend>
               ###HIDDEN###
-              <input type="hidden" name="no_cache" value="1" />
-              <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
               <input class="sword" type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
               <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" class="button hidesubmit ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
                 <span class="ui-button-text">###MY_SEARCH###</span>
@@ -94,7 +92,7 @@ This template is the default template for all list views.
               <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" type="reset" onclick="location='###MY_URL###'" class="button reset ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
                 <span class="ui-button-text">###MY_RESET###</span>
               </button>
-              <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+              <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
               ###FILTER###
             </fieldset>
           </form>
@@ -132,7 +130,7 @@ This template is the default template for all list views.
             </div> <!-- /listview -->
             <!-- ###LISTVIEW### end -->
           </div> <!-- /ui-tabs -->
-          ###MAP###
+          <!-- #61926, 140928, dwildt, 1-:  ### MAP ### -->
           <!-- ###LISTTABS### end -->
         </div> <!-- /listarea -->
       </div> <!-- /ui-widget -->
@@ -200,7 +198,7 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 </em>
 
 <!-- ###TEMPLATE_SINGLE### begin -->
-      <div class="###MODE### singleview-###MODE### ui-widget ui-corner-all">
+      <div class="columns ###MODE### singleview-###MODE### ui-widget ui-corner-all">
         <!-- ###SINGLEVIEW### begin -->
           SINGLEVIEW subpart will replaced by plugin.tx_browser_pi1.views.single.###MODE###.htmlSnippets.subparts.singleview while runtime ...
         <!-- ###SINGLEVIEW### end -->

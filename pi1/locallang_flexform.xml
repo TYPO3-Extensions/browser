@@ -38,6 +38,7 @@
       <label index="sheet_evaluate.handle_marker.0">Remove marker, which weren't replaced</label>
       <label index="sheet_evaluate.handle_marker.1">Don't remove any marker (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">The DRS - Development Reporting System - is enabled. This costs performance and is a security risk for any operative sytem. You can disable the DRS in the extension manager. Status: %status%.</label>
+      <label index="sheet_evaluate.plugin.error.cHashExcludedParameters">Bug: $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] doesn't contain tx_browser_pi1[sword]. You will get errors like '<![CDATA[&]]>cHash comparison failed'.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIConflict">Bug: You like to use OpenStreetMap. And you have enabled AJAX. But there is a conflict of the map and AJAX unfortunately.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">Bug: You like to use BrowserMaps. And you have enabled the record browser. But there is a conflict of the map and the record browser unfortunately.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Bug: You like to use AJAX. But there isn't any default typeNum for the AJAX page object.</label>
@@ -49,7 +50,10 @@
       <label index="sheet_evaluate.plugin.error.no_record_storage_pid">Error: There isn't any record storage pid configured and records on root level aren't allowed. You won't see any data in the frontend.</label>
       <label index="sheet_evaluate.plugin.error.no_ts_template">Bug: There isn't any TypoScript configuration for this plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
+      <label index="sheet_evaluate.plugin.error.pageNotFoundOnCHashError">Bug: $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled. You will get errors like '<![CDATA[&]]>cHash comparison failed'.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
+      <label index="sheet_evaluate.plugin.info.cHashExcludedParameters">Please set $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] like: 'L,tx_browser_pi1[sword],...'. See: System > Install.</label>
+      <label index="sheet_evaluate.plugin.info.drs">If you get an unexpected result nevertheless, you can enable the DRS - the Development Reporting System. You will get a report with all rendered SQL queries among others. You enable the DRS in the extension manager.</label>
       <label index="sheet_evaluate.plugin.info.mapAjaxIConflict">Please disable AJAX (see tab "jQuery <![CDATA[&]]> AJAX" or OpenStreetMap (see TypoScript constant editor).</label>
       <label index="sheet_evaluate.plugin.info.mapAjaxIIConflict">Please disable the record browser (see tab "Single View") or OpenStreetMap (see TypoScript constant editor).</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fix it: Configure javascript.ajax.jQuery.default.typeNum</label>
@@ -61,7 +65,7 @@
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fix it? Configure the general storage pid or allow the access to records on the top level. See tab [Behaviour] field [Record Storage Page] or tab [Plugin] <![CDATA[>]]> [General] <![CDATA[>]]> Relations Configuration: Configured <![CDATA[>]]> Relations: Records without Pid: enabled. <![CDATA[<br />]]> Bear in mind to set more than one pid, if your data are stored in more than one folder.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fix it: include the Static Template "Browser"!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fix it: configure your TypoScript like plugin.tx_browser_pi1.views.list.1 { ... }</label>
-      <label index="sheet_evaluate.plugin.info.drs">If you get an unexpected result nevertheless, you can enable the DRS - the Development Reporting System. You will get a report with all rendered SQL queries among others. You enable the DRS in the extension manager.</label>
+      <label index="sheet_evaluate.plugin.info.pageNotFoundOnCHashError">Please disable $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ]. See: System > Install.</label>
       <label index="sheet_evaluate.plugin.info.updateAssistent">If you get an unexpected result nevertheless, please check with the TYPO3 Browser Update Assistent, if your plugin and if your TypoScript is up-to-date. You enable the Update Assistent in the extension manager.</label>
       <label index="sheet_evaluate.plugin.info.saved_never">Fix it: Save the Flexform once.</label>
       <label index="sheet_evaluate.plugin.info.tutorialAndForum">If you have any question about the Browser, please refer to the online manual <![CDATA[<a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>]]>. If you need interactive help, please post your question in the <![CDATA[<a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>]]>. Posts are welcome in English and German.</label>
@@ -410,6 +414,7 @@
       <label index="sheet_evaluate.handle_marker.0">Nicht ersetzte Marker entfernen</label>
       <label index="sheet_evaluate.handle_marker.1">Nicht ersetzte Marker anzeigen (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">Das DRS - Development Reporting System - ist aktiviert. Das kostet Performance und ist ein Sicherheitsrisiko f<![CDATA[&uuml;]]>r jedes operative Sytem. Du kannst das DRS im Extension Manager abschalten. Status: %status%.</label>
+      <label index="sheet_evaluate.plugin.error.cHashExcludedParameters">FEHLER: In $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] fehlt tx_browser_pi1[sword]. Du wirst Fehler bekommen wie '<![CDATA[&]]>cHash comparison failed'.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap und AJAX gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest BrowserMaps und den Record-Browser gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest AJAX verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das AJAX Page Objekt.</label>
@@ -421,7 +426,10 @@
       <label index="sheet_evaluate.plugin.error.no_record_storage_pid">Fehler: Es gibt keinen Eintrag im Feld [Datensatzsammlung] und der Zugriff auf Daten ohne Seiten-ID ist auch nicht erlaubt. Du wirst im Frontend keine Daten sehen.</label>
       <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f<![CDATA[&uuml;]]>r dieses Plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
+      <label index="sheet_evaluate.plugin.error.pageNotFoundOnCHashError">Fehler: $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] ist aktiviert. Du wirst Fehler bekommen wie '<![CDATA[&]]>cHash comparison failed'.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
+      <label index="sheet_evaluate.plugin.info.cHashExcludedParameters">Bitte konfiguriere $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] so: 'L,tx_browser_pi1[sword],...'. Siehe: System > Install.</label>
+      <label index="sheet_evaluate.plugin.info.drs">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, check mit dem TYPO3-Browser-Update-Assistenten, ob Dein Plugin und Dein TypoScript aktuell sind. Du aktivierst den Update-Assistenten im Extension Manager.</label>
       <label index="sheet_evaluate.plugin.info.mapAjaxIConflict">Bitte deaktiviere AJAX (siehe Register "jQuery <![CDATA[&]]> AJAX") oder OpenStreetMap (siehe TypoScript Konstanten Editor).</label>
       <label index="sheet_evaluate.plugin.info.mapAjaxIIConflict">Bitte deaktiviere den Record Browser (siehe Register "Detailansicht") oder OpenStreetMap (siehe TypoScript Konstanten Editor).</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fehler beheben: konfiguriere javascript.ajax.jQuery.default.typeNum</label>
@@ -433,7 +441,7 @@
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fehler beheben? Konfigure das Feld [Datensatzsammlung] oder den Zugriff auf Daten ohne Pid. Siehe Reiter [Verhalten] Feld [Datensatzsammlung]. Oder Reiter [Plugin] <![CDATA[>]]> [Allgemein] <![CDATA[>]]> Relations Konfiguration: Konfiguriert <![CDATA[>]]> Relations: Records ohne Pid: aktiviert.<![CDATA[<br />]]>Denk' d'ran: Wenn Du Deine Daten in mehr als einem Ordner speicherst, musst Du auch diese Ordner angeben.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fehler beheben: binde das Static Template "Browser" ein!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fehler beheben: konfiguriere Dein TypoScript etwa so: plugin.tx_browser_pi1.views.list.1 { ... }</label>
-      <label index="sheet_evaluate.plugin.info.drs">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, check mit dem TYPO3-Browser-Update-Assistenten, ob Dein Plugin und Dein TypoScript aktuell sind. Du aktivierst den Update-Assistenten im Extension Manager.</label>
+      <label index="sheet_evaluate.plugin.info.pageNotFoundOnCHashError">Bitte deaktiviere $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ]. Siehe: System > Install.</label>
       <label index="sheet_evaluate.plugin.info.saved_never">Beheb' den Fehler: Speicher das Plugin einmal ab.</label>
       <label index="sheet_evaluate.plugin.info.updateAssistent">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, kannst Du das DRS - das Development Reporting System - zur Fehleranaylse benutzen. Du bekommst einen Bericht unter anderem mit allen erzeugten SQL-Abfragen. Du aktivierts das DRS im Extension Manager.</label>
       <label index="sheet_evaluate.plugin.info.tutorialAndForum">Wenn Du eine Frage zum Browser hast, wirf einen Blick in das Online-Handbuch <![CDATA[<a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>]]>. Wenn Du interaktive Hilfe ben<![CDATA[&ouml;]]>tigst, ver<![CDATA[&ouml;]]>ffentliche Dein Anliegen im <![CDATA[<a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>]]>. Beitr<![CDATA[&auml;]]>ge in Englisch und Deutsch sind willkommen.</label>

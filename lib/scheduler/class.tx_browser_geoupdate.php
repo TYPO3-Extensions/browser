@@ -1986,6 +1986,67 @@ table     : ' . $this->browser_table;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
   }
 
+  /**
+   * init_typo3version( ): Get the current TYPO3 version, move it to an integer
+   *                      and set the global $bool_typo3_43
+   *                      This method is independent from
+   *                        * t3lib_div::int_from_ver (upto 4.7)
+   *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
+   *
+   * @internal  #61520
+   *
+   * @return    void
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function init_typo3version()
+  {
+    // RETURN : typo3Version is set
+    if ( $this->typo3Version !== null )
+    {
+      return;
+    }
+
+    // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+    list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+    $version = ( ( int ) $main ) * 1000000;
+    $version = $version + ( ( int ) $sub ) * 1000;
+    $version = $version + ( ( int ) $bugfix ) * 1;
+    $this->typo3Version = $version;
+    // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+    if ( $this->typo3Version < 3000000 )
+    {
+      $prompt = '<h1>ERROR</h1>
+        <h2>Unproper TYPO3 version</h2>
+        <ul>
+          <li>
+            TYPO3 version is smaller than 3.0.0
+          </li>
+          <li>
+            constant TYPO3_version: ' . TYPO3_version . '
+          </li>
+          <li>
+            integer $this->typo3Version: ' . ( int ) $this->typo3Version . '
+          </li>
+        </ul>
+          ';
+      die( $prompt );
+    }
+
+    // Set the global $bool_typo3_43
+    if ( $this->typo3Version >= 4003000 )
+    {
+      $this->bool_typo3_43 = true;
+    }
+    if ( $this->typo3Version < 4003000 )
+    {
+      $this->bool_typo3_43 = false;
+    }
+    // Set the global $bool_typo3_43
+    // #43108, 121212, dwildt, +
+  }
+
 
 
   /***********************************************
@@ -2036,7 +2097,7 @@ table     : ' . $this->browser_table;
     //    $data       = array( );
     //    $event_pid  = null; // page id
     //    $NEWid      = null;
-    switch( $status ) 
+    switch( $status )
     {
       case( -1 ):
         $fmHeader   = null;
@@ -2076,12 +2137,12 @@ table     : ' . $this->browser_table;
         $logStatus = 0;
         break;
     }
-    
+
     $GLOBALS[ 'BE_USER' ]->writelog( $type, $action, $logStatus, $details_nr, $details, $data, $table, $recuid, $recpid, $event_pid, $NEWid );
     if( $logStatus >  0 )
     {
     }
-    
+
       // RETURN : Don't prompt to the backend
     if( $status < 0 )
     {
@@ -2090,7 +2151,7 @@ table     : ' . $this->browser_table;
       // RETURN : Don't prompt to the backend
 
     $flashMessage = t3lib_div::makeInstance( 't3lib_FlashMessage', $fmPrompt, $fmHeader, $fmStatus );
-    t3lib_FlashMessageQueue::addMessage( $flashMessage );    
+    t3lib_FlashMessageQueue::addMessage( $flashMessage );
 
   }
 
@@ -2172,13 +2233,22 @@ table     : ' . $this->browser_table;
  *
  * @return	void
  * @access private
- * @version       4.5.13
+ * @version       6.0.0
  * @since         4.5.13
  */
   private function timeTracking_init( )
   {
-      // Init the timetracking object
-    require_once( PATH_t3lib . 'class.t3lib_timetrack.php' );
+    // #61520, 140911, dwildt, 2-
+//    // Init the timetracking object
+//    require_once( PATH_t3lib . 'class.t3lib_timetrack.php' );
+
+    // #61520, 140911, dwildt, 5+
+    $this->init_typo3version();
+    if ( $this->typo3Version < 6002000 )
+    {
+      require_once( PATH_t3lib . 'class.t3lib_timetrack.php' );
+    }
+
     $this->TT = new t3lib_timeTrack;
     $this->TT->start( );
       // Init the timetracking object

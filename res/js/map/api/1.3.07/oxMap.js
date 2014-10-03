@@ -18,7 +18,7 @@ window.oxMap = {
 	  		name = arguments[ a ];
 	  		oxMap[ s.wms ][ name ] = window[ name ];
 	  		oxMap[ s.wms ][ name ]['scope'] = oxMap[ s.wms ];
-			oxMap.Utils.delObject( name );
+        oxMap.Utils.delObject( name );
 	  	}
 	    return true;
 	}
@@ -27,7 +27,7 @@ window.oxMap = {
 	  	oxMap[ this.wms ][ name ].apply( this, [parameters] );
 		return true;
 	}
-  
+
   , getCfg : function(type){
 		return type ? oxMap.cfg[ type ] : oxMap.cfg;
 	}

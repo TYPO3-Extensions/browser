@@ -1,9 +1,7 @@
 plugin.tx_browser_pi1 {
   navigation {
-      // debugging, enabled, provider, template, configuration, marker
-    map =
     map {
-        // addToCData, snippets, variables
+        // variables
       marker =
       marker {
           // dynamic, system: Values, which will set while runtime.
@@ -136,60 +134,47 @@ plugin.tx_browser_pi1 {
                 value = <div class="olPopupCloseBox" style="width: 17px; height: 17px; position: absolute; right: 13px; top: 45px; z-index: 1;" id="featurePopup_close"></div>
               }
               10 >
-              // image. 10: with image of the record. 20: with default image.
+              // image linked to record (default), notype, page, url
               20 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.image.0
               20 {
-                10 {
-                  default {
-                    file {
-                      import {
-                        listNum = {$plugin.tx_browser_pi1.map.popup.image.listNum}
-                      }
-                      height = {$plugin.tx_browser_pi1.map.popup.image.height}
-                      width = {$plugin.tx_browser_pi1.map.popup.image.width}
+                default {
+                  file {
+                    import {
+                      listNum = {$plugin.tx_browser_pi1.map.popup.image.listNum}
                     }
+                    height = {$plugin.tx_browser_pi1.map.popup.image.height}
+                    width = {$plugin.tx_browser_pi1.map.popup.image.width}
                   }
-                    // without any link (record is available only in list views)
-                  notype < .default
-                  notype {
-                    imageLinkWrap >
-                  }
-                  page < .default
-                  page {
-                    imageLinkWrap {
-                      typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.page
-                    }
-                  }
-                    // link to an external website. 10: teaser_title, 20: title
-                  url < .page
-                  url {
-                    imageLinkWrap {
-                      typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.url
-                    }
-                  }
-                    // DEPRECATED! Use page!
-                  calpage < .page
-                    // DEPRECATED! Use url!
-                  calurl  < .url
-                    // DEPRECATED! Use default (record)!
-                  news < .default
-                    // DEPRECATED! Use page!
-                  newspage < .page
-                    // DEPRECATED! Use url!
-                  newsurl  < .url
+                  wrap = <div style="float:left;padding:0 1em 1em 0;">|</div>
                 }
-                20 {
-                  default {
-                    file {
-                      import {
-                        listNum = {$plugin.tx_browser_pi1.map.popup.image.listNum}
-                      }
-                      height = {$plugin.tx_browser_pi1.map.popup.image.height}
-                      width = {$plugin.tx_browser_pi1.map.popup.image.width}
-                    }
+                  // without any link (record is available only in list views)
+                notype < .default
+                notype {
+                  imageLinkWrap >
+                }
+                page < .default
+                page {
+                  imageLinkWrap {
+                    typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.page
                   }
                 }
-                wrap = <div style="float:left;padding:0 1em 1em 0;">|</div>
+                  // link to an external website
+                url < .page
+                url {
+                  imageLinkWrap {
+                    typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.url
+                  }
+                }
+                  // DEPRECATED! Use page!
+                calpage < .page
+                  // DEPRECATED! Use url!
+                calurl  < .url
+                  // DEPRECATED! Use default (record)!
+                news < .default
+                  // DEPRECATED! Use page!
+                newspage < .page
+                  // DEPRECATED! Use url!
+                newsurl  < .url
               }
                 // header
               30 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.header.0
@@ -208,7 +193,7 @@ plugin.tx_browser_pi1 {
               40 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.text
               40 {
                 default {
-                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}  | ... | 1
+                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
                   20 {
                     if {
                       value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
@@ -218,7 +203,7 @@ plugin.tx_browser_pi1 {
                   wrap            = <div class="mapPopupText mapPopupTextDefault">|</div>
                 }
                 page {
-                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}  | ... | 1
+                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
                   20 {
                     if {
                       value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
@@ -228,7 +213,7 @@ plugin.tx_browser_pi1 {
                   wrap            = <div class="mapPopupText mapPopupTextPage">|</div>
                 }
                 url {
-                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}  | ... | 1
+                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
                   20 {
                     if {
                       value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
@@ -264,7 +249,7 @@ plugin.tx_browser_pi1 {
               key {
                 field = {$plugin.tx_browser_pi1.templates.listview.url.0.key}
               }
-                // single view. 10: teaser_title, 20: title
+                // single view
               default = TEXT
               default {
                 typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.default

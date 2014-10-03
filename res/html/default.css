@@ -34,3 +34,8 @@
   float:left;
   padding-right:1em;
 }
+
+.olMap .olTileImage {
+  /* foundation css sets 100%, .olTileImages will displayed with 50%! */
+  max-width: inherit;
+}

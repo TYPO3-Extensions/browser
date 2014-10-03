@@ -68,8 +68,8 @@ class tx_browser_pi1_zz_sword
     $this->conf = $this->pObj->conf;
     $this->mode = $this->pObj->mode;
     $this->view = $this->pObj->view;
-    $this->conf_view = $this->pObj->conf_view;
-    $this->conf_path = $this->pObj->conf_path;
+    $this->conf_view = $this->pObj->get_confView();
+    $this->conf_path = $this->pObj->get_confPath();
     $this->template = $this->pObj->template;
   }
 
@@ -172,7 +172,6 @@ class tx_browser_pi1_zz_sword
     //$arr_swords_quoted = explode( '\\"', $this->pObj->pObj->piVar_sword );
     // 140705, dwildt, 1+: without mysql_real_escape_string
     $arr_swords_quoted = explode( '"', $this->pObj->pObj->piVar_sword );
-var_dump( __METHOD__, __LINE__, $this->pObj->pObj->piVar_sword, $arr_swords_quoted );
     // Preparation for investigating quotes
 
     switch ( true )
@@ -227,11 +226,9 @@ var_dump( __METHOD__, __LINE__, $this->pObj->pObj->piVar_sword, $arr_swords_quot
    */
   private function getSwordsWiQuotes()
   {
-var_dump(__METHOD__, __LINE__ );
     $arr_swords_marker = array(); // Array with every search word or search phrase and its marker like $0, $1
 
     $arr_swords_quoted = explode( '"', $this->pObj->pObj->piVar_sword );
-    var_dump( __METHOD__, __LINE__, $this->pObj->pObj->piVar_sword, $arr_swords_quoted );
     // Preparation for investigating quotes
     // Workflow for search words without any quotes
 
@@ -290,7 +287,6 @@ var_dump(__METHOD__, __LINE__ );
       'marker' => $arr_swords_marker,
       'exploded' => $arr_exploded
     );
-var_dump(__METHOD__, __LINE__, $arrReturn);
     return $arrReturn;
   }
 
@@ -305,14 +301,12 @@ var_dump(__METHOD__, __LINE__, $arrReturn);
    */
   private function getSwordsWoQuotes()
   {
-var_dump(__METHOD__, __LINE__ );
 
     // Get current search words or phrase
     $sword = $this->pObj->pObj->piVar_sword;
     $arrSwords = $this->getSwordsExploded( $sword );
     $arrSwords = $this->removeShortWords( $arrSwords );
 
-    var_dump( __METHOD__, __LINE__, $this->pObj->pObj->piVar_sword, $arrSwords );
     return $arrSwords;
   }
 
@@ -385,7 +379,6 @@ var_dump(__METHOD__, __LINE__ );
     {
       $arr_swords_marker = array_unique( $arr_swords_marker );
     }
-var_dump(__METHOD__, __LINE__, $arr_swords_exploded, $arr_swords_marker);
     // Extend marker array with search words from the array exploded
     //////////////////////////////////////////////////
     //

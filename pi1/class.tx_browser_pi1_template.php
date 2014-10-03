@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 5.0.0
+ * @version 6.0.0
  * @since 1.0.0
  */
 
@@ -131,7 +131,9 @@ class tx_browser_pi1_template
   // It is needed by social media bookmarks in a default single view.
   var $arr_curr_value = false;
 
-  // 3.4.0
+  private $objSearch = null;
+  // [object] object of the search class
+
   // Variables set by this class
 
   /**
@@ -668,7 +670,7 @@ class tx_browser_pi1_template
     switch ( true )
     {
       case( $field == $this->pObj->arrHandleAs[ 'image' ]):
-    //var_dump( __METHOD__, __LINE__, $field, $handleAsMarkerArray );
+        //var_dump( __METHOD__, __LINE__, $field, $handleAsMarkerArray );
         $value = $handleAsMarkerArray[ $hashMarker ];
         break;
       default:
@@ -788,7 +790,8 @@ class tx_browser_pi1_template
     $html = null;
     $wiDefaultTemplate = false;
     $markerArray = $this->pObj->objTyposcript->wrapRow( $template, $wiDefaultTemplate, $uid );
-    $markerArray[ '###SOCIALMEDIA_BOOKMARKS###' ] = $this->htmlFields5xBookmark( $uid );
+    $socialmedia_bookmarks = $this->htmlFields5xBookmark( $uid );
+    $markerArray[ '###SOCIALMEDIA_BOOKMARKS###' ] = $socialmedia_bookmarks;
     $html = $this->htmlRow5xHtml( $template, $hashMarker, $markerArray );
     return $html;
   }
@@ -934,13 +937,9 @@ class tx_browser_pi1_template
    */
   private function htmlRows5x( $template, $hashMarkerRow, $hashMarkerField, $markerArray = array() )
   {
-//var_dump( __METHOD__, __LINE__, $this->pObj->rowsLocalised);
-//die();
 
     $html = null;
     $uids = $this->htmlRows5xLocalUids();
-//var_dump( __METHOD__, __LINE__, $this->htmlRows5xLocalUids());
-//die( ':(' );
 
     $currRow = 0;
     $sumRows = count( $uids );
@@ -1113,6 +1112,37 @@ class tx_browser_pi1_template
     } // FOREACH subpart
 
     return $template;
+  }
+
+  /**
+   * init( )  :
+   *
+   * @return	void
+   * @internal  #61594
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function init()
+  {
+    $this->initSearch();
+  }
+
+  /**
+   * initSearch( )  :
+   *
+   * @return	void
+   * @internal  #61594
+   * @version 6.0.0
+   * @since   6.0.0
+   */
+  private function initSearch()
+  {
+    if ( is_object( $this->objSearch ) )
+    {
+      return;
+    }
+    require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_search.php');
+    $this->objSearch = new tx_browser_pi1_search( $this->pObj );
   }
 
   /**
@@ -1346,194 +1376,16 @@ class tx_browser_pi1_template
    * Building the result phrase for the search form.
    *
    * @return	string		Rendered rusult phrase
-   * @version   4.1.9
+   * @version   6.0.0
    * @since     2.0.0
    */
-  function resultphrase()
+  private function resultphrase()
   {
-    /**
-     * This method correspondends with tx_browser_pi1_zz::color_swords($tableField, $str_content)
-     */
-    $lSearchform = $this->pObj->lDisplay[ 'searchform.' ];
+    // #61594, 140915, 3+
+    $this->init();
+    $resultphrase = $this->objSearch->resultphrase();
+    return $resultphrase;
 
-
-
-    ///////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of any swords
-
-    if ( !is_array( $this->pObj->arr_swordPhrases ) )
-    {
-      return false;
-    }
-    // RETURN in case of any swords
-    ///////////////////////////////////////////////////////////////
-    //
-    // Set variables
-
-    $conf = $this->pObj->conf;
-    $mode = $this->pObj->piVar_mode;
-
-    $view = $this->pObj->view;
-    $viewWiDot = $view . '.';
-    $conf_view = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ];
-
-    $conf_phrase = $lSearchform[ 'resultPhrase.' ];
-    $conf_searchFor = $lSearchform[ 'resultPhrase.' ][ 'searchFor.' ];
-    $str_searchFor = $this->pObj->objWrapper4x->general_stdWrap( $conf_searchFor[ 'value' ], $conf_searchFor );
-    // 120915, dwildt, 1-
-    //$conf_and        = $lSearchform['resultPhrase.']['searchFor.']['and.'];
-    // 120915, dwildt, 1-
-    //$str_and         = $this->pObj->objWrapper4x->general_stdWrap($conf_and['value'], $conf_and);
-
-    $conf_minLen = $lSearchform[ 'resultPhrase.' ];
-    $bool_wrapSwords = $this->pObj->objFlexform->bool_searchForm_wiColoredSwords;
-    $key_according = 0;
-    $arr_confWrap = $lSearchform[ 'wrapSwordInResults.' ];
-    $max_key = count( $arr_confWrap ) - 1;
-    // Set variables
-    ///////////////////////////////////////////////////////////////
-    //
-    // Get global or local array advanced
-    #10116
-    $arr_conf_advanced = $conf[ 'advanced.' ];
-    if ( !empty( $conf_view[ 'advanced.' ] ) )
-    {
-      $arr_conf_advanced = $conf_view[ 'advanced.' ];
-    }
-    // Get global or local array advanced
-    // Char for Wildcard
-    $chr_wildcard = $this->pObj->str_searchWildcardCharManual;
-    $arr_colored = array();
-    // 120915, dwildt, 1+
-    $arrWrappedSwords = null;
-    foreach ( ( array ) $this->pObj->arr_resultphrase[ 'arr_marker' ] as $key => $value )
-    {
-      $value = stripslashes( $value );
-      if ( $bool_wrapSwords )
-      {
-        // Wildcards are used by default
-        if ( !$this->pObj->bool_searchWildcardsManual )
-        {
-          $str_wrapped_value = $this->pObj->objWrapper4x->general_stdWrap( $value, $arr_confWrap[ $key_according . '.' ] );
-        }
-        // Wildcards are used by default
-        // The user has to add a wildcard
-        if ( $this->pObj->bool_searchWildcardsManual )
-        {
-          $valueWildcard = $value;
-          // First char of search word is a wildcard
-          if ( $valueWildcard[ 0 ] == $chr_wildcard )
-          {
-            $valueWildcard = substr( $valueWildcard, 1, strlen( $valueWildcard ) - 1 );
-          }
-          // First char of search word is a wildcard
-          // Last char of search word is a wildcard
-          if ( $valueWildcard[ strlen( $valueWildcard ) - 1 ] == $chr_wildcard )
-          {
-            $valueWildcard = substr( $valueWildcard, 0, -1 );
-          }
-          // Last char of search word is a wildcard
-          $str_wrapped_value = $this->pObj->objWrapper4x->general_stdWrap( $valueWildcard, $arr_confWrap[ $key_according . '.' ] );
-        }
-        // The user has to add a wildcard
-
-        $arr_colored[ $key ] = $str_wrapped_value;
-      }
-//if(t3lib_div::_GP('dev')) var_dump('template 332', $arr_colored);
-      if ( !$bool_wrapSwords )
-      {
-        $str_wrapped_value = $value;
-      }
-      $arrWrappedSwords[ $key ] = $str_wrapped_value;
-      if ( $key_according <= $max_key )
-      {
-        $key_according++;
-      }
-      if ( $key_according > $max_key )
-      {
-        $key_according = 0;
-      }
-    }
-    $str_swords = $this->pObj->arr_resultphrase[ 'str_mask' ];
-    foreach ( ( array ) $arrWrappedSwords as $key => $value )
-    {
-      $str_swords = str_replace( $key, $value, $str_swords );
-    }
-    $this->pObj->arr_resultphrase[ 'arr_colored' ] = $arr_colored;
-// 3.3.4
-//if(t3lib_div::_GP('dev')) var_dump('template 354', $this->pObj->arr_resultphrase);
-
-    $conf_hasResult = $lSearchform[ 'resultPhrase.' ][ 'hasResult.' ];
-    $str_hasResult = $lSearchform[ 'resultPhrase.' ][ 'hasResult.' ][ 'value' ];
-    $str_hasResult = $this->pObj->objWrapper4x->general_stdWrap( $str_hasResult, $conf_hasResult );
-    $str_minLen = false;
-    $bool_minLen = $lSearchform[ 'resultPhrase.' ][ 'minLenPhrase' ];
-    if ( $bool_minLen )
-    {
-      $conf_minLen = $lSearchform[ 'resultPhrase.' ][ 'minLenPhrase.' ];
-      $str_minLen = $lSearchform[ 'resultPhrase.' ][ 'minLenPhrase.' ][ 'value' ];
-      $str_minLen = $this->pObj->objWrapper4x->general_stdWrap( $str_minLen, $conf_minLen );
-      #10116
-      $str_minLen = str_replace( '###advanced.security.sword.minLenWord###', $arr_conf_advanced[ 'security.' ][ 'sword.' ][ 'minLenWord' ], $str_minLen );
-    }
-    $bool_operator = $lSearchform[ 'resultPhrase.' ][ 'operatorPhrase' ];
-    $str_operator = false;
-    if ( $bool_operator )
-    {
-      $conf_operator = $lSearchform[ 'resultPhrase.' ][ 'operatorPhrase.' ];
-      $str_operator = $lSearchform[ 'resultPhrase.' ][ 'operatorPhrase.' ][ 'value' ];
-      $str_operator = $this->pObj->objWrapper4x->general_stdWrap( $str_operator, $conf_operator );
-    }
-    $str_wildcard = false;
-    if ( $this->pObj->bool_searchWildcardsManual )
-    {
-      $conf_wildcard = $lSearchform[ 'resultPhrase.' ][ 'wildcardPhrase.' ];
-      $str_wildcard = $lSearchform[ 'resultPhrase.' ][ 'wildcardPhrase.' ][ 'value' ];
-      $str_wildcard = $this->pObj->objWrapper4x->general_stdWrap( $str_wildcard, $conf_wildcard );
-      $str_wildcard = str_replace( '%wildcard%', $this->pObj->str_searchWildcardCharManual, $str_wildcard );
-    }
-    $str_phrase = $str_searchFor . ' ' . $str_swords . ' ' . $str_hasResult . ' ' . $str_minLen . $str_operator . $str_wildcard;
-    $str_phrase = $this->pObj->objWrapper4x->general_stdWrap( $str_phrase, $conf_phrase );
-
-    if ( $this->pObj->b_drs_search )
-    {
-      t3lib_div::devlog( '[INFO/SEARCH] Result phrase: \'' . $str_phrase . '\'', $this->pObj->extKey, 0 );
-    }
-
-
-
-    ///////////////////////////////////////////////////////////////
-    //
-    // RETURN false, in case of TypoScript: Don't display resultphrase'
-
-    if ( !$this->pObj->objFlexform->bool_searchForm_wiPhrase )
-    {
-      return false;
-    }
-    // RETURN false, in case of TypoScript: Don't display resultphrase'
-
-
-
-    return $str_phrase;
-  }
-
-  /**
-   * setDisplayList() : Set the global $this->lDisplayList
-   *
-   * @return	array		$lDisplayList : displayList configuration
-   * @version 5.0.0
-   * @since 2.0.0
-   */
-  private function setDisplayList()
-  {
-    $lDisplayList = $this->conf_view[ 'displayList.' ];
-    if ( !is_array( $lDisplayList ) )
-    {
-      $lDisplayList = $this->pObj->conf[ 'displayList.' ];
-    }
-    $this->lDisplayList = $lDisplayList;
-    return $lDisplayList;
   }
 
   /**
@@ -1992,7 +1844,6 @@ class tx_browser_pi1_template
 
     $str_html = false;
     $int_counter_element = 0;
-    $conf_selected = ' ' . $arr_ts[ 'wrap.' ][ 'item.' ][ 'selected' ];
     $int_space_left = $arr_ts[ 'wrap.' ][ 'item.' ][ 'nice_html_spaceLeft' ];
     $str_space_left = str_repeat( ' ', $int_space_left );
 
@@ -2011,8 +1862,6 @@ class tx_browser_pi1_template
       $conf_item = str_replace( '###VALUE###', $value, $conf_item );
       // Get the item selected (or not selected)
       $arr_piVar = $this->pObj->piVars;
-      // dwildt, 110102
-      //$conf_item  = $this->pObj->objFltr3x->get_wrappedItemSelected($value, $arr_piVar, $conf_selected, $conf_item);
       $tmp_value = null;
       if ( $value !== 0 )
       {
@@ -2029,8 +1878,6 @@ class tx_browser_pi1_template
           }
         }
       }
-      // 140705, dwildt, 1-: User can't select a selected item again.
-      //$conf_item = $this->pObj->objFltr3x->get_wrappedItemSelected( null, $tmp_value, $arr_piVar, $arr_ts, $conf_selected, $conf_item );
       // Wrap the value
       $conf_item = str_replace( '|', $label, $conf_item );
       $conf_item = $conf_item . "\n";
@@ -2124,7 +1971,7 @@ class tx_browser_pi1_template
     }
     // DRS - Development Reporting System
     // We need jQuery. Load
-    // name has to correspondend with similar code in tx_browser_pi1.php
+    // name has to correspond with similar code in tx_browser_pi1.php
     $name = 'jQuery';
     // 120915, dwildt, 1-
     //$bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
@@ -2133,7 +1980,7 @@ class tx_browser_pi1_template
 
     if ( $this->pObj->objFlexform->bool_ajax_enabled )
     {
-      // name has to correspondend with similar code in tx_browser_pi1.php
+      // name has to correspond with similar code in tx_browser_pi1.php
       $name = 'ajaxLL';
       $path = $this->pObj->conf[ 'javascript.' ][ 'ajax.' ][ 'fileLL' ];
       $path_tsConf = 'javascript.ajax.fileLL';
@@ -2144,7 +1991,7 @@ class tx_browser_pi1_template
       $bool_success = $this->pObj->objJss->addJssFileTo( $path, $name, $path_tsConf, $footer, $inline, $marker );
       // #50069, 130716, dwildt, 1-
       //$bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
-      // name has to correspondend with similar code in tx_browser_pi1.php
+      // name has to correspond with similar code in tx_browser_pi1.php
       $name = 'ajax';
       $path = $this->pObj->conf[ 'javascript.' ][ 'ajax.' ][ 'file' ];
       $path_tsConf = 'javascript.ajax.file';
@@ -2345,16 +2192,11 @@ class tx_browser_pi1_template
   public function tmplListview( $template, $rows )
   {
 
-    // Get the local or the global displayList array
-    $lDisplayList = $this->setDisplayList();
-
     // Remove ###LIST_TITLE### in case of AJAX single view
     $template = $this->tmplListviewAjaxTitle( $template );
 
     $markerArray = $this->tmpl_marker();
 
-    // dwildt, 140624, 1-: no effect
-    //$this->updateWizard( 'displayList.noItemMessage', $lDisplayList );
     // First time on the site?
     $arrFirstVisit = $this->tmplListviewFirstVisit( $template );
     if ( $arrFirstVisit[ 'return' ] )
@@ -2388,10 +2230,6 @@ class tx_browser_pi1_template
 
     $this->pObj->rows = $rows;
 
-    // #i0064, 140714, dwildt, 3-
-//    // Get oddClasses
-//    $this->oddClassColumns = $lDisplayList[ 'templateMarker.' ][ 'oddClass.' ][ 'columns' ];
-//    $this->oddClassRows = $lDisplayList[ 'templateMarker.' ][ 'oddClass.' ][ 'rows' ];
     // Hook for handle the consolidated rows
     $this->hook_row_list_consolidated();
 
@@ -3732,265 +3570,6 @@ class tx_browser_pi1_template
     return false;
   }
 
-  /**
-   * Building the searchbox as a form.
-   *
-   * @param	string		$template: The current template part
-   * @return	string		$template: The HTML template part
-   * @version 5.0.0
-   * @since 1.0.0
-   */
-  public function tmplSearchBox( $template )
-  {
-    $conf = $this->pObj->conf;
-    $mode = $this->pObj->piVar_mode;
-
-    $view = $this->pObj->view;
-    $viewWiDot = $view . '.';
-    $conf_view = $conf[ 'views.' ][ $viewWiDot ][ $mode . '.' ];
-
-    $display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment[ 'searchform' ];
-
-
-    //////////////////////////////////////////////////////////
-    //
-      // RETURN searchform shouldn't displayed
-
-    if ( !$display )
-    {
-      $template = $this->pObj->cObj->substituteSubpart( $template, '###SEARCHFORM###', '', true );
-      return $template;
-    }
-    // RETURN searchform shouldn't displayed
-    //////////////////////////////////////////////////////////
-    //
-      // action without filters and sword
-
-    $arr_currPiVars = $this->pObj->piVars;
-
-    // Remove pointer temporarily
-    // #i0074, 140720, dwildt, 1-
-    //$pageBrowserPointerLabel = $this->conf[ 'navigation.' ][ 'pageBrowser.' ][ 'pointer' ];
-    // #i0074, 140720, dwildt, 1+
-    $pageBrowserPointerLabel = $this->pObj->conf[ 'navigation.' ][ 'pageBrowser.' ][ 'pointer' ];
-    $arr_removePiVars = array( 'sword', 'sort', $pageBrowserPointerLabel );
-    // #11576, dwildt, 101219
-    if ( !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
-    {
-      $arr_removePiVars[] = 'plugin';
-    }
-    foreach ( ( array ) $arr_removePiVars as $str_removePiVars )
-    {
-      if ( isset( $this->pObj->piVars[ $str_removePiVars ] ) )
-      {
-        unset( $this->pObj->piVars[ $str_removePiVars ] );
-      }
-    }
-    // Remove pointer temporarily
-    // Move $GLOBALS['TSFE']->id temporarily
-    // #9458
-    $int_tsfeId = $GLOBALS[ 'TSFE' ]->id;
-    if ( !empty( $this->pObj->objFlexform->int_viewsListPid ) )
-    {
-      $GLOBALS[ 'TSFE' ]->id = $this->pObj->objFlexform->int_viewsListPid;
-    }
-    // Move $GLOBALS['TSFE']->id temporarily
-    // Remove the filter fields temporarily
-    // #9495, fsander
-    // #11580, dwildt, 101219
-    if ( is_array( $conf_view[ 'displayList.' ][ 'display.' ][ 'searchform.' ][ 'respect_filters.' ] ) )
-    {
-      $conf_respect_filters = $conf_view[ 'displayList.' ][ 'display.' ][ 'searchform.' ][ 'respect_filters.' ];
-    }
-    if ( !is_array( $conf_view[ 'displayList.' ][ 'display.' ][ 'searchform.' ][ 'respect_filters.' ] ) )
-    {
-      $conf_respect_filters = $conf[ 'displayList.' ][ 'display.' ][ 'searchform.' ][ 'respect_filters.' ];
-    }
-    if ( $conf_respect_filters[ 'all' ] )
-    {
-      // Don't remove any filter ...
-    }
-    if ( !$conf_respect_filters[ 'all' ] )
-    {
-      // Remove all but ...
-      if ( is_array( $conf_respect_filters[ 'but.' ] ) )
-      {
-        $conf_filter = $conf_view[ 'filter.' ];
-        foreach ( ( array ) $conf_respect_filters[ 'but.' ] as $tableWiDot => $arr_fields )
-        {
-          foreach ( ( array ) $arr_fields as $field_key => $field_value )
-          {
-            if ( $field_value )
-            {
-              unset( $conf_filter[ $tableWiDot ][ $field_key ] );
-            }
-          }
-        }
-      }
-      $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars( $this->pObj->piVars, $conf_filter );
-    }
-    // #11580, dwildt, 101219
-    // Remove the filter fields temporarily
-
-    $clearAnyway = 0;
-    $altPageId = 0;
-    $str_action = $this->pObj->pi_linkTP_keepPIvars_url( $this->pObj->piVars, $this->pObj->boolCache, $clearAnyway, $altPageId );
-
-    // Recover piVars
-    // #9495, fsander
-    $this->pObj->piVars = $arr_currPiVars;
-    // Recover piVars
-    // 110829, dwildt+
-    $markerArray = $this->tmpl_marker();
-    // #43778, 121208, dwildt, 1+
-    $this->tmpl_marker_rmFilter();
-    $markerArray = $this->markerArray;
-    // 110829, dwildt+
-    // 110829, dwildt-
-//    $markerArray                  = $this->pObj->objWrapper4x->constant_markers();
-    $markerArray[ '###ACTION###' ] = $str_action;
-    $str_sword = stripslashes( $this->pObj->piVars[ 'sword' ] );
-    $str_sword = htmlspecialchars( $str_sword );
-    $str_sword_default = $this->pObj->pi_getLL( 'label_sword_default', 'Search Word', true );
-    $str_sword_default = htmlspecialchars( $str_sword_default );
-    // 140712, dwildt, -: Foundation
-//    if ( !$str_sword )
-//    {
-//      $str_sword = $str_sword_default;
-//      if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_templating )
-//      {
-//        t3lib_div::devLog( '[INFO/LANG+TEMPLATING] Empty Sword becomes the default value: \'' . $str_sword . '\'.', $this->pObj->extKey, 0 );
-//        $langKey = $GLOBALS[ 'TSFE' ]->lang;
-//        if ( $langKey == 'en' )
-//        {
-//          $langKey = 'default';
-//        }
-//        t3lib_div::devLog( '[HELP/LANG+TEMPLATING] Configure it? See _LOCAL_LANG.' . $langKey . '.label_sword_default', $this->pObj->extKey, 1 );
-//      }
-//    }
-    $markerArray[ '###SWORD###' ] = $str_sword;
-    $markerArray[ '###SWORD_DEFAULT###' ] = $str_sword_default;
-    $markerArray[ '###BUTTON###' ] = $this->pObj->pi_getLL( 'pi_list_searchBox_search', 'Search', true );
-    $markerArray[ '###POINTER###' ] = $this->pObj->prefixId . '[pointer]';
-    // 110110, cweiske, #11886
-    $markerArray[ '###FLEXFORM###' ] = $this->pObj->piVars[ 'plugin' ];
-    // 120916, dwildt, 1+
-    $markerArray[ '###PLUGIN###' ] = $this->pObj->piVars[ 'plugin' ];
-    $markerArray[ '###MODE###' ] = $this->pObj->piVar_mode;
-    $markerArray[ '###VIEW###' ] = $this->pObj->view;
-    $markerArray[ '###RESULTPHRASE###' ] = $this->resultphrase();
-
-    $str_hidden = null;
-    $arr_ts = $this->lDisplayList[ 'selectBox_orderBy.' ][ 'selectbox.' ];
-    $int_space_left = $arr_ts[ 'wrap.' ][ 'item.' ][ 'nice_html_spaceLeft' ];
-    $str_space_left = str_repeat( ' ', $int_space_left );
-    foreach ( ( array ) $this->pObj->piVars as $key => $values )
-    {
-      // #i0074, 140720, dwildt, +
-      if( $key == 'pointer' )
-      {
-        continue;
-      }
-      $piVar_key = $this->pObj->prefixId . '[' . $key . ']';
-
-      if ( is_array( $values ) )
-      {
-        foreach ( ( array ) $values as $value )
-        {
-          if ( $value != null )
-          {
-            $str_hidden = $str_hidden . PHP_EOL .
-                    $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $value . '">';
-          }
-        }
-      }
-      if ( !is_array( $values ) && !( $values == null ) )
-      {
-        $str_hidden = $str_hidden . PHP_EOL .
-                $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $values . '">';
-      }
-    }
-    $markerArray[ '###HIDDEN###' ] = $str_hidden;
-
-    // Removes the marker radialsearch and radius
-    $markerArray = $this->tmplSearchBoxRadialsearch( $markerArray );
-
-    $subpart = $this->pObj->cObj->getSubpart( $template, '###SEARCHFORM###' );
-    // 3.5.0: We need the subpartmarker for the filter again
-    $searchBox = '<!-- ###SEARCHFORM### begin -->
-        ' . $this->pObj->cObj->substituteMarkerArray( $subpart, $markerArray ) . '
-<!-- ###SEARCHFORM### end -->';
-
-
-
-    //////////////////////////////////////////////////////////////////////
-    //
-      // csv export: remove the csv export button
-    // #29370, 110831, dwildt+
-    if ( !$this->pObj->objFlexform->sheet_viewList_csvexport )
-    {
-      $searchBox = $this->pObj->cObj->substituteSubpart( $searchBox, '###BUTTON_CSV-EXPORT###', null, true );
-    }
-    // #29370, 110831, dwildt+
-    // #00000, 120126, dwildt+
-    if ( $this->pObj->objFlexform->sheet_viewList_csvexport )
-    {
-      $templateCSV = $this->pObj->cObj->getSubpart( $searchBox, '###BUTTON_CSV-EXPORT###' );
-      if ( empty( $templateCSV ) )
-      {
-        $prompt = '<div style="border:1em solid orange;padding:1em;text-align:center;">
-            <h1>
-              TYPO3 Browser Warning
-            </h1>
-            <h2>
-              EN: Subpart is missing
-            </h2>
-            <p>
-              English: You enabled the CSV export in the plugin/flexform.<br />
-              But the current HTML template doesn\'t contain the subpart ###BUTTON_CSV-EXPORT###.<br />
-              Please take care of a proper template and add the subpart.<br />
-              See example in res/html/default.templ.<br />
-            </p>
-            <h2>
-              DE: Subpart fehlt
-            </h2>
-            <p>
-              Deutsch: Du hast im Plugin/in der Flexform den CSV-Export aktiviert.<br />
-              Aber das aktuelle HTML-Template hat keinen Subpart ###BUTTON_CSV-EXPORT###.<br />
-              Bitte k&uuml;mmere Dich um ein korrektes Template und f&uuml;ge den Subpart hinzu.<br />
-              Ein Beispiel findest Du in der Datei: res/html/default.tmpl<br />
-            </p>
-          </div>';
-      }
-      $template = $prompt . $template;
-    }
-    // #00000, 120126, dwildt+
-
-    $template = $this->pObj->cObj->substituteSubpart( $template, '###SEARCHFORM###', $searchBox, true );
-    // csv export: remove the csv export button
-
-    $this->pObj->piVars = $arr_currPiVars;
-    $GLOBALS[ 'TSFE' ]->id = $int_tsfeId; // #9458
-    // action without filters and sword
-
-    return $template;
-  }
-
-  /**
-   * tmplSearchBoxRadialsearch()  : Removes the marker radialsearch and radius
-   *                                Both will be set later in the workflow
-   *
-   * @param	array		$markerArray  : current marker array
-   * @return	array $markerArray  : marker array without radialsearch and radius
-   * @version 5.0.0
-   * @since 5.0.0
-   */
-  private function tmplSearchBoxRadialsearch( $markerArray )
-  {
-    unset( $markerArray[ '###RADIALSEARCH###' ] );
-    unset( $markerArray[ '###RADIUS###' ] );
-    return $markerArray;
-  }
 
   /**
    * tmplSingleview() : Returns the single view
@@ -4500,51 +4079,38 @@ class tx_browser_pi1_template
     $markerArray = $this->pObj->objMarker->extend_marker( $markerArray );
     $this->markerArray = $markerArray;
     return $markerArray;
+  }
 
-//    // Set marker
-//    $markerArray[ '###MODE###' ] = $this->pObj->piVar_mode;
-//    $markerArray[ '###VIEW###' ] = $this->pObj->view;
-//    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $markerArray );
-//    $constantMarkers = $this->pObj->objWrapper4x->constant_markers();
-//    foreach ( ( array ) $constantMarkers as $key => $value )
+//  /**
+//   * tmpl_marker_rmMarker(): Remove fields, if they are filter
+//   *
+//   * @return	void
+//   * @version   4.2.0
+//   * @since     4.2.0
+//   * @internal  43778
+//   */
+//  private function tmpl_marker_rmFilter()
+//  {
+//    // LOOP each filter
+//    foreach ( ( array ) $this->conf_view[ 'filter.' ] as $tableWiDot => $fields )
 //    {
-//      $markerArray[ $key ] = $value;
-//    }
+//      foreach ( array_keys( ( array ) $fields ) as $field )
+//      {
+//        // CONTINUE : field has an dot
+//        if ( rtrim( $field, '.' ) != $field )
+//        {
+//          continue;
+//        }
+//        // CONTINUE : field has an dot
 //
-//    $this->markerArray = $markerArray;
-//    return $markerArray;
-  }
-
-  /**
-   * tmpl_marker_rmMarker(): Remove fields, if they are filter
-   *
-   * @return	void
-   * @version   4.2.0
-   * @since     4.2.0
-   * @internal  43778
-   */
-  private function tmpl_marker_rmFilter()
-  {
-    // LOOP each filter
-    foreach ( ( array ) $this->conf_view[ 'filter.' ] as $tableWiDot => $fields )
-    {
-      foreach ( array_keys( ( array ) $fields ) as $field )
-      {
-        // CONTINUE : field has an dot
-        if ( rtrim( $field, '.' ) != $field )
-        {
-          continue;
-        }
-        // CONTINUE : field has an dot
-
-        $currFilter = $tableWiDot . $field;
-        $hashFilter = '###' . strtoupper( $currFilter ) . '###';
-
-        unset( $this->markerArray[ $hashFilter ] );
-      }
-    }
-    // LOOP each filter
-  }
+//        $currFilter = $tableWiDot . $field;
+//        $hashFilter = '###' . strtoupper( $currFilter ) . '###';
+//
+//        unset( $this->markerArray[ $hashFilter ] );
+//      }
+//    }
+//    // LOOP each filter
+//  }
 
   /**
    * tmpl_rmFields( ):  Get the field names, which should not displayed.

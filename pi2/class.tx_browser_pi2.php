@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Dirk Wildt <wildt.at.die-netzmacher.de>
+ *  (c) 2009-2014 Dirk Wildt <wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,21 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(PATH_tslib.'class.tslib_pibase.php');
+// #61520, 140911, dwildt, 1-
+//require_once(PATH_tslib . 'class.tslib_pibase.php');
+
+// #61520, 140911, dwildt, +
+list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
+$version = ( ( int ) $main ) * 1000000;
+$version = $version + ( ( int ) $sub ) * 1000;
+$version = $version + ( ( int ) $bugfix ) * 1;
+// Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
+
+if ( $version < 6002000 )
+{
+  require_once(PATH_tslib . 'class.tslib_pibase.php');
+}
+// #61520, 140911, dwildt, +
 
 /**
  * Plugin 'Browser' for the 'browser' extension - the fastest way for your data into the TYPO3 frontend.
@@ -30,6 +44,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @author    Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
+ * @version 6.0.0
  */
 
 /**

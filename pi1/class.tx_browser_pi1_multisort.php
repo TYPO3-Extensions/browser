@@ -60,6 +60,8 @@ class tx_browser_pi1_multisort
 
   // [object] The parent object
   public $pObj;
+  private $conf_view = null;
+  private $conf_path = null;
   // [Array] current rows
   private $rows;
   // [Boolean]
@@ -74,6 +76,9 @@ class tx_browser_pi1_multisort
   function __construct( $parentObj )
   {
     $this->pObj = $parentObj;
+    // #i0084, 140922, dwildt, 2+
+    $this->conf_path = $this->pObj->get_confPath();
+    $this->conf_view = $this->pObj->get_confView();
   }
 
   /**
@@ -147,7 +152,7 @@ class tx_browser_pi1_multisort
   private function initRequirementsRandom()
   {
     // RETURN false : no random mode
-    if ( !$this->pObj->conf_view[ 'random' ] )
+    if ( !$this->conf_view[ 'random' ] )
     {
       return false;
     }
@@ -174,7 +179,7 @@ class tx_browser_pi1_multisort
   private function initRequirementsSynonyms()
   {
     // RETURN false : no synonyms mode
-    if ( !$this->pObj->conf_view[ 'functions.' ][ 'synonym' ] )
+    if ( !$this->conf_view[ 'functions.' ][ 'synonym' ] )
     {
       return false;
     }

@@ -1,6 +1,9 @@
 plugin.tx_browser_pi1 {
 
   _CSS_DEFAULT_STYLE (
+    .tx-browser-pi1 div.browser {
+      padding-bottom: 1em;
+    }
     .tx-browser-pi1 div.azSelector,
     .tx-browser-pi1 div.indexBrowser,
     .tx-browser-pi1 div.modeSelector,
@@ -64,7 +67,6 @@ plugin.tx_browser_pi1 {
     }
     select#tx_browser_pi1_radius {
       padding-right:.2em;
-      text-align:right;
     }
     select#tx_browser_pi1_radius option{
       padding-right:1em;

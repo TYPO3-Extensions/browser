@@ -3,7 +3,7 @@
 
 plugin.tx_browser_pi1 {
   navigation {
-      // debugging, enabled, provider, template, configuration, marker
+      // enabled, provider
     map =
     map {
         // [STRING] disabled,Map,Map +Routes

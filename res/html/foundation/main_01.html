@@ -83,54 +83,57 @@ This template is the default template for all list views.
 </em>
 
       <!-- ###TEMPLATE_LIST### begin -->
-      <div class="row ###MODE### listview-###MODE###">
-        <div class="columns">
-          <!-- ###LIST_TITLE### begin -->
-            ###MY_TITLE###
-          <!-- ###LIST_TITLE### end -->
-          <div class="row">
-            <!-- ###SEARCHFORM### begin -->
-            <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="columns small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE###">
-              LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.searchform while runtime ...<br />
-              Please use typoscript like:<br />
-              plugin.tx_browser_pi1.views.list.[list-id].htmlSnippets.subparts.searchform < plugin.tx_browser_pi1.displayList.master_templates.subparts.listview.searchform.simpleMapFilter
-            </div><!-- /columns --><!-- ###SEARCHFORM### end -->
-            <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
-              ###MAP###
-              <!-- ###LISTHEAD### begin -->
-                <!-- ###LISTHEADITEM### begin -->
-                  ###ITEM###
-                <!-- ###LISTHEADITEM### end -->
-              <!-- ###LISTHEAD### end -->
-              <div class="listarea">
-                <!-- ###INDEXBROWSER### begin -->
-                <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
-                  <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE### "><!-- ###INDEXBROWSERTABS### begin -->
-                    <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
-                  </ul>
-                </div><!-- ###INDEXBROWSER### end -->
-                <!-- ###PAGEBROWSER### begin -->
-                <div id="c###TT_CONTENT.UID###-pageBrowser-###MODE###" class="pageBrowser pageBrowser-list-###MODE###">
-                  ###RESULT_AND_ITEMS###
-                </div><!-- ###PAGEBROWSER### end -->
-                <!-- ###MODESELECTOR### begin -->
-                <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
-                  <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE###">
-                    <!-- ###MODESELECTORTABS### begin -->
-                    <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
-                    <!-- ###MODESELECTORTABS### end -->
-                  </ul>
-                </div><!-- ###MODESELECTOR### end -->
-                <!-- ###LISTVIEW### begin -->
-                <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
-                  LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
-                </div> <!-- /listview -->
-                <!-- ###LISTVIEW### end -->
-              </div> <!-- /listarea -->
-            </div><!-- /columns -->
-          </div><!-- /row -->
-        </div><!-- /columns -->
-      </div><!-- /row --><!-- ###TEMPLATE_LIST### end -->
+      <!-- ###LIST_TITLE### begin -->
+      <div class="columns">
+        ###MY_TITLE###
+      </div>
+      <!-- ###LIST_TITLE### end -->
+      <!-- ###SEARCHFORM### begin -->
+      <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE###">
+        LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.searchform while runtime ...<br />
+        Please use typoscript like:<br />
+        plugin.tx_browser_pi1.views.list.[list-id].htmlSnippets.subparts.searchform < plugin.tx_browser_pi1.displayList.master_templates.subparts.listview.searchform.simpleMapFilter
+      </div><!-- /columns --><!-- ###SEARCHFORM### end -->
+      <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
+        ###MAP###
+        <!-- ###LISTHEAD### begin -->
+          <!-- ###LISTHEADITEM### begin -->
+            ###ITEM###
+          <!-- ###LISTHEADITEM### end -->
+        <!-- ###LISTHEAD### end -->
+        <div class="row listarea">
+          <div class="columns browser">
+            <!-- ###INDEXBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="show-for-large-up indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+              <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE### "><!-- ###INDEXBROWSERTABS### begin -->
+                <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
+              </ul>
+            </div><!-- ###INDEXBROWSER### end -->
+            <!-- ###PAGEBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-pageBrowser-###MODE###" class="pageBrowser pageBrowser-list-###MODE###">
+              ###RESULT_AND_ITEMS###
+            </div><!-- ###PAGEBROWSER### end -->
+            <!-- ###MODESELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
+              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE###">
+                <!-- ###MODESELECTORTABS### begin -->
+                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                <!-- ###MODESELECTORTABS### end -->
+              </ul>
+            </div><!-- ###MODESELECTOR### end -->
+          </div><!-- browser end -->
+          <!-- ###LISTVIEW### begin -->
+          <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="columns listview listview-content listview-###MODE### listview-content-###MODE###">
+            LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
+          </div> <!-- /listview -->
+          <!-- ###LISTVIEW### end -->
+          <!-- ###PAGEBROWSER### begin -->
+          <div id="c###TT_CONTENT.UID###-pageBrowser-###MODE###" class="pageBrowser pageBrowser-list-###MODE###">
+            ###RESULT_AND_ITEMS###
+          </div><!-- ###PAGEBROWSER### end -->
+        </div> <!-- /listarea -->
+      </div><!-- /columns -->
+      <!-- ###TEMPLATE_LIST### end -->
 
 
 
@@ -216,7 +219,7 @@ displayList.selectBox_orderBy.display = 0
 </em>
 
 <!-- ###TEMPLATE_SELECTBOX_VALID### begin -->
-            <div class="sortbox c###TT_CONTENT.UID###-###VIEW###view-###MODE###-sortbox">
+            <div class="sortbox c###TT_CONTENT.UID###-listview-###MODE###-sortbox">
               <form ###CLASS### action="###URL###" method="POST">
                 <fieldset>
                   <legend>###LEGEND###</legend>

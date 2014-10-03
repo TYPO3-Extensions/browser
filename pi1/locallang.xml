@@ -11,9 +11,19 @@
       <label index="config_error_prompt">Error in %class%::%sheet%: Value '%field%' isn't defined: '%value%'.</label>
       <label index="config_reload">Please reload your plugin Browser! Id of the page: %pid%, id of the content element: %uid%</label>
       <label index="drs_security">SECURITY WARNING: Please deactivate the DRS - Development Reporting System - on every operating system.</label>
-      <label index="drs_sql_prompt">The SQL query has an error. Please use the DRS - the Development Reporting System. The DRS will display the query and the error. 
+      <label index="drs_sql_prompt">The SQL query has an error. Please use the DRS - the Development Reporting System. The DRS will display the query and the error.
 
 Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable DRS.</label>
+      <label index="error_cHashExcludedParameters_sword"><![CDATA[
+        <h2>
+          ERROR: cHashExcludedParameters
+        </h2>
+        <p>
+          $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] doesn't contain tx_browser_pi1[sword].<br />
+          You will get a cHash Error from TYPO3 6.x.<br />
+          Please set $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] like: 'L,tx_browser_pi1[sword],...'
+        </p>
+      ]]></label>
       <label index="error_h1">Error</label>
       <label index="error_filterh1">Filter Configuration Error</label>
       <label index="error_filter_prompt"><![CDATA[The configuration of the filter  has an error. Please use the DRS - the Development Reporting System. The DRS will display the error and the solution probably.<br /><br />Browser - TYPO3 without PHP]]></label>
@@ -188,6 +198,17 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
   Browser - TYPO3 without PHP.
 </p>
 ]]></label>
+      <label index="error_pageNotFoundOnCHashError"><![CDATA[
+        <h2>
+          ERROR: pageNotFoundOnCHashError
+        </h2>
+        <p>
+          $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled.<br />
+          You will get a cHash Error from TYPO3 6.2.<br />
+          Please disable $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
+          See: System > Install
+        </p>
+      ]]></label>
       <label index="error_readlog_h1">Error</label>
       <label index="error_readlog_prompt">There is an error. Please activate the logging mode of this extension (browser) and take a look in the log of cc_devlog!</label>
       <label index="error_relation_h1">Relation Building: Error</label>
@@ -444,6 +465,17 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
   Browser - TYPO3 ohne PHP.
 </p>
 ]]></label>
+      <label index="error_pageNotFoundOnCHashError"><![CDATA[
+        <h2>
+          Fehler: pageNotFoundOnCHashError
+        </h2>
+        <p>
+          $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] ist aktiviert.<br />
+          Du wirst mit TYPO3 ab Version 6.2 einen cHash-Fehler bekommen (&cHash comparison failed)<br />
+          Bitte deaktiviere $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
+          Siehe: System > Install
+        </p>
+      ]]></label>
       <label index="error_readlog_h1">Fehler</label>
       <label index="error_readlog_prompt">Es ist ein Fehler aufgetreten. Bitte aktiviere die Logging-Funktion dieser Extension (Browser) und wirf einen Blick in das Log von cc_devLog!</label>
       <label index="error_sql_h1">SQL Fehler</label>

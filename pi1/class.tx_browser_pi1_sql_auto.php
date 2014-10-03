@@ -2768,8 +2768,8 @@ class tx_browser_pi1_sql_auto
    */
   private function init_class_boolAutorelation()
   {
-    $conf_path = $this->pObj->conf_path;
-    $conf_view = $this->pObj->conf_view;
+    $conf_path = $this->pObj->get_confPath();
+    $conf_view = $this->pObj->get_confView();
 
     $coa_autoconfigRelations = $conf_view[ 'autoconfig.' ][ 'relations.' ];
 

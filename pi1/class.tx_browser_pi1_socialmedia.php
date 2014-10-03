@@ -121,7 +121,7 @@ class tx_browser_pi1_socialmedia
    * @version 5.0.0
    * @since 3.0.0
    */
-  function get_htmlBookmarks( $elements, $key, $bool_defaultTemplate )
+  public function get_htmlBookmarks( $elements, $key, $bool_defaultTemplate )
   {
     static $int_countThisMethod = 1;
     static $int_currPlugin_uid = 0; // #9596
@@ -146,7 +146,7 @@ class tx_browser_pi1_socialmedia
       }
       // DRS - Development Reporting System
       $int_countThisMethod = $int_countThisMethod + 1;
-      return false;
+      return;
     }
     // RETURN if social bookmarks are disabled
     // Default HTML template with an ###ITEM### marker or a ###VALUE### marker
@@ -174,7 +174,7 @@ class tx_browser_pi1_socialmedia
         }
         // DRS - Development Reporting System
         $int_countThisMethod = $int_countThisMethod + 1;
-        return false;
+        return;
       }
       // RETURN false if current key is the table.field for site
     }
@@ -346,7 +346,7 @@ class tx_browser_pi1_socialmedia
    *
    * @return	string		$str_items or false. $str_items is an html template code with ###URL### and ###TITLE###
    */
-  function init_htmlBookmarks()
+  private function init_htmlBookmarks()
   {
     static $int_countThisMethod = 1;
     static $int_currPlugin_uid = 0; // #9596
@@ -580,7 +580,7 @@ class tx_browser_pi1_socialmedia
    *
    * @return	boolean		false
    */
-  function init_default_stdWraps()
+  private function init_default_stdWraps()
   {
     static $bool_firsttime = true;
     static $int_currPlugin_uid = 0; // #9596
