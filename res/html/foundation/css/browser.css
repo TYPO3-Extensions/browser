@@ -1,0 +1,96 @@
+.clearing-blackout {
+  z-index:999999 !important; /* because of map */
+}
+nav .fixed,
+nav.top-bar {
+  z-index:999998; /* because of map */
+}
+/* Stiftung Liebenau */
+/*nav section {
+  clear:none;
+}
+
+.contain-to-grid {
+  background-color:inherit;
+}*/
+
+/*
+*
+* CSS multicolumn menu
+* #i0081, 140806, dwildt
+*/
+@media only screen and (min-width: 40.063em) {
+  .top-bar-section ul.left .divider-first,
+  .top-bar-section ul.right .divider-last {
+    display:none;
+  }
+  DEVELOPMENT.top-bar-section .page-3 > .dropdown:nth-child(2) {
+    left:-140px;      /* fallback for browsers without support for calc() */
+    min-width:280px;  /* fallback for browsers without support for calc() */
+    left:calc(140px*-1);
+    min-width:calc(140px*2);
+  }
+  .top-bar-section .dropdown ul {
+    min-width:100%;
+  }
+  .top-bar-section .dropdown ul li {
+    width:100%;
+  }
+  .top-bar-section .dropdown-6,
+  .top-bar-section .dropdown-7,
+  .top-bar-section .dropdown-8,
+  .top-bar-section .dropdown-9,
+  .top-bar-section .dropdown-10 {
+    min-width:400px; /* fallback for browsers without support for calc() */
+    min-width:calc(200px*2);
+  }
+  .top-bar-section .dropdown-6 li,
+  .top-bar-section .dropdown-7 li,
+  .top-bar-section .dropdown-8 li,
+  .top-bar-section .dropdown-9 li,
+  .top-bar-section .dropdown-10 li {
+    width:50%; /* fallback for browsers without support for calc() */
+    width:calc(100%/2);
+  }
+  .top-bar-section .dropdown-11,
+  .top-bar-section .dropdown-12,
+  .top-bar-section .dropdown-13,
+  .top-bar-section .dropdown-14,
+  .top-bar-section .dropdown-15 {
+    min-width:600px; /* fallback for browsers without support for calc() */
+    min-width:calc(200px*3);
+  }
+  .top-bar-section .dropdown-11 li,
+  .top-bar-section .dropdown-12 li,
+  .top-bar-section .dropdown-13 li,
+  .top-bar-section .dropdown-14 li,
+  .top-bar-section .dropdown-15 li {
+    width:33%; /* fallback for browsers without support for calc() */
+    width:calc(100%/3);
+  }
+  .top-bar-section .dropdown-16,
+  .top-bar-section .dropdown-17,
+  .top-bar-section .dropdown-18,
+  .top-bar-section .dropdown-19,
+  .top-bar-section .dropdown-20 {
+    min-width:800px; /* fallback for browsers without support for calc() */
+    min-width:calc(200px*4);
+  }
+  .top-bar-section .dropdown-16 li,
+  .top-bar-section .dropdown-17 li,
+  .top-bar-section .dropdown-18 li,
+  .top-bar-section .dropdown-19 li,
+  .top-bar-section .dropdown-20 li {
+    width:25%; /* fallback for browsers without support for calc() */
+    width:calc(100%*4);
+  }
+}
+
+figure.tx-browser-pi1 {
+  margin:0;
+}
+.row > .below-center,
+.row > .below-left,
+.row > .below-right {
+  padding-top: 1em;
+}
