@@ -31,7 +31,7 @@ plugin.tx_browser_pi1 {
                 stripHtml         = 1
                 htmlSpecialChars  = 1
                 crop              = 30|...|1
-                noTrimWrap        = || &raquo;|
+                noTrimWrap        = ||&nbsp;&raquo;|
               }
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.2.default
               required = 1

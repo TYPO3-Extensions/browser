@@ -7,9 +7,9 @@ page {
   }
   includeJS {
     browserModernizr  = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJS.modernizr}
+    browserJquery     = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.jquery}
   }
   includeJSFooter {
-    browserJquery     = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.jquery}
     browserFoundation = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.foundation}
   }
   jsFooterInline {

@@ -51,7 +51,7 @@ plugin.tx_browser_pi1 {
                   30 = TEXT
                   30 {
                     value       = linktosingle
-                    noTrimWrap  = | ||
+                    noTrimWrap  = | "|"|
                   }
                     // title
                   40 = TEXT

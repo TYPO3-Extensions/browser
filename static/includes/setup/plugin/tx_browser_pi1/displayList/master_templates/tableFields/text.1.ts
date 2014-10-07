@@ -36,10 +36,16 @@ plugin.tx_browser_pi1 {
                 // Details link
               20 = TEXT
               20 {
-                value = details &raquo;
+                value = details
                 lang {
-                  de = Details &raquo;
-                  en = details &raquo;
+                  de = Mehr
+                  en = details
+                }
+                stdWrap {
+                  stripHtml         = 1
+                  htmlSpecialChars  = 1
+                  crop              = 30|...|1
+                  noTrimWrap        = ||&nbsp;&raquo;|
                 }
                 noTrimWrap = | ||
                 typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.1.default

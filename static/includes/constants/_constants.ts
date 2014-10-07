@@ -3,7 +3,7 @@
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/drs.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/imagedimensions.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/javascript.ts">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/jquerydebugging.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/jquery.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/jqueryjstree.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/localisation.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/constants/navigation.ts">

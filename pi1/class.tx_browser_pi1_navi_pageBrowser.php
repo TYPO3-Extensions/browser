@@ -30,7 +30,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.8.7
+ * @version     6.0.0
  * @since       3.9.12
  */
 

@@ -2248,7 +2248,7 @@ class tx_browser_pi1_viewlist
     {
       $this->content = $this->pObj->cObj->substituteSubpart
       (
-      $this->content, '###PAGEBROWSER###', null, true
+      $this->content, '###PAGEBROWSERTOP###', null, true
       );
 //var_dump(__METHOD__, __LINE__, $arr_return, $markerArray, $subpart, $pageBrowser);
       return;
@@ -2261,11 +2261,19 @@ class tx_browser_pi1_viewlist
     $markerArray[ '###VIEW###' ] = $this->view;
     // Set marker the array
     // Replace markers in the current content
-    $subpart = $this->pObj->cObj->getSubpart( $this->content, '###PAGEBROWSER###' );
+    // #i0083, 141006, dwildt, 6~
+    $subpart = $this->pObj->cObj->getSubpart( $this->content, '###PAGEBROWSERTOP###' );
     $pageBrowser = $this->pObj->cObj->substituteMarkerArray( $subpart, $markerArray );
     $this->content = $this->pObj->cObj->substituteSubpart
             (
-            $this->content, '###PAGEBROWSER###', $pageBrowser, true
+            $this->content, '###PAGEBROWSERTOP###', $pageBrowser, true
+    );
+    // #i0083, 141006, dwildt, 6+
+    $subpart = $this->pObj->cObj->getSubpart( $this->content, '###PAGEBROWSERBOTTOM###' );
+    $pageBrowser = $this->pObj->cObj->substituteMarkerArray( $subpart, $markerArray );
+    $this->content = $this->pObj->cObj->substituteSubpart
+            (
+            $this->content, '###PAGEBROWSERBOTTOM###', $pageBrowser, true
     );
     // Replace markers in the current content
     $debugTrailLevel = 1;

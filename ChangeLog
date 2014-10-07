@@ -6,6 +6,13 @@
 6.0.0
   14-09-15
   Major Feature
+  * #i0085: foundation jQuery is placed on top of page, because og browser inline JSS.
+            Effected files:
+            * static/Foundation/Framework/page/setup.ts
+  * #i0084: pagebrowser got foundation wrapping
+  * #i0083: pagebrowser is placed at top and bottom of lists.
+            * Supbart marker ###PAGEBROWSER### is moved to ###PAGEBROWSERTOP###
+            * New supbart marker ###PAGEBROWSERBOTTOM###
   * #61970: Templates for header, text and images
             * #61971: Templates for header
                       * plugin.tx_browser_pi1.displayList.master_templates.tableFields.header
@@ -66,6 +73,8 @@
   Feature
   * #61938: BrowserMaps: Links depending on record type: record, page, noType, url
             See #61937 at route
+  Improvement
+  * #i0083: graded from beta to alpha
   Bug
   * #61926: ###MAP### marker in main template is removed (error with route. see: route ChangeLog)
             Effected files:

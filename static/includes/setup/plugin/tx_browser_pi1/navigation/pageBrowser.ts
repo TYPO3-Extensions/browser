@@ -34,6 +34,21 @@ plugin.tx_browser_pi1 {
         showResultsNumbersWrap = <span class="showResultsNumbersWrap">|</span>
         showResultsWrap        = <div class="showResultsWrap">|</div>
       }
+        // #i0084, 141006, dwildt, +dontLinkActivePage, +wrap
+        // [BOOLEAN] Don't link the active page
+      dontLinkActivePage  =  0
+        // activeLinkWrap, browseBoxWrap, browseLinksWrap, disabledLinkWrap, inactiveLinkWrap, showResultsNumbersWrap, showResultsWrap
+      wrap =
+      wrap {
+        activeLinkWrap         = <li class="current">|</li>
+        browseBoxWrap          = <div class="browseBoxWrap">|</div>
+        browseBoxWrap          = |
+        browseLinksWrap        = <ul class="pagination">|</ul>
+        disabledLinkWrap       = <li class="unavailable"><a>|</a></li>
+        inactiveLinkWrap       = <li>|</li>
+        showResultsNumbersWrap = <span class="showResultsNumbersWrap">|</span>
+        showResultsWrap        = <div class="showResultsWrap">|</div>
+      }
     }
   }
 }

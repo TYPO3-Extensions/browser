@@ -1400,7 +1400,7 @@ class tx_browser_pi1_navi_3x
 
     if (!$this->pObj->objFlexform->bool_pageBrowser)
     {
-      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
+      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSERTOP###', '', true);
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
@@ -1414,7 +1414,7 @@ class tx_browser_pi1_navi_3x
 
     if (!is_array($rows) || (is_array($rows) && count($rows) < 1))
     {
-      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
+      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSERTOP###', '', true);
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
@@ -1428,7 +1428,7 @@ class tx_browser_pi1_navi_3x
 
     if($this->pObj->boolFirstVisit and $this->pObj->objFlexform->bool_emptyAtStart)
     {
-      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
+      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSERTOP###', '', true);
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
@@ -1544,9 +1544,9 @@ class tx_browser_pi1_navi_3x
     $markerArray['###RESULT_AND_ITEMS###']  = $res_items;
     $markerArray['###MODE###']              = $this->mode;
     $markerArray['###VIEW###']              = $this->view;
-    $subpart      = $this->pObj->cObj->getSubpart($template, '###PAGEBROWSER###');
+    $subpart      = $this->pObj->cObj->getSubpart($template, '###PAGEBROWSERTOP###');
     $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
-    $template     = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', $pageBrowser, true);
+    $template     = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSERTOP###', $pageBrowser, true);
       // Build the template
 
 

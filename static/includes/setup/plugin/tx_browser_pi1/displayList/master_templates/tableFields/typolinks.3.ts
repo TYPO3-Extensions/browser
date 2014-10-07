@@ -51,7 +51,7 @@ plugin.tx_browser_pi1 {
                   30 = TEXT
                   30 {
                     value       = linktosingle
-                    noTrimWrap  = | ||
+                    noTrimWrap  = | "|"|
                   }
                     // title
                   40 = TEXT
@@ -75,7 +75,7 @@ plugin.tx_browser_pi1 {
               }
               useCacheHash = 1
             }
-              // link to an internal page 
+              // link to an internal page
             page < .default
             page {
               parameter.cObject {
@@ -90,7 +90,7 @@ plugin.tx_browser_pi1 {
               }
               additionalParams >
             }
-              // link to an external website 
+              // link to an external website
             url < .page
             url {
               parameter.cObject {

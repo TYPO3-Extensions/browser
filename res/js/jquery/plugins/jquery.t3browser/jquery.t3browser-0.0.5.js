@@ -575,6 +575,4 @@
     $.error( "Method " +  method + " does not exist on jquery.t3browser-0.0.5.js" );
       // Method calling logic
   };
-
 })( jQuery );
-
