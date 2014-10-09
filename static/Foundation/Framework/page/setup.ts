@@ -12,16 +12,13 @@ page {
   }
   includeJS {
     browserModernizr  = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJS.modernizr}
-    browserJquery     = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.jquery}
   }
   includeJSFooter {
     browserFoundation = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.foundation}
+    60142 = EXT:browser/res/js/foundationInit.js
   }
-  jsFooterInline {
-      // browser: $( document ).foundation();
-    60142 = TEXT
-    60142 {
-      value = $( document ).foundation();
-    }
+  includeJSFooterlibs {
+    browserJquery     = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.jquery}
+    browserJquery.forceOnTop = 1
   }
 }

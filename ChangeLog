@@ -6,6 +6,8 @@
 6.0.0
   14-09-15
   Major Feature
+  * #i0086: Foundation is updated from 5.3.0 to 5.4.5
+            * foundation jQuery is placed on top of page (#i0085 is deprecated)
   * #i0085: foundation jQuery is placed on top of page, because og browser inline JSS.
             Effected files:
             * static/Foundation/Framework/page/setup.ts
