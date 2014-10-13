@@ -234,7 +234,7 @@
   14-07-04
   Feature
   * #i0051: Make TypoScript main file clear: map
-            Effcted files:
+            Effected files:
             * static/includes/setup/plugin/tx_browser_pi1/navigation/map/* ( new )
 
 5.0.1

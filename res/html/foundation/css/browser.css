@@ -94,3 +94,13 @@ figure.tx-browser-pi1 {
 .row > .below-right {
   padding-top: 1em;
 }
+
+.above-center ul.clearing-thumbs,
+.below-center ul.clearing-thumbs {
+  text-align:center;
+}
+.above-right ul.clearing-thumbs,
+.below-right ul.clearing-thumbs {
+  text-align:right;
+}
+

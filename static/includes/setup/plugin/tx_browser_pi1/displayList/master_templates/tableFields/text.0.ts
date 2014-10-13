@@ -71,10 +71,10 @@ plugin.tx_browser_pi1 {
               wrap  = <{$plugin.tx_browser_pi1.templates.listview.text.0.tag} class="link-to-url">|</{$plugin.tx_browser_pi1.templates.listview.text.0.tag}>
               20 {
                 typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.url
-                value = URL &raquo;
+                value = URL
                 lang {
-                  de = URL &raquo;
-                  en = URL &raquo;
+                  de = URL
+                  en = URL
                 }
               }
             }
