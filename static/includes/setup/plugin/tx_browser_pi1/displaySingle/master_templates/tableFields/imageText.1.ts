@@ -14,33 +14,33 @@ plugin.tx_browser_pi1 {
           // 140707: empty statement: for proper comments only
         imageText {
         }
-          // 0
+          // 1
         imageText =
         imageText {
             // key, default (single view), page, url
-          0 = COA
-          0 {
+          1 = COA
+          1 {
               // image in case of: above ... and beside ...
             10 = CASE
             10 {
               key {
-                field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
+                field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imageorient}
               }
               // don't handle
               default = TEXT
               default {
-                value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.0.10. ...
+                value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.1.10. ...
               }
               // above-center: div.column ul.block-grid image /ul /div
               0 = COA
               0 {
                 10 = TEXT
                 10 {
-                  field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imagecols}
+                  field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imagecols}
                   wrap = <div class="columns large-12 above-center"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
                 }
                   // image
-                20 < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.0
+                20 < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.1
                 20 {
                   wrap >
                 }
@@ -97,7 +97,7 @@ plugin.tx_browser_pi1 {
             20 = CASE
             20 {
               key {
-                field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
+                field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imageorient}
               }
               // don't handle
               default = TEXT
@@ -111,7 +111,7 @@ plugin.tx_browser_pi1 {
                   // Buy now
                 10 = TEXT
                 10 {
-                  value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.0.10. ...
+                  value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.1.10. ...
                 }
               }
               // above-right: div.columns
@@ -164,7 +164,7 @@ plugin.tx_browser_pi1 {
             30 = CASE
             30 {
               key {
-                field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
+                field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imageorient}
               }
               // don't handle
               default = TEXT
@@ -176,11 +176,11 @@ plugin.tx_browser_pi1 {
               8 {
                 10 = TEXT
                 10 {
-                  field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imagecols}
+                  field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imagecols}
                   wrap = <div class="columns large-12 below-center"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
                 }
                   // image
-                20 < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.0
+                20 < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.1
                 20 {
                   wrap >
                 }

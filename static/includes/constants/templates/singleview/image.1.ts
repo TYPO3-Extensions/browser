@@ -10,7 +10,11 @@ plugin.tx_browser_pi1 {
   templates.singleview.image.1.seo        =
   # cat=Browser - Templates - Single - Image 1*//113;         type=string;     label= Caption:Field for the image caption. I.e. tx_org_service.imagecaption
   templates.singleview.image.1.caption    =
-  # cat=Browser - Templates - Single - Image 1*//113;         type=options[data,default,picture,srcset];     label= Render layout:data: renders an image tag containing data-keys for the different resolutions. default: renders a normal non-responsive image as a <img> tag. picture: renders a picture tag containing source tags for each resolutions and an <img> tag for the default image. srcset: renders an image tag pointing to a set of images for the different resolutions.
+  # cat=Browser - Templates - Single - Image 0*//114;         type=string;     label= Image orient:Field for the image orient. I.e. tx_org_service.imageorient
+  templates.singleview.image.1.imageorient  =
+  # cat=Browser - Templates - Single - Image 0*//115;         type=string;     label= Image columns:Field for the image columns. I.e. tx_org_service.imagecols
+  templates.singleview.image.1.imagecols  =
+  # cat=Browser - Templates - Single - Image 1*//120;         type=options[data,default,picture,srcset];     label= Render layout:data: renders an image tag containing data-keys for the different resolutions. default: renders a normal non-responsive image as a <img> tag. picture: renders a picture tag containing source tags for each resolutions and an <img> tag for the default image. srcset: renders an image tag pointing to a set of images for the different resolutions.
   templates.singleview.image.1.layoutKey  = default
   # cat=Browser - Templates - Single - Image 1*//130;         type=string;     label= Path:Path to the images (with ending backslash!). I.e: uploads/tx_org/
   templates.singleview.image.1.path       =
