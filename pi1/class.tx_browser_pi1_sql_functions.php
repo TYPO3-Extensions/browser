@@ -999,8 +999,6 @@ class tx_browser_pi1_sql_functions
    */
   public function zz_concatenateWithAnd( $param_1, $param_2 )
   {
-// #62546
-var_dump(__METHOD__, __LINE__, $param_1, $param_2);
     // RETURN $param_2
     if ( empty( $param_1 ) )
     {

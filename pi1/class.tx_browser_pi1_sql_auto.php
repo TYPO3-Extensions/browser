@@ -31,7 +31,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     5.0.14
+ * @version     6.0.1
  * @since       3.9.12
  */
 
@@ -614,7 +614,7 @@ class tx_browser_pi1_sql_auto
    * Relation method: Building the whole where clause
    *
    * @return	string		FALSE or the SQL-where-clause
-   * @version 3.9.13
+   * @version 6.0.1
    * @since   3.9.12
    */
   private function get_statements_where()
@@ -660,12 +660,17 @@ class tx_browser_pi1_sql_auto
       // Get enableFields like hiddden, deleted, starttime ... only for the localTable
 
     $str_enablefields = $this->str_enableFields( $this->pObj->localTable );
-    // #11429, cweiske, 101219
-    //if (strpos($whereClause, $str_enablefields) === false)
-    if ( $str_enablefields !== '' && strpos( $whereClause, $str_enablefields ) === false )
-    {
-      $whereClause = $whereClause . " AND " . $str_enablefields;
-    }
+
+    // #62546, 141029, dwildt, 1+
+    $whereClause = $this->pObj->objSqlFun->zz_concatenateWithAnd( $whereClause, $str_enablefields );
+
+    // #62546, 141029, dwildt, 6-
+//    // #11429, cweiske, 101219
+//    //if (strpos($whereClause, $str_enablefields) === false)
+//    if ( $str_enablefields !== '' && strpos( $whereClause, $str_enablefields ) === false )
+//    {
+//      $whereClause = $whereClause . " AND " . $str_enablefields;
+//    }
     // Get enableFields like hiddden, deleted, starttime ... only for the localTable
 //      ////////////////////////////////////////////////////////////////////
 //      //
@@ -733,10 +738,13 @@ class tx_browser_pi1_sql_auto
     //
     // Add an AND WHERE from TypoScript
 
-    if ( $andWhere != '' )
-    {
-      $whereClause .= ' AND ' . $andWhere;
-    }
+    // #62546, 141029, dwildt, 4-
+//    if ( $andWhere != '' )
+//    {
+//      $whereClause .= ' AND ' . $andWhere;
+//    }
+    // #62546, 141029, dwildt, 1+
+    $whereClause = $this->pObj->objSqlFun->zz_concatenateWithAnd( $whereClause, $andWhere );
     // Add an AND WHERE from TypoScript
     //////////////////////////////////////////////////////////////////////////
     //
@@ -746,15 +754,22 @@ class tx_browser_pi1_sql_auto
     {
       case('single'):
         // Add the uid of the choosen record
-        //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
-        $whereClause .= $this->pObj->objLocalise->localisationSingle_where( $this->pObj->localTable );
+        // #62546, 141029, dwildt, 2-
+//        //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
+//        $whereClause .= $this->pObj->objLocalise->localisationSingle_where( $this->pObj->localTable );
+        // #62546, 141029, dwildt, 2+
+        $whereLL = $this->pObj->objLocalise->localisationSingle_where( $this->pObj->localTable );
+        $whereClause = $this->pObj->objSqlFun->zz_concatenateWithAnd( $whereClause, $whereLL );
         break;
       case('list'):
         // Add the search clause, if there is a search (sword)
-        if ( $whereSword != '' )
-        {
-          $whereClause .= ' ' . $whereSword;
-        }
+        // #62546, 141029, dwildt, 4-
+//        if ( $whereSword != '' )
+//        {
+//          $whereClause .= ' ' . $whereSword;
+//        }
+        // #62546, 141029, dwildt, 1+
+        $whereClause = $this->pObj->objSqlFun->zz_concatenateWithAnd( $whereClause, $whereSword );
         break;
     }
     // Process depending on the view (LIST || SINGLE)
@@ -765,10 +780,13 @@ class tx_browser_pi1_sql_auto
     $str_pidStatement = $this->pObj->objSqlFun->get_andWherePid( $this->pObj->localTable );
     // Do we have a showUid not for the local table but for the foreign table? 3.3.3
 
-    if ( strpos( $whereClause, $str_pidStatement ) === false )
-    {
-      $whereClause = $whereClause . $str_pidStatement;
-    }
+    // #62546, 141029, dwildt, 4-
+//    if ( strpos( $whereClause, $str_pidStatement ) === false )
+//    {
+//      $whereClause = $whereClause . $str_pidStatement;
+//    }
+    // #62546, 141029, dwildt, 1+
+    $whereClause = $this->pObj->objSqlFun->zz_concatenateWithAnd( $whereClause, $str_pidStatement );
     // Add pid IN list
     //////////////////////////////////////////////////////////////////////////
     //
