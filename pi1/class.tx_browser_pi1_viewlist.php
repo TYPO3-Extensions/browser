@@ -1648,6 +1648,8 @@ class tx_browser_pi1_viewlist
             . $this->sql_radialsearchFrom()
     ;
     $where = $this->pObj->objSqlInit->statements[ 'listView' ][ 'where' ];
+// #62546
+var_dump(__METHOD__, __LINE__, $where );
     $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
     if ( $this->pObj->objFltr4x->get_selectedFilters() )
