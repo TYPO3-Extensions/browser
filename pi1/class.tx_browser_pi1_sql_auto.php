@@ -654,22 +654,39 @@ class tx_browser_pi1_sql_auto
 
     $whereClause = false;
 
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+      // Get enableFields like hiddden, deleted, starttime ... only for the localTable
+
+    $str_enablefields = $this->str_enableFields( $this->pObj->localTable );
+    // #11429, cweiske, 101219
+    //if (strpos($whereClause, $str_enablefields) === false)
+    if ( $str_enablefields !== '' && strpos( $whereClause, $str_enablefields ) === false )
+    {
+      $whereClause = $whereClause . " AND " . $str_enablefields;
+    }
     // Get enableFields like hiddden, deleted, starttime ... only for the localTable
-    // #62546, 141029, dwildt, -
-//    $str_enablefields = $this->str_enableFields( $this->pObj->localTable );
-//    // #62546, 141029, dwildt, -
-//    // #11429, cweiske, 101219
-//    //if (strpos($whereClause, $str_enablefields) === false)
-//    if ( $str_enablefields !== '' && strpos( $whereClause, $str_enablefields ) === false )
+//      ////////////////////////////////////////////////////////////////////
+//      //
+//      // Add localisation fields
+//
+//    $whereClause = $this->whereLL( $whereClause );
+//      // Add localisation fields
+// #41754.01, 1210101, dwildt, -
+// $this->pObj->arr_andWhereFilter isn't never allocated
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // Is there an andWhere statement from the filter class?
+////$this->pObj->dev_var_dump( 'X' );
+//    if ( is_array( $this->pObj->arr_andWhereFilter ) )
 //    {
-//      $whereClause = $whereClause . " AND " . $str_enablefields;
+//      $str_andFilter  = implode( " AND ", $this->pObj->arr_andWhereFilter );
+////$this->pObj->dev_var_dump( $str_andFilter );
+//      $whereClause    = $whereClause." AND ".$str_andFilter;
 //    }
-    // #62546, 141029, dwildt, -
-
-    // #62546, 141029, dwildt, +
-    $whereClause = $this->str_enableFields( $this->pObj->localTable );
-
-    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
+//      // Is there an andWhere statement from the filter class?
+// #41754.01, 1210101, dwildt, -
     //////////////////////////////////////////////////////////////////////////
     //
       // If we have a sword, allocates the global $arr_swordPhrasesTableField
@@ -934,7 +951,7 @@ class tx_browser_pi1_sql_auto
         {
           $str_whereTableField = '(' . $str_whereTableField . ')';
         }
-        $str_whereTableFieldOr = str_replace( ' AND ', ' OR ', $str_whereTableField );
+        $str_whereTableFieldOr = str_replace(' AND ', ' OR ', $str_whereTableField);
         $arr_whereSword[ $int_sword ][] = $str_whereTableField;
         $arr_whereSwordOr[ $int_sword ][] = $str_whereTableFieldOr;
       }
@@ -946,7 +963,7 @@ class tx_browser_pi1_sql_auto
       $str_or = implode( ' OR ', $arr_fields );
       $arr_or[] = '( ' . $str_or . ' )';
     }
-    // #i0073, 140720, dwildt, 2+
+      // #i0073, 140720, dwildt, 2+
     foreach ( $arr_whereSwordOr as $arr_fields )
     {
       $str_and = implode( ' AND ', $arr_fields );
