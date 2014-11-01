@@ -14,6 +14,8 @@ external_links_02=0
 drs_mode = Don't log anything
   # cat=Debugging/101;        type=boolean; label= pageNotFoundOnCHashError: Display warning prompt, if $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled.
 drs_pageNotFoundOnCHashError = 1
+  # cat=Debugging/102;        type=boolean; label= cHashExcludedParameters: Display warning prompt, if $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] doesn't contain 'tx_browser_pi1[sword]'.
+drs_cHashExcludedParameters = 1
   # cat=Debugging/999;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_03=0
 

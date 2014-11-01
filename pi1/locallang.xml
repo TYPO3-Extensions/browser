@@ -16,12 +16,16 @@
 Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable DRS.</label>
       <label index="error_cHashExcludedParameters_sword"><![CDATA[
         <h2>
-          ERROR: cHashExcludedParameters
+          Warning: cHashExcludedParameters
         </h2>
         <p>
           $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] doesn't contain tx_browser_pi1[sword].<br />
-          You will get a cHash Error from TYPO3 6.x.<br />
+          You will get a cHash Error from TYPO3 6.x probably.<br />
           Please set $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] like: 'L,tx_browser_pi1[sword],...'
+        </p>
+        <p>
+          Get rid of this message?<br />
+          Configure the Extension Manager [debugging] > cHashExcludedParameters = 0
         </p>
       ]]></label>
       <label index="error_h1">Error</label>
@@ -200,11 +204,11 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 ]]></label>
       <label index="error_pageNotFoundOnCHashError"><![CDATA[
         <h2>
-          ERROR: pageNotFoundOnCHashError
+          Warning: pageNotFoundOnCHashError
         </h2>
         <p>
           $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled.<br />
-          You will get a cHash Error from TYPO3 6.2.<br />
+          You will get a cHash Error from TYPO3 6.2 probably<br />
           Please disable $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
           See: System > Install
         </p>
@@ -304,6 +308,20 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 Die SQL-Abfrage enthält einen Fehler. Bitte benutze das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.
 
 DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DRS aktivieren.]]></label>
+      <label index="error_cHashExcludedParameters_sword"><![CDATA[
+        <h2>
+          Warnung: cHashExcludedParameters
+        </h2>
+        <p>
+          $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] enthält nicht 'tx_browser_pi1[sword]'.<br />
+          Du bekommst ab TYPO3 6.x wahrscheinlich einen cHash-Fehler.<br />
+          Bitte setze $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] so: 'L,tx_browser_pi1[sword],...'
+        </p>
+        <p>
+          Meldung nicht mehr zeigen?<br />
+          Setze im Extension Manager [debugging] > cHashExcludedParameters = 0
+        </p>
+      ]]></label>
       <label index="error_h1">Fehler</label>
       <label index="error_filter_h1">Fehler mit der Filter-Konfiguration</label>
       <label index="error_filter_prompt"><![CDATA[Die Filter sind falsch konfiguriert. Benutze das DRS - Development Reporting System. Das DRS beschreibt den Fehler und wird versuchen eine Lösung anzubieten.]]></label>
@@ -471,11 +489,11 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 ]]></label>
       <label index="error_pageNotFoundOnCHashError"><![CDATA[
         <h2>
-          Fehler: pageNotFoundOnCHashError
+          Warnung: pageNotFoundOnCHashError
         </h2>
         <p>
           $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] ist aktiviert.<br />
-          Du wirst mit TYPO3 ab Version 6.2 einen cHash-Fehler bekommen (&cHash comparison failed)<br />
+          Du wirst mit TYPO3 ab Version 6.2 wahrscheinlich einen cHash-Fehler bekommen (&cHash comparison failed)<br />
           Bitte deaktiviere $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
           Siehe: System > Install
         </p>

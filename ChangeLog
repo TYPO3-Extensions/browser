@@ -6,7 +6,8 @@
 6.0.2
   14-11-01
   Feature
-  * #62607: Prompt for pageNotFoundOnCHashError configureable by extension manager
+  * #62610: Prompt for cHashExcludedParameters configurable by extension manager
+  * #62607: Prompt for pageNotFoundOnCHashError configurable by extension manager
   Bugfix
   * #62604: Make sure that jQuery will be loaded at the bottom of the page, BUT before every other javascript inclusions
 
