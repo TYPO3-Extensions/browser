@@ -6,6 +6,7 @@
 6.0.2
   14-11-01
   Feature
+  * #62615: Static template for pageBrowser Wrap 4.9 (see #i0084)
   * #62610: Prompt for cHashExcludedParameters configurable by extension manager
   * #62607: Prompt for pageNotFoundOnCHashError configurable by extension manager
   Bugfix
@@ -24,7 +25,7 @@
   * #i0085: foundation jQuery is placed on top of page, because og browser inline JSS.
             Effected files:
             * static/Foundation/Framework/page/setup.ts
-  * #i0084: pagebrowser got foundation wrapping
+  * #i0084: pagebrowser got foundation wrapping, HTML/CSS is effected (see #62615)
   * #i0083: pagebrowser is placed at top and bottom of lists.
             * Supbart marker ###PAGEBROWSER### is moved to ###PAGEBROWSERTOP###
             * New supbart marker ###PAGEBROWSERBOTTOM###

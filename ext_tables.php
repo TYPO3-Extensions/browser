@@ -59,6 +59,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/Foundation/Framework/',  'Browser [0] + Foundation Framework');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/',                       'Browser [1] Basis');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.9.1/navigation/pageBrowser/wrap/', 'Browser [1] + pageBrowser Wrap v4.9');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/',       'Browser [1] Basis v4.5 (veraltet!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/map/',   'Browser [1.1] + Basis v4.5 oxMap <= 1.2 (veraltet!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/',       'Browser [1] Basis v3.9 (veraltet!)');
@@ -82,6 +83,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/Foundation/Framework/',  'Browser [0] + Foundation Framework');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/',                       'Browser [1] Basis');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.9.1/navigation/pageBrowser/wrap/', 'Browser [1] + pageBrowser Wrap v4.9');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/',       'Browser [1] Basis v4.5 (deprecated!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/4.5.4/map/',   'Browser [1.1] + Basis v4.5 oxMap <= 1.2 (deprecated!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/downgrade/3.9.0/',       'Browser [1] Basis v3.9 (deprecated!)');

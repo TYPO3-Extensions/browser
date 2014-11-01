@@ -1,0 +1,16 @@
+plugin.tx_browser_pi1 {
+  navigation {
+    pageBrowser {
+      wrap {
+        activeLinkWrap         = <span class="SCell">|</span>
+        browseBoxWrap          = <div class="browseBoxWrap">|</div>
+        browseBoxWrap          = |
+        browseLinksWrap        = <div class="browseLinksWrap">|</div>
+        disabledLinkWrap       = <span class="SCell">|</span>
+        inactiveLinkWrap       = |
+        showResultsNumbersWrap = <span class="showResultsNumbersWrap">|</span>
+        showResultsWrap        = <div class="showResultsWrap">|</div>
+      }
+    }
+  }
+}
