@@ -785,7 +785,7 @@ class tx_browser_pi1_backend
    *
    * @return	string
    * @internal #61594
-   * @version 6.0.0
+   * @version 6.0.2
    * @since 4.1.7
    */
   private function evaluate_pluginTYPO3_6x()
@@ -798,11 +798,15 @@ class tx_browser_pi1_backend
       return;
     }
 
+    $arr_extConf = unserialize( $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'EXT' ][ 'extConf' ][ $this->extKey ] );
+
     //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
     if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
     {
-      $str_prompt = '
-            <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+      if ( $arr_extConf[ 'drs_pageNotFoundOnCHashError' ] )
+      {
+        $str_prompt = '
+            <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
               <div class="message-body">
                 ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.pageNotFoundOnCHashError' ) . '
               </div>
@@ -813,31 +817,35 @@ class tx_browser_pi1_backend
               </div>
             </div>
             ';
-      return $str_prompt;
+        return $str_prompt;
+      }
     }
 
     $cHashExcludedParameters = $TYPO3_CONF_VARS[ 'FE' ][ 'cHashExcludedParameters' ];
     $cHashExcludedParameters = explode( ',', $cHashExcludedParameters );
 
     //var_dump( __METHOD__, __LINE__, $swordKey, $cHashExcludedParameters );
-    if ( in_array( 'tx_browser_pi1[sword]', $cHashExcludedParameters ) )
+    switch( true )
     {
-      return;
+      case( in_array( 'tx_browser_pi1[sword]', $cHashExcludedParameters ) ):
+      case( ! $this->pObj->arr_extConf[ 'drs_cHashExcludedParameters' ] ):
+        return;
+      default:
+        $str_prompt = '
+              <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+                <div class="message-body">
+                  ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.cHashExcludedParameters' ) . '
+                </div>
+              </div>
+              <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+                <div class="message-body">
+                  ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.cHashExcludedParameters' ) . '
+                </div>
+              </div>
+              ';
+        return $str_prompt;
     }
 
-    $str_prompt = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.cHashExcludedParameters' ) . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.cHashExcludedParameters' ) . '
-            </div>
-          </div>
-          ';
-    return $str_prompt;
   }
 
   /**

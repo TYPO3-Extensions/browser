@@ -702,7 +702,7 @@ class tx_browser_pi1_search
    * @param	string		$searchform
    * @return	string		$searchform
    * @internal #61594
-   * @version 6.0.0
+   * @version 6.0.2
    * @since 6.0.0
    */
   private function requirements( $searchform )

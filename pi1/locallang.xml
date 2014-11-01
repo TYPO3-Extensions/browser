@@ -27,7 +27,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
           Get rid of this message?
         </h3>
         <p>
-          Configure the Extension Manager [debugging] > cHashExcludedParameters = 0
+          Disable cHashExcludedParameters at the Extension Manager [debugging].
         </p>
       ]]></label>
       <label index="error_h1">Error</label>
@@ -218,7 +218,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
           Get rid of this message?
         </h3>
         <p>
-          Configure the Extension Manager [debugging] > pageNotFoundOnCHashError = 0
+          Disable pageNotFoundOnCHashError at the Extension Manager [debugging].
         </p>
       ]]></label>
       <label index="error_readlog_h1">Error</label>
@@ -325,7 +325,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
           Meldung nicht mehr zeigen?
         </h3>
         <p>
-          Setze im Extension Manager [debugging] > cHashExcludedParameters = 0
+          Deaktiviere cHashExcludedParameters im Extension Manager [debugging].
         </p>
       ]]></label>
       <label index="error_h1">Fehler</label>
@@ -507,7 +507,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
           Meldung nicht mehr zeigen?
         </h3>
         <p>
-          Setze im Extension Manager [debugging] > pageNotFoundOnCHashError = 0
+          Deaktiviere pageNotFoundOnCHashError im Extension Manager [debugging].
         </p>
       ]]></label>
       <label index="error_readlog_h1">Fehler</label>

@@ -38,7 +38,7 @@
       <label index="sheet_evaluate.handle_marker.0">Remove marker, which weren't replaced</label>
       <label index="sheet_evaluate.handle_marker.1">Don't remove any marker (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">The DRS - Development Reporting System - is enabled. This costs performance and is a security risk for any operative sytem. You can disable the DRS in the extension manager. Status: %status%.</label>
-      <label index="sheet_evaluate.plugin.error.cHashExcludedParameters">Bug: $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] doesn't contain tx_browser_pi1[sword]. You will get errors like '<![CDATA[&]]>cHash comparison failed'.</label>
+      <label index="sheet_evaluate.plugin.error.cHashExcludedParameters">Warning: $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] doesn't contain tx_browser_pi1[sword]. You will get errors like '<![CDATA[&]]>cHash comparison failed' probably. Get rid of this message? Disable cHashExcludedParameters at the Extension Manager [debugging].</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIConflict">Bug: You like to use OpenStreetMap. And you have enabled AJAX. But there is a conflict of the map and AJAX unfortunately.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">Bug: You like to use BrowserMaps. And you have enabled the record browser. But there is a conflict of the map and the record browser unfortunately.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Bug: You like to use AJAX. But there isn't any default typeNum for the AJAX page object.</label>
@@ -50,7 +50,7 @@
       <label index="sheet_evaluate.plugin.error.no_record_storage_pid">Error: There isn't any record storage pid configured and records on root level aren't allowed. You won't see any data in the frontend.</label>
       <label index="sheet_evaluate.plugin.error.no_ts_template">Bug: There isn't any TypoScript configuration for this plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
-      <label index="sheet_evaluate.plugin.error.pageNotFoundOnCHashError">Bug: $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled. You will get errors like '<![CDATA[&]]>cHash comparison failed'.</label>
+      <label index="sheet_evaluate.plugin.error.pageNotFoundOnCHashError">Warning: $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled. You will get errors like '<![CDATA[&]]>cHash comparison failed' probably. Get rid of this message? Disable pageNotFoundOnCHashError at the Extension Manager [debugging].</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
       <label index="sheet_evaluate.plugin.info.cHashExcludedParameters">Please set $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] like: 'L,tx_browser_pi1[sword],...'. See: System > Install.</label>
       <label index="sheet_evaluate.plugin.info.drs">If you get an unexpected result nevertheless, you can enable the DRS - the Development Reporting System. You will get a report with all rendered SQL queries among others. You enable the DRS in the extension manager.</label>
@@ -414,7 +414,7 @@
       <label index="sheet_evaluate.handle_marker.0">Nicht ersetzte Marker entfernen</label>
       <label index="sheet_evaluate.handle_marker.1">Nicht ersetzte Marker anzeigen (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">Das DRS - Development Reporting System - ist aktiviert. Das kostet Performance und ist ein Sicherheitsrisiko f<![CDATA[&uuml;]]>r jedes operative Sytem. Du kannst das DRS im Extension Manager abschalten. Status: %status%.</label>
-      <label index="sheet_evaluate.plugin.error.cHashExcludedParameters">FEHLER: In $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] fehlt tx_browser_pi1[sword]. Du wirst Fehler bekommen wie '<![CDATA[&]]>cHash comparison failed'.</label>
+      <label index="sheet_evaluate.plugin.error.cHashExcludedParameters">Warnung: In $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] fehlt tx_browser_pi1[sword]. Du wirst wahrscheinlich Fehler bekommen wie '<![CDATA[&]]>cHash comparison failed'. Meldung nicht mehr zeigen? Deaktiviere cHashExcludedParameters im Extension Manager [debugging].</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap und AJAX gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
       <label index="sheet_evaluate.plugin.error.mapAjaxIIConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest BrowserMaps und den Record-Browser gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest AJAX verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das AJAX Page Objekt.</label>
@@ -426,7 +426,7 @@
       <label index="sheet_evaluate.plugin.error.no_record_storage_pid">Fehler: Es gibt keinen Eintrag im Feld [Datensatzsammlung] und der Zugriff auf Daten ohne Seiten-ID ist auch nicht erlaubt. Du wirst im Frontend keine Daten sehen.</label>
       <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f<![CDATA[&uuml;]]>r dieses Plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
-      <label index="sheet_evaluate.plugin.error.pageNotFoundOnCHashError">Fehler: $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] ist aktiviert. Du wirst Fehler bekommen wie '<![CDATA[&]]>cHash comparison failed'.</label>
+      <label index="sheet_evaluate.plugin.error.pageNotFoundOnCHashError">Warnung: $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] ist aktiviert. Du wirst wahrscheinlich Fehler bekommen wie '<![CDATA[&]]>cHash comparison failed'. Meldung nicht mehr zeigen? Deaktiviere pageNotFoundOnCHashError im Extension Manager [debugging].</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
       <label index="sheet_evaluate.plugin.info.cHashExcludedParameters">Bitte konfiguriere $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] so: 'L,tx_browser_pi1[sword],...'. Siehe: System > Install.</label>
       <label index="sheet_evaluate.plugin.info.drs">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, check mit dem TYPO3-Browser-Update-Assistenten, ob Dein Plugin und Dein TypoScript aktuell sind. Du aktivierst den Update-Assistenten im Extension Manager.</label>
