@@ -208,6 +208,10 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
           Please disable $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
           See: System > Install
         </p>
+        <p>
+          Get rid of this message?<br />
+          Configure the Extension Manager [debugging] > pageNotFoundOnCHashError = 0
+        </p>
       ]]></label>
       <label index="error_readlog_h1">Error</label>
       <label index="error_readlog_prompt">There is an error. Please activate the logging mode of this extension (browser) and take a look in the log of cc_devlog!</label>
@@ -474,6 +478,10 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
           Du wirst mit TYPO3 ab Version 6.2 einen cHash-Fehler bekommen (&cHash comparison failed)<br />
           Bitte deaktiviere $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
           Siehe: System > Install
+        </p>
+        <p>
+          Meldung nicht mehr zeigen?<br />
+          Setze im Extension Manager [debugging] > pageNotFoundOnCHashError = 0
         </p>
       ]]></label>
       <label index="error_readlog_h1">Fehler</label>

@@ -715,7 +715,7 @@ class tx_browser_pi1_search
     }
 
     //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
-    if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
+    if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] && $this->pObj->arr_extConf[ 'drs_pageNotFoundOnCHashError' ])
     {
       $prompt = $this->pObj->pi_getLL( 'error_pageNotFoundOnCHashError' );
 

@@ -137,7 +137,7 @@ class tx_browser_pi1 extends tslib_pibase
   var $extKey = 'browser';
   var $pi_checkCHash = true;
   // [Array] values out of the extConf file
-  var $arr_extConf = null;
+  public $arr_extConf = null;
   // TYPO3 extension
   ////////////////////////////////////////////////////////////////////
   //
