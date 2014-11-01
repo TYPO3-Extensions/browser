@@ -734,7 +734,7 @@ class tx_browser_pi1_search
     switch ( true )
     {
       case( $this->requirementsCHashExcludedParameters() ):
-      case( $this->pObj->arr_extConf[ 'drs_cHashExcludedParameters' ] ):
+      case( ! $this->pObj->arr_extConf[ 'drs_cHashExcludedParameters' ] ):
         $this->requirementsCHashExcludedParametersDRS();
         return $searchform;
       default:
