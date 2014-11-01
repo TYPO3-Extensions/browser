@@ -713,7 +713,7 @@ class tx_browser_pi1_search
     {
       return $searchform;
     }
-
+var_dump ( __METHOD__, __LINE__, $this->pObj->arr_extConf );
     //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
     if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] && $this->pObj->arr_extConf[ 'drs_pageNotFoundOnCHashError' ])
     {
