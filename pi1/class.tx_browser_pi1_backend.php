@@ -798,7 +798,7 @@ class tx_browser_pi1_backend
       return;
     }
 
-    $arr_extConf = unserialize( $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'EXT' ][ 'extConf' ][ $this->extKey ] );
+    $arr_extConf = unserialize( $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'EXT' ][ 'extConf' ][ 'browser' ] );
 
     //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
     if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
@@ -828,7 +828,7 @@ class tx_browser_pi1_backend
     switch( true )
     {
       case( in_array( 'tx_browser_pi1[sword]', $cHashExcludedParameters ) ):
-      case( ! $this->pObj->arr_extConf[ 'drs_cHashExcludedParameters' ] ):
+      case( ! $arr_extConf[ 'drs_cHashExcludedParameters' ] ):
         return;
       default:
         $str_prompt = '
