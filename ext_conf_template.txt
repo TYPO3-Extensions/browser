@@ -12,7 +12,7 @@ external_links_02=0
 
   # cat=Debugging/100;        type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Marker,Navigation,ORDER BY,Realurl,Scheduler: Geoupdate,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript,Typoscript Template Container,Typoscript Update Checker,TYPO3 6.x---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
-  # cat=Debugging/101;        type=boolean; label= pageNotFoundOnCHashError: Display warning prompt, if pageNotFoundOnCHashError is enabled
+  # cat=Debugging/101;        type=boolean; label= pageNotFoundOnCHashError: Display warning prompt, if $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ] is enabled.
 drs_pageNotFoundOnCHashError = 1
   # cat=Debugging/999;         type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links_03=0
