@@ -16,7 +16,7 @@ plugin.tx_browser_pi1 {
   templates.singleview.image.0.imagecols  =
   # cat=Browser - Templates - Single - Image 0*//120;         type=options[data,default,picture,srcset];     label= Render layout:data: renders an image tag containing data-keys for the different resolutions. default: renders a normal non-responsive image as a <img> tag. picture: renders a picture tag containing source tags for each resolutions and an <img> tag for the default image. srcset: renders an image tag pointing to a set of images for the different resolutions.
   templates.singleview.image.0.layoutKey  = default
-  # cat=Browser - Templates - Single - Image 0*//130;         type=string;     label= Path:Path to the images (with ending backslash!). I.e: uploads/tx_org/
+  # cat=Browser - Templates - Single - Image 0*//130;         type=string;     label= Path*:(Obligate!) Path to the images (with ending backslash!). I.e: uploads/tx_org/
   templates.singleview.image.0.path       =
   # cat=Browser - Templates - Single - Image 0*//others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   templates.singleview.image.0.links      = Click me!
