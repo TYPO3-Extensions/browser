@@ -23,8 +23,10 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
           You will get a cHash Error from TYPO3 6.x probably.<br />
           Please set $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] like: 'L,tx_browser_pi1[sword],...'
         </p>
+        <h3>
+          Get rid of this message?
+        </h3>
         <p>
-          Get rid of this message?<br />
           Configure the Extension Manager [debugging] > cHashExcludedParameters = 0
         </p>
       ]]></label>
@@ -212,8 +214,10 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
           Please disable $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
           See: System > Install
         </p>
+        <h3>
+          Get rid of this message?
+        </h3>
         <p>
-          Get rid of this message?<br />
           Configure the Extension Manager [debugging] > pageNotFoundOnCHashError = 0
         </p>
       ]]></label>
@@ -317,8 +321,10 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
           Du bekommst ab TYPO3 6.x wahrscheinlich einen cHash-Fehler.<br />
           Bitte setze $TYPO3_CONF_VARS[ FE ][ cHashExcludedParameters ] so: 'L,tx_browser_pi1[sword],...'
         </p>
+        <h3>
+          Meldung nicht mehr zeigen?
+        </h3>
         <p>
-          Meldung nicht mehr zeigen?<br />
           Setze im Extension Manager [debugging] > cHashExcludedParameters = 0
         </p>
       ]]></label>
@@ -497,8 +503,10 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
           Bitte deaktiviere $TYPO3_CONF_VARS[ FE ][ pageNotFoundOnCHashError ].<br />
           Siehe: System > Install
         </p>
+        <h3>
+          Meldung nicht mehr zeigen?
+        </h3>
         <p>
-          Meldung nicht mehr zeigen?<br />
           Setze im Extension Manager [debugging] > pageNotFoundOnCHashError = 0
         </p>
       ]]></label>
