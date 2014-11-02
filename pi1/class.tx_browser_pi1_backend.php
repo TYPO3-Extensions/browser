@@ -803,6 +803,12 @@ class tx_browser_pi1_backend
     //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
     if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
     {
+      // #62607, 141102, dwildt, +
+      $display = $arr_extConf[ 'drs_pageNotFoundOnCHashError' ];
+      if ( $display === null )
+      {
+        $display = 1;
+      }
       if ( $arr_extConf[ 'drs_pageNotFoundOnCHashError' ] )
       {
         $str_prompt = '
@@ -823,12 +829,18 @@ class tx_browser_pi1_backend
 
     $cHashExcludedParameters = $TYPO3_CONF_VARS[ 'FE' ][ 'cHashExcludedParameters' ];
     $cHashExcludedParameters = explode( ',', $cHashExcludedParameters );
+    // #62610, 141102, dwildt, +
+    $display = $arr_extConf[ 'drs_cHashExcludedParameters' ];
+    if ( $display === null )
+    {
+      $display = 1;
+    }
 
     //var_dump( __METHOD__, __LINE__, $swordKey, $cHashExcludedParameters );
-    switch( true )
+    switch ( true )
     {
       case( in_array( 'tx_browser_pi1[sword]', $cHashExcludedParameters ) ):
-      case( ! $arr_extConf[ 'drs_cHashExcludedParameters' ] ):
+      case(!$display ):
         return;
       default:
         $str_prompt = '
@@ -845,7 +857,6 @@ class tx_browser_pi1_backend
               ';
         return $str_prompt;
     }
-
   }
 
   /**
