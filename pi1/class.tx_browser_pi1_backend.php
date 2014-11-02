@@ -809,7 +809,7 @@ class tx_browser_pi1_backend
       {
         $display = 1;
       }
-      if ( $arr_extConf[ 'drs_pageNotFoundOnCHashError' ] )
+      if ( $display )
       {
         $str_prompt = '
             <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">

@@ -715,14 +715,23 @@ class tx_browser_pi1_search
     }
 //var_dump ( __METHOD__, __LINE__, $this->pObj->arr_extConf );
     //var_dump( __METHOD__, __LINE__, $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] );
-    if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] && $this->pObj->arr_extConf[ 'drs_pageNotFoundOnCHashError' ] )
+    if ( $TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
     {
-      $prompt = $this->pObj->pi_getLL( 'error_pageNotFoundOnCHashError' );
+      // #62607, 141102, dwildt, +
+      $display = $this->pObj->arr_extConf[ 'drs_pageNotFoundOnCHashError' ];
+      if ( $display === null )
+      {
+        $display = 1;
+      }
+      if ( $display )
+      {
+        $prompt = $this->pObj->pi_getLL( 'error_pageNotFoundOnCHashError' );
 
-      return '<div style="border:solid 1em red;padding:1em;text-align:center;">'
-              . $prompt
-              . '</div>'
-              . $searchform;
+        return '<div style="border:solid 1em red;padding:1em;text-align:center;">'
+                . $prompt
+                . '</div>'
+                . $searchform;
+      }
     }
 
     if ( !$TYPO3_CONF_VARS[ 'FE' ][ 'pageNotFoundOnCHashError' ] )
@@ -731,10 +740,16 @@ class tx_browser_pi1_search
       return $searchform;
     }
 
+    // #62610, 141102, dwildt, +
+    $display = $this->pObj->arr_extConf[ 'drs_cHashExcludedParameters' ];
+    if ( $display === null )
+    {
+      $display = 1;
+    }
     switch ( true )
     {
       case( $this->requirementsCHashExcludedParameters() ):
-      case( ! $this->pObj->arr_extConf[ 'drs_cHashExcludedParameters' ] ):
+      case(!$display ):
         $this->requirementsCHashExcludedParametersDRS();
         return $searchform;
       default:
