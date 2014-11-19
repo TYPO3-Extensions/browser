@@ -29,7 +29,8 @@ plugin.tx_browser_pi1 {
               // don't handle
               default = TEXT
               default {
-                value = Please configure plugin.tx_browser_pi1.templates.singleview.image.0.imageorient
+                //value = Please configure plugin.tx_browser_pi1.templates.singleview.image.0.imageorient
+                value = 
               }
               // above-center: div.column ul.block-grid image /ul /div
               0 = COA
