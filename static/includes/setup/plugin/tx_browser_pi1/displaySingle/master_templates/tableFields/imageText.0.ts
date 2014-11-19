@@ -30,7 +30,7 @@ plugin.tx_browser_pi1 {
               default = TEXT
               default {
                 //value = Please configure plugin.tx_browser_pi1.templates.singleview.image.0.imageorient
-                value = 
+                value =
               }
               // above-center: div.column ul.block-grid image /ul /div
               0 = COA
@@ -109,11 +109,6 @@ plugin.tx_browser_pi1 {
               0 = COA
               0 {
                 wrap = <div class="columns large-12">|</div>
-                  // Buy now
-                10 = TEXT
-                10 {
-                  value = plugin.tx_browser_pi1.templates.singleview.image.0.imageorient
-                }
               }
               // above-right: div.columns
               1 < .0
