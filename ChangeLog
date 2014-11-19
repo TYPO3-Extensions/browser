@@ -3,6 +3,13 @@
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+6.0.4
+  14-11-17
+  Bugfix
+  * #i0088: Wrong constant paths twice
+            Effected file:
+            static/includes/constants/templates/singleview/image.1.ts
+
 6.0.3
   14-11-13
   Bugfix

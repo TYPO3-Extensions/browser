@@ -29,7 +29,7 @@ plugin.tx_browser_pi1 {
               // don't handle
               default = TEXT
               default {
-                value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.0.10. ...
+                value = Please configure plugin.tx_browser_pi1.templates.singleview.image.0.imageorient
               }
               // above-center: div.column ul.block-grid image /ul /div
               0 = COA
@@ -111,7 +111,7 @@ plugin.tx_browser_pi1 {
                   // Buy now
                 10 = TEXT
                 10 {
-                  value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.0.10. ...
+                  value = plugin.tx_browser_pi1.templates.singleview.image.0.imageorient
                 }
               }
               // above-right: div.columns
