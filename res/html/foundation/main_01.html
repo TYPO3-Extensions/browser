@@ -95,7 +95,11 @@ This template is the default template for all list views.
         plugin.tx_browser_pi1.views.list.[list-id].htmlSnippets.subparts.searchform < plugin.tx_browser_pi1.displayList.master_templates.subparts.listview.searchform.simpleMapFilter
       </div><!-- /columns --><!-- ###SEARCHFORM### end -->
       <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
-        ###MAP###
+        <div class="row">
+          <div class="show-for-large-up">
+            ###MAP###
+          </div>
+        </div>
         <!-- ###LISTHEAD### begin -->
           <!-- ###LISTHEADITEM### begin -->
             ###ITEM###
