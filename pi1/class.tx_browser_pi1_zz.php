@@ -1037,7 +1037,7 @@ class tx_browser_pi1_zz
     // Security: recursionGuard
 
     static $int_levelRecurs = 0;
-    var_dump( __METHOD__ . ' (#' . __LINE__ . "): ". $int_levelRecurs );
+    //var_dump( __METHOD__ . ' (#' . __LINE__ . "): ". $int_levelRecurs );
     $int_levelRecursMax = ( int ) $arr_conf_advanced[ 'recursionGuard' ];
     $int_levelRecurs++;
     if ( $int_levelRecurs > $int_levelRecursMax )
@@ -1049,7 +1049,7 @@ class tx_browser_pi1_zz
         t3lib_div::devlog( '[ERROR/TTC] EXIT', $this->pObj->extKey, 3 );
       }
       // #i0090, 141206, dwildt, +
-      var_dump( __METHOD__ . ' (#' . __LINE__ . "): ", $arr_multi_dimensional );
+      var_dump( __METHOD__ . ' (#' . __LINE__ . "): Curren TypoScript of the last loop: ", $arr_multi_dimensional );
       $header = 'Recursion Limit is exceeded';
       $text = 'Recursion is bigger than ' . $int_levelRecursMax . '. If the exceeding is intended, please increase advanced.recursionGuard.';
       $this->pObj->drs_die( $header, $text );
