@@ -1048,20 +1048,11 @@ class tx_browser_pi1_zz
         t3lib_div::devlog( '[ERROR/TTC] EXIT', $this->pObj->extKey, 3 );
       }
       // #i0090, 141206, dwildt, +
-      $prompt = '<h1>Recursion Limit is exceeded</h1>'
-              . '<p>'
-              . 'Recursion is bigger than ' . $int_levelRecursMax . ' <br />'
-              . 'If it is intended, please increase advanced.recursionGuard. <br />'
-              . 'die() <br />'
-              . '</p>'
-              . '<p>'
-              . 'Sorry for the trouble. Browser - TYPO3 without PHP'
-              . '</p>'
-              ;
+      var_dump( $arr_multi_dimensional );
       $header = 'Recursion Limit is exceeded';
-      $text = 'Recursion is bigger than ' . $int_levelRecursMax . ' If the exceeding is intended, please increase advanced.recursionGuard.';
+      $text = 'Recursion is bigger than ' . $int_levelRecursMax . '. If the exceeding is intended, please increase advanced.recursionGuard.';
       $this->pObj->drs_die( $header, $text );
-      die( $prompt );
+      die( __METHOD__ . ' (#' . __LINE__ . ")" );
     }
     // Security: recursionGuard
     ////////////////////////////////////////////////
