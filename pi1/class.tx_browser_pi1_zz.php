@@ -29,7 +29,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     6.0.0
+ * @version     6.0.6
  * @since       1.0.0
  */
 
@@ -1001,8 +1001,10 @@ class tx_browser_pi1_zz
    *
    * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
    * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+   *
+   * @version 6.0.6
    */
-  function substitute_t3globals_recurs( $arr_multi_dimensional )
+  public function substitute_t3globals_recurs( $arr_multi_dimensional )
   {
     $conf = $this->pObj->conf;
     $conf_view = $this->pObj->conf[ 'views.' ][ $this->pObj->view . '.' ][ $this->pObj->piVar_mode . '.' ];
@@ -1045,7 +1047,21 @@ class tx_browser_pi1_zz
         t3lib_div::devlog( '[HELP/TTC] If it is ok, please increase advanced.recursionGuard.', $this->pObj->extKey, 1 );
         t3lib_div::devlog( '[ERROR/TTC] EXIT', $this->pObj->extKey, 3 );
       }
-      exit;
+      // #i0090, 141206, dwildt, +
+      $prompt = '<h1>Recursion Limit is exceeded</h1>'
+              . '<p>'
+              . 'Recursion is bigger than ' . $int_levelRecursMax . ' <br />'
+              . 'If it is intended, please increase advanced.recursionGuard. <br />'
+              . 'die() <br />'
+              . '</p>'
+              . '<p>'
+              . 'Sorry for the trouble. Browser - TYPO3 without PHP'
+              . '</p>'
+              ;
+      $header = 'Recursion Limit is exceeded';
+      $text = 'Recursion is bigger than ' . $int_levelRecursMax . ' If the exceeding is intended, please increase advanced.recursionGuard.';
+      $this->pObj->drs_die( $header, $text );
+      die( $prompt );
     }
     // Security: recursionGuard
     ////////////////////////////////////////////////
