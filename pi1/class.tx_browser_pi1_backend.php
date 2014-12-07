@@ -1811,7 +1811,7 @@ class tx_browser_pi1_backend
             {
               case (!isset( $arr_template[ 'file' ] ) ):
               case (!isset( $arr_template[ 'csvViews' ] ) ):
-                continue;
+                continue 2;
               default:
                 // follow the workflow
                 break;
@@ -2129,7 +2129,7 @@ class tx_browser_pi1_backend
         {
           case (!isset( $arr_template[ 'file' ] ) ):
           case (!isset( $arr_template[ 'name' ] ) ):
-            continue;
+            continue 2;
           default:
             // follow the workflow
             break;
