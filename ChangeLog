@@ -6,6 +6,10 @@
 6.0.6
   14-12-06
   Improvements
+  * #i0091: PHP Warning: Illegal string offset
+            * 'file' in pi1/class.tx_browser_pi1_backend.php line 1809
+            * 'name' in pi1/class.tx_browser_pi1_backend.php line 2118
+            * 'file' in pi1/class.tx_browser_pi1_backend.php line 2119
   * #i0090: Improve recursion guard
 
 6.0.5

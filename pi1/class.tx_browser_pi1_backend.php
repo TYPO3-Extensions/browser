@@ -29,7 +29,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 6.0.0
+ * @version 6.0.6
  * @since 3.0.0
  */
 
@@ -1747,7 +1747,7 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf: Current plugin/flexform configuration
    * @return	array		with the names of the views list
-   * @version 4.1.5
+   * @version 6.0.6
    * @since 3.6.1
    */
   public function sDef_getArrViewsList( $arr_pluginConf )
@@ -1806,6 +1806,16 @@ class tx_browser_pi1_backend
           //$extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
           foreach ( ( array ) $arr_templates as $arr_template )
           {
+            // #i0091, 141206, dwildt, 9+
+            switch ( true )
+            {
+              case (!isset( $arr_template[ 'file' ] ) ):
+              case (!isset( $arr_template[ 'csvViews' ] ) ):
+                continue;
+              default:
+                // follow the workflow
+                break;
+            }
             if ( $arr_template[ 'file' ] == $str_pathToTmplFile )
             {
               $csvViews = str_replace( ' ', null, trim( $csvViews ) );
@@ -2082,7 +2092,7 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf: Current plugin/flexform configuration
    * @return	array		$arr_pluginConf: Extended with the templates
-   * @version 3.6.1
+   * @version 6.0.6
    * @since 3.6.1
    */
   public function templating_getExtensionTemplates( $arr_pluginConf )
@@ -2114,6 +2124,16 @@ class tx_browser_pi1_backend
       $extension = substr( $extensionWiDot, 0, strlen( $extensionWiDot ) - 1 );
       foreach ( ( array ) $arr_templates as $arr_template )
       {
+        // #i0091, 141206, dwildt, 9+
+        switch ( true )
+        {
+          case (!isset( $arr_template[ 'file' ] ) ):
+          case (!isset( $arr_template[ 'name' ] ) ):
+            continue;
+          default:
+            // follow the workflow
+            break;
+        }
 //var_dump($extensionWiDot, $arr_template['name'], $arr_template['file']);
         $label = $arr_template[ 'name' ] . ' (' . $extension . ')';
         $value = $arr_template[ 'file' ];
