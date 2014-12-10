@@ -2135,9 +2135,19 @@ class tx_browser_pi1_backend
             break;
         }
 //var_dump($extensionWiDot, $arr_template['name'], $arr_template['file']);
-        $label = $arr_template[ 'name' ] . ' (' . $extension . ')';
-        $value = $arr_template[ 'file' ];
-        $arr_pluginConf[ 'items' ][] = array( $label, $value );
+        $label  = $arr_template[ 'name' ] . ' (' . $extension . ')';
+        $value  = $arr_template[ 'file' ];
+        // #i0092, 141209, dwildt, +
+        switch ( true )
+        {
+          case (!isset( $arr_template[ 'image' ] ) ):
+            $image = 'EXT:browser/Resources/Public/Images/BackendLayouts/browser-default.gif';
+            break;
+          default:
+            $image = $arr_template[ 'image' ];
+            break;
+        }
+        $arr_pluginConf[ 'items' ][] = array( $label, $value, $image );
       }
     }
     // Loop through all extensions and templates
@@ -2171,8 +2181,14 @@ class tx_browser_pi1_backend
 
 //var_dump( __METHOD__, __LINE__, $this->typo3Version );
     // Loop: jquery_ui
+    // #i0093, 141209, dwildt, 1+
+    $loop = 0;
     foreach ( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
+      if($loop > 2)
+      {
+        break;
+      }
       $jquery_ui_key = strtolower( substr( $key_jquery_ui, 0, -1 ) );
       // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
@@ -2192,6 +2208,7 @@ class tx_browser_pi1_backend
       $jquery_ui_icon = $arr_jquery_ui[ 'icon' ];
 
       $arr_pluginConf[ 'items' ][] = array( $jquery_ui_label, $jquery_ui_key, $jquery_ui_icon );
+      $loop = $loop + 1;
     }
     // Loop: jquery_ui
 

@@ -19,11 +19,12 @@ plugin.tx_browser_pi1 {
       browser =
       browser {
         table {
-          name = Browser: Table (without any view)
-          file = EXT:browser/res/html/default.tmpl
+          name  = Browser: Table (without own template)
+          file  = EXT:browser/res/html/default.tmpl
+          //image = EXT:browser/Resources/Public/Images/BackendLayouts/start_bronze_02.gif
         }
         list {
-          name = Browser: List (without any view)
+          name = Browser: List (without own template)
           file = EXT:browser/res/html/default_ul.tmpl
         }
           // #44131

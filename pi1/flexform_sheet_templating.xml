@@ -37,6 +37,7 @@
             <itemListStyle>width:200px</itemListStyle>
             <items type="array"></items>
             <itemsProcFunc>tx_browser_pi1_backend->templating_getExtensionTemplates</itemsProcFunc>
+            <selicon_cols>6</selicon_cols>
             <default>typoscript</default>
           </config>
         </TCEforms>
