@@ -23,7 +23,7 @@ t3lib_extMgm::addPItoST43( $_EXTKEY, 'pi3/class.tx_browser_pi3.php', '_pi3', 'li
 t3lib_extMgm::addPItoST43( $_EXTKEY, 'pi4/class.tx_browser_pi4.php', '_pi4', 'list_type', 1 );
 
 // PageTSConfig
-t3lib_extMgm::addPageTSConfig( '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/ext_localconf/addPageTSConfig/foundation.txt">' );
+t3lib_extMgm::addPageTSConfig( '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/ExtLocalconf/addPageTSConfig/foundation.txt">' );
 
 // SC_OPTIONS
 // #33673, 120203, dwildt

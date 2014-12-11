@@ -15,7 +15,6 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     // Plugin 1 configuration
     // Plugin 4 configuration
     // Plugin 3 configuration
-    // Add default page and user TSconfig
     // Add pagetree icon
 
 
@@ -197,16 +196,6 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
   t3lib_extMgm::addPlugin(array('LLL:EXT:browser/locallang_db.xml:tt_content.list_type_pi3', $_EXTKEY.'_pi3', 'EXT:browser/ext_icon.gif'),'list_type');
     // Add the Flexform to the Plugin List
     // Plugin 3 configuration
-
-
-
-
-  /////////////////////////////////////////////////
-  //
-  // Add default page and user TSconfig
-
-//t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/tsConfig/' . $llStatic . '/page.txt">');
-  // Add default page and user TSconfig
 
 
 
