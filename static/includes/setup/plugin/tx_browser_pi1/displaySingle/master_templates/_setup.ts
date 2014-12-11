@@ -1,1 +1,0 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/static/includes/setup/plugin/tx_browser_pi1/displaySingle/master_templates/tableFields/_setup.ts">
