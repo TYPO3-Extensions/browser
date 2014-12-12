@@ -156,12 +156,13 @@ class tx_browser_pi1_sql_auto
    */
   public function get_statements()
   {
-    static $arr_return = null;
-
-    if ( $arr_return !== null )
-    {
-      return $arr_return;
-    }
+    $arr_return = null;
+//    static $arr_return = null;
+//
+//    if ( $arr_return !== null )
+//    {
+//      return $arr_return;
+//    }
 
     // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter();
