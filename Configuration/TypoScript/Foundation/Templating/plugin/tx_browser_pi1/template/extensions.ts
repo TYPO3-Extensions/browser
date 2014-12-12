@@ -9,6 +9,7 @@ plugin.tx_browser_pi1 {
         foundationMain01 {
           name      = Foundation - Main 1: Title // Searchform / Map, Browser, Order, Content
           file      = EXT:browser/res/html/foundation/main_01.html
+          image     = EXT:browser/res/html/foundation/foundation-icons.gif
           csvViews  = all
         }
         foundationMain02 {

@@ -1,0 +1,4 @@
+// #i0058, 140713, dwildt, 3+
+TCEFORM.tt_content.menu_type.addItems {
+  browserFoundationTopNav = Foundation top navigation (browser)
+}
