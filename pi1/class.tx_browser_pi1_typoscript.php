@@ -2335,7 +2335,6 @@ class tx_browser_pi1_typoscript
   {
     $row = $this->getFirstRow();
     $row = $this->wrapRowTableLocalForeignMarker( $markerArray, $row );
-var_dump( __METHOD__, __LINE__, $row );
 
     $this->cObjDataAdd( $row );
     foreach ( array_keys( ( array ) $row ) as $tableField )
@@ -2348,6 +2347,7 @@ var_dump( __METHOD__, __LINE__, $row );
     }
     $markerArray = $markerArray + $this->pObj->objWrapper4x->constant_markers( $row );
     $this->cObjDataReset();
+var_dump( __METHOD__, __LINE__, $markerArray );
     return $markerArray;
   }
 
