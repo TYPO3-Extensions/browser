@@ -83,27 +83,51 @@ This template is the default template for all list views.
 </em>
 
       <!-- ###TEMPLATE_LIST### begin -->
-      <!-- ###LIST_TITLE### begin -->
       <div class="columns">
+        <!-- ###LIST_TITLE### begin -->
         <div class="row">
           <div class="columns">
             ###MY_TITLE###
           </div>
         </div>
+        <!-- ###LIST_TITLE### end -->
         <div class="row">
-          <!-- ###LIST_TITLE### end -->
           <!-- ###SEARCHFORM### begin -->
-          <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE###">
-            LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.searchform while runtime ...<br />
-            Please use typoscript like:<br />
-            plugin.tx_browser_pi1.views.list.[list-id].htmlSnippets.subparts.searchform < plugin.tx_browser_pi1.displayList.master_templates.subparts.listview.searchform.simpleMapFilter
+          <div class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
+            <form action="###ACTION###" method="post" >
+              <fieldset>
+                <legend>
+                  ###MY_SEARCH_LEGEND###
+                </legend>
+                ###HIDDEN###
+                <input type="hidden" name="no_cache" value="1" />
+                <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
+                <input type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
+                <button class="tiny expand hidesubmit" role="button">
+                  ###MY_SEARCH###
+                </button>
+                <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                ###FILTER###
+                <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
+                  ###MY_RESET###
+                </button>
+                <!-- ###BUTTON_CSV-EXPORT### begin -->
+                <button class="tiny expand hidesubmit" role="button">
+                  ###MY_CSV_EXPORT###
+                </button>
+                <!-- ###BUTTON_CSV-EXPORT### end -->
+                <button class="tiny expand hidesubmit" role="button">
+                  ###MY_SEARCH###
+                </button>
+              </fieldset>
+            </form>
           </div><!-- /columns --><!-- ###SEARCHFORM### end -->
           <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
             <div class="row">
               <div class="show-for-large-up">
                 ###MAP###
-              </div>
-            </div>
+              </div><!-- /columns -->
+            </div><!-- /row -->
             <!-- ###LISTHEAD### begin -->
               <!-- ###LISTHEADITEM### begin -->
                 ###ITEM###
@@ -131,12 +155,12 @@ This template is the default template for all list views.
                 </div><!-- ###MODESELECTOR### end -->
               </div><!-- browser end -->
               <!-- ###LISTVIEW### begin -->
-              <div class="columns pagebrowser pagebrowser-bottom">
+              <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="columns listview listview-content listview-###MODE### listview-content-###MODE###">
                 LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
               </div> <!-- /listview -->
               <!-- ###LISTVIEW### end -->
               <!-- ###PAGEBROWSERBOTTOM### begin -->
-              <div class="columns pagination-centered pageBrowser pageBrowser-list-###MODE###">
+              <div class="columns pagination-centered pagebrowser pagebrowser-bottom">
                 ###RESULT_AND_ITEMS###
               </div><!-- ###PAGEBROWSERBOTTOM### end -->
             </div> <!-- /listarea -->
