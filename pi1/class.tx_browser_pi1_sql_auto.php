@@ -31,7 +31,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     6.0.1
+ * @version     6.0.7
  * @since       3.9.12
  */
 
@@ -151,11 +151,12 @@ class tx_browser_pi1_sql_auto
    *                    GROUP BY isn't handled
    *
    * @return	array		$arr_return : contains statements or an error message
-   * @version 5.0.0
+   * @version 6.0.7
    * @since   3.9.12
    */
   public function get_statements()
   {
+    // #i0106, 141212, dwildt, 1+/6-
     $arr_return = null;
 //    static $arr_return = null;
 //
@@ -344,7 +345,6 @@ class tx_browser_pi1_sql_auto
     $view = $this->pObj->view;
 
     $viewWiDot = $view . '.';
-var_dump( __METHOD__, __LINE__, $from );
     // DIE in case of override.from
     $this->zz_dieIfOverride( 'from' );
 
@@ -371,7 +371,6 @@ var_dump( __METHOD__, __LINE__, $from );
         t3lib_div::devLog( '[INFO/SQL] Value from the localTable: FROM \'' . $from . '\'', $this->pObj->extKey, 0 );
       }
     }
-var_dump( __METHOD__, __LINE__, $from );
 
     if ( !$from )
     {
@@ -388,7 +387,6 @@ var_dump( __METHOD__, __LINE__, $from );
       }
       // Add the first element of fetched tables to FROM
     }
-var_dump( __METHOD__, __LINE__, $from );
 
     // LEFT JOIN
     if ( $this->b_left_join )
@@ -404,7 +402,6 @@ var_dump( __METHOD__, __LINE__, $from );
           FROM \'' . $from . '\'', $this->pObj->extKey, 0 );
       }
     }
-var_dump( __METHOD__, __LINE__, $from );
     // LEFT JOIN
     // FULL JOIN
     if ( !$this->b_left_join )
@@ -448,7 +445,6 @@ var_dump( __METHOD__, __LINE__, $from );
       // Get fetched tables as array
     }
     // FULL JOIN
-var_dump( __METHOD__, __LINE__, $from );
 
     if ( $this->pObj->b_drs_sql )
     {
