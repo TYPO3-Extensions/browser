@@ -2424,7 +2424,7 @@ class tx_browser_pi1_typoscript
   private function wrapRowTableLocalGetFields()
   {
     #i0107
-var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
+//var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
     static $staticArray = array();
     $fields = array();
 
