@@ -2423,20 +2423,25 @@ class tx_browser_pi1_typoscript
    */
   private function wrapRowTableLocalGetFields()
   {
+    #i0107
 var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
-    static $test = array();
-    if( !isset( $test[$this->pObj->cObj->data[ 'uid' ]] ))
+    static $staticArray = array();
+    $fields = array();
+
+    $pluginId = $this->pObj->cObj->data[ 'uid' ];
+    if( !isset( $staticArray[$pluginId]['firstLoop'] ))
     {
-var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
-      $test[$this->pObj->cObj->data[ 'uid' ]] = true;
+var_dump( __METHOD__, __LINE__, $pluginId );
+      $staticArray[$pluginId]['firstLoop'] = true;
     }
 
-    static $firstLoop = true;
-    static $fields = array();
+    #i0107
+//    static $firstLoop = true;
+//    static $fields = array();
 
-    if ( !$firstLoop )
+    if ( !$staticArray[$pluginId]['firstLoop'] )
     {
-      return $fields;
+      return $staticArray[$pluginId]['fields'];
     }
 
     foreach ( ( array ) $this->tableFields as $tableField )
@@ -2449,9 +2454,9 @@ var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
       $fields[] = $tableField;
       continue;
     }
-    $fields = array_unique( ( array ) $fields );
-    $firstLoop = false;
-    return $fields;
+    $staticArray[$pluginId]['fields'] = array_unique( ( array ) $fields );
+    $staticArray[$pluginId]['firstLoop'] = true;
+    return $staticArray[$pluginId]['fields'];
   }
 
   /**
