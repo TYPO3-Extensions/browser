@@ -7,24 +7,33 @@ plugin.tx_browser_pi1 {
         // foundationMain
       browser {
         foundationMain01 {
-          name      = Foundation - Main 1: Title // Searchform / Map, Browser, Order, Content
-          file      = EXT:browser/res/html/foundation/main_01.html
-          image     = EXT:browser/res/html/foundation/foundation-icons.gif
+          name      = Foundation with own HTML snippet - 1: Title // Searchform / Map, Browser, Order, Content
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_01.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_01.gif
           csvViews  = all
         }
         foundationMain02 {
-          name      = Foundation - Main 2: Searchform / Title, Browser, Content
-          file      = EXT:browser/res/html/foundation/main_02.html
+          name      = Foundation with own HTML snippet - 2: Searchform / Title, Browser, Content
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_02.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_02.gif
+          csvViews  = all
+        }
+        foundationMain09 {
+          name      = Foundation with own HTML snippet - 9: List only
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_09.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_09.gif
           csvViews  = all
         }
         foundationTable01 {
-          name      = Foundation - Table 1: Title // Searchform / Map, Browser, Table
-          file      = EXT:browser/res/html/foundation/table_01.html
+          name      = Foundation without HTML snippet - 1: Title // Searchform / Map, Browser, Table
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/table_01.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_01.gif
           csvViews  = all
         }
         foundationTable02 {
-          name      = Foundation - Table 2: Searchform / Title, Browser, Table
-          file      = EXT:browser/res/html/foundation/table_02.html
+          name      = Foundation without HTML snippet - 2: Searchform / Title, Browser, Table
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/table_02.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_02.gif
           csvViews  = all
         }
       }
