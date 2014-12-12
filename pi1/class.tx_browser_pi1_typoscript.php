@@ -2341,6 +2341,7 @@ class tx_browser_pi1_typoscript
     {
       if ( !$this->wrapRowTableLocalRequirements( $this->pObj->localTable, $tableField ) )
       {
+var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $tableField );
         continue;
       }
       $markerArray = $this->wrapRowTableLocalField( $markerArray, $tableField, $row );
@@ -2384,14 +2385,14 @@ var_dump( __METHOD__, __LINE__, $markerArray );
   {
     // :TODO: ###TITLE### gehoert nicht in demn Body sondern in den Head
     return $markerArray;
-    $key = $this->objHandleAs->getHandleAsKey( $tableField );
-    if ( $key != 'title' )
-    {
-      return $markerArray;
-    }
-
-    $markerArray[ '###TITLE###' ] = $markerArray[ $hashMarker ];
-    return $markerArray;
+//    $key = $this->objHandleAs->getHandleAsKey( $tableField );
+//    if ( $key != 'title' )
+//    {
+//      return $markerArray;
+//    }
+//
+//    $markerArray[ '###TITLE###' ] = $markerArray[ $hashMarker ];
+//    return $markerArray;
   }
 
   /**
