@@ -343,7 +343,7 @@ class tx_browser_pi1_sql_auto
     $view = $this->pObj->view;
 
     $viewWiDot = $view . '.';
-
+var_dump( __METHOD__, __LINE__, $from );
     // DIE in case of override.from
     $this->zz_dieIfOverride( 'from' );
 
@@ -370,6 +370,7 @@ class tx_browser_pi1_sql_auto
         t3lib_div::devLog( '[INFO/SQL] Value from the localTable: FROM \'' . $from . '\'', $this->pObj->extKey, 0 );
       }
     }
+var_dump( __METHOD__, __LINE__, $from );
 
     if ( !$from )
     {
@@ -386,6 +387,7 @@ class tx_browser_pi1_sql_auto
       }
       // Add the first element of fetched tables to FROM
     }
+var_dump( __METHOD__, __LINE__, $from );
 
     // LEFT JOIN
     if ( $this->b_left_join )
@@ -401,6 +403,7 @@ class tx_browser_pi1_sql_auto
           FROM \'' . $from . '\'', $this->pObj->extKey, 0 );
       }
     }
+var_dump( __METHOD__, __LINE__, $from );
     // LEFT JOIN
     // FULL JOIN
     if ( !$this->b_left_join )
@@ -444,6 +447,7 @@ class tx_browser_pi1_sql_auto
       // Get fetched tables as array
     }
     // FULL JOIN
+var_dump( __METHOD__, __LINE__, $from );
 
     if ( $this->pObj->b_drs_sql )
     {
