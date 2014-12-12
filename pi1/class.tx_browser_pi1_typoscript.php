@@ -2341,14 +2341,12 @@ class tx_browser_pi1_typoscript
     {
       if ( !$this->wrapRowTableLocalRequirements( $this->pObj->localTable, $tableField ) )
       {
-var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $tableField );
         continue;
       }
       $markerArray = $this->wrapRowTableLocalField( $markerArray, $tableField, $row );
     }
     $markerArray = $markerArray + $this->pObj->objWrapper4x->constant_markers( $row );
     $this->cObjDataReset();
-var_dump( __METHOD__, __LINE__, $markerArray );
     return $markerArray;
   }
 
@@ -2425,6 +2423,7 @@ var_dump( __METHOD__, __LINE__, $markerArray );
    */
   private function wrapRowTableLocalGetFields()
   {
+var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
     static $firstLoop = true;
     static $fields = array();
 

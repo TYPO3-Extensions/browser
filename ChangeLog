@@ -21,9 +21,12 @@
   * #i0094: static to Configuration/TypoScript
             UPGRADE: All TypoScript Templates must be included again
   Bugfix
+  * #i0107: tx_browser_pi1_typoscript::wrapRowTableLocalGetFields cached fields by a static variable.
+            This causes empty fields in case of multiple plugins.
+            static is removed.
   * #i0106: tx_browser_pi1_sql::get_statements cached get statements by a static variable.
             This causes SQL errors in case of multiple plugins.
-             static is removed.
+            static is removed.
 
 6.0.6
   14-12-09
