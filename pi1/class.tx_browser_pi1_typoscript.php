@@ -737,7 +737,7 @@ class tx_browser_pi1_typoscript
   {
     // Get the label of the local table
     $tableLocal = $this->pObj->localTable;
-var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $this->rows );
+//var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $this->rows );
     // LOOP rows
     foreach ( ( array ) $this->rows as $row )
     {
@@ -2335,6 +2335,7 @@ var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $this->rows );
   {
     $row = $this->getFirstRow();
     $row = $this->wrapRowTableLocalForeignMarker( $markerArray, $row );
+var_dump( __METHOD__, __LINE__, $row );
 
     $this->cObjDataAdd( $row );
     foreach ( array_keys( ( array ) $row ) as $tableField )
