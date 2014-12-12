@@ -14,8 +14,8 @@ plugin.tx_browser_pi1 {
   templates.listview.image.2.layoutKey  = default
   # cat=Browser - Templates - List - Image 2*//130;         type=string;     label= Path*:(Obligate!) Path to the images (with ending backslash!). I.e: uploads/tx_org/
   templates.listview.image.2.path       =
-  # cat=Browser - Templates - List - Image 2*//130;         type=string;     label= Default image:Full qualified path to the default image. I.e: EXT:browser/res/images/browser_default_300x200.gif
-  templates.listview.image.2.default    = EXT:browser/res/images/browser_default_300x200.gif
+  # cat=Browser - Templates - List - Image 2*//130;         type=string;     label= Default image:Full qualified path to the default image. I.e: EXT:browser/Resources/Public/Images/Icons/browser_default_300x200.gif
+  templates.listview.image.2.default    = EXT:browser/Resources/Public/Images/Icons/browser_default_300x200.gif
   # cat=Browser - Templates - List - Image 2*//others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   templates.listview.image.2.links      = Click me!
 

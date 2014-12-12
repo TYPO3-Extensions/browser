@@ -5,7 +5,7 @@ plugin.tx_browser_pi1 {
     jquery =
     jquery {
         // [STRING] Path to jQuery library
-      library = EXT:browser/res/js/jquery/jquery-1.8.3.min.js
+      library = EXT:browser/Resources/Public/JavaScript/jQuery/jquery-1.8.3.min.js
       library {
           // [Boolean] 1 (default): place JSS scripts in the footer section
         footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -16,7 +16,7 @@ plugin.tx_browser_pi1 {
       plugins =
       plugins {
         jstree {
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree_1.0-rc3.js
+          plugin = EXT:browser/Resources/Public/JavaScript/jQuery/plugins/jquery.jstree/jquery.jstree_1.0-rc3.js
           plugin {
               // [Boolean] 1 (default): place JSS scripts in the footer section
             footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -24,7 +24,7 @@ plugin.tx_browser_pi1 {
             inline = 0
           }
           plugins {
-            cookie = EXT:browser/res/js/jquery/plugins/jquery.jstree/_lib/jquery.cookie.js
+            cookie = EXT:browser/Resources/Public/JavaScript/jQuery/plugins/jquery.jstree/_lib/jquery.cookie.js
             cookie {
                 // [Boolean] 1 (default): place JSS scripts in the footer section
               footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -32,7 +32,7 @@ plugin.tx_browser_pi1 {
               inline = 0
             }
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree_4.1.22.js
+          library = EXT:browser/Resources/Public/JavaScript/jQuery/tx_browser_pi1_jstree_4.1.22.js
           library {
               // [Boolean] 1 (default): place JSS scripts in the footer section
             footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -226,14 +226,14 @@ plugin.tx_browser_pi1 {
         }
         t3browser {
             // [String] Path to the jss file of the t3browser plugin
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.5.js
+          plugin = EXT:browser/Resources/Public/JavaScript/jQuery/plugins/jquery.t3browser/jquery.t3browser-0.0.5.js
           plugin {
               // [Boolean] 1 (default): place JSS scripts in the footer section
             footer = {$plugin.tx_browser_pi1.jss.placement.footer}
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.7.js
+          library = EXT:browser/Resources/Public/JavaScript/jQuery/tx_browser_pi1-0.0.7.js
           library {
               // [Boolean] 1 (default): place JSS scripts in the footer section
             footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -272,7 +272,7 @@ plugin.tx_browser_pi1 {
             }
           }
             // [STRING] Path to the jss file of the t3browser localisation. ###LANG### will be replacedwhile runtime
-          localisation = EXT:browser/res/js/jquery/plugins/jquery.t3browser/localisation.###LANG###.js
+          localisation = EXT:browser/Resources/Public/JavaScript/jQuery/plugins/jquery.t3browser/localisation.###LANG###.js
           localisation {
               // [Boolean] 1 (default): place JSS scripts in the footer section
             footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -282,7 +282,7 @@ plugin.tx_browser_pi1 {
         }
       }
         // [STRING] Path to the jss file of the user interface (ui). All features are enabled in the default script file!
-      ui = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
+      ui = EXT:browser/Resources/Public/JavaScript/jQuery/ui/jquery-ui-1.8.14.custom.min.js
       ui {
           // [Boolean] 1 (default): place JSS scripts in the footer section
         footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -290,7 +290,7 @@ plugin.tx_browser_pi1 {
         inline = 0
       }
       cleanup {
-        library = EXT:browser/res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
+        library = EXT:browser/Resources/Public/JavaScript/jQuery/tx_browser_pi1_cleanup_4.2.0.js
         library {
             // [Boolean] 1 (default): place JSS scripts in the footer section
           footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -304,7 +304,7 @@ plugin.tx_browser_pi1 {
     }
     ajax {
         // [STRING] Path to Javascript file with ajax methods
-      file    = EXT:browser/res/js/tx_browser_pi1_ajax-0.0.5.js
+      file    = EXT:browser/Resources/Public/JavaScript/tx_browser_pi1_ajax-0.0.5.js
       file {
           // [Boolean] 1 (default): place JSS scripts in the footer section
         footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -312,7 +312,7 @@ plugin.tx_browser_pi1 {
         inline = 0
       }
         // [STRING] Path to Javascript file with ajax language values
-      fileLL  = EXT:browser/res/js/tx_browser_pi1_ajax_languages.js
+      fileLL  = EXT:browser/Resources/Public/JavaScript/tx_browser_pi1_ajax_languages.js
       fileLL {
           // [Boolean] 1 (default): place JSS scripts in the footer section
         footer = {$plugin.tx_browser_pi1.jss.placement.footer}
@@ -438,7 +438,7 @@ plugin.tx_browser_pi1 {
     }
     general {
         // [STRING] Path to Javascript file general methods
-      file = EXT:browser/res/js/tx_browser_pi1.js
+      file = EXT:browser/Resources/Public/JavaScript/tx_browser_pi1.js
       file {
           // [Boolean] 1 (default): place JSS scripts in the footer section
         footer = {$plugin.tx_browser_pi1.jss.placement.footer}

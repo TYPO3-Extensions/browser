@@ -15,7 +15,7 @@ page {
   }
   includeJSFooter {
     browserFoundation = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.foundation}
-    60142 = EXT:browser/res/js/foundationInit.js
+    60142 = EXT:browser/Resources/Public/JavaScript/foundationInit.js
   }
   includeJSFooterlibs {
     browserJquery     = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.jquery}

@@ -5,7 +5,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - jQuery jstree//100;   type=options[apple,classic,default,default-rtl];  label= Theme: Name of the theme of tree views
   jQuery.plugin.jstree.theme            = classic
   # cat=Browser - jQuery jstree//101;   type=string;  label= Path to themes: Path to the folder, which contains the themes (with ending slash)
-  jQuery.plugin.jstree.pathToTheme      = typo3conf/ext/browser/res/js/jquery/plugins/jquery.jstree/themes/
+  jQuery.plugin.jstree.pathToTheme      = typo3conf/ext/browser/Resources/Public/JavaScript/jQuery/plugins/jquery.jstree/themes/
   # cat=Browser - jQuery jstree//102;   type=options[category_menu,checkbox];  label= Plugins: category_menu: contains plugins for a category menu. checkbox: contains plugins for a checkbox.
   jQuery.plugin.jstree.plugins          = checkbox
   # cat=Browser - jQuery jstree//201;   type=string;  label= Selector 1: HTML id of div tag which contains a tree view. DON'T USE DOTS!
@@ -35,7 +35,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - jQuery jstree//100;   type=options[apple,classic,default,default-rtl];  label= Theme: Name of the theme of tree views
   jQuery.plugin.jstree.theme            = classic
   # cat=Browser - jQuery jstree//101;   type=string;  label= Path to themes: Path to the folder, which contains the themes (with ending slash)
-  jQuery.plugin.jstree.pathToTheme      = typo3conf/ext/browser/res/js/jquery/plugins/jquery.jstree/themes/
+  jQuery.plugin.jstree.pathToTheme      = typo3conf/ext/browser/Resources/Public/JavaScript/jQuery/plugins/jquery.jstree/themes/
   # cat=Browser - jQuery jstree//102;   type=options[category_menu,checkbox];  label= Plugins: category_menu: contains plugins for a category menu. checkbox: contains plugins for a checkbox.
   jQuery.plugin.jstree.plugins          = checkbox
   # cat=Browser - jQuery jstree//201;   type=string;  label= Selector 1: HTML id of div tag which contains a tree view. DON'T USE DOTS!

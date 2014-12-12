@@ -76,7 +76,7 @@ plugin.tx_browser_pi1 {
       cursor: pointer;
     }
     .txbrowserpi1loader {
-      background: #fff url(/typo3conf/ext/browser/res/images/browser_loader.gif) no-repeat  center ;
+      background: #fff url(/typo3conf/ext/browser/Resources/Public/Images/Icons/browser_loader.gif) no-repeat  center ;
       background-color: #fff;
       opacity:.8;
       position: relative;

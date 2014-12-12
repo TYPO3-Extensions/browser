@@ -5,7 +5,7 @@ plugin.tx_browser_pi1 {
         sample {
             // [String] Name of the template. It will displayed in the plugin/flexform
           name      = +DAM: Sample
-          file      = EXT:browser/res/sample/dam/default.html
+          file      = EXT:browser/Resources/Public/Sample/dam/default.html
             // [csv] Comma seperated list with the number of the correspondening views
           csvViews  = 37165
         }
@@ -190,6 +190,6 @@ plugin.tx_browser_pi1 {
 
 page {
   includeCSS {
-    37165 = EXT:browser/res/sample/dam/default.css
+    37165 = EXT:browser/Resources/Public/Sample/dam/default.css
   }
 }

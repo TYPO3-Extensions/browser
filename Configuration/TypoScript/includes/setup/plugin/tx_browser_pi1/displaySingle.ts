@@ -92,7 +92,7 @@ plugin.tx_browser_pi1 {
     }
     image {
         // [String] path and file name of the image, which should displayed, if a record hasn't any image #11204
-      file = EXT:browser/res/images/alternate_image_400x300.gif
+      file = EXT:browser/Resources/Public/Images/Icons/alternate_image_400x300.gif
       file {
         maxW = {$plugin.tx_browser_pi1.singleMaxW}
         maxH = {$plugin.tx_browser_pi1.singleMaxH}

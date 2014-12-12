@@ -34,7 +34,7 @@ plugin.tx_browser_pi1 {
           // [STRING] Path to the HTML template file
         template {
             // default file
-          file    = EXT:browser/res/html/csv_export.tmpl
+          file    = EXT:browser/Resources/Private/Templates/HTML/csv_export.tmpl
           marker  = ###TEMPLATE_CSV###
         }
       }

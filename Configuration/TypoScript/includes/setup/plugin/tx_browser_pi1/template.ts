@@ -1,14 +1,14 @@
 plugin.tx_browser_pi1 {
   template {
       // default file
-    file = EXT:browser/res/html/default.tmpl
+    file = EXT:browser/Resources/Private/Templates/HTML/default.tmpl
     css {
-      browser = EXT:browser/res/html/default.css
+      browser = EXT:browser/Resources/Public/Css/default.css
       browser {
           // [Boolean] 0 (default): CSS as external file, 1: CSS inline
         inline = 0
       }
-      jquery_ui = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
+      jquery_ui = EXT:browser/Resources/Public/JavaScript/jQuery/ui/smoothness/jquery-ui-1.8.14.custom.css
       jquery_ui {
           // [Boolean] 0 (default): CSS as external file, 1: CSS inline
         inline = 0
@@ -20,34 +20,30 @@ plugin.tx_browser_pi1 {
       browser {
         table {
           name  = Browser: Table (without own template)
-          file  = EXT:browser/res/html/default.tmpl
+          file  = EXT:browser/Resources/Private/Templates/HTML/default.tmpl
           //image = EXT:browser/Resources/Public/Images/BackendLayouts/start_bronze_02.gif
         }
         list {
           name = Browser: List (without own template)
-          file = EXT:browser/res/html/default_ul.tmpl
+          file = EXT:browser/Resources/Private/Templates/HTML/default_ul.tmpl
         }
           // #44131
         main {
           name      = Browser: Main
-          file      = EXT:browser/res/html/main.tmpl
+          file      = EXT:browser/Resources/Private/Templates/HTML/main.tmpl
           csvViews  = all
         }
           // #44131
         margin {
           name      = Browser: Margin
-          file      = EXT:browser/res/html/margin.tmpl
+          file      = EXT:browser/Resources/Private/Templates/HTML/margin.tmpl
           csvViews  = all
         }
           // #60530
         newsletter {
           name      = Browser: Newsletter
-          file      = EXT:browser/res/html/newsletter.html
+          file      = EXT:browser/Resources/Private/Templates/HTML/newsletter.html
           csvViews  = all
-        }
-        table_until_3-9-6 {
-          name = Browser: Table (until version 4.0)
-          file = EXT:browser/res/html/until_3.9.6/default.tmpl
         }
       }
     }
