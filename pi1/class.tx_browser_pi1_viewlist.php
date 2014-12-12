@@ -1647,7 +1647,6 @@ class tx_browser_pi1_viewlist
     $from = $this->pObj->objSqlInit->statements[ 'listView' ][ 'from' ]
             . $this->sql_radialsearchFrom()
     ;
-var_dump(__METHOD__, __LINE__, $from );
     $where = $this->pObj->objSqlInit->statements[ 'listView' ][ 'where' ];
 //// #62546
 //var_dump(__METHOD__, __LINE__, $where );
