@@ -1122,7 +1122,7 @@ class tx_browser_pi1_search
             Deutsch: Du hast im Plugin/in der Flexform den CSV-Export aktiviert.<br />
             Aber das aktuelle HTML-Template hat keinen Subpart ###BUTTON_CSV-EXPORT###.<br />
             Bitte k&uuml;mmere Dich um ein korrektes Template und f&uuml;ge den Subpart hinzu.<br />
-            Ein Beispiel findest Du in der Datei: res/html/default.tmpl<br />
+            Ein Beispiel findest Du in der Datei: Resources/Private/Templates/HTML/default.tmpl<br />
           </p>
         </div>';
       $template = $prompt . $template;

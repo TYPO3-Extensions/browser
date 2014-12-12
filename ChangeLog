@@ -4,9 +4,22 @@
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 6.0.7
-  14-12-11
+  14-12-12
   Improvements
-  * #i0094: static is moved to Configuration/TypoScript
+  * #i0105: removed: Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/subparts/searchform/complex.ts
+  * #i0104: moved: res/sample to Resources/Public/Sample
+  * #i0103: moved: res/js to Resources/Public/JavaScript
+  * #i0102: moved: res/images to Resources/Public/Images
+  * #i0101: moved: res/html/map to Resources/Private/Templates/HTML/Map
+  * #i0100: removed: Configuration/TypoScript/downgrade/4.5.4
+  * #i0099: removed: Configuration/TypoScript/downgrade/3.9.0
+  * #i0098: removed: res/html/until_3.9.6
+  * #i0097: moved: default.css from res/html to Resources/Public/Css
+  * #i0096: moved: favicon.ico from res/html to Resources/Public/Images
+  * #i0095: moved: res/html/*tmpl are moved to Resources/Private/Templates/HTML/
+            UPGRADE: All Browser Plugins/Flexforms must be updated. See [Templating] > HTML
+  * #i0094: static to Configuration/TypoScript
+            UPGRADE: All TypoScript Templates must be included again
 
 6.0.6
   14-12-09
@@ -632,7 +645,7 @@
             * pi1
               * class.tx_browser_pi1_javascript.php
               * class.tx_browser_pi1_navi_recordbrowser.php
-            * res/html/default.css
+            * Resources/Public/Css/default.css
             * static/setup.txt
   * #50214: Fix core error prompts
             * pi1
