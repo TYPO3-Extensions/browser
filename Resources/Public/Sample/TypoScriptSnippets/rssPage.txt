@@ -1,0 +1,13 @@
+  ////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  // RSS page object
+
+  // Remove the default page object. Check if your page object is called "page"!
+page >
+
+  // Remove tt_content.stdWrap.innerWrap
+tt_content.stdWrap.innerWrap >
+
+  // Create a new page object for XML output
+page < plugin.tx_browser_pi1.rss.page
+  // RSS page object

@@ -1,0 +1,16 @@
+// Code Tutorial I, step 3
+plugin.tx_browser_pi1 {
+  views {
+    list {
+      1 {
+        select = tt_news.title, tt_news_cat.title
+      }
+      2 {
+        select = tt_news.image, tt_news_cat.title
+      }
+      3 {
+        select = tt_news.datetime, tt_news_cat.title
+      }
+    }
+  }
+}

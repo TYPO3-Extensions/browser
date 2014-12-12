@@ -1,0 +1,37 @@
+// Code Tutorial I, step 4
+plugin.tx_browser_pi1 {
+  views {
+    list {
+      1 {
+        select = tt_news.title, tt_news_cat.title
+      }
+      2 {
+        select = tt_news.image, tt_news_cat.title
+      }
+      3 {
+        select = tt_news.datetime, tt_news_cat.title
+      }
+    }
+    single {
+      1 {
+        select  = tt_news.title, tt_news.author, tt_news_cat.title, tt_news.short, tt_news.datetime
+      }
+      2 {
+        select  = tt_news.title, tt_news.bodytext, tt_news.image, tt_news.imagecaption, tt_news.imagealttext, tt_news.imagetitletext, tt_news_cat.title
+      }
+      3 {
+        select  = tt_news.title, tt_news.bodytext, tt_news.image, tt_news.imagecaption, tt_news.imagealttext, tt_news.imagetitletext
+        displaySingle < plugin.tx_browser_pi1.displaySingle
+        displaySingle {
+          templateMarker = ###TEMPLATE_SINGLE_IMGTXT###
+        }
+        handleAs {
+          text = tt_news.bodytext
+        }
+      }
+    }
+  }
+}
+
+// Code Tutorial I, step 5
+plugin.tx_browser_pi1.views.list.3.select = tt_news.title, tt_news.datetime
