@@ -737,6 +737,7 @@ class tx_browser_pi1_typoscript
   {
     // Get the label of the local table
     $tableLocal = $this->pObj->localTable;
+var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $this->rows );
     // LOOP rows
     foreach ( ( array ) $this->rows as $row )
     {
