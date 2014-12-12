@@ -628,7 +628,7 @@ class tx_browser_pi1_template
     $html = null;
     $wiDefaultTemplate = true;
     $markerArray = $this->pObj->objTyposcript->wrapRow( $template, $wiDefaultTemplate, $uid );
-var_dump( __METHOD__, __LINE__, $markerArray );
+//var_dump( __METHOD__, __LINE__, $markerArray );
 
     $currField = 0;
     $sumFields = count( $markerArray );

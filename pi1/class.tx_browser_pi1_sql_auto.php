@@ -153,17 +153,26 @@ class tx_browser_pi1_sql_auto
    * @return	array		$arr_return : contains statements or an error message
    * @version 6.0.7
    * @since   3.9.12
+   * @internal  #i0106
    */
   public function get_statements()
   {
     // #i0106, 141212, dwildt, 1+/6-
-    $arr_return = null;
 //    static $arr_return = null;
 //
 //    if ( $arr_return !== null )
 //    {
 //      return $arr_return;
 //    }
+
+    static $staticArray = array();
+    $arr_return = array();
+
+    $pluginId = $this->pObj->cObj->data[ 'uid' ];
+    if( isset( $staticArray[$pluginId]['arr_return'] ))
+    {
+      return $staticArray[$pluginId]['arr_return'];
+    }
 
     // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter();
@@ -181,6 +190,7 @@ class tx_browser_pi1_sql_auto
       $arr_return[ 'error' ][ 'status' ] = true;
       $arr_return[ 'error' ][ 'header' ] = $str_header;
       $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
+      $staticArray[$pluginId]['arr_return'] = $arr_return;
       return $arr_return;
     }
     // Get SELECT
@@ -210,6 +220,7 @@ class tx_browser_pi1_sql_auto
       $arr_return[ 'error' ][ 'status' ] = true;
       $arr_return[ 'error' ][ 'header' ] = $str_header;
       $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
+      $staticArray[$pluginId]['arr_return'] = $arr_return;
       return $arr_return;
     }
     // Get ORDER BY
@@ -255,6 +266,7 @@ class tx_browser_pi1_sql_auto
       $arr_return[ 'data' ][ $str_query_part ] = $str_statement;
     }
 
+    $staticArray[$pluginId]['arr_return'] = $arr_return;
     return $arr_return;
   }
 

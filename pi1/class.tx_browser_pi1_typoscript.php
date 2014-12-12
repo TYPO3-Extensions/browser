@@ -2418,26 +2418,20 @@ class tx_browser_pi1_typoscript
    * wrapRowTableLocalGetFields() : List of tableFields of the local table
    *
    * @return	array		$fields : List of tableFields
-   * @version 5.0.0
+   * @version 6.0.7
    * @since 5.0.0
+   * @internal #i0107
    */
   private function wrapRowTableLocalGetFields()
   {
-    #i0107
-//var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data[ 'uid' ] );
     static $staticArray = array();
     $fields = array();
 
     $pluginId = $this->pObj->cObj->data[ 'uid' ];
     if( !isset( $staticArray[$pluginId]['firstLoop'] ))
     {
-var_dump( __METHOD__, __LINE__, $pluginId );
       $staticArray[$pluginId]['firstLoop'] = true;
     }
-
-    #i0107
-//    static $firstLoop = true;
-//    static $fields = array();
 
     if ( !$staticArray[$pluginId]['firstLoop'] )
     {
@@ -2454,6 +2448,7 @@ var_dump( __METHOD__, __LINE__, $pluginId );
       $fields[] = $tableField;
       continue;
     }
+
     $staticArray[$pluginId]['fields'] = array_unique( ( array ) $fields );
     $staticArray[$pluginId]['firstLoop'] = true;
     return $staticArray[$pluginId]['fields'];
