@@ -67,7 +67,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/samples/dam/',           'Browser [3] + Beispiel fuer DAM (veraltet!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates');
         // Plugin 4
-      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/pi4/',                   'Browser [10] + kein Cache)');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/pi4/',                   'Browser [10] + kein Cache');
         // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/reset/',                 'Browser [99] Reset');
         // Plugin 3
