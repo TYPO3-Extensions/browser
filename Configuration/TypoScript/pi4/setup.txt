@@ -1,0 +1,15 @@
+  ////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi4
+
+  // Copy browser configuration to plugin 4
+plugin.tx_browser_pi4 < plugin.tx_browser_pi1
+  // Set plugin configuration to no cache
+plugin.tx_browser_pi4 = USER_INT
+
+  // Plugin 4 should use 
+plugin.tx_browser_pi4 {
+  userFunc 		= tx_browser_pi4->main
+	includeLibs = EXT:browser/pi4/class.tx_browser_pi4.php
+}
+  // plugin.tx_browser_pi4
