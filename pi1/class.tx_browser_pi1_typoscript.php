@@ -2285,11 +2285,11 @@ class tx_browser_pi1_typoscript
     }
 
     $arrDevider = $this->getDeviderPerTableField( $tableField );
-//var_dump(__METHOD__, __LINE__, $arrDevider);
     if ( $arrDevider[ 'isset' ] )
     {
       $devider[ $tableField ] = $arrDevider[ 'devider' ];
       $value = implode( $devider[ $tableField ], ( array ) $values );
+var_dump(__METHOD__, __LINE__, $devider, $value);
       return $value;
     }
 
@@ -2297,7 +2297,7 @@ class tx_browser_pi1_typoscript
     $devider[ $tableField ] = $this->str_sqlDeviderDisplay;
 
     $value = implode( $devider[ $tableField ], ( array ) $values );
-//var_dump(__METHOD__, __LINE__, $devider, $value);
+var_dump(__METHOD__, __LINE__, $devider, $value);
     return $value;
   }
 

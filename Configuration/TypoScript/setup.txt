@@ -52,7 +52,7 @@ plugin.tx_browser_pi1 {
   }
 
     // TypoScript version. Don't touch this value!
-  version = 4.7.0
+  version = 6.0.7
 
     // downgrade, localisation, performance, php, recursionGuard, security, session_manager, sql
   advanced =
