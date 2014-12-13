@@ -67,11 +67,11 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/samples/dam/',           'Browser [3] + Beispiel fuer DAM (veraltet!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates');
         // Plugin 4
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/Configuration/TypoScript/',                   'Browser [10] + kein Cache)');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/pi4/',                   'Browser [10] + kein Cache)');
         // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/reset/',                 'Browser [99] Reset');
         // Plugin 3
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/Configuration/TypoScript/',                   'Browser Handbuecher [1]');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/pi3/',                   'Browser Handbuecher [1]');
         // TypoScript: Include Static Templates
       break;
     default:
@@ -88,11 +88,11 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/samples/dam/',           'Browser [3] + Sample for DAM (deprecated!)');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates');
         // Plugin 4
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/Configuration/TypoScript/',                   'Browser [10] + no cache');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/pi4/',                   'Browser [10] + no cache');
         // Plugin 1
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/reset/',                 'Browser [99] Reset');
         // Plugin 3
-      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/Configuration/TypoScript/',                   'Browser Manuals [1]');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/pi3/',                   'Browser Manuals [1]');
         // TypoScript: Include Static Templates
       break;
   }
