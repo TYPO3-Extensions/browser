@@ -2743,12 +2743,16 @@ class tx_browser_pi1_navi_indexBrowser
     // #i0109, 141214, dwildt 1-/+
     //$class = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
     $classDefault = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'class.' ][ 'default' ];
+    $classDefault = str_replace('###KEY###', $key, $classDefault);
+    $classDefault = str_replace('###TAB###', $tab[ 'labelAscii' ], $classDefault);
     if( empty( $classDefault ))
     {
       $classDefault = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
     }
     $classActive = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'class.' ][ 'active' ];
-    if( empty( $classDefault ))
+    $classActive = str_replace('###KEY###', $key, $classActive);
+    $classActive = str_replace('###TAB###', $tab[ 'labelAscii' ], $classActive);
+    if( empty( $classActive ))
     {
       $classActive = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key . ' ui-tabs-active ui-state-active selected';
     }
