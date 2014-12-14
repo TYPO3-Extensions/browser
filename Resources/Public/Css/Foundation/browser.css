@@ -1,3 +1,17 @@
+.sub-nav {
+    background-color: #F2F2F2;
+    padding: 10px 10px 10px 0px;
+}
+.sub-nav dt {
+  display:none !important;
+}
+.sub-nav dd {
+  margin-left: 0.1875rem !important;
+}
+.sub-nav dd a {
+  padding: 0.1875rem 0.1875rem !important;
+}
+
 .clearing-blackout {
   z-index:999999 !important; /* because of map */
 }
