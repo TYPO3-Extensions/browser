@@ -6,8 +6,8 @@ plugin.tx_browser_pi1 {
       }
       class =
       class {
-        active  = ui-state-default ui-corner-top tab-###TAB### tab-###KEY###
-        default = ui-state-default ui-corner-top tab-###TAB### tab-###KEY### ui-tabs-active ui-state-active selected
+        active  = ui-state-default ui-corner-top tab-###TAB### tab-###KEY### ui-tabs-active ui-state-active selected
+        default = ui-state-default ui-corner-top tab-###TAB### tab-###KEY###
       }
       display {
           // [Boolean] Should tabs displayed, if they haven't any item?
