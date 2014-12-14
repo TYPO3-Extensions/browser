@@ -30,7 +30,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.8.7
+ * @version     6.0.7
  * @since       3.9.9
  */
 
@@ -380,94 +380,94 @@ class tx_browser_pi1_navi_indexBrowser
 //      $prompt = 'localisation_consolidate( )';
 //      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
 //    }
-
-    static $thisMethodIsUsed = false;
-
-    // RETURN : method is called twice at least
-    if ( $thisMethodIsUsed )
-    {
-      return;
-    }
-    // RETURN : method is called twice at least
-    // Don't call method twice
-    $thisMethodIsUsed = true;
-
-    // SWITCH $int_localisation_mode
-    switch ( $this->int_localisation_mode )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-        // RETURN : nothing to do
-        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
-        {
-          $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        return false;
-        break;
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
-        {
-          $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE_ONLY.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        // RETURN : nothing to do
-        return false;
-        break;
-      case( $this->pObj->objFltr4x->get_selectedFilters() ):
-        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
-        {
-          $prompt = 'Index browser doesn\'t need any localisation consolidation. A filter is selected.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        // RETURN : nothing to do
-        return false;
-        break;
-      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
-        {
-          $prompt = 'Index browser: Hits of the default language will substracted.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        // Store current localisation mode
-        $curr_int_localisation_mode = $this->int_localisation_mode;
-        // Set all to default language
-        $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-        //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-        $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
-        $this->bool_LLconsolidationMode = true;
-        // Set all to default language
-        // Substract of special char tabs the hits of default language
-        $arr_return = $this->count_specialChars();
-        if ( !( empty( $arr_return ) ) )
-        {
-          // Restore former localisation mode
-          $this->bool_LLconsolidationMode = false;
-          $this->int_localisation_mode = $curr_int_localisation_mode;
-          //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-          $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
-          // Restore former localisation mode
-          // RETURN : Array with error prompt in case of an error
-          return $arr_return;
-        }
-        // Substract of special char tabs the hits of default language
-        // Substract of default char tabs the hits of default language
-        $arr_return = $this->count_chars();
-        // Restore former localisation mode
-        $this->bool_LLconsolidationMode = false;
-        $this->int_localisation_mode = $curr_int_localisation_mode;
-        //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-        $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
-        // Restore former localisation mode
-        // RETURN : Array with error prompt in case of an error
-        return $arr_return;
-        // Substract of default char tabs the hits of default language
-        break;
-      default:
-        // DIE
-        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
-        break;
-    }
-    // SWITCH $int_localisation_mode
+//
+//    static $thisMethodIsUsed = false;
+//
+//    // RETURN : method is called twice at least
+//    if ( $thisMethodIsUsed )
+//    {
+//      return;
+//    }
+//    // RETURN : method is called twice at least
+//    // Don't call method twice
+//    $thisMethodIsUsed = true;
+//
+//    // SWITCH $int_localisation_mode
+//    switch ( $this->int_localisation_mode )
+//    {
+//      case( PI1_DEFAULT_LANGUAGE ):
+//        // RETURN : nothing to do
+//        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+//        {
+//          $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE.';
+//          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+//        return false;
+//        break;
+//      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+//        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+//        {
+//          $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE_ONLY.';
+//          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+//        // RETURN : nothing to do
+//        return false;
+//        break;
+//      case( $this->pObj->objFltr4x->get_selectedFilters() ):
+//        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+//        {
+//          $prompt = 'Index browser doesn\'t need any localisation consolidation. A filter is selected.';
+//          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+//        // RETURN : nothing to do
+//        return false;
+//        break;
+//      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+//        if ( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+//        {
+//          $prompt = 'Index browser: Hits of the default language will substracted.';
+//          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+//        // Store current localisation mode
+//        $curr_int_localisation_mode = $this->int_localisation_mode;
+//        // Set all to default language
+//        $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+//        //$this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+//        $this->pObj->objLocalise->setLocalisationMode( PI1_DEFAULT_LANGUAGE );
+//        $this->bool_LLconsolidationMode = true;
+//        // Set all to default language
+//        // Substract of special char tabs the hits of default language
+//        $arr_return = $this->count_specialChars();
+//        if ( !( empty( $arr_return ) ) )
+//        {
+//          // Restore former localisation mode
+//          $this->bool_LLconsolidationMode = false;
+//          $this->int_localisation_mode = $curr_int_localisation_mode;
+//          //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+//          $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
+//          // Restore former localisation mode
+//          // RETURN : Array with error prompt in case of an error
+//          return $arr_return;
+//        }
+//        // Substract of special char tabs the hits of default language
+//        // Substract of default char tabs the hits of default language
+//        $arr_return = $this->count_chars();
+//        // Restore former localisation mode
+//        $this->bool_LLconsolidationMode = false;
+//        $this->int_localisation_mode = $curr_int_localisation_mode;
+//        //$this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+//        $this->pObj->objLocalise->setLocalisationMode( $curr_int_localisation_mode );
+//        // Restore former localisation mode
+//        // RETURN : Array with error prompt in case of an error
+//        return $arr_return;
+//        // Substract of default char tabs the hits of default language
+//        break;
+//      default:
+//        // DIE
+//        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+//        break;
+//    }
+//    // SWITCH $int_localisation_mode
   }
 
   /**
@@ -549,7 +549,6 @@ class tx_browser_pi1_navi_indexBrowser
           t3lib_div :: devLog( '[WARN/MAP/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
         }
         return true;
-        break;
       // map isn't enabled
       case( 1 ) :
       case( 'Map' ) :
@@ -562,7 +561,6 @@ class tx_browser_pi1_navi_indexBrowser
           t3lib_div :: devLog( '[INFO/MAP/NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return false;
-        break;
     }
 
     return true;
@@ -838,7 +836,9 @@ class tx_browser_pi1_navi_indexBrowser
 //        // Wrap the label
 //      $label  = $tab['label'];
       // Init the marker array
-      unset( $markerArray );
+      // 141214, dwildt, 1-/+
+      //unset( $markerArray );
+      $markerArray = array();
 
       // Get class
       $class = $this->zz_tabClass( $lastTabId, $tab, $key );
@@ -2457,6 +2457,8 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
 
+    // 141214, dwildt, 1+
+    $idsOfAllTranslatedLLrecords = null;
     $res = $arr_return[ 'data' ][ 'res' ];
     while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
@@ -2736,16 +2738,26 @@ class tx_browser_pi1_navi_indexBrowser
    */
   private function zz_tabClass( $lastTabId, $tab, $key )
   {
-#43732
+    #43732
     // Default class
-    //$class = 'tab-' . $tab['labelAscii'] . ' tab-' . $key;
-    $class = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
+    // #i0109, 141214, dwildt 1-/+
+    //$class = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
+    $classDefault = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'class.' ][ 'default' ];
+    if( empty( $classDefault ))
+    {
+      $classDefault = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
+    }
+    $classActive = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'class.' ][ 'active' ];
+    if( empty( $classDefault ))
+    {
+      $classActive = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key . ' ui-tabs-active ui-state-active selected';
+    }
 
     // Selected tab
+    $class = $classDefault;
     if ( !empty( $tab[ 'selected' ] ) )
     {
-      //$class = $class . ' selected';
-      $class = $class . ' ui-tabs-active ui-state-active selected';
+      $class = $classActive;
     }
     // Selected tab
     // Last visible tab
