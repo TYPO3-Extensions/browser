@@ -1,13 +1,19 @@
 plugin.tx_browser_pi1 {
   navigation {
     indexBrowser {
-      // default, active
-      class {
-      }
-      class =
-      class {
-        active  = ui-state-default ui-corner-top tab-###TAB### tab-###KEY### ui-tabs-active ui-state-active selected
-        default = ui-state-default ui-corner-top tab-###TAB### tab-###KEY###
+      classes =
+      classes {
+        // a-tag: default, active
+        a =
+        a {
+          default = ui-tabs-anchor
+        }
+        // tab-wrap: default, active
+        tab =
+        tab {
+          active  = ui-state-default ui-corner-top tab-###TAB### tab-###KEY### ui-tabs-active ui-state-active selected
+          default = ui-state-default ui-corner-top tab-###TAB### tab-###KEY###
+        }
       }
       display {
           // [Boolean] Should tabs displayed, if they haven't any item?

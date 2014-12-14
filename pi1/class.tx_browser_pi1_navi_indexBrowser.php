@@ -2742,14 +2742,14 @@ class tx_browser_pi1_navi_indexBrowser
     // Default class
     // #i0109, 141214, dwildt 1-/+
     //$class = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
-    $classDefault = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'class.' ][ 'default' ];
+    $classDefault = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'classes.' ][ 'tab.' ][ 'default' ];
     $classDefault = str_replace('###KEY###', $key, $classDefault);
     $classDefault = str_replace('###TAB###', $tab[ 'labelAscii' ], $classDefault);
     if( empty( $classDefault ))
     {
       $classDefault = 'ui-state-default ui-corner-top tab-' . $tab[ 'labelAscii' ] . ' tab-' . $key;
     }
-    $classActive = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'class.' ][ 'active' ];
+    $classActive = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'classes.' ][ 'tab.' ][ 'active' ];
     $classActive = str_replace('###KEY###', $key, $classActive);
     $classActive = str_replace('###TAB###', $tab[ 'labelAscii' ], $classActive);
     if( empty( $classActive ))
@@ -2848,9 +2848,9 @@ class tx_browser_pi1_navi_indexBrowser
     $title = $this->zz_tabTitle( $tab[ 'sum' ] );
     if ( $title )
     {
-      #43732
-      $class = '"ui-tabs-anchor"';
-      $typolink[ 'parameter' ] = $typolink[ 'parameter' ] . ' - ' . $class . ' "' . $title . '"';
+      // #43732, #i0109, 141214, dwildt
+      $class = $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'classes.' ][ 'a.' ][ 'default' ];
+      $typolink[ 'parameter' ] = $typolink[ 'parameter' ] . ' - "' . $class . '" "' . $title . '"';
     }
     // Get the property title
     // Set piVars
