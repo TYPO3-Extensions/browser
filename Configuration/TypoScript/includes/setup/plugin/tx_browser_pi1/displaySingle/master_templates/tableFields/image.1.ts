@@ -57,7 +57,7 @@ plugin.tx_browser_pi1 {
                       // image, caption
                     20 = COA
                     20 {
-                      wrap = <li class="tx-browser-pi1"><figure class="tx-browser-pi1">|</figure></li>
+                      wrap = <li class="tx-browser-pi1-figure"><figure class="tx-browser-pi1-figure">|</figure></li>
                         // image
                       10 = IMAGE
                       10 {
