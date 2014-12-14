@@ -2,6 +2,8 @@ plugin.tx_browser_pi1 {
   navigation {
     indexBrowser {
       // default, active
+      class {
+      }
       class =
       class {
         active  = ui-state-default ui-corner-top tab-###TAB### tab-###KEY###
