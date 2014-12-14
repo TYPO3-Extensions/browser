@@ -1,2 +1,3 @@
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/Foundation/Templating/plugin/tx_browser_pi1/_setup.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/Foundation/Templating/plugin/tx_browser_pi1/marker.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/Foundation/Templating/plugin/tx_browser_pi1/navigation.ts">
