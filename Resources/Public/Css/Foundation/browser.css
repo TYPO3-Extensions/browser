@@ -1,6 +1,6 @@
 .sub-nav {
     background-color: #F2F2F2;
-    padding: 10px 10px 10px 0px;
+    padding: 10px 10px 3px 0px;
 }
 .sub-nav dt {
   display:none !important;
@@ -10,6 +10,13 @@
 }
 .sub-nav dd a {
   padding: 0.1875rem 0.1875rem !important;
+}
+.sub-nav dd a.without-href:active,
+.sub-nav dd a.without-href:focus,
+.sub-nav dd a.without-href:hover {
+  color:inherit !important;
+  cursor:default !important;
+  text-decoration:inherit !important;
 }
 
 .clearing-blackout {
