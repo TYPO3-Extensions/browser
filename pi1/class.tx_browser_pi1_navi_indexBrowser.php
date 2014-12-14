@@ -854,11 +854,9 @@ class tx_browser_pi1_navi_indexBrowser
           break;
         case( $tab[ 'displayWoItems' ] ):
           // Tab without hits
-          // #43558, 121203, dwildt, 1-
-          //$markerArray['###TAB###'] = $label;
-          // #43558, 121203, dwildt, 1+
-#43732
-          $class = 'class="ui-tabs-anchor without-href"';
+          // #43732, #i0109, 141214, dwildt
+          //$class = 'class="ui-tabs-anchor without-href"';
+          $class = 'class="' . $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'classes.' ][ 'a.' ][ 'empty' ] . '"';
           $tab[ 'label' ] = '<a ' . $class . '>' . $tab[ 'label' ] . '</a>';
 //$this->pObj->dev_var_dump( $tab['label'] );
           $markerArray[ '###TAB###' ] = $tab[ 'label' ];

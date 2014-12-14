@@ -7,6 +7,7 @@ plugin.tx_browser_pi1 {
         a =
         a {
           default = ui-tabs-anchor
+          empty   = ui-tabs-anchor without-href
         }
         // tab-wrap: default, active
         tab =
