@@ -1,0 +1,5 @@
+page {
+  includeCSS {
+    browserNormalize  = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeCSS.normalize}
+  }
+}

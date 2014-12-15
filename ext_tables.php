@@ -56,7 +56,10 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     case($llStatic == 'de'):
       // German
       // Plugin 1
-      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/',  'Browser [0] + Foundation Framework');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/',                    'Browser [0] + Foundation Framework');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/page/css/normalize/', 'Browser [0] + Foundation Framework + CSS normalize');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/page/jss/jQuery/',    'Browser [0] + Foundation Framework + JSS jQuery');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/page/jss/modernizr/', 'Browser [0] + Foundation Framework + JSS modernizr');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/',                       'Browser [1] Basis');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/downgrade/4.9.1/navigation/pageBrowser/wrap/', 'Browser [1] + pageBrowser Wrap v4.9');
         // Plugin 5
@@ -77,7 +80,10 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     default:
       // English
       // Plugin 1
-      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/',  'Browser [0] + Foundation Framework');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/',                    'Browser [0] + Foundation Framework');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/page/css/normalize/', 'Browser [0] + Foundation Framework + CSS normalize');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/page/jss/jQuery/',    'Browser [0] + Foundation Framework + JSS jQuery');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/Foundation/Framework/page/jss/modernizr/', 'Browser [0] + Foundation Framework + JSS modernizr');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/',                       'Browser [1] Basis');
       t3lib_extMgm::addStaticFile($_EXTKEY,'Configuration/TypoScript/downgrade/4.9.1/navigation/pageBrowser/wrap/', 'Browser [1] + pageBrowser Wrap v4.9');
         // Plugin 5

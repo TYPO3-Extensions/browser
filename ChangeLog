@@ -6,6 +6,7 @@
 6.0.7
   14-12-12
   Feature
+  * #i0110: Own include static templates for normalize css, jQuery and modernizr JavaScript
   * #i0109: Class for indexBrowser tab by TypoScript
   * #i0108: Additional templates head 3 and 4, image 3 and 4, typoscript/url 4
   Improvements

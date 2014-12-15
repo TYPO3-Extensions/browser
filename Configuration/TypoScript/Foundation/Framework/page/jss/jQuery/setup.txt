@@ -1,0 +1,6 @@
+page {
+  includeJSFooterlibs {
+    browserJquery     = {$plugin.tx_browser_pi1.frameworks.foundation.framework.page.includeJSFooter.jquery}
+    browserJquery.forceOnTop = 1
+  }
+}
