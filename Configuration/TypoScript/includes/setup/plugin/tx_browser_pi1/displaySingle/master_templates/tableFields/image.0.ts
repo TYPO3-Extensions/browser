@@ -68,13 +68,13 @@ plugin.tx_browser_pi1 {
                             wrap = {$plugin.tx_browser_pi1.templates.singleview.image.0.path}|
                             current = 1
                           }
-                          height = 400
+                          height = {$plugin.tx_browser_pi1.templates.singleview.image.0.heightDefault}
                           height {
                             override {
                               field = {$plugin.tx_browser_pi1.templates.singleview.image.0.height}
                             }
                           }
-                          width = {$styles.content.imgtext.maxW}
+                          width = {$plugin.tx_browser_pi1.templates.singleview.image.0.widthDefault}
                           width {
                             override {
                               field = {$plugin.tx_browser_pi1.templates.singleview.image.0.width}

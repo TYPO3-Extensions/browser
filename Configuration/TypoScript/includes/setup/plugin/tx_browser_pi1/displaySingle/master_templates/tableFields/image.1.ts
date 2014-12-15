@@ -68,16 +68,16 @@ plugin.tx_browser_pi1 {
                             wrap = {$plugin.tx_browser_pi1.templates.singleview.image.1.path}|
                             current = 1
                           }
-                          height = 400
+                          height = {$plugin.tx_browser_pi1.templates.singleview.image.1.heightDeafult}
                           height {
                             override {
-                              field = {$plugin.tx_browser_pi1.templates.singleview.image.0.height}
+                              field = {$plugin.tx_browser_pi1.templates.singleview.image.1.height}
                             }
                           }
-                          width = {$styles.content.imgtext.maxW}
+                          width = {$plugin.tx_browser_pi1.templates.singleview.image.1.widthDefault}
                           width {
                             override {
-                              field = {$plugin.tx_browser_pi1.templates.singleview.image.0.width}
+                              field = {$plugin.tx_browser_pi1.templates.singleview.image.1.width}
                             }
                           }
                         }
