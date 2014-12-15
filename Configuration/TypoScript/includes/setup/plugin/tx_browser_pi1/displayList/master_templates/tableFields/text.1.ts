@@ -29,7 +29,7 @@ plugin.tx_browser_pi1 {
                 field     = {$plugin.tx_browser_pi1.templates.listview.text.1.field}
                 stdWrap {
                   stripHtml         = 1
-                  htmlSpecialChars  = 1
+                  htmlSpecialChars  = 0
                   crop              = {$plugin.tx_browser_pi1.templates.listview.text.1.crop}
                 }
               }

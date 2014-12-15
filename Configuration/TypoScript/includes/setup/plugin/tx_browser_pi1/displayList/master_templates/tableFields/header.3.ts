@@ -26,7 +26,7 @@ plugin.tx_browser_pi1 {
               wrap  = <{$plugin.tx_browser_pi1.templates.listview.header.3.tag}>|</{$plugin.tx_browser_pi1.templates.listview.header.3.tag}>
               stdWrap {
                 stripHtml         = 1
-                htmlSpecialChars  = 1
+                htmlSpecialChars  = 0
                 crop              = {$plugin.tx_browser_pi1.templates.listview.header.3.crop}
               }
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.3.default
