@@ -1073,98 +1073,99 @@ class tx_browser_pi1_flexform
     $viewWiDot = $this->pObj->view . '.';
     $conf_view = $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ];
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field performance_select
-
-    $str_performance_select = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'performance_select', 'advanced', 'lDEF', 'vDEF' );
-
-    // DRS - Development Reporting System
-    if ( $this->pObj->b_drs_flexform )
-    {
-      t3lib_div :: devlog( '[INFO/FLEXFORM] advanced/performance_select: \'' . $str_performance_select . '\'.', $this->pObj->extKey, 0 );
-    }
-    // DRS - Development Reporting System
-    // Field performance_select
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get global or local array advanced
-
-    $bool_advanced_is_local = false;
-    if ( !empty( $conf_view[ 'advanced.' ] ) )
-    {
-      $bool_advanced_is_local = true;
-    }
-    // Get global or local array advanced
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field $GLOBALS
-    // Default configuration
-    if ( $str_performance_select == 'default' )
-    {
-      #10116
-      if ( $bool_advanced_is_local )
-      {
-        $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
-      }
-      if ( !$bool_advanced_is_local )
-      {
-        $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
-      }
-    }
-    // Default configuration
-    // Configured by user
-    if ( $str_performance_select != 'default' )
-    {
-      $int_performance_costs = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'performance_costs', 'advanced', 'lDEF', 'vDEF' );
-      switch ( $int_performance_costs )
-      {
-        case (0) :
-          // Set value in TypoScript
-          #10116
-          if ( $bool_advanced_is_local )
-          {
-            $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
-          }
-          if ( !$bool_advanced_is_local )
-          {
-            $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
-          }
-          break;
-        case (1) :
-          // Set value in TypoScript
-          #10116
-          if ( $bool_advanced_is_local )
-          {
-            $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 0;
-          }
-          if ( !$bool_advanced_is_local )
-          {
-            $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 0;
-          }
-          break;
-        default :
-          $prompt = '
-                      <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
-                        <h1>
-                          ERROR
-                        </h1>
-                        <p>
-                          Flexform field Searchbox has a value bigger than 7. The value isn\'t defined.<br />
-                          ' . __METHOD__ . ' (' . __LINE__ . ')
-                        </p>
-                      </div>';
-          echo $prompt;
-          exit;
-      }
-      if ( $this->pObj->b_drs_flexform )
-      {
-        t3lib_div :: devlog( '[INFO/FLEXFORM] advanced/performance_costs<br />
-                  look_for_globals: \'' . $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] . '\'', $this->pObj->extKey, 0 );
-      }
-    }
-    // Configured by user
-    // Field $GLOBALS
+    // #i0111, 141226, dwildt, -
+//    //////////////////////////////////////////////////////////////////////
+//    //
+//    // Field performance_select
+//
+//    $str_performance_select = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'performance_select', 'advanced', 'lDEF', 'vDEF' );
+//
+//    // DRS - Development Reporting System
+//    if ( $this->pObj->b_drs_flexform )
+//    {
+//      t3lib_div :: devlog( '[INFO/FLEXFORM] advanced/performance_select: \'' . $str_performance_select . '\'.', $this->pObj->extKey, 0 );
+//    }
+//    // DRS - Development Reporting System
+//    // Field performance_select
+//    //////////////////////////////////////////////////////////////////////
+//    //
+//    // Get global or local array advanced
+//
+//    $bool_advanced_is_local = false;
+//    if ( !empty( $conf_view[ 'advanced.' ] ) )
+//    {
+//      $bool_advanced_is_local = true;
+//    }
+//    // Get global or local array advanced
+//    //////////////////////////////////////////////////////////////////////
+//    //
+//    // Field $GLOBALS
+//    // Default configuration
+//    if ( $str_performance_select == 'default' )
+//    {
+//      #10116
+//      if ( $bool_advanced_is_local )
+//      {
+//        $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
+//      }
+//      if ( !$bool_advanced_is_local )
+//      {
+//        $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
+//      }
+//    }
+//    // Default configuration
+//    // Configured by user
+//    if ( $str_performance_select != 'default' )
+//    {
+//      $int_performance_costs = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'performance_costs', 'advanced', 'lDEF', 'vDEF' );
+//      switch ( $int_performance_costs )
+//      {
+//        case (0) :
+//          // Set value in TypoScript
+//          #10116
+//          if ( $bool_advanced_is_local )
+//          {
+//            $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
+//          }
+//          if ( !$bool_advanced_is_local )
+//          {
+//            $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 1;
+//          }
+//          break;
+//        case (1) :
+//          // Set value in TypoScript
+//          #10116
+//          if ( $bool_advanced_is_local )
+//          {
+//            $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 0;
+//          }
+//          if ( !$bool_advanced_is_local )
+//          {
+//            $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] = 0;
+//          }
+//          break;
+//        default :
+//          $prompt = '
+//                      <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+//                        <h1>
+//                          ERROR
+//                        </h1>
+//                        <p>
+//                          Flexform field Searchbox has a value bigger than 7. The value isn\'t defined.<br />
+//                          ' . __METHOD__ . ' (' . __LINE__ . ')
+//                        </p>
+//                      </div>';
+//          echo $prompt;
+//          exit;
+//      }
+//      if ( $this->pObj->b_drs_flexform )
+//      {
+//        t3lib_div :: devlog( '[INFO/FLEXFORM] advanced/performance_costs<br />
+//                  look_for_globals: \'' . $this->pObj->conf[ 'advanced.' ][ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ] . '\'', $this->pObj->extKey, 0 );
+//      }
+//    }
+//    // Configured by user
+//    // Field $GLOBALS
     //////////////////////////////////////////////////////////////////////
     //
     // Field realUrl_select
