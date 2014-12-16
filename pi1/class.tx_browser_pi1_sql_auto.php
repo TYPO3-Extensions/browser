@@ -1442,7 +1442,7 @@ class tx_browser_pi1_sql_auto
     if ( !empty( $config[ 'MM_opposite_field' ] ) )
     {
       // #59563, 140701, dwildt, 1-
-      $this->arr_relations_opposite[ $table ][ $relationTable ][ 'MM_opposite_field' ] = $config[ 'MM_opposite_field' ];
+      //$this->arr_relations_opposite[ $table ][ $relationTable ][ 'MM_opposite_field' ] = $config[ 'MM_opposite_field' ];
       // #59563, 140701, dwildt, 1+
       $this->arr_relations_opposite[ $table ][ $relationTable ][ 'MM_opposite_field' ][ $foreignTable ] = $config[ 'MM_opposite_field' ];
     }
