@@ -697,7 +697,8 @@ class tx_browser_pi1_filter_4x
 
       $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
       $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
       $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #45422, 130212, dwildt, 6-
 //      if( ! empty( $from ) )
@@ -721,7 +722,8 @@ class tx_browser_pi1_filter_4x
 
       $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
       $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
       $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #45422, 130212, dwildt, 6-
 //      if( ! empty( $to ) )
@@ -791,7 +793,8 @@ class tx_browser_pi1_filter_4x
 
       $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
       $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
       $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #45422, 130212, dwildt, 6-
       if ( !empty( $from ) )
@@ -815,7 +818,8 @@ class tx_browser_pi1_filter_4x
 
       $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
       $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
       $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #45422, 130212, dwildt, 6-
       if ( !empty( $to ) )
@@ -989,7 +993,8 @@ class tx_browser_pi1_filter_4x
 
       $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
       $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
       $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
@@ -1015,7 +1020,8 @@ class tx_browser_pi1_filter_4x
 
       $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
       $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
       $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
@@ -1088,7 +1094,8 @@ class tx_browser_pi1_filter_4x
 
       $from = $arr_currField[ 'valueFrom_stdWrap.' ][ 'value' ];
       $from_conf = $arr_currField[ 'valueFrom_stdWrap.' ];
-      $from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$from_conf = $this->pObj->objZz->substitute_t3globals_recurs( $from_conf );
       $from = $this->pObj->local_cObj->stdWrap( $from, $from_conf );
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
@@ -1108,7 +1115,8 @@ class tx_browser_pi1_filter_4x
 
       $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
       $to_conf = $arr_currField[ 'valueTo_stdWrap.' ];
-      $to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
+      // #i0111, 141216, dwildt, 1-
+      //$to_conf = $this->pObj->objZz->substitute_t3globals_recurs( $to_conf );
       $to = $this->pObj->local_cObj->stdWrap( $to, $to_conf );
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );

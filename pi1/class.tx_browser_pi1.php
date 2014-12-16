@@ -623,9 +623,9 @@ class tx_browser_pi1 extends tslib_pibase
     //////////////////////////////////////////////////////////////////////
     //
       // Replace TSFE markers
-
-    $this->timeTracking_log( $debugTrailLevel, 'before substitute_t3globals_recurs( )' );
-    $this->conf = $this->objZz->substitute_t3globals_recurs( $this->conf );
+    // #i0111, 141216, dwildt, 2-
+//    $this->timeTracking_log( $debugTrailLevel, 'before substitute_t3globals_recurs( )' );
+//    $this->conf = $this->objZz->substitute_t3globals_recurs( $this->conf );
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'after substitute_t3globals_recurs( )' );

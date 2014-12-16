@@ -1003,142 +1003,143 @@ class tx_browser_pi1_zz
    * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
    *
    * @version 6.0.6
+   * @internal #i0111
    */
-  public function substitute_t3globals_recurs( $arr_multi_dimensional )
-  {
-    $conf = $this->pObj->conf;
-    $conf_view = $this->pObj->conf[ 'views.' ][ $this->pObj->view . '.' ][ $this->pObj->piVar_mode . '.' ];
-
-
-    ////////////////////////////////////////////////
-    //
-    // RETURN, if marker with $Global keys should not replaced
-    #10116
-    $arr_conf_advanced = $conf[ 'advanced.' ];
-    if ( !empty( $conf_view[ 'advanced.' ] ) )
-    {
-      $arr_conf_advanced = $conf_view[ 'advanced.' ];
-    }
-
-    $bool_dontReplace = $arr_conf_advanced[ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ];
-    if ( $bool_dontReplace )
-    {
-      if ( $this->pObj->b_drs_ttc || $this->pObj->b_drs_flexform )
-      {
-        t3lib_div::devlog( '[INFO/TYPOSCRIPT] [advanced.][performance.][GLOBALS.][dont_replace] is TRUE.', $this->pObj->extKey, 0 );
-        t3lib_div::devlog( '[HELP/TTC] If you are using markers like ###TSFE:fe_user|...### you should set it to false.<br />' .
-                'Be aware that the configuration in the plugin has priority.', $this->pObj->extKey, 1 );
-      }
-      return $arr_multi_dimensional;
-    }
-    // RETURN, if marker with $Global keys should not replaced
-    ////////////////////////////////////////////////
-    //
-    // Security: recursionGuard
-
-    static $int_levelRecurs = 0;
-    //var_dump( __METHOD__ . ' (#' . __LINE__ . "): ". $int_levelRecurs );
-    $int_levelRecursMax = ( int ) $arr_conf_advanced[ 'recursionGuard' ];
-    $int_levelRecurs++;
-    if ( $int_levelRecurs > $int_levelRecursMax )
-    {
-      if ( $this->pObj->b_drs_error )
-      {
-        t3lib_div::devlog( '[ERROR/TTC] Recursion is bigger than ' . $int_levelRecursMax, $this->pObj->extKey, 3 );
-        t3lib_div::devlog( '[HELP/TTC] If it is ok, please increase advanced.recursionGuard.', $this->pObj->extKey, 1 );
-        t3lib_div::devlog( '[ERROR/TTC] EXIT', $this->pObj->extKey, 3 );
-      }
-      // #i0090, 141206, dwildt, +
-      var_dump( __METHOD__ . ' (#' . __LINE__ . "): Curren TypoScript of the last loop: ", $arr_multi_dimensional );
-      $header = 'Recursion Limit is exceeded';
-      $text = 'Recursion is bigger than ' . $int_levelRecursMax . '. If the exceeding is intended, please increase advanced.recursionGuard.';
-      $this->pObj->drs_die( $header, $text );
-      die( __METHOD__ . ' (#' . __LINE__ . ")" );
-    }
-    // Security: recursionGuard
-    ////////////////////////////////////////////////
-    //
-    // Get all keys from $GLOBALS
-
-    if ( $int_levelRecurs < 2 )
-    {
-      $this->arr_t3global_keys = array_keys( $GLOBALS );
-    }
-    // Get all keys from $GLOBALS
-    ////////////////////////////////////////////////
-    //
-    // Loop through the current level of the multi-dimensional array
-
-    foreach ( ( array ) $arr_multi_dimensional as $key_arr_curr => $value_arr_curr )
-    {
-      // The current TypoScript element is an array
-      if ( is_array( $value_arr_curr ) )
-      {
-        // Loop through the next level of the multi-dimensional array (recursive)
-        $arr_multi_dimensional[ $key_arr_curr ] = $this->substitute_t3globals_recurs( $value_arr_curr );
-      }
-      // The current TypoScript element is an array
-      // The current TypoScript element is a value
-      // Replace markers with a $GLOBALS key with the value from the $GLOBALS element
-      if ( !is_array( $value_arr_curr ) )
-      {
-        // Loop through all keys of $GLOBALS (We had 77 keys in the November of 2009! TYPO3 4.2.9)
-        foreach ( ( array ) $this->arr_t3global_keys as $key_t3global )
-        {
-          // Do we have a marker with a $GLOBALS key?
-          $bool_t3globals = false;
-          $int_marker = substr_count( $value_arr_curr, '###' . $key_t3global . ':' );
-          if ( $int_marker > 0 )
-          {
-            $bool_t3globals = true;
-          }
-          // Do we have a marker with a $GLOBALS key?
-          // We have a marker with a $GLOBALS key
-          if ( $bool_t3globals )
-          {
-            $str_value_after_loop = $value_arr_curr;
-            $bool_marker = false;
-            $arr_t3globals_marker = explode( '###' . $key_t3global . ':', $value_arr_curr );
-            // We have at least two elements and the first isn't in any case the second part of the marker
-            unset( $arr_t3globals_marker[ 0 ] );
-            // Remove the first element
-            // Loop through all markers with a $GLOBALS key
-            foreach ( ( array ) $arr_t3globals_marker as $str_marker_and_more )
-            {
-              $arr_marker = explode( '###', $str_marker_and_more );
-              $key_marker = '###' . $key_t3global . ':' . $arr_marker[ 0 ] . '###';
-              $value_marker = $this->get_t3globals_value( $key_marker );
-              $str_tmp_value = $str_value_after_loop;
-              $str_value_after_loop = str_replace( $key_marker, $value_marker, $str_value_after_loop );
-              if ( $str_tmp_value != $str_value_after_loop )
-              {
-                $bool_marker = true;
-              }
-            }
-            // Loop through all markers with a $GLOBALS key
-            // Value has changed
-            if ( $bool_marker )
-            {
-              if ( $this->pObj->b_drs_ttc )
-              {
-                t3lib_div::devlog( '[INFO/TYPOSCRIPT] ... [' . $key_arr_curr . ']: ' . $value_arr_curr . '<br />' .
-                        '... became .......... [' . $key_arr_curr . ']: ' . $str_value_after_loop, $this->pObj->extKey, 0 );
-              }
-              $value_arr_curr = $str_value_after_loop;
-            }
-            // Value has changed
-          }
-          // We have a marker with a $GLOBALS key
-          $arr_multi_dimensional[ $key_arr_curr ] = $value_arr_curr;
-        }
-        // Loop through all keys of $GLOBALS
-      }
-      // Replace markers with a $GLOBALS key with the value from the $GLOBALS element
-      // The current TypoScript element is a value
-    }
-    // Loop through the current level of the multi-dimensional array
-    return $arr_multi_dimensional;
-  }
+//  public function substitute_t3globals_recurs( $arr_multi_dimensional )
+//  {
+//    $conf = $this->pObj->conf;
+//    $conf_view = $this->pObj->conf[ 'views.' ][ $this->pObj->view . '.' ][ $this->pObj->piVar_mode . '.' ];
+//
+//
+//    ////////////////////////////////////////////////
+//    //
+//    // RETURN, if marker with $Global keys should not replaced
+//    #10116
+//    $arr_conf_advanced = $conf[ 'advanced.' ];
+//    if ( !empty( $conf_view[ 'advanced.' ] ) )
+//    {
+//      $arr_conf_advanced = $conf_view[ 'advanced.' ];
+//    }
+//
+//    $bool_dontReplace = $arr_conf_advanced[ 'performance.' ][ 'GLOBALS.' ][ 'dont_replace' ];
+//    if ( $bool_dontReplace )
+//    {
+//      if ( $this->pObj->b_drs_ttc || $this->pObj->b_drs_flexform )
+//      {
+//        t3lib_div::devlog( '[INFO/TYPOSCRIPT] [advanced.][performance.][GLOBALS.][dont_replace] is TRUE.', $this->pObj->extKey, 0 );
+//        t3lib_div::devlog( '[HELP/TTC] If you are using markers like ###TSFE:fe_user|...### you should set it to false.<br />' .
+//                'Be aware that the configuration in the plugin has priority.', $this->pObj->extKey, 1 );
+//      }
+//      return $arr_multi_dimensional;
+//    }
+//    // RETURN, if marker with $Global keys should not replaced
+//    ////////////////////////////////////////////////
+//    //
+//    // Security: recursionGuard
+//
+//    static $int_levelRecurs = 0;
+//    //var_dump( __METHOD__ . ' (#' . __LINE__ . "): ". $int_levelRecurs );
+//    $int_levelRecursMax = ( int ) $arr_conf_advanced[ 'recursionGuard' ];
+//    $int_levelRecurs++;
+//    if ( $int_levelRecurs > $int_levelRecursMax )
+//    {
+//      if ( $this->pObj->b_drs_error )
+//      {
+//        t3lib_div::devlog( '[ERROR/TTC] Recursion is bigger than ' . $int_levelRecursMax, $this->pObj->extKey, 3 );
+//        t3lib_div::devlog( '[HELP/TTC] If it is ok, please increase advanced.recursionGuard.', $this->pObj->extKey, 1 );
+//        t3lib_div::devlog( '[ERROR/TTC] EXIT', $this->pObj->extKey, 3 );
+//      }
+//      // #i0090, 141206, dwildt, +
+//      var_dump( __METHOD__ . ' (#' . __LINE__ . "): Curren TypoScript of the last loop: ", $arr_multi_dimensional );
+//      $header = 'Recursion Limit is exceeded';
+//      $text = 'Recursion is bigger than ' . $int_levelRecursMax . '. If the exceeding is intended, please increase advanced.recursionGuard.';
+//      $this->pObj->drs_die( $header, $text );
+//      die( __METHOD__ . ' (#' . __LINE__ . ")" );
+//    }
+//    // Security: recursionGuard
+//    ////////////////////////////////////////////////
+//    //
+//    // Get all keys from $GLOBALS
+//
+//    if ( $int_levelRecurs < 2 )
+//    {
+//      $this->arr_t3global_keys = array_keys( $GLOBALS );
+//    }
+//    // Get all keys from $GLOBALS
+//    ////////////////////////////////////////////////
+//    //
+//    // Loop through the current level of the multi-dimensional array
+//
+//    foreach ( ( array ) $arr_multi_dimensional as $key_arr_curr => $value_arr_curr )
+//    {
+//      // The current TypoScript element is an array
+//      if ( is_array( $value_arr_curr ) )
+//      {
+//        // Loop through the next level of the multi-dimensional array (recursive)
+//        $arr_multi_dimensional[ $key_arr_curr ] = $this->substitute_t3globals_recurs( $value_arr_curr );
+//      }
+//      // The current TypoScript element is an array
+//      // The current TypoScript element is a value
+//      // Replace markers with a $GLOBALS key with the value from the $GLOBALS element
+//      if ( !is_array( $value_arr_curr ) )
+//      {
+//        // Loop through all keys of $GLOBALS (We had 77 keys in the November of 2009! TYPO3 4.2.9)
+//        foreach ( ( array ) $this->arr_t3global_keys as $key_t3global )
+//        {
+//          // Do we have a marker with a $GLOBALS key?
+//          $bool_t3globals = false;
+//          $int_marker = substr_count( $value_arr_curr, '###' . $key_t3global . ':' );
+//          if ( $int_marker > 0 )
+//          {
+//            $bool_t3globals = true;
+//          }
+//          // Do we have a marker with a $GLOBALS key?
+//          // We have a marker with a $GLOBALS key
+//          if ( $bool_t3globals )
+//          {
+//            $str_value_after_loop = $value_arr_curr;
+//            $bool_marker = false;
+//            $arr_t3globals_marker = explode( '###' . $key_t3global . ':', $value_arr_curr );
+//            // We have at least two elements and the first isn't in any case the second part of the marker
+//            unset( $arr_t3globals_marker[ 0 ] );
+//            // Remove the first element
+//            // Loop through all markers with a $GLOBALS key
+//            foreach ( ( array ) $arr_t3globals_marker as $str_marker_and_more )
+//            {
+//              $arr_marker = explode( '###', $str_marker_and_more );
+//              $key_marker = '###' . $key_t3global . ':' . $arr_marker[ 0 ] . '###';
+//              $value_marker = $this->get_t3globals_value( $key_marker );
+//              $str_tmp_value = $str_value_after_loop;
+//              $str_value_after_loop = str_replace( $key_marker, $value_marker, $str_value_after_loop );
+//              if ( $str_tmp_value != $str_value_after_loop )
+//              {
+//                $bool_marker = true;
+//              }
+//            }
+//            // Loop through all markers with a $GLOBALS key
+//            // Value has changed
+//            if ( $bool_marker )
+//            {
+//              if ( $this->pObj->b_drs_ttc )
+//              {
+//                t3lib_div::devlog( '[INFO/TYPOSCRIPT] ... [' . $key_arr_curr . ']: ' . $value_arr_curr . '<br />' .
+//                        '... became .......... [' . $key_arr_curr . ']: ' . $str_value_after_loop, $this->pObj->extKey, 0 );
+//              }
+//              $value_arr_curr = $str_value_after_loop;
+//            }
+//            // Value has changed
+//          }
+//          // We have a marker with a $GLOBALS key
+//          $arr_multi_dimensional[ $key_arr_curr ] = $value_arr_curr;
+//        }
+//        // Loop through all keys of $GLOBALS
+//      }
+//      // Replace markers with a $GLOBALS key with the value from the $GLOBALS element
+//      // The current TypoScript element is a value
+//    }
+//    // Loop through the current level of the multi-dimensional array
+//    return $arr_multi_dimensional;
+//  }
 
   /*   * *********************************************
    *

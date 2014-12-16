@@ -6,63 +6,6 @@
     </TCEforms>
     <type>array</type>
     <el>
-      <performance_select>
-        <TCEforms>
-          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select</label>
-          <onChange>reload</onChange>
-          <config>
-            <type>select</type>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select.default</numIndex>
-                <numIndex index="1">default</numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select.configured</numIndex>
-                <numIndex index="1">configured</numIndex>
-              </numIndex>
-            </items>
-            <default>default</default>
-            <maxitems>1</maxitems>
-            <size>1</size>
-          </config>
-        </TCEforms>
-      </performance_select>
-      <performanceTutorial>
-        <TCEforms>
-          <exclude>0</exclude>
-          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial</label>
-          <displayCond>FIELD:performance_select:=:configured</displayCond>
-          <config>
-            <type>check</type>
-            <cols>1</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial.0</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-          </config>
-        </TCEforms>
-      </performanceTutorial>
-      <performance_costs>
-        <TCEforms>
-          <exclude>0</exclude>
-          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs</label>
-          <displayCond>FIELD:performance_select:=:configured</displayCond>
-          <config>
-            <type>check</type>
-            <cols>1</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs.look_for_globals</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-            <default>0</default>
-          </config>
-        </TCEforms>
-      </performance_costs>
       <realUrl_select>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select</label>

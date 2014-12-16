@@ -2489,19 +2489,22 @@ class tx_browser_pi1_cal
         // Wrap item from
       $from       = $arr_string['valueFrom_stdWrap.']['value'];
       $from_conf  = $arr_string['valueFrom_stdWrap.'];
-      $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
+      // #i0111, 141216, dwildt, 1-
+      //$from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
       $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
 
         // Wrap item to
       $to         = $arr_string['valueTo_stdWrap.']['value'];
       $to_conf    = $arr_string['valueTo_stdWrap.'];
-      $to         = $this->pObj->objZz->substitute_t3globals_recurs($to);
+      // #i0111, 141216, dwildt, 1-
+      //$to         = $this->pObj->objZz->substitute_t3globals_recurs($to);
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
 
         // Wrap item value
       $value      = $arr_string['value_stdWrap.']['value'];
       $value_conf = $arr_string['value_stdWrap.'];
-      $value_conf = $this->pObj->objZz->substitute_t3globals_recurs($value_conf);
+      // #i0111, 141216, dwildt, 1-
+      //$value_conf = $this->pObj->objZz->substitute_t3globals_recurs($value_conf);
       $value      = $this->pObj->local_cObj->stdWrap($value, $value_conf);
 
       $arr_values_new[$key] = $value;
@@ -2696,7 +2699,8 @@ class tx_browser_pi1_cal
     $arr_period_conf    = $arr_interval[$this->str_area_case . '.'];
     $start_period       = $arr_period_conf['start_period.']['stdWrap.']['value'];
     $start_period_conf  = $arr_period_conf['start_period.']['stdWrap.'];
-    $start_period_conf  = $this->pObj->objZz->substitute_t3globals_recurs($start_period_conf);
+    // #i0111, 141216, dwildt, 1-
+    //$start_period_conf  = $this->pObj->objZz->substitute_t3globals_recurs($start_period_conf);
     $start_period       = $this->pObj->local_cObj->stdWrap($start_period, $start_period_conf);
       // Field start_period
 
@@ -2732,7 +2736,8 @@ class tx_browser_pi1_cal
       // default period, if no period is selected by the category menu
     $selected_period        = $arr_period_conf['selected_period.']['stdWrap.']['value'];
     $selected_period_conf   = $arr_period_conf['selected_period.']['stdWrap.'];
-    $selected_period_conf   = $this->pObj->objZz->substitute_t3globals_recurs($selected_period_conf);
+    // #i0111, 141216, dwildt, 1-
+    //$selected_period_conf   = $this->pObj->objZz->substitute_t3globals_recurs($selected_period_conf);
     $selected_period        = $this->pObj->local_cObj->stdWrap($selected_period, $selected_period_conf);
     $bool_strtotime         = $arr_period_conf['selected_period.']['use_php_strtotime'];
     $arr_result             = $this->zz_strtotime( $bool_strtotime, $selected_period );
@@ -2763,7 +2768,8 @@ class tx_browser_pi1_cal
           // Firstday of the given week
         $firstday       = $arr_period_conf['firstday_stdWrap.']['value'];
         $firstday_conf  = $arr_period_conf['firstday_stdWrap.'];
-        $firstday_conf  = $this->pObj->objZz->substitute_t3globals_recurs($firstday_conf);
+        // #i0111, 141216, dwildt, 1-
+        //$firstday_conf  = $this->pObj->objZz->substitute_t3globals_recurs($firstday_conf);
         $firstday       = $this->pObj->local_cObj->stdWrap($firstday, $firstday_conf);
         $start_period   = strtotime(date('Y', $start_period) . 'W' . date('W', $start_period) . $firstday);
           // Firstday of the given week
@@ -2801,7 +2807,8 @@ class tx_browser_pi1_cal
 
     $times       = $arr_period_conf['times_stdWrap.']['value'];
     $times_conf  = $arr_period_conf['times_stdWrap.'];
-    $times_conf  = $this->pObj->objZz->substitute_t3globals_recurs($times_conf);
+    // #i0111, 141216, dwildt, 1-
+    //$times_conf  = $this->pObj->objZz->substitute_t3globals_recurs($times_conf);
     $times       = $this->pObj->local_cObj->stdWrap($times, $times_conf);
     switch($arr_interval['case'])
     {
