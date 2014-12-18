@@ -422,7 +422,7 @@ class tx_browser_pi1_navi_recordbrowser
 //var_dump(__METHOD__, __LINE__);
 //die( ":(" );
     //$dummy = $this->pObj->objViewlist_3x->main($this->pObj->str_template_raw);
-    $dummy = $this->objViewlist->main();
+    $dummy = $this->pObj->objViewlist->main();
       // 4.1.8, dwildt, 1+
     unset( $dummy );
       // Restore current values
