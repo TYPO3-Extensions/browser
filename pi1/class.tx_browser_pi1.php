@@ -782,6 +782,8 @@ class tx_browser_pi1 extends tslib_pibase
         switch ( $this->dev_browserEngine )
         {
           case( 3 ):
+var_dump(__METHOD__, __LINE__);
+die( ":(" );
             $str_template_completed = $this->objViewlist_3x->main();
             break;
           case( 4 ):

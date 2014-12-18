@@ -1522,12 +1522,12 @@ class tx_browser_pi1_navi_3x
       ///////////////////////////////////////////////
       //
       // Get the wrapped pagebrowser
-    
+
     $pb = $this->conf['navigation.']['pageBrowser.'];
     $res_items  = $this->pObj->pi_list_browseresults
                   (
-                    $pb['showResultCount'], 
-                    $pb['tableParams'], 
+                    $pb['showResultCount'],
+                    $pb['tableParams'],
                     $pb['wrap.'],
                     $pb['pointer'],
                     $pb['hscText']
@@ -1933,6 +1933,8 @@ class tx_browser_pi1_navi_3x
       // #33892, 120214, dwildt-
     //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // #33892, 120214, dwildt+
+var_dump(__METHOD__, __LINE__);
+die( ":(" );
     $dummy = $this->pObj->objViewlist_3x->main($this->pObj->str_template_raw);
       // Restore current values
     $this->pObj->rows = $curr_rows;

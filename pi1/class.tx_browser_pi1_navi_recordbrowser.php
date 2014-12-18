@@ -113,11 +113,11 @@ class tx_browser_pi1_navi_recordbrowser
     $this->pObj = $parentObj;
   }
 
-  
-  
-  
-  
-  
+
+
+
+
+
  /***********************************************
   *
   * record browser
@@ -189,7 +189,7 @@ class tx_browser_pi1_navi_recordbrowser
     $tt_content_uid = $this->pObj->cObj->data['uid'];
       // Current language
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
-    
+
       // RETURN : there isn't any session
     if( ! $this->pObj->objSession->bool_session_enabled )
     {
@@ -237,7 +237,7 @@ class tx_browser_pi1_navi_recordbrowser
       return $piVarsForListView;
     }
       // RETURN : sPiVars is empty
-    
+
       // Get the serialized piVars
     $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
 
@@ -249,18 +249,18 @@ class tx_browser_pi1_navi_recordbrowser
         $this->pObj->extKey, 0);
     }
       // DRS
-      
+
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
       // #40960, 120916, dwildt, +
-      // Unset piVars, which shouldn't rendered 
+      // Unset piVars, which shouldn't rendered
     $csvRmPiVars  = $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_listview.']['csvDontRenderPiVars'];
     $csvArray     = $this->pObj->objZz->getCSVasArray( $csvRmPiVars );
     foreach( ( array) $csvArray as $piVarKey )
     {
       unset( $piVars[$piVarKey] );
     }
-      // Unset piVars, which shouldn't rendered 
+      // Unset piVars, which shouldn't rendered
       // #40960, 120916, dwildt, +
     $httpQuery[$this->pObj->prefixId] = $piVars;
       // Move the piVars to an query string
@@ -269,7 +269,7 @@ class tx_browser_pi1_navi_recordbrowser
       // DRS
     if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
     {
-      $prompt = 'navigation.record_browser.enable.pivars_for_listview is true. ' . 
+      $prompt = 'navigation.record_browser.enable.pivars_for_listview is true. ' .
                 'Marker ###PIVARS_FOR_LISTVIEW### will replaced with ' . $piVarsForListView;
       t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
       $prompt = 'BE AWARE: Don\'t cache the single view!';
@@ -299,7 +299,7 @@ class tx_browser_pi1_navi_recordbrowser
     $tt_content_uid = $this->pObj->cObj->data['uid'];
       // Current language
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
-    
+
       // RETURN : there isn't any session
     if( ! $this->pObj->objSession->bool_session_enabled )
     {
@@ -347,7 +347,7 @@ class tx_browser_pi1_navi_recordbrowser
       return $piVarsForSingleView;
     }
       // RETURN : sPiVars is empty
-    
+
       // Get the serialized piVars
     $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
 
@@ -359,18 +359,18 @@ class tx_browser_pi1_navi_recordbrowser
         $this->pObj->extKey, 0);
     }
       // DRS
-      
+
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
-      // Unset piVars, which shouldn't rendered 
+      // Unset piVars, which shouldn't rendered
     $csvRmPiVars  = $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_singleview.']['csvDontRenderPiVars'];
     $csvArray     = $this->pObj->objZz->getCSVasArray( $csvRmPiVars );
     foreach( ( array) $csvArray as $piVarKey )
     {
       unset( $piVars[$piVarKey] );
     }
-      // Unset piVars, which shouldn't rendered 
-    
+      // Unset piVars, which shouldn't rendered
+
     $httpQuery[$this->pObj->prefixId] = $piVars;
       // Move the piVars to an query string
     $piVarsForSingleView = '&' . http_build_query( $httpQuery );
@@ -378,7 +378,7 @@ class tx_browser_pi1_navi_recordbrowser
       // DRS
     if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
     {
-      $prompt = 'navigation.record_browser.enable.pivars_for_singleview is true. ' . 
+      $prompt = 'navigation.record_browser.enable.pivars_for_singleview is true. ' .
                 'Marker ###PIVARS_FOR_SINGLEVIEW### will replaced with ' . $piVarsForSingleView;
       t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
       $prompt = 'BE AWARE: Don\'t cache the single view!';
@@ -419,6 +419,8 @@ class tx_browser_pi1_navi_recordbrowser
       // #33892, 120214, dwildt-
     //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // #33892, 120214, dwildt+
+var_dump(__METHOD__, __LINE__);
+die( ":(" );
     $dummy = $this->pObj->objViewlist_3x->main($this->pObj->str_template_raw);
       // 4.1.8, dwildt, 1+
     unset( $dummy );
@@ -445,7 +447,7 @@ class tx_browser_pi1_navi_recordbrowser
     $record_browser = null;
     $arr_buttons    = array();
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
-    
+
       // Uid of the current record
     $singlePid      = (int) $this->pObj->piVars['showUid'];
       // Uid of the current plugin
@@ -486,8 +488,8 @@ class tx_browser_pi1_navi_recordbrowser
           // Get position of the record
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
         // #40960, 120916, dwildt, 2+
-        $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );   
-        $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );   
+        $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );
+        $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );
 
           // Get button configuration
         $button_name = $conf_record_browser['buttons.']['current.']['first'];
@@ -532,8 +534,8 @@ class tx_browser_pi1_navi_recordbrowser
         // Get position of the record
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
         // #40960, 120916, dwildt, 2+
-      $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );   
-      $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );   
+      $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );
+      $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );
 
         // Get button configuration
       $button_name = $conf_record_browser['buttons.']['current.']['prev'];
@@ -590,8 +592,8 @@ class tx_browser_pi1_navi_recordbrowser
         // Get position of the record
       $marker['###RECORD_POSITION###']        = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
         // #40960, 120916, dwildt, 2+
-      $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );   
-      $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );   
+      $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );
+      $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );
 
         // Get button configuration
       $button_name = $conf_record_browser['buttons.']['current.']['next'];
@@ -637,8 +639,8 @@ class tx_browser_pi1_navi_recordbrowser
           // Get position of the record
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
           // #40960, 120916, dwildt, 2+
-        $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );   
-        $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );   
+        $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForSingleview( );
+        $marker['###PIVARS_FOR_LISTVIEW###']    = $this->recordbrowser_get_piVarsForListview( );
 
           // Get button configuration
         $button_name = $conf_record_browser['buttons.']['current.']['last'];
@@ -717,18 +719,18 @@ class tx_browser_pi1_navi_recordbrowser
   private function recordbrowser_rendering_button_current( $pos_of_all_rows )
   {
     $button = null;
-    
+
       // Uid of the current record
     $singlePid = (int) $this->pObj->piVars['showUid'];
       // Get record_browser configuration
     $conf_record_browser = $this->conf['navigation.']['record_browser.'];
-    
+
       // Get uid of the record
     $marker['###RECORD_UID###']           = $singlePid;
       // Get position of the record
     $marker['###RECORD_POSITION###']      = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
-    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVarsForListview( );   
-//    $marker['###PIVARS_FOR_LISTVIEW###']  = null;   
+    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVarsForListview( );
+//    $marker['###PIVARS_FOR_LISTVIEW###']  = null;
 
       // Get button configuration
     $button_name = $conf_record_browser['buttons.']['current.']['curr'];
@@ -748,8 +750,8 @@ class tx_browser_pi1_navi_recordbrowser
  /**
   * recordbrowser_init( ): Returns true, if requirements are matched
   *
-  * @return	boolean   
-  * 
+  * @return	boolean
+  *
   * @internal #50222
   * @version  4.5.11
   * @since    4.5.11
@@ -762,7 +764,7 @@ class tx_browser_pi1_navi_recordbrowser
       return false;
     }
       // RETURN false : Record Browser should not used
-    
+
       // Set session data
     $this->recordbrowser_initSession( );
 
@@ -772,7 +774,7 @@ class tx_browser_pi1_navi_recordbrowser
       return false;
     }
       // RETURN false : Record Browser should not used
-    
+
       // RETURN true: requirements are matched
     return true;
   }
@@ -781,7 +783,7 @@ class tx_browser_pi1_navi_recordbrowser
   * recordbrowser_initSession( )
   *
   * @return	void
-  * 
+  *
   * @internal #50222
   * @version  4.5.11
   * @since    4.5.11
@@ -795,8 +797,8 @@ class tx_browser_pi1_navi_recordbrowser
  /**
   * recordbrowser_initUseMe( ): Returns true, if requirements are matched
   *
-  * @return	boolean   
-  * 
+  * @return	boolean
+  *
   * @internal #50222
   * @version  4.5.11
   * @since    4.5.11
@@ -809,7 +811,7 @@ class tx_browser_pi1_navi_recordbrowser
       return true;
     }
       // RETURN true  : record browser is enabled
-    
+
       // DRS
     if( $this->pObj->b_drs_templating )
     {
@@ -826,8 +828,8 @@ class tx_browser_pi1_navi_recordbrowser
  /**
   * recordbrowser_initUseMeWoResult( ): Returns true, if requirements are matched
   *
-  * @return	boolean   
-  * 
+  * @return	boolean
+  *
   * @internal #50222
   * @version  4.5.11
   * @since    4.5.11
@@ -843,7 +845,7 @@ class tx_browser_pi1_navi_recordbrowser
       return true;
     }
       // RETURN true: record_browser should displayed in case of any result
-      
+
       // Set local variables
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
     $tt_content_uid = $this->pObj->cObj->data['uid'];
@@ -854,11 +856,11 @@ class tx_browser_pi1_navi_recordbrowser
       return true;
     }
       // RETURN true: there is a result (a list of records)
-    
+
       // DRS
     if( $this->pObj->b_drs_templating )
     {
-      $prompt = 'uids_of_all_rows is empty. ' 
+      $prompt = 'uids_of_all_rows is empty. '
               . 'Record browser should not displayed in case of an empty result: RETURN';
       t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
     }
@@ -935,7 +937,7 @@ class tx_browser_pi1_navi_recordbrowser
         $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
         if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
         {
-          $prompt = 'Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . ']' . 
+          $prompt = 'Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . ']' .
                     '[uids_of_all_rows] will be empty.';
           t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
         }
@@ -945,7 +947,7 @@ class tx_browser_pi1_navi_recordbrowser
 
       // Store the current piVars in the session
     $this->recordbrowser_set_session_piVars( );
-    
+
     return;
   }
 
@@ -987,7 +989,7 @@ class tx_browser_pi1_navi_recordbrowser
   private function recordbrowser_set_session_dataRows( $rows )
   {
     $arr_return = null;
-    
+
       //////////////////////////////////////////////////////////////////////////
       //
       // Get table.field for uid of the local table
@@ -1057,7 +1059,7 @@ class tx_browser_pi1_navi_recordbrowser
       $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
       if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
-        $prompt = 'No session (less performance): global array uids_of_all_rows is set with ' . 
+        $prompt = 'No session (less performance): global array uids_of_all_rows is set with ' .
                   '#' . count( $ids ) . ' uids.';
         t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
       }
@@ -1112,7 +1114,7 @@ class tx_browser_pi1_navi_recordbrowser
     $piVars = $this->pObj->piVars;
     unset( $piVars['showUid'] );
       // piVars without showUid
-    
+
       // #40959, 120916, dwildt, +
       // Catch the uid of the plugin in case of multiple plugins
     $bool_rmPiVarPlugin = false;
@@ -1128,7 +1130,7 @@ class tx_browser_pi1_navi_recordbrowser
 //$this->pObj->dev_var_dump( $this->pObj->piVars );
       // Catch the uid of the plugin in case of multiple plugins
       // #40959, 120916, dwildt, +
-    
+
       // SWITCH : piVars
     switch( true )
     {
@@ -1169,7 +1171,7 @@ class tx_browser_pi1_navi_recordbrowser
 //$this->pObj->dev_var_dump( $this->pObj->piVars );
       // Remove piVars['plugin'], if it was set by this method (see above)
       // #40959, 120916, dwildt, +
-    
+
     return;
   }
 
@@ -1190,7 +1192,7 @@ class tx_browser_pi1_navi_recordbrowser
   public function recordbrowser_set_session_data_3x( $rows )
   {
     $arr_return = null;
-    
+
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
