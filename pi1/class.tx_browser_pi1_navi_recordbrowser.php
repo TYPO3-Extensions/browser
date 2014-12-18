@@ -419,8 +419,13 @@ class tx_browser_pi1_navi_recordbrowser
       // #33892, 120214, dwildt-
     //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // #33892, 120214, dwildt+
-//var_dump(__METHOD__, __LINE__);
-//die( ":(" );
+$prompt = 'FATAL ERROR: Please disable the record browser of the Browser plugin. Sorry for the trouble.<br />'
+        . 'Method: ' . __METHOD__ . ' (#' . __LINE__ . ')<br />'
+        . '<br />'
+        . 'Sorry for the troble. Browser - TYPO3 without PHP';
+die( $prompt );
+
+
     //$dummy = $this->pObj->objViewlist_3x->main($this->pObj->str_template_raw);
     $dummy = $this->pObj->objViewlist->main();
       // 4.1.8, dwildt, 1+
