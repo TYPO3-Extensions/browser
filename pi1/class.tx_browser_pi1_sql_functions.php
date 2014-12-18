@@ -860,7 +860,7 @@ class tx_browser_pi1_sql_functions
     $res = $GLOBALS[ 'TYPO3_DB' ]->sql_query( $query );
 //$this->pObj->dev_var_dump( $query, $res );
     $error = $GLOBALS[ 'TYPO3_DB' ]->sql_error();
-
+//var_dump( __METHOD__, __LINE__, $query, $res, $error );
     // DRS - Development Reporting System
 //    $iCounter = 0;
 //    if( $this->pObj->b_drs_warn )
@@ -873,7 +873,6 @@ class tx_browser_pi1_sql_functions
     if ( $this->pObj->b_drs_sql )
     {
       // #i0003, 130214, dwildt, 1-
-//      $prompt = $debugTrail['prompt'] . ': ' . $query;
       // #i0003, 130214, dwildt, 1+
       $prompt = $debugTrail[ 'prompt' ] . ': ' . str_replace( ',', ', ', $query );
       t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
