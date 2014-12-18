@@ -2291,7 +2291,13 @@ class tx_browser_pi1_filter_4x
     // DEVELOPMENT: Browser engine 4.x
     switch ( $this->pObj->dev_browserEngine )
     {
+      case( 3 ):
+        // stdWrap the current value
+        $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
+        break;
       case( 4 ):
+      // #i0112, 141218, dwildt, 1+
+      case( 5 ):
         // Wrap the current value by the cObject
         $this->updateWizard( 'filter_cObject' );
         if ( $loop[ $this->curr_tableField ] < 2 )
@@ -2306,13 +2312,9 @@ class tx_browser_pi1_filter_4x
           $this->pObj->timeTracking_log( $debugTrailLevel, '### 2' );
         }
         break;
-      case( 3 ):
-        // stdWrap the current value
-        $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
-        break;
       default:
         $header = 'FATAL ERROR!';
-        $text = 'Sorry, this filter shouldn\'t occure: case is undefined.';
+        $text = 'Sorry, this error shouldn\'t occure: case is undefined.';
         $this->pObj->drs_die( $header, $text );
         break;
     }
