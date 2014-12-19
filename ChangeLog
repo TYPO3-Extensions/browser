@@ -28,6 +28,7 @@
   * #i0094: static to Configuration/TypoScript
             UPGRADE: All TypoScript Templates must be included again
   Bugfix
+  * #i0113: PHP Warning: Couldn't fetch mysqli_result in pi1/class.tx_browser_pi1_viewlist.php line 1144
   * #i0112: Browser engine 5 is using code of Browser 3
   * #i0107: tx_browser_pi1_typoscript::wrapRowTableLocalGetFields cached fields by a static variable.
             This causes empty fields in case of multiple plugins.

@@ -1082,7 +1082,8 @@ class tx_browser_pi1_viewlist
     // #42302, dwildt, 1-
     //$GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
     // #42302, dwildt, 1+
-    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
+    // #i0113, dwildt, 1-
+    //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
     // Set global var
     $this->pObj->rows = $rows;
@@ -1499,7 +1500,8 @@ class tx_browser_pi1_viewlist
     }
     // Get ids of rows with translated records and ids of translated records
     // Free SQL result
-    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
+    // #i0113, dwildt, 1-
+    //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
 
 
@@ -1553,7 +1555,8 @@ class tx_browser_pi1_viewlist
     }
     // Get the ids
     // Free SQL result
-    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
+    // #i0113, dwildt, 1-
+    //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
     return $arr_return;
     // Workflow for recordbrowser
@@ -1742,7 +1745,8 @@ class tx_browser_pi1_viewlist
     }
     // Get the ids
     // Free SQL result
-    $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
+    // #i0113, dwildt, 1-
+    //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 
     return $arr_return;
   }
