@@ -252,6 +252,7 @@ class tx_browser_pi1_viewlist
     //  #38612, 120703, dwildt+
     // Building SQL query and get the SQL result
     // Set rows
+//var_dump( __METHOD__, __LINE__, $res, $arr_return );
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
@@ -1141,6 +1142,9 @@ class tx_browser_pi1_viewlist
    */
   private function rows_getDefault( $res )
   {
+if( $res->num_rows > 0 ) {
+  var_dump( __METHOD__, __LINE__, $res->num_rows, $res );
+}
     $rows = array();
 
     while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
