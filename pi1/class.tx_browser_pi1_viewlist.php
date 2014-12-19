@@ -1142,9 +1142,9 @@ class tx_browser_pi1_viewlist
    */
   private function rows_getDefault( $res )
   {
-if( $res->num_rows > 0 ) {
-  var_dump( __METHOD__, __LINE__, $res->num_rows, $res );
-}
+//    if( $res->num_rows > 0 ) {
+//      var_dump( __METHOD__, __LINE__, $res->num_rows, $res );
+//    }
     $rows = array();
 
     while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
