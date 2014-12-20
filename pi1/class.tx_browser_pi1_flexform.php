@@ -776,7 +776,7 @@ class tx_browser_pi1_flexform
       {
         // #i0114, 141220, dwildt -/+
         //if ( in_array( $value, $arr_viewsList_proper ) )
-        if ( in_array( $value, array( $arr_viewsList_proper ) ) )
+        if ( in_array( $value, ( array ) $arr_viewsList_proper ) )
         {
           continue;
         }

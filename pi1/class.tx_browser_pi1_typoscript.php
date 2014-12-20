@@ -356,7 +356,9 @@ class tx_browser_pi1_typoscript
       {
         t3lib_div::devlog( '[INFO/SQL] localTable (global TypoScript value) isn\'t configured. Probably it is OK.', $this->pObj->extKey, 0 );
       }
-      reset( $this->arr_realTables_arrFields );
+      // #i0115, 141220, dwildt -/+
+      //reset( $this->arr_realTables_arrFields );
+      reset( ( array ) $this->arr_realTables_arrFields );
       $str_localTable = key( $this->arr_realTables_arrFields );
       if ( $str_localTable )
       {
@@ -1453,7 +1455,7 @@ class tx_browser_pi1_typoscript
     // LOOP all tableFields from select
     // #i0115, 141220, dwildt, -/+
     //$str_aliasedSelect = implode( ', ', $arr_aliasedSelect );
-    $str_aliasedSelect = implode( ', ', array( $arr_aliasedSelect ) );
+    $str_aliasedSelect = implode( ', ', ( array ) $arr_aliasedSelect );
     $conf_sql[ 'select' ] = $str_aliasedSelect;
     // Add aliases to the SELECT statement
     //////////////////////////////////////////////////////
