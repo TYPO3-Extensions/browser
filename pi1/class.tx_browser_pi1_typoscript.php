@@ -1451,8 +1451,9 @@ class tx_browser_pi1_typoscript
       $arr_aliasedSelect[] = $tableField . ' AS \'' . $alias . '\'';
     }
     // LOOP all tableFields from select
-
-    $str_aliasedSelect = implode( ', ', $arr_aliasedSelect );
+    // #i0115, 141220, dwildt, -/+
+    //$str_aliasedSelect = implode( ', ', $arr_aliasedSelect );
+    $str_aliasedSelect = implode( ', ', array( $arr_aliasedSelect ) );
     $conf_sql[ 'select' ] = $str_aliasedSelect;
     // Add aliases to the SELECT statement
     //////////////////////////////////////////////////////
@@ -2428,14 +2429,14 @@ class tx_browser_pi1_typoscript
     $fields = array();
 
     $pluginId = $this->pObj->cObj->data[ 'uid' ];
-    if( !isset( $staticArray[$pluginId]['firstLoop'] ))
+    if ( !isset( $staticArray[ $pluginId ][ 'firstLoop' ] ) )
     {
-      $staticArray[$pluginId]['firstLoop'] = true;
+      $staticArray[ $pluginId ][ 'firstLoop' ] = true;
     }
 
-    if ( !$staticArray[$pluginId]['firstLoop'] )
+    if ( !$staticArray[ $pluginId ][ 'firstLoop' ] )
     {
-      return $staticArray[$pluginId]['fields'];
+      return $staticArray[ $pluginId ][ 'fields' ];
     }
 
     foreach ( ( array ) $this->tableFields as $tableField )
@@ -2449,9 +2450,9 @@ class tx_browser_pi1_typoscript
       continue;
     }
 
-    $staticArray[$pluginId]['fields'] = array_unique( ( array ) $fields );
-    $staticArray[$pluginId]['firstLoop'] = true;
-    return $staticArray[$pluginId]['fields'];
+    $staticArray[ $pluginId ][ 'fields' ] = array_unique( ( array ) $fields );
+    $staticArray[ $pluginId ][ 'firstLoop' ] = true;
+    return $staticArray[ $pluginId ][ 'fields' ];
   }
 
   /**
