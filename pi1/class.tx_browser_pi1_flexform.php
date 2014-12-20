@@ -708,107 +708,6 @@ class tx_browser_pi1_flexform
     {
       t3lib_div :: devlog( '[INFO/FLEXFORM] sDEF/views: \'' . $str_views_status . '\'.', $this->pObj->extKey, 0 );
     }
-    // DRS - Development Reporting System
-    // #9683
-    //    //////////////////////////////////////////////////////////////////////
-    //    //
-    //    // Field viewsIds
-    //
-    //    $bool_viewsIds = true;
-    //    $str_views_csv  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'viewsIds', 'sDEF', 'lDEF', 'vDEF');
-    //
-    //    // If viewsIds is empty, do nothing
-    //    if ($str_views_csv == '')
-    //    {
-    //      $bool_viewsIds = false;
-    //      if ($this->pObj->b_drs_flexform)
-    //      {
-    //        t3lib_div::devlog('[INFO/FLEXFORM] sDEF/viewsIds is empty. Nothing to do.', $this->pObj->extKey, 0);
-    //      }
-    //    }
-    //    // If viewsIds is empty, do nothing
-    //
-    //    // Remove every id, which isn't proper
-    //    if($bool_viewsIds)
-    //    {
-    //      $arr_viewsIds         =  $this->pObj->objZz->getCSVasArray($str_views_csv);
-    //      $arr_viewsIds_proper  = false;
-    //      // Remove every id, which isn't proper
-    //      foreach((array) $arr_viewsIds as $key => $value)
-    //      {
-    //        if (in_array($value.'.', array_keys($this->pObj->conf['views.']['list.'])))
-    //        {
-    //          $arr_viewsIds_proper[] = $value.'.';
-    //        }
-    //      }
-    //      // Remove every id, which isn't proper
-    //      if (is_array($arr_viewsIds_proper))
-    //      {
-    //        $arr_viewsIds_proper = array_unique($arr_viewsIds_proper);
-    //      }
-    //      if (!is_array($arr_viewsIds_proper))
-    //      {
-    //        $bool_viewsIds = false;
-    //        if ($this->pObj->b_drs_flexform)
-    //        {
-    //          $str_prompt = implode(', ', $arr_viewsIds);
-    //          t3lib_div::devlog('[WARN/FLEXFORM] sDEF/viewsIds hasn\'t any proper views.list id: \''.$str_prompt.'\'', $this->pObj->extKey, 2);
-    //          $str_prompt = implode('.', array_keys($this->pObj->conf['views.']['list.']));
-    //          $str_prompt = str_replace('..', ', ', $str_prompt);
-    //          $str_prompt = str_replace('.', '', $str_prompt);
-    //          t3lib_div::devlog('[HELP/FLEXFORM] Proper values would be: \''.$str_prompt.'\'', $this->pObj->extKey, 1);
-    //        }
-    //      }
-    //    }
-    //    // Remove every id, which isn't proper
-    //
-    //    // Remove every view, which isn't element of the id list
-    //    if($bool_viewsIds)
-    //    {
-    //      $arr_keyslistViews  = array_keys($this->pObj->conf['views.']['list.']);
-    //      foreach ($arr_keyslistViews as $key => $value)
-    //      {
-    //        if(!in_array($value, $arr_viewsIds_proper))
-    //        {
-    //          // Remove list view
-    //          // Remove array
-    //          unset($this->pObj->conf['views.']['list.'][$value]);
-    //          // Remove string
-    //          $valueWoDot = substr($value, 0, strlen($value) - 1);
-    //          unset($this->pObj->conf['views.']['list.'][$value]);
-    //          if ($this->pObj->b_drs_flexform)
-    //          {
-    //            t3lib_div::devlog('[INFO/FLEXFORM] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
-    //          }
-    //          // Remove list view
-    //
-    //          // Remove single view
-    //          // Remove array
-    //          unset($this->pObj->conf['views.']['single.'][$value]);
-    //          // Remove string
-    //          $valueWoDot = substr($value, 0, strlen($value) - 1);
-    //          unset($this->pObj->conf['views.']['single.'][$value]);
-    //          if ($this->pObj->b_drs_flexform)
-    //          {
-    //            t3lib_div::devlog('[INFO/FLEXFORM] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
-    //          }
-    //          // Remove single view
-    //        }
-    //      }
-    //      //var_dump($arr_viewsIds_proper);
-    //    }
-    //    if ($this->pObj->b_drs_flexform)
-    //    {
-    //      $str_prompt = implode('.', array_keys($this->pObj->conf['views.']['list.']));
-    //      $str_prompt = str_replace('..', ', ', $str_prompt);
-    //      $str_prompt = str_replace('.', '', $str_prompt);
-    //      t3lib_div::devlog('[INFO/FLEXFORM] This views will displayed: \''.$str_prompt.'\'', $this->pObj->extKey, 0);
-    //    }
-    //    // Remove every view, which isn't element of the id list
-    //    // Field viewsIds
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field viewsList, #9683
 
     $bool_viewsIds = true;
     $str_views_csv = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'viewsList', 'sDEF', 'lDEF', 'vDEF' );
@@ -875,33 +774,9 @@ class tx_browser_pi1_flexform
       // #i0029, dwildt, 5+
       foreach ( $arr_keyslistViews as $key => $value )
       {
-        // #i0029, dwildt, -
-//        if (!in_array($value, $arr_viewsList_proper)) {
-//          // Remove list view
-//          // Remove array
-//          unset ($this->pObj->conf['views.']['list.'][$value]);
-//          // Remove string
-//          $valueWoDot = substr($value, 0, strlen($value) - 1);
-//          unset ($this->pObj->conf['views.']['list.'][$value]);
-//          if ($this->pObj->b_drs_flexform) {
-//            t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
-//          }
-//          // Remove list view
-//
-//          // Remove single view
-//          // Remove array
-//          unset ($this->pObj->conf['views.']['single.'][$value]);
-//          // Remove string
-//          $valueWoDot = substr($value, 0, strlen($value) - 1);
-//          unset ($this->pObj->conf['views.']['single.'][$value]);
-//          if ($this->pObj->b_drs_flexform) {
-//            t3lib_div :: devlog('[INFO/FLEXFORM] views.list.' . $valueWoDot . ' is removed from TypoScript.', $this->pObj->extKey, 0);
-//          }
-//          // Remove single view
-//        }
-        // #i0029, dwildt, -
-        // #i0029, dwildt, +
-        if ( in_array( $value, $arr_viewsList_proper ) )
+        // #i0114, 141220, dwildt -/+
+        //if ( in_array( $value, $arr_viewsList_proper ) )
+        if ( in_array( $value, array( $arr_viewsList_proper ) ) )
         {
           continue;
         }
