@@ -358,7 +358,10 @@ class tx_browser_pi1_typoscript
       }
       // #i0115, 141220, dwildt -/+
       //reset( $this->arr_realTables_arrFields );
-      reset( ( array ) $this->arr_realTables_arrFields );
+      if ( is_array( $this->arr_realTables_arrFields ) )
+      {
+        reset( $this->arr_realTables_arrFields );
+      }
       $str_localTable = key( $this->arr_realTables_arrFields );
       if ( $str_localTable )
       {
