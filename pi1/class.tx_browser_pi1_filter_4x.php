@@ -876,7 +876,7 @@ class tx_browser_pi1_filter_4x
   private function init_andWhereFilter_localTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
-
+var_dump(__METHOD__, __LINE__, $this->arr_tablesWiTreeparentfield);
     // SWITCH  : area filter versus default filter
     switch ( true )
     {
