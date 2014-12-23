@@ -4506,14 +4506,10 @@ class tx_browser_pi1_filter_4x
         $tableField = $table . $field;
 
         $conf_view = $this->conf_view;
-        $cObj_name = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled' ];
-        $cObj_conf = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled.' ];
+        $cObj_name = $conf_view[ 'filter.' ][ $table ][ $field . '.' ][ 'treeview.' ][ 'enabled' ];
+        $cObj_conf = $conf_view[ 'filter.' ][ $table ][ $field . '.' ][ 'treeview.' ][ 'enabled.' ];
         $treeviewEnabled = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-if( $tableField == 'tx_org_headquarters.title')
-{
-  var_dump( __METHOD__, __LINE__, $tableField, $treeviewEnabled, $this->conf_view );
-}
         // CONTINUE : field has an dot
         if ( !$treeviewEnabled )
         {
@@ -4537,7 +4533,7 @@ if( $tableField == 'tx_org_headquarters.title')
 $this->treeviewTableFields[] = $tableField;
 var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
 
-        switch ( $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] )
+        switch ( $this->conf_view[ 'filter.' ][ $table ][ $field ] )
         {
           case( 'CATEGORY_MENU' ):
             $this->eval_treeviewCategoryMenu( $tableField );
@@ -4562,7 +4558,7 @@ var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
             break;
           default:
             $header = 'Evaluation of treeview filter failed!';
-            $text = '' . $tableField . ' is configured as ' . $this->conf_view[ 'filter.' ][ $table . '.' ][ $field ] . '
+            $text = '' . $tableField . ' is configured as ' . $this->conf_view[ 'filter.' ][ $table ][ $field ] . '
                         <br />
                         But ' . $tableField . '.treeview.enabled is true. This isn\'t proper.
                         <br />
