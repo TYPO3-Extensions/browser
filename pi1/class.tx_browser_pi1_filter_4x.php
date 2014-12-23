@@ -877,7 +877,6 @@ class tx_browser_pi1_filter_4x
   private function init_andWhereFilter_localTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
-    var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
     // SWITCH  : area filter versus default filter
     switch ( true )
     {
@@ -885,21 +884,31 @@ class tx_browser_pi1_filter_4x
         // Handle area filter
         $str_andWhere = $this->init_andWhereFilter_localTableArea( $arr_piVar, $tableField );
         break;
+      // #i0117, 141223, dwildt, +
+      case( in_array( $tableField, $this->treeviewTableFields ) ):
+        // Handle tree view filter
+        list( $table ) = explode( '.', $tableField );
+        foreach ( $arr_piVar as $str_value )
+        {
+          $str_value = str_replace( "'", null, $str_value );
+          $str_value = str_replace( '"', null, $str_value );
+          $arr_orValues[] = $table . '.uid' . " LIKE '" . $str_value . "'";
+          $strtolower_value = "'" . mb_strtolower( $str_value ) . "'";
+          $this->arr_filter_condition[ $table . '.uid' ][ 'like' ][] = $strtolower_value;
+        }
+        $str_andWhere = implode( ' OR ', $arr_orValues );
+        if ( !empty( $str_andWhere ) )
+        {
+          $str_andWhere = ' (' . $str_andWhere . ')';
+        }
+        break;
       default:
         // Handle default filter (without area)
         foreach ( $arr_piVar as $str_value )
         {
-          // #i0082, 140811, dwildt, 3+
           $str_value = str_replace( "'", null, $str_value );
           $str_value = str_replace( '"', null, $str_value );
           $arr_orValues[] = $tableField . " LIKE '" . $str_value . "'";
-          // #i0082, 140811, dwildt, 1-
-          //$arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
-          // #i0082, 140811, dwildt, 2-
-          //// #30912, 120202, dwildt+
-          //$strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
-          // #i0082, 140811, dwildt, 2+
-          // #30912, 120202, dwildt+
           $strtolower_value = "'" . mb_strtolower( $str_value ) . "'";
           $this->arr_filter_condition[ $tableField ][ 'like' ][] = $strtolower_value;
         }
@@ -4529,9 +4538,8 @@ class tx_browser_pi1_filter_4x
         }
         // DRS
 
-// #i0117, 141223, dwildt, 1+
-$this->treeviewTableFields[] = $tableField;
-var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
+        // #i0117, 141223, dwildt, 1+
+        $this->treeviewTableFields[] = $tableField;
 
         switch ( $this->conf_view[ 'filter.' ][ $table ][ $field ] )
         {
