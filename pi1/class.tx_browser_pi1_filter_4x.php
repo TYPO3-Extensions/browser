@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      5.0.0
+ * @version      6.0.7
  * @since        3.9.9
  */
 
@@ -248,6 +248,7 @@ class tx_browser_pi1_filter_4x
   // #41776, dwildt, 2+
   // [Array] Tables with a treeParentField field
   var $arr_tablesWiTreeparentfield = array();
+  private $tmpOneDim;
 
   /**
    * Constructor. The method initiate the parent object
@@ -711,7 +712,7 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
       // #61520, 140911, dwildt, 1+
-      $from = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+      $from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
@@ -736,7 +737,7 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
       // #61520, 140911, dwildt, 1+
-      $to = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+      $to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
@@ -803,8 +804,8 @@ class tx_browser_pi1_filter_4x
 //        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
 //        $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
         // #61520, 140911, dwildt, 2+
-        $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
-        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table ) . "'";
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $from = mysql_real_escape_string( $from );
@@ -828,8 +829,8 @@ class tx_browser_pi1_filter_4x
 //        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
 //        $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
         // #61520, 140911, dwildt, 2+
-        $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
-        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table ) . "'";
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $to         = mysql_real_escape_string( $to );
@@ -888,8 +889,8 @@ class tx_browser_pi1_filter_4x
         foreach ( $arr_piVar as $str_value )
         {
           // #i0082, 140811, dwildt, 3+
-          $str_value = str_replace("'", null, $str_value);
-          $str_value = str_replace('"', null, $str_value);
+          $str_value = str_replace( "'", null, $str_value );
+          $str_value = str_replace( '"', null, $str_value );
           $arr_orValues[] = $tableField . " LIKE '" . $str_value . "'";
           // #i0082, 140811, dwildt, 1-
           //$arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
@@ -999,7 +1000,7 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
       // #61520, 140911, dwildt, 1+
-      $from = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+      $from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1026,7 +1027,7 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
       // #61520, 140911, dwildt, 1+
-      $to = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+      $to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1100,7 +1101,7 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
       // #61520, 140911, dwildt, 1+
-      $from = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+      $from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1121,7 +1122,7 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
       // #61520, 140911, dwildt, 1+
-      $to = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+      $to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -5223,7 +5224,7 @@ class tx_browser_pi1_filter_4x
    * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
    * @return	void		Result will be allocated to the class var $tmpOneDim
    * @internal        #32223, 120119, dwildt+
-   * @version 3.9.16
+   * @version 6.0.7
    * @since   3.9.9
    */
   private function tree_setOneDimDefault( $uid_parent )
@@ -5240,7 +5241,9 @@ class tx_browser_pi1_filter_4x
     }
 
     // LOOP rows
-    foreach ( $this->arr_rowsTablefield as $key => $row )
+    //#i0116, 141223, dwildt, 1-/+
+    //foreach ( $this->arr_rowsTablefield as $key => $row )
+    foreach ( ( array ) $this->arr_rowsTablefield as $key => $row )
     {
       // CONTINUE current row isn't row with current $uid_parent
       if ( $row[ $this->treeParentField ] != $uid_parent )

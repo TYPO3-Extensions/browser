@@ -28,6 +28,7 @@
   * #i0094: static to Configuration/TypoScript
             UPGRADE: All TypoScript Templates must be included again
   Bugfix
+  * #i0116: PHP Warning: Invalid argument supplied for foreach() in pi1/class.tx_browser_pi1_filter_4x.php line 5243
   * #i0115: PHP Warning: implode(): Invalid arguments passed in pi1/class.tx_browser_pi1_typoscript.php
   * #i0114: PHP Warning: in_array() expects parameter 2 to be array in pi1/class.tx_browser_pi1_flexform.php
   * #i0113: PHP Warning: Couldn't fetch mysqli_result in pi1/class.tx_browser_pi1_viewlist.php line 1144
