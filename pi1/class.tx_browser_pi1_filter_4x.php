@@ -4510,7 +4510,7 @@ class tx_browser_pi1_filter_4x
         $cObj_conf = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled.' ];
         $treeviewEnabled = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-if( $table == 'tx_org_headquarters.title')
+if( $tableField == 'tx_org_headquarters.title')
 {
   var_dump( __METHOD__, __LINE__, $tableField, $treeviewEnabled, $this->conf_view );
 }
