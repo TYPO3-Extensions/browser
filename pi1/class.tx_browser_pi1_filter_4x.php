@@ -4537,6 +4537,7 @@ class tx_browser_pi1_filter_4x
           case( 'TREEVIEW' ):
             // #i0117, 141223, dwildt, 1+
             $this->treeviewTableFields[] = $tableField;
+    var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
             $this->eval_treeviewCheckbox( $tableField );
             // #43692, 121206, dwildt, 13+
             // Adding jQuery
