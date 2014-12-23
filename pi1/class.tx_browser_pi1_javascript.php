@@ -902,12 +902,16 @@ class tx_browser_pi1_javascript
   public function addJssFilesJqueryPluginsJsTree()
   {
     // There isn't any table with a treeparentfield
-    if ( empty( $this->pObj->objFltr4x->arr_tablesWiTreeparentfield ) )
+    // #i0117, 141223, dwildt, 4-
+//    if ( empty( $this->pObj->objFltr4x->arr_tablesWiTreeparentfield ) )
+//    {
+//      return;
+//    }
+    // #i0117, 141223, dwildt, 3+
+    if ( ! $this->pObj->objFltr4x->get_isTableWiTreeParentField( ) )
     {
       return;
     }
-    // There isn't any table with a treeparentfield
-    // There are tables with a treeparentfield
 
     $name = 'jquery_plugins_jstree_plugin';
     $path = $this->pObj->conf[ 'javascript.' ][ 'jquery.' ][ 'plugins.' ][ 'jstree.' ][ 'plugin' ];

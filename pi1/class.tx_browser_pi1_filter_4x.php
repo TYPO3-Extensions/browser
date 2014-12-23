@@ -247,7 +247,7 @@ class tx_browser_pi1_filter_4x
   var $arr_filter_condition = null;
   // #41776, dwildt, 2+
   // [Array] Tables with a treeParentField field
-  var $arr_tablesWiTreeparentfield = array();
+  private $arr_tablesWiTreeparentfield = array();
   private $tmpOneDim;
 
   /**
@@ -1849,11 +1849,9 @@ class tx_browser_pi1_filter_4x
     $this->set_maxItemsPerHtmlRow();
 
     // SWITCH current filter is a tree view
-    // #41776, dwildt, 2-
-//      // @todo: 120518, objFltr4x instead of 3x
-//    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-    // #41776, dwildt, 1+
-    switch ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    // #i0117, 141223, dwildt, 1-/+
+    //switch ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    switch ( in_array( $this->curr_tableField, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree();
@@ -1913,11 +1911,9 @@ class tx_browser_pi1_filter_4x
     $this->set_maxItemsPerHtmlRow();
 
     // SWITCH current filter is a tree view
-    // #41776, dwildt, 2-
-//      // @todo: 121019, dwildt: 3x -> 4x
-//    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-    // #41776, dwildt, 1+
-    switch ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    // #i0117, 141223, dwildt, 1-/+
+    //switch ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    switch ( in_array( $this->curr_tableField, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree();
@@ -3124,6 +3120,23 @@ class tx_browser_pi1_filter_4x
   }
 
   /**
+   * get_isTableWiTreeParentField( ) : Returns true, if there is a table with a tree parent field.
+   *
+   * @return	boolean
+   * @version 6.0.7
+   * @since   6.0.7
+   */
+  public function get_isTableWiTreeParentField()
+  {
+    if ( empty( $this->arr_tablesWiTreeparentfield ) )
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * get_selectedFilters( ) : Sets the class var $arr_selectedFilters. The $tableField
    *                          of a filter is added to $arr_selectedFilters, if the filter
    *                          is an element of the piVars.
@@ -3781,12 +3794,10 @@ class tx_browser_pi1_filter_4x
     // Add $tableTreeParentField to the class var array
     $this->sql_filterFields[ $this->curr_tableField ][ 'treeParentField' ] = $tableTreeParentField;
 
-    // #41776, dwildt, 2-
-//      // Add table to arr_tablesWiTreeparentfield
-//    $this->pObj->objFltr3x->arr_tablesWiTreeparentfield[] = $table;
-    // #41776, dwildt, 2+
     // Add table to arr_tablesWiTreeparentfield
-    $this->arr_tablesWiTreeparentfield[] = $table;
+    // #i0117, 141223, dwildt, 1-/+
+    //$this->arr_tablesWiTreeparentfield[] = $table;
+    $this->arr_tablesWiTreeparentfield[] = $this->curr_tableField;
 
     // DRS
     if ( $this->pObj->b_drs_filter )
@@ -6129,10 +6140,9 @@ class tx_browser_pi1_filter_4x
     // Tree view flag
     $bTreeView = false;
     list( $table ) = explode( '.', $this->curr_tableField );
-    // #41776, dwildt, 1-
-//    if( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-    // #41776, dwildt, 1+
-    if ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    // #i0117, 141223, dwildt, 1-/+
+    //if ( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    if ( in_array( $this->curr_tableField, $this->arr_tablesWiTreeparentfield ) )
     {
       $bTreeView = true;
     }
@@ -6421,11 +6431,9 @@ class tx_browser_pi1_filter_4x
     list( $table ) = explode( '.', $this->curr_tableField );
 
     // RETURN current filter isn't a tree view
-    // #41776, dwildt, 2-
-//      // @todo: 3x -> 4x
-//    if( ! in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-    // #41776, dwildt, 1+
-    if ( !in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    // #i0117, 141223, dwildt, 1-/+
+    //if ( !in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    if ( !in_array( $this->curr_tableField, $this->arr_tablesWiTreeparentfield ) )
     {
       return;
     }
