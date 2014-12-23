@@ -4509,6 +4509,9 @@ class tx_browser_pi1_filter_4x
         $cObj_name = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled' ];
         $cObj_conf = $conf_view[ 'filter.' ][ $table . '.' ][ $field . '.' ][ 'treeview.' ][ 'enabled.' ];
         $treeviewEnabled = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+            // #i0117, 141223, dwildt, 1+
+            $this->treeviewTableFields[] = $tableField;
+    var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
 
         // CONTINUE : field has an dot
         if ( !$treeviewEnabled )
@@ -4535,9 +4538,6 @@ class tx_browser_pi1_filter_4x
             $this->eval_treeviewCategoryMenu( $tableField );
             break;
           case( 'TREEVIEW' ):
-            // #i0117, 141223, dwildt, 1+
-            $this->treeviewTableFields[] = $tableField;
-    var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
             $this->eval_treeviewCheckbox( $tableField );
             // #43692, 121206, dwildt, 13+
             // Adding jQuery
