@@ -249,6 +249,7 @@ class tx_browser_pi1_filter_4x
   // [Array] Tables with a treeParentField field
   private $arr_tablesWiTreeparentfield = array();
   private $tmpOneDim;
+  private $treeviewTableFields = array();
 
   /**
    * Constructor. The method initiate the parent object
@@ -876,7 +877,7 @@ class tx_browser_pi1_filter_4x
   private function init_andWhereFilter_localTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
-var_dump(__METHOD__, __LINE__, $this->arr_tablesWiTreeparentfield);
+    var_dump( __METHOD__, __LINE__, $this->treeviewTableFields );
     // SWITCH  : area filter versus default filter
     switch ( true )
     {
@@ -4534,6 +4535,8 @@ var_dump(__METHOD__, __LINE__, $this->arr_tablesWiTreeparentfield);
             $this->eval_treeviewCategoryMenu( $tableField );
             break;
           case( 'TREEVIEW' ):
+            // #i0117, 141223, dwildt, 1+
+            $this->treeviewTableFields[] = $tableField;
             $this->eval_treeviewCheckbox( $tableField );
             // #43692, 121206, dwildt, 13+
             // Adding jQuery
