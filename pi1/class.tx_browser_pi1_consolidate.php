@@ -1056,7 +1056,7 @@ class tx_browser_pi1_consolidate
         {
           $bool_handle = false;
         }
-var_dump(__METHOD__, __LINE__, $tableField, $str_searchFor, $arr_result);
+//var_dump(__METHOD__, __LINE__, $tableField, $str_searchFor, $arr_result);
         // There isn't any marker for the foreign table in the TypoScript
       }
       // Get all tsConf parameters with markers for foreign tables
