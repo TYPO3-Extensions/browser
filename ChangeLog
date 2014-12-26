@@ -1,3 +1,8 @@
+Manual
+  * #i0118: There is a conflict with tree view and real url
+            If list view is cached, the url moves from url/mypage to url/nc/mypage in case of filtering.
+            Effect is, that the cookie is set one step to late.
+
 :ToDo:
   * #i0049: typoscript 5x: default template: ###TITLE### should placed in the table head.
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
