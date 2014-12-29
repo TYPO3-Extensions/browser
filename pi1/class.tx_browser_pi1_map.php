@@ -198,7 +198,9 @@ class tx_browser_pi1_map
 
     // FOREACH category label
 //$this->pObj->dev_var_dump( $this->arrCategories );
-    foreach ( $this->arrCategories[ 'labels' ] as $labelKey => $labelValue )
+    // #i0118, dwildt, 1-/+
+    //foreach ( $this->arrCategories[ 'labels' ] as $labelKey => $labelValue )
+    foreach ( ( array ) $this->arrCategories[ 'labels' ] as $labelKey => $labelValue )
     {
       // Get the draft for an input field
       $cObj_name = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'form_input' ];
