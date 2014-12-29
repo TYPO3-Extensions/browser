@@ -2086,7 +2086,9 @@ class tx_browser_pi1_map
     }
     // Get category labels
 
-    $arrCategoriesFlipped = array_flip( $this->arrCategories[ 'labels' ] );
+    // #i0118, dwildt, 1-/+
+    //$arrCategoriesFlipped = array_flip( $this->arrCategories[ 'labels' ] );
+    $arrCategoriesFlipped = array_flip( ( array ) $this->arrCategories[ 'labels' ] );
 
     // LOOP row
 //$this->pObj->dev_var_dump( $this->pObj->rows );

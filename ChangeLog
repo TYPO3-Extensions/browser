@@ -35,6 +35,7 @@ Manual
   Bugfix
   * #i0118: PHP Warning: Invalid argument supplied for foreach() in pi1/class.tx_browser_pi1_map.php line 201
             PHP Warning: implode(): pi1/class.tx_browser_pi1_map.php line 262
+            PHP Warning: array_flip() pi1/class.tx_browser_pi1_map.php line 2089
   * #i0117: Bug in case of a table with a tree parent field and more than one used filter
   * #i0116: PHP Warning: Invalid argument supplied for foreach() in pi1/class.tx_browser_pi1_filter_4x.php line 5243
   * #i0115: PHP Warning: implode(): Invalid arguments passed in pi1/class.tx_browser_pi1_typoscript.php
