@@ -259,7 +259,9 @@ class tx_browser_pi1_map
     }
     // FOREACH category label
     // Move array of input fields to a string
-    $inputs = implode( PHP_EOL, $arrInputs );
+    // #i0118, dwildt, 1-/+
+    //$inputs = implode( PHP_EOL, $arrInputs );
+    $inputs = implode( PHP_EOL, ( array ) $arrInputs );
     $inputs = trim( $inputs );
 
     // RETURN input fields
@@ -277,7 +279,6 @@ class tx_browser_pi1_map
   {
 //var_dump(__METHOD__, __LINE__, array_keys($this->confMap));
 //var_dump(__METHOD__, __LINE__, array_keys( $this->confMap[ 'configuration.' ][ 'categories.' ][ 'colours.' ][ 'points.' ]));
-
     // RETURN : method is called twice at least
     if ( $this->arrCategories != null )
     {
@@ -397,7 +398,6 @@ class tx_browser_pi1_map
     // Remove non unique category labels
     $categoryLabels = array_unique( $categoryLabels );
 //var_dump(__METHOD__, __LINE__);
-
     // Order the category labels
     $orderBy = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'orderBy' ];
     switch ( $orderBy )
