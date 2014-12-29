@@ -2464,12 +2464,12 @@ class tx_browser_pi1_map
       $view = $this->pObj->view;
       $viewWiDot = $view . '.';
       $tsPath = 'plugin.tx_browser_pi1.views.' . $viewWiDot . $mode;
-      $prompt = '<div style="background:white;">' .
+      $prompt = '<div style="background:white;color:black;">' .
               ' <h1 style="color:red;">'
               . $this->pObj->pi_getLL( 'error_maproutes_marker_woUid_h1' )
               . '</h1>'
               . $this->pObj->pi_getLL( 'error_maproutes_marker_woUid_prompt' )
-              . '<p>' . PHP_EOL
+              . '<p style="color:black;">' . PHP_EOL
               . __METHOD__ . ' (line ' . __LINE__ . '): <br />' . PHP_EOL
               . '</p>'
               . '</div>';
