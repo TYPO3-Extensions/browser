@@ -15,7 +15,7 @@
 
 Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable DRS.</label>
       <label index="error_cHashExcludedParameters_sword"><![CDATA[
-        <h2>
+        <h2 style="color:black;">
           Warning: cHashExcludedParameters
         </h2>
         <p>
@@ -57,13 +57,13 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 <p>
   The category of one path is without longitude or latitude.
 </p>
-<h2>
+<h2 style="color:black;">
   Please check your paths
 </h2>
 <p>
   Has every path and their categories proper longitudes and latitudes?
 </p>
-<h2>
+<h2 style="color:black;">
   If you need a latitude and a longitude at 0,0
 </h2>
 <p>
@@ -74,7 +74,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
     Category: [BROWSERMAPS – CONTROLLING*] > Empty coordinates?
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Further Information
 </h2>
 <p>
@@ -90,13 +90,13 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 ]]></label>
       <label index="error_maproutes_marker_woUid_h1">Marker with a missing uid!</label>
       <label index="error_maproutes_marker_woUid_prompt"><![CDATA[
-<h2>
+<h2 style="color:black;">
   Type of error
 </h2>
 <p>
   A marker (POI) is without a needed uid.
 </p>
-<h2>
+<h2 style="color:black;">
   Possible reasons
 </h2>
 <ul>
@@ -104,7 +104,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
     The marker (POI) is without any category
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Please check your marker (POI)
 </h2>
 <ul>
@@ -112,7 +112,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
     Do they have one category at least?
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Further information
 </h2>
 <p>
@@ -131,13 +131,13 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 ]]></label>
       <label index="error_maproutes_marker_relation_h1">Path with a relation error</label>
       <label index="error_maproutes_marker_relation_missing"><![CDATA[
-<h2>
+<h2 style="color:black;">
   Type of error
 </h2>
 <p>
   One path is without a relation to a marker (POI).
 </p>
-<h2>
+<h2 style="color:black;">
   Possible reasons
 </h2>
 <ul>
@@ -156,7 +156,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
     </ul>
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Your job:
 </h2>
 <p>
@@ -165,7 +165,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 <p>
   Please check your marker (POI): Do they have a one category at least? Do they have a latitude and a longitude?
 </p>
-<h2>
+<h2 style="color:black;">
   Further information
 </h2>
 <p>
@@ -205,7 +205,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
 </p>
 ]]></label>
       <label index="error_pageNotFoundOnCHashError"><![CDATA[
-        <h2>
+        <h2 style="color:black;">
           Warning: pageNotFoundOnCHashError
         </h2>
         <p>
@@ -313,7 +313,7 @@ Die SQL-Abfrage enthält einen Fehler. Bitte benutze das DRS - das Development R
 
 DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DRS aktivieren.]]></label>
       <label index="error_cHashExcludedParameters_sword"><![CDATA[
-        <h2>
+        <h2 style="color:black;">
           Warnung: cHashExcludedParameters
         </h2>
         <p>
@@ -355,13 +355,13 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 <p>
   Bei einem Pfad fehlen L&auml;ngengrad und/oder Breitengrad f&uuml;r das Kategorie-Symbol.
 </p>
-<h2>
+<h2 style="color:black;">
   Pr&uuml;fe bitte Deine Pfade
 </h2>
 <p>
   Hat jeder Pfad einen korrekten Breiten- und Längengrad?
 </p>
-<h2>
+<h2 style="color:black;">
   Brauchst Du ein Pfad-Icon mit Breiten- und Längengrad 0,0?
 </h2>
 <p>
@@ -372,7 +372,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
     Category: [BROWSERMAPS – CONTROLLING*] > Empty coordinates?
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Weitere Infos
 </h2>
 <p>
@@ -388,7 +388,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 ]]></label>
       <label index="error_maproutes_marker_woUid_h1">Einer Markierung (POI) fehlt eine Uid!</label>
       <label index="error_maproutes_marker_woUid_prompt"><![CDATA[
-<h2>
+<h2 style="color:black;">
   M&ouml;gliche Gr&uuml;nde
 </h2>
 <ul>
@@ -396,7 +396,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
     Der Markierung (POI) fehlt eine Kategorie.
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Pr&uuml;fe Deine Markierungen (POI)
 </h2>
 <ul>
@@ -404,7 +404,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
     Ist jede Markierung (POI) mindestens einer Kategorie zugeordnet?
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Weitere Infos
 </h2>
 <p>
@@ -420,7 +420,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 ]]></label>
       <label index="error_maproutes_marker_relation_h1">Pfad mit Relations-Fehler</label>
       <label index="error_maproutes_marker_relation_missing"><![CDATA[
-<h2>
+<h2 style="color:black;">
   Fehlerbeschreibung
 </h2>
 <p>
@@ -429,7 +429,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 <p>
   Ein Pfad muss aber mindestens einer Markierung zugeordnet sein, sonst kommt es zu Fehlern in der Karte.
 </p>
-<h2>
+<h2 style="color:black;">
   M&ouml;gliche Gr&uuml;nde
 </h2>
 <ul>
@@ -448,7 +448,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
     </ul>
   </li>
 </ul>
-<h2>
+<h2 style="color:black;">
   Das kannst Du tun
 </h2>
 <p>
@@ -457,7 +457,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 <p>
   Pr&uuml;fe bitte die zugeordneten Markierungen auf Kategorien und Geokodierung.
 </p>
-<h2>
+<h2 style="color:black;">
   Weitere Infos
 </h2>
 <p>
@@ -494,7 +494,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
 </p>
 ]]></label>
       <label index="error_pageNotFoundOnCHashError"><![CDATA[
-        <h2>
+        <h2 style="color:black;">
           Warnung: pageNotFoundOnCHashError
         </h2>
         <p>
