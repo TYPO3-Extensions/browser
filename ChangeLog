@@ -9,12 +9,13 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 6.0.7
-  14-12-12
+  14-12-30
   Feature
   * #i0110: Own include static templates for normalize css, jQuery and modernizr JavaScript
   * #i0109: Class for indexBrowser tab by TypoScript
   * #i0108: Additional templates head 3 and 4, image 3 and 4, typoscript/url 4
   Improvements
+  * #i0119: CSS for multicolumnsmenu becomes own file (see: #i0081)
   * #i0111: Support for supporting t3globals is removed. It isn't needed. If you need it, please configure TypoScript.
             Removed: tx_browser_pi1_zz::substitute_t3globals_recurs
   * #i0106: moved: static templates of pi3 and pi4 are moved to Configuration/TypoScript
@@ -195,6 +196,7 @@ Manual
   Feature
   * #i0081: CSS multicolumns menu
             * <ul> of a menu got the additional class "dropdown-{register:count_menuItems}"
+            See #i0119
   Improvement
   * #i0080: HTML foundation top bar
 
