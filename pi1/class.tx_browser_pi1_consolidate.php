@@ -957,7 +957,7 @@ class tx_browser_pi1_consolidate
       {
         continue;
       }
-      var_dump(__METHOD__, __LINE__, $arr_ts_one_dimension);
+      //var_dump(__METHOD__, __LINE__, $arr_ts_one_dimension);
       // Get TypoScript configuration of current table.field
       // Check if TypoScript contains marker with foreign table
       $str_searchFor = '/###' . strtoupper($arr_relation_info['foreign_table']) . '.+###/';
