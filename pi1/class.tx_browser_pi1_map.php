@@ -1987,7 +1987,7 @@ class tx_browser_pi1_map
     $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
     // Substitute marker HTML
     // #i0120, 150101, dwildt: 5+
-    $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $mapTemplate, $template );
+    $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $template );
     if ( $templateWoMarker )
     {
       return $templateWoMarker;
@@ -3221,13 +3221,12 @@ class tx_browser_pi1_map
    *
    * @param	string		$mapHaskKey   : Should be ###MAP###
    * @param	string		$template     : current HTML template of the parent object
-   * @param	string		$mapTemplate  : the map
    * @return	string		$template     : current HTML template with the rendered map
    * @internal #i0120
    * @version 6.0.7
    * @since   6.0.7
    */
-  private function renderMapMarkerWoMarker( $mapHashKey, $mapTemplate, $template )
+  private function renderMapMarkerWoMarker( $mapHashKey, $template )
   {
     if ( !empty( $this->arrCategories ) )
     {
@@ -3235,6 +3234,15 @@ class tx_browser_pi1_map
     }
 
     $template = str_replace( $mapHashKey, null, $template );
+
+    if ( !$this->pObj->b_drs_map )
+    {
+      return $template;
+    }
+
+    $prompt = 'Map is returned without any content.';
+    t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
+
     return $template;
   }
 
