@@ -180,7 +180,7 @@ class tx_browser_pi1_map
    */
   private function categoriesEmpty( $categoryLabels )
   {
-    if ( !$this->categoriesEmpty( $categoryLabels ) )
+    if ( !empty( $categoryLabels ) )
     {
       return false;
     }
@@ -1986,7 +1986,6 @@ class tx_browser_pi1_map
     $markerArray = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate ) + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
     $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
     // Substitute marker HTML
-
     // #i0120, 150101, dwildt: 5+
     $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $mapTemplate, $template );
     if ( $templateWoMarker )
@@ -3230,7 +3229,7 @@ class tx_browser_pi1_map
    */
   private function renderMapMarkerWoMarker( $mapHashKey, $mapTemplate, $template )
   {
-    if( ! empty( $this->arrCategories) )
+    if ( !empty( $this->arrCategories ) )
     {
       return null;
     }
