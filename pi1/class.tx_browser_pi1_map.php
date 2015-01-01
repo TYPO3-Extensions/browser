@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2011-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 5.0.14
+ * @version 6.0.7
  * @since 3.9.6
  */
 
@@ -170,6 +170,32 @@ class tx_browser_pi1_map
    * ******************************************** */
 
   /**
+   * categoriesEmpty( ): Returns true, if categories are empty
+   *
+   * @param array     $categoryLabels
+   * @return	boolean
+   * @internal #i0102
+   * @version 6.0.7
+   * @since   6.0.7
+   */
+  private function categoriesEmpty( $categoryLabels )
+  {
+    if ( !$this->categoriesEmpty( $categoryLabels ) )
+    {
+      return false;
+    }
+
+    if ( !$this->pObj->b_drs_warn )
+    {
+      return true;
+    }
+
+    $prompt = 'There isn\'t any row with lat and lon.';
+    t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
+    return true;
+  }
+
+  /**
    * categoriesFormInputs( ): Returns the input fields for the category form
    *
    * @return	string
@@ -272,7 +298,7 @@ class tx_browser_pi1_map
    * categoriesGet( ): Get the category labels from the current rows. And set it in $this->arrCategories.
    *
    * @return	array		$this->arrCategories
-   * @version 5.0.10
+   * @version 6.0.7
    * @since   4.1.4
    */
   private function categoriesGet()
@@ -395,6 +421,11 @@ class tx_browser_pi1_map
     }
     // FOREACH row
     // Get categories from the rows
+    // #i0120, 150101, dwildt: 4+
+    if ( $this->categoriesEmpty( $categoryLabels ) )
+    {
+      return false;
+    }
     // Remove non unique category labels
     $categoryLabels = array_unique( $categoryLabels );
 //var_dump(__METHOD__, __LINE__);
@@ -1945,15 +1976,23 @@ class tx_browser_pi1_map
    * @param	string		$template     : current HTML template of the parent object
    * @param	string		$mapTemplate  : the map
    * @return	string		$template     : current HTML template with the rendered map
-   * @version 4.5.6
+   * @version 6.0.7
    * @since   3.9.6
    */
   private function renderMapMarker( $template, $mapTemplate )
   {
+    $mapHashKey = '###MAP###';
     // Substitute marker HTML
     $markerArray = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate ) + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
     $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
     // Substitute marker HTML
+
+    // #i0120, 150101, dwildt: 5+
+    $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $mapTemplate, $template );
+    if ( $templateWoMarker )
+    {
+      return $templateWoMarker;
+    }
     // Add data
     $mapTemplate = $this->renderMapMarkerVariablesSystem( $mapTemplate );
     $markerArray = $this->renderMapMarkerVariablesDynamic( $mapTemplate );
@@ -1964,7 +2003,6 @@ class tx_browser_pi1_map
     $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
     // Substitute marker JSS
     // map marker
-    $mapHashKey = '###MAP###';
     // Replace the map marker in the template of the parent object
     $template = str_replace( $mapHashKey, $mapTemplate, $template );
 
@@ -2085,7 +2123,6 @@ class tx_browser_pi1_map
       $arrLabels = $this->renderMapMarkerPointsCatLabels();
     }
     // Get category labels
-
     // #i0118, dwildt, 1-/+
     //$arrCategoriesFlipped = array_flip( $this->arrCategories[ 'labels' ] );
     $arrCategoriesFlipped = array_flip( ( array ) $this->arrCategories[ 'labels' ] );
@@ -3178,6 +3215,28 @@ class tx_browser_pi1_map
 
     unset( $pos );
     return;
+  }
+
+  /**
+   * renderMapMarkerWoMarker( ): Return an empty template, if there isn' any marker
+   *
+   * @param	string		$mapHaskKey   : Should be ###MAP###
+   * @param	string		$template     : current HTML template of the parent object
+   * @param	string		$mapTemplate  : the map
+   * @return	string		$template     : current HTML template with the rendered map
+   * @internal #i0120
+   * @version 6.0.7
+   * @since   6.0.7
+   */
+  private function renderMapMarkerWoMarker( $mapHashKey, $mapTemplate, $template )
+  {
+    if( ! empty( $this->arrCategories) )
+    {
+      return null;
+    }
+
+    $template = str_replace( $mapHashKey, null, $template );
+    return $template;
   }
 
   /*   * *********************************************

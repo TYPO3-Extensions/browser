@@ -9,8 +9,9 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 6.0.7
-  14-12-30
+  15-01-01
   Feature
+  * #i0120: Don't display any map, if there isn't any category
   * #i0110: Own include static templates for normalize css, jQuery and modernizr JavaScript
   * #i0109: Class for indexBrowser tab by TypoScript
   * #i0108: Additional templates head 3 and 4, image 3 and 4, typoscript/url 4
