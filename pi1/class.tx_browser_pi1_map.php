@@ -428,6 +428,7 @@ class tx_browser_pi1_map
     }
     // Remove non unique category labels
     $categoryLabels = array_unique( $categoryLabels );
+//var_dump (__METHOD__, __LINE__, $categoryLabels);
 //var_dump(__METHOD__, __LINE__);
     // Order the category labels
     $orderBy = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'orderBy' ];
@@ -2124,6 +2125,7 @@ class tx_browser_pi1_map
     // Get category labels
     // #i0118, dwildt, 1-/+
     //$arrCategoriesFlipped = array_flip( $this->arrCategories[ 'labels' ] );
+//var_dump (__METHOD__, __LINE__, $this->arrCategories[ 'labels' ]);
     $arrCategoriesFlipped = array_flip( ( array ) $this->arrCategories[ 'labels' ] );
 
     // LOOP row
