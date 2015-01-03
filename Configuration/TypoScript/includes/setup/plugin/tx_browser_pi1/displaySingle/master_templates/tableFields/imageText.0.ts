@@ -108,6 +108,27 @@ plugin.tx_browser_pi1 {
               // above-center: div.columns
               0 = COA
               0 {
+                  // socialmedia_bookmarks
+                10 = TEXT
+                10 {
+                  value = ###SOCIALMEDIA_BOOKMARKS###
+                  wrap = <div class="show-for-large-up socialbookmarks">|</div>
+                }
+                  // header
+                20 = TEXT
+                20 {
+                  field = {$plugin.tx_browser_pi1.templates.singleview.text.0.header}
+                  wrap  = <{$plugin.tx_browser_pi1.templates.singleview.text.0.tag}>|</{$plugin.tx_browser_pi1.templates.singleview.text.0.tag}>
+                }
+                  // bodytext
+                30 = TEXT
+                30 {
+                  field = {$plugin.tx_browser_pi1.templates.singleview.text.0.bodytext}
+                  required = 1
+                  stdWrap {
+                    parseFunc < lib.parseFunc_RTE
+                  }
+                }
                 wrap = <div class="columns large-12">|</div>
               }
               // above-right: div.columns
