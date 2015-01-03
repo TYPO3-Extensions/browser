@@ -118,7 +118,7 @@ plugin.tx_browser_pi1 {
                 20 = TEXT
                 20 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.text.0.header}
-                  wrap  = <{$plugin.tx_browser_pi1.templates.singleview.text.0.tag}>|</{$plugin.tx_browser_pi1.templates.singleview.text.0.tag}>
+                  wrap  = <{$plugin.tx_browser_pi1.templates.singleview.text.0.headertag}>|</{$plugin.tx_browser_pi1.templates.singleview.text.0.headertag}>
                 }
                   // bodytext
                 30 = TEXT
