@@ -515,7 +515,6 @@ class tx_browser_pi1_viewlist
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         // RETURN : nothing to do
         return;
-        break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         // Follow the workflow
         break;
@@ -659,7 +658,7 @@ class tx_browser_pi1_viewlist
   private function content_setCSV()
   {
     // #33336, 130529, dwildt, 3+
-    $arr_return = $this->subpart_setSearchboxFilter( $filter );
+    $arr_return = $this->subpart_setSearchboxFilter( );
     //$this->pObj->dev_var_dump( $arr_return );
     unset( $arr_return );
     // #33336, 130529, dwildt, 3+
@@ -1937,7 +1936,6 @@ class tx_browser_pi1_viewlist
         }
         // RETURN : nothing to do
         return $select;
-        break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         // Follow the workflow
         break;

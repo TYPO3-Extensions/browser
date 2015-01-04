@@ -145,6 +145,7 @@ class tx_browser_pi1_template
   function __construct( $parentObj )
   {
     $this->pObj = $parentObj;
+    $this->lDisplayList = $this->pObj->lDisplayList;
   }
 
   /*   * *********************************************

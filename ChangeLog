@@ -52,6 +52,7 @@ Manual
   * #i0106: tx_browser_pi1_sql::get_statements cached get statements by a static variable.
             This causes SQL errors in case of multiple plugins.
             static variable is moved to an static with values depending on the plugin uid.
+  * #64116: No noItemMessage in case of no records
 
 6.0.6
   14-12-09
