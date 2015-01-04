@@ -145,7 +145,6 @@ class tx_browser_pi1_template
   function __construct( $parentObj )
   {
     $this->pObj = $parentObj;
-    $this->lDisplayList = $this->pObj->lDisplayList;
   }
 
   /*   * *********************************************
@@ -2193,6 +2192,8 @@ class tx_browser_pi1_template
    */
   public function tmplListview( $template, $rows )
   {
+
+    $this->lDisplayList = $this->pObj->lDisplayList;
 
     // Remove ###LIST_TITLE### in case of AJAX single view
     $template = $this->tmplListviewAjaxTitle( $template );
