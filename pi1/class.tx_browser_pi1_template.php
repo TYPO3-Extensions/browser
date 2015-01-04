@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.0
+ * @version 6.0.7
  * @since 1.0.0
  */
 
@@ -2187,7 +2187,7 @@ class tx_browser_pi1_template
    * @param	string		A HTML template with the TYPO3 subparts and markers
    * @param	array		Array with the records of the SQL result
    * @return	void
-   * @version 5.0.0
+   * @version 6.0.7
    * @since 1.0.0
    */
   public function tmplListview( $template, $rows )
