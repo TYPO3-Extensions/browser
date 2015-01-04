@@ -2192,7 +2192,7 @@ class tx_browser_pi1_template
    */
   public function tmplListview( $template, $rows )
   {
-
+    // #64116, 150104, dwildt, 1+
     $this->lDisplayList = $this->pObj->lDisplayList;
 
     // Remove ###LIST_TITLE### in case of AJAX single view
