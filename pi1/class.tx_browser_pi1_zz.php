@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -522,7 +522,8 @@ class tx_browser_pi1_zz
       {
         if ( $this->pObj->b_drs_navi )
         {
-          t3lib_div::devlog( '[INFO/NAVIGATION] len of tx_browser_pi1[sword] is less than 3: \'' . $this->pObj->piVars[ 'sword' ] . '\'. Sword is  deleted.', $this->pObj->extKey, 0 );
+          $prompt = 'len of tx_browser_pi1[sword] is less than ' . $int_minLenSword . ': \'' . $this->pObj->piVars[ 'sword' ] . '\'. Sword is  deleted.';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         unset( $this->pObj->piVars[ 'sword' ] );
       }

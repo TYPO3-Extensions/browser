@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 - Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
+*  (c) 2010-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +25,7 @@
 /**
 * Class that adds the wizard icon.
 *
-* @author    Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
+* @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage  browser
 */

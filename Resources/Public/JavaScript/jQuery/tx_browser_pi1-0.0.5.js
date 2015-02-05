@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (c) 2011-2012 Dirk Wildt
+ * Copyright (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * http://wildt.at.die-netzmacher.de/
  *
  * Version 0.0.6
@@ -15,7 +15,7 @@
 
   // #45846, 130226, dwildt, 1+
 var t3browserAlert = ###T3BROWSERALERT###;
-  
+
 $( document ).ready( function( )
 {
     //////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ $( document ).ready( function( )
     // Append a hidden field with TYPO3 page type for csv export
     // Remove the hidden field after submitting the form
   $( "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" ).blur(
-    function ( e ) 
+    function ( e )
     {
       $( "#c###TT_CONTENT.UID###-button-export-###MODE###" ).remove( )
       bool_sendAjaxRequest = true;
@@ -167,7 +167,7 @@ $( document ).ready( function( )
         }
         return;
       }
-        // Append the content of plugin_id_wi_selector as html_element at the bottom of the plugin_id 
+        // Append the content of plugin_id_wi_selector as html_element at the bottom of the plugin_id
       $( this ).t3browser( 'appendHidden', html_element, url, plugin_id, plugin_id_wi_selector );
     }
       // Load the content only, if it is the first time

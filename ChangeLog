@@ -12,6 +12,8 @@ Manual
   15-02-04
   Feature
   * #i0121: 3rd backend layout without HTML snippet for foundation
+  Bugfix
+  * #i0122: Missing sword in value of HTML sword input field
 
 6.0.7
   15-01-01

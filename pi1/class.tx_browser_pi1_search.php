@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2014 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2014-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.0
+ * @version 6.0.8
  * @since 6.0.0
  */
 
@@ -120,43 +120,6 @@ class tx_browser_pi1_search
     $this->conf_path = $this->pObj->get_confPath();
     // [Array] The TypoScript configuration array of the current view
     $this->conf_view = $this->pObj->get_confView();
-  }
-
-  /**
-   * addWorkaroundPiVars( ) : Adds a dummy piVar, if piVars are empty.
-   *                          This is a bugfix for the cHash comparison failed issue.
-   *
-   * @return	void
-   * @internal #61594
-   * @version 6.0.0
-   * @since 6.0.0
-   */
-  private function addWorkaroundPiVars()
-  {
-    if ( $this->typo3Version < 6000000 )
-    {
-      return;
-    }
-
-    return;
-
-////    var_dump( __METHOD__, __LINE__, $this->pObj->piVars );
-//    if ( empty( $this->pObj->piVars ) )
-//    {
-//      $this->pObj->piVars[ 'bugfix' ] = 1;
-//      return;
-//    }
-//
-//    foreach ( $this->pObj->piVars as $value )
-//    {
-//      if ( $value !== null )
-//      {
-//        return;
-//      }
-//    }
-//
-//    $this->pObj->piVars[ 'bugfix' ] = 1;
-//    return;
   }
 
   /**
@@ -283,16 +246,16 @@ class tx_browser_pi1_search
 
     $this->replaceTSFEid();
 
+      // #i0122, 150205, dwildt: must run before removeUnwantedPiVars()
+    $this->markerSword();
+
     $this->removeUnwantedPiVars();
     $this->removeFilterFromPiVars();
 
-    $this->addWorkaroundPiVars();
     $this->markerArray[ '###ACTION###' ] = $this->markerAction();
 
     $this->markerExtend();
     $this->markerRemoveFilter();
-
-    $this->markerSword();
 
     $this->markerArray[ '###BUTTON###' ] = $this->pObj->pi_getLL( 'pi_list_searchBox_search', 'Search', true );
     $this->markerArray[ '###POINTER###' ] = $this->pObj->prefixId . '[pointer]';
@@ -522,26 +485,10 @@ class tx_browser_pi1_search
    */
   private function markerSword()
   {
-
     $sword = stripslashes( $this->pObj->piVars[ 'sword' ] );
     $sword = htmlspecialchars( $sword );
     $swordDefault = $this->pObj->pi_getLL( 'label_sword_default', 'Search Word', true );
     $swordDefault = htmlspecialchars( $swordDefault );
-    // 140712, dwildt, -: Foundation
-//    if ( !$sword )
-//    {
-//      $sword = $swordDefault;
-//      if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_templating )
-//      {
-//        t3lib_div::devLog( '[INFO/LANG+TEMPLATING] Empty Sword becomes the default value: \'' . $sword . '\'.', $this->pObj->extKey, 0 );
-//        $langKey = $GLOBALS[ 'TSFE' ]->lang;
-//        if ( $langKey == 'en' )
-//        {
-//          $langKey = 'default';
-//        }
-//        t3lib_div::devLog( '[HELP/LANG+TEMPLATING] Configure it? See _LOCAL_LANG.' . $langKey . '.label_sword_default', $this->pObj->extKey, 1 );
-//      }
-//    }
 
     $this->markerArray[ '###SWORD###' ] = $sword;
     $this->markerArray[ '###SWORD_DEFAULT###' ] = $swordDefault;
@@ -601,11 +548,6 @@ class tx_browser_pi1_search
    */
   private function removeUnwantedPiVars()
   {
-//    // 140915, dwildt: Workaround for &cHash comparison failed
-//    if ( $this->removeUnwantedPiVarsWorkaroundCHashComparisonFailed() )
-//    {
-//      return;
-//    }
 
     $arr_removePiVars = array(
 //      'bugfix',
@@ -1037,7 +979,6 @@ class tx_browser_pi1_search
     $searchform = '<!-- ###SEARCHFORM### begin -->
         ' . $this->pObj->cObj->substituteMarkerArray( $searchform, $markerArray ) . '
 <!-- ###SEARCHFORM### end -->';
-
     // Remove the CSV button, if it isn't needed
     $template = $this->searchformWoCsvButton( $template, $searchform );
 

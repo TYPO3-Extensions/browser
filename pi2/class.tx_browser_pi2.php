@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2014 Dirk Wildt <wildt.at.die-netzmacher.de>
+ *  (c) 2009-2015 Dirk Wildt <wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,7 +41,7 @@ if ( $version < 6002000 )
 /**
  * Plugin 'Browser' for the 'browser' extension - the fastest way for your data into the TYPO3 frontend.
  *
- * @author    Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
+ * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
  * @version 6.0.0
