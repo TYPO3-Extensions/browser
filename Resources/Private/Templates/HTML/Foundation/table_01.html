@@ -126,12 +126,15 @@ This template is the default template for all list views.
             <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
               <div class="listarea">
                 ###MAP###
-                <!-- ###INDEXBROWSER### begin -->
-                <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
-                  <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE### "><!-- ###INDEXBROWSERTABS### begin -->
-                    <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
-                  </ul>
-                </div><!-- ###INDEXBROWSER### end -->
+                    <!-- ###INDEXBROWSER### begin -->
+                    <div class="row">
+                      <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="columns show-for-large-up indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+                        <dl class="sub-nav">
+                          <dt>Filter:</dt><!-- ###INDEXBROWSERTABS### begin -->
+                          <dd###LI_CLASS###>###TAB###</dd><!-- ###INDEXBROWSERTABS### end -->
+                        </dl>
+                      </div><!-- /columns -->
+                    </div><!-- /row --><!-- ###INDEXBROWSER### end -->
                 <!-- ###PAGEBROWSERTOP### begin -->
                 <div class="pagination-centered pagebrowser pagebrowser-top">
                   ###RESULT_AND_ITEMS###
