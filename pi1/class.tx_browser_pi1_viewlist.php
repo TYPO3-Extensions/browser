@@ -114,7 +114,7 @@ class tx_browser_pi1_viewlist
   // [Boolean] True: Query is a union, false: query isn't a union
   var $bool_union = null;
   // [String] Current content
-  var $content = null;
+  private $content = null;
   // [object] object of the search class
   private $objSearch = null;
   // [Object] interface of extension radialsearch
@@ -223,7 +223,7 @@ class tx_browser_pi1_viewlist
       // CASE no csv
     }
     $content = $this->content;
-//var_dump( __METHOD__, __LINE__, $this->content );
+//var_dump( __METHOD__, __LINE__, $content );
 //die( ':(' );
     // Get template for csv
     // csv export versus list view
@@ -377,6 +377,10 @@ class tx_browser_pi1_viewlist
     // #42124, dwildt, 10+
 //$this->pObj->dev_var_dump( $this->pObj->conf['flexform.']['viewList.']['display_listview'] );
 //die( __METHOD__ . ' - ' . __LINE__ );
+//var_dump( __METHOD__, __LINE__, $content );
+//$strDebugTrail = t3lib_utility_Debug::debugTrail();
+//$arrDebugTrail = explode( '//', $strDebugTrail );
+//var_dump( __METHOD__, __LINE__, $arrDebugTrail );
     switch ( true )
     {
       case( strpos( $content, '###LISTBODYITEM###' ) === false ):
@@ -396,12 +400,14 @@ class tx_browser_pi1_viewlist
         }
         break;
       default:
+//var_dump( __METHOD__, __LINE__, $content );
+//die( ':(' );
         $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
         break;
     }
     // #42124, dwildt, +
     $this->content = $content;
-//$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );
+//var_dump( __METHOD__, __LINE__, $this->content );
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );

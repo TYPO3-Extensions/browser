@@ -1719,6 +1719,7 @@ class tx_browser_pi1_template
       $markerArray = $markerArrayStatic + $markerArray;
 
       $listHeadItem = $this->pObj->cObj->getSubpart( $template, '###LISTHEADITEM###' );
+//var_dump( __METHOD__, __LINE__, $listHeadItem );
       $item = $this->pObj->cObj->substituteMarkerArray( $listHeadItem, $markerArray );
       $items = $items . $item;
       $currentColumn++;
@@ -2192,6 +2193,7 @@ class tx_browser_pi1_template
    */
   public function tmplListview( $template, $rows )
   {
+//var_dump( __METHOD__, __LINE__, $template );
     // #64116, 150104, dwildt, 1+
     $this->lDisplayList = $this->pObj->lDisplayList;
 
@@ -2224,7 +2226,6 @@ class tx_browser_pi1_template
 
     // Set the groupby mode and get a proper template
     $template = $this->groupBy_verify( $template );
-
     // Set the global arr_rmFields
     $this->tmpl_rmFields();
 

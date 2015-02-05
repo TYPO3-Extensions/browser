@@ -8,6 +8,11 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+6.0.8
+  15-02-04
+  Feature
+  * #i0121: 3rd backend layout without HTML snippet for foundation
+
 6.0.7
   15-01-01
   Feature

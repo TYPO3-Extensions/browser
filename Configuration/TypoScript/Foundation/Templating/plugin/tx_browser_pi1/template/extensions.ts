@@ -36,6 +36,12 @@ plugin.tx_browser_pi1 {
           image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_02.gif
           csvViews  = all
         }
+        foundationTable03 {
+          name      = Foundation without HTML snippet - 3: Searchform, Title, Browser, Table
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/table_03.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_03.gif
+          csvViews  = all
+        }
       }
     }
   }

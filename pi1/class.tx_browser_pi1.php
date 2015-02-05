@@ -396,24 +396,6 @@ class tx_browser_pi1 extends tslib_pibase
    */
   public function main( $content, $conf )
   {
-    // 130530, dwildt, -
-//      // Globalise TypoScript configuration
-//    $this->conf = $conf;
-//      // Set default values for piVars[]
-//    $this->pi_setPiVarDefaults();
-//      // Init localisation
-//    $this->pi_loadLL();
-//      // Set the global $bool_typo3_43
-//    $this->init_typo3version( );
-//      // Init timetracking, set the starttime
-//    $this->timeTracking_init( );
-//      // Get the values from the localconf.php file
-//    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
-//      // Init DRS - Development Reporting System
-//    $this->init_drs();
-//      // Init current IP
-//    $this->init_accessByIP( );
-    // 130530, dwildt, -
 
     if ( !$this->init( $conf ) )
     {
@@ -423,7 +405,7 @@ class tx_browser_pi1 extends tslib_pibase
       return $this->pi_wrapInBaseClass( $prompt );
       // #i0011, 130530, dwildt, +
     }
-
+//var_dump( __METHOD__, __LINE__, $this->cObj->data['uid'] );
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
