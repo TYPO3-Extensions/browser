@@ -27,8 +27,9 @@ nav.top-bar {
 }
 
 .sub-nav {
-    background-color: #E3E3E3;
-    padding: 10px 10px 3px 0px;
+  background-color: #E3E3E3;
+  margin-left: 0;
+  padding: 10px 10px 3px 0px;
 }
 .sub-nav dt {
   display:none !important;
