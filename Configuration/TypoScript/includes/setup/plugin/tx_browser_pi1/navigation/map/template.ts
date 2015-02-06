@@ -10,7 +10,7 @@ plugin.tx_browser_pi1 {
       template =
       template {
           // [STRING] Path to the map HTML template
-        file = EXT:browser/Resources/Private/Templates/HTML/Map/default_1.3.tmpl
+        file = {$plugin.tx_browser_pi1.map.html.path}
       }
     }
   }

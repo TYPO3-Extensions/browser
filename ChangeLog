@@ -10,9 +10,23 @@ Manual
 
 6.0.8
   15-02-04
-  Feature
+  Features
+  * #i0123: Toggle the map
+            See example at
+            * http://typo3-organiser.de > Companies
+            Configuration by TypoScript Constant Editor
+            * Category [BROWSERMAPS - HTML]
+              * JavaScript
+              * Template
+            New files:
+            * Resources/Private/Templates/HTML/Map
+              * map_toggle.js
+              * map_toggle.tmpl
   * #i0121: 3rd backend layout without HTML snippet for foundation
+  Improvements
+  * #i0124: Map default template: filter are moved from top to bottom
   Bugfix
+  * #i0125: Map marker pop-up without desription
   * #i0122: Missing sword in value of HTML sword input field
 
 6.0.7

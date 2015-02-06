@@ -190,37 +190,49 @@ plugin.tx_browser_pi1 {
                 }
               }
                 // text
-              40 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.text
+              40 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.text.0
               40 {
                 default {
-                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                  10 {
+                    stdWrap {
+                      crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                    }
+                  }
                   20 {
                     if {
                       value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
                       equals  = 'click'
                     }
                   }
-                  wrap            = <div class="mapPopupText mapPopupTextDefault">|</div>
+                  wrap = <div class="mapPopupText mapPopupTextDefault">|</div>
                 }
                 page {
-                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                  10 {
+                    stdWrap {
+                      crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                    }
+                  }
                   20 {
                     if {
                       value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
                       equals  = 'click'
                     }
                   }
-                  wrap            = <div class="mapPopupText mapPopupTextPage">|</div>
+                  wrap = <div class="mapPopupText mapPopupTextDefault">|</div>
                 }
                 url {
-                  10.stdWrap.crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                  10 {
+                    stdWrap {
+                      crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                    }
+                  }
                   20 {
                     if {
                       value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
                       equals  = 'click'
                     }
                   }
-                  wrap            = <div class="mapPopupText mapPopupTextUrl">|</div>
+                  wrap = <div class="mapPopupText mapPopupTextDefault">|</div>
                 }
               }
             }
