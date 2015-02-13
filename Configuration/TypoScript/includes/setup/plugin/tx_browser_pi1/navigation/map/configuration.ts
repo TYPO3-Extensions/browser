@@ -348,7 +348,7 @@ plugin.tx_browser_pi1 {
           // dontHandle
         00Coordinates =
         00Coordinates {
-            // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
+            // [BOOLEAN] true (recommended): If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = {$plugin.tx_browser_pi1.map.controlling.dontHandle00Coordinates}
         }
           // markerMapper, tables

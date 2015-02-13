@@ -493,6 +493,8 @@ plugin.tx_browser_pi1 {
             // [Array] lat, lon, radius, sword
           constanteditor =
           constanteditor {
+              // [BOOLEAN] true (recommended): If a coordinate is 0,0, it won't handled and won't displayed
+            coordinatesNotEmpty = {$plugin.tx_browser_pi1.map.controlling.dontHandle00Coordinates}
               // Distance: field label for the distance. Field isn't part of your database. Field will generated while runtime and will added to SELECT statements. Example: distance, Don't use tableField syntax like tx_myext_main.distance: You will get an SQL error!
             distance    = {$plugin.tx_radialsearch_pi1.distance.fieldLabel}
               // [String] Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat

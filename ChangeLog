@@ -11,6 +11,11 @@ Manual
 6.0.8
   15-02-04
   Features
+  * #i0127: Radial search: Don't display records without epmty lat and empty lon in list views
+            Configuration by TypoScript Constant Editor
+            * Category [BROWSERMAPS - CONTROLLING]
+              * Empty coordinates?
+  * #i0126: New property: displayList.templateMarker.cssClass.wrap
   * #i0123: Toggle the map
             See example at
             * http://typo3-organiser.de > Companies

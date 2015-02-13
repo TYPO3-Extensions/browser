@@ -7,39 +7,27 @@ plugin.tx_browser_pi1 {
         // foundationMain
       browser {
         foundationMain01 {
-          name      = Foundation with own HTML snippet - 1: 1st row: Title. 2nd row:  Searchform | Map, Browser, Order, Content
+          name      = Foundation 1: two columns, map above the list
           file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_01.html
           image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_01.gif
           csvViews  = all
         }
         foundationMain02 {
-          name      = Foundation with own HTML snippet - 2: Searchform | Title, Browser, Content
+          name      = Foundation 2: two columns, map above the search form
           file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_02.html
           image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_02.gif
           csvViews  = all
         }
         foundationMain03 {
-          name      = Foundation with own HTML snippet - 3: Title, Searchform, Map, Browser, Content
+          name      = Foundation 3: one column
           file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_03.html
           image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_03.gif
           csvViews  = all
         }
-        foundationTable01 {
-          name      = Foundation without HTML snippet - 1: Title // Searchform / Map, Browser, Table
-          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/table_01.html
-          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_01.gif
-          csvViews  = all
-        }
-        foundationTable02 {
-          name      = Foundation without HTML snippet - 2: Searchform / Title, Browser, Table
-          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/table_02.html
-          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_02.gif
-          csvViews  = all
-        }
-        foundationTable03 {
-          name      = Foundation without HTML snippet - 3: Searchform, Title, Browser, Table
-          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/table_03.html
-          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/table_03.gif
+        foundationMain04 {
+          name      = Foundation 4: two columns for map and searchform, one column for the list
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_04.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_04.gif
           csvViews  = all
         }
       }

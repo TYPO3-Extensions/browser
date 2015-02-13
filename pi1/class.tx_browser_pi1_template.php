@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.7
+ * @version 6.0.8
  * @since 1.0.0
  */
 
@@ -4017,12 +4017,14 @@ class tx_browser_pi1_template
    * @param	integer      $currPosition
    * @param	integer      $max
    * @return	string   $class
-   * @version 5.0.0
+   * @version 6.0.8
    * @since 2.0.0
    */
   private function tmplTableTrTdClass( $name, $currPosition, $max )
   {
     $odd = $this->lDisplayList[ 'templateMarker.' ][ 'cssClass.' ][ 'odd' ];
+      // #i0126, 150206, dwildt, 1+
+    $wrap = $this->lDisplayList[ 'templateMarker.' ][ 'cssClass.' ][ 'wrap' ];
 
     $max = $max - 1;
     $class = $name . ' ' . $name . '-' . $currPosition;
@@ -4041,7 +4043,12 @@ class tx_browser_pi1_template
         $class = $class . ' ' . $name . '-last last';
       }
     }
-    $class = ' class="' . $class . '"';
+
+      // #i0126, 150206, dwildt, 4+
+    if( $wrap )
+    {
+      $class = ' class="' . $class . '"';
+    }
 //var_dump(__METHOD__, __LINE__, $class);
     return $class;
   }

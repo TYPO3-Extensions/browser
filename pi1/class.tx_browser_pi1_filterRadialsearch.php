@@ -30,7 +30,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.7.0
+ * @version      6.0.8
  * @since        4.7.0
  */
 
@@ -175,7 +175,43 @@ class tx_browser_pi1_filterRadialsearch
       return null;
     }
 
-    return $this->objRadialsearch->andWhere( $withDistance );
+    $andWhere = ''
+            . $this->objRadialsearch->andWhere( $withDistance )
+            . $this->andWhereEmptyCoordinates()
+    ;
+    return $andWhere;
+  }
+
+  /**
+   * andWhereEmptyCoordinates( )  :
+   *
+   * @return	string
+   * @internal    #i0127
+   * @access  private
+   * @version 6.0.8
+   * @since   6.0.8
+   */
+  private function andWhereEmptyCoordinates()
+  {
+    $table = $this->radialsearchTable;
+    $constanteditor = $this->conf_view[ 'filter.' ][ $table . '.' ][ 'conf.' ][ 'constanteditor.' ];
+    $coordinatesNotEmpty = $constanteditor[ 'coordinatesNotEmpty' ];
+
+    if ( empty( $coordinatesNotEmpty ) )
+    {
+      return;
+    }
+
+    $arrLatLon = $this->objRadialsearch->getFieldForLatLon();
+    $lat = $arrLatLon[ 'lat' ];
+    $lon = $arrLatLon[ 'lon' ];
+
+    $andWhere = " AND (" . $lat . " != 0 OR " . $lon ." != 0)";
+
+//plugin.tx_browser_pi1.navigation.map.configuration.00Coordinates.dontHandle
+    //var_dump( __METHOD__, __LINE__, $lat, $lon, $andWhere );
+    //die();
+    return $andWhere;
   }
 
   /*   * *********************************************

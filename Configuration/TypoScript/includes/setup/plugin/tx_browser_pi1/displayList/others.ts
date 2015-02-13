@@ -195,15 +195,17 @@ plugin.tx_browser_pi1 {
       // cssClass
     templateMarker = ###TEMPLATE_LIST###
     templateMarker {
-        // odd, tr, td
+        // odd, tr, td, wrap
       cssClass =
       cssClass {
-          // Class for odd rows and columns
+          // [String] Class for odd rows and columns
         odd = odd
-          // Class for rows. Don't use 'rows' in case of bootstrap or foundation!
+          // [String] Class for rows. Don't use 'rows' in case of bootstrap or foundation!
         tr = tr
-          // Class for columns. Don't use 'columns' in case of bootstrap or foundation!
+          // [String] Class for columns. Don't use 'columns' in case of bootstrap or foundation!
         td = td
+          // [Boolean] Wrap the class by a noTrimWrap: | class="|"|
+        wrap = 1
       }
     }
 

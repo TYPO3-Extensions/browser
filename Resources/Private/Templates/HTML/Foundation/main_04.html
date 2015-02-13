@@ -9,16 +9,17 @@
     <pre>
 <em>
 
-VERSION 5.0.10
+VERSION 6.0.8
+
 
   |------------------|
   | Title            |
   |------------------|
-  | Search | Map     |
-  |        | Browser |
-  |        | Table   |
+  | Map    | Search  |
   |------------------|
-
+  | Browser          |
+  | Content          |
+  |------------------|
 
 
 DEFAULT TEMPLATE FOR LIST VIEWS
@@ -84,17 +85,23 @@ This template is the default template for all list views.
 </em>
 
       <!-- ###TEMPLATE_LIST### begin -->
-        <div class="columns">
-          <!-- ###LIST_TITLE### begin -->
-          <div class="row tx_browser_pi1-title-main">
-            <div class="columns">
+      <div class="columns">
+        <!-- ###LIST_TITLE### begin -->
+        <div class="row">
+          <div class="columns">
+            <div class="tx_browser_pi1-title-main">
               ###MY_TITLE###
             </div>
-          </div>
-          <!-- ###LIST_TITLE### end -->
-          <div class="row">
+          </div><!-- /columns -->
+        </div><!-- /row -->
+        <!-- ###LIST_TITLE### end -->
+        <div class="row">
+          <div class="columns show-for-large-up large-6">
+            ###MAP###
+          </div><!-- /columns -->
+          <div class="columns show-for-medium-up medium-12 large-6">
             <!-- ###SEARCHFORM### begin -->
-            <div class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
+            <div class="searchbox searchbox-list-###MODE###">
               <form action="###ACTION###" method="post" >
                 <fieldset>
                   <legend>
@@ -122,55 +129,59 @@ This template is the default template for all list views.
                   </button>
                 </fieldset>
               </form>
-            </div><!-- /columns --><!-- ###SEARCHFORM### end -->
-            <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
-              <div class="listarea">
-                ###MAP###
-                    <!-- ###INDEXBROWSER### begin -->
-                    <div class="row">
-                      <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="columns show-for-large-up indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
-                        <dl class="sub-nav">
-                          <dt>Filter:</dt><!-- ###INDEXBROWSERTABS### begin -->
-                          <dd###LI_CLASS###>###TAB###</dd><!-- ###INDEXBROWSERTABS### end -->
-                        </dl>
-                      </div><!-- /columns -->
-                    </div><!-- /row --><!-- ###INDEXBROWSER### end -->
-                <!-- ###PAGEBROWSERTOP### begin -->
-                <div class="pagination-centered pagebrowser pagebrowser-top">
-                  ###RESULT_AND_ITEMS###
-                </div><!-- ###PAGEBROWSERTOP### end -->
-                <!-- ###MODESELECTOR### begin -->
-                <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
-                  <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE###">
-                    <!-- ###MODESELECTORTABS### begin -->
-                    <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
-                    <!-- ###MODESELECTORTABS### end -->
-                  </ul>
-                </div><!-- ###MODESELECTOR### end -->
-                <!-- ###LISTVIEW### begin -->
-                <table id="c###TT_CONTENT.UID###-listview-###MODE###-table"###SUMMARY###>
-                  ###CAPTION###
-                  <!-- ###LISTHEAD### begin -->
-                  <thead>
-                    <tr><!-- ###LISTHEADITEM### begin -->
-                      <th###CLASS###>###ITEM###</th><!-- ###LISTHEADITEM### end -->
-                    </tr>
-                  </thead><!-- ###LISTHEAD### end -->
-                  <tbody><!-- ###LISTBODY### begin -->
-                    <tr###CLASS###><!-- ###LISTBODYITEM### begin -->
-                      <td###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</td><!-- ###LISTBODYITEM### end -->
-                    </tr><!-- ###LISTBODY### end -->
-                  </tbody>
-                </table><!-- /listview -->
-                <!-- ###LISTVIEW### end -->
-                <!-- ###PAGEBROWSERBOTTOM### begin -->
-                <div class="pagination-centered pagebrowser pagebrowser-bottom">
-                  ###RESULT_AND_ITEMS###
-                </div><!-- ###PAGEBROWSERBOTTOM### end -->
-              </div> <!-- /listarea -->
+            </div><!-- /searchbox --><!-- ###SEARCHFORM### end -->
+          </div><!-- /columns -->
+        </div><!-- /row -->
+        <div class="listarea">
+          <div class="row">
+            <div class="columns">
+              <!-- ###INDEXBROWSER### begin -->
+              <dl class="sub-nav show-for-large-up">
+                <dt>Filter:</dt><!-- ###INDEXBROWSERTABS### begin -->
+                <dd###LI_CLASS###>###TAB###</dd><!-- ###INDEXBROWSERTABS### end -->
+              </dl><!-- ###INDEXBROWSER### end -->
+              <!-- ###PAGEBROWSERTOP### begin -->
+              <div class="pagination-centered pagebrowser pagebrowser-top">
+                ###RESULT_AND_ITEMS###
+              </div><!-- ###PAGEBROWSERTOP### end -->
+              <!-- ###MODESELECTOR### begin -->
+              <div class="modeSelector modeSelector-list-###MODE###">
+                <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE###">
+                  <!-- ###MODESELECTORTABS### begin -->
+                  <li class="c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                  <!-- ###MODESELECTORTABS### end -->
+                </ul>
+              </div><!-- ###MODESELECTOR### end -->
             </div><!-- /columns -->
           </div><!-- /row -->
-        </div><!-- /columns --><!-- ###TEMPLATE_LIST### end -->
+          <!-- ###LISTVIEW### begin -->
+          <div class="row">
+            <div class="columns listview listview-content listview-###MODE### listview-content-###MODE###">
+              <table###SUMMARY###>
+                ###CAPTION###
+                <!-- ###LISTHEAD### begin -->
+                <thead>
+                  <tr><!-- ###LISTHEADITEM### begin -->
+                    <th###CLASS###>###ITEM###</th><!-- ###LISTHEADITEM### end -->
+                  </tr>
+                </thead><!-- ###LISTHEAD### end -->
+                <tbody><!-- ###LISTBODY### begin -->
+                  <tr###CLASS###><!-- ###LISTBODYITEM### begin -->
+                    <td###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</td><!-- ###LISTBODYITEM### end -->
+                  </tr><!-- ###LISTBODY### end -->
+                </tbody>
+              </table>
+            </div><!-- /columns --><!-- /listview -->
+          </div><!-- /row -->
+          <!-- ###LISTVIEW### end -->
+            <!-- ###PAGEBROWSERBOTTOM### begin -->
+          <div class="row">
+            <div class="columns pagination-centered pagebrowser pagebrowser-bottom">
+              ###RESULT_AND_ITEMS###
+            </div><!-- /columns -->
+          </div><!-- /row --><!-- ###PAGEBROWSERBOTTOM### end -->
+        </div><!-- /listarea -->
+      </div><!-- /columns --><!-- ###TEMPLATE_LIST### end -->
 
 
 
@@ -234,7 +245,7 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 </em>
 
 <!-- ###TEMPLATE_SINGLE### begin -->
-          <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="tx_org_job row ###MODE### singleview-###MODE###">
+          <div class="###MODE### singleview-###MODE###">
             <!-- ###SINGLEVIEW### begin -->
             <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
             <div class="main columns">

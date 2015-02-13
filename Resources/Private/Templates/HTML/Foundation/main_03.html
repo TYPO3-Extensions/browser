@@ -152,7 +152,7 @@ This template is the default template for all list views.
               <div class="columns browser">
                 <!-- ###INDEXBROWSER### begin -->
                 <div class="row">
-                  <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="columns show-for-large-up indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+                  <div class="columns show-for-large-up indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
                     <dl class="sub-nav">
                       <dt>Filter:</dt><!-- ###INDEXBROWSERTABS### begin -->
                       <dd###LI_CLASS###>###TAB###</dd><!-- ###INDEXBROWSERTABS### end -->
@@ -167,10 +167,10 @@ This template is the default template for all list views.
                 </div><!-- /row --><!-- ###PAGEBROWSERTOP### end -->
                 <!-- ###MODESELECTOR### begin -->
                 <div class="row">
-                  <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="columns modeSelector modeSelector-list-###MODE###">
+                  <div class="columns modeSelector modeSelector-list-###MODE###">
                     <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE###">
                       <!-- ###MODESELECTORTABS### begin -->
-                      <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                      <li class="c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
                       <!-- ###MODESELECTORTABS### end -->
                     </ul>
                   </div><!-- /columns -->
@@ -179,8 +179,21 @@ This template is the default template for all list views.
             </div><!-- /row -->
             <!-- ###LISTVIEW### begin -->
             <div class="row">
-              <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="columns listview listview-content listview-###MODE### listview-content-###MODE###">
-                LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
+              <div class="columns listview listview-content listview-###MODE### listview-content-###MODE###">
+                <table###SUMMARY###>
+                  ###CAPTION###
+                  <!-- ###LISTHEAD### begin -->
+                  <thead>
+                    <tr><!-- ###LISTHEADITEM### begin -->
+                      <th###CLASS###>###ITEM###</th><!-- ###LISTHEADITEM### end -->
+                    </tr>
+                  </thead><!-- ###LISTHEAD### end -->
+                  <tbody><!-- ###LISTBODY### begin -->
+                    <tr###CLASS###><!-- ###LISTBODYITEM### begin -->
+                      <td###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</td><!-- ###LISTBODYITEM### end -->
+                    </tr><!-- ###LISTBODY### end -->
+                  </tbody>
+                </table>
               </div><!-- /columns --><!-- /listview -->
             </div><!-- /row -->
             <!-- ###LISTVIEW### end -->

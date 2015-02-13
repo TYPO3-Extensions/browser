@@ -13,7 +13,7 @@ $( document ).ready( function( )
   var lnDeSlidedown = "Karte einblenden";
   var lnDeSlideup = "Karte ausblenden";
 
-  var htmlLang = $( 'html' ).attr( 'lang' ).substr(0, 2);
+  var htmlLang = $( 'html' ).attr( 'lang' ).substr( 0, 2 );
 
   if( htmlLang === "de" ) {
     labelSlidedown = lnDeSlidedown;
@@ -24,11 +24,11 @@ $( document ).ready( function( )
   $( ".maptoggle" ).toggle(
           function( ) {
             $( ".mapview" ).slideUp( 'slow' );
-            $( ".maptoggle button" ).html( labelSlidedown );
+            $( ".maptoggle button" ).html( labelSlidedown ).blur();
           },
           function( ) {
             $( ".mapview" ).slideDown( 'slow' );
-            $( ".maptoggle button" ).html( labelSlideup );
+            $( ".maptoggle button" ).html( labelSlideup ).blur();
           }
   );
 } );
