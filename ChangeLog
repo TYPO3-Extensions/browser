@@ -31,6 +31,7 @@ Manual
   Improvements
   * #i0124: Map default template: filter are moved from top to bottom
   Bugfix
+  * #i0128: td class in case of an non default template
   * #i0125: Map marker pop-up without desription
   * #i0122: Missing sword in value of HTML sword input field
 

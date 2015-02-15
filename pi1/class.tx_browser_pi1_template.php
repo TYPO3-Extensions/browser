@@ -604,7 +604,7 @@ class tx_browser_pi1_template
         break;
       case(false):
       default:
-        $html = $this->htmlFieldsWoDefaultTemplate5x( $template, $hashMarker, $uid );
+        $html = $this->htmlFieldsWoDefaultTemplate5x( $template, $hashMarker, $uid, $markerArray );
         break;
     }
     return $html;
@@ -651,6 +651,54 @@ class tx_browser_pi1_template
       $currField++;
     }
 
+    return $html;
+  }
+
+  /**
+   * htmlFieldsWoDefaultTemplate5x() : Process rows, moves html template to html code
+   *
+   * @param	string    $template   : html template
+   * @param	string    $hashMarker : hash marker for the field subpart
+   * @param	string		$uid        : uid of the current record of the local table
+   * @param	string    $markerArray  : array with some value like rendered handleAsValues
+   * @return	string	$html       : html code
+   * @version 6.0.8
+   * @since 5.0.0
+   */
+  private function htmlFieldsWoDefaultTemplate5x( $template, $hashMarker, $uid, $handleAsMarkerArray )
+  {
+    $html = null;
+    $wiDefaultTemplate = false;
+    $markerArray = $this->pObj->objTyposcript->wrapRow( $template, $wiDefaultTemplate, $uid );
+
+    #i0128 +
+//    $currField = 0;
+//    $sumFields = count( $markerArray );
+//
+//    foreach ( $markerArray as $field => $value )
+//    {
+//      if ( $this->htmlFields5xDontHandle( $field ) )
+//      {
+//        continue;
+//      }
+//      $fieldMarker = '###' . strtoupper($field) . '###';
+//      $markerField[ '###CLASS###' ] = $this->tmplTableTdClass( $currField, $sumFields );
+//      $markerField[ '###FIELD###' ] = $this->htmlFields5xLabel( $field );  // single view
+//      // Wenn handleAs, dann handleAsValue
+//      $value = $this->htmlFields5xValue( $field, $value, $handleAsMarkerArray );  // single view
+//      $markerField[ '###VALUE###' ] = $value;  // single view
+//      $markerField[ '###ITEM###' ] = $value;  // list view
+//      $markerField[ $fieldMarker ] = $value;  // list and single view
+//      $markerField[ '###SOCIALMEDIA_BOOKMARKS###' ] = $this->htmlFields5xBookmark( $uid, $field );
+//      $htmlField = $this->htmlRow5xHtml( $template, $hashMarker, $markerField );
+//      $html = $html . $htmlField;
+//      $currField++;
+//    }
+
+    #i0128 -
+    $socialmedia_bookmarks = $this->htmlFields5xBookmark( $uid );
+    $markerArray[ '###SOCIALMEDIA_BOOKMARKS###' ] = $socialmedia_bookmarks;
+    $html = $this->htmlRow5xHtml( $template, $hashMarker, $markerArray );
     return $html;
   }
 
@@ -774,27 +822,6 @@ class tx_browser_pi1_template
     }
 
     return $dontHandle;
-  }
-
-  /**
-   * htmlFieldsWoDefaultTemplate5x() : Process rows, moves html template to html code
-   *
-   * @param	string    $template   : html template
-   * @param	string    $hashMarker : hash marker for the field subpart
-   * @param	string		$uid        : uid of the current record of the local table
-   * @return	string	$html       : html code
-   * @version 5.0.0
-   * @since 5.0.0
-   */
-  private function htmlFieldsWoDefaultTemplate5x( $template, $hashMarker, $uid )
-  {
-    $html = null;
-    $wiDefaultTemplate = false;
-    $markerArray = $this->pObj->objTyposcript->wrapRow( $template, $wiDefaultTemplate, $uid );
-    $socialmedia_bookmarks = $this->htmlFields5xBookmark( $uid );
-    $markerArray[ '###SOCIALMEDIA_BOOKMARKS###' ] = $socialmedia_bookmarks;
-    $html = $this->htmlRow5xHtml( $template, $hashMarker, $markerArray );
-    return $html;
   }
 
   /**
