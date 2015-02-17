@@ -1,2 +1,2 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/subparts/searchform/complex.ts">
+//<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/subparts/searchform/complex.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/subparts/searchform/simple.ts">
