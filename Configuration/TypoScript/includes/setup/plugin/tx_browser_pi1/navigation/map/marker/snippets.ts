@@ -386,18 +386,18 @@ plugin.tx_browser_pi1 {
                       }
                       value (
 
-                        <!--<script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenLayers_2.12/ol-te7.js"></script>-->
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenLayers_2.13/OpenLayers.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenStreetMap/OpenStreetMap_1.3.10.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.Utils.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.Error.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.CDmap.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Filter.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Marker.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.mobile.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Route.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Tooltip.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.js"></script>
+                        <!--<script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenLayers_2.12/ol-te7.js"></script>-->
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenLayers_2.13/OpenLayers.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenStreetMap/OpenStreetMap_1.3.10.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.Utils.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.Error.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.CDmap.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Filter.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Marker.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.mobile.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Route.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Tooltip.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.js"></script>
                         <script>new oxMapRender(configuration)</script>
 
 )
@@ -410,18 +410,18 @@ plugin.tx_browser_pi1 {
                       }
                       value (
 
-                        <!--<script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenLayers_2.12/ol-te7.js"></script>-->
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenLayers_2.13/OpenLayers.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenStreetMap/OpenStreetMap_1.3.10.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.Utils.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.Error.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.CDmap.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Filter.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Marker.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Route.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Tooltip.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.mobile.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.js"></script>
+                        <!--<script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenLayers_2.12/ol-te7.js"></script>-->
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenLayers_2.13/OpenLayers.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenStreetMap/OpenStreetMap_1.3.10.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.Utils.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.Error.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.CDmap.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Filter.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Marker.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Route.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Tooltip.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.mobile.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.js"></script>
                         <script>new oxMapRender(configuration)</script>
 
 )
@@ -441,7 +441,7 @@ plugin.tx_browser_pi1 {
                       }
                       value (
 
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap.Render_1.3.07.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/oxMap.Render_1.3.07.js"></script>
                         <script>new oxMapRender(configuration)</script>
 
 )
@@ -454,17 +454,17 @@ plugin.tx_browser_pi1 {
                       }
                       value (
 
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenLayers_2.13/OpenLayers.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/lib/OpenStreetMap/OpenStreetMap_1.3.10.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.Utils.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.Error.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.CDmap.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Filter.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Marker.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Route.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.Tooltip.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.OSM.js"></script>
-                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/api/1.3.10/oxMap.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenLayers_2.13/OpenLayers.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/lib/OpenStreetMap/OpenStreetMap_1.3.10.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.Utils.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.Error.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.CDmap.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Filter.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Marker.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Route.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.Tooltip.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.OSM.js"></script>
+                        <script src="typo3conf/ext/browser/Resources/Public/JavaScript/Map/oxMap/api/1.3.10/oxMap.js"></script>
                         <script>new oxMapRender(configuration)</script>
 
 )

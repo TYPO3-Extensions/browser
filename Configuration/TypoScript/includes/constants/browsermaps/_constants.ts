@@ -1,4 +1,5 @@
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/aliases.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/compatibility.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/controlling.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/databasemarker.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/databasepath.ts">
@@ -9,6 +10,9 @@
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/designpopup.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/html.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/icons.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/leafletpaths.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/leafletplugins.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/mobile.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/openlayers.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/provider.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/constants/browsermaps/zoom.ts">

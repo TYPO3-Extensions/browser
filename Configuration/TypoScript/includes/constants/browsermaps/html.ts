@@ -1,10 +1,10 @@
 plugin.tx_browser_pi1 {
-  # cat=BrowserMaps - HTML//101;           type=string;    label= Template: Path to the HTML template. Examples: EXT:browser/Resources/Private/Templates/HTML/Map/default_1.3.tmpl, EXT:browser/Resources/Private/Templates/HTML/Map/map_toggle.tmpl
-  map.html.path             = EXT:browser/Resources/Private/Templates/HTML/Map/default_1.3.tmpl
+  # cat=BrowserMaps - HTML//101;           type=string;    label= Template:[DEPRECATED] oxMap only! Path to the HTML template. Examples: EXT:browser/Resources/Private/Templates/HTML/Map/oxMap/default_1.3.tmpl, EXT:browser/Resources/Private/Templates/HTML/Map/oxMap/map_toggle.tmpl
+  map.html.path             =
   # cat=BrowserMaps - HTML//102;           type=boolean;    label= JavaScript: Include JavaScript code for toggling the map. Needed, if you are using the HTML template map_toggle.tmpl from above.
   map.html.jss.toggle       = 0
-  # cat=BrowserMaps - HTML//202;           type=string;    label= Map id: HTML id of the map div-tag
-  map.html.id               = oxMap-area
+  # cat=BrowserMaps - HTML//202;           type=string;    label= Map id: HTML id of the map div-tag. If you are change it, please change it in the toggle Javascript too.
+  map.html.id               = leafletmap
   # cat=BrowserMaps - HTML//202;           type=string;    label= Filter id: HTML id of the filter form
   map.html.form.id          = oxMap-filter-module
   # cat=BrowserMaps - HTML//203;           type=string;    label= Input class: HTML class of the input fields

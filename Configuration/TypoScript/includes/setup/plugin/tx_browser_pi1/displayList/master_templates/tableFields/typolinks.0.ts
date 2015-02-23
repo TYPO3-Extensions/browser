@@ -45,7 +45,7 @@ plugin.tx_browser_pi1 {
                   20 = TEXT
                   20 {
                     value       = -
-                    noTrimWrap  = | ||
+                    noTrimWrap  = | "|"|
                   }
                     // class
                   30 = TEXT
@@ -83,6 +83,10 @@ plugin.tx_browser_pi1 {
                 10 = TEXT
                 10 {
                   field = {$plugin.tx_browser_pi1.templates.listview.url.0.page}
+                  stdWrap {
+                    stripHtml = 1
+                    htmlSpecialChars = 1
+                  }
                 }
                 30 {
                   value = internal

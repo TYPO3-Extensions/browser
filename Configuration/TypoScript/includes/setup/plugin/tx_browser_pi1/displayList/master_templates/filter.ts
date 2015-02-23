@@ -257,46 +257,52 @@ plugin.tx_browser_pi1 {
               // Wrap the filter item
             cObject = COA
             cObject {
+              wrap = <span class="item">|</span>
                 // Input
               10 = TEXT
               10 {
-                value       = <input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>
+                value       = <input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" id="###ID###" value="###UID###"###ITEM_SELECTED###>
                 noTrimWrap  = | ||
               }
-                // Value in case of a value
-              20 = TEXT
+                // Label
+              20 = COA
               20 {
-                if {
-                  isTrue {
-                    field = value
+                wrap = <label for="###ID###">|</label>
+                  // Value in case of a value
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue {
+                      field = value
+                    }
                   }
+                  field = value
+                  htmlSpecialChars  = 1
+                  crop              = 60 | ... | 1
                 }
-                field = value
-                htmlSpecialChars  = 1
-                crop              = 60 | ... | 1
-              }
-                // Value in case of no value
-              21 = TEXT
-              21 {
-                if {
-                  isTrue {
-                    field = value
+                  // Value in case of no value
+                21 = TEXT
+                21 {
+                  if {
+                    isTrue {
+                      field = value
+                    }
+                    negate  = 1
                   }
-                  negate  = 1
+                  data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
                 }
-                data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
-              }
-                // Hits
-              30 = TEXT
-              30 {
-                if {
-                    // Display hits only in case of one hit at least
-                  isTrue {
-                    field = hits
+                  // Hits
+                30 = TEXT
+                30 {
+                  if {
+                      // Display hits only in case of one hit at least
+                    isTrue {
+                      field = hits
+                    }
                   }
+                  field = hits
+                  noTrimWrap  = | (|)|
                 }
-                field = hits
-                noTrimWrap  = | (|)|
               }
               if {
                 isTrue {
@@ -322,7 +328,7 @@ plugin.tx_browser_pi1 {
           itemsPerRow = 3
           itemsPerRow {
               // [String] Wrap the row
-            wrap = <div class="row row-###EVEN_ODD###">|</div>
+            wrap = <div class="checkbox-row checkbox-row-###EVEN_ODD###">|</div>
               // [String] if there aren't enough items to fill up a row
             noItemValue = &nbsp;
           }
@@ -407,40 +413,48 @@ plugin.tx_browser_pi1 {
               // Wrap the filter item
             cObject = COA
             cObject {
+              wrap = <span class="item">|</span>
                 // Input
               10 = TEXT
               10 {
-                value       = <input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>
+                value       = <input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" id="###ID###" value="###UID###"###ITEM_SELECTED###>
                 noTrimWrap  = | ||
               }
-                // Value in case of a value
-              20 = TEXT
+                // Label
+              20 = COA
               20 {
-                if {
-                  isTrue = ###VALUE###
+                wrap = <label for="###ID###">|</label>
+                  // Value in case of a value
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue = ###VALUE###
+                  }
+                  value             = ###VALUE###
+                  htmlSpecialChars  = 1
+                  crop              = 60 | ... | 1
                 }
-                value             = ###VALUE###
-                htmlSpecialChars  = 1
-                crop              = 60 | ... | 1
-              }
-                // Value in case of no value
-              21 = TEXT
-              21 {
-                if {
-                  isTrue  = ###VALUE###
-                  negate  = 1
+                  // Value in case of no value
+                21 = TEXT
+                21 {
+                  if {
+                    isTrue  = ###VALUE###
+                    negate  = 1
+                  }
+                  data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
                 }
-                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
-              }
-                // Hits
-              30 = TEXT
-              30 {
-                if {
-                    // Display hits only in case of one hit at least
-                  isTrue = hits
+                  // Hits
+                30 = TEXT
+                30 {
+                  if {
+                      // Display hits only in case of one hit at least
+                    isTrue {
+                      field = hits
+                    }
+                  }
+                  field = hits
+                  noTrimWrap  = | (|)|
                 }
-                field       = hits
-                noTrimWrap  = | (|)|
               }
               if {
                 isTrue {
@@ -466,7 +480,7 @@ plugin.tx_browser_pi1 {
           itemsPerRow = 3
           itemsPerRow {
               // [String] Wrap the row
-            wrap = <div class="row row-###EVEN_ODD###">|</div>
+            wrap = <div class="radio-row radio-row-###EVEN_ODD###">|</div>
               // [String] if there aren't enough items to fill up a row
             noItemValue = &nbsp;
           }

@@ -1,0 +1,1 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/lib/parseFunc.ts">

@@ -1,0 +1,7 @@
+plugin.tx_browser_pi1 {
+
+  map.compatibility.mode  = oxMap (deprecated)
+  map.html.id             = oxMap-area
+  map.html.path           = EXT:browser/Resources/Private/Templates/HTML/Map/oxMap/default_1.3.tmpl
+
+}

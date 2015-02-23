@@ -85,7 +85,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               10 = reddark
               10 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/reddark.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/reddark.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}reddark.png
@@ -102,7 +102,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               20 = bluedark
               20 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/bluedark.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/bluedark.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}bluedark.png
@@ -119,7 +119,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               30 = greendark
               30 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/greendark.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/greendark.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}greendark.png
@@ -136,7 +136,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               40 = purple
               40 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/purple.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/purple.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}purple.png
@@ -153,7 +153,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               50 = orange
               50 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/orange.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/orange.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}orange.png
@@ -170,7 +170,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               60 = red
               60 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/red.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/red.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}red.png
@@ -187,7 +187,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               70 = blue
               70 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/blue.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/blue.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}blue.png
@@ -204,7 +204,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               80 = green
               80 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/green.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/green.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}green.png
@@ -221,7 +221,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               90 = pink
               90 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/pink.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/pink.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}pink.png
@@ -238,7 +238,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               100 = yellow
               100 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/yellow.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/yellow.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}yellow.png
@@ -255,7 +255,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               110 = black
               110 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/black.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/black.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}black.png
@@ -272,7 +272,7 @@ plugin.tx_browser_pi1 {
                 // Label for a clear view only and without any effect
               120 = white
               120 {
-                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/icons/points/white.png
+                  // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/white.png
                 pathToIcon = TEXT
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}white.png
