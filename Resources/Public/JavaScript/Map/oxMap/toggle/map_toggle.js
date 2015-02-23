@@ -1,7 +1,7 @@
 /**
  * @description map_toggle.js: toggle the map
  * @author (c) 2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de/>
- * @version 6.0.8
+ * @version 7.0.0
  * @since 6.0.8
  */
 
@@ -23,10 +23,12 @@ $( document ).ready( function( )
 
   $( ".maptoggle" ).toggle(
           function( ) {
+            $( "#leafletmap" ).slideUp( 'slow' );
             $( ".mapview" ).slideUp( 'slow' );
             $( ".maptoggle button" ).html( labelSlidedown ).blur();
           },
           function( ) {
+            $( "#leafletmap" ).slideDown( 'slow' );
             $( ".mapview" ).slideDown( 'slow' );
             $( ".maptoggle button" ).html( labelSlideup ).blur();
           }
