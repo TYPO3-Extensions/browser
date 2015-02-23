@@ -132,6 +132,8 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
   // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
   protected $confMap = null;
   // #65184, 150221, dwildt, +
+  // [ARRAY] Array with the category icons
+  protected $catIcons = array();
   // [ARRAY] Array with elements all and center
   protected $coordinates = array();
   // [ARRAY] Array with the current marker
@@ -2276,6 +2278,8 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     }
 
 //var_dump( __METHOD__, __LINE__, $catIcons );
+    // #65184, 150223, dwildt, +
+    $this->catIcons = $catIcons;
     return $catIcons;
   }
 

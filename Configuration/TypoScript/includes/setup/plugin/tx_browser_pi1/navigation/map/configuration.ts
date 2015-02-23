@@ -6,7 +6,10 @@ plugin.tx_browser_pi1 {
       // configuration
     map =
     map {
-        // categories, centerCoordinates, 00Coordinates, route, zoomLevel
+        // empty statement for a proper comment only
+      configuration {
+      }
+        // categories, centerCoordinates, defaultIcons, 00Coordinates, overlays, route, zoomLevel
       configuration =
       configuration {
           // colours, offset, fields, form_input, orderBy
@@ -21,62 +24,62 @@ plugin.tx_browser_pi1 {
                 // Reddark
               10 = IMAGE
               10 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}reddark.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}reddark.png
               }
                 // bluedark
               20 = IMAGE
               20 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}bluedark.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}bluedark.png
               }
                 // greendark
               30 = IMAGE
               30 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}greendark.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}greendark.png
               }
                 // purple
               40 = IMAGE
               40 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}purple.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}purple.png
               }
                 // orange
               50 = IMAGE
               50 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}orange.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}orange.png
               }
                 // red
               60 = IMAGE
               60 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}red.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}red.png
               }
                 // blue
               70 = IMAGE
               70 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}blue.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}blue.png
               }
                 // green
               80 = IMAGE
               80 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}green.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}green.png
               }
                 // pink
               90 = IMAGE
               90 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}pink.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}pink.png
               }
                 // yellow
               100 = IMAGE
               100 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}yellow.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}yellow.png
               }
                 // black
               110 = IMAGE
               110 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}black.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}black.png
               }
                 // white
               120 = IMAGE
               120 {
-                file = {$plugin.tx_browser_pi1.map.pathToLegend}white.png
+                file = {$plugin.tx_browser_pi1.map.defaultIcons.pathToLegend}white.png
               }
             }
               // 10, 20, 30 ... 120
@@ -88,7 +91,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/reddark.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}reddark.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}reddark.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -105,7 +108,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/bluedark.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}bluedark.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}bluedark.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -122,7 +125,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/greendark.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}greendark.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}greendark.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -139,7 +142,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/purple.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}purple.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}purple.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -156,7 +159,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/orange.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}orange.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}orange.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -173,7 +176,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/red.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}red.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}red.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -190,7 +193,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/blue.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}blue.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}blue.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -207,7 +210,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/green.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}green.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}green.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -224,7 +227,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/pink.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}pink.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}pink.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -241,7 +244,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/yellow.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}yellow.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}yellow.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -258,7 +261,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/black.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}black.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}black.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -275,7 +278,7 @@ plugin.tx_browser_pi1 {
                   // [STRING] path to the icon. Default: EXT:browser/Resources/Public/JavaScript/Map/oxMap/icons/points/white.png
                 pathToIcon = TEXT
                 pathToIcon {
-                  value = {$plugin.tx_browser_pi1.map.pathToPoints}white.png
+                  value = {$plugin.tx_browser_pi1.map.defaultIcons.pathToPoints}white.png
                 }
                   // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
@@ -297,9 +300,9 @@ plugin.tx_browser_pi1 {
           offset =
           offset {
               // [INTEGER] x-offset of the icon in pixel
-            x = 0
+            x = 7
               // [INTEGER] y-offset of the icon in pixel
-            y = 0
+            y = 7
           }
             // marker, path
           fields =
@@ -345,6 +348,22 @@ plugin.tx_browser_pi1 {
             // [STRING] marker for the center in the HTML code. Example: oxMapConfigCenter
           dynamicMarker = oxMapConfigCenter
         }
+          // enabled, shadow
+        defaultIcons =
+        defaultIcons {
+            // [Boolean] Enabled: Use the leaflet default icon (recommended).
+          enabled = {$plugin.tx_browser_pi1.map.defaultIcons.enabled}
+            // path, offsetX, offsetY
+          shadow =
+          shadow {
+              // [String] Shadow: Path to the shadow image
+            path = {$plugin.tx_browser_pi1.map.defaultIcons.shadow.path}
+              // [Integer] Shadow x-offset: X-offset of the shadow
+            offsetX = {$plugin.tx_browser_pi1.map.defaultIcons.shadow.offsetX}
+              // [Integer] Shadow y-offset: Y-offset of the shadow
+            offsetY = {$plugin.tx_browser_pi1.map.defaultIcons.shadow.offsetY}
+          }
+        }
           // dontHandle
         00Coordinates =
         00Coordinates {
@@ -353,6 +372,18 @@ plugin.tx_browser_pi1 {
         }
           // [Booelan] Disable it, if you don't like that each category is one overlay. Without any effect for oxMap!
         overlays = {$plugin.tx_browser_pi1.map.leafletcontrolling.overlays}
+          // offset
+        popup =
+        popup {
+            // x, y
+          offset =
+          offset {
+              // [INTEGER] x-offset of the icon in pixel
+            x = {$plugin.tx_browser_pi1.map.popup.offsetX}
+              // [INTEGER] y-offset of the icon in pixel
+            y = {$plugin.tx_browser_pi1.map.popup.offsetY}
+          }
+        }
           // markerMapper, tables
         route =
         route {

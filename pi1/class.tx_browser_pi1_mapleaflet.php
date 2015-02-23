@@ -421,6 +421,7 @@ class tx_browser_pi1_mapleaflet
     $this->mapLLjssSetView();
     $this->mapLLjssAttributionControl();
 
+    $this->mapLLjssIcon();
     $this->mapLLjssAddLayer();
     $this->mapLLjssAddControl();
 
@@ -742,6 +743,7 @@ class tx_browser_pi1_mapleaflet
    */
   private function mapLLjssAddLayerOverlayGroupsInitCluster()
   {
+    //var_dump( __METHOD__, __LINE__, $this->arrCategories );
     foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
     {
       $this->mapLLjssLeafletFooterInline = ''
@@ -792,6 +794,7 @@ class tx_browser_pi1_mapleaflet
     {
       $lat = $marker[ 'lat' ];
       $lon = $marker[ 'lon' ];
+      $icon = $this->mapLLjssAddLayerOverlayGroupsMarkerIcon( $marker[ 'iconKey' ] );
       $popUp = $marker[ 'desc' ];
       $popUp = preg_replace( '/\\r/', null, $popUp );
       $popUp = preg_replace( '/\\n/', null, $popUp );
@@ -801,7 +804,7 @@ class tx_browser_pi1_mapleaflet
       {
         $layerGroup = "lgDefault";
       }
-      $arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]).bindPopup('" . $popUp . "').addTo( " . $layerGroup . ")";
+      $arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]" . $icon . ").bindPopup('" . $popUp . "').addTo( " . $layerGroup . ")";
     }
 
     if ( empty( $arrMarker ) )
@@ -818,6 +821,25 @@ class tx_browser_pi1_mapleaflet
             . PHP_EOL
     ;
     return;
+  }
+
+  /**
+   * mapLLjssAddLayerOverlayGroupsMarkerIcon( ):
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssAddLayerOverlayGroupsMarkerIcon( $iconKey )
+  {
+    if ( $this->confMap[ 'configuration.' ][ 'defaultIcons.' ][ 'enabled' ] )
+    {
+      return null;
+    }
+
+    $icon = "liIcon" . $iconKey;
+    return ", {icon: " . $icon . "}";
   }
 
   /**
@@ -876,6 +898,220 @@ class tx_browser_pi1_mapleaflet
             . PHP_EOL
             . PHP_EOL
     ;
+  }
+
+  /**
+   * mapLLjssIcon( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIcon()
+  {
+    if ( $this->confMap[ 'configuration.' ][ 'defaultIcons.' ][ 'enabled' ] )
+    {
+      return;
+    }
+
+    $this->mapLLjssIconClass();
+    $this->mapLLjssIconIcons();
+  }
+
+  /**
+   * mapLLjssIconClass( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClass()
+  {
+    $shadowPath = $this->mapLLjssIconClassShadowPath();
+    $shadowSize = $this->mapLLjssIconClassSizeShadow( $shadowPath );
+    $iconSize = $this->mapLLjssIconClassSizeIcon();
+    $iconAnchor = $this->mapLLjssIconClassAnchorIcon();
+    $popupAnchor = $this->mapLLjssIconClassAnchorPopup();
+    $shadowAnchor = $this->mapLLjssIconClassAnchorShadow();
+//    var_dump( __METHOD__, __LINE__, $this->arrCategories, $this->catIcons );
+
+    $this->mapLLjssLeafletFooterInline = ''
+            . $this->mapLLjssLeafletFooterInline
+            . "
+var LeafIcon = L.Icon.extend({
+  options: {
+    shadowUrl     : '" . $shadowPath . "',
+    iconSize      : [" . $iconSize . "],
+    shadowSize    : [" . $shadowSize . "],
+    iconAnchor    : [" . $iconAnchor . "],
+    shadowAnchor  : [" . $shadowAnchor . "],
+    popupAnchor   : [" . $popupAnchor . "]
+  }
+});
+"
+            . PHP_EOL
+    ;
+  }
+
+  /**
+   * mapLLjssIconClassAnchorIcon( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassAnchorIcon()
+  {
+    $key = key( $this->marker );
+    $x = $this->marker[ $key ][ 'iconOffsetX' ];
+    $y = $this->marker[ $key ][ 'iconOffsetY' ];
+    return $x . ", " . $y;
+  }
+
+  /**
+   * mapLLjssIconClassAnchorPopup( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassAnchorPopup()
+  {
+    $x = $this->confMap[ 'configuration.' ][ 'popup.' ][ 'offset.' ][ 'x' ];
+    $y = $this->confMap[ 'configuration.' ][ 'popup.' ][ 'offset.' ][ 'y' ];
+    return $x . ", " . $y;
+  }
+
+  /**
+   * mapLLjssIconClassAnchorShadow( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassAnchorShadow()
+  {
+    $x = $this->confMap[ 'configuration.' ][ 'defaultIcons.' ][ 'shadow.' ][ 'offsetX' ];
+    $y = $this->confMap[ 'configuration.' ][ 'defaultIcons.' ][ 'shadow.' ][ 'offsetY' ];
+    return $x . ", " . $y;
+  }
+
+  /**
+   * mapLLjssIconClassShadowPath( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassShadowPath()
+  {
+    // Set the path
+    $shadowPath = $this->confMap[ 'configuration.' ][ 'defaultIcons.' ][ 'shadow.' ][ 'path' ];
+
+    if ( empty( $shadowPath ) )
+    {
+      $header = 'FATAL ERROR!';
+      $text = 'Unexpeted value : TypoScript property "configuration.defaultIcons.shadow.path" is empty.';
+      $this->pObj->drs_die( $header, $text );
+    }
+    // absolute path
+    $pathAbsolute = t3lib_div::getFileAbsFileName( $shadowPath );
+    if ( !file_exists( $pathAbsolute ) )
+    {
+      $header = 'FATAL ERROR!';
+      $text = 'File doesn\'t exist: ' . $pathAbsolute;
+      $this->pObj->drs_die( $header, $text );
+    }
+    // relative path
+    $pathRelative = preg_replace( '%' . PATH_site . '%', '', $pathAbsolute );
+
+    return $pathRelative;
+  }
+
+  /**
+   * mapLLjssIconClassSize( ):
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassSize( $path )
+  {
+    $root = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' ) . '/';
+    list( $width, $height ) = getimagesize( $root . $path );
+    if ( !( empty( $height ) or empty( $width ) ) )
+    {
+      $size = $width . ", " . $height;
+      return $size;
+    }
+
+    $header = 'FATAL ERROR!';
+    $text = 'Can\'t calculate width or height from: ' . $root;
+    $this->pObj->drs_die( $header, $text );
+  }
+
+  /**
+   * mapLLjssIconClassSizeIcon( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassSizeIcon()
+  {
+    //var_dump( __METHOD__, __LINE__, $this->arrCategories, $this->catIcons );
+    $key = key( $this->marker );
+    $path = $this->marker[ $key ][ 'catIconMap' ];
+    return $this->mapLLjssIconClassSize( $path );
+  }
+
+  /**
+   * mapLLjssIconClassSizeShadow( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconClassSizeShadow( $path )
+  {
+    return $this->mapLLjssIconClassSize( $path );
+  }
+
+  /**
+   * mapLLjssIconIcons( ): Add the Javascript
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssIconIcons()
+  {
+//    var_dump( __METHOD__, __LINE__, $this->arrCategories, $this->marker );
+    foreach ( array_keys( $this->marker ) as $key )
+    {
+      $iconKey = $this->marker[ $key ][ 'iconKey' ];
+//      if ( !in_array( $iconKey, array_keys( $this->arrCategories[ 'labels' ] ) ) )
+//      {
+//        continue;
+//      }
+      $path = $this->marker[ $key ][ 'catIconMap' ];
+      $comment = $this->arrCategories[ 'labels' ][ $iconKey ];
+      $this->mapLLjssLeafletFooterInline = ''
+              . $this->mapLLjssLeafletFooterInline
+              . "var liIcon" . $iconKey . " = new LeafIcon({iconUrl: '" . $path . "'}); // " . $comment
+              . PHP_EOL
+      ;
+    }
   }
 
   /**
