@@ -92,39 +92,43 @@ This template is the default template for all list views.
         </div>
         <!-- ###LIST_TITLE### end -->
         <div class="row">
-          <!-- ###SEARCHFORM### begin -->
           <div class="columns show-for-medium-up small-###FDTMPLMAINLISTCOLLEFTSMALL### medium-###FDTMPLMAINLISTCOLLEFTMEDIUM### large-###FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
-            <form action="###ACTION###" method="post" >
-              <fieldset>
-                <legend>
-                  ###MY_SEARCH_LEGEND###
-                </legend>
-                ###HIDDEN###
-                <input type="hidden" name="no_cache" value="1" />
-                <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
-                <input type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
-                <button class="tiny expand hidesubmit" role="button">
-                  ###MY_SEARCH###
-                </button>
-                <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
-                ###FILTER###
-                <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
-                  ###MY_RESET###
-                </button>
-                <!-- ###BUTTON_CSV-EXPORT### begin -->
-                <button class="tiny expand hidesubmit" role="button">
-                  ###MY_CSV_EXPORT###
-                </button>
-                <!-- ###BUTTON_CSV-EXPORT### end -->
-                <button class="tiny expand hidesubmit" role="button">
-                  ###MY_SEARCH###
-                </button>
-              </fieldset>
-            </form>
-          </div><!-- /columns --><!-- ###SEARCHFORM### end -->
+            <!-- ###SEARCHFORM### begin -->
+            <div class="row">
+              <div class="columns searchbox searchbox-list-###MODE###">
+                <form action="###ACTION###" method="post" >
+                  <fieldset>
+                    <legend>
+                      ###MY_SEARCH_LEGEND###
+                    </legend>
+                    ###HIDDEN###
+                    <input type="hidden" name="no_cache" value="1" />
+                    <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
+                    <input type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
+                    <button class="tiny expand hidesubmit" role="button">
+                      ###MY_SEARCH###
+                    </button>
+                    <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+                    ###FILTER###
+                    <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
+                      ###MY_RESET###
+                    </button>
+                    <!-- ###BUTTON_CSV-EXPORT### begin -->
+                    <button class="tiny expand hidesubmit" role="button">
+                      ###MY_CSV_EXPORT###
+                    </button>
+                    <!-- ###BUTTON_CSV-EXPORT### end -->
+                    <button class="tiny expand hidesubmit" role="button">
+                      ###MY_SEARCH###
+                    </button>
+                  </fieldset>
+                </form>
+              </div><!-- /columns -->
+            </div><!-- /row --><!-- ###SEARCHFORM### end -->
+          </div><!-- /columns -->
           <div class="columns small-###FDTMPLMAINLISTCOLRIGHTSMALL### medium-###FDTMPLMAINLISTCOLRIGHTMEDIUM### large-###FDTMPLMAINLISTCOLRIGHTLARGE###">
             <div class="row">
-              <div class="columns show-for-large-up">
+              <div class="columns">
                 ###MAP###
               </div><!-- /columns -->
             </div><!-- /row -->
@@ -187,12 +191,11 @@ This template is the default template for all list views.
                   </div>
                 </div><!-- /row --><!-- ###PAGEBROWSERBOTTOM### end -->
               </div><!-- /columns -->
-            </div> <!-- /listarea -->
+            </div><!-- /row --><!-- /listarea -->
           </div><!-- /columns -->
           <!-- ###TEMPLATE_LIST### end -->
-        </div>
-      </div>
-
+        </div><!-- /row -->
+      </div><!-- /columns -->
 
 
 
