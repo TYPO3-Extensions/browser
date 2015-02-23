@@ -129,6 +129,32 @@ plugin.tx_browser_pi1 {
             }
           }
         }
+          // Empty statement needed for proper comments
+        leafletWiMastercluster {
+        }
+          // true, if leavelet and providers and mastercluster is enabled. Test it at Configuration/TypoScript/includes/setup/PAGE/testleaflet.ts
+        leafletWiMastercluster < plugin.tx_browser_pi1.navigation.map.rules.leafletIsEnabled
+        leafletWiMastercluster {
+          value = 111
+          equals {
+            stdWrap {
+              cObject = COA
+              cObject {
+                  // true, if mastercluster is enabled
+                30 = TEXT
+                30 {
+                  value = 1
+                    // true, if mastercluster is enabled
+                  if =
+                  if {
+                    value   = 1
+                    equals  = {$plugin.tx_browser_pi1.map.leafletcontrolling.masterclustering}
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

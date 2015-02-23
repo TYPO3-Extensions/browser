@@ -2166,8 +2166,8 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $template );
     if ( $templateWoMarker )
     {
-      var_dump( __METHOD__, __LINE__ );
-      die( ':(' );
+//      var_dump( __METHOD__, __LINE__ );
+//      die( ':(' );
       return $templateWoMarker;
     }
     // Add data

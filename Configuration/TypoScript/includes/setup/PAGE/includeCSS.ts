@@ -5,4 +5,12 @@ page.includeCSS {
   leafletLib {
     if < plugin.tx_browser_pi1.navigation.map.rules.leafletIsEnabled
   }
+  leafletMastercluster = {$plugin.tx_browser_pi1.map.leafletplugins.masterclusterCss}
+  leafletMastercluster {
+    if < plugin.tx_browser_pi1.navigation.map.rules.leafletWiMastercluster
+  }
+  leafletMasterclusterDefault = {$plugin.tx_browser_pi1.map.leafletplugins.masterclusterCssDefault}
+  leafletMasterclusterDefault {
+    if < plugin.tx_browser_pi1.navigation.map.rules.leafletWiMastercluster
+  }
 }

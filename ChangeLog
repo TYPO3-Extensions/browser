@@ -17,6 +17,10 @@ Manual
             TypoScript properties
             * navigation.map.template.leaflet
             See: http://leafletjs.com/
+            * #65184/#i193: Modul Marker-Cluster
+              See: https://github.com/Leaflet/Leaflet.markercluster
+            * #65184/#i194: Modul Plugin-Master (GoogleMaps)
+              See: https://github.com/shramov/leaflet-plugins
 
 6.0.8
   15-02-04

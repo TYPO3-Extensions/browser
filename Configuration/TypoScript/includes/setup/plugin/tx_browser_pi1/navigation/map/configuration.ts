@@ -351,6 +351,8 @@ plugin.tx_browser_pi1 {
             // [BOOLEAN] true (recommended): If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = {$plugin.tx_browser_pi1.map.controlling.dontHandle00Coordinates}
         }
+          // [Booelan] Disable it, if you don't like that each category is one overlay. Without any effect for oxMap!
+        overlays = {$plugin.tx_browser_pi1.map.leafletcontrolling.overlays}
           // markerMapper, tables
         route =
         route {

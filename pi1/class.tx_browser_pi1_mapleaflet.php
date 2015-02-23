@@ -480,24 +480,6 @@ class tx_browser_pi1_mapleaflet
             . PHP_EOL
     ;
 
-    //var_dump( __METHOD__, __LINE__, $this->arrCategories );
-    $strOverlays = null;
-    $arrOverlays = array();
-    foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
-    {
-      $arrOverlays[] = "'" . $value . "' : lg" . $key;
-    }
-    if ( count( $arrOverlays ) >= 2 )
-    {
-      $strOverlays = implode( ', ', $arrOverlays );
-    }
-
-    $this->mapLLjssLeafletFooterInline = ''
-            . $this->mapLLjssLeafletFooterInline
-            . "var overlays = { " . $strOverlays . " };"
-            . PHP_EOL
-    ;
-
     $this->mapLLjssLeafletFooterInline = ''
             . $this->mapLLjssLeafletFooterInline
             . "map.addControl( new L.Control.Layers( baseLayers, overlays ));"
@@ -641,6 +623,50 @@ class tx_browser_pi1_mapleaflet
     $this->mapLLjssAddLayerOverlayGroupsInit();
     $this->mapLLjssAddLayerOverlayGroupsMarker();
     $this->mapLLjssAddLayerOverlayGroupsAdd();
+    $this->mapLLjssAddLayerOverlayAdd();
+  }
+
+  /**
+   * mapLLjssAddLayerOverlayAdd( ):
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssAddLayerOverlayAdd()
+  {
+    $strOverlays = null;
+    $arrOverlays = array();
+
+    //var_dump( __METHOD__, __LINE__, $this->arrCategories );
+    switch ( true )
+    {
+      case(!$this->confMap[ 'configuration.' ][ 'overlays' ]):
+        $this->mapLLjssLeafletFooterInline = ''
+                . $this->mapLLjssLeafletFooterInline
+                . "var overlays = { };"
+                . PHP_EOL
+        ;
+        return;
+      case($this->confMap[ 'configuration.' ][ 'overlays' ]):
+      default:
+        foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+        {
+          $arrOverlays[] = "'" . $value . "' : lg" . $key;
+        }
+        if ( count( $arrOverlays ) >= 2 )
+        {
+          $strOverlays = implode( ', ', $arrOverlays );
+        }
+
+        $this->mapLLjssLeafletFooterInline = ''
+                . $this->mapLLjssLeafletFooterInline
+                . "var overlays = { " . $strOverlays . " };"
+                . PHP_EOL
+        ;
+        return;
+    }
   }
 
   /**
@@ -654,13 +680,26 @@ class tx_browser_pi1_mapleaflet
   private function mapLLjssAddLayerOverlayGroupsAdd()
   {
     //var_dump( __METHOD__, __LINE__, $this->arrCategories );
-    foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+    switch ( true )
     {
-      $this->mapLLjssLeafletFooterInline = ''
-              . $this->mapLLjssLeafletFooterInline
-              . "map.addLayer( lg" . $key . " ); // " . $value
-              . PHP_EOL
-      ;
+      case(!$this->confMap[ 'configuration.' ][ 'overlays' ]):
+        $this->mapLLjssLeafletFooterInline = ''
+                . $this->mapLLjssLeafletFooterInline
+                . "map.addLayer( lgDefault ); // "
+                . PHP_EOL
+        ;
+        return;
+      case($this->confMap[ 'configuration.' ][ 'overlays' ]):
+      default:
+        foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+        {
+          $this->mapLLjssLeafletFooterInline = ''
+                  . $this->mapLLjssLeafletFooterInline
+                  . "map.addLayer( lg" . $key . " ); // " . $value
+                  . PHP_EOL
+          ;
+        }
+        return;
     }
   }
 
@@ -674,6 +713,56 @@ class tx_browser_pi1_mapleaflet
    */
   private function mapLLjssAddLayerOverlayGroupsInit()
   {
+    switch ( true )
+    {
+      case(!$this->confMap[ 'configuration.' ][ 'overlays' ]):
+        $this->mapLLjssLeafletFooterInline = ''
+                . $this->mapLLjssLeafletFooterInline
+                . "var lgDefault = new L.MarkerClusterGroup();"
+                . PHP_EOL
+        ;
+        return;
+      case($this->confMap[ 'plugins.' ][ 'mastercluster.' ][ 'enabled' ]):
+        $this->mapLLjssAddLayerOverlayGroupsInitCluster();
+        return;
+      case(!$this->confMap[ 'plugins.' ][ 'mastercluster.' ][ 'enabled' ]):
+      default:
+        $this->mapLLjssAddLayerOverlayGroupsInitGroup();
+        return;
+    }
+  }
+
+  /**
+   * mapLLjssAddLayerOverlayGroupsInitCluster( ):
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssAddLayerOverlayGroupsInitCluster()
+  {
+    foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+    {
+      $this->mapLLjssLeafletFooterInline = ''
+              . $this->mapLLjssLeafletFooterInline
+              . "var lg" . $key . " = new L.MarkerClusterGroup(); // " . $value
+              . PHP_EOL
+      ;
+    }
+    return;
+  }
+
+  /**
+   * mapLLjssAddLayerOverlayGroupsInitGroup( ):
+   *
+   * @return	void
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function mapLLjssAddLayerOverlayGroupsInitGroup()
+  {
     //var_dump( __METHOD__, __LINE__, $this->arrCategories );
     foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
     {
@@ -683,6 +772,7 @@ class tx_browser_pi1_mapleaflet
               . PHP_EOL
       ;
     }
+    return;
   }
 
   /**
@@ -706,8 +796,12 @@ class tx_browser_pi1_mapleaflet
       $popUp = preg_replace( '/\\r/', null, $popUp );
       $popUp = preg_replace( '/\\n/', null, $popUp );
       //$popUp = nl2br( $marker[ 'desc' ] ); <- Isn't proper!
-      $layerGroup = $marker[ 'iconKey' ];
-      $arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]).bindPopup('" . $popUp . "').addTo( lg" . $layerGroup . ")";
+      $layerGroup = "lg" . $marker[ 'iconKey' ];
+      if ( !$this->confMap[ 'configuration.' ][ 'overlays' ] )
+      {
+        $layerGroup = "lgDefault";
+      }
+      $arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]).bindPopup('" . $popUp . "').addTo( " . $layerGroup . ")";
     }
 
     if ( empty( $arrMarker ) )
@@ -724,16 +818,6 @@ class tx_browser_pi1_mapleaflet
             . PHP_EOL
     ;
     return;
-    $this->mapLLjssLeafletFooterInline = ''
-            . $this->mapLLjssLeafletFooterInline
-            . "
-L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(cities),
-L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(cities),
-L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(cities),
-L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
-    "
-            . PHP_EOL
-    ;
   }
 
   /**

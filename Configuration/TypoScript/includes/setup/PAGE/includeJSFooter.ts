@@ -24,4 +24,10 @@ page.includeJSFooter {
   googletilelayers {
     if < plugin.tx_browser_pi1.navigation.map.rules.leafletWiGoogle
   }
+    // #65184, 150220, dwildt
+    // Test @ browser/Configuration/TypoScript/includes/setup/PAGE/testleaflet.ts
+  leafletmastercluster = {$plugin.tx_browser_pi1.map.leafletplugins.mastercluster}
+  leafletmastercluster {
+    if < plugin.tx_browser_pi1.navigation.map.rules.leafletWiMastercluster
+  }
 }
