@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Google // Leaflet</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+    <script src="../layer/tile/Google.js"></script>
+  </head>
+  <body>
+    <!-- define a DIV into which the map will appear. Make it take up the whole window -->
+    <div style="width:100%; height:100%" id="map"></div>
+    <script type='text/javascript'>
+      var map = new L.Map( 'map', { center: new L.LatLng( 53.9618, 58.4277 ), zoom: 13 } );
+      var osm = new L.TileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' );
+      var ggl = new L.Google();
+      var ggl2 = new L.Google( 'TERRAIN' );
+      var ggl3 = new L.Google( 'ROADMAP' );
+      var ggl4 = new L.Google( 'SATELLITE' );
+      var ggl5 = new L.Google( 'HYBRID' );
+//      map.addLayer( ggl );
+//      map.addControl( new L.Control.Layers( { 'OSM': osm, 'Google': ggl, 'Google Terrain': ggl2 }, { } ) );
+      map.addLayer( osm );
+      map.addControl( new L.Control.Layers
+              (
+                      {
+                        'OSM': osm
+                        , 'Google': ggl
+                        , 'Google Terrain': ggl2
+                        , 'Google Roadmap': ggl3
+                        , 'Google Satellite': ggl4
+                        , 'Google Hybrid': ggl5
+                      },
+              {
+              }
+              ) );
+    </script>
+
+    https://developers.google.com/maps/documentation/javascript/maptypes?hl=de
+    MapTypeId.ROADMAP zeigt die Standard-Straßenkartenansicht.
+    MapTypeId.SATELLITE zeigt Google Earth-Satellitenbilder.
+    MapTypeId.HYBRID zeigt eine Mischung aus der normalen und der Satellitenansicht.
+    MapTypeId.TERRAIN zeigt physische Kartenkacheln, die auf Geländeinformationen basieren.
+  </body>
+</html>
