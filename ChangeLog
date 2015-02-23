@@ -8,9 +8,20 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.0.0
+  15-02-19
+  Major Feature
+  * #65184: Integration of Leaflet - responsive map
+            Constant Editor Categories
+            * BrowserMaps - Compatibility
+            TypoScript properties
+            * navigation.map.template.leaflet
+            See: http://leafletjs.com/
+
 6.0.8
   15-02-04
   Features
+  * #i0129: Radio buttons and checkbox: field got label
   * #i0127: Radial search: Don't display records without epmty lat and empty lon in list views
             Configuration by TypoScript Constant Editor
             * Category [BROWSERMAPS - CONTROLLING]
@@ -29,6 +40,7 @@ Manual
               * map_toggle.tmpl
   * #i0121: 3rd backend layout without HTML snippet for foundation
   Improvements
+  * #i0130: CSS: Checkbox row is moved to checkbox-row, radio button row is moved to radio-row
   * #i0124: Map default template: filter are moved from top to bottom
   Bugfix
   * #i0128: td class in case of an non default template
