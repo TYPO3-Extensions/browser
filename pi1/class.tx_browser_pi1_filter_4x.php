@@ -2500,7 +2500,7 @@ class tx_browser_pi1_filter_4x
    * @param	integer		$uid            : uid of the current item / row
    * @param	string		$value          : value of the current item / row
    * @return	string		$value_stdWrap  : The value stdWrapped
-   * @version 3.9.20
+   * @version 6.0.8
    * @since   3.9.9
    */
   private function get_filterItemCObj( $uid, $value )
@@ -2563,6 +2563,8 @@ class tx_browser_pi1_filter_4x
     $this->markerArray[ '###STYLE###' ] = $this->replace_itemStyle( $conf_array, '###STYLE###' );
     $this->markerArray[ '###TITLE###' ] = $this->replace_itemTitle( '###TITLE###' );
     $this->markerArray[ '###URL###' ] = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+    // #i0129, 150218, dwildt, 1+
+    $this->markerArray[ '###ID###' ] = $table . '__' . $field . '__' . $uid;
     $this->markerArray[ '###ITEM_SELECTED###' ] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
     // #40354, #40354, 4.1.7, 1+
     $this->markerArray[ '###TABLE.FIELD###' ] = $this->nicePiVar[ 'key_piVar' ];

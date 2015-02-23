@@ -30,10 +30,9 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.7
+ * @version 7.0.0
  * @since 3.9.6
  */
-
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
@@ -63,7 +62,7 @@
  *              SECTION: Init
  *  682:     private function init(  )
  *  704:     private function initCatDevider( )
- *  719:     private function initMainMarker( $template )
+ *  719:     private function initMapMarker( $template )
  *
  *              SECTION: Init global variables
  *  809:     private function initVar(  )
@@ -109,7 +108,9 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_map
+require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_mapleaflet.php');
+
+class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
 {
 
   // [OBJECT] parent object
@@ -123,19 +124,24 @@ class tx_browser_pi1_map
   // [INTEGER] Id of the single view
   private $singlePid = null;
   // [STRING] Type of the current view: list or single
-  private $view = null;
+  protected $view = null;
   // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
   public $enabled = null;
   // [STRING] GoogleMaps, Open Street Map
   private $provider = null;
   // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
-  private $confMap = null;
+  protected $confMap = null;
+  // #65184, 150221, dwildt, +
+  // [ARRAY] Array with elements all and center
+  protected $coordinates = array();
+  // [ARRAY] Array with the current marker
+  protected $marker = array();
   // [Integer] Number of the current typeNum
   public $int_typeNum = null;
   // [String] Name of the current typeNum
   public $str_typeNum = null;
   // [ARRAY] Contains the categories of the current records
-  private $arrCategories = null;
+  protected $arrCategories = null;
   // #i0062, 140714, dwildt, 2+
   // [ARRAY] Contains the rows without any category and the key of the "no category" label of the category form
   private $arrWoCategories = null;
@@ -145,6 +151,7 @@ class tx_browser_pi1_map
   private $catDevider = null;
   // [array] rows
   private $rowsBackup = null;
+  protected $zoomlevel = 18;
 
   /*   * *********************************************
    *
@@ -792,11 +799,11 @@ class tx_browser_pi1_map
    * ******************************************** */
 
   /**
-   * get_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+   * get_map( ): Replace the marker ###MAP### with the map. Returns the template.
    *
    * @param	string		$template: Current HTML template
-   * @return	array		$template: Template with map marker
-   * @version 4.5.6
+   * @return	array		$template: Template with a rendered map marker
+   * @version 7.0.0
    * @since   3.9.6
    */
   public function get_map( $template )
@@ -806,8 +813,13 @@ class tx_browser_pi1_map
 
     // init the map
     $this->init();
+
+    // RETURN: map isn't enabled
     switch ( true )
     {
+      case( $this->mapLLleafletIsEnabled()):
+        // Follow the workflow
+        break;
       case( empty( $this->enabled ) ):
       case( $this->enabled == 'disabled'):
         if ( $this->pObj->b_drs_map )
@@ -820,8 +832,7 @@ class tx_browser_pi1_map
       default:
         // Follow the workflow
         break;
-    }
-    // RETURN: map isn't enabled
+    } // RETURN: map isn't enabled
     // DRS
     if ( $this->pObj->b_drs_warn )
     {
@@ -851,48 +862,55 @@ class tx_browser_pi1_map
           break;
         case(!empty( $arr_result[ 'marker' ] ) ):
         default:
-// #i0020, 130718, dwildt
+          // #i0020, 130718, dwildt
           $this->pObj->rows = $arr_result[ 'marker' ];
           break;
       }
       $jsonRoutes = $arr_result[ 'jsonRoutes' ];
       unset( $arr_result );
-    }
+    } // if Map +Routes is enabled
 
-//$this->pObj->dev_var_dump( $this->pObj->rows );
-    // set the map marker (in case template is without the marker)
-    $template = $this->initMainMarker( $template );
-//    var_dump( __METHOD__, __LINE__, $template );
-    // render the map
+    $template = $this->initMapMarker( $template ); // add map marker, if marker is missing
 
     $template = $this->renderMap( $template );
-//    var_dump( __METHOD__, __LINE__, $template );
-//    die( ':(' );
-//$this->pObj->dev_var_dump( $this->pObj->rows );
 
-
-    if ( $this->enabled == 'Map +Routes' )
+    // RETURN map (without Routes)
+    if ( $this->enabled != 'Map +Routes' )
     {
-      switch ( true )
+      // RETURN the template
+      $this->rowsReset();
+      return $template;
+    } // RETURN map (without Routes)
+
+    $mode = $this->confMap[ 'compatibility.' ][ 'mode' ];
+    if ( $mode != 'oxMap (deprecated)' )
+    {
+      if ( $this->pObj->b_drs_warn )
       {
-        case( empty( $jsonRoutes ) ):
-          if ( $this->pObj->b_drs_warn )
-          {
-            $prompt = 'JSON array for the variable routes is empty!';
-            t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 3 );
-          }
-          break;
-        case(!empty( $jsonRoutes ) ):
-        default:
-          $template = str_replace( "'###ROUTES###'", $jsonRoutes, $template );
-          break;
+        $prompt = 'map mode isn\'t ' . $mode . '. Map +Routes will not handled.';
+        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 3 );
       }
+      $this->rowsReset();
+      return $template;
+    } // RETURN map (without Routes)
+
+    switch ( true )
+    {
+      case( empty( $jsonRoutes ) ):
+        if ( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'JSON array for the variable routes is empty!';
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 3 );
+        }
+        break;
+      case(!empty( $jsonRoutes ) ):
+      default:
+        $template = str_replace( "'###ROUTES###'", $jsonRoutes, $template );
+        break;
     }
 
-
-    // RETURN the template
+    // RETURN map (with Routes)
     $this->rowsReset();
-//$this->pObj->dev_var_dump( $this->pObj->rows );
     return $template;
   }
 
@@ -968,14 +986,40 @@ class tx_browser_pi1_map
   }
 
   /**
-   * initMainMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+   * getPobj( ): Init the leaflet class
+   *
+   * @return	void
+   * @access  public
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  public function getConfMap()
+  {
+    return $this->confMap;
+  }
+
+  /**
+   * getPobj( ): Init the leaflet class
+   *
+   * @return	void
+   * @access  public
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  public function getPobj()
+  {
+    return $this;
+  }
+
+  /**
+   * initMapMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
    *
    * @param	string		$template: Current HTML template
    * @return	array		$template: Template with map marker
    * @version 3.9.6
    * @since   3.9.6
    */
-  private function initMainMarker( $template )
+  private function initMapMarker( $template )
   {
     // map marker
     $str_mapMarker = '###MAP###';
@@ -1432,14 +1476,6 @@ class tx_browser_pi1_map
     }
     // RETURN : HTML template is not proper
 
-    if ( $arr_result[ 'error' ] )
-    {
-      $mapHashKey = '###MAP###';
-      $prompt = $arr_result[ 'prompt' ];
-      $template = str_replace( $mapHashKey, $prompt, $template );
-      return $template;
-    }
-
     $template = $this->renderMapMarker( $template, $mapTemplate );
 
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $mapTemplate, $template );
@@ -1459,7 +1495,7 @@ class tx_browser_pi1_map
    * @param	string		$map_template: ...
    * @param	[type]		$coordinates: ...
    * @return	string
-   * @version 4.1.0
+   * @version 7.0.0
    * @since   4.1.0
    */
   private function renderMapAutoCenterCoor( $map_template, $coordinates )
@@ -1523,8 +1559,14 @@ class tx_browser_pi1_map
     }
     // FOR all coordinates
     // #47632, #i0007, dwildt, 10+
+    // #65184, 150221, dwildt, +
+    $mode = $this->confMap[ 'compatibility.' ][ 'mode' ];
     switch ( true )
     {
+      // #65184, 150221, dwildt, +
+      case($mode != 'oxMap (deprecated)'):
+        $centerCoor = $this->renderMapAutoCenterCoorVersLeaflet( $objLibMap );
+        break;
       case( $this->pObj->typoscriptVersion <= 4005004 ):
         $centerCoor = $this->renderMapAutoCenterCoorVers12( $objLibMap );
         break;
@@ -1553,6 +1595,13 @@ class tx_browser_pi1_map
       (
       'map_template' => $map_template,
       'coordinates' => $coordinates
+    );
+
+//var_dump( __METHOD__, __LINE__, $coordinates, $centerCoor);
+    // #65184, 150221, dwildt, +
+    $this->coordinates = array(
+      'center' => $centerCoor,
+      'all' => $coordinates
     );
     return $arr_return;
   }
@@ -1628,10 +1677,26 @@ class tx_browser_pi1_map
   }
 
   /**
+   * renderMapAutoCenterCoorVersLeaflet( ) : Wrap center coordinates for oxMap version 1.2
+   *
+   * @param	object		$objLibMap  : ...
+   * @return	string		$centerCoor :
+   * @version 4.5.6
+   * @since   4.1.0
+   */
+  private function renderMapAutoCenterCoorVersLeaflet( $objLibMap )
+  {
+    list( $lon, $lat ) = $objLibMap->centerCoor();
+    $centerCoor = '[ ' . $lat . ', ' . $lon . ' ]';
+
+    return $centerCoor;
+  }
+
+  /**
    * renderMapAutoZoomLevel( ):
    *
    * @return	string  $map_template
-   * @version 5.0.10
+   * @version 7.0.0
    * @since   4.1.0
    */
   private function renderMapAutoZoomLevel( $map_template, $coordinates )
@@ -1657,6 +1722,13 @@ class tx_browser_pi1_map
         break;
     }
 
+    // #65184, 150221, dwildt, +
+    $maxZoomLevel = $this->confMap[ 'configuration.']['zoomLevel.']['max'];
+    if( $zoomLevel > $maxZoomLevel )
+    {
+      $zoomLevel = $maxZoomLevel;
+    }
+    $this->zoomlevel = $zoomLevel;
 
     $marker = $this->confMap[ 'configuration.' ][ 'zoomLevel.' ][ 'dynamicMarker' ];
     $marker = "'###" . strtoupper( $marker ) . "###'";
@@ -1887,10 +1959,53 @@ class tx_browser_pi1_map
    *
    * @param	string		$template  : current HTML template of the parent object
    * @return	array		$arr_return     : with elements error, template
+   * @internal  #65184
+   * @access private
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function renderMapGetTemplate( $template )
+  {
+    $this->mapLLleafletIsEnabled();
+    $arr_return = array();
+    $mode = $this->mapLLleafletIsEnabled();
+
+    switch ( $mode )
+    {
+      case(false):
+        $arr_return = $this->renderMapGetTemplateOxMap( $template );
+        break;
+      case(true):
+      default:
+        $arr_return = $this->renderMapGetTemplateLeaflet( $template );
+        break;
+    }
+    return $arr_return;
+  }
+
+  /**
+   * renderMapGetTemplateLeaflet( ): Get the HTML template
+   *
+   * @param	string		$template  : current HTML template of the parent object
+   * @return	array		$arr_return     : with elements error, template
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function renderMapGetTemplateLeaflet( $template )
+  {
+    $arr_return = $this->mapLLgetDivContainer( $template );
+    return $arr_return;
+  }
+
+  /**
+   * renderMapGetTemplateOxMap( ): Get the HTML template
+   *
+   * @param	string		$template  : current HTML template of the parent object
+   * @return	array		$arr_return     : with elements error, template
    * @version 4.5.6
    * @since   3.9.6
    */
-  private function renderMapGetTemplate( $template )
+  private function renderMapGetTemplateOxMap( $template )
   {
     $arr_return = array();
     $arr_return[ 'error' ] = false;
@@ -1914,12 +2029,12 @@ class tx_browser_pi1_map
       }
       // DRS - Development Reporting System
       // Error message
-      $str_map = '<h1 style="color:red;">' .
-              $this->pObj->pi_getLL( 'error_readlog_h1' ) .
-              '</h1>
-                  <p style="color:red;font-weight:bold;">' .
-              $this->pObj->pi_getLL( 'error_template_map_no' ) .
-              '</p>';
+      $str_map = '<h1 style="color:red;">'
+              . $this->pObj->pi_getLL( 'error_readlog_h1' )
+              . '</h1>'
+              . '<p style="color:red;font-weight:bold;">'
+              . $this->pObj->pi_getLL( 'error_template_map_no' )
+              . '</p>';
       // Error message
       // Replace the map marker in the template of the parent object
       $template = str_replace( $mapHashKey, $str_map, $template );
@@ -1972,25 +2087,87 @@ class tx_browser_pi1_map
    * ******************************************** */
 
   /**
-   * renderMap( ): Render the Map
+   * renderMapMarker( ): Render the Map
    *
    * @param	string		$template     : current HTML template of the parent object
    * @param	string		$mapTemplate  : the map
    * @return	string		$template     : current HTML template with the rendered map
-   * @version 6.0.7
-   * @since   3.9.6
+   * @version 7.0.0
+   * @since   7.0.0
    */
   private function renderMapMarker( $template, $mapTemplate )
   {
+    $mode = $this->confMap[ 'compatibility.' ][ 'mode' ];
+
+    switch ( $mode )
+    {
+      case('leaflet (default)'):
+        $template = $this->renderMapMarkerLeaflet( $template, $mapTemplate );
+        break;
+      case('oxMap (deprecated)'):
+        $template = $this->renderMapMarkerOxMap( $template, $mapTemplate );
+        break;
+      default:
+        $header = 'FATAL ERROR!';
+        $text = 'Unexpeted value. navigation.map.compatibility.mode is "' . $mode . '"';
+        $this->pObj->drs_die( $header, $text );
+        break;
+    }
+    return $template;
+  }
+
+  /**
+   * renderMapMarkerLeaflet( ): Render the Map
+   *
+   * @param	string		$template     : current HTML template of the parent object
+   * @param	string		$mapTemplate  : the map
+   * @return	string		$template     : current HTML template with the rendered map
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function renderMapMarkerLeaflet( $template, $mapTemplate )
+  {
+    $mapHashKey = '###MAP###';
+    $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate );
+    $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
+    $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $template );
+    if ( $templateWoMarker )
+    {
+//      var_dump( __METHOD__, __LINE__ );
+//      die( ':(' );
+      return $templateWoMarker;
+    }
+    // Add data
+    $mapTemplate = $this->renderMapMarkerVariablesSystem( $mapTemplate );
+
+    $arr_return = $this->mapLLjss( $template, $mapTemplate );
+    return $arr_return;
+  }
+
+  /**
+   * renderMapMarkerOxMap( ): Render the Map
+   *
+   * @param	string		$template     : current HTML template of the parent object
+   * @param	string		$mapTemplate  : the map
+   * @return	string		$template     : current HTML template with the rendered map
+   * @version 7.0.0
+   * @since   3.9.6
+   */
+  private function renderMapMarkerOxMap( $template, $mapTemplate )
+  {
     $mapHashKey = '###MAP###';
     // Substitute marker HTML
-    $markerArray = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate ) + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
+    $markerArray = $this->renderMapMarkerSnippetsHtmlCategories( $mapTemplate );
+    $markerArray = $markerArray + $this->renderMapMarkerSnippetsHtmlDynamic( $mapTemplate );
     $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
+//var_dump( __METHOD__, __LINE__, $markerArray, $mapTemplate );
     // Substitute marker HTML
     // #i0120, 150101, dwildt: 5+
     $templateWoMarker = $this->renderMapMarkerWoMarker( $mapHashKey, $template );
     if ( $templateWoMarker )
     {
+      var_dump( __METHOD__, __LINE__ );
+      die( ':(' );
       return $templateWoMarker;
     }
     // Add data
@@ -2125,7 +2302,6 @@ class tx_browser_pi1_map
     // Get category labels
     // #i0118, dwildt, 1-/+
     //$arrCategoriesFlipped = array_flip( $this->arrCategories[ 'labels' ] );
-//var_dump (__METHOD__, __LINE__, $this->arrCategories[ 'labels' ]);
     $arrCategoriesFlipped = array_flip( ( array ) $this->arrCategories[ 'labels' ] );
 
     // LOOP row
@@ -2180,6 +2356,8 @@ class tx_browser_pi1_map
       )
     );
     // Return array
+    // #65184, 150221, dwildt, +
+    $this->marker = $mapMarkers;
 
     return $arr_return;
   }
@@ -2906,19 +3084,22 @@ class tx_browser_pi1_map
   }
 
   /**
-   * renderMapMarkerSnippetsHtmlCategories( ):
+   * renderMapMarkerSnippetsHtmlCategories( ):  Returns HTML code for the marker ###FILTER_FORM###
+   *                                            Doesn't return anything in case of leaflet, because
+   *                                            leaflet hasn't the marker ###FILTER_FORM###
    *
-   * @param	[type]		$$map_template: ...
+   * @param	string		$map_template: Current HTML code of the map template
    * @return	array
+   * @access protected
    * @version 5.0.14
    * @since   4.1.0
    */
-  private function renderMapMarkerSnippetsHtmlCategories( $map_template )
+  protected function renderMapMarkerSnippetsHtmlCategories( $map_template )
   {
     $markerArray = array();
 
     $inCaseOfOneCategory = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'display.' ][ 'inCaseOfOneCategory' ];
-//var_dump(__METHOD__, __LINE__, $this->confMap);
+//    var_dump( __METHOD__, __LINE__, $inCaseOfOneCategory, $this->categoriesMoreThanOne() );
 
     switch ( true )
     {
@@ -2927,7 +3108,7 @@ class tx_browser_pi1_map
         {
           if ( $this->pObj->b_drs_map )
           {
-            $prompt = 'There isn\'t more than one category. Any form with categories will rendered.';
+            $prompt = 'There isn\'t more than one category. Any form with categories won\'t rendered.';
             t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
           }
           return $markerArray;
@@ -2942,9 +3123,11 @@ class tx_browser_pi1_map
 
     $tsProperty = 'categories';
     $markerArray = $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
+    //var_dump( __METHOD__, __LINE__, $map_template, $markerArray );
 
     $inputs = $this->categoriesFormInputs();
     $markerArray[ '###FILTER_FORM###' ] = str_replace( '###INPUTS###', $inputs, $markerArray[ '###FILTER_FORM###' ] );
+    //var_dump( __METHOD__, __LINE__, $markerArray );
 
     return $markerArray;
   }
@@ -2954,13 +3137,15 @@ class tx_browser_pi1_map
    *
    * @param	[type]		$$map_template: ...
    * @return	array
+   * @access protected
    * @version 4.1.0
    * @since   4.1.0
    */
-  private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
+  protected function renderMapMarkerSnippetsHtmlDynamic( $map_template )
   {
     $tsProperty = 'dynamic';
     $markerArray = $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
+    //var_dump( __METHOD__, __LINE__, $markerArray );
 
     return $markerArray;
   }
@@ -3230,18 +3415,22 @@ class tx_browser_pi1_map
    */
   private function renderMapMarkerWoMarker( $mapHashKey, $template )
   {
+    // RETURN: there are categories
     if ( !empty( $this->arrCategories ) )
     {
       return null;
     }
 
+    // Template without any category
     $template = str_replace( $mapHashKey, null, $template );
 
+    // RETURN: without any DRS prompt
     if ( !$this->pObj->b_drs_map )
     {
       return $template;
     }
 
+    // RETURN: with DRS prompt
     $prompt = 'Map is returned without any content.';
     t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
 
@@ -3265,8 +3454,8 @@ class tx_browser_pi1_map
   {
     $arrReturn = array
       (
-      'error' => false
-      , 'prompt' => null
+      'error' => false,
+      'prompt' => null
     );
 
     // RETURN : Map +Routes is disabled
@@ -3277,11 +3466,32 @@ class tx_browser_pi1_map
       {
         $prompt = 'Map +Routes is disabled.';
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      // DRS
+      } // DRS
       return $arrReturn;
-    }
-    // RETURN : Map +Routes is disabled
+    } // RETURN : Map +Routes is disabled
+
+    $mode = $this->confMap[ 'compatibility.' ][ 'mode' ];
+
+    // RETURN : leaflet is enabled
+    switch ( $mode )
+    {
+      case('leaflet (default)'):
+        // DRS
+        if ( $this->pObj->b_drs_map )
+        {
+          $prompt = 'Map +Routes is disabled, because map mode is ' . $mode;
+          t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
+        } // DRS
+        return $arrReturn;
+      case('oxMap (deprecated)'):
+        // follow the workflow
+        break;
+      default:
+        $header = 'FATAL ERROR!';
+        $text = 'Unexpeted value. navigation.map.compatibility.mode is "' . $mode . '"';
+        $this->pObj->drs_die( $header, $text );
+        break;
+    } // RETURN : leaflet is enabled
     // Init
     $this->renderMapRouteInit();
 

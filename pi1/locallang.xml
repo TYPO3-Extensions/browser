@@ -235,8 +235,8 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_table_no"><![CDATA[There aren't any tables for processing.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_array"><![CDATA[The returned template is an array. This is an error.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_indexbrowser_no_subpart"><![CDATA[The subpart marker INDEXBROWSER (or AZBROWSER (deperecated!))  is missing in the HTML template.<br /><br />Browser - TYPO3 without PHP]]></label>
-      <label index="error_template_map_no"><![CDATA[There isn't any HTML template for the open street map.<br /><br />Browser - TYPO3 without PHP]]></label>
-      <label index="error_template_map_no_subpart"><![CDATA[The subpart TEMPLATE_MAP is missing in the HTML template for the open street map.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_map_no"><![CDATA[There isn't any HTML template for the map.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_map_no_subpart"><![CDATA[The subpart TEMPLATE_MAP is missing in the HTML template for the map.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_no">There isn't any HTML template.<![CDATA[<br />]]>
                                         <![CDATA[<br />]]>
                                         Please check:<![CDATA[<br />]]>
@@ -299,6 +299,11 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="label_selectbox_noValue">No value</label>
       <label index="label_sword_default">Search Word</label>
       <label index="label_to">To</label>
+      <label index="leafletLabelGoogleHybrid">Hybrid</label>
+      <label index="leafletLabelGoogleRoadmap">Google Maps</label>
+      <label index="leafletLabelGoogleSatellite">Satellite</label>
+      <label index="leafletLabelGoogleTerrain">Terrain</label>
+      <label index="leafletLabelOSMRoadmap">Open Street Map</label>
       <label index="phrase_noMapCat">Without any category</label>
       <label index="phrase_norecord">Sorry, there is no matched record!</label>
     </languageKey>
@@ -521,8 +526,8 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_table_no"><![CDATA[Es konnten keine Tabellen für die Verarbeitung gefunden werden.]]></label>
       <label index="error_template_array"><![CDATA[Das Template ist ein Array. Das ist ein Fehler.<br /><br />Browser - TYPO3 ohne PHP]]></label>
       <label index="error_template_indexbrowser_no_subpart"><![CDATA[Der Subpart-Marker INDEXBROWSER (oder AZBROWSER (&uumlberholt!)) fehlt im HTML-Template.<br /><br />Browser - TYPO3 without PHP]]></label>
-      <label index="error_template_map_no"><![CDATA[Es gibt kein HTML-Template f&uuml;r die OpenStreetMap-Karte.<br /><br />Browser - TYPO3 ohne PHP]]></label>
-      <label index="error_template_map_no_subpart"><![CDATA[Im HTML-Template f&uuml;r die OpenStreetMap-Karte fehlt der Subpart TEMPLATE_MAP<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_template_map_no"><![CDATA[Es gibt kein HTML-Template f&uuml;r die Karte.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_template_map_no_subpart"><![CDATA[Im HTML-Template f&uuml;r die Karte fehlt der Subpart TEMPLATE_MAP<br /><br />Browser - TYPO3 ohne PHP]]></label>
       <label index="error_template_no"> Es gibt kein HTML-Template.<![CDATA[<br />]]>
                                         <![CDATA[<br />]]>
                                         Du kannst folgendes pr<![CDATA[&uuml;]]>fen:<![CDATA[<br />]]>
@@ -585,6 +590,11 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="label_selectbox_noValue">Ohne Angabe</label>
       <label index="label_sword_default">Begriff suchen</label>
       <label index="label_to">Bis</label>
+      <label index="leafletLabelGoogleHybrid">Satellit/Stra<![CDATA[&szlig;]]>e</label>
+      <label index="leafletLabelGoogleRoadmap">Google Maps</label>
+      <label index="leafletLabelGoogleSatellite">Satellit</label>
+      <label index="leafletLabelGoogleTerrain">Gel<![CDATA[&auml;]]>nde</label>
+      <label index="leafletLabelOSMRoadmap">Open Street Map</label>
       <label index="phrase_noMapCat">Ohne Kategorie</label>
       <label index="phrase_norecord">Zu Ihrer Anfrage gibt es keine Treffer.</label>
     </languageKey>
