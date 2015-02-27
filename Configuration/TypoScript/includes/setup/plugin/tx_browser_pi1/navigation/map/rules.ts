@@ -18,7 +18,7 @@ plugin.tx_browser_pi1 {
           // true, if leavelet and a map provider is enabled. Test it at Configuration/TypoScript/includes/setup/PAGE/testleaflet.ts
         leafletIsEnabled =
         leafletIsEnabled  {
-          value = 11
+          value = 111
           equals {
             stdWrap {
               cObject = COA
@@ -30,13 +30,25 @@ plugin.tx_browser_pi1 {
                     // true, if leavelet is the current modul
                   if =
                   if {
+                    value   = disabled
+                    equals  = {$plugin.tx_browser_pi1.map.controlling.enabled}
+                    negate = 1
+                  }
+                }
+                  // true, if leavelet is the current modul
+                20 = TEXT
+                20 {
+                  value = 1
+                    // true, if leavelet is the current modul
+                  if =
+                  if {
                     value   = leaflet (default)
                     equals  = {$plugin.tx_browser_pi1.map.compatibility.mode}
                   }
                 }
                   // true, if one of the OpenStreetMap or GoogleMaps layers is enabled at least
-                20 = TEXT
-                20 {
+                30 = TEXT
+                30 {
                   value = 1
                     // true, if one of the GoogleMaps layers hybrid, roadmap, stellite or terrain is enabled at least
                   if =
@@ -113,7 +125,7 @@ plugin.tx_browser_pi1 {
           equals {
             stdWrap {
               cObject {
-                20 {
+                30 {
                   if {
                     isTrue {
                       stdWrap {
@@ -135,14 +147,14 @@ plugin.tx_browser_pi1 {
           // true, if leavelet and providers and mastercluster is enabled. Test it at Configuration/TypoScript/includes/setup/PAGE/testleaflet.ts
         leafletWiMastercluster < plugin.tx_browser_pi1.navigation.map.rules.leafletIsEnabled
         leafletWiMastercluster {
-          value = 111
+          value = 1111
           equals {
             stdWrap {
               cObject = COA
               cObject {
                   // true, if mastercluster is enabled
-                30 = TEXT
-                30 {
+                40 = TEXT
+                40 {
                   value = 1
                     // true, if mastercluster is enabled
                   if =

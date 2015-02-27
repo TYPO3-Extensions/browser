@@ -1703,14 +1703,19 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
    */
   private function renderMapAutoZoomLevel( $map_template, $coordinates )
   {
-    // #i0057, 140712, dwildt, +
-    if ( !$this->renderMapAutoZoomLevelRequirements() )
-    {
-      return $map_template;
-    }
+      // #65184, 150223, dwildt, -
+//    // #i0057, 140712, dwildt, +
+//    if ( !$this->renderMapAutoZoomLevelRequirements() )
+//    {
+//      return $map_template;
+//    }
 
     switch ( count( $coordinates ) )
     {
+      // #65184, 150223, dwildt, +
+      case($this->confMap[ 'configuration.' ][ 'zoomLevel.' ][ 'mode' ] == 'fixed' ):
+        $zoomLevel = $this->renderMapAutoZoomLevelFix( );
+        break;
       case(0):
         // #i0061
         $zoomLevel = 1;
@@ -1725,11 +1730,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     }
 
     // #65184, 150221, dwildt, +
-    $maxZoomLevel = $this->confMap[ 'configuration.']['zoomLevel.']['max'];
-    if( $zoomLevel > $maxZoomLevel )
-    {
-      $zoomLevel = $maxZoomLevel;
-    }
+    $zoomLevel = $this->renderMapAutoZoomLevelMax( $zoomLevel );
     $this->zoomlevel = $zoomLevel;
 
     $marker = $this->confMap[ 'configuration.' ][ 'zoomLevel.' ][ 'dynamicMarker' ];
@@ -1739,6 +1740,21 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
 
     // RETURN the handled template
     return $map_template;
+  }
+
+  /**
+   * renderMapAutoZoomLevelFix( ):
+   *
+   * @return	integer $zoomLevel
+   * @access private
+   * @internal #65184
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function renderMapAutoZoomLevelFix()
+  {
+    $zoomLevel = $this->confMap[ 'configuration.' ][ 'zoomLevel.' ][ 'start' ];
+    return $zoomLevel;
   }
 
   /**
@@ -1831,6 +1847,26 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     $lngFraction = $lngDiff / 360;
 
     return $lngFraction;
+  }
+
+  /**
+   * renderMapAutoZoomLevelMax( ):
+   *
+   * @return	integer $zoomLevel
+   * @access private
+   * @internal #65184
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  private function renderMapAutoZoomLevelMax( $zoomLevel )
+  {
+    $maxZoomLevel = $this->confMap[ 'configuration.' ][ 'zoomLevel.' ][ 'max' ];
+    if ( $zoomLevel <= $maxZoomLevel )
+    {
+      return $zoomLevel;
+    }
+
+    return $maxZoomLevel;
   }
 
   /**

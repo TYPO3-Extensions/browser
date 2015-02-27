@@ -524,6 +524,8 @@ plugin.tx_browser_pi1 {
           dynamicMarker = oxMapConfigStartLevel
             // [INTEGER] Maximum zoom level
           max           = {$plugin.tx_browser_pi1.map.zoomLevel.max}
+            // [INTEGER] The start zoom level. Value from 1 to 18. Value has an effect only, if zoom level mode is "fixed".
+          start         = {$plugin.tx_browser_pi1.map.zoomLevel.start}
         }
       }
     }

@@ -49,6 +49,7 @@ class tx_browser_pi1_mapleaflet
 //  // [string]
   private $mapLLjssLeafletFooterInline = null;
   private $mapLLleafletIsEnabled = null;
+  private $mapLLOverlayIsEmpty = true;
   private $mapLLProviderGoogleIsEnabled = null;
   private $mapLLProviderIsEnabled = null;
   private $mapLLProviderOsmIsEnabled = null;
@@ -221,13 +222,17 @@ class tx_browser_pi1_mapleaflet
       return $this->mapLLleafletIsEnabled;
     }
 
-    $mode = $this->confMap[ 'compatibility.' ][ 'mode' ];
+    if ( $this->mapLLMapIsDisabled() )
+    {
+      return false;
+    }
 
     if ( !$this->mapLLProviderIsEnabled() )
     {
       return false;
     }
 
+    $mode = $this->confMap[ 'compatibility.' ][ 'mode' ];
     switch ( $mode )
     {
       case('leaflet (default)'):
@@ -237,6 +242,33 @@ class tx_browser_pi1_mapleaflet
       default:
         $header = 'FATAL ERROR!';
         $text = 'Unexpeted value. navigation.map.compatibility.mode is "' . $mode . '"';
+        $this->pObj->drs_die( $header, $text );
+        exit;
+    }
+  }
+
+  /**
+   * mapLLMapIsDisabled( ):
+   *
+   * @return	boolean
+   * @internal  #65184
+   * @access protected
+   * @version 7.0.0
+   * @since   7.0.0
+   */
+  protected function mapLLMapIsDisabled()
+  {
+    $enabled = $this->confMap[ 'enabled' ];
+    switch ( $enabled )
+    {
+      case('disabled'):
+      case('Map +Routes'):
+        return true;
+      case('Map'):
+        return false;
+      default:
+        $header = 'FATAL ERROR!';
+        $text = 'Unexpeted value. navigation.map.$enabled is "' . $mode . '"';
         $this->pObj->drs_die( $header, $text );
         exit;
     }
@@ -413,7 +445,7 @@ class tx_browser_pi1_mapleaflet
   {
     $hashKey = '###MAP###';
 
-    $this->mapLLinit();
+    $this->mapLLinit( $template, $mapTemplate );
 
     $this->mapLLjssComment();
     $this->mapLLjssMapObject();
@@ -474,6 +506,15 @@ class tx_browser_pi1_mapleaflet
       $strLayers = implode( ', ', $arrLayers );
     }
 
+    switch ( true )
+    {
+      case(!$this->mapLLOverlayIsEmpty ):
+      case($strLayers ):
+        // Follow the workflow
+        break;
+      default;
+        return;
+    }
 
     $this->mapLLjssLeafletFooterInline = ''
             . $this->mapLLjssLeafletFooterInline
@@ -649,6 +690,7 @@ class tx_browser_pi1_mapleaflet
                 . "var overlays = { };"
                 . PHP_EOL
         ;
+        $this->mapLLOverlayIsEmpty = true;
         return;
       case($this->confMap[ 'configuration.' ][ 'overlays' ]):
       default:
@@ -666,6 +708,7 @@ class tx_browser_pi1_mapleaflet
                 . "var overlays = { " . $strOverlays . " };"
                 . PHP_EOL
         ;
+        $this->mapLLOverlayIsEmpty = false;
         return;
     }
   }
