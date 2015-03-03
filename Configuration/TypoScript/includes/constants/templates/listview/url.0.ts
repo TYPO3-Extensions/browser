@@ -13,9 +13,9 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Templates - List - URL 0*//105;        type=options[http,https];  label= Scheme:Scheme is used, if absolute Url is enabled.
   templates.listview.url.0.forceAbsoluteUrlScheme = http
   # cat=Browser - Templates - List - URL 0*//106;        type=string;  label= Alias for showUid:If the destination tables is using an alias for the showUid, you must enter it. I.e: jobUid
-  templates.listview.url.0.showUid  =
+  templates.listview.url.0.showUid  = showUid
   # cat=Browser - Templates - List - URL 0*//107;        type=int+;    label= PID of single view:Page id of the single view. Leave it empty, if the list view and single have the same pid. I.e: 142
-  templates.listview.url.0.singlePid  =
+  templates.listview.url.0.singlePid  = showUid
   # cat=Browser - Templates - List - URL 0*//others/999; type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   templates.listview.url.0.links = Click me!
 

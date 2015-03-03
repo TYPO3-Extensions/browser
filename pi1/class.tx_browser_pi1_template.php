@@ -1738,6 +1738,7 @@ class tx_browser_pi1_template
 
     $markerArrayStatic = $this->tmpl_marker();
     // LOOP : tablefields
+//var_dump( __METHOD__, __LINE__, $tableFields );
     foreach ( ( array ) $tableFields as $tableField )
     {
       $typolink = $this->tmplHeadTypolink( $tableField, $arrOrderByFields, $tableFieldWiAscOrDesc );
@@ -3657,9 +3658,9 @@ class tx_browser_pi1_template
     $this->tmpl_rmFields();
 
     $handleAs = $this->pObj->arrHandleAs;
-//var_dump(__METHOD__, __LINE__, $handleAs);
     // Wrap all elements. If the fieldname is a marker in the HTML-Template, it will be replaced
     $markerArray = $this->render_handleAs( $elements, $handleAs, $markerArray );
+//var_dump(__METHOD__, __LINE__, $handleAs, $markerArray);
     $markerArray = $this->pObj->objZz->extend_marker_wi_pivars( $markerArray );
 
     $lAutoconf = $this->conf_view[ 'autoconfig.' ];
