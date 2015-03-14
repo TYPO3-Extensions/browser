@@ -130,10 +130,9 @@ class tx_browser_pi1_template
   // [Array] Array [table.field] = $value.
   // It is needed by social media bookmarks in a default single view.
   var $arr_curr_value = false;
-
   private $objSearch = null;
-  // [object] object of the search class
 
+  // [object] object of the search class
   // Variables set by this class
 
   /**
@@ -182,6 +181,35 @@ class tx_browser_pi1_template
     $this->pObj->objCObjData->reset();
     $this->pObj->local_cObj->data = $this->dataLocalCobj;
     unset( $this->dataLocalCobj );
+  }
+
+  /*   * *********************************************
+   *
+   * GroupBy
+   *
+   * ******************************************** */
+
+  /**
+   * drsEmptySubpartDie( )
+   *
+   * @param	string		$marker   : Marker
+   * @param	string		$subpart  : Subpart
+   * @return	void
+   * @internal         #i0133
+   * @version 7.0.1
+   * @since 7.0.1
+   */
+  private function drsEmptySubpartDie( $marker, $subpart )
+  {
+    if ( !empty( $subpart ) )
+    {
+      return;
+    }
+
+    $header = 'FATAL ERROR!';
+    $text = 'Template doesn\'t contain needed subpart marker: ' . $marker;
+    $this->pObj->drs_die( $header, $text );
+    die( __METHOD__ . ' #' . __LINE__ );
   }
 
   /*   * *********************************************
@@ -628,7 +656,6 @@ class tx_browser_pi1_template
     $html = null;
     $wiDefaultTemplate = true;
     $markerArray = $this->pObj->objTyposcript->wrapRow( $template, $wiDefaultTemplate, $uid );
-//var_dump( __METHOD__, __LINE__, $markerArray );
 
     $currField = 0;
     $sumFields = count( $markerArray );
@@ -670,7 +697,7 @@ class tx_browser_pi1_template
     $html = null;
     $wiDefaultTemplate = false;
     $markerArray = $this->pObj->objTyposcript->wrapRow( $template, $wiDefaultTemplate, $uid );
-
+//var_dump( __METHOD__, __LINE__, $markerArray );
     #i0128 +
 //    $currField = 0;
 //    $sumFields = count( $markerArray );
@@ -694,7 +721,6 @@ class tx_browser_pi1_template
 //      $html = $html . $htmlField;
 //      $currField++;
 //    }
-
     #i0128 -
     $socialmedia_bookmarks = $this->htmlFields5xBookmark( $uid );
     $markerArray[ '###SOCIALMEDIA_BOOKMARKS###' ] = $socialmedia_bookmarks;
@@ -1413,7 +1439,6 @@ class tx_browser_pi1_template
     $this->init();
     $resultphrase = $this->objSearch->resultphrase();
     return $resultphrase;
-
   }
 
   /**
@@ -1564,7 +1589,7 @@ class tx_browser_pi1_template
 
     $typolink = $this->pObj->objExport->csv_value( $typolink );
 
-    if ( in_array( $tableField, $arrOrderByFields ) )
+    if ( in_array( $tableField, ( array ) $arrOrderByFields ) )
     {
       $sort = array(
         'sort' => $tableFieldWiAscOrDesc[ $tableField ][ 'param' ]
@@ -1605,12 +1630,19 @@ class tx_browser_pi1_template
    * tmplHeadOrderbyFields() :
    *
    * @return	array
-   * @version 5.0.0
+   * @version 7.0.2
    * @since 5.0.0
    */
   private function tmplHeadOrderbyFields()
   {
     $arrOrderByFields = null;
+
+    // #i0138, 150310, dwildt, 4+
+    // Table head should not get any oder properties
+    $tableHead_orderBy = $this->lDisplayList[ 'tableHead_orderBy' ];
+    if( empty($tableHead_orderBy)){
+      return null;
+    }
 
     $csvOrderBy = $this->pObj->conf_sql[ 'orderBy' ];
     $csvOrderBy = str_ireplace( ' desc', '', $csvOrderBy );
@@ -1695,7 +1727,7 @@ class tx_browser_pi1_template
     $tableFieldWiAscOrDesc = array();
     foreach ( ( array ) $tableFields as $tableField )
     {
-      if ( !in_array( $tableField, $arrOrderByFields ) )
+      if ( !in_array( $tableField, ( array ) $arrOrderByFields ) )
       {
         continue;
       }
@@ -2221,7 +2253,6 @@ class tx_browser_pi1_template
    */
   public function tmplListview( $template, $rows )
   {
-//var_dump( __METHOD__, __LINE__, $template );
     // #64116, 150104, dwildt, 1+
     $this->lDisplayList = $this->pObj->lDisplayList;
 
@@ -2260,7 +2291,10 @@ class tx_browser_pi1_template
     // Init the global array $arrHandleAs
     $this->pObj->objTca->setArrHandleAs();
 
-    $this->pObj->rows = $rows;
+    // 150303, dwildt, 1-/+
+    //$this->pObj->rows = $rows;
+    $this->setGlobalRows( $rows );
+
 
     // Hook for handle the consolidated rows
     $this->hook_row_list_consolidated();
@@ -2289,7 +2323,7 @@ class tx_browser_pi1_template
         $this->pObj->timeTracking_log( $debugTrailLevel, 'After tmplListviewWoItemMarker()' );
         break;
     }
-
+//var_dump( __METHOD__, __LINE__, $template );
     // Fill up the template with content
 
     $markerArray = $this->tmpl_marker( $markerArray );
@@ -3488,7 +3522,7 @@ class tx_browser_pi1_template
    *
    * @param	string		$template : The SQL row (elements)
    * @return	boolean		true, if row is empty, false, if not.
-   * @version 4.1.13
+   * @version 7.0.2
    * @since 1.0.0
    */
   private function tmplRowIsDefaultDesign( $template )
@@ -3501,10 +3535,14 @@ class tx_browser_pi1_template
     {
       case( 'list' ):
         $tmpl_element = $this->pObj->cObj->getSubpart( $template, '###LISTBODYITEM###' );
+        // #i0133, 150304, dwildt, 1+
+        $this->drsEmptySubpartDie( '###LISTBODYITEM###', $tmpl_element );
         $pos = strpos( $tmpl_element, '###ITEM###' );
         break;
       case( 'single' ):
         $tmpl_element = $this->pObj->cObj->getSubpart( $template, '###SINGLEBODYROW###' );
+        // #i0133, 150304, dwildt, 1+
+        $this->drsEmptySubpartDie( '###SINGLEBODYROW###', $tmpl_element );
         $pos = strpos( $tmpl_element, '###VALUE###' );
         break;
       default:
@@ -3602,18 +3640,18 @@ class tx_browser_pi1_template
     return false;
   }
 
-
   /**
    * tmplSingleview() : Returns the single view
    *
    * @param	string		$template : current template
    * @param	array		$rows     : current rows
    * @return	string
-   * @version 5.0.0
+   * @version 7.0.2
    * @since 1.0.0
    */
   public function tmplSingleview( $template, $rows )
   {
+//var_dump( __METHOD__, __LINE__, $rows);
     // Get displaySingle configuration
     $lDisplaySingle = $this->setDisplaySingle();
 
@@ -3626,7 +3664,8 @@ class tx_browser_pi1_template
     // Set the globals elements and rows
     $rows = $this->pObj->rows;
     $elements = $this->setGlobalElementsOfFirstRow( $rows );
-    $this->setGlobalRows( $rows );
+    // 150303, dwildt, 1-
+    //$this->setGlobalRows( $rows );
 
     $this->updateWizard( 'displaySingle.noItemMessage', $lDisplaySingle );
 
@@ -3660,7 +3699,7 @@ class tx_browser_pi1_template
     $handleAs = $this->pObj->arrHandleAs;
     // Wrap all elements. If the fieldname is a marker in the HTML-Template, it will be replaced
     $markerArray = $this->render_handleAs( $elements, $handleAs, $markerArray );
-//var_dump(__METHOD__, __LINE__, $handleAs, $markerArray);
+//var_dump(__METHOD__, __LINE__, $markerArray);
     $markerArray = $this->pObj->objZz->extend_marker_wi_pivars( $markerArray );
 
     $lAutoconf = $this->conf_view[ 'autoconfig.' ];
@@ -3685,6 +3724,10 @@ class tx_browser_pi1_template
     $markerArray[ '###TEXT###' ] = $this->tmplSingleviewText( $template, $handleAs, $elements );
     $elements = $this->pObj->elements;
 
+    // #i0133, 150304, dwildt, 2+
+    $tmpl_element = $this->pObj->cObj->getSubpart( $template, '###SINGLEBODYROW###' );
+    $this->drsEmptySubpartDie( '###SINGLEBODYROW###', $tmpl_element );
+
     // Substitute some markers
     $useTyposcriptEngine4x = $this->pObj->objZz->get_advanced_5_0_0_useTyposcriptEngine4x();
     switch ( $useTyposcriptEngine4x )
@@ -3695,10 +3738,13 @@ class tx_browser_pi1_template
         break;
       case( false ):
       default:
+//var_dump( __METHOD__, __LINE__, $markerArray );
         // #59669, 140624, dwildt, 1+
-        $htmlRow = $this->htmlRows5x( $template, '###SINGLEBODY###', '###SINGLEBODYROW###', $markerArray );
+        //$htmlRow = $this->htmlRows5x( $template, '###SINGLEBODY###', '###SINGLEBODYROW###', $markerArray );
+        $htmlRow = $this->htmlRows5x( $template, '###SINGLEBODY###', '###SINGLEBODYROW###' );
+//var_dump( __METHOD__, __LINE__, $htmlRow);
 //        var_dump( __METHOD__, __LINE__, $htmlRow, $template );
-//        var_dump( __METHOD__, __LINE__, $htmlRow );
+//        var_dump( __METHOD__, __LINE__, $this->pObj->local_cObj->data );
 //        die( 'Auskommentierten Code oben beachten :(' );
 //        $template = $this->pObj->cObj->substituteSubpart( $template, '###SINGLEBODY###', $htmlRow, true );
 //      var_dump( __METHOD__, __LINE__, 'Titel in den Head!' );
@@ -4051,7 +4097,7 @@ class tx_browser_pi1_template
   private function tmplTableTrTdClass( $name, $currPosition, $max )
   {
     $odd = $this->lDisplayList[ 'templateMarker.' ][ 'cssClass.' ][ 'odd' ];
-      // #i0126, 150206, dwildt, 1+
+    // #i0126, 150206, dwildt, 1+
     $wrap = $this->lDisplayList[ 'templateMarker.' ][ 'cssClass.' ][ 'wrap' ];
 
     $max = $max - 1;
@@ -4072,8 +4118,8 @@ class tx_browser_pi1_template
       }
     }
 
-      // #i0126, 150206, dwildt, 4+
-    if( $wrap )
+    // #i0126, 150206, dwildt, 4+
+    if ( $wrap )
     {
       $class = ' class="' . $class . '"';
     }

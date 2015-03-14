@@ -8,10 +8,26 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.0.3
+  15-03-10
+  Bugfix
+  * #i0141: Order of list items with translation and language overlay
+  * #i0140: Order of filter items with language overlay
+  * #i0139: SQL ressource error in case of an empty result in localisation mode
+
 7.0.2
-  15-03-03
+  15-03-04
+  Features
+  * #i0138: Disable order properties in the table head. See:
+            * plugin.tx_browser_pi1.displayList.tableHead_orderBy
   Improvement
-  * #i0132: Constants for imaghe and url got default values
+  * #i0136: debugTrail() compatibility TYPO3 4.x / 6.x
+  * #i0133: Template must contain subpart marker ###SINGLEBODYROW### or ###LISTBODYITEM###
+  * #i0132: Constants for image and url got default values
+  Bugfix
+  * #i0137: Filter aren't respected in localisation mode and in case of no counting
+  * #i0135: Order of filter items wasn't proper in case of no counting
+  * #i0134: Proper localisation for the single view
 
 7.0.1
   15-02-24

@@ -289,6 +289,8 @@ plugin.tx_browser_pi1 {
         }
       }
     }
+      // [BOOLEAN] table head get order by properties. This feature corresponds with the select and/or the orderBy statement.
+    tableHead_orderBy = 1
       // Displays the no-item-message, if SQL query will return an empty result
     noItemMessage = TEXT
     noItemMessage {

@@ -74,7 +74,7 @@ if ( $version < 6002000 )
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.0
+ * @version 7.0.2
  * @since 0.0.1
  */
 
@@ -411,7 +411,6 @@ class tx_browser_pi1 extends tslib_pibase
     $this->timeTracking_log( $debugTrailLevel, 'START' );
 
 
-
     //////////////////////////////////////////////////////////////////////
     //
       // Init Update Check
@@ -565,7 +564,7 @@ class tx_browser_pi1 extends tslib_pibase
       // Prepaire piVars
     // Allocates values to $this->piVars, $this->pi_isOnlyFields and $this->views
     $this->objZz->prepairePiVars();
-    
+
     // Prepaire piVars
     //////////////////////////////////////////////////////////////////////
     //
@@ -1103,7 +1102,7 @@ class tx_browser_pi1 extends tslib_pibase
    *
    * @param	integer		$level: ...
    * @return	array		$arr_return : with elements class, method, line and prompt
-   * @version 3.9.9
+   * @version 7.0.2
    * @since   3.9.9
    */
   public function drs_debugTrail( $level = 1 )
@@ -1111,7 +1110,16 @@ class tx_browser_pi1 extends tslib_pibase
     $arr_return = null;
 
     // Get the debug trail
-    $strDebugTrail = t3lib_utility_Debug::debugTrail();
+    switch ( TRUE )
+    {
+      case ( $this->typo3Version < 6000000 ):
+        $strDebugTrail = t3lib_utility_Debug::debugTrail();
+        break;
+      case ( $this->typo3Version >= 6000000 ): // #i0136, 150309, dwildt, 4+
+      default:
+        $strDebugTrail = \TYPO3\CMS\Core\Utility\DebugUtility::debugTrail();
+        break;
+    }
 
     // Get debug trail elements
     $arrDebugTrail = explode( '//', $strDebugTrail );
@@ -2027,7 +2035,7 @@ class tx_browser_pi1 extends tslib_pibase
       $this->b_drs_error = true;
       $this->b_drs_warn = true;
       $this->b_drs_info = true;
-      $this->b_drs_cObjData = true;
+      //$this->b_drs_cObjData = true;
       $this->b_drs_devTodo = true;
       $this->b_drs_filter = true;
       t3lib_div::devlog( '[INFO/DRS] DRS - Development Reporting System:<br />' . $this->arr_extConf[ 'drs_mode' ], $this->extKey, 0 );

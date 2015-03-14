@@ -169,9 +169,9 @@ class tx_browser_pi1_sql_auto
     $arr_return = array();
 
     $pluginId = $this->pObj->cObj->data[ 'uid' ];
-    if( isset( $staticArray[$pluginId]['arr_return'] ))
+    if ( isset( $staticArray[ $pluginId ][ 'arr_return' ] ) )
     {
-      return $staticArray[$pluginId]['arr_return'];
+      return $staticArray[ $pluginId ][ 'arr_return' ];
     }
 
     // Add filter tables to class var $statementTables
@@ -190,7 +190,7 @@ class tx_browser_pi1_sql_auto
       $arr_return[ 'error' ][ 'status' ] = true;
       $arr_return[ 'error' ][ 'header' ] = $str_header;
       $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
-      $staticArray[$pluginId]['arr_return'] = $arr_return;
+      $staticArray[ $pluginId ][ 'arr_return' ] = $arr_return;
       return $arr_return;
     }
     // Get SELECT
@@ -220,7 +220,7 @@ class tx_browser_pi1_sql_auto
       $arr_return[ 'error' ][ 'status' ] = true;
       $arr_return[ 'error' ][ 'header' ] = $str_header;
       $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
-      $staticArray[$pluginId]['arr_return'] = $arr_return;
+      $staticArray[ $pluginId ][ 'arr_return' ] = $arr_return;
       return $arr_return;
     }
     // Get ORDER BY
@@ -266,7 +266,7 @@ class tx_browser_pi1_sql_auto
       $arr_return[ 'data' ][ $str_query_part ] = $str_statement;
     }
 
-    $staticArray[$pluginId]['arr_return'] = $arr_return;
+    $staticArray[ $pluginId ][ 'arr_return' ] = $arr_return;
     return $arr_return;
   }
 
@@ -283,7 +283,7 @@ class tx_browser_pi1_sql_auto
    *            Added fields will added to the consolidation array.
    *
    * @return	string		SQL select or FALSE, if there is an error
-   * @version 3.9.12
+   * @version 7.0.2
    * @since   3.9.12
    */
   private function get_statements_select()
@@ -292,11 +292,13 @@ class tx_browser_pi1_sql_auto
     $this->zz_dieIfOverride( 'select' );
 
     // Remove all expressions and aliases in the SELECT statement
-    $csvSelect = $this->zz_setToRealTableNames( $this->conf_view[ 'select' ] );
+    $csvSelectRealTableNames = $this->zz_setToRealTableNames( $this->conf_view[ 'select' ] );
     // Add table.uid
-    $csvSelect = $this->zz_addUidsToSelect( $csvSelect );
+    $csvSelectRealTableNames = $this->zz_addUidsToSelect( $csvSelectRealTableNames );
     // Add aliases
-    $csvSelect = $this->zz_addAliases( $csvSelect );
+    $csvSelect = $this->zz_addAliases( $csvSelectRealTableNames );
+    // Add localisation fields to select
+    $csvSelect = $csvSelect . $this->sql_select_addLL( $csvSelectRealTableNames );
 
     // Devide in local table and foreign tables
     $this->init_class_statementTables( 'select', $csvSelect );
@@ -304,7 +306,6 @@ class tx_browser_pi1_sql_auto
     // Remove foreign tables
     // 120329, Don't remove, because of missing table.uids!
     //$csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
-
     return $csvSelect;
   }
 
@@ -750,7 +751,6 @@ class tx_browser_pi1_sql_auto
     //////////////////////////////////////////////////////////////////////////
     //
     // Add an AND WHERE from TypoScript
-
     // #62546, 141029, dwildt, 4-
 //    if ( $andWhere != '' )
 //    {
@@ -792,7 +792,6 @@ class tx_browser_pi1_sql_auto
 
     $str_pidStatement = $this->pObj->objSqlFun->get_andWherePid( $this->pObj->localTable );
     // Do we have a showUid not for the local table but for the foreign table? 3.3.3
-
     // #62546, 141029, dwildt, 4-
 //    if ( strpos( $whereClause, $str_pidStatement ) === false )
 //    {
@@ -982,7 +981,7 @@ class tx_browser_pi1_sql_auto
         {
           $str_whereTableField = '(' . $str_whereTableField . ')';
         }
-        $str_whereTableFieldOr = str_replace(' AND ', ' OR ', $str_whereTableField);
+        $str_whereTableFieldOr = str_replace( ' AND ', ' OR ', $str_whereTableField );
         $arr_whereSword[ $int_sword ][] = $str_whereTableField;
         $arr_whereSwordOr[ $int_sword ][] = $str_whereTableFieldOr;
       }
@@ -994,7 +993,7 @@ class tx_browser_pi1_sql_auto
       $str_or = implode( ' OR ', $arr_fields );
       $arr_or[] = '( ' . $str_or . ' )';
     }
-      // #i0073, 140720, dwildt, 2+
+    // #i0073, 140720, dwildt, 2+
     foreach ( $arr_whereSwordOr as $arr_fields )
     {
       $str_and = implode( ' AND ', $arr_fields );
@@ -1265,6 +1264,194 @@ class tx_browser_pi1_sql_auto
     // Replace real name of the table with its alias, if there is an alias
 
     return $str_enablefields;
+  }
+
+  /*   * *********************************************
+   *
+   * SQL localisation
+   *
+   * ******************************************** */
+
+  /**
+   * sql_select_addLL( ): Returns an addSelect with the localisation fields,
+   *                      if there are localisation needs.
+   *                      Localisation fields depends on case
+   *                      * local table   (sys_language record)
+   *                      * foreign table (language overlay)
+   *
+   * @param string      $csvTableFields : CSV list of the current tableFields in the SQL select statement.
+   *                                      Must be without any aliases.
+   * @return	string		$addSelect      : the addSelect with the localisation fields
+   * @access  private
+   * @internal #i0134
+   * @version 7.0.2
+   * @since   7.0.2
+   */
+  private function sql_select_addLL( $csvTableFields )
+  {
+      // SWITCH $int_localisation_mode
+    switch ( $this->pObj->objLocalise->get_localisationMode() )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        // RETURN : nothing to do
+        return;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        // Follow the workflow
+        break;
+      default:
+        // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+
+    $addSelect = null;
+    $csvTableFields = str_replace( ' ', null, $csvTableFields );
+    $arrTableFields = explode( ',', $csvTableFields );
+    foreach ( $arrTableFields as $tableField )
+    {
+      list($table, $field ) = explode( '.', $tableField );
+      // Add table to array with non localised tables. Remove it late, if it is localised.
+      $this->consolidateLocalisationTableAdd( $table );
+      $addSelect = $addSelect . $this->sql_select_addLL_sysLanguage( $table );
+      $addSelect = $addSelect . $this->sql_select_addLL_langOl( $table, $field );
+    }
+
+    // Remove all tables from array with non localised tables, if they are localised.
+    $this->consolidateLocalisationTableCleanUp();
+
+    // Get addSelect
+    // RETURN addSelect
+    return $addSelect;
+  }
+
+  /**
+   * sql_select_addLL_sysLanguage( ): Returns an addSelect with the localisation fields,
+   *                                  if there are localisation needs.
+   *                                  Method handles the local table (sys_language record) only.
+   *
+   * @param string      $table      : current table (from the SQL select statement)
+   * @return	string		$addSelect  : the addSelect with the localisation fields
+   * @access  private
+   * @internal #i0134
+   * @version 7.0.2
+   * @since   7.0.2
+   */
+  private function sql_select_addLL_sysLanguage( $table )
+  {
+    static $tableIsDone = array();
+
+    if ( in_array( $table, $tableIsDone ) )
+    {
+      return;
+    }
+
+    $tableIsDone[] = $table;
+
+    // RETURN no languageField
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField' ] ) )
+    {
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+      {
+        $prompt = $table . ' isn\'t a localised localTable: TCA.' . $table . 'ctrl.languageField is missing.';
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return;
+    }
+    // RETURN no languageField
+    // RETURN no transOrigPointerField
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ] ) )
+    {
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+      {
+        $prompt = $table . ' isn\'t a localised localTable: TCA.' . $table . 'ctrl.transOrigPointerField is missing.';
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return;
+    }
+    // RETURN no transOrigPointerField
+    // Get field labels
+    $languageField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'languageField' ];
+    $languageField = $table . '.' . $languageField;
+    $transOrigPointerField = $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ];
+    $transOrigPointerField = $table . '.' . $transOrigPointerField;
+    // Get field labels
+    // addSelect
+    $addSelect = ", " .
+            $languageField . " AS '" . $languageField . "', " .
+            $transOrigPointerField . " AS '" . $transOrigPointerField . "'";
+    // addSelect
+    // Add $languageField and $transOrigPointerField to the class var sql_filterFields
+    $this->pObj->arrConsolidate[ 'addedTableFields' ][] = $languageField;
+    $this->pObj->arrConsolidate[ 'addedTableFields' ][] = $transOrigPointerField;
+    $this->pObj->arr_realTables_localised[] = $table;
+
+    // DRS
+    if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      $prompt = $table . ' is a localised localTable. SELECT is localised.';
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    // DRS
+    // RETURN addSelect
+    return $addSelect;
+  }
+
+  /**
+   * sql_select_addLL_langOl( ): Returns an addSelect with the localisation fields,
+   *                              if there are localisation needs.
+   *                              Method handles the foreign table (language overlay) only.
+   *
+   * @param string      $table      : current table
+   * @param string      $field      : current field
+   * @return	string		$addSelect  : the addSelect with the localisation fields
+   * @access  private
+   * @internal #i0134
+   * @version 7.0.2
+   * @since   7.0.2
+   */
+  private function sql_select_addLL_langOl( $table, $field )
+  {
+    // Load TCA
+    $this->pObj->objZz->loadTCA( $table );
+
+    // Get language overlay appendix
+    $lang_ol = $this->pObj->objLocalise->conf_localisation[ 'TCA.' ][ 'field.' ][ 'appendix' ];
+
+    // Label of the  field for language overlay
+    $field_lang_ol = $field . $lang_ol;
+
+    // RETURN no field for language overlay
+    if ( !isset( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $field_lang_ol ] ) )
+    {
+      // DRS
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+      {
+        $prompt = $table . ' isn\'t a localised foreignTable: ' .
+                'TCA.' . $table . 'columns.' . $field_lang_ol . ' is missing.';
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      // DRS
+      return;
+    }
+    // RETURN no field for language overlay
+    // addSelect
+    $tableField_ol = $table . '.' . $field_lang_ol;
+    $addSelect = ", " . $tableField_ol . " AS '" . $tableField_ol . "'";
+    // addSelect
+    // Add field to the class var sql_filterFields
+    $this->pObj->arrConsolidate[ 'addedTableFields' ][] = $tableField_ol;
+    $this->pObj->arr_realTables_notLocalised[] = $table;
+
+    // DRS
+    if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      $prompt = $table . ' is a localised foreignTable. SELECT is localised.';
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    // DRS
+    // RETURN addSelect
+    return $addSelect;
   }
 
   /*   * *********************************************
@@ -1851,6 +2038,54 @@ class tx_browser_pi1_sql_auto
     // CONTINUE : current column is element of $arrDontUseTableFields
 
     return true;
+  }
+
+  /*   * *********************************************
+   *
+   * Consolidation
+   *
+   * ******************************************** */
+
+  /**
+   * consolidateLocalisationTableAdd( ):
+   *
+   * @param string      $table : Add table to array with non localised tables.
+   * @return	void
+   * @access  private
+   * @internal #i0134
+   * @version 7.0.2
+   * @since   7.0.2
+   */
+  private function consolidateLocalisationTableAdd( $table )
+  {
+    // RETURN, current table is an element in the array
+    if ( in_array( $table, ( array ) $this->pObj->arr_realTables_notLocalised ) )
+    {
+      return;
+    }
+
+    // Add current table to the array with localised tables
+    $this->pObj->arr_realTables_notLocalised[] = $table;
+  }
+
+  /**
+   * consolidateLocalisationTableAdd( ): Remove all tables from array with non localised tables, if they are localised.
+   *
+   * @return	void
+   * @access  private
+   * @internal #i0134
+   * @version 7.0.2
+   * @since   7.0.2
+   */
+  private function consolidateLocalisationTableCleanUp()
+  {
+    // Get all localised tables, which are part of the array with non localised tables
+    $arrRemoveTables = array_intersect(
+            ( array ) $this->pObj->arr_realTables_notLocalised, ( array ) $this->pObj->arr_realTables_localised
+    );
+    $this->pObj->arr_realTables_notLocalised = array_diff(
+            ( array ) $this->pObj->arr_realTables_notLocalised, ( array ) $arrRemoveTables
+    );
   }
 
   /*   * *********************************************

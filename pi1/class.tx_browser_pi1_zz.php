@@ -151,10 +151,11 @@ class tx_browser_pi1_zz
    * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
    *
    * @return	void
+   * @access  public
    * @version   4.8.5
    * @since     1.0.0
    */
-  function prepairePiVars()
+  public function prepairePiVars()
   {
 
     //////////////////////////////////////

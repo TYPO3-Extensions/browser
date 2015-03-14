@@ -1096,7 +1096,8 @@ var LeafIcon = L.Icon.extend({
     }
 
     $header = 'FATAL ERROR!';
-    $text = 'Can\'t calculate width or height from: ' . $root;
+    $text = 'Can\'t calculate width or height from: ' . $root . $path . '<br />'
+            . 'Be aware: each category record must have an icon!';
     $this->pObj->drs_die( $header, $text );
   }
 

@@ -80,7 +80,7 @@ class tx_browser_pi1_cObjData
    * @param	object		The parent object
    * @return	void
    */
-  function __construct($pObj)
+  function __construct( $pObj )
   {
     $this->pObj = $pObj;
   }
@@ -100,14 +100,14 @@ class tx_browser_pi1_cObjData
    * @version 4.4.4
    * @since   4.4.4
    */
-  public function add($keyValues, $drs = true, $debugTrailLevel = 0)
+  public function add( $keyValues, $drs = true, $debugTrailLevel = 0 )
   {
     $debugTrailLevel++;
 
     $this->backup();
     $this->addArrayFieldWrapper();
     $this->addTsValues();
-    $this->addArray($keyValues, $drs, $debugTrailLevel);
+    $this->addArray( $keyValues, $drs, $debugTrailLevel );
 
     $debugTrailLevel--;
   }
@@ -125,7 +125,7 @@ class tx_browser_pi1_cObjData
   public function reset()
   {
     $this->pObj->cObj->data = $this->bakCObjData;
-    unset($GLOBALS['TSFE']->tx_browser_pi1);
+    unset( $GLOBALS[ 'TSFE' ]->tx_browser_pi1 );
 //    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
 //    $GLOBALS['TSFE']->currentRecord = $this->bakCurrRecord;
 //    $this->removeArray( $keyValues );
@@ -141,12 +141,12 @@ class tx_browser_pi1_cObjData
    * @version 4.5.6
    * @since   4.4.4
    */
-  public function set($keyValues, $drs = true, $debugTrailLevel = 1)
+  public function set( $keyValues, $drs = true, $debugTrailLevel = 1 )
   {
     $debugTrailLevel++;
 
     $this->backup();
-    $this->setArray($keyValues, $drs, $debugTrailLevel);
+    $this->setArray( $keyValues, $drs, $debugTrailLevel );
     $this->addTsValues();
 
     $debugTrailLevel--;
@@ -168,49 +168,49 @@ class tx_browser_pi1_cObjData
    * @version 4.8.9
    * @since   4.4.4
    */
-  private function addArray($keyValues, $drs, $debugTrailLevel)
+  private function addArray( $keyValues, $drs, $debugTrailLevel )
   {
     // #47823, 130502, dwildt, 1+
     $debugTrailLevel++;
 
     // FOREACH  : element
-    foreach ((array) $keyValues as $key => $value)
+    foreach ( ( array ) $keyValues as $key => $value )
     {
       // CONTINUE : key is empty
-      if (empty($key))
+      if ( empty( $key ) )
       {
         continue;
       }
       // CONTINUE : key is empty
       // Adds element to cObjData
-      $this->pObj->cObj->data[$key] = $value;
+      $this->pObj->cObj->data[ $key ] = $value;
     }
     // FOREACH  : element
     // #i0045, 140321, dwildt, 5+
-    if (!is_object($GLOBALS['TSFE']->tx_browser_pi1))
+    if ( !is_object( $GLOBALS[ 'TSFE' ]->tx_browser_pi1 ) )
     {
-      $GLOBALS['TSFE']->tx_browser_pi1 = new stdClass();
-      $GLOBALS['TSFE']->tx_browser_pi1->cObj = new stdClass();
+      $GLOBALS[ 'TSFE' ]->tx_browser_pi1 = new stdClass();
+      $GLOBALS[ 'TSFE' ]->tx_browser_pi1->cObj = new stdClass();
     }
 //    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
 //    $GLOBALS['TSFE']->cObj->data = $this->pObj->cObj->data;
     // #44858, 130130, dwildt, 2+
     $table = $this->pObj->localTable;
-    $GLOBALS['TSFE']->tx_browser_pi1->currentRecord = $table . ':' . $this->pObj->cObj->data[$table . '.uid'];
-    $GLOBALS['TSFE']->tx_browser_pi1->cObj->data = $this->pObj->cObj->data;
+    $GLOBALS[ 'TSFE' ]->tx_browser_pi1->currentRecord = $table . ':' . $this->pObj->cObj->data[ $table . '.uid' ];
+    $GLOBALS[ 'TSFE' ]->tx_browser_pi1->cObj->data = $this->pObj->cObj->data;
 
     // DRS
-    if ($drs)
+    if ( $drs )
     {
-      if ($this->pObj->b_drs_cObjData)
+      if ( $this->pObj->b_drs_cObjData )
       {
         // #47823, 130502, dwildt, 2+
-        $debugTrail = $this->pObj->drs_debugTrail($debugTrailLevel);
-        t3lib_div :: devlog('[INFO/COBJDATA] Call from ' . $debugTrail['prompt'], $this->pObj->extKey, 0);
-        $prompt = 'This fields are added to cObject: ' . implode(', ', array_keys($keyValues));
-        t3lib_div :: devLog('[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key($keyValues);
-        t3lib_div :: devLog('[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0);
+        $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
+        t3lib_div :: devlog( '[INFO/COBJDATA] Call from ' . $debugTrail[ 'prompt' ], $this->pObj->extKey, 0 );
+        $prompt = 'This fields are added to cObject: ' . implode( ', ', array_keys( $keyValues ) );
+        t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key( $keyValues );
+        t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
     // DRS
@@ -229,42 +229,42 @@ class tx_browser_pi1_cObjData
   private function addArrayFieldWrapper()
   {
     // RETURN : if fields shouldn't  added with another key ...
-    if (!is_array($this->pObj->conf['cObjDataFieldWrapper.']))
+    if ( !is_array( $this->pObj->conf[ 'cObjDataFieldWrapper.' ] ) )
     {
       return;
     }
     // RETURN : if fields shouldn't  added with another key ...
     // FOREACH  : userFunc.cObjDataFieldWrapper. ...
-    foreach (array_keys($this->pObj->conf['cObjDataFieldWrapper.']) as $key)
+    foreach ( array_keys( $this->pObj->conf[ 'cObjDataFieldWrapper.' ] ) as $key )
     {
       // CONTINUE : current value is an array
-      if (substr($key, -1, 1) == '.')
+      if ( substr( $key, -1, 1 ) == '.' )
       {
         continue;
       }
       // CONTINUE : current value is an array
       // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
-      $value = $this->pObj->conf['cObjDataFieldWrapper.'][$key];
+      $value = $this->pObj->conf[ 'cObjDataFieldWrapper.' ][ $key ];
 
-      if ($this->b_drs_warn)
+      if ( $this->b_drs_warn )
       {
-        switch (true)
+        switch ( true )
         {
-          case( isset($this->pObj->cObj->data[$key]) ):
+          case( isset( $this->pObj->cObj->data[ $key ] ) ):
             $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' .
-                    $this->pObj->cObj->data[$value];
-            t3lib_div::devlog('[INFO/COBJDATA] ' . $prompt, $this->extKey, 2);
+                    $this->pObj->cObj->data[ $value ];
+            t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
             break;
           default:
             $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: ' .
-                    $this->pObj->cObj->data[$value];
-            t3lib_div::devlog('[INFO/COBJDATA] ' . $prompt, $this->extKey, 0);
+                    $this->pObj->cObj->data[ $value ];
+            t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
             break;
         }
       }
 
       // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
-      $this->pObj->cObj->data[$key] = $this->pObj->cObj->data[$value];
+      $this->pObj->cObj->data[ $key ] = $this->pObj->cObj->data[ $value ];
     }
     // FOREACH  : userFunc.cObjDataFieldWrapper. ...
   }
@@ -279,37 +279,37 @@ class tx_browser_pi1_cObjData
   private function addTsValues()
   {
     // FOREACH  : plugin.tx_browser_pi1.cObjData
-    foreach ((array) array_keys($this->pObj->conf['cObjData.']) as $tsValue)
+    foreach ( ( array ) array_keys( $this->pObj->conf[ 'cObjData.' ] ) as $tsValue )
     {
       // CONTINUE : current value is an array
-      if (substr($tsValue, -1, 1) == '.')
+      if ( substr( $tsValue, -1, 1 ) == '.' )
       {
         continue;
       }
       // CONTINUE : current value is an array
       // Render the content
-      $cObj_name = $this->pObj->conf['cObjData.'][$tsValue];
-      $cObj_conf = $this->pObj->conf['cObjData.'][$tsValue . '.'];
-      $content = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      $cObj_name = $this->pObj->conf[ 'cObjData.' ][ $tsValue ];
+      $cObj_conf = $this->pObj->conf[ 'cObjData.' ][ $tsValue . '.' ];
+      $content = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
       // Render the content
       // Adds element to cObjData
-      $this->pObj->cObj->data['tx_browser_pi1.cObjData.' . $tsValue] = $content;
+      $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
 //      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
-      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1.cObjData.' . $tsValue] = $content;
+      $GLOBALS[ 'TSFE' ]->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
 
-      if ($this->pObj->b_drs_cObjData)
+      if ( $this->pObj->b_drs_cObjData )
       {
-        if (empty($content))
+        if ( empty( $content ) )
         {
           $prompt = 'cObjData.' . $tsValue . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog('[WARN/COBJDATA] ' . $prompt, $this->pObj->extKey, 3);
+          t3lib_div :: devLog( '[WARN/COBJDATA] ' . $prompt, $this->pObj->extKey, 3 );
         }
         else
         {
           $prompt = 'Added to cObject[' . $tsValue . ']: ' . $content;
-          t3lib_div :: devLog('[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = 'You can use the content in TypoScript with: field = tx_browser_pi1.cObjData.' . $tsValue;
-          t3lib_div :: devLog('[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devLog( '[INFO/COBJDATA] ' . $prompt, $this->pObj->extKey, 0 );
         }
       }
     }
@@ -331,7 +331,7 @@ class tx_browser_pi1_cObjData
    */
   private function backup()
   {
-    if (!( $this->bakCObjData === null ))
+    if ( !( $this->bakCObjData === null ) )
     {
       return;
     }
@@ -416,20 +416,20 @@ class tx_browser_pi1_cObjData
    * @version 4.5.6
    * @since   4.4.4
    */
-  private function setArray($keyValues, $drs = true, $debugTrailLevel = 0)
+  private function setArray( $keyValues, $drs = true, $debugTrailLevel = 0 )
   {
     $debugTrailLevel++;
 
-    unset($this->pObj->cObj->data);
-    $this->addArray($keyValues, $drs, $debugTrailLevel);
+    unset( $this->pObj->cObj->data );
+    $this->addArray( $keyValues, $drs, $debugTrailLevel );
 
     $debugTrailLevel--;
   }
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_cObjData.php'])
+if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_cObjData.php' ] )
 {
-  include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_cObjData.php']);
+  include_once ($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_cObjData.php' ]);
 }
 ?>

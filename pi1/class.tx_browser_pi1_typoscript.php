@@ -214,6 +214,7 @@ class tx_browser_pi1_typoscript
     $conf = $this->conf_view[ $table . '.' ][ $field . '.' ];
     $conf = $this->cObjGetSingleTableFieldReplaceMarker( $name, $conf, $row );
 
+
     switch ( true )
     {
       case(is_array( $conf )):
@@ -226,6 +227,10 @@ class tx_browser_pi1_typoscript
         $value = $this->link( $tableField, $value );
         break;
     }
+//if( $tableField == 'tx_wine_main.image' )
+//{
+//  var_dump( __METHOD__, __LINE__, $name, $conf, $value );
+//}
     return $value;
   }
 
@@ -1645,6 +1650,7 @@ class tx_browser_pi1_typoscript
     $markerArray = ( array ) $this->wrapRowTableForeign( $markerArray );
     $markerArray = ( array ) $this->wrapRowTableLocal( $markerArray );
     $markerArray = ( array ) $this->wrapRowFieldOrder( $markerArray, $wiDefaultTemplate );
+//var_dump( __METHOD__, __LINE__, $markerArray );
     return $markerArray;
   }
 

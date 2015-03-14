@@ -170,7 +170,7 @@ class tx_browser_pi1_localisation
    */
   public function consolidate_rows( $rows, $table )
   {
-//$this->pObj->dev_var_dump( $rows );
+    //$this->consolidate_rowsDebug( $rows );
     // For development only, IP must allowed in the extension manager!
     $promptForDev = false;
 
@@ -209,7 +209,7 @@ class tx_browser_pi1_localisation
     $arrUidsKeyDefault = $arrResult[ 'default' ];
     $arrUidsLocalisedDefault = $arrResult[ 'localised' ];
     unset( $arrResult );
-    // 2. Get uids of records with default language and localised records
+
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
     $rows = $this->consolidate_rows03handleTableLocalised( $arrUidsLocalisedDefault, $arrUidsKeyDefault, $rows );
 
@@ -225,12 +225,14 @@ class tx_browser_pi1_localisation
     // 7. Language Overlay
     $rows = $this->consolidate_rows07languageOverlay( $rows, $table );
 
+    // 8. Order rows by the order of the uids of the default language
+    $rows = $this->consolidate_rows08OrderByUidsDefault( $rows, $arrUidsKeyDefault );
+
     // Just for development
     $this->zz_devPromptRows( $promptForDev, $rows );
 
     $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
-
-//$this->pObj->dev_var_dump( $rows );
+//var_dump( __METHOD__, __LINE__, $rows );
     // 8. Return $rows
     return $rows;
   }
@@ -436,7 +438,7 @@ class tx_browser_pi1_localisation
    */
   private function consolidate_rows04handleTableTranslated( $rows )
   {
-//$this->pObj->dev_var_dump( $rows );
+//var_dump( __METHOD__, __LINE__, $rows );
     // RETURN : All tables are localised
     if ( !is_array( $this->pObj->arr_realTables_notLocalised ) )
     {
@@ -445,11 +447,11 @@ class tx_browser_pi1_localisation
         $prompt = 'All tables are localised.';
         t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'This is strange, if you are using foreign / category tables!';
-        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
       }
       return $rows;
     }
-    // RETURN : All tables are localised
+
     // Check first row for lang_ol fields
     reset( $rows );
     $firstKey = key( $rows );
@@ -462,7 +464,7 @@ class tx_browser_pi1_localisation
         $arr_lang_ol[] = $tableField_ol;
       }
     }
-    // Check first row for lang_ol fields
+
 //$this->pObj->dev_var_dump( $arr_lang_ol );
     // RETURN : there isn't any not localised table
     if ( empty( $arr_lang_ol ) )
@@ -476,7 +478,7 @@ class tx_browser_pi1_localisation
       }
       return $rows;
     }
-    // RETURN : there isn't any not localised table
+
     // Get default lang overlay values
     $arr_default_lang_ol = array();
     $int_count = 0;
@@ -588,7 +590,7 @@ class tx_browser_pi1_localisation
     unset( $arr_lang_ol );
 
 //$this->pObj->dev_var_dump( $rows );
-
+//var_dump( __METHOD__, __LINE__, $rows );
     return $rows;
   }
 
@@ -686,6 +688,7 @@ class tx_browser_pi1_localisation
    */
   public function consolidate_rows07languageOverlay( $rows, $table )
   {
+//    var_dump( __METHOD__, __LINE__, $rows );
     // Do we have lang_ol fields?
     $arr_lang_ol = false;
     $conf_tca = $this->conf_localisation[ 'TCA.' ];
@@ -797,6 +800,116 @@ class tx_browser_pi1_localisation
     // FOREACH  : rows
 
     return $rows;
+  }
+
+  /**
+   * consolidate_rows08OrderByUidsDefault( )  :
+   *
+   * @param	array		$rows               :
+   * @param	array		$arrUidsKeyDefault  :
+   * @return	void
+   * @access  private
+   * @internal #i0141 (browser_bzdstaffdirectory)
+   * @version   7.0.3
+   * @since     7.0.3
+   */
+  private function consolidate_rows08OrderByUidsDefault( $rows, $arrUidsKeyDefault )
+  {
+    // DRS
+    if ( $this->pObj->b_drs_warn )
+    {
+      $prompt = 'Dangerous order: alphabetical fields will ordered by default language!';
+      t3lib_div::devlog( '[WARN/LOCALISATION] ' . $prompt, $this->pObj->extKey, 2 );
+    } // DRS
+
+    $localTable = $this->pObj->localTable;
+    $uid_localTable = $localTable . '.uid';
+
+    foreach( $rows as $row )
+    {
+      $uid = $row[$uid_localTable];
+      $arrUidsKeyDefault[$uid_localTable][$uid] = $row;
+      unset($arrUidsKeyDefault['keys_in_rows']);
+    }
+    unset($rows);
+    $rows = $arrUidsKeyDefault[$uid_localTable];
+    return $rows;
+  }
+
+  /**
+   * consolidate_rowsDebug( )  :
+   *
+   * @param	array		$rows   : SQL result rows
+   * @return	void
+   * @access  private
+   * @version   7.0.3
+   * @since     7.0.3
+   */
+  private function consolidate_rowsDebug( $rows )
+  {
+//    $count = 0;
+    var_dump( __METHOD__, __LINE__ );
+    $key = key( $rows );
+    var_dump( $rows[ $key ] );
+    echo ''
+    . '<table>'
+    . '<thead>'
+    . '<tr>'
+    . '<td>'
+    . 'sys_lanuguage_uid'
+    . '</td>'
+    . '<td>'
+    . 'uid'
+    . '</td>'
+    . '<td>'
+    . 'last_name'
+    . '</td>'
+    . '<td>'
+    . 'function'
+    . '</td>'
+    . '<td>'
+    . 'location'
+    . '</td>'
+    . '</tr>'
+    . '</thead>'
+    . '</tbody>'
+    ;
+    foreach ( $rows as $row )
+    {
+      echo ''
+      . '<tr>'
+      . '<td>'
+      . $row[ 'tx_bzdstaffdirectory_persons.sys_language_uid' ]
+      . '</td>'
+      . '<td>'
+      . $row[ 'tx_bzdstaffdirectory_persons.uid' ]
+      . '</td>'
+      . '<td>'
+      . $row[ 'tx_bzdstaffdirectory_persons.last_name' ]
+      . '</td>'
+      . '<td>'
+      . $row[ 'tx_bzdstaffdirectory_functions.title' ]
+      . '</td>'
+      . '<td>'
+      . $row[ 'tx_bzdstaffdirectory_locations.title' ]
+      . '</td>'
+      . '</tr>'
+      ;
+//          if ( $row[ 'tx_bzdstaffdirectory_persons.sys_language_uid' ] != '0' )
+//      {
+//        $count++;
+//        continue;
+//      }
+//      if ( $row[ 'tx_bzdstaffdirectory_locations.title' ] == 'Bratislava' )
+//      {
+//        var_dump( $count );
+//      }
+//      $count++;
+    }
+    echo ''
+    . '</tbody>'
+    . '</table>'
+    ;
   }
 
   /**

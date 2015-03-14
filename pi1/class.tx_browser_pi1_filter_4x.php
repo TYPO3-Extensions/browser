@@ -1986,7 +1986,6 @@ class tx_browser_pi1_filter_4x
       $this->row_number++;
     }
     // LOOP rows
-
     $items = $this->get_maxItemsWrapBeginEnd( $items );
 
     // Prompt the expired time to devlog
@@ -3287,8 +3286,8 @@ class tx_browser_pi1_filter_4x
    * sql_resAllItemsFilterWoRelation( ):
    *
    * @return	array		$arr_return : Array with the SQL ressource or an error message
-   * @internal  #41754.03
-   * @version 4.1.26
+   * @internal  #41754.03, #i0135
+   * @version 7.0.2
    * @since   4.1.21
    */
   private function sql_resAllItemsFilterWoRelation()
@@ -3317,8 +3316,11 @@ class tx_browser_pi1_filter_4x
             $this->sql_whereAnd_fromTS() .
             $this->sql_whereAnd_sysLanguage();
 
-    $groupBy = $tableField;
-    $orderBy = $tableField;
+    // #i0135, 150309, dwildt, 2-/2+
+    //$groupBy = $tableField;
+    //$orderBy = $tableField;
+    $groupBy = $this->curr_tableField;
+    $orderBy = $this->sql_orderBy();
     $limit = null;
 
 //    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -4539,7 +4541,6 @@ class tx_browser_pi1_filter_4x
           }
         }
         // DRS
-
         // #i0117, 141223, dwildt, 1+
         $this->treeviewTableFields[] = $tableField;
 
@@ -4782,11 +4783,61 @@ class tx_browser_pi1_filter_4x
     {
       case( true ):
         $this->localise_langOlWiPrefix();
+        $this->localise_langOlOrderBy();
         break;
       case( false ):
       default:
         $this->localise_langOlWoPrefix();
         break;
+    }
+  }
+
+  /**
+   * localise_langOlOrderBy( ):
+   *
+   * @return	void
+   * @access private
+   * @intern  #i0140
+   * @version 7.0.3
+   * @since   7.0.3
+   */
+  private function localise_langOlOrderBy()
+  {
+    // Get field labels
+    $tableFieldOrder = $this->sql_orderBy();
+    list( $tableField, $order) = explode( ' ', $tableFieldOrder );
+    list( $table) = explode( '.', $tableField );
+
+    // Get ASC or DESC
+    switch ( $order )
+    {
+      case( 'DESC'):
+      case( 'desc'):
+        $flag = SORT_DESC;
+        break;
+      case( 'ASC'):
+      case( 'asc'):
+      default:
+        $flag = SORT_ASC;
+        break;
+    }
+
+    // Get the orderBy array
+    $orderBy = null;
+    foreach ( $this->rows as $key => $row )
+    {
+      $orderBy[ $key ] = $row[ $tableField ];
+    }
+
+    // Order the rows. Keys will lost!
+    array_multisort( ( array ) $orderBy, $flag, $this->rows );
+
+    // Set keys
+    $rows = $this->rows;
+    unset( $this->rows );
+    foreach ( $rows as $row )
+    {
+      $this->rows[ $row[ $table. '.uid' ] ] = $row;
     }
   }
 
@@ -4831,7 +4882,7 @@ class tx_browser_pi1_filter_4x
       // IF: Override default language with language overlay value
       if ( preg_match( $pattern, $langOlValue, $matches ) )
       {
-        $this->rows[ $uid ][ $valueField ] = $matches[ 2 ];
+        $this->rows[ $uid ][ $valueField ] = trim( $matches[ 2 ] );
       }
       // IF: Override default language with language overlay value
       // Get language overlay value for the current language

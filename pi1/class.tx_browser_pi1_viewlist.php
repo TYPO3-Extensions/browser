@@ -172,7 +172,6 @@ class tx_browser_pi1_viewlist
     $this->content = $this->pObj->str_template_raw;
 //var_dump( __METHOD__, __LINE__, $this->content );
 //die( ':(' );
-
     // Replace static html marker and subparts by typoscript marker and subparts
     // #43627, 1212105, dwildt, 5+
     $arr_return = $this->content_replaceStaticHtml();
@@ -255,7 +254,7 @@ class tx_browser_pi1_viewlist
 //var_dump( __METHOD__, __LINE__, $res, $arr_return );
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
-
+//var_dump( __METHOD__, __LINE__, $rows);
     // DRS
     if ( $this->pObj->b_drs_devTodo )
     {
@@ -288,8 +287,10 @@ class tx_browser_pi1_viewlist
     // #i0048, 140627, dwildt, 4+: Order in every case
     // Prompt to DRS
     $this->zz_orderByValueIsLocalised();
+//$this->pObj->objLocalise->consolidate_rowsDebug( $rows );
     $this->pObj->objMultisort->main();
     $rows = $this->pObj->rows;
+//$this->pObj->objLocalise->consolidate_rowsDebug( $rows );
 
     // Ordering the children rows
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
@@ -400,7 +401,7 @@ class tx_browser_pi1_viewlist
         }
         break;
       default:
-//var_dump( __METHOD__, __LINE__, $content );
+//var_dump( __METHOD__, __LINE__, $rows);
 //die( ':(' );
         $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
         break;
@@ -562,8 +563,8 @@ class tx_browser_pi1_viewlist
     }
     // Loop through all used tables
 
-    $this->pObj->arr_realTables_localised = array_unique( $this->pObj->arr_realTables_localised );
-    $this->pObj->arr_realTables_notLocalised = array_unique( $this->pObj->arr_realTables_notLocalised );
+    $this->pObj->arr_realTables_localised = array_unique( ( array ) $this->pObj->arr_realTables_localised );
+    $this->pObj->arr_realTables_notLocalised = array_unique( ( array ) $this->pObj->arr_realTables_notLocalised );
   }
 
   /**
@@ -664,7 +665,7 @@ class tx_browser_pi1_viewlist
   private function content_setCSV()
   {
     // #33336, 130529, dwildt, 3+
-    $arr_return = $this->subpart_setSearchboxFilter( );
+    $arr_return = $this->subpart_setSearchboxFilter();
     //$this->pObj->dev_var_dump( $arr_return );
     unset( $arr_return );
     // #33336, 130529, dwildt, 3+
@@ -760,7 +761,6 @@ class tx_browser_pi1_viewlist
     $this->content = $this->pObj->objTemplate->htmlStaticReplace( $this->content, $this->conf_view );
     return;
   }
-
 
   /**
    * content_dieIfEmpty( ): If content is empty, the methods will die the workflow
@@ -1090,7 +1090,6 @@ class tx_browser_pi1_viewlist
     // #42302, dwildt, 1+
     // #i0113, dwildt, 1-
     //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
-
     // Set global var
     $this->pObj->rows = $rows;
 
@@ -1142,22 +1141,32 @@ class tx_browser_pi1_viewlist
    *
    * @param    array        $res  : current SQL result
    * @return    array        $rows : the rows
-   * @version 3.9.12
+   * @version 7.0.3
    * @since   3.9.12
    */
   private function rows_getDefault( $res )
   {
-//    if( $res->num_rows > 0 ) {
-//      var_dump( __METHOD__, __LINE__, $res->num_rows, $res );
-//    }
     $rows = array();
 
-    while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
+    // RETURN rows
+    if ( !empty( $res ) )
     {
-      $rows[] = $row;
+      while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
+      {
+        $rows[] = $row;
+      }
+
+      return $rows;
     }
 
-    return $rows;
+    // #i0139, 150310, dwildt, 1+
+    return null;
+
+    // 150309, dwildt, +
+    // DIE: ressource isn't proper
+    $header = 'FATAL ERROR!';
+    $text = 'SQL ressource is empty.';
+    $this->pObj->drs_die( $header, $text );
   }
 
   /**
@@ -1295,7 +1304,6 @@ class tx_browser_pi1_viewlist
     // Get all ids
     $withIds = array();
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
-//$this->pObj->dev_var_dump( $arr_return );
     if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
@@ -1305,6 +1313,10 @@ class tx_browser_pi1_viewlist
     // Get ids of records, which match the rules and have a translation for the current language
     // Get ids of records of default language, which match the rules but haven't any translation
     $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
+//if ( $GLOBALS[ 'TSFE' ]->id == 200 )
+//{
+//  var_dump( __METHOD__, __LINE__, $arr_return );
+//}
     if ( $arr_return[ 'error' ][ 'status' ] )
     {
       return $arr_return;
@@ -1318,6 +1330,10 @@ class tx_browser_pi1_viewlist
 
     // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
+//if ( $GLOBALS[ 'TSFE' ]->id == 200 )
+//{
+//  var_dump( __METHOD__, __LINE__, $arr_return );
+//}
 
     return $arr_return;
   }
@@ -1385,7 +1401,6 @@ class tx_browser_pi1_viewlist
         }
         // RETURN : nothing to do
         return $arr_return;
-        break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         // Follow the workflow
         break;
@@ -1487,7 +1502,7 @@ class tx_browser_pi1_viewlist
     );
     // #56329, 140226, dwildt, 1+
     $query = $this->queryWiAndFilter( $query, $limit );
-//$this->pObj->dev_var_dump( $query );
+
     // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
             'Don\'t use the query in a localised context.';
@@ -1511,10 +1526,6 @@ class tx_browser_pi1_viewlist
     // Free SQL result
     // #i0113, dwildt, 1-
     //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
-
-
-
-
     //////////////////////////////////////////////////
     //
       // RETURN record browser isn't enabled
@@ -1566,6 +1577,10 @@ class tx_browser_pi1_viewlist
     // Free SQL result
     // #i0113, dwildt, 1-
     //$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
+//if ( $GLOBALS[ 'TSFE' ]->id == 200 )
+//{
+//  var_dump( __METHOD__, __LINE__, $arr_return );
+//}
 
     return $arr_return;
     // Workflow for recordbrowser
@@ -2256,13 +2271,12 @@ class tx_browser_pi1_viewlist
       return $arr_return;
     }
     // Get the page browser content
-
     // #i0066, 140715, dwildt 5+
-    if ( empty($arr_return[ 'data' ][ 'content' ] ))
+    if ( empty( $arr_return[ 'data' ][ 'content' ] ) )
     {
       $this->content = $this->pObj->cObj->substituteSubpart
-      (
-      $this->content, '###PAGEBROWSERTOP###', null, true
+              (
+              $this->content, '###PAGEBROWSERTOP###', null, true
       );
 //var_dump(__METHOD__, __LINE__, $arr_return, $markerArray, $subpart, $pageBrowser);
       return;

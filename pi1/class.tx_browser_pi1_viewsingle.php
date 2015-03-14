@@ -209,12 +209,13 @@ class tx_browser_pi1_viewsingle
     {
       case(is_array( $arr_table_realnames )):
         $rows = $this->getRowsAliasesWith( $res );
-        return $rows;
+        break;
       case(!is_array( $arr_table_realnames )):
       default:
         $rows = $this->getRowsAliasesWithout( $res );
-        return $rows;
+        break;
     }
+    return $rows;
   }
 
   /**
@@ -233,7 +234,6 @@ class tx_browser_pi1_viewsingle
     $i_row = 0;
     while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
-//var_dump( __METHOD__, __LINE__, $row );
       //foreach ( $row as $str_tablealias_field => $value )
       foreach ( array_keys( $row ) as $tableAliasField )
       {
@@ -368,14 +368,15 @@ class tx_browser_pi1_viewsingle
     $from = $statements[ 'data' ][ 'from' ];
     $where = $statements[ 'data' ][ 'where' ];
     $where = $where . $statements[ 'data' ][ 'whereLL' ];
+
     $orderBy = $statements[ 'data' ][ 'orderBy' ];
     unset( $statements );
 
     $groupBy = '';
     $orderBy = '';
     $limit = '';
+    //$select = $select . ", tx_wine_main.sys_language_uid AS 'tx_wine_main.sys_language_uid', tx_wine_main.l10n_parent AS 'tx_wine_main.l10n_parent'";
     $query = $GLOBALS[ 'TYPO3_DB' ]->SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit, $uidIndexField = "" );
-
     $res = $GLOBALS[ 'TYPO3_DB' ]->sql_query( $query );
     $error = $GLOBALS[ 'TYPO3_DB' ]->sql_error();
 
