@@ -1690,9 +1690,7 @@ class tx_browser_pi1_viewlist
             . $this->sql_radialsearchHaving()
     ;
 
-    // #61797, 150327, dwildt, Workaround: 1-
-    // $groupBy = null;
-    $groupBy = $tableUid;
+    $groupBy = null;
 
     // #52486, 131005, dwildt, 5+
     $orderBy = $this->sql_radialsearchOrderBy();
