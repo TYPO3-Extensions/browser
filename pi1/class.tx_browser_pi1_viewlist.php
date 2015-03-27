@@ -291,7 +291,6 @@ class tx_browser_pi1_viewlist
     $this->pObj->objMultisort->main();
     $rows = $this->pObj->rows;
 //$this->pObj->objLocalise->consolidate_rowsDebug( $rows );
-
     // Ordering the children rows
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
     $this->pObj->rows = $rows;
@@ -1161,12 +1160,6 @@ class tx_browser_pi1_viewlist
 
     // #i0139, 150310, dwildt, 1+
     return null;
-
-    // 150309, dwildt, +
-    // DIE: ressource isn't proper
-    $header = 'FATAL ERROR!';
-    $text = 'SQL ressource is empty.';
-    $this->pObj->drs_die( $header, $text );
   }
 
   /**
@@ -1697,7 +1690,9 @@ class tx_browser_pi1_viewlist
             . $this->sql_radialsearchHaving()
     ;
 
-    $groupBy = null;
+    // #61797, 150327, dwildt, Workaround: 1-
+    // $groupBy = null;
+    $groupBy = $tableUid;
 
     // #52486, 131005, dwildt, 5+
     $orderBy = $this->sql_radialsearchOrderBy();
@@ -1746,7 +1741,7 @@ class tx_browser_pi1_viewlist
     // Get query
     // #56329, 140226, dwildt, 1+
     $query = $this->queryWiAndFilter( $query, $limit );
-//$this->pObj->dev_var_dump( str_replace( '\'', '"', $query ) );
+    //$this->pObj->dev_var_dump( str_replace( '\'', '"', $query ) );
     // Execute query
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
             'Don\'t use the query in a localised context.';

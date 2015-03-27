@@ -4,8 +4,10 @@ plugin.tx_browser_pi1 {
   radialsearch.help = Click me!
   # cat=Browser - Radial Search//200;       type=string;    label= Latitude: table.field label for the latitude. Example: tx_myext_address.lat, tx_org_headquarters.mail_lat
   radialsearch.lat =
-  # cat=Browser - Radial Search//201;       type=string;    label= Longitude: table.field label for the longitude. Example: tx_myext_address.lon, , tx_org_headquarters.mail_lon
+  # cat=Browser - Radial Search//201;       type=string;    label= Longitude: table.field label for the longitude. Example: tx_myext_address.lon, tx_org_headquarters.mail_lon
   radialsearch.lon =
+  # cat=Browser - Radial Search//202;       type=string;    label= Uid: table.field label for the uid. Example: tx_myext_address.uid,
+  radialsearch.uid =
   # cat=Browser - Radial Search//300;       type=string;    label= Sword: HTML name of the input field for the search word (sword).
   radialsearch.sword = tx_radialsearch_pi1[sword]
   # cat=Browser - Radial Search//301;       type=string;    label= Radius: HTML name of the select box with the radius options.

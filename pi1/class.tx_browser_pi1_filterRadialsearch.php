@@ -436,7 +436,7 @@ class tx_browser_pi1_filterRadialsearch
    * @return	void
    * @internal    #52486
    * @access  private
-   * @version 4.7.0
+   * @version 7.0.4
    * @since   4.7.0
    */
   private function initObject()
@@ -454,11 +454,14 @@ class tx_browser_pi1_filterRadialsearch
     $lat = $constanteditor[ 'lat' ];
     $lon = $constanteditor[ 'lon' ];
     $searchmode = $constanteditor[ 'searchmode' ];
+    // #61797, 150327, dwildt, 1+
+    $uid = $constanteditor[ 'uid' ];
     $fields = array(
       'distance' => $distance,
       'lat' => $lat,
       'lon' => $lon,
-      'searchmode' => $searchmode
+      'searchmode' => $searchmode,
+      'uid' => $uid
     );
 
     // Get filter

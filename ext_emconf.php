@@ -13,7 +13,7 @@
 $EM_CONF[$_EXTKEY] = array(
   'title' => 'Browser - TYPO3 without PHP',
   'description' => ''
-  . 'Publish your data in list and single views and in maps! '
+  . 'Publish your data responsive in list and single views and in maps! '
   . 'You don\'t need neither any own plugin nor any line PHP code. '
   . 'The Browser - TYPO3 without PHP - provides an index browser (a-z), '
   . 'a page browser, a record browser, a search form, filters, category menus, AJAX, '
@@ -26,7 +26,7 @@ $EM_CONF[$_EXTKEY] = array(
   ,
   'category' => 'plugin',
   'shy' => 0,
-  'version' => '7.0.3',
+  'version' => '7.0.4',
   'dependencies' => 'browser_manual_en',
   'conflicts' => 'be_tablefilter',
   'priority' => '',

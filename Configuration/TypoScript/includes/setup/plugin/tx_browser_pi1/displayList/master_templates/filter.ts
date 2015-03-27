@@ -521,6 +521,8 @@ plugin.tx_browser_pi1 {
             searchmode  = {$plugin.tx_browser_pi1.radialsearch.searchmode}
               // [String] Sword: HTML name of the input field for the search word (sword).
             sword       = {$plugin.tx_browser_pi1.radialsearch.sword}
+              // [String] uid: table.field label for the uid. Example: tx_myext_address.uid,
+            uid         = {$plugin.tx_browser_pi1.radialsearch.uid}
           }
             // [Array] admin_code1, country_code
           filter < plugin.tx_radialsearch_pi1.res.js.tx_radialsearch_pi1.filter

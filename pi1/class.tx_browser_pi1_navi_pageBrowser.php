@@ -498,6 +498,7 @@ class tx_browser_pi1_navi_pageBrowser
     ;
     $where = $this->sqlStatement_where( $table )
             . $this->sql_radialsearchWhere( true )
+            //. $this->sql_radialsearchHaving() // #61797: Code before hasn't the wanted effect.
     ;
     $groupBy = null;
     $orderBy = null;
