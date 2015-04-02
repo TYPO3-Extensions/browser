@@ -1289,7 +1289,7 @@ class tx_browser_pi1_sql_auto
    */
   private function sql_select_addLL( $csvTableFields )
   {
-      // SWITCH $int_localisation_mode
+    // SWITCH $int_localisation_mode
     switch ( $this->pObj->objLocalise->get_localisationMode() )
     {
       case( PI1_DEFAULT_LANGUAGE ):
@@ -2270,19 +2270,6 @@ class tx_browser_pi1_sql_auto
       t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
     }
     // DRS
-    // 140701, dwildt, ~: not needed
-//    // Convert $tables
-//    // Example: from ["tt_news."]["tt_news_cat_mm"] to ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
-//    foreach ( array_keys( ( array ) $tables ) as $localTable )
-//    {
-//      if ( substr( $localTable, -1 ) == '.' )
-//      {
-//        $tableWoDot = substr( $localTable, 0, strlen( $localTable ) - 1 );
-//        $tables[ $tableWoDot ] = $tables[ $localTable ];
-//        unset( $tables[ $localTable ] );
-//      }
-//    }
-//    // Convert $tables from ["tt_news."]["tt_news_cat_mm"] to ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
     // Loop: tables
 //var_dump( __METHOD__, __LINE__, $tables );
 //die(':(');
@@ -2541,26 +2528,6 @@ class tx_browser_pi1_sql_auto
     }
 
     return $partForeign;
-    $mmTableAlias = $localTable . '_mm_' . $foreignTable;
-    $mmTableAliasUid = $this->get_joinsSetMmUidForeign( $localTable, $mmTableAlias );
-
-    $partForeign = '
-                LEFT JOIN ' . $foreignTable . '
-                ON
-                (
-                  ' . $mmTableAliasUid . ' = ' . $foreignTable . '.uid
-                  ' . $this->pObj->cObj->enableFields( $foreignTable ) . '
-                  ' . $this->pObj->objSqlFun->get_andWherePid( $foreignTable ) . '
-                )';
-
-    // Add where once only
-    if ( strpos( $leftJoin, $partForeign ) === true )
-    {
-      return null;
-    }
-    // Add where once only
-    // RETURN relation
-    return $partForeign;
   }
 
   /**
@@ -2748,13 +2715,30 @@ class tx_browser_pi1_sql_auto
    * @param	string		$mmTable      : mm table like tx_org_mm_global
    * @return	string		$mmTableUid   : uid_foreign or uid_local
    * @internal  #59563
-   * @version   5.0.0
+   * @version   7.0.5
    * @since     5.0.0
    */
   private function get_joinsSetMmMatchFields( $localTable, $foreignTable, $mmTable )
   {
+    // #i0142: :TODO:
+    static $drsPrompt = true;
+
+    if ( $drsPrompt )
+    {
+      if ( $this->pObj->b_drs_warn )
+      {
+        $prompt = ':TODO: method get_joinsSetMmMatchFields() is proper only, '
+                . 'if the current table field and the foreign table has the same label! '
+                . 'If they haven\'t, you will get wrong SQL query results.';
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+      }
+      $drsPrompt = false;
+    }
+
     $tcaMmMatchFields = $GLOBALS[ 'TCA' ][ $localTable ][ 'columns' ][ $foreignTable ][ 'config' ][ 'MM_match_fields' ];
     $mmMatchFields = null;
+//var_dump( __METHOD__, __LINE__, $localTable, $foreignTable, $tcaMmMatchFields );
+//die(':(');
 
     if ( empty( $tcaMmMatchFields ) )
     {
