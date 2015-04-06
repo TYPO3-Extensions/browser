@@ -3130,7 +3130,7 @@ class tx_browser_pi1_template
     $handleAs = $this->pObj->arrHandleAs;
     // [Boolean] Shouldn't empty values handled?
     $bool_dontHandleEmptyValues = $this->pObj->objFlexform->bool_dontHandleEmptyValues;
-
+var_dump(__METHOD__, __LINE__, $bool_dontHandleEmptyValues);
     // RETURN : row is empty
     if ( $bool_dontHandleEmptyValues )
     {

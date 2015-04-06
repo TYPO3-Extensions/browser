@@ -29,7 +29,7 @@
  * @author       Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package      TYPO3
  * @subpackage   browser
- * @version      5.0.16
+ * @version      7.0.6
  * @since         2.0.0
  * @internal #59669
  */
@@ -1650,7 +1650,6 @@ class tx_browser_pi1_typoscript
     $markerArray = ( array ) $this->wrapRowTableForeign( $markerArray );
     $markerArray = ( array ) $this->wrapRowTableLocal( $markerArray );
     $markerArray = ( array ) $this->wrapRowFieldOrder( $markerArray, $wiDefaultTemplate );
-//var_dump( __METHOD__, __LINE__, $markerArray );
     return $markerArray;
   }
 
@@ -1659,19 +1658,22 @@ class tx_browser_pi1_typoscript
    *
    * @param   string  $markerArraySrcs  : marker array
    * @return	array		$markerArrayDest  : ordered marker array
-   * @version 5.0.0
+   * @version 7.0.6
    * @since 5.0.0
    */
   private function wrapRowFieldOrder( $markerArraySrce, $wiDefaultTemplate )
   {
     $markerArrayDest = array();
     $tableFields = $this->wrapRowFieldOrderGetTablefields();
+    //var_dump( __METHOD__, __LINE__, $tableFields );
 
     // LOOP each table.field
     foreach ( $tableFields as $tableField )
     {
       $hashMarker = '###' . strtoupper( $tableField ) . '###';
-      if ( !isset( $markerArraySrce[ $hashMarker ] ) )
+      // #i0144, 150406, dwildt, 1-/+
+      //if ( !isset( $markerArraySrce[ $hashMarker ] ) )
+      if ( !array_key_exists( $hashMarker, $markerArraySrce ) )
       {
         continue;
       }
@@ -1679,6 +1681,7 @@ class tx_browser_pi1_typoscript
       // #i0050, 140630, dwildt, 1+
       unset( $markerArraySrce[ $hashMarker ] );
     } // LOOP each table.field
+    //var_dump( __METHOD__, __LINE__, $markerArraySrce, $markerArrayDest );
     // RETURN markerArray in the order of the table.fields in the SELECT statement
     // #i0050, 140630, dwildt, 4+
     if ( $wiDefaultTemplate )
@@ -2358,7 +2361,6 @@ class tx_browser_pi1_typoscript
       $markerArray = $this->wrapRowTableLocalField( $markerArray, $tableField, $row );
     }
     $markerArray = $markerArray + $this->pObj->objWrapper4x->constant_markers( $row );
-    $this->cObjDataReset();
     return $markerArray;
   }
 

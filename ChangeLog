@@ -10,8 +10,10 @@ Manual
 
 7.0.6
   15-04-02
-  Improvemnet
+  Improvement
   * #i0143: Adapt the tt_content sample to Browser 6.x/7.x
+  Bugfix
+  * #i0144: isset() returns false in case of a NULL value > moved to array_key_exists()
 
 7.0.5
   15-04-02

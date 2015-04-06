@@ -1,0 +1,49 @@
+plugin.tx_browser_pi1 {
+  navigation {
+    showUid = contentUid
+  }
+  templates {
+    listview {
+      image {
+        0 {
+          default =
+          file    = tt_content.image
+          height  = 80
+          path    =
+          seo     = tt_content.header
+          width   = 80c
+        }
+      }
+      text {
+        0 {
+          crop = 56|...|1
+          field = tx_quickshop_products.teaser_short // tx_quickshop_products.short // tx_quickshop_products.description
+        }
+      }
+      url {
+        0 {
+          key       =
+          page      =
+          record    = tt_content.uid
+          showUid   = contentUid
+          #singlePid =
+          url       =
+        }
+      }
+    }
+    singleview {
+      image {
+        0 {
+          caption     =
+          file        = tt_content.image
+          height      = tt_content.imageheight
+          imagecols   =
+          imageorient =
+          path        =
+          seo         = tt_content.header
+          width       = tt_content.imagewidth
+        }
+      }
+    }
+  }
+}
