@@ -14,6 +14,7 @@ Manual
   * #i0146: Adapt the tt_news sample to Browser 6.x/7.x and TYPO3 6.x
   * #i0143: Adapt the tt_content sample to Browser 6.x/7.x and TYPO3 6.x with FAL
   Bugfix
+  * #i0147: tt_news sample list view: image isn't rendered
   * #i0145: FAL failes in sngle view
   * #i0144: isset() returns false in case of a NULL value > moved to array_key_exists()
 

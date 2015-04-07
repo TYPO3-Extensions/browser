@@ -668,8 +668,9 @@ class tx_browser_pi1_template
       }
       $markerField[ '###CLASS###' ] = $this->tmplTableTdClass( $currField, $sumFields );
       $markerField[ '###FIELD###' ] = $this->htmlFields5xLabel( $field );  // single view
-      // Wenn handleAs, dann handleAsValue
-      $value = $this->htmlFields5xValue( $field, $value, $handleAsMarkerArray );  // single view
+      // #i0147, 150407, dwildt, 2-
+//      // Wenn handleAs, dann handleAsValue
+//      $value = $this->htmlFields5xValue( $field, $value, $handleAsMarkerArray );  // single view
       $markerField[ '###VALUE###' ] = $value;  // single view
       $markerField[ '###ITEM###' ] = $value;  // list view
       $markerField[ '###SOCIALMEDIA_BOOKMARKS###' ] = $this->htmlFields5xBookmark( $uid, $field );
