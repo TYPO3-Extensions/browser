@@ -1,28 +1,11 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news/template/setup.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news/views/_setup.ts">
 plugin.tx_browser_pi1 {
 
-  template {
-    extensions {
-      tt_news {
-        sample {
-          // [String] Name of the template. It will displayed in the plugin/flexform
-          name      = tt_news: Sample
-          file      = EXT:browser/Resources/Public/Sample/tt_news/default.tmpl
-          // [csv] Comma seperated list with the number of the correspondening views
-          csvViews  = 1000
-        }
-        rss {
-          // [String] Name of the template. It will displayed in the plugin/flexform
-          name      = tt_news: RSS
-          file      = EXT:browser/Resources/Public/Sample/tt_news/rss.tmpl
-          // [csv] Comma seperated list with the number of the correspondening views
-          csvViews  = 1010
-        }
-      }
-    }
-  }
 
   views {
     list {
+      1000 = tt_news: Sample
       1000 {
         // [String] Name of the view. It will displayed in the plugin/flexform
         name    = tt_news: Sample
@@ -43,6 +26,7 @@ plugin.tx_browser_pi1 {
           tt_news.datetime DESC
         )
       }
+      1010 = tt_news: RSS
       1010 {
         // [String] Name of the view. It will displayed in the plugin/flexform
         name    = tt_news: RSS
@@ -146,6 +130,7 @@ plugin.tx_browser_pi1 {
       }
     }
     single {
+      1000 = tt_news: Sample
       1000 {
         // [String] Select clause (don't confuse it with the SQL select)
         select (
@@ -159,6 +144,7 @@ plugin.tx_browser_pi1 {
           tt_news.imagetitletext
         )
       }
+      1010 = tt_news: RSS
       1010 {
         // [Mixed] Internal comment
         comment = This view should not be used. select value is a dummy!
