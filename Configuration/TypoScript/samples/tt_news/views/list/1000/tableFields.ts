@@ -5,7 +5,7 @@ plugin.tx_browser_pi1 {
         tt_news {
           tstamp = TEXT
           tstamp {
-            field     = tt_content.tstamp
+            field     = tt_news.tstamp
             strftime  = %d.%m.%y
           }
         }
