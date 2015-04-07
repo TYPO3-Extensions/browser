@@ -15,13 +15,6 @@ plugin.tx_browser_pi1 {
             }
           }
           image < plugin.tx_browser_pi1.displayList.master_templates.tableFields.image.0
-          image >
-          image = TEXT
-          image {
-            field = tt_news.image
-            listNum = 0
-            wrap = uploads/pics/
-          }
           title < plugin.tx_browser_pi1.displayList.master_templates.tableFields.header.0
         }
       }

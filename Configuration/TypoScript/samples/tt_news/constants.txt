@@ -33,22 +33,19 @@ plugin.tx_browser_pi1 {
     listview {
       header {
         0 {
-          crop  = 24|...|1
+          crop  = 40|...|1
           field = tt_news.title
-        }
-        1 {
-          crop  = 30|...|1
-          field = tt_news.short
+          tag   = div
         }
       }
       image {
         0 {
           #default =
           file    = tt_news.image
-          height  = 188c
+          height  = 40c
           path    = uploads/pics/
           seo     = tt_news.imagealttext // tt_news.imagetitletext
-          width   = 188c
+          width   = 40
         }
       }
       text {
