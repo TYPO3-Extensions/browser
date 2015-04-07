@@ -23,7 +23,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'pi5/Configuration/TypoScript/', 'Browser [2] + Kalender' );
     // Plugin 1
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_content/', 'Browser [3] + Beispiel ready-to-use' );
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Beispiel fuer tt_news (veraltet!)' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Beispiel fuer tt_news' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/dam/', 'Browser [3] + Beispiel fuer DAM (veraltet!)' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates' );
     // Plugin 4
@@ -47,7 +47,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'pi5/Configuration/TypoScript/', 'Browser [2] + Calendar' );
     // Plugin 1
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_content/', 'Browser [3] + Sample ready-to-use' );
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Sample for tt_news (deprecated!)' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Sample for tt_news' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/dam/', 'Browser [3] + Sample for DAM (deprecated!)' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates' );
     // Plugin 4
