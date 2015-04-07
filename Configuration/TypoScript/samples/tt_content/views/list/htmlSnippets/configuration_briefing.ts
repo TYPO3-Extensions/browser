@@ -18,26 +18,7 @@ temp.configurationbriefing {
           </ul>
         </li>
         <li>
-          Flexform [Plugin] > [Templating]
-          <ul>
-            <li>
-              HTML: [Browser: Out of the box (browser)]
-            </li>
-            <li>
-              CSS jQuery UI (User Interface): select one out of 24 themes
-            </li>
-          </ul>
-        </li>
-        <li>
-          Flexform [Plugin] > [List View]
-          <ul>
-            <li>
-              Limit: records per page (from 1 to 1000): 5
-            </li>
-          </ul>
-        </li>
-        <li>
-          Adapt the vies to your needs
+          Adapt these view to your needs
           <ul>
             <li>
               Modul Web > Template
@@ -109,26 +90,7 @@ temp.configurationbriefing {
           </ul>
         </li>
         <li>
-          Flexform [Plug-In] > [Templating]
-          <ul>
-            <li>
-              HTML: [Browser: Out of the Box (browser)]
-            </li>
-            <li>
-              CSS jQuery UI (User Interface): Wähle eins von 24 Themen aus.
-            </li>
-          </ul>
-        </li>
-        <li>
-          Flexform [Plugin] > [Listenansicht]
-          <ul>
-            <li>
-              Limit: Datensätze pro Seite (1 bis 1000): 5
-            </li>
-          </ul>
-        </li>
-        <li>
-          Pass' die Views an Deine Anforderungen an:
+          Pass' diese View an Deine Anforderungen an:
           <ul>
             <li>
               Modul Web > Template

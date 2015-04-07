@@ -1,2 +1,1 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_content/template/setup.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_content/views/_setup.ts">

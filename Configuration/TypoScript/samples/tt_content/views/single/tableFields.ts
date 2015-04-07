@@ -10,9 +10,6 @@ plugin.tx_browser_pi1 {
               uid {
                 field = tt_content.uid
               }
-              uid >
-              XXXuid = 120
-              uid = ###TT_CONTENT.UID###
               fieldName = image
             }
             begin = 0
@@ -51,7 +48,7 @@ plugin.tx_browser_pi1 {
           }
           list_type = COA
           list_type {
-              // If it is default content
+              // If it isn't any plugin
             10 = TEXT
             10 {
               if {

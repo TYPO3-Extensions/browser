@@ -12,10 +12,17 @@ plugin.tx_browser_pi1 {
           tt_content.image,
           tt_content.imageheight,
           tt_content.imagewidth,
-          tt_content.layout,
-          tt_content.colPos,
           tt_content.uid
 )
+        functions {
+          clean_up {
+            csvTableFields (
+              tt_content.imageheight,
+              tt_content.imagewidth,
+              tt_content.uid
+            )
+          }
+        }
       }
     }
   }

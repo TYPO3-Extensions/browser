@@ -1313,6 +1313,9 @@ class tx_browser_pi1_template
       $bool_nRows = true;
     }
 
+    // #i0145, 150407, dwildt, 1+
+    $this->cObjDataAdd( $elements );
+
     /////////////////////////////////////////
     //
     // Wrap all elements
@@ -1377,12 +1380,18 @@ class tx_browser_pi1_template
         // Store the id of the previous element.
         $int_last_uid = false;
 
+        // #i0145, 150407, dwildt, 1+
+        $this->cObjDataReset();
+
         // Loop through all rows
         // 120915, dwildt, 1-
         //foreach( ( array ) $rows as $lRow => $lElements )
         // 120915, dwildt, 1+
         foreach ( ( array ) $rows as $lElements )
         {
+          // #i0145, 150407, dwildt, 1+
+          $this->cObjDataAdd( $lElements );
+
           // Store the current id of the current element.
           $int_cur_uid = $lElements[ $table . '.uid' ];
           if ( !$int_cur_uid )
@@ -1402,8 +1411,14 @@ class tx_browser_pi1_template
             $value = $this->pObj->objWrapper4x->wrapAndLinkValue( $tableField, $lElements[ $tableField ], 0 );
           }
           $int_last_uid = $int_cur_uid;
+
+          // #i0145, 150407, dwildt, 1+
+          $this->cObjDataReset();
         }
         // Loop through all rows
+        // #i0145, 150407, dwildt, 1+
+        $this->cObjDataAdd( $elements );
+
         // Process the TS extensions.browser.wrapAll
         if ( $value )
         {
@@ -1421,7 +1436,8 @@ class tx_browser_pi1_template
       // Process all the rest of the elements
     }
     // Wrap all elements
-
+    // #i0145, 150407, dwildt, 1+
+    $this->cObjDataReset();
 
     return $markerArray;
   }
@@ -1640,7 +1656,8 @@ class tx_browser_pi1_template
     // #i0138, 150310, dwildt, 4+
     // Table head should not get any oder properties
     $tableHead_orderBy = $this->lDisplayList[ 'tableHead_orderBy' ];
-    if( empty($tableHead_orderBy)){
+    if ( empty( $tableHead_orderBy ) )
+    {
       return null;
     }
 
@@ -3130,7 +3147,7 @@ class tx_browser_pi1_template
     $handleAs = $this->pObj->arrHandleAs;
     // [Boolean] Shouldn't empty values handled?
     $bool_dontHandleEmptyValues = $this->pObj->objFlexform->bool_dontHandleEmptyValues;
-var_dump(__METHOD__, __LINE__, $bool_dontHandleEmptyValues);
+
     // RETURN : row is empty
     if ( $bool_dontHandleEmptyValues )
     {
@@ -3680,7 +3697,7 @@ var_dump(__METHOD__, __LINE__, $bool_dontHandleEmptyValues);
 
     // 140630, dwildt, 1+
     $markerArray = $this->tmpl_marker();
-
+//var_dump( __METHOD__, __CLASS__, $markerArray );
     // Replace mode and view in the whole template
     $template = str_replace( '###MODE###', $this->pObj->piVar_mode, $template );
     $template = str_replace( '###VIEW###', $this->pObj->view, $template );
@@ -3742,7 +3759,6 @@ var_dump(__METHOD__, __LINE__, $bool_dontHandleEmptyValues);
         // #59669, 140624, dwildt, 1+
         //$htmlRow = $this->htmlRows5x( $template, '###SINGLEBODY###', '###SINGLEBODYROW###', $markerArray );
         $htmlRow = $this->htmlRows5x( $template, '###SINGLEBODY###', '###SINGLEBODYROW###' );
-//var_dump( __METHOD__, __LINE__, $htmlRow);
 //        var_dump( __METHOD__, __LINE__, $htmlRow, $template );
 //        var_dump( __METHOD__, __LINE__, $this->pObj->local_cObj->data );
 //        die( 'Auskommentierten Code oben beachten :(' );
@@ -4026,7 +4042,7 @@ var_dump(__METHOD__, __LINE__, $bool_dontHandleEmptyValues);
         t3lib_div::devlog( '[INFO/TEMPLATING] \'' . $title . '\' will be handled as the title.', $this->pObj->extKey, 0 );
         t3lib_div::devlog( '[INFO/TEMPLATING] The system marker ###TITLE### will be replaced.', $this->pObj->extKey, 0 );
       }
-      return value;
+      return $title;
     }
 
     list($table, $field) = explode( '.', $handleAs[ 'title' ] );

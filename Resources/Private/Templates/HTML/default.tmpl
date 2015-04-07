@@ -5,7 +5,7 @@
 <pre>
 <em>
 
-VERSION 6.0.0
+VERSION 7.0.4
   * #00000: Marker ###VIEW### is moved to list or single
   * #00000: Most tags got an id
   * #00000: Subpart ###MODESELECTORTABS###
@@ -185,35 +185,31 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
       <div class="columns singleview singleview-###MODE###">
         <!-- ###SINGLEVIEW### begin -->
 <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
-        <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
-          ###RECORD_BROWSER###
-          <div class="ui-widget ui-corner-all">
-            <h1 class="ui-widget-header ui-corner-top">
-              ###TITLE###
-            </h1>
-            <div class="ui-widget-content ui-corner-bottom">
-              <table###SUMMARY###>
-                ###CAPTION###<!-- ###SINGLEBODY### begin -->
-                <tbody><!-- ###SINGLEBODYROW### begin -->
-                  <tr###CLASS###>
-                    <th>###FIELD###</th>
-                    <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
-                  </tr><!-- ###SINGLEBODYROW### end -->
-                </tbody><!-- ###SINGLEBODY### end -->
-              </table>
-            </div>
+        ###RECORD_BROWSER###
+        <div class="record">
+          <h1 class="ui-widget-header ui-corner-top">
+            ###TITLE###
+          </h1>
+          <table###SUMMARY###>
+            ###CAPTION###<!-- ###SINGLEBODY### begin -->
+            <tbody><!-- ###SINGLEBODYROW### begin -->
+              <tr###CLASS###>
+                <th>###FIELD###</th>
+                <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
+              </tr><!-- ###SINGLEBODYROW### end -->
+            </tbody><!-- ###SINGLEBODY### end -->
+          </table>
 <!-- ###AREA_FOR_AJAX_LIST_01### end -->
-            <!-- ###BACKBUTTON### begin -->
-            <p class="backbutton">
-              ###BUTTON###
-            </p>
+          <!-- ###BACKBUTTON### begin -->
+          <p class="backbutton">
+            ###BUTTON###
+          </p>
           <!-- ###BACKBUTTON### end -->
 <!-- ###AREA_FOR_AJAX_LIST_02### begin -->
-          </div>
-        </div>
+        </div> <!-- /record -->
 <!-- ###AREA_FOR_AJAX_LIST_02### end -->
         <!-- ###SINGLEVIEW### end -->
-      </div> <!-- /ui-widget -->
+      </div> <!-- /singleview -->
 <!-- ###TEMPLATE_SINGLE### end -->
 
 

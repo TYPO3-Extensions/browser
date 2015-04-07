@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
- * @version 5.0.0
+ * @version 7.0.4
  * @since 1.0
  */
 
@@ -782,100 +782,13 @@ class tx_browser_pi1_viewsingle
    *
    * @param	 string  $template : HTML template with TYPO3 subparts and markers
    * @return	string  $template : HTML template with TYPO3 subparts and markers
-   * @version 5.0.0
+   * @version 7.0.4
    * @since   5.0.0
    */
   private function templateRows( $template, $rows )
   {
-    switch ( $this->templateTTCmode() )
-    {
-      case( true ):
-        $template = $this->templateRowsTTC( $template, $rows );
-        break;
-      case( false ):
-      default:
-        $template = $this->templateRowsSingleView( $template, $rows );
-        break;
-    }
-    return $template;
-  }
-
-  /**
-   * templateRowsSingleView() :
-   *
-   * @param	 string  $template : HTML template with TYPO3 subparts and markers
-   * @return	string  $template : HTML template with TYPO3 subparts and markers
-   * @version 5.0.0
-   * @since   5.0.0
-   */
-  private function templateRowsSingleView( $template, $rows )
-  {
     $template = $this->pObj->objTemplate->tmplSingleview( $template, $rows );
     return $template;
-  }
-
-  /**
-   * templateRowsTTC() :
-   *
-   * @param	 string  $template : HTML template with TYPO3 subparts and markers
-   * @return	string  $template : HTML template with TYPO3 subparts and markers
-   * @version 5.0.0
-   * @since   1.x
-   */
-  private function templateRowsTTC( $template, $rows )
-  {
-    $arr_result = $this->pObj->objTTContainer->main( $rows );
-
-    if ( !$arr_result[ 'error' ][ 'status' ] )
-    {
-      $template = $arr_result[ 'data' ][ 'template' ];
-      return $template;
-    }
-
-    $template = $arr_result[ 'error' ][ 'header' ] . $arr_result[ 'error' ][ 'prompt' ];
-    return $template;
-  }
-
-  /**
-   * templateTTCmode() :
-   *
-   * @return	boolean
-   * @version 5.0.0
-   * @since   5.0.0
-   */
-  private function templateTTCmode()
-  {
-    $mode = $this->mode;
-
-    $ttcMode = false;
-
-    foreach ( ( array ) $this->conf_view[ $mode . '.' ] as $ts_value )
-    {
-      if ( $ts_value == 'TT_CONTAINER' )
-      {
-        $ttcMode = true;
-        break;
-      }
-    }
-
-    if ( !$this->pObj->b_drs_ttc )
-    {
-      return $ttcMode;
-    }
-
-    if ( $ttcMode )
-    {
-      t3lib_div::devlog( '[INFO/TTC] We have one TT_CONTAINER at least.', $this->pObj->extKey, 0 );
-      t3lib_div::devlog( '[INFO/TTC] We don\'t process the default TypoScript Template Marker.', $this->pObj->extKey, 0 );
-    }
-    else
-    {
-      t3lib_div::devlog( '[INFO/TTC] We don\'t have any TT_CONTAINER.', $this->pObj->extKey, 0 );
-      t3lib_div::devlog( '[INFO/TTC] We don\'t process the TypoScript Template Container (TTC).', $this->pObj->extKey, 0 );
-      t3lib_div::devlog( '[INFO/TTC] We process the default TypoScript Template Marker.', $this->pObj->extKey, 0 );
-    }
-
-    return $ttcMode;
   }
 
   /**
