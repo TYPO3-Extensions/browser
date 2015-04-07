@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
- * @version 7.0.4
+ * @version 7.0.6
  * @since 1.0
  */
 
@@ -474,7 +474,7 @@ class tx_browser_pi1_viewsingle
    * init() :
    *
    * @return	void
-   * @version 5.0.0
+   * @version 7.0.6
    * @since   5.0.0
    */
   private function init()
@@ -485,6 +485,9 @@ class tx_browser_pi1_viewsingle
     $this->pObj->str_template_raw = $template;
 
     $this->initGeneralStdWrap();
+    // #i0146, 150408, dwildt, 2+
+    $this->init_lDisplayList();
+    $this->init_lDisplay();
     $this->initGlobalDisplaySingle();
     $this->initGlobalDisplaySingleDisplay();
   }
@@ -582,6 +585,50 @@ class tx_browser_pi1_viewsingle
 
     $arr_result = $this->pObj->objSqlAut->get_statements();
     return $arr_result;
+  }
+
+  /**
+   * init_lDisplay( ):
+   *
+   * @return    void
+   * @internal #i0146
+   * @version 7.0.6
+   * @since 7.0.6
+   */
+  private function init_lDisplay()
+  {
+    // Get the local or global displayList.display
+    if ( is_array( $this->conf_view[ 'displayList.' ][ 'display.' ] ) )
+    {
+      $this->pObj->lDisplay = $this->conf_view[ 'displayList.' ][ 'display.' ];
+    }
+    if ( !is_array( $this->conf_view[ 'displayList.' ][ 'display.' ] ) )
+    {
+      $this->pObj->lDisplay = $this->conf[ 'displayList.' ][ 'display.' ];
+    }
+    // Get the local or global displayList.display
+  }
+
+  /**
+   * init_lDisplayList( ):
+   *
+   * @return    void
+   * @internal #i0146
+   * @version 7.0.6
+   * @since 7.0.6
+   */
+  private function init_lDisplayList()
+  {
+    // Get the local or global displayList
+    if ( is_array( $this->conf_view[ 'displayList.' ] ) )
+    {
+      $this->pObj->lDisplayList = $this->conf_view[ 'displayList.' ];
+    }
+    if ( !is_array( $this->conf_view[ 'displayList.' ] ) )
+    {
+      $this->pObj->lDisplayList = $this->conf[ 'displayList.' ];
+    }
+    // Get the local or global displayList
   }
 
   /**
