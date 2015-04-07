@@ -12,7 +12,7 @@ plugin.tx_browser_pi1 {
           tt_news.short
         )
         orderBy (
-          tt_news.datetime DESC
+          tt_news.datetime DESC, tt_news_cat.title, tt_news.title
         )
       }
     }
