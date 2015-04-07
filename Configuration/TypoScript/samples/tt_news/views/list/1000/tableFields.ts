@@ -3,9 +3,9 @@ plugin.tx_browser_pi1 {
     list {
       1000 {
         tt_news {
-          tstamp = TEXT
-          tstamp {
-            field     = tt_news.tstamp
+          datetime = TEXT
+          datetime {
+            field     = tt_news.datetime
             strftime  = %d.%m.%y
           }
         }
