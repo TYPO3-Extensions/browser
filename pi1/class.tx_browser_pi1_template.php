@@ -4098,6 +4098,7 @@ class tx_browser_pi1_template
   private function tmplTableTrClass( $currPosition, $max )
   {
     $class = $this->lDisplayList[ 'templateMarker.' ][ 'cssClass.' ][ 'tr' ];
+var_dump( __METHOD__, __LINE__, $this->lDisplayList );
     return $this->tmplTableTrTdClass( $class, $currPosition, $max );
   }
 
