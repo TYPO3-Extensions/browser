@@ -14,6 +14,11 @@ plugin.tx_browser_pi1 {
         orderBy (
           tt_news.datetime DESC, tt_news_cat.title, tt_news.title
         )
+        functions {
+          clean_up {
+            csvTableFields = distance
+          }
+        }
       }
     }
   }
