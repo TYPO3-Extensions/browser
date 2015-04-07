@@ -14,12 +14,6 @@ plugin.tx_browser_pi1 {
           width   = 80c
         }
       }
-      text {
-        0 {
-          crop = 56|...|1
-          field = tx_quickshop_products.teaser_short // tx_quickshop_products.short // tx_quickshop_products.description
-        }
-      }
       url {
         0 {
           key       =

@@ -14,6 +14,8 @@ plugin.tx_browser_pi1 {
               }
             }
           }
+          image < plugin.tx_browser_pi1.displayList.master_templates.tableFields.image.0
+          title < plugin.tx_browser_pi1.displayList.master_templates.tableFields.header.0
         }
       }
     }

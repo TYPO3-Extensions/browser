@@ -4,9 +4,9 @@ plugin.tx_browser_pi1 {
   extensions.tt_news.host = www.typo3-browser.de
 
   # cat=Browser for tt_news//320;       type=int+;  label=News single view: Page uid of the single view with the news
-  extensions.tt_news.pages.single_view = 
+  extensions.tt_news.pages.single_view =
   # cat=Browser for tt_news//321;       type=int+;  label=RSS-Feed: Page uid of the RSS-Feed with the news
-  extensions.tt_news.pages.rss_feed = 
+  extensions.tt_news.pages.rss_feed =
 
   # cat=Browser for tt_news//330;       type=string;  label=Title: Title of the RSS-Feed in the default language (usually English)
   extensions.tt_news._LOCAL_LANG.default.title = News
@@ -19,8 +19,70 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser for tt_news//340;       type=string;  label=Path to the RSS icon
   extensions.tt_news.pathToIcon = /typo3conf/ext/browser/Resources/Public/Images/Icons/browser_rss-feed.gif
-  # cat=Browser for tt_news/Dims/341;       type=int+;  label=Height of RSS icon: in pixel 
+  # cat=Browser for tt_news/Dims/341;       type=int+;  label=Height of RSS icon: in pixel
   extensions.tt_news.heightOfIcon = 210
   # cat=Browser for tt_news/Dims/342;       type=int+;  label=Width of RSS icon: in pixel
   extensions.tt_news.widthOfIcon = 210
+}
+
+plugin.tx_browser_pi1 {
+  navigation {
+    showUid = newsUid
+  }
+  templates {
+    listview {
+      header {
+        0 {
+          crop  = 24|...|1
+          field = tt_news.tx_newscomfort_title // tt_news.title
+        }
+        1 {
+          crop  = 30|...|1
+          field = tt_news.tx_newscomfort_subjeader // tt_news.short
+        }
+      }
+      image {
+        0 {
+          default = EXT:quick_shop/Ressources/Public/Images/quickshop_default_300x200.gif
+          file    = tt_news.image
+          height  = 188c
+          path    = uploads/tt_news/
+          seo     = tt_news.imagealttext // tt_news.imagetitletext
+          width   = 188c
+        }
+      }
+      text {
+        0 {
+          crop = 56|...|1
+          field = tt_news.tx_newscomfort_subheader // tt_news.short
+        }
+      }
+      url {
+        0 {
+          key       = tt_news.type
+          page      = tt_news.page
+          record    = tt_news.uid
+          showUid   = newsUid
+          #singlePid =
+          url       = tt_news.ext_url
+        }
+      }
+    }
+    singleview {
+      image {
+        0 {
+          caption       = tt_news.caption
+          file          = tt_news.image
+          height        =
+          heightDefault =
+          imagecols     =
+          imageorient   =
+          path          = uploads/tt_news/
+          seo           = tt_news.imagealttext // tt_news.imagetitletext
+          width         =
+          widthDefault  = 300
+        }
+      }
+    }
+  }
 }

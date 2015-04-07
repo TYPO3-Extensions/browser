@@ -8,7 +8,6 @@ plugin.tx_browser_pi1 {
           tt_news.image,
           tt_news.imagealttext,
           tt_news.imagetitletext,
-          tt_news.image,
           tt_news.datetime,
           tt_news.short
         )
