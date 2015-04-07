@@ -3664,7 +3664,7 @@ class tx_browser_pi1_template
    * @param	string		$template : current template
    * @param	array		$rows     : current rows
    * @return	string
-   * @version 7.0.2
+   * @version 7.0.6
    * @since 1.0.0
    */
   public function tmplSingleview( $template, $rows )
@@ -3672,6 +3672,9 @@ class tx_browser_pi1_template
 //var_dump( __METHOD__, __LINE__, $rows);
     // Get displaySingle configuration
     $lDisplaySingle = $this->setDisplaySingle();
+
+    // #i0146, 150408, dwildt, 1+
+    $this->lDisplayList = $this->pObj->lDisplayList;
 
     // Set the globals elements and rows
     $elements = $this->setGlobalElementsOfFirstRow( $rows );
