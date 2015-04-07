@@ -5,8 +5,7 @@ plugin.tx_browser_pi1 {
         tt_news {
           datetime = TEXT
           datetime {
-            field     = tt_news.datetime
-            XXXstrftime  = %d.%m.%y
+            field = tt_news.datetime
             strftime {
               cObject = TEXT
               cObject {
