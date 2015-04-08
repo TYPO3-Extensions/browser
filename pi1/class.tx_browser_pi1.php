@@ -770,7 +770,6 @@ class tx_browser_pi1 extends tslib_pibase
           // #i0112, 141218, dwildt, 1+
           case( 5 ):
             $str_template_completed = $this->objViewlist->main();
-var_dump( __METHOD__, __LINE__, $str_template_completed );
             break;
           // #i0112, 141218, dwildt, +
           default:
@@ -835,7 +834,6 @@ var_dump( __METHOD__, __LINE__, $str_template_completed );
 //    // #28855, 110809, dwildt
 //    if ( substr( $str_template_completed, 0, strlen( '<?xml' ) ) == '<?xml' )
       // #i0149, 150408, dwildt, 1+
-var_dump( __METHOD__, __LINE__, strpos( $str_template_completed, '<?xml' ));
     if ( strpos( $str_template_completed, '<?xml' ) !== false )
     {
       // Prompt the expired time to devlog
@@ -2546,7 +2544,6 @@ var_dump( __METHOD__, __LINE__, strpos( $str_template_completed, '<?xml' ));
       // Global HTML Template
       $template_path = $conf[ 'template.' ][ 'file' ];
     }
-var_dump( __METHOD__, __LINE__, $template_path );
     $template = $cObj->fileResource( $template_path );
     // Catch the template
     // RETURN : the template

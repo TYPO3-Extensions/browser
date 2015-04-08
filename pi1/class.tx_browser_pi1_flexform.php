@@ -2325,7 +2325,6 @@ class tx_browser_pi1_flexform
       // Field template
 
     $str_template = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'template', $sheet, 'lDEF', 'vDEF' );
-var_dump( __METHOD__, __LINE__, $str_template );
     $bool_doNothing = false;
     switch ( $str_template )
     {
@@ -2352,7 +2351,6 @@ var_dump( __METHOD__, __LINE__, $str_template );
         #10221: RSS-Feed
         $str_path2template = $str_template;
     }
-var_dump( __METHOD__, __LINE__, $str_path2template );
     if ( !$bool_doNothing )
     {
       if ( empty( $str_path2template ) )
@@ -2365,17 +2363,14 @@ var_dump( __METHOD__, __LINE__, $str_path2template );
       }
       if ( !empty( $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'template.' ][ 'file' ] ) )
       {
-var_dump( __METHOD__, __LINE__ );
         $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'template.' ][ 'file' ] = $str_path2template;
       }
       if ( empty( $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'template.' ][ 'file' ] ) )
       {
-var_dump( __METHOD__, __LINE__ );
         $this->pObj->conf[ 'template.' ][ 'file' ] = $str_path2template;
         // Global HTML Template
       }
     }
-var_dump( __METHOD__, __LINE__, $this->pObj->conf[ 'template.' ] );
     // #9689
     //////////////////////////////////////////////////////////////////////
     //
