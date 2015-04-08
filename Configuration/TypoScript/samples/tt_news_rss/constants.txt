@@ -31,29 +31,6 @@ plugin.tx_browser_pi1 {
   }
   templates {
     listview {
-      header {
-        0 {
-          crop  = 40|...|1
-          field = tt_news.title
-          tag   = div
-        }
-      }
-      image {
-        0 {
-          #default =
-          file    = tt_news.image
-          height  = 40c
-          path    = uploads/pics/
-          seo     = tt_news.imagealttext // tt_news.imagetitletext
-          width   = 40
-        }
-      }
-      text {
-        0 {
-          crop = 56|...|1
-          field = tt_news.short
-        }
-      }
       url {
         0 {
           key       = tt_news.type
@@ -62,22 +39,6 @@ plugin.tx_browser_pi1 {
           showUid   = newsUid
           #singlePid =
           url       = tt_news.ext_url
-        }
-      }
-    }
-    singleview {
-      image {
-        0 {
-          caption       = tt_news.imagecaption
-          file          = tt_news.image
-          height        =
-          heightDefault =
-          imagecols     =
-          imageorient   =
-          path          = uploads/pics/
-          seo           = tt_news.imagealttext // tt_news.imagetitletext
-          width         =
-          widthDefault  = 300
         }
       }
     }

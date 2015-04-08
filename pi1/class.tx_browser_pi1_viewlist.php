@@ -198,18 +198,18 @@ class tx_browser_pi1_viewlist
       // csv export versus list view
     // #29370, 110831, dwildt+
     // Get template for csv
-    // #i0149, 150408, dwildt, 1-/+
+    // #i0150, 150408, dwildt, 1-/+
     //switch ( $this->pObj->objExport->str_typeNum )
     switch ( TRUE )
     {
-      // #i0149, 150408, dwildt, 1-/+
+      // #i0150, 150408, dwildt, 1-/+
       //case( 'csv' ) :
       case( $this->pObj->objExport->str_typeNum == 'csv' ) :
         // CASE csv
         // Take the CSV template
         $this->content_setCSV();
         break;
-      // #i0149, 150408, dwildt, 3+
+      // #i0150, 150408, dwildt, 3+
       case( strpos( $this->content, '<?xml' ) !== false ):
         $this->content_setXML();
         break;
@@ -759,7 +759,7 @@ class tx_browser_pi1_viewlist
    * @return    void
    * @version 7.0.6
    * @since   7.0.6
-   * @internal #i0149
+   * @internal #i0150
    */
   private function content_setXML()
   {
