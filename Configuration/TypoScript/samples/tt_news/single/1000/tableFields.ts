@@ -18,10 +18,10 @@ plugin.tx_browser_pi1 {
                 }
               }
             }
-              // devider
+              // devider: –
             20 = TEXT
             20 {
-              value = -
+              value = –
               noTrimWrap = | | |
             }
               // tt_news.bodytext
