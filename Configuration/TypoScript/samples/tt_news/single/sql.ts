@@ -16,6 +16,7 @@ plugin.tx_browser_pi1 {
 )
         functions {
           clean_up {
+            // Don't display fields as columns in the table
             csvTableFields (
               tt_news.datetime,
               tt_news.imagecaption,

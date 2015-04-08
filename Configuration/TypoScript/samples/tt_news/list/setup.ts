@@ -5,8 +5,8 @@ plugin.tx_browser_pi1 {
       1000 {
         // [String] Name of the view. It will displayed in the plugin/flexform
         name    = tt_news: Sample
-        // [String] Alias for showUid. It is optional. If you don't need it, remove the whole line.
-        showUid = newsUid
+        // [String] Alias for showUid.
+        showUid = {$plugin.tx_browser_pi1.navigation.showUid}
       }
     }
   }

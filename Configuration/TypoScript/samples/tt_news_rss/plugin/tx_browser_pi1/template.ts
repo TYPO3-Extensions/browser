@@ -8,7 +8,7 @@ plugin.tx_browser_pi1 {
             // [String] Path to your RSS/XML template
           file      = EXT:browser/Resources/Public/Sample/tt_news/rss.tmpl
             // [String] Path to a icon. It will displayed in the flexform of the plugin.
-          image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_01.gif
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/browser-rss.gif
             // [csv] Comma seperated list with the numbers of the correspondening views
           csvViews  = 1010
         }

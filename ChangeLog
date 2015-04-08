@@ -11,6 +11,7 @@ Manual
 7.0.6
   15-04-02
   Improvement
+  * #i0152: state is set from alpha to beta
   * #i0150: Adapt the tt_news sample RSS feed to Browser 6.x/7.x and TYPO3 6.x
   * #i0148: Sample for DAM is deprecated and removed
   * #i0146: Adapt the tt_news sample to Browser 6.x/7.x and TYPO3 6.x
