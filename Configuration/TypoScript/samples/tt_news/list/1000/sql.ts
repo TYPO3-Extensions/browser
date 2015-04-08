@@ -21,7 +21,12 @@ plugin.tx_browser_pi1 {
         csvLinkToSingleView = dummy
         functions {
           clean_up {
-            csvTableFields = distance
+            csvTableFields (
+              distance,
+              tt_news.ext_url,
+              tt_news.page,
+              tt_news.type
+)
           }
         }
       }
