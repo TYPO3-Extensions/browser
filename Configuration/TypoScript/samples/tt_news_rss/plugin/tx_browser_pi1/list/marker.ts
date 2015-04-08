@@ -4,42 +4,36 @@ plugin.tx_browser_pi1 {
       1010 {
         marker < plugin.tx_browser_pi1.marker
         marker {
-          my_http = TEXT
-          my_http {
-            value = http://
-          }
-          rss_title {
-            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.title}
-            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.title}
-          }
-          rss_url {
-            typolink {
-              parameter = {$plugin.tx_browser_pi1.extensions.tt_news.pages.rss_feed}
+          rss_description = TEXT
+          rss_description {
+            value   = Browser - TYPO3 without PHP. RSS feed with tt_news.
+            lang {
+              de = Browser - TYPO3 ohne PHP: RSS-Feed mit tt_news.
+              en = Browser - TYPO3 without PHP. RSS feed with tt_news.
             }
           }
-          rss_description {
-            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.description}
-            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.description}
+          rss_lang = TEXT
+          rss_lang {
+            value   = en
+            lang {
+              de = de
+              en = en
+            }
           }
-          rss_image_title {
-            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.description}
-            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.description}
+          rss_title = TEXT
+          rss_title {
+            value   = News
+            lang {
+              de = Nachrichten
+              en = News
+            }
           }
-          rss_image_url {
-            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.host}{$plugin.tx_browser_pi1.extensions.tt_news.pathToIcon}
-          }
-          rss_image_link {
-            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.host}/
-          }
-          rss_image_height {
-            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.heightOfIcon}/
-          }
-          rss_image_width {
-            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.widthOfIcon}/
-          }
-          rss_image_description {
-            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.description}
-            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.description}
+          rss_url = TEXT
+          rss_url {
+            typolink {
+              parameter   = {$plugin.tx_browser_pi1.templates.listview.url.0.singlePid}
+              returnLast  = url
+            }
           }
         }
       }
