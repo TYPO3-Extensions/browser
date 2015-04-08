@@ -34,7 +34,10 @@ plugin.tx_browser_pi1 {
           }
           uid = COA
           uid {
-            10 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.default
+            10 = TEXT
+            10 {
+              typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.default
+            }
           }
         }
       }
