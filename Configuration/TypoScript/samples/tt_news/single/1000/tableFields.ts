@@ -33,11 +33,6 @@ plugin.tx_browser_pi1 {
               parseFunc < lib.parseFunc_RTE
             }
           }
-          imagecaption = TEXT
-          imagecaption {
-            field = tt_news.imagecaption
-            wrap = <div>|</div>
-          }
           image < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.0
         }
       }

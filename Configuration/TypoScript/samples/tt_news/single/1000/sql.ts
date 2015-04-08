@@ -17,7 +17,10 @@ plugin.tx_browser_pi1 {
         functions {
           clean_up {
             csvTableFields (
-              tt_news.datetime
+              tt_news.datetime,
+              tt_news.imagecaption,
+              tt_news.imagealttext,
+              tt_news.imagetitletext
 )
           }
         }
