@@ -3,18 +3,6 @@ plugin.tx_browser_pi1 {
     single {
       1000 {
         tt_news {
-          datetime = TEXT
-          datetime {
-            field = tt_news.datetime
-            strftime {
-              cObject = TEXT
-              cObject {
-                value   = %m/%d/%y
-                lang.de = %d.%m.%y
-              }
-            }
-          }
-          image < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.0
             // tt_news.datetime - tt_news.bodytext
           bodytext = COA
           bodytext {
@@ -45,6 +33,12 @@ plugin.tx_browser_pi1 {
               parseFunc < lib.parseFunc_RTE
             }
           }
+          imagecaption = TEXT
+          imagecaption {
+            field = tt_news.imagecaption
+            wrap = <div>|</div>
+          }
+          image < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.0
         }
       }
     }
