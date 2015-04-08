@@ -21,15 +21,17 @@ plugin.tx_browser_pi1 {
               crop        = 300 | ... | 1
             }
             stdWrap {
+              stripHtml = 1
               htmlSpecialChars = 1
             }
           }
-          title = COA
+          title = TEXT
           title {
-            10 = TEXT
-            10 {
-              field = tt_news.title
-              crop  = 60 | ... | 1
+            field = tt_news.title
+            crop  = 60 | ... | 1
+            stdWrap {
+              stripHtml = 1
+              htmlSpecialChars = 1
             }
           }
           uid = COA
