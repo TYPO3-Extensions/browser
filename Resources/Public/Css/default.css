@@ -41,9 +41,18 @@
   max-width: inherit;
 }
 
-.category_menu ul {
-    text-align: center;
+.category_menu ul,
+.modeSelector ul {
+  text-align: center;
 }
-.category_menu li {
-    display: inline-block;
+.category_menu li,
+.modeSelector li {
+  display: inline-block;
+  border-right: 1px solid #333;
+  padding-right: 0.4em;
+}
+.category_menu li:last-of-type,
+.modeSelector li:last-of-type {
+  border-right: inherit;
+  padding-right: 0;
 }
