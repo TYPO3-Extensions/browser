@@ -2381,7 +2381,7 @@ class tx_browser_pi1_typoscript
     //$markerArray[ $hashMarker ] = $this->cObjGetSingleTableField( $tableField, $row );
     $value = $this->cObjGetSingleTableField( $tableField, $row );
     $value = $this->pObj->objExport->csv_value( $value );
-    $markerArray[ $hashMarker ] = value;
+    $markerArray[ $hashMarker ] = $value;
     $markerArray = $this->wrapRowTableLocalFieldTitle( $markerArray, $tableField, $hashMarker );
 
     return $markerArray;
