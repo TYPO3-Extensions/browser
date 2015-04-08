@@ -6,10 +6,10 @@ plugin.tx_browser_pi1 {
         marker {
           rss_description = TEXT
           rss_description {
-            value   = Browser - TYPO3 without PHP. RSS feed with tt_news.
+            value   = Browser – TYPO3 without PHP. RSS feed with tt_news.
             lang {
-              de = Browser - TYPO3 ohne PHP: RSS-Feed mit tt_news.
-              en = Browser - TYPO3 without PHP. RSS feed with tt_news.
+              de = Browser – TYPO3 ohne PHP: RSS-Feed mit tt_news.
+              en = Browser – TYPO3 without PHP. RSS feed with tt_news.
             }
           }
           rss_lang = TEXT

@@ -2377,7 +2377,11 @@ class tx_browser_pi1_typoscript
   private function wrapRowTableLocalField( $markerArray, $tableField, $row )
   {
     $hashMarker = '###' . strtoupper( $tableField ) . '###';
-    $markerArray[ $hashMarker ] = $this->cObjGetSingleTableField( $tableField, $row );
+    // #i0151, 150408, dwildt, 1-/3+
+    //$markerArray[ $hashMarker ] = $this->cObjGetSingleTableField( $tableField, $row );
+    $value = $this->cObjGetSingleTableField( $tableField, $row );
+    $value = $this->pObj->objExport->csv_value( $value );
+    $markerArray[ $hashMarker ] = value;
     $markerArray = $this->wrapRowTableLocalFieldTitle( $markerArray, $tableField, $hashMarker );
 
     return $markerArray;
