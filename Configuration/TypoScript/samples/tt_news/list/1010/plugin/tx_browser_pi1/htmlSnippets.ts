@@ -7,8 +7,7 @@ plugin.tx_browser_pi1 {
           subparts {
             listview = TEXT
             listview {
-              value (
-<?xml version="1.0" encoding="utf-8"?>
+              value (<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>###RSS_TITLE###</title>
