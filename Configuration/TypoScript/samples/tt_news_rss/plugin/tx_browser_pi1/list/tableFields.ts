@@ -39,6 +39,10 @@ plugin.tx_browser_pi1 {
             10 = TEXT
             10 {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.default
+              stdWrap {
+                stripHtml = 1
+                htmlSpecialChars = 1
+              }
             }
           }
         }

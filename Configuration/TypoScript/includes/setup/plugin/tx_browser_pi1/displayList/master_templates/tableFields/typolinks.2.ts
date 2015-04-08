@@ -74,6 +74,7 @@ plugin.tx_browser_pi1 {
                 scheme = {$plugin.tx_browser_pi1.templates.listview.url.2.forceAbsoluteUrlScheme}
               }
               useCacheHash = 1
+              returnLast = {$plugin.tx_browser_pi1.templates.listview.url.2.returnLast}
             }
               // link to an internal page
             page < .default
