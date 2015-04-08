@@ -38,10 +38,11 @@ plugin.tx_browser_pi1 {
               field = {$plugin.tx_browser_pi1.templates.listview.url.0.key}
             }
               // tt_news type: News
-            0 = TEXT
-            0 {
+            default = TEXT
+            default {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.default
             }
+            0 < .default
               // tt_news type: Link internal Page
             1 = TEXT
             1 {
