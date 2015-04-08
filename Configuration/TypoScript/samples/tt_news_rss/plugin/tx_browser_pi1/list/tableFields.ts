@@ -22,7 +22,6 @@ plugin.tx_browser_pi1 {
             }
             stdWrap {
               stripHtml = 1
-              htmlSpecialChars = 1
             }
           }
           title = TEXT
@@ -31,7 +30,6 @@ plugin.tx_browser_pi1 {
             crop  = 60 | ... | 1
             stdWrap {
               stripHtml = 1
-              htmlSpecialChars = 1
             }
           }
           uid = COA
