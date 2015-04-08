@@ -15,9 +15,9 @@ plugin.tx_browser_pi1 {
             }
           }
           image < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.0
-            // tt_news.datetime - tt_news.short
-          short = COA
-          short {
+            // tt_news.datetime - tt_news.bodytext
+          bodytext = COA
+          bodytext {
               // tt_news.datetime
             10 = TEXT
             10 {
@@ -36,10 +36,10 @@ plugin.tx_browser_pi1 {
               value = -
               noTrimWrap = | | |
             }
-              // tt_news.short
+              // tt_news.bodytext
             30 = TEXT
             30 {
-              field = tt_news.short
+              field = tt_news.bodytext
             }
             stdWrap {
               parseFunc < lib.parseFunc_RTE
