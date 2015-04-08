@@ -2351,6 +2351,7 @@ class tx_browser_pi1_flexform
         #10221: RSS-Feed
         $str_path2template = $str_template;
     }
+var_dump( __METHOD__, __LINE__, $str_path2template );
     if ( !$bool_doNothing )
     {
       if ( empty( $str_path2template ) )
