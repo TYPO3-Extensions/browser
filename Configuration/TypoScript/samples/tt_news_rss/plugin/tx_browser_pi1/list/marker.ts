@@ -31,8 +31,9 @@ plugin.tx_browser_pi1 {
           rss_url = TEXT
           rss_url {
             typolink {
-              parameter   = {$plugin.tx_browser_pi1.templates.listview.url.0.singlePid}
-              returnLast  = url
+              parameter         = {$plugin.tx_browser_pi1.templates.listview.url.0.singlePid}
+              forceAbsoluteUrl  = 1
+              returnLast        = url
             }
           }
         }
