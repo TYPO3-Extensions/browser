@@ -24,6 +24,7 @@ switch ( true )
     // Plugin 1
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_content/', 'Browser [3] + Beispiel ready-to-use' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Beispiel fuer tt_news' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news_rss/', 'Browser [3] + Beispiel fuer tt_news (RSS-FEED)' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates' );
     // Plugin 4
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi4/', 'Browser [10] + kein Cache' );
@@ -47,6 +48,7 @@ switch ( true )
     // Plugin 1
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_content/', 'Browser [3] + Sample ready-to-use' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Sample for tt_news' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news_rss/', 'Browser [3] + Sample for tt_news (RSS feed)' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates' );
     // Plugin 4
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi4/', 'Browser [10] + no cache' );
