@@ -21,28 +21,32 @@ plugin.tx_browser_pi1 {
         table {
           name  = Browser: Table
           file  = EXT:browser/Resources/Private/Templates/HTML/default.tmpl
-          //image = EXT:browser/Resources/Public/Images/BackendLayouts/start_bronze_02.gif
+          image = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_01_table.gif
         }
         list {
-          name = Browser: List
-          file = EXT:browser/Resources/Private/Templates/HTML/default_ul.tmpl
+          name  = Browser: List
+          file  = EXT:browser/Resources/Private/Templates/HTML/default_ul.tmpl
+          image = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_02_list.gif
         }
           // #44131
         main {
           name      = Browser: Main
           file      = EXT:browser/Resources/Private/Templates/HTML/main.tmpl
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_03_main.gif
           csvViews  = all
         }
           // #44131
         margin {
           name      = Browser: Margin
           file      = EXT:browser/Resources/Private/Templates/HTML/margin.tmpl
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_04_margin.gif
           csvViews  = all
         }
           // #60530
         newsletter {
           name      = Browser: Newsletter
           file      = EXT:browser/Resources/Private/Templates/HTML/newsletter.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_05_newsletter.gif
           csvViews  = all
         }
       }
