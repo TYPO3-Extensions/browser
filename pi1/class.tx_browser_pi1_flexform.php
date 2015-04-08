@@ -2325,6 +2325,7 @@ class tx_browser_pi1_flexform
       // Field template
 
     $str_template = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'template', $sheet, 'lDEF', 'vDEF' );
+var_dump( __METHOD__, __LINE__, $str_template );
     $bool_doNothing = false;
     switch ( $str_template )
     {
