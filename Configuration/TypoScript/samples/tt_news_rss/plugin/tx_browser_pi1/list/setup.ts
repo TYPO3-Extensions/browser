@@ -1,4 +1,4 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/template.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/list/template.ts">
 
 plugin.tx_browser_pi1 {
   views {
@@ -15,6 +15,6 @@ plugin.tx_browser_pi1 {
   }
 }
 
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/marker.ts">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/sql.ts">
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/tableFields.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/list/marker.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/list/sql.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news_rss/plugin/tx_browser_pi1/list/tableFields.ts">
