@@ -40,3 +40,11 @@
   /* foundation css sets 100%, .olTileImages will displayed with 50%! */
   max-width: inherit;
 }
+
+  .category_menu ul {
+    margin: 0; padding: 0;
+  }
+  .category_menu ul li {
+    list-style: none;
+    margin: 0; padding: 0;
+  }
