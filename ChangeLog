@@ -11,6 +11,7 @@ Manual
 7.0.6
   15-04-02
   Improvement
+  * #i0147: Sample for DAM is deprecated and removed
   * #i0146: Adapt the tt_news sample to Browser 6.x/7.x and TYPO3 6.x
   * #i0143: Adapt the tt_content sample to Browser 6.x/7.x and TYPO3 6.x with FAL
   Bugfix

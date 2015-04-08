@@ -13,7 +13,14 @@ plugin.tx_browser_pi1 {
           tt_news.imagecaption,
           tt_news.imagealttext,
           tt_news.imagetitletext
-        )
+)
+        functions {
+          clean_up {
+            csvTableFields (
+              tt_news.datetime
+)
+          }
+        }
       }
     }
   }

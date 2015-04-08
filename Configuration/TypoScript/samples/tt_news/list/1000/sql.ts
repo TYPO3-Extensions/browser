@@ -10,10 +10,10 @@ plugin.tx_browser_pi1 {
           tt_news.imagetitletext,
           tt_news.datetime,
           tt_news.short
-        )
+)
         orderBy (
           tt_news.datetime DESC, tt_news_cat.title, tt_news.title
-        )
+)
         // Don't link any field automatically with the link to the single view
         csvLinkToSingleView = dummy
         functions {
