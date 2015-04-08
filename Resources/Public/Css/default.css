@@ -56,3 +56,6 @@
   border-right: inherit;
   padding-right: 0;
 }
+.pagination-centered {
+  text-align:center;
+}
