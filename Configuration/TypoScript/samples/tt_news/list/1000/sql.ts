@@ -25,7 +25,8 @@ plugin.tx_browser_pi1 {
               distance,
               tt_news.ext_url,
               tt_news.page,
-              tt_news.type
+              tt_news.type,
+              tt_news_cat.title
 )
           }
         }

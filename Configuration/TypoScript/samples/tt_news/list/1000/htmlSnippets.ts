@@ -9,8 +9,8 @@ plugin.tx_browser_pi1 {
             filter {
               value (
               <div class="filter">
-                ###TT_NEWS.DATETIME###
                 ###TT_NEWS_CAT.TITLE###
+                ###TT_NEWS.DATETIME###
               </div>
 )
             }
