@@ -834,6 +834,7 @@ class tx_browser_pi1 extends tslib_pibase
 //    // #28855, 110809, dwildt
 //    if ( substr( $str_template_completed, 0, strlen( '<?xml' ) ) == '<?xml' )
       // #i0149, 150408, dwildt, 1+
+var_dump( __METHOD__, __LINE__, $str_template_completed , strpos( $str_template_completed, '<?xml' ))
     if ( strpos( $str_template_completed, '<?xml' ) !== false )
     {
       // Prompt the expired time to devlog
