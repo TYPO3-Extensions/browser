@@ -32,11 +32,25 @@ plugin.tx_browser_pi1 {
               stripHtml = 1
             }
           }
-          uid = COA
+          uid = CASE
           uid {
-            10 = TEXT
-            10 {
+            key {
+              field = {$plugin.tx_browser_pi1.templates.listview.url.0.key}
+            }
+              // tt_news type: News
+            0 = TEXT
+            0 {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.default
+            }
+              // tt_news type: Link internal Page
+            1 = TEXT
+            1 {
+              typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.page
+            }
+              // tt_news type: Link external URL
+            2 = TEXT
+            2 {
+              typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.0.url
             }
           }
         }
