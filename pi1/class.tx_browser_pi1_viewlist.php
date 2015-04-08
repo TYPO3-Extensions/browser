@@ -198,14 +198,18 @@ class tx_browser_pi1_viewlist
       // csv export versus list view
     // #29370, 110831, dwildt+
     // Get template for csv
-    switch ( $this->pObj->objExport->str_typeNum )
+    // #i0149, 150408, dwildt, 1-/+
+    //switch ( $this->pObj->objExport->str_typeNum )
+var_dump( __METHOD__, __LINE__, $this->content );
+    switch ( TRUE )
     {
-      case( 'csv' ) :
+      // #i0149, 150408, dwildt, 1-/+
+      //case( 'csv' ) :
+      case( $this->pObj->objExport->str_typeNum == 'csv' ) :
         // CASE csv
         // Take the CSV template
         $this->content_setCSV();
         break;
-      // CASE csv
       default:
         // CASE no csv
         // Take the default template (the list view) and replace some subparts
@@ -219,7 +223,6 @@ class tx_browser_pi1_viewlist
           return $content;
         }
         break;
-      // CASE no csv
     }
     $content = $this->content;
 //var_dump( __METHOD__, __LINE__, $content );
