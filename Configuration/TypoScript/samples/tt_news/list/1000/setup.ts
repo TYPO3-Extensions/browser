@@ -13,4 +13,5 @@ plugin.tx_browser_pi1 {
 }
 
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news/list/1000/sql.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news/list/1000/filter.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_news/list/1000/tableFields.ts">

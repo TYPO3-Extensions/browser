@@ -1,4 +1,4 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_content/views/list/htmlSnippets/configuration_briefing.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/samples/tt_content/list/htmlSnippets/configuration_briefing.ts">
 
 plugin.tx_browser_pi1 {
   views {
