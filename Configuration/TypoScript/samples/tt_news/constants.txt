@@ -68,7 +68,7 @@ plugin.tx_browser_pi1 {
     singleview {
       image {
         0 {
-          caption       = tt_news.caption
+          caption       = tt_news.imagecaption
           file          = tt_news.image
           height        =
           heightDefault =
