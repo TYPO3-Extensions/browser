@@ -645,7 +645,6 @@ class tx_browser_pi1 extends tslib_pibase
     // RETURN error
     // Init global $str_template_raw
     $this->str_template_raw = $arr_result[ 'data' ][ 'template' ];
-var_dump( __METHOD__, __LINE__, $this->str_template_raw );
     unset( $arr_result );
     // Get the HTML template
     //////////////////////////////////////////////////////////////////////
@@ -2547,6 +2546,7 @@ var_dump( __METHOD__, __LINE__, strpos( $str_template_completed, '<?xml' ));
       // Global HTML Template
       $template_path = $conf[ 'template.' ][ 'file' ];
     }
+var_dump( __METHOD__, __LINE__, $template_path );
     $template = $cObj->fileResource( $template_path );
     // Catch the template
     // RETURN : the template

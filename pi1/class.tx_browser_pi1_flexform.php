@@ -2371,6 +2371,7 @@ class tx_browser_pi1_flexform
         // Global HTML Template
       }
     }
+var_dump( __METHOD__, __LINE__, $this->pObj->conf[ 'template.' ] );
     // #9689
     //////////////////////////////////////////////////////////////////////
     //
