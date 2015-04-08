@@ -200,7 +200,6 @@ class tx_browser_pi1_viewlist
     // Get template for csv
     // #i0149, 150408, dwildt, 1-/+
     //switch ( $this->pObj->objExport->str_typeNum )
-var_dump( __METHOD__, __LINE__, $this->content );
     switch ( TRUE )
     {
       // #i0149, 150408, dwildt, 1-/+
@@ -209,6 +208,10 @@ var_dump( __METHOD__, __LINE__, $this->content );
         // CASE csv
         // Take the CSV template
         $this->content_setCSV();
+        break;
+      // #i0149, 150408, dwildt, 3+
+      case( strpos( $this->content, '<?xml' ) !== false ):
+        $this->content_setXML();
         break;
       default:
         // CASE no csv
@@ -748,6 +751,25 @@ var_dump( __METHOD__, __LINE__, $this->content );
     // Set mode selector
 //$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );
     return;
+  }
+
+  /**
+   * content_setXML( ):
+   *
+   * @return    void
+   * @version 7.0.6
+   * @since   7.0.6
+   * @internal #i0149
+   */
+  private function content_setXML()
+  {
+    // HTML template subpart for the list view
+    $str_marker = $this->pObj->lDisplayList[ 'templateMarker' ];
+    // Set the list view content
+    $this->content = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
+
+    // Die, if content is empty
+    $this->content_dieIfEmpty( $str_marker );
   }
 
   /**
