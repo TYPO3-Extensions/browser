@@ -2364,10 +2364,12 @@ var_dump( __METHOD__, __LINE__, $str_path2template );
       }
       if ( !empty( $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'template.' ][ 'file' ] ) )
       {
+var_dump( __METHOD__, __LINE__ );
         $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'template.' ][ 'file' ] = $str_path2template;
       }
       if ( empty( $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ][ 'template.' ][ 'file' ] ) )
       {
+var_dump( __METHOD__, __LINE__ );
         $this->pObj->conf[ 'template.' ][ 'file' ] = $str_path2template;
         // Global HTML Template
       }
