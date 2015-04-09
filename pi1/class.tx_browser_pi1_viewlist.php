@@ -2092,11 +2092,18 @@ class tx_browser_pi1_viewlist
    * @return	string
    * @internal    #52486
    * @access  private
-   * @version 4.7.0
+   * @version 7.0.6
    * @since   4.7.0
    */
   private function sql_radialsearchSelect()
   {
+    //  #i0154, 150409, dwildt, 5+
+    // RETURN : There isn't any radialsearch sword
+    if ( !$this->objFilterRadialsearch->getSword() )
+    {
+      return NULL;
+    }
+
     $this->pObj->csvSelectWoFunc = $this->pObj->csvSelectWoFunc
             . ', distance'
     ;

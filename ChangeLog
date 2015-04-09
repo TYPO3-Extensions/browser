@@ -17,6 +17,7 @@ Manual
   * #i0146: Adapt the tt_news sample to Browser 6.x/7.x and TYPO3 6.x
   * #i0143: Adapt the tt_content sample to Browser 6.x/7.x and TYPO3 6.x with FAL
   Bugfix
+  * #i0154: distance is added in default templates but without radial search
   * #i0153: Images aren't sized in some cases (wine extension for example): GM (GraphicsMagick missed on the local server)
   * #i0151: CSV export: fields aren't wrapped proper
   * #i0149: RSS-Feed template: detection error

@@ -11,7 +11,7 @@ plugin.tx_browser_pi1 {
           tt_content.uid
 )
           // Order of the records
-        orderBy             = tt_content.header, tt_content.list_type
+        orderBy = tt_content.header, tt_content.list_type
           // Link the header to the single view
         csvLinkToSingleView = tt_content.header
           // Don't display fields as columns in the table
