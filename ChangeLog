@@ -9,7 +9,9 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 7.0.6
-  15-04-02
+  15-04-09
+  Feature
+  * #i0155: link management: tt_news types 0, 1, and 2 are respected
   Improvement
   * #i0152: state is set from alpha to beta
   * #i0150: Adapt the tt_news sample RSS feed to Browser 6.x/7.x and TYPO3 6.x
