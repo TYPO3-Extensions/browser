@@ -78,6 +78,10 @@ plugin.tx_browser_pi1 {
                 }
               }
             }
+              // tt_news type: Link internal Page
+            1 < .page
+              // tt_news type: Link external Url
+            2 < .url
               // DEPRECATED! Use page!
             calpage   < .page
               // DEPRECATED! Use url!

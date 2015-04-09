@@ -56,6 +56,10 @@ plugin.tx_browser_pi1 {
               }
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.6.url
             }
+              // tt_news type: Link internal Page
+            1 < .page
+              // tt_news type: Link external Url
+            2 < .url
           }
         }
       }

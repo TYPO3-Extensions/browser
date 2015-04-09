@@ -19,7 +19,7 @@ plugin.tx_browser_pi1 {
             key {
               field = {$plugin.tx_browser_pi1.templates.listview.url.2.key}
             }
-              // single view 
+              // single view
             default = TEXT
             default {
               field = {$plugin.tx_browser_pi1.templates.listview.header.2.field}
@@ -37,16 +37,20 @@ plugin.tx_browser_pi1 {
             notype {
               typolink >
             }
-              // link to an internal page 
+              // link to an internal page
             page < .default
             page {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.2.page
             }
-              // link to an external website 
+              // link to an external website
             url < .page
             url {
               typolink < plugin.tx_browser_pi1.displayList.master_templates.tableFields.typolinks.2.url
             }
+              // tt_news type: Link internal Page
+            1 < .page
+              // tt_news type: Link external Url
+            2 < .url
               // DEPRECATED! Use page!
             calpage < .page
               // DEPRECATED! Use url!
