@@ -1,9 +1,12 @@
 plugin.tx_browser_pi1 {
   views {
     list {
+        // [String] Name of the view. It will displayed in the plugin/flexform
       43746 = Browser: ready-to-use with tt_content
       43746 {
+          // [String] Name of the view.
         name    = Browser: ready-to-use with tt_content
+          // [String] Alias for showUid.
         showUid = {$plugin.tx_browser_pi1.navigation.showUid}
       }
     }
