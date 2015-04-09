@@ -1,7 +1,7 @@
 plugin.tx_browser_pi1 {
 
   # cat=Browser - Templates - List - Image 4*//102;         type=string;     label= File*:(Obligate!) Field with the file name. I.e: tx_org_service.image
-  templates.listview.image.4.file       = EXT:browser/Resources/Public/Images/Icons/alternate_image_400x300.gif
+  templates.listview.image.4.file       = 
   # cat=Browser - Templates - List - Image 4*//103;         type=int+;       label= Position:Position of the image in the list of files: 0 (and empty) is 1st position (default),  1 is 2nd position, 2 is 3rd position and so on.
   templates.listview.image.4.listNum    = 0
   # cat=Browser - Templates - List - Image 4*//110;         type=string;     label= Height:Height of the image in pixel. I.e: width = 120c and height = 80c crops 120x80px from the center of the scaled image.4. Width = 100c-100 and height = 100c crops 100x100px from landscape-images at the left and portrait- images centered. Width = 100c+30 height = 100c-25 crops 100x100px from landscape-images a bit right of the center and portrait-images a bit higher than centered.
