@@ -62,3 +62,10 @@
 .pagination-centered {
   text-align:center;
 }
+
+ul.tx-browser-pi1-figure {
+  padding:0;
+}
+figure.tx-browser-pi1-figure {
+  margin:0;
+}

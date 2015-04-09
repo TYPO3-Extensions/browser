@@ -20,7 +20,6 @@ plugin.tx_browser_pi1 {
               }
               wrap = <div class="selectbox">|</div>
             }
-
             tstamp < plugin.tx_browser_pi1.displayList.master_templates.category_menu
             tstamp {
               first_item {

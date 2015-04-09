@@ -220,6 +220,11 @@ class tx_browser_pi1_typoscript
       case(is_array( $conf )):
       case(!empty( $name )):
         $value = $this->cObjGetSingle( $name, $conf );
+//// #i0153
+//if( $tableField == 'tx_wine_main.image' )
+//{
+//  var_dump( __METHOD__, __LINE__, $name, $conf, $value );
+//}
         break;
       default:
         $value = $this->objHandleAs->main( $tableField, $row );
@@ -227,10 +232,6 @@ class tx_browser_pi1_typoscript
         $value = $this->link( $tableField, $value );
         break;
     }
-//if( $tableField == 'tx_wine_main.image' )
-//{
-//  var_dump( __METHOD__, __LINE__, $name, $conf, $value );
-//}
     return $value;
   }
 

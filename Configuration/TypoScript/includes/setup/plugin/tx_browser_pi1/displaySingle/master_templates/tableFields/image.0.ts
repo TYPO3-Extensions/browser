@@ -43,6 +43,7 @@ plugin.tx_browser_pi1 {
                     // load register; image, caption
                   10 = COA
                   10 {
+                    wrap = <ul class="tx-browser-pi1-figure">|</ul>
                     10 = LOAD_REGISTER
                     10 {
                       Counter {

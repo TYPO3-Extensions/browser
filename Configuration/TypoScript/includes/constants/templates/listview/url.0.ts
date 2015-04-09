@@ -6,7 +6,7 @@ plugin.tx_browser_pi1 {
   templates.listview.url.0.record  =
   # cat=Browser - Templates - List - URL 0*//102;        type=string;  label= Page*:(Obligate!) Field with the link to the internal page. I.e: tx_org_service.page
   templates.listview.url.0.page  =
-  # cat=Browser - Templates - List - URL 0*//103;        type=string;  label= URL 0*:(Obligate!) Field with the link to the external website. I.e: tx_org_service.url
+  # cat=Browser - Templates - List - URL 0*//103;        type=string;  label= URL*:(Obligate!) Field with the link to the external website. I.e: tx_org_service.url
   templates.listview.url.0.url  =
   # cat=Browser - Templates - List - URL 0*//104;        type=boolean;  label= Force absolute URL:If it's enabled, a absolute URL will rendered. An absolute URL in a newsletter is obligatory!
   templates.listview.url.0.forceAbsoluteUrl = 0

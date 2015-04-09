@@ -7,8 +7,8 @@
   <data type="array">
     <languageKey index="default" type="array">
       <label index="browserMaps.section_header">BrowserMaps</label>
-      <label index="browserMaps.browser_tut_map_en.title">BrowserMaps Tutorial</label>
-      <label index="browserMaps.browser_tut_map_en.description">Publish your data with BrowserMaps. BrowserMaps is based on GoogleMaps and OpenStreetMap.</label>
+      <label index="browserMaps.browser_tut_leaflet_en.title">BrowserMaps Tutorial</label>
+      <label index="browserMaps.browser_tut_leaflet_en.description">Publish your data with BrowserMaps. BrowserMaps is based on GoogleMaps and OpenStreetMap. The map API is provided by Leaflet.</label>
       <label index="tt_content.list_type_pi3">Browser - Tutorials and Websites</label>
       <label index="title">TYPO3 Browser Manuals, Tutorials and Websites</label>
       <label index="manuals.section_header">Browser Manuals</label>
@@ -41,8 +41,8 @@
       <label index="tutorials.browser_tut_labeling_en.description">Labeling and field properties.</label>
       <label index="tutorials.browser_tut_localisation_en.title">Browser Tutorial Localisation</label>
       <label index="tutorials.browser_tut_localisation_en.description">Proper localisation design for your database.</label>
-      <label index="tutorials.browser_tut_map_en.title">Browser Tutorial Maps</label>
-      <label index="tutorials.browser_tut_map_en.description">Publish your data with Google Maps or OpenStreetMap.</label>
+      <label index="tutorials.browser_tut_leaflet_en.title">Browser Tutorial Maps</label>
+      <label index="tutorials.browser_tut_leaflet_en.description">Publish your data with Google Maps or OpenStreetMap.</label>
       <label index="tutorials.browser_tut_marker_en.title">Browser Tutorial Marker</label>
       <label index="tutorials.browser_tut_marker_en.description">Database marker, constant marker, browser system marker, piVars marker, TYPO3 GLOBALS Marker</label>
       <label index="tutorials.browser_tut_navigation_en.title">Browser Tutorial Navigation</label>
@@ -85,8 +85,8 @@
     </languageKey>
     <languageKey index="de" type="array">
       <label index="browserMaps.section_header">BrowserMaps</label>
-      <label index="browserMaps.browser_tut_map_en.title">BrowserMaps Tutorial</label>
-      <label index="browserMaps.browser_tut_map_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten mit BrowserMaps. BrowserMaps basiert auf GoogleMaps und OpenStreetMap.</label>
+      <label index="browserMaps.browser_tut_leaflet_en.title">BrowserMaps Tutorial</label>
+      <label index="browserMaps.browser_tut_leaflet_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten mit BrowserMaps. BrowserMaps basiert auf GoogleMaps und OpenStreetMap. Die Karten-API ist von Leaflet.</label>
       <label index="tt_content.list_type_pi3">Browser - Tutorials und Websites</label>
       <label index="title">TYPO3 Browser Handb<![CDATA[&uuml;]]>cher, Tutorials and Websites</label>
       <label index="manuals.section_header">Browser Handb<![CDATA[&uuml;]]>cher</label>
@@ -119,8 +119,8 @@
       <label index="tutorials.browser_tut_labeling_en.description">Felder bezeichnen und Eigenschaften <![CDATA[&auml;]]>ndern.</label>
       <label index="tutorials.browser_tut_localisation_en.title">Browser Tutorial Localisation - Sprachen</label>
       <label index="tutorials.browser_tut_localisation_en.description">Wie funktioniert Lokalisierung. Wie sollte eine Datenbank aufgebaut sein, damit diese f<![CDATA[&uuml;]]>r verschiedene Sprachen verwendbar ist?</label>
-      <label index="tutorials.browser_tut_map_en.title">Browser Tutorial Maps</label>
-      <label index="tutorials.browser_tut_map_en.description">Veröffentliche Deine Daten mit Google Maps oder OpenStreetMap.</label>
+      <label index="tutorials.browser_tut_leaflet_en.title">Browser Tutorial Maps</label>
+      <label index="tutorials.browser_tut_leaflet_en.description">Veröffentliche Deine Daten mit Google Maps oder OpenStreetMap.</label>
       <label index="tutorials.browser_tut_marker_en.title">Browser Tutorial Marker</label>
       <label index="tutorials.browser_tut_marker_en.description">Datenbank Marker, Konstanten, Browser-System-Marker, Marker f<![CDATA[&uuml;]]>r Parameter der aktuellen URL und alle Werte aus dem TYPO3-GLOBALS-Array.</label>
       <label index="tutorials.browser_tut_navigation_en.title">Browser Tutorial Navigation</label>
