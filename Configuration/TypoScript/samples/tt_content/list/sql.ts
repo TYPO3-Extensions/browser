@@ -14,6 +14,12 @@ plugin.tx_browser_pi1 {
         orderBy             = tt_content.header, tt_content.list_type
           // Don't link any field automatically with the link to the single view
         csvLinkToSingleView = dummy
+          // Don't display fields as columns in the table
+        functions {
+          clean_up {
+            csvTableFields = tt_content.uid
+          }
+        }
       }
     }
   }
