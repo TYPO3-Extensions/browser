@@ -45,6 +45,9 @@
 .modeSelector ul {
   text-align: center;
 }
+.category_menu_treeview ul {
+  text-align: inherit;
+}
 .category_menu li,
 .modeSelector li {
   display: inline-block;
