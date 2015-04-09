@@ -20,10 +20,10 @@ plugin.tx_browser_pi1 {
             // key, default (single view), page, url
           0 = COA
           0 {
-            wrap = <ul class="small-block-grid-3 columns small-12">|</ul>
               // image, caption
             10 = TEXT
             10 {
+              wrap = <ul class="small-block-grid-3 columns small-12 tx-browser-pi1-figure">|</ul>
                 // if is true: file
               if =
               if {
@@ -43,7 +43,6 @@ plugin.tx_browser_pi1 {
                     // load register; image, caption
                   10 = COA
                   10 {
-                    wrap = <ul class="tx-browser-pi1-figure">|</ul>
                     10 = LOAD_REGISTER
                     10 {
                       Counter {
