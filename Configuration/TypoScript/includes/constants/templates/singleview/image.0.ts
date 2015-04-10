@@ -1,14 +1,5 @@
 plugin.tx_browser_pi1 {
 
-  # cat=Browser - Templates - Single - Text 0*//102;         type=string;     label= Header*:(Obligate!) Field with the content for the header. I.e: tx_org_event.header
-  templates.singleview.text.0.header       =
-  # cat=Browser - Templates - Single - Text 0*//102;         type=string;     label= Header tag:HTML tag for the header. I.e: h1
-  templates.singleview.text.0.headertag    = h1
-  # cat=Browser - Templates - Single - Text 0*//110;         type=string;     label= Bodytext:Field with the content for the bodytext. I.e: tx_org_event.bodytext // tx_org_event.teaser_short
-  templates.singleview.text.0.bodytext     =
-  # cat=Browser - Templates - Single - Text 0*//others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
-  templates.singleview.text.0.links      = Click me!
-
   # cat=Browser - Templates - Single - Image 0*//102;         type=string;     label= File*:(Obligate!) Field with the file name. I.e: tx_org_service.image
   templates.singleview.image.0.file       =
   # cat=Browser - Templates - Single - Image 0*//110;         type=string;     label= Height field:Field with the image height. I.e: tx_org_service.imageheight
@@ -27,6 +18,8 @@ plugin.tx_browser_pi1 {
   templates.singleview.image.0.imageorient  =
   # cat=Browser - Templates - Single - Image 0*//117;         type=string;     label= Image columns:Field for the image columns. I.e. tx_org_service.imagecols
   templates.singleview.image.0.imagecols  =
+  # cat=Browser - Templates - Single - Image 0*//118;         type=string;     label= Image zoom:If enabled, image will enlarged on click. I.e. tx_org_service.image_zoom
+  templates.singleview.image.0.zoom  =
   # cat=Browser - Templates - Single - Image 0*//120;         type=options[data,default,picture,srcset];     label= Render layout:data: renders an image tag containing data-keys for the different resolutions. default: renders a normal non-responsive image as a <img> tag. picture: renders a picture tag containing source tags for each resolutions and an <img> tag for the default image. srcset: renders an image tag pointing to a set of images for the different resolutions.
   templates.singleview.image.0.layoutKey  = default
   # cat=Browser - Templates - Single - Image 0*//130;         type=string;     label= Path*:(Obligate!) Path to the images (with ending backslash!). I.e: uploads/tx_org/

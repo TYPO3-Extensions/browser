@@ -21,9 +21,46 @@ plugin.tx_browser_pi1 {
           1 = COA
           1 {
               // image, caption
+            wrap {
+              stdWrap {
+                cObject = COA
+                cObject {
+                  10 = COA
+                  10 {
+                    10 = TEXT
+                    10 {
+                        // if is true: zoom
+                      if =
+                      if {
+                        isTrue {
+                          field = {$plugin.tx_browser_pi1.templates.singleview.image.1.zoom}
+                        }
+                      }
+                      field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imagecols}
+                      wrap = <ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                    }
+                    20 = TEXT
+                    20 {
+                        // if is true: zoom
+                      if =
+                      if {
+                        isFalse {
+                          field = {$plugin.tx_browser_pi1.templates.singleview.image.1.zoom}
+                        }
+                      }
+                      field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imagecols}
+                      wrap = <ul class="clearing-thumbs small-block-grid-|">
+                    }
+                  }
+                  20 = TEXT
+                  20 {
+                    value = |</ul>
+                  }
+                }
+              }
+            }
             10 = TEXT
             10 {
-              wrap = <ul class="small-block-grid-3 columns small-12 tx-browser-pi1-figure">|</ul>
                 // if is true: file
               if =
               if {
@@ -40,24 +77,13 @@ plugin.tx_browser_pi1 {
                   // load register; image, caption
                 1 =
                 1 {
-                    // load register; image, caption
+                    // image, caption
                   10 = COA
                   10 {
-                    10 = LOAD_REGISTER
-                    10 {
-                      Counter {
-                        cObject = TEXT
-                        cObject {
-                          data = register:Counter
-                          wrap = |+1
-                        }
-                      }
-                      prioriCalc = intval
-                    }
                       // image, caption
                     20 = COA
                     20 {
-                      wrap = <li class="tx-browser-pi1-figure"><figure class="tx-browser-pi1-figure">|</figure></li>
+                      wrap = <li><figure class="tx-browser-pi1-figure">|</figure></li>
                         // image
                       10 = IMAGE
                       10 {
@@ -68,7 +94,7 @@ plugin.tx_browser_pi1 {
                             wrap = {$plugin.tx_browser_pi1.templates.singleview.image.1.path}|
                             current = 1
                           }
-                          height = {$plugin.tx_browser_pi1.templates.singleview.image.1.heightDeafult}
+                          height = {$plugin.tx_browser_pi1.templates.singleview.image.1.heightDefault}
                           height {
                             override {
                               field = {$plugin.tx_browser_pi1.templates.singleview.image.1.height}
@@ -83,8 +109,10 @@ plugin.tx_browser_pi1 {
                         }
                         imageLinkWrap = 1
                         imageLinkWrap {
-                           enable = 1
-                           directImageLink = 1
+                          enable {
+                            field = {$plugin.tx_browser_pi1.templates.singleview.image.1.zoom}
+                          }
+                          directImageLink = 1
                         }
                         altText = TEXT
                         altText {
@@ -97,12 +125,7 @@ plugin.tx_browser_pi1 {
                               stdWrap {
                                 cObject = TEXT
                                 cObject {
-                                  current = 1
-                                  setCurrent {
-                                    data = register:Counter
-                                    wrap = |-1
-                                  }
-                                  prioriCalc = intval
+                                  data = register:SPLIT_COUNT
                                 }
                               }
                             }
@@ -130,7 +153,6 @@ plugin.tx_browser_pi1 {
                               10 = TEXT
                               10 {
                                 field = {$plugin.tx_browser_pi1.templates.singleview.image.1.caption}
-                                //field = tx_route_path.imagecaption
                                 split {
                                   token {
                                     char = 10
@@ -139,12 +161,7 @@ plugin.tx_browser_pi1 {
                                     stdWrap {
                                       cObject = TEXT
                                       cObject {
-                                        current = 1
-                                        setCurrent {
-                                          data = register:Counter
-                                          wrap = |-1
-                                        }
-                                        prioriCalc = intval
+                                        data = register:SPLIT_COUNT
                                       }
                                     }
                                   }
@@ -216,12 +233,7 @@ plugin.tx_browser_pi1 {
                               stdWrap {
                                 cObject = TEXT
                                 cObject {
-                                  current = 1
-                                  setCurrent {
-                                    data = register:Counter
-                                    wrap = |-1
-                                  }
-                                  prioriCalc = intval
+                                  data = register:SPLIT_COUNT
                                 }
                               }
                             }

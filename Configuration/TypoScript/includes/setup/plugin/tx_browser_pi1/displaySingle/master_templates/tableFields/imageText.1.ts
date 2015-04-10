@@ -29,67 +29,64 @@ plugin.tx_browser_pi1 {
               // don't handle
               default = TEXT
               default {
-                value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.1.10. ...
+                //value = Please configure plugin.tx_browser_pi1.templates.singleview.image.1.imageorient
+                value =
               }
               // above-center: div.column ul.block-grid image /ul /div
               0 = COA
               0 {
                 10 = TEXT
                 10 {
-                  field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imagecols}
-                  wrap = <div class="columns large-12 above-center"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-12 above-center">
                 }
                   // image
                 20 < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.1
-                20 {
-                  wrap >
-                }
                 // above-right: /ul /div
                 30 = TEXT
                 30 {
-                  value = </ul></div>
+                  value = </div>
                 }
               }
               // above-right: div.column ul.block-grid image /ul /div
               1 < .0
               1 {
                 10 {
-                  wrap = <div class="columns large-6 large-offset-6 above-right"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-6 large-offset-6 above-right">
                 }
               }
               // above-left: div.column ul.block-grid
               2 < .0
               2 {
                 10 {
-                  wrap = <div class="columns large-6 above-left"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-6 above-left">
                 }
               }
               // intext-right: div.columns ul.block-grid
               17 < .0
               17 {
                 10 {
-                  wrap = <div class="columns large-4 large-push-8 intext-right"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-4 large-push-8 intext-right">
                 }
               }
               // intext-left: div.columns ul.block-grid
               18 < .0
               18 {
                 10 {
-                  wrap = <div class="columns large-4 intext-left"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-4 intext-left">
                 }
               }
               // intext-right-nowrap: div.columns ul.block-grid
               25 < .0
               25 {
                 10 {
-                  wrap = <div class="columns large-4 large-push-8 intext-right-nowrap"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-4 large-push-8 intext-right-nowrap">
                 }
               }
               // intext-left-nowrap: div.columns ul.block-grid
               26 < .0
               26 {
                 10 {
-                  wrap = <div class="columns large-4 intext-left-nowrap"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-4 intext-left-nowrap">
                 }
               }
             }
@@ -107,12 +104,28 @@ plugin.tx_browser_pi1 {
               // above-center: div.columns
               0 = COA
               0 {
-                wrap = <div class="columns large-12">|</div>
-                  // Buy now
+                  // socialmedia_bookmarks
                 10 = TEXT
                 10 {
-                  value = Please configure plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.imageText.1.10. ...
+                  value = ###SOCIALMEDIA_BOOKMARKS###
+                  wrap = <div class="show-for-large-up socialbookmarks">|</div>
                 }
+                  // header
+                20 = TEXT
+                20 {
+                  field = {$plugin.tx_browser_pi1.templates.singleview.text.1.header}
+                  wrap  = <{$plugin.tx_browser_pi1.templates.singleview.text.1.headertag}>|</{$plugin.tx_browser_pi1.templates.singleview.text.1.headertag}>
+                }
+                  // bodytext
+                30 = TEXT
+                30 {
+                  field = {$plugin.tx_browser_pi1.templates.singleview.text.1.bodytext}
+                  required = 1
+                  stdWrap {
+                    parseFunc < lib.parseFunc_RTE
+                  }
+                }
+                wrap = <div class="columns large-12">|</div>
               }
               // above-right: div.columns
               1 < .0
@@ -176,32 +189,28 @@ plugin.tx_browser_pi1 {
               8 {
                 10 = TEXT
                 10 {
-                  field = {$plugin.tx_browser_pi1.templates.singleview.image.1.imagecols}
-                  wrap = <div class="columns large-12 below-center"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-12 below-center">
                 }
                   // image
                 20 < plugin.tx_browser_pi1.displaySingle.master_templates.tableFields.image.1
-                20 {
-                  wrap >
-                }
                 // above-right: /ul /div
                 30 = TEXT
                 30 {
-                  value = </ul></div>
+                  value = </div>
                 }
               }
               // below-right: div.column ul.block-grid
               9 < .8
               9 {
                 10 {
-                  wrap = <div class="columns large-6 large-offset-6 below-right"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-6 large-offset-6 below-right">
                 }
               }
               // below-left: div.column ul.block-grid
               10 < .8
               10 {
                 10 {
-                  wrap = <div class="columns large-6 below-left"><ul class="clearing-thumbs small-block-grid-|" data-clearing>
+                  value = <div class="columns large-6 below-left">
                 }
               }
             }

@@ -62,12 +62,3 @@
 .pagination-centered {
   text-align:center;
 }
-
-ul.tx-browser-pi1-figure {
-  list-style-type: none;
-  margin: 0;
-  padding:0;
-}
-figure.tx-browser-pi1-figure {
-  margin:0;
-}

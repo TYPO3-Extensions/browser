@@ -18,6 +18,8 @@ plugin.tx_browser_pi1 {
   templates.singleview.image.1.imageorient  =
   # cat=Browser - Templates - Single - Image 1*//117;         type=string;     label= Image columns:Field for the image columns. I.e. tx_org_service.imagecols
   templates.singleview.image.1.imagecols  =
+  # cat=Browser - Templates - Single - Image 1*//118;         type=string;     label= Image zoom:If enabled, image will enlarged on click. I.e. tx_org_service.image_zoom
+  templates.singleview.image.1.zoom  =
   # cat=Browser - Templates - Single - Image 1*//120;         type=options[data,default,picture,srcset];     label= Render layout:data: renders an image tag containing data-keys for the different resolutions. default: renders a normal non-responsive image as a <img> tag. picture: renders a picture tag containing source tags for each resolutions and an <img> tag for the default image. srcset: renders an image tag pointing to a set of images for the different resolutions.
   templates.singleview.image.1.layoutKey  = default
   # cat=Browser - Templates - Single - Image 1*//130;         type=string;     label= Path*:(Obligate!) Path to the images (with ending backslash!). I.e: uploads/tx_org/

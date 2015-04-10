@@ -12,6 +12,8 @@ Manual
   15-04-09
   Feature
   * #i0155: link management: tt_news types 0, 1, and 2 are respected
+  Bugfix
+  * #i0156: Image in single view: Bug in case of missing foundation templates: Because of missing clearing, images doesn't get an ul-tag.
 
 7.0.6
   15-04-09
