@@ -10,7 +10,9 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 7.0.7
-  15-04-09
+  15-04-10
+  Manual
+  + #i0157: Manual is updated from 4.x to 7.x
   Feature
   * #i0155: link management: tt_news types 0, 1, and 2 are respected
   Bugfix
