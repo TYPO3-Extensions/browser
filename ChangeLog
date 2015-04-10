@@ -4,6 +4,7 @@ Manual
             Effect is, that the cookie is set one step to late.
 
 :ToDo:
+  * #i0142: See below
   * #i0049: typoscript 5x: default template: ###TITLE### should placed in the table head.
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
@@ -13,7 +14,7 @@ Manual
   Feature
   * #i0155: link management: tt_news types 0, 1, and 2 are respected
   Bugfix
-  * #i0156: Image in single view: Bug in case of missing foundation templates: Because of missing clearing, images doesn't get an ul-tag.
+  * #i0156: foundation lightbox
 
 7.0.6
   15-04-09
@@ -494,6 +495,12 @@ Manual
   * #59729: Don't mark up search words within HTML tags
   * #54983: cHash comparison failed
   * #46200: SQL error when searching with "and"
+
+4.10.0
+  14-11-01
+  Major Feature
+  * #i0047: Enabled for TYPO3 6.2 by smoothmigration
+            * Please take a look into the section "What's new in 4.10" of the manual
 
 4.9.1
   14-05-03

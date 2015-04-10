@@ -1,6 +1,6 @@
 <?php
 
-/***************************************************************
+/* * *************************************************************
  * Extension Manager/Repository config file for ext "browser".
  *
  * Auto generated 03-05-2014 01:27
@@ -8,21 +8,19 @@
  * Manual updates:
  * Only the data in the array - everything else is removed by next
  * writing. "version" and "dependencies" must not be touched!
- ***************************************************************/
+ * ************************************************************* */
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[ $_EXTKEY ] = array(
   'title' => 'Browser - TYPO3 without PHP',
   'description' => ''
-  . 'Publish your data responsive in list and single views and in maps! '
-  . 'You don\'t need neither any own plugin nor any line PHP code. '
-  . 'The Browser - TYPO3 without PHP - provides an index browser (a-z), '
-  . 'a page browser, a record browser, a search form, filters, category menus, AJAX, '
-  . 'GoogleMaps and OpenStreetMap by default. Your data will be detected as objects, '
-  . 'i.e. images will be wrapped automatically. SEO - Search Engine Optimization - is supported. '
-  . 'The Browser enables the development of TYPO3-Extensions without any line PHP. '
-  . 'TYPO3 developers and TYPO3 integrators  will be eight times faster! '
-  . 'The browser is very suitable for database development. '
-  . 'Manual: http://typo3-browser.de/typo3conf/ext/browser/doc/manual.pdf'
+  . 'Publish the data of your extension with the Browser – TYPO3 without PHP! '
+  . 'You don\'t need neither any own PHP code nor any own plugin. '
+  . 'You can save up to 85 percent of your operating expense. '
+  . 'The Browser – TYPO3 without PHP – provides responsive templates, '
+  . 'an index browser (a-z), a page browser, a record browser, a search form, filters, '
+  . 'category menus, AJAX, GoogleMaps and OpenStreetMap by default. '
+  . 'SEO – Search Engine Optimization – is optional.'
+  . 'Manual: http://typo3-browser.de/typo3conf/ext/browser_tut_manual_en/doc/manual.pdf'
   ,
   'category' => 'plugin',
   'shy' => 0,
@@ -58,5 +56,4 @@ $EM_CONF[$_EXTKEY] = array(
   'suggests' => array(
   ),
 );
-
 ?>
