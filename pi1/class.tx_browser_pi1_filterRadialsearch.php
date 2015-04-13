@@ -144,15 +144,16 @@ class tx_browser_pi1_filterRadialsearch
    */
   public function andSelect()
   {
+    $andSelect = null;
     $this->init();
-
     // RETURN : There isn't any radialsearch sword
     if ( !$this->radialsearchIsSword )
     {
       return null;
     }
 
-    return $this->objRadialsearch->andSelect();
+    $andSelect = $this->objRadialsearch->andSelect();
+    return $andSelect;
   }
 
   /**
@@ -276,6 +277,8 @@ class tx_browser_pi1_filterRadialsearch
    */
   public function getSword()
   {
+    // #66391/#66389, 150413, dwildt, 1+
+    $this->init();
     return $this->radialsearchIsSword;
   }
 

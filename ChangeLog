@@ -9,6 +9,12 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.0.8
+  15-04-13
+  Bugfix
+  * #66391: Radialseach doesn't calculate radial distance
+  * #66389: SQL Error in context with radial search
+
 7.0.7
   15-04-10
   Manual
