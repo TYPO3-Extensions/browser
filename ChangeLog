@@ -9,6 +9,11 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.0.10
+  15-04-14
+  Feature
+  * #i0159: Resources/Public/JavaScript/Map/oxMap/toggle/map_slideDown.js
+
 7.0.9
   15-04-13
   Improvement
