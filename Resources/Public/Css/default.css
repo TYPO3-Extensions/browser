@@ -51,8 +51,10 @@
 .category_menu li,
 .modeSelector li {
   display: inline-block;
-  border-right: 1px solid #333;
   padding-right: 0.4em;
+}
+.modeSelector li {
+  border-right: 1px solid #333;
 }
 .category_menu li:last-of-type,
 .modeSelector li:last-of-type {
