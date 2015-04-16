@@ -12,6 +12,7 @@ Manual
 7.0.12
   15-04-16
   Improvement
+  * #i0162: ATagTitle field for the foundation top bar.
   * #i0161: CSS: remove border-right from .category_menu.
 
 7.0.11
