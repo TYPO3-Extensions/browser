@@ -16,6 +16,8 @@ plugin.tx_browser_pi1 {
         page.includeJSFooter.jquery     = EXT:browser/Resources/Public/JavaScript/foundation-5.4.5/js/vendor/jquery.js
         # cat=browser foundation - framework - Javascript/250/103; type=string;        label= modernizr:Path to the modernizr.js file.
         page.includeJS.modernizr        = EXT:browser/Resources/Public/JavaScript/foundation-5.4.5/js/vendor/modernizr.js
+        # cat=browser foundation - framework - Javascript/250/104; type=string;        label= fastclick:Path to the fastclick.js file.
+        page.includeJS.fastclick        = EXT:browser/Resources/Public/JavaScript/foundation-5.4.5/js/vendor/fastclick.js
 
       }
     }
