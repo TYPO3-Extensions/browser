@@ -17,6 +17,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/css/normalize/', 'Browser [0] + Foundation Framework + CSS normalize' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/jQuery/', 'Browser [0] + Foundation Framework + JSS jQuery' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/modernizr/', 'Browser [0] + Foundation Framework + JSS modernizr' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/fastclick/', 'Browser [0] + Foundation Framework + JSS fastclick' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/', 'Browser [1] Basis' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/downgrade/4.9.1/navigation/pageBrowser/wrap/', 'Browser [1] + pageBrowser Wrap v4.9' );
     // Plugin 5
@@ -41,6 +42,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/css/normalize/', 'Browser [0] + Foundation Framework + CSS normalize' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/jQuery/', 'Browser [0] + Foundation Framework + JSS jQuery' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/modernizr/', 'Browser [0] + Foundation Framework + JSS modernizr' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/fastclick/', 'Browser [0] + Foundation Framework + JSS fastclick' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/', 'Browser [1] Basis' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/downgrade/4.9.1/navigation/pageBrowser/wrap/', 'Browser [1] + pageBrowser Wrap v4.9' );
     // Plugin 5

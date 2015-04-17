@@ -24,7 +24,7 @@ $EM_CONF[ $_EXTKEY ] = array(
   ,
   'category' => 'plugin',
   'shy' => 0,
-  'version' => '7.0.12',
+  'version' => '7.0.13',
   'dependencies' => 'browser_manual_en',
   'conflicts' => 'be_tablefilter',
   'priority' => '',
