@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.0
+ * @version 7.0.14
  * @since 3.0.1
  */
 
@@ -955,8 +955,11 @@ class tx_browser_pi1_filter_3x
           //$arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
           //$this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
           // #61520, 140911, dwildt, 2+
-          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+          // #i0164, 150421, dwildt, 2-/2+
+          //$arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
+          //$this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->quoteStr( $from, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->quoteStr( $from, $table );
         }
 
         $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
@@ -970,8 +973,11 @@ class tx_browser_pi1_filter_3x
 //          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
 //          $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
           // #61520, 140911, dwildt, 2+
-          $arr_item[] = $tableField . " <= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+          // #i0164, 150421, dwildt, 2-/2+
+          //$arr_item[] = $tableField . " <= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
+          //$this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+          $arr_item[] = $tableField . " <= '" . $GLOBALS['TYPO3_DB']->quoteStr( $to, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS['TYPO3_DB']->quoteStr( $to, $table );
         }
 
         if ( is_array( $arr_item ) )
@@ -998,8 +1004,11 @@ class tx_browser_pi1_filter_3x
 //        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
 //        $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
         // #61520, 140911, dwildt, 2-
-        $arr_orValues[] = $tableField . " LIKE '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) . "'";
-        $strtolower_value = "'" . mb_strtolower( $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) ) . "'";
+        // #i0164, 150421, dwildt, 2-/2+
+        //$arr_orValues[] = $tableField . " LIKE '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) . "'";
+        //$strtolower_value = "'" . mb_strtolower( $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) ) . "'";
+        $arr_orValues[] = $tableField . " LIKE '" . $GLOBALS['TYPO3_DB']->quoteStr( $str_value, $table ) . "'";
+        $strtolower_value = "'" . mb_strtolower( $GLOBALS['TYPO3_DB']->quoteStr( $str_value, $table ) ) . "'";
         $this->arr_filter_condition[ $tableField ][ 'like' ][] = $strtolower_value;
       }
       $str_andWhere = implode( ' OR ', $arr_orValues );
@@ -1066,8 +1075,11 @@ class tx_browser_pi1_filter_3x
 //          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
 //          $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
           // #61520, 140911, dwildt, 2+
-          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+          // #i0164, 150421, dwildt, 2-/2+
+          //$arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
+          //$this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
+          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->quoteStr( $from, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->quoteStr( $from, $table );
         }
 
         $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
@@ -1081,8 +1093,11 @@ class tx_browser_pi1_filter_3x
 //          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
 //          $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
           // #61520, 140911, dwildt, 2+
-          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+          // #i0164, 150421, dwildt, 2-/2+
+          //$arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
+          //$this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
+          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->quoteStr( $to, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->quoteStr( $to, $table );
         }
 
         if ( is_array( $arr_item ) )

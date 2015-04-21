@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      6.0.7
+ * @version      7.0.14
  * @since        3.9.9
  */
 
@@ -713,7 +713,10 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
       // #61520, 140911, dwildt, 1+
-      $from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
+      // #i0164, 150421, dwildt, 1+
+      $from = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table );
+      // #i0164, 150421, dwildt, 1-
+      //$from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
@@ -738,7 +741,10 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
       // #61520, 140911, dwildt, 1+
-      $to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
+      // #i0164, 150421, dwildt, 1-
+      $to = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table );
+      // #i0164, 150421, dwildt, 1-
+      //$to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
@@ -805,8 +811,13 @@ class tx_browser_pi1_filter_4x
 //        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string( $from ) . "'";
 //        $this->arr_filter_condition[ $tableField ][ 'from' ] = mysql_real_escape_string( $from );
         // #61520, 140911, dwildt, 2+
-        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table ) . "'";
-        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
+        // #i0164, 150421, dwildt, 2+
+        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table ) . "'";
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table );
+        // #i0164, 150421, dwildt, 2-
+        // #i0164, 150421, dwildt, 2-
+//        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table ) . "'";
+//        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $from = mysql_real_escape_string( $from );
@@ -830,8 +841,12 @@ class tx_browser_pi1_filter_4x
 //        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string( $to ) . "'";
 //        $this->arr_filter_condition[ $tableField ][ 'to' ] = mysql_real_escape_string( $to );
         // #61520, 140911, dwildt, 2+
-        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table ) . "'";
-        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
+        // #i0164, 150421, dwildt, 2+
+        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table ) . "'";
+        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table );
+        // #i0164, 150421, dwildt, 2-
+//        $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table ) . "'";
+//        $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       }
 //        // #45422, 130212, dwildt, 8+
 //      $to         = mysql_real_escape_string( $to );
@@ -1010,7 +1025,10 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
       // #61520, 140911, dwildt, 1+
-      $from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
+      // #i0164, 150421, dwildt, 1+
+      $from = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table );
+      // #i0164, 150421, dwildt, 1-
+      //$from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1037,7 +1055,10 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
       // #61520, 140911, dwildt, 1+
-      $to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
+      // #i0164, 150421, dwildt, 1+
+      $to = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table );
+      // #i0164, 150421, dwildt, 1-
+      //$to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1111,7 +1132,10 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$from = mysql_real_escape_string( $from );
       // #61520, 140911, dwildt, 1+
-      $from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
+      // #i0164, 150421, dwildt, 1+
+      $from = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table );
+      // #i0164, 150421, dwildt, 1-
+      //$from = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $from, $table );
       if ( !empty( $from ) )
       {
         // #45422, 130212, dwildt, 1-
@@ -1132,7 +1156,10 @@ class tx_browser_pi1_filter_4x
       // #61520, 140911, dwildt, 1-
       //$to = mysql_real_escape_string( $to );
       // #61520, 140911, dwildt, 1+
-      $to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
+      // #i0164, 150421, dwildt, 1+
+      $to = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table );
+      // #i0164, 150421, dwildt, 1-
+      //$to = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $to, $table );
       if ( !empty( $to ) )
       {
         // #45422, 130212, dwildt, 1-

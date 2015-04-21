@@ -29,7 +29,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     6.0.6
+ * @version     7.0.14
  * @since       1.0.0
  */
 
@@ -125,8 +125,8 @@ class tx_browser_pi1_zz
   // #12528, dwildt, 110125
   // [Boolean] Empty marker in TypoScript will be removed
   public $bool_advanced_3_6_0_rmMarker = false;
-
   private $typo3Version = null;
+
   // [INTEGER] Current TYPO3 version as an integer like 4007007 for 4.7.7
 
   /**
@@ -1729,7 +1729,6 @@ class tx_browser_pi1_zz
   {
     // #61520, 140911, dwildt, 1-
     //require_once(PATH_typo3 . 'sysext/lang/lang.php');
-
     // #61520, 140911, dwildt, 1+
     $this->init_typo3version();
 
@@ -1942,17 +1941,17 @@ class tx_browser_pi1_zz
           case(false):
             // We have an even array like [0], [2], [4]
             // We have a quoted sword in every even element - don't explode it.
-            if ( $bool_odd)
+            if ( $bool_odd )
             {
               // 140705, dwildt: $arr_swords_old[][] = $arr_swords_quoted[ $key ];
               $arr_swords_marker[ '$' . $int_counter ] = $arr_swords_quoted[ $key ];
               // #i0067, 140716, dwildt, 1+
-              $arr_swords_exploded[$int_counter][] = $arr_swords_quoted[ $key ];
+              $arr_swords_exploded[ $int_counter ][] = $arr_swords_quoted[ $key ];
               $int_counter++;
             }
             // We have a quoted sword in every odd element - don't explode it.
             // We have a non quoted sword in every even element - explode it.
-            if ( !$bool_odd)
+            if ( !$bool_odd )
             {
               // 140705, dwildt: $arr_swords_old[] = explode( ' ', $arr_swords_quoted[ $key ] );
               // Get current search words or phrase
@@ -1983,12 +1982,12 @@ class tx_browser_pi1_zz
           case(true):
             // We have a odd array like [1], [3], [5]
             // We have a quoted sword in every odd element - don't explode it.
-            if ( !$bool_odd)
+            if ( !$bool_odd )
             {
               // 140705, dwildt: $arr_swords_old[][] = $arr_swords_quoted[ $key ];
               $arr_swords_marker[ '$' . $int_counter ] = $arr_swords_quoted[ $key ];
               // #i0067, 140716, dwildt, 1+
-              $arr_swords_exploded[$int_counter][] = $arr_swords_quoted[ $key ];
+              $arr_swords_exploded[ $int_counter ][] = $arr_swords_quoted[ $key ];
               $int_counter++;
             }
             // We have a quoted sword in every even element - don't explode it.
@@ -2300,6 +2299,8 @@ class tx_browser_pi1_zz
    * @param	string		$str_value: piVar value
    * @param	string		$str_type: Type for evaluation like string, integer or boolean
    * @return	string		piVar value
+   * @version 7.0.14
+   * @since   2.0.0
    */
   public function secure_piVar( $str_value, $str_type )
   {
@@ -2324,40 +2325,10 @@ class tx_browser_pi1_zz
       }
     }
 
-    // mysql_real_escape_string
-    // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/function.mysql-real-escape-string.html
-    // #61520, 140911, dwildt, 1-
-//    $str_value_out = mysql_real_escape_string( $str_value );
-    // #61520, 140911, dwildt, -
-//    switch ( $str_value_out )
-//    {
-//      case( false ):
-//        // 140705, dwildt, 3-
-////        $str_value = str_replace( '\\', null, $str_value );
-////        $str_value = str_replace( '"', null, $str_value );
-////        $str_value = str_replace( "'", null, $str_value );
-//        // 140705, dwildt, 3+
-//        $str_value = stripslashes( $str_value );
-//        $str_value = str_replace( "'", "''", $str_value );
-//        $str_value = str_replace( "\0", "[NULL]", $str_value );
-//        if ( $this->pObj->b_drs_warn )
-//        {
-//          $prompt = 'mysql_real_escape_string( ) returns an error. Connection to database isn\'t possible.';
-//          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
-//          $prompt = 'This signs are removed in the given piVar: \\, ", \' manually. Maybe this is a security risk.';
-//          t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 2 );
-//        }
-//        break;
-//      case( true ):
-//      default:
-//        $str_value = $str_value_out;
-//        break;
-//    }
-//    // #50195, 130719, dwildt, +
-//    // mysql_real_escape_string
-    // #61520, 140911, dwildt, -
-    // #61520, 140911, dwildt, +
-    $str_value = $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $this->pObj->localTable );
+    // #i0164, 150421, dwildt, 2-/1+
+    //// #61520, 140911, dwildt, +
+    // $str_value = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $str_value, $this->pObj->localTable );
+    $str_value = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $str_value, 'pages' );
     if ( $this->pObj->b_drs_warn )
     {
       $prompt = 'escapeStrForLike( ) is using the local table name. This doesn\'t seem to be proper in every case.';
@@ -2428,7 +2399,7 @@ class tx_browser_pi1_zz
       $bool_ok = true;
     }
     // Check Sword
-//$this->pObj->dev_var_dump( $str_value );
+//    $this->pObj->dev_var_dump( $str_type, $str_value );
 
     if ( !$bool_defined )
     {
