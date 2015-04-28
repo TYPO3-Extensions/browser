@@ -9,6 +9,13 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.0.16
+  15-04-28
+  Improvement
+  * #i0166: Base class wrap: some classes are removed
+  Bugfix
+  * #i0167: Flexform property "Template" > "wrap in base class" wasn't respected
+
 7.0.15
   15-04-21
   SECURITY BUGFIX

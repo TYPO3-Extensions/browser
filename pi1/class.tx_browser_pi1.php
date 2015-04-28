@@ -74,7 +74,7 @@ if ( $version < 6002000 )
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 7.0.2
+ * @version 7.0.16
  * @since 0.0.1
  */
 
@@ -391,7 +391,7 @@ class tx_browser_pi1 extends tslib_pibase
    * @param	string		$content: The content of the PlugIn
    * @param	array		$conf: The PlugIn Configuration
    * @return	string		The content that should be displayed on the website
-   * @version 4.5.8
+   * @version 7.0.16
    * @since   0.0.1
    */
   public function main( $content, $conf )
@@ -1081,12 +1081,15 @@ class tx_browser_pi1 extends tslib_pibase
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel, 'END' );
         $html = $html_updateCheck . $str_checkedUpdate . $str_browserEngineIndicator . $str_template_completed;
+        // #i0167, 150428, dwildt, 1+
+        break;
       case( true ):
       default:
         // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel, 'END' );
         $html = $html_updateCheck . $this->objWrapper4x->wrapInBaseIdClass( $str_checkedUpdate . $str_browserEngineIndicator . $str_template_completed );
+        break;
     }
 
     return $html;

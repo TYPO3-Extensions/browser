@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage    browser
  *
- * @version 6.0.0
+ * @version 7.0.16
  * @since 3.0.0
  */
 
@@ -1050,7 +1050,7 @@ class tx_browser_pi1_wrapper4x
    *
    * @param	string		$content: the content which will be wrapped
    * @return	string		the wrapped content
-   * @version 6.0.0
+   * @version 7.0.16
    * @since 3.7.0
    */
   public function wrapInBaseIdClass( $content )
@@ -1063,22 +1063,14 @@ class tx_browser_pi1_wrapper4x
     //                    #29042
     $uidPlugin = 'c' . $this->pObj->cObj->data[ 'uid' ];
     $local_prefixId = str_replace( '_', '-', $this->pObj->prefixId );
-    // #i0083, 140920, dwildt, 6-
-//    $id = ' id="' .
-//            $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"';
-//    $class = ' class="' .
-//            $local_prefixId . ' ' .
-//            $local_prefixId . '-' . $this->pObj->view . ' ' .
-//            $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '"';
-    // #i0083, 140920, dwildt, 1+
     $id = ' id="' . $uidPlugin . '-' . $local_prefixId . '"';
+    // #i0166, 150428, dwildt, ~
     $class = ' class="'
-            . 'row '
-            . $this->pObj->piVar_mode . ' '
-            . $local_prefixId . ' '
-            . $local_prefixId . '-' . $this->pObj->view . ' '
-            . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"'
-            ;
+            . 'row'
+            . ' ' . $local_prefixId
+            . ' ' . $local_prefixId . '-' . $this->pObj->view
+            . '"'
+    ;
 
     $wrap[ 'start' ] = '<div' . $id . $class . '>';
     $wrap[ 'end' ] = '</div>';
