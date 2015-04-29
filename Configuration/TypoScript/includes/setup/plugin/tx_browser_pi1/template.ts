@@ -49,6 +49,13 @@ plugin.tx_browser_pi1 {
           image     = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_05_newsletter.gif
           csvViews  = all
         }
+          // #i0168
+        slick {
+          name      = Browser: Slick Carousel
+          file      = EXT:browser/Resources/Private/Templates/HTML/slick.html
+          image     = EXT:browser/Resources/Public/Images/BackendLayouts/browser-default_06_slick.gif
+          csvViews  = all
+        }
       }
     }
     add_parameter {

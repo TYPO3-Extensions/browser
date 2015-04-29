@@ -41,7 +41,7 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
-                        // if is true: zoom
+                        // if is false: zoom
                       if =
                       if {
                         isFalse {
