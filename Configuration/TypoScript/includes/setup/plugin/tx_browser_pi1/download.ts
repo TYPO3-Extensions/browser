@@ -23,7 +23,18 @@ plugin.tx_browser_pi1 {
                 // choose the current Browser plugin
               10 = TEXT
               10 {
-                data = GP:tx_browser_pi1|plugin
+                // #i0170, 150430, dwildt, 1-
+                //data = GP:tx_browser_pi1|plugin
+                // #i0170, 150430, dwildt, 4+
+                stdWrap {
+                  data    = GP:tx_browser_pi1|plugin
+                  intval  = 1
+                }
+                if {
+                  isTrue {
+                    data = GP:tx_browser_pi1|plugin
+                  }
+                }
                 wrap = uid=|
               }
             }

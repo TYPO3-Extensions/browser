@@ -2720,11 +2720,11 @@ class tx_browser_pi1_flexform
     // #i0051, 140630, dwildt, 2-
 //    if ( $str_lang == 'default' )
 //    {
-      if ( isset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_title.' ][ 'value' ] ) )
-      {
-        $conf_title = $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_title.' ][ 'value' ];
-        $str_path = 'views.list.' . $this->mode . '.marker.my_title.value';
-      }
+    if ( isset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_title.' ][ 'value' ] ) )
+    {
+      $conf_title = $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_title.' ][ 'value' ];
+      $str_path = 'views.list.' . $this->mode . '.marker.my_title.value';
+    }
     // #i0051, 140630, dwildt, 1-
     //}
     if ( $str_lang != 'default' )
@@ -2766,7 +2766,7 @@ class tx_browser_pi1_flexform
         // #i0051, 140630, dwildt, 2-
 //        if ( $str_lang == 'default' )
 //        {
-          $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_title.' ][ 'value' ] = $conf_title;
+        $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_title.' ][ 'value' ] = $conf_title;
         // #i0051, 140630, dwildt, 2-
 //        }
         if ( $str_lang != 'default' )
@@ -2786,8 +2786,8 @@ class tx_browser_pi1_flexform
       // #i0051, 140630, dwildt, 2-
 //      if ( $str_lang == 'default' )
 //      {
-        $conf_title = $this->pObj->conf[ 'marker.' ][ 'my_title.' ][ 'value' ];
-        $str_path = 'marker.my_title.value';
+      $conf_title = $this->pObj->conf[ 'marker.' ][ 'my_title.' ][ 'value' ];
+      $str_path = 'marker.my_title.value';
       // #i0051, 140630, dwildt, 1-
       //}
       if ( $str_lang != 'default' )
@@ -2812,7 +2812,7 @@ class tx_browser_pi1_flexform
         // #i0051, 140630, dwildt, 2-
 //        if ( $str_lang == 'default' )
 //        {
-          $this->pObj->conf[ 'marker.' ][ 'my_title.' ][ 'value' ] = $conf_title;
+        $this->pObj->conf[ 'marker.' ][ 'my_title.' ][ 'value' ] = $conf_title;
         // #i0051, 140630, dwildt, 2-
 //        }
         if ( $str_lang != 'default' )
@@ -2980,99 +2980,9 @@ class tx_browser_pi1_flexform
     }
     // Get the grouptitleWrap for the list view
     // Field grouptitleWrap
-    //////////////////////////////////////////////////////////////////////
-    //
-      // Field limit
-    // Get the limit for the list view
-    // #27354, uherrmann, 110611
-    // Get the limit (offset) for the list view
-    $str_limit_offset = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'limitOffset', $sheet, 'lDEF', 'vDEF' );
-    // downwards compatibility < 3.6.5:
-    // offset is NULL if flexform was never saved with this field:
-    $str_limit_offset = ( int ) $str_limit_offset;
-    // #27354, uherrmann, 110611
+    //  #i0169, 150430, dwildt
+    $this->sheet_viewList_field_limitOffset();
 
-    $str_limit = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'limit', $sheet, 'lDEF', 'vDEF' );
-    if ( $str_limit )
-    {
-      if ( $this->pObj->b_drs_flexform )
-      {
-        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/limit: \'' . htmlspecialchars( $str_limit ) . '\'!', $this->pObj->extKey, 0 );
-      }
-    }
-    if ( !$str_limit )
-    {
-      $str_limit = 20;
-      if ( $this->pObj->b_drs_flexform )
-      {
-        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/limit is empty.', $this->pObj->extKey, 0 );
-        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/limit: We allocates it with 20.', $this->pObj->extKey, 0 );
-      }
-    }
-    // #27354, uherrmann, 110611
-    ##$str_limit = '0,'.$str_limit;
-    $str_limit = $str_limit_offset . ',' . $str_limit;
-    // #27354, uherrmann, 110611
-    // Get the limit for the list view
-    // View has a local limit
-    // #34212: 120223, dwildt+
-    $conf_limit = $str_limit;
-    // #34212: 120223, dwildt-
-    //$conf_limit = false;
-    $str_path = false;
-    if ( isset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'limit' ] ) )
-    {
-      $conf_limit = $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'limit' ];
-      $str_path = 'views.list.' . $this->mode . '.limit';
-    }
-    if ( $str_path )
-    {
-      if ( $this->pObj->b_drs_flexform )
-      {
-        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $str_path . ': \'' . htmlspecialchars( $conf_limit ) . '\'', $this->pObj->extKey, 0 );
-      }
-      if ( $conf_limit )
-      {
-        if ( $this->pObj->b_drs_flexform )
-        {
-          t3lib_div :: devlog( '[INFO/FLEXFORM] The TypoScript value hasn\'t any effect: \'' . htmlspecialchars( $conf_limit ) . '\'!', $this->pObj->extKey, 0 );
-          ##t3lib_div::devlog('[HELP/FLEXFORM] Please remove \''.$str_path.'\'! ', $this->pObj->extKey, 0);
-          // #27354, uherrmann, 110611
-          t3lib_div :: devlog( '[HELP/FLEXFORM] Please remove \'' . $str_path . '\'! Use fields \'Limit: start/offset\' and \'Limit: records per page\' (Backend/ Browser plugin) instead of!', $this->pObj->extKey, 0 );
-          // #27354, uherrmann, 110611
-        }
-      }
-    }
-    // #34212: 120223, dwildt-
-    //$conf_limit = $str_limit;
-    list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
-    if ( $results_at_a_time == null )
-    {
-      if ( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'views.list.' . $this->mode . '.limit is ' . $conf_limit;
-        t3lib_div :: devlog( '[WARN/DRS] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-      $conf_limit = '0,' . $start;
-      if ( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'Please move it from ' . $start . ' to ' . $conf_limit;
-        t3lib_div :: devlog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-    }
-
-    // Set start
-    $pageBrowserPointerLabel = $this->pObj->conf[ 'navigation.' ][ 'pageBrowser.' ][ 'pointer' ];
-    if ( isset( $this->pObj->piVars[ $pageBrowserPointerLabel ] ) )
-    {
-      $multiplier = ( int ) $this->pObj->piVars[ $pageBrowserPointerLabel ];
-      list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
-      $start = $start + ( $multiplier * $results_at_a_time );
-      $conf_limit = $start . ',' . $results_at_a_time;
-    }
-    $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'limit' ] = $conf_limit;
-    // View has a local limit
-    // Field limit
     //////////////////////////////////////////////////////////////////////
     //
       // csv export
@@ -3508,6 +3418,100 @@ class tx_browser_pi1_flexform
     }
     // Get the simulateSingleUid for the list view
     // Field simulateSingleUid
+
+    return;
+  }
+
+  /**
+   * sheet_viewList_field_limitOffset( )  :
+   *
+   * @return
+   * @version 7.1.0
+   * @since   7.1.0
+   * @internal  #i0169
+   */
+  private function sheet_viewList_field_limitOffset()
+  {
+
+    $arr_piFlexform = $this->pObj->cObj->data[ 'pi_flexform' ];
+    $sheet = 'viewList';
+
+
+    // Get the limit offset
+    $str_offset = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'limitOffset', $sheet, 'lDEF', 'vDEF' );
+    $str_offset = ( int ) $str_offset;
+
+    // Get the limit
+    $str_limit = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'limit', $sheet, 'lDEF', 'vDEF' );
+
+    // Set default limit
+    if ( $str_limit )
+    {
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/limit: \'' . htmlspecialchars( $str_limit ) . '\'!', $this->pObj->extKey, 0 );
+      }
+    }
+    if ( !$str_limit )
+    {
+      $str_limit = 20;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/limit is empty.', $this->pObj->extKey, 0 );
+        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/limit: We allocates it with 20.', $this->pObj->extKey, 0 );
+      }
+    } // Set default limit
+
+    $str_limit = $str_offset . ',' . $str_limit;
+    $conf_limit = $str_limit;
+
+    // Take limit from TypoScript
+    $str_path = false;
+    if ( isset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'limit' ] ) )
+    {
+      $conf_limit = $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'limit' ];
+      $str_path = 'views.list.' . $this->mode . '.limit';
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $str_path . ': \'' . htmlspecialchars( $conf_limit ) . '\'', $this->pObj->extKey, 0 );
+      }
+      if ( $conf_limit )
+      {
+        if ( $this->pObj->b_drs_flexform )
+        {
+          t3lib_div :: devlog( '[INFO/FLEXFORM] The TypoScript value hasn\'t any effect: \'' . htmlspecialchars( $conf_limit ) . '\'!', $this->pObj->extKey, 0 );
+          t3lib_div :: devlog( '[HELP/FLEXFORM] Please remove \'' . $str_path . '\'! Use fields \'Limit: start/offset\' and \'Limit: records per page\' (Backend/ Browser plugin) instead of!', $this->pObj->extKey, 0 );
+        }
+      }
+    } // Take limit from TypoScript
+
+    list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
+    if ( $results_at_a_time == null )
+    {
+      if ( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'views.list.' . $this->mode . '.limit is ' . $conf_limit;
+        t3lib_div :: devlog( '[WARN/DRS] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      $conf_limit = '0,' . $start;
+      if ( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'Please move it from ' . $start . ' to ' . $conf_limit;
+        t3lib_div :: devlog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+    }
+
+    // Set start
+    $pageBrowserPointerLabel = $this->pObj->conf[ 'navigation.' ][ 'pageBrowser.' ][ 'pointer' ];
+    if ( isset( $this->pObj->piVars[ $pageBrowserPointerLabel ] ) )
+    {
+      $multiplier = ( int ) $this->pObj->piVars[ $pageBrowserPointerLabel ];
+      list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
+      $start = $start + ( $multiplier * $results_at_a_time );
+      $conf_limit = $start . ',' . $results_at_a_time;
+    }
+    $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'limit' ] = $conf_limit;
+    // View has a local limit
 
     return;
   }

@@ -1764,6 +1764,7 @@ class tx_browser_pi1_viewlist
     // Get query
     // #56329, 140226, dwildt, 1+
     $query = $this->queryWiAndFilter( $query, $limit );
+//var_dump( __METHOD__, __LINE__, str_replace( '\'', '"', $query ) );
     //$this->pObj->dev_var_dump( str_replace( '\'', '"', $query ) );
     // Execute query
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .

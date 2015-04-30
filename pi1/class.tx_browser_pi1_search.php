@@ -485,8 +485,14 @@ class tx_browser_pi1_search
    */
   private function markerSword()
   {
-    $sword = stripslashes( $this->pObj->piVars[ 'sword' ] );
-    $sword = htmlspecialchars( $sword );
+    // #i0170, 150430, dwildt, 2-/2+
+    //$sword = stripslashes( $this->pObj->piVars[ 'sword' ] );
+    //$sword = htmlspecialchars( $sword );
+    $stripslashes = true;
+    $strip_tags = true;
+    $htmlspecialchars = true;
+    $quoteStr = false;
+    $sword = $this->pObj->objZz->secure_piVar( $this->pObj->piVars[ 'sword' ], 'sword', $stripslashes, $strip_tags, $htmlspecialchars, $quoteStr );
     $swordDefault = $this->pObj->pi_getLL( 'label_sword_default', 'Search Word', true );
     $swordDefault = htmlspecialchars( $swordDefault );
 

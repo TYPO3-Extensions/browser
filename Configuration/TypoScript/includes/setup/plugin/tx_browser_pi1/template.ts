@@ -67,43 +67,90 @@ plugin.tx_browser_pi1 {
           // showUid
         10 = TEXT
         10 {
-          dataWrap        = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap        = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+          // #i0170, 150430, dwildt, 4+
+          stdWrap {
+            dataWrap  = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+            intval    = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|showUid
         }
           // azTab
         20 = TEXT
         20  {
-          dataWrap        = &tx_browser_pi1[azTab]={GP:tx_browser_pi1|azTab}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap        = &tx_browser_pi1[azTab]={GP:tx_browser_pi1|azTab}
+          // #i0170, 150430, dwildt, 5+
+          stdWrap {
+            dataWrap          = &tx_browser_pi1[azTab]={GP:tx_browser_pi1|azTab}
+            htmlSpecialChars  = 1
+            stripHtml         = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|azTab
         }
           // indexBrowserTab
         21 = TEXT
         21  {
-          dataWrap        = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
+          // #i0170, 150430, dwildt, 5+
+          stdWrap {
+           dataWrap           = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
+            htmlSpecialChars  = 1
+            stripHtml         = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|indexBrowserTab
         }
           // mode
         30 = TEXT
         30  {
-          dataWrap        = &tx_browser_pi1[mode]={GP:tx_browser_pi1|mode}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap        = &tx_browser_pi1[mode]={GP:tx_browser_pi1|mode}
+          // #i0170, 150430, dwildt, 5+
+          stdWrap {
+            dataWrap          = &tx_browser_pi1[mode]={GP:tx_browser_pi1|mode}
+            htmlSpecialChars  = 1
+            stripHtml         = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|mode
         }
           // pointer
         40 = TEXT
         40  {
-          dataWrap        = &tx_browser_pi1[pointer]={GP:tx_browser_pi1|pointer}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap        = &tx_browser_pi1[pointer]={GP:tx_browser_pi1|pointer}
+          // #i0170, 150430, dwildt, 4+
+          stdWrap {
+            dataWrap  = &tx_browser_pi1[pointer]={GP:tx_browser_pi1|pointer}
+            intval    = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|pointer
         }
           // sort
         50 = TEXT
         50  {
-          dataWrap        = &tx_browser_pi1[sort:tx_browser_pi1|sort]={GP:tx_browser_pi1|sort}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap = &tx_browser_pi1[sort:tx_browser_pi1|sort]={GP:tx_browser_pi1|sort}
+          // #i0170, 150430, dwildt, 5+
+          stdWrap {
+            dataWrap          = &tx_browser_pi1[sort:tx_browser_pi1|sort]={GP:tx_browser_pi1|sort}
+            htmlSpecialChars  = 1
+            stripHtml         = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|sort
         }
           // sword
         60 = TEXT
         60  {
-          dataWrap        = &tx_browser_pi1[sword]={GP:tx_browser_pi1|sword}
+          // #i0170, 150430, dwildt, 1-
+          //dataWrap        = &tx_browser_pi1[sword]={GP:tx_browser_pi1|sword}
+          // #i0170, 150430, dwildt, 5+
+          stdWrap {
+            dataWrap        = &tx_browser_pi1[sword]={GP:tx_browser_pi1|sword}
+            htmlSpecialChars = 1
+            stripHtml = 1
+          }
           if.isTrue.data  = GP:tx_browser_pi1|sword
         }
       }

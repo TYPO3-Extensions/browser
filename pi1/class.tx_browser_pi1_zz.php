@@ -199,6 +199,8 @@ class tx_browser_pi1_zz
     // 3.9.24, 120604, dwildt+
     // _GET - Allocate piVars from _GET, if they aren't set
 
+    $this->prepairePiVarsXSS();
+
 
     $conf = $this->pObj->conf;
     // #9599
@@ -674,6 +676,40 @@ class tx_browser_pi1_zz
 //// 4.1.8
 //$this->pObj->objNaviRecordBrowser->mode = ( int ) $this->pObj->piVar_mode;
 //$this->pObj->dev_var_dump( $this->pObj->objNaviRecordBrowser->recordbrowser_get_piVars_as_params( ) );
+  }
+
+  /**
+   * prepairePiVarsXSS( ) :
+   *
+   * @return	void
+   * @access  private
+   * @version   7.1.0
+   * @since     7.1.0
+   * @internal #i0164, #i0170
+   */
+  private function prepairePiVarsXSS()
+  {
+    $stripslashes = true;
+    $strip_tags = true;
+    $htmlspecialchars = false;
+    $quoteStr = false;
+    $table = 'pages';
+
+    foreach ( ( array ) $this->pObj->piVars as $key => $values )
+    {
+      if ( !is_array( $values ) )
+      {
+        $values = $this->secure_piVar( $values, 'string', $stripslashes, $strip_tags, $htmlspecialchars, $quoteStr, $table );
+        $this->pObj->piVars[ $key ] = $values;
+        continue;
+      }
+
+      foreach ( $values as $value )
+      {
+        $value = $this->secure_piVar( $value, 'string', $stripslashes, $strip_tags, $htmlspecialchars, $quoteStr, $table );
+        $this->pObj->piVars[ $key ][ key( $values ) ] = $value;
+      }
+    }
   }
 
 // 100709, frank.sander (new function removeFiltersFromPiVars)
@@ -2296,131 +2332,253 @@ class tx_browser_pi1_zz
   /**
    * Checks the value of a piVar for security. Get magic quotes, stripslashes, mysql_real_escape_string
    *
-   * @param	string		$str_value: piVar value
-   * @param	string		$str_type: Type for evaluation like string, integer or boolean
-   * @return	string		piVar value
-   * @version 7.0.14
-   * @since   2.0.0
+   * @param	string		$value            : value
+   * @param	boolean		$stripslashes     : process stripslashes
+   * @param	boolean		$strip_tags       : process strip_tags
+   * @param	boolean		$htmlspecialchars : process $htmlspecialchars
+   * @param	boolean		$quoteStr         : process $quoteStr
+   * @param	string		$table            : table for TYPO3 method quoteStr
+   * @return	string  $value
+   * @version 7.1.0
+   * @internal #i0164, #i0170
    */
-  public function secure_piVar( $str_value, $str_type )
+  public function secure_piVar( $value, $type, $stripslashes = true, $strip_tags = true, $htmlspecialchars = true, $quoteStr = true, $table = 'pages' )
   {
-    $str_value_in = $str_value;
+    $value_in = $value;
     $conf_sword = $this->arr_advanced_securitySword;
     $csv_swordAddSlashes = $conf_sword[ 'addSlashes.' ][ 'csvChars' ];
 
-    // Get Magic Quotes
-    // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/security.database.sql-injection.html
-    if ( get_magic_quotes_gpc() )
+    $value = $this->secure_piVar_getMagicQuotes( $value );
+
+    switch ( $type )
     {
-      if ( ini_get( 'magic_quotes_sybase' ) )
-      {
-        $str_value = str_replace( "''", "'", $str_value );
-        // #50195, 130719, dwildt, 2+
-        // http://www.php.net/manual/de/function.stripslashes.php
-        $str_value = str_replace( '\\', null, $str_value );
-      }
-      else
-      {
-        $str_value = stripslashes( $str_value );
-      }
+      case('boolean'):
+        $value = $this->secure_piVar_boolean( $value );
+        $this->secure_piVar_drs( $value_in, $value );
+        return $value;
+      case('integer'):
+        $value = $this->secure_piVar_integer( $value );
+        $this->secure_piVar_drs( $value_in, $value );
+        return $value;
+      case('string'):
+      case('sword'):
+        $value = $this->secure_piVar_string( $value, $stripslashes, $strip_tags, $htmlspecialchars, $quoteStr, $table );
+        $this->secure_piVar_drs( $value_in, $value );
+        return $value;
+      default:
+        $header = 'FATAL ERROR!';
+        $text = 'type isn\'t defined: "' . $type . '"';
+        $this->pObj->drs_die( $header, $text );
+        break;
     }
 
-    // #i0164, 150421, dwildt, 2-/1+
-    //// #61520, 140911, dwildt, +
-    // $str_value = $GLOBALS[ 'TYPO3_DB' ]->escapeStrForLike( $str_value, $this->pObj->localTable );
-    $str_value = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $str_value, 'pages' );
-    if ( $this->pObj->b_drs_warn )
-    {
-      $prompt = 'escapeStrForLike( ) is using the local table name. This doesn\'t seem to be proper in every case.';
-      t3lib_div::devlog( '[WARN/Development] ' . $prompt, $this->pObj->extKey, 3 );
-      $prompt = 'Maybe you get unwanted effect in context with secure piVars.';
-      t3lib_div::devlog( '[WARN/Development] ' . $prompt, $this->pObj->extKey, 2 );
-    }
+    $header = 'FATAL ERROR!';
+    $text = 'Workflow shouldn\'t reach this line of code :(';
+    $this->pObj->drs_die( $header, $text );
 
-    ////////////////////////////////////
-    //
-      // Check Type
-
-    $bool_defined = false;
-    $bool_ok = false;
-
-    // Check Boolean
-    if ( strtolower( $str_type ) == 'boolean' )
-    {
-      $bool_defined = true;
-      if ( strtolower( $str_value ) == 'false' )
-      {
-        $str_value = 0;
-      }
-      if ( strtolower( $str_value ) == 'true' )
-      {
-        $str_value = 1;
-      }
-      $str_value = intval( $str_value );
-      if ( $str_value == 0 )
-      {
-        $bool_ok = true;
-      }
-      if ( $str_value == 1 )
-      {
-        $bool_ok = true;
-      }
-    }
-    // Check Boolean
-//$this->pObj->dev_var_dump( $str_value );
-    // Check Integer
-    if ( strtolower( $str_type ) == 'integer' )
-    {
-      $bool_defined = true;
-      $str_value = intval( $str_value );
-      $bool_ok = true;
-    }
-    // Check Integer
-//$this->pObj->dev_var_dump( $str_value );
-    // Check String
-    if ( strtolower( $str_type ) == 'string' )
-    {
-      $bool_defined = true;
-      $bool_ok = true;
-    }
     // Check String
     // Check Sword
-    if ( strtolower( $str_type ) == 'sword' )
+    if ( strtolower( $type ) == 'sword' )
     {
       $arr_swordAddSlashes = $this->getCSVasArray( $csv_swordAddSlashes );
       if ( is_array( $arr_swordAddSlashes ) )
       {
         foreach ( $arr_swordAddSlashes as $str_char )
         {
-          $str_value = str_replace( $str_char, '\\' . $str_char, $str_value );
+          $value = str_replace( $str_char, '\\' . $str_char, $value );
         }
       }
-      $bool_defined = true;
-      $bool_ok = true;
     }
     // Check Sword
-//    $this->pObj->dev_var_dump( $str_type, $str_value );
 
-    if ( !$bool_defined )
+    return $value;
+  }
+
+  /**
+   * secure_piVar_drs( )  :
+   *
+   * @param	string		$value_in : value
+   * @param	string		$value    : processed value
+   * @return	void
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_drs( $value_in, $value )
+  {
+    $this->secure_piVar_drsWarn( $value_in, $value );
+    $this->secure_piVar_drsXSS( $value_in, $value );
+  }
+
+  /**
+   * secure_piVar_drsWarn( )  :
+   *
+   * @param	string		$value_in : value
+   * @param	string		$value    : processed value
+   * @return	void
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_drsWarn( $value_in, $value )
+  {
+    if ( !$this->pObj->b_drs_warn )
     {
-      $str_header = '<h1>ERROR</h1>';
-      $str_prompt = '<p>The Type \'' . $str_type . '\' isn\'t defined.<br />
-        Function: tx_browser_pi1_zz::secure_piVar()</p>';
-      echo $str_header . $str_prompt;
-      exit;
+      return;
     }
-    // Check Type
 
-    if ( $str_value_in != $str_value )
+    if ( $value_in == $value )
     {
-      if ( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'piVar is moved from \'' . $str_value_in . '\' to \'' . $str_value . '\'';
-        t3lib_div::devlog( '[WARN/Security] ' . $prompt, $this->pObj->extKey, 3 );
-      }
+      return;
     }
 
-    return $str_value;
+    if ( empty( $value_in ) )
+    {
+      return;
+    }
+
+    $prompt = 'piVar is moved from \'' . $value_in . '\' to \'' . $value . '\'';
+    t3lib_div::devlog( '[WARN/XSS/Security] ' . $prompt, $this->pObj->extKey, 2 );
+  }
+
+  /**
+   * secure_piVar_drsWarn( )  :
+   *
+   * @param	string		$value_in : value
+   * @param	string		$value    : processed value
+   * @return	void
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_drsXSS( $value_in, $value )
+  {
+    if ( !$this->pObj->b_drs_xss )
+    {
+      return;
+    }
+
+    switch ( true )
+    {
+      case( empty( $value_in ) ):
+        break;
+      case( $value_in == $value ):
+        $prompt = 'piVar isn\'t touched: \'' . $value_in . '\'';
+        t3lib_div::devlog( '[OK/XSS/Security] ' . $prompt, $this->pObj->extKey, -1 );
+        break;
+      case( $value_in != $value ):
+      default:
+        $prompt = 'piVar is moved from \'' . $value_in . '\' to \'' . $value . '\'';
+        t3lib_div::devlog( '[WARN/XSS/Security] ' . $prompt, $this->pObj->extKey, 2 );
+        break;
+    }
+  }
+
+  /**
+   * secure_piVar_getMagicQuotes():
+   *
+   * @param	string		$value: piVar value
+   * @return	string  $value
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_getMagicQuotes( $value )
+  {
+    // Get Magic Quotes
+    // PHP/MySQL-Documentation: file:///usr/share/doc/packages/php-doc/html/security.database.sql-injection.html
+    if ( !get_magic_quotes_gpc() )
+    {
+      return $value;
+    }
+
+    if ( ini_get( 'magic_quotes_sybase' ) )
+    {
+      $value = str_replace( "''", "'", $value );
+      // #50195, 130719, dwildt, 2+
+      // http://www.php.net/manual/de/function.stripslashes.php
+      $value = str_replace( '\\', null, $value );
+    }
+    else
+    {
+      $value = stripslashes( $value );
+    }
+
+    return $value;
+  }
+
+  /**
+   * secure_piVar_boolean():
+   *
+   * @param	string		: piVar value
+   * @return	string  $value
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_boolean( $value )
+  {
+
+    if ( strtolower( $value ) == 'false' )
+    {
+      $value = 0;
+    }
+    if ( strtolower( $value ) == 'true' )
+    {
+      $value = 1;
+    }
+    $value = intval( $value );
+    if ( $value > 0 )
+    {
+      $value = 1;
+    }
+    return $value;
+  }
+
+  /**
+   * secure_piVar_boolean():
+   *
+   * @param	string		$value: piVar value
+   * @return	string  $value
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_integer( $value )
+  {
+
+    $value = intval( $value );
+    return $value;
+  }
+
+  /**
+   * secure_piVar_boolean():
+   *
+   * @param	string		$value            : value
+   * @param	boolean		$stripslashes     : process stripslashes
+   * @param	boolean		$strip_tags       : process strip_tags
+   * @param	boolean		$htmlspecialchars : process $htmlspecialchars
+   * @param	boolean		$quoteStr         : process $quoteStr
+   * @param	string		$table            : table for TYPO3 method quoteStr
+   * @return	string  $value
+   * @version 7.1.0
+   * @since   2.0.0
+   */
+  private function secure_piVar_string( $value, $stripslashes = true, $strip_tags = true, $htmlspecialchars = true, $quoteStr = true, $table = 'pages' )
+  {
+//    var_dump( __METHOD__, __LINE__, $value );
+    if ( $stripslashes )
+    {
+      $value = stripslashes( $value );
+    }
+    if ( $strip_tags )
+    {
+      $value = strip_tags( $value );
+    }
+    if ( $htmlspecialchars )
+    {
+      $value = htmlspecialchars( $value );
+    }
+    if ( $quoteStr )
+    {
+      $value = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $value, $table );
+    }
+//    var_dump( __METHOD__, __LINE__, $value );
+    return $value;
   }
 
   /*   * *********************************************

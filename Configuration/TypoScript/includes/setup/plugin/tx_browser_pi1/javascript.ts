@@ -353,7 +353,13 @@ plugin.tx_browser_pi1 {
                   // if an UID is provided in the querystring, choose only that plugin
                 20 = TEXT
                 20 {
-                  data = GP:tx_browser_pi1|plugin
+                  // #i0170, 150430, dwildt, 1-
+                  //data = GP:tx_browser_pi1|plugin
+                  // #i0170, 150430, dwildt, 4+
+                  stdWrap {
+                    data    = GP:tx_browser_pi1|plugin
+                    intval  = 1
+                  }
                   if {
                     isTrue {
                       data = GP:tx_browser_pi1|plugin

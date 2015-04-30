@@ -29,9 +29,9 @@
   * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
   * @package    TYPO3
   * @subpackage  browser
-  * 
+  *
   * @version  4.5.6
-  * @since    2.0.0 
+  * @since    2.0.0
   */
 
   /**
@@ -60,9 +60,9 @@ class tx_browser_pi1_sql_manual
  *
  * @param	object		The parent object
  * @return	void
- * 
+ *
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   function __construct( $parentObj )
   {
@@ -82,11 +82,11 @@ class tx_browser_pi1_sql_manual
  *
  * @return	string		SQL query
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   public function get_queryArray( )
   {
-
+//var_dump( __METHOD__, __LINE__ );
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -114,7 +114,7 @@ class tx_browser_pi1_sql_manual
 
       // WHERE clause
     $arr_where          = $this->get_queryArrayWhere( $conf_view );
-    $str_where          = $arr_where['where']; 
+    $str_where          = $arr_where['where'];
     // 130502, dwildt, 1-
     //$str_enable_fields  = $arr_where['enableFields'];
     unset( $arr_where );
@@ -125,7 +125,7 @@ class tx_browser_pi1_sql_manual
     $str_joins  = $this->get_queryArrayJoins( $conf_view );
     $str_query  = str_replace( '###JOINS###', $str_joins, $str_query );
     $str_from   = $str_from
-                . $str_joins 
+                . $str_joins
                 ;
 
       // FROM statement II/II
@@ -167,7 +167,7 @@ class tx_browser_pi1_sql_manual
     }
       // DRS
 
-      // #47678, 130429, dwildt, 3+      
+      // #47678, 130429, dwildt, 3+
     $table      = $this->pObj->localTable;
     $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
 //var_dump( __METHOD__, __LINE__, $table, $this->pObj->objLocalise->get_localisationMode( ) );
@@ -178,13 +178,13 @@ class tx_browser_pi1_sql_manual
   }
 
 /**
- * get_queryArrayCleanUp( ) : 
- * 
- * @param   string                $query  : 
+ * get_queryArrayCleanUp( ) :
+ *
+ * @param   string                $query  :
  *
  * @return	string            $query  :
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArrayCleanUp( $query )
   {
@@ -195,19 +195,19 @@ class tx_browser_pi1_sql_manual
 
     $query = str_replace( 'AND ',  PHP_EOL . '                    AND ', $query );
     $query = str_replace( 'OR ',   PHP_EOL . '                    OR ',  $query );
-    
+
     return $query;
   }
 
 
 /**
- * get_queryArrayFrom( ) : 
- * 
+ * get_queryArrayFrom( ) :
+ *
  * @param   array               $conf_view  : Configuration of the current view
  *
  * @return	string		FROM statement
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArrayFrom( $conf_view )
   {
@@ -219,13 +219,13 @@ class tx_browser_pi1_sql_manual
   }
 
 /**
- * get_queryArrayJoins( ) : 
- * 
+ * get_queryArrayJoins( ) :
+ *
  * @param   array               $conf_view  : Configuration of the current view
  *
  * @return	string		FROM statement
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArrayJoins( $conf_view )
   {
@@ -330,20 +330,20 @@ class tx_browser_pi1_sql_manual
   }
 
 /**
- * get_queryArrayMarker( ) : 
- * 
+ * get_queryArrayMarker( ) :
+ *
  * @param   array               $queryParts
  *
  * @return	array		$queryParts
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArrayMarker( $queryParts )
   {
     $str_pid_list = $this->pObj->pidList;
       // For human readable
     $str_pid_list = str_replace( ',', ', ', $str_pid_list );
-  
+
       // LOOP
     foreach( ( array ) $queryParts as $queryPart => $statement )
     {
@@ -351,19 +351,19 @@ class tx_browser_pi1_sql_manual
       $statement  = str_replace( '###UID###',      $this->pObj->piVars['showUid'], $statement );
       $queryParts[$queryPart] = $statement;
     }
-    
+
     return $queryParts;
   }
 
 
 /**
- * get_queryArrayOrderBy( ) : 
- * 
+ * get_queryArrayOrderBy( ) :
+ *
  * @param   array               $conf_view  : Configuration of the current view
  *
  * @return	string		ORDER BY statement
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArrayOrderBy( $conf_view )
   {
@@ -376,18 +376,18 @@ class tx_browser_pi1_sql_manual
         // #47700, 130502, dwildt, 1+
       $str_order_by = $conf_view['orderBy'];
     }
-    
+
     return $str_order_by;
   }
 
 /**
- * get_queryArraySelect( ) : 
- * 
+ * get_queryArraySelect( ) :
+ *
  * @param   array               $conf_view  : Configuration of the current view
  *
  * @return	string		SELECT statement
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArraySelect( $conf_view )
   {
@@ -461,13 +461,13 @@ class tx_browser_pi1_sql_manual
   }
 
 /**
- * get_queryArrayWhere( ) : 
- * 
+ * get_queryArrayWhere( ) :
+ *
  * @param   array               $conf_view  : Configuration of the current view
  *
  * @return	array		where, enableFields
  * @version  4.5.6
- * @since    2.0.0 
+ * @since    2.0.0
  */
   private function get_queryArrayWhere( $conf_view )
   {
@@ -539,6 +539,7 @@ class tx_browser_pi1_sql_manual
     $arr_where                  = array( );
     $arr_where['where']         = $str_where;
     $arr_where['enableFields']  = $str_enable_fields;
+//var_dump( __METHOD__, __LINE__, $arr_where );
     return $arr_where;
   }
 

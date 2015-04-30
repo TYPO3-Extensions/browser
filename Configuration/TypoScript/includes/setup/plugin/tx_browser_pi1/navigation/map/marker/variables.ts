@@ -68,12 +68,24 @@ plugin.tx_browser_pi1 {
                           // markerUid
                         10 = TEXT
                         10 {
-                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                          // #i0170, 150430, dwildt, 1-
+                          //data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                          // #i0170, 150430, dwildt, 4+
+                          stdWrap {
+                            data    = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                            intval  = 1
+                          }
                         }
                           // routeUid
                         20 = TEXT
                         20 {
-                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
+                          // #i0170, 150430, dwildt, 1-
+                          //data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
+                          // #i0170, 150430, dwildt, 4+
+                          stdWrap {
+                            data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
+                            intval  = 1
+                          }
                         }
                       }
                     }
@@ -96,12 +108,24 @@ plugin.tx_browser_pi1 {
                           // markerUid
                         10 = TEXT
                         10 {
-                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                          // #i0170, 150430, dwildt, 1-
+                          //data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                          // #i0170, 150430, dwildt, 4+
+                          stdWrap {
+                            data    = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.marker}
+                            intval  = 1
+                          }
                         }
                           // routeUid
                         20 = TEXT
                         20 {
-                          data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
+                          // #i0170, 150430, dwildt, 1-
+                          //data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
+                          // #i0170, 150430, dwildt, 4+
+                          stdWrap {
+                            data = GP:tx_browser_pi1|{$plugin.tx_browser_pi1.map.aliases.showUid.path}
+                            intval  = 1
+                          }
                         }
                       }
                     }

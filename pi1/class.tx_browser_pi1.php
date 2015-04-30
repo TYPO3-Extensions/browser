@@ -1938,6 +1938,7 @@ class tx_browser_pi1 extends tslib_pibase
     $this->b_drs_ttc = false;
     $this->b_drs_typoscript = false;
     $this->b_drs_TYPO3_6x = false;
+    $this->b_drs_xss = false;
     // If a plugin disabled the DRS ...
     //////////////////////////////////////////////////////////////////////
     //
@@ -1979,6 +1980,7 @@ class tx_browser_pi1 extends tslib_pibase
       $this->b_drs_ttc = true;
       $this->b_drs_typoscript = true;
       $this->b_drs_TYPO3_6x = true;
+      $this->b_drs_xss = true;
       t3lib_div::devlog( '[INFO/DRS] DRS - Development Reporting System:<br />' . $this->arr_extConf[ 'drs_mode' ], $this->extKey, 0 );
     }
     if ( $this->arr_extConf[ 'drs_mode' ] == 'Auto Discover development' )
@@ -2220,6 +2222,11 @@ class tx_browser_pi1 extends tslib_pibase
       $this->b_drs_warn = true;
       $this->b_drs_info = true;
       $this->b_drs_TYPO3_6x = true;
+      t3lib_div::devlog( '[INFO/DRS] DRS - Development Reporting System:<br />' . $this->arr_extConf[ 'drs_mode' ], $this->extKey, 0 );
+    }
+    if ( $this->arr_extConf[ 'drs_mode' ] == 'XSS (Cross Site Scripting)' )
+    {
+      $this->b_drs_xss = true;
       t3lib_div::devlog( '[INFO/DRS] DRS - Development Reporting System:<br />' . $this->arr_extConf[ 'drs_mode' ], $this->extKey, 0 );
     }
 

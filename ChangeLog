@@ -10,8 +10,12 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 7.1.0
-  15-04-29
+  15-04-30
+  SECURITY BUGFIX
+  * #i0170: Prevent cross site scripting. See #i0164 too.
+            * https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#XSS_Locator
   Feature
+  * #i0169: plugin can ignore the pointer
   * #i0168: Slick template. See tab Template in the flexform.
   Bugfix
   * #i0169: Text with image should wrapped as text only in case of no image.
