@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.8
+ * @version 7.1.1
  * @since 6.0.0
  */
 
@@ -246,7 +246,7 @@ class tx_browser_pi1_search
 
     $this->replaceTSFEid();
 
-      // #i0122, 150205, dwildt: must run before removeUnwantedPiVars()
+    // #i0122, 150205, dwildt: must run before removeUnwantedPiVars()
     $this->markerSword();
 
     $this->removeUnwantedPiVars();
@@ -430,7 +430,7 @@ class tx_browser_pi1_search
    * @param   integer   $str_space_left : the sum of HTML space at the left margin
    * @param   string    $hidden         : former hidden fields
    * @return	string    $hidden         : new hidden fields
-   * @version 6.0.0
+   * @version 7.1.1
    * @since 6.0.0
    */
   private function markerHiddenString( $value, $key, $str_space_left, $hidden )
@@ -439,7 +439,8 @@ class tx_browser_pi1_search
     {
       return $hidden;
     }
-
+    // #i0171, 150501. dwildt, 1+
+    $value = htmlentities( $value );
     $hidden = $hidden . PHP_EOL
             . $str_space_left . '<input type="hidden" name="' . $key . '" value="' . $value . '">';
     return $hidden;

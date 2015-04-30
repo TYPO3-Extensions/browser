@@ -9,13 +9,18 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.1.1
+  15-04-30
+  SECURITY BUGFIX
+  * #i0170: hidden fields
+
 7.1.0
   15-04-30
   SECURITY BUGFIX
   * #i0169: Prevent cross site scripting. See #i0164 too.
             * https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#XSS_Locator
   Feature
-  * #i0168: Slick Carousel template. See tab Template in the flexform.
+  * #i0168: Slick template. See tab Template in the flexform.
   Bugfix
   * #i0169: Text with image should wrapped as text only in case of no image.
 
