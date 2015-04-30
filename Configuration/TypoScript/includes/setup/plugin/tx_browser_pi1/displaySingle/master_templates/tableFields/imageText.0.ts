@@ -23,6 +23,13 @@ plugin.tx_browser_pi1 {
               // image in case of: above ... and beside ...
             10 = CASE
             10 {
+                // #i0169, 150430, dwildt, +
+              if =
+              if {
+                isTrue {
+                  field = {$plugin.tx_browser_pi1.templates.singleview.image.0.file}
+                }
+              }
               key {
                 field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
               }
@@ -176,6 +183,13 @@ plugin.tx_browser_pi1 {
               // image in case of: below ...
             30 = CASE
             30 {
+                // #i0169, 150430, dwildt, +
+              if =
+              if {
+                isTrue {
+                  field = {$plugin.tx_browser_pi1.templates.singleview.image.0.file}
+                }
+              }
               key {
                 field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
               }

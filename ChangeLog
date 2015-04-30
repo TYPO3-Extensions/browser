@@ -12,7 +12,9 @@ Manual
 7.1.0
   15-04-29
   Feature
-  * #i0168: Slick template. See tab Template in the felxform.
+  * #i0168: Slick template. See tab Template in the flexform.
+  Bugfix
+  * #i0169: Text with image should wrapped as text only in case of no image.
 
 7.0.16
   15-04-28
