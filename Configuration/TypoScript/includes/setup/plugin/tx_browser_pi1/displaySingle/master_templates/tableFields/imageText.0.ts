@@ -101,7 +101,34 @@ plugin.tx_browser_pi1 {
             20 = CASE
             20 {
               key {
-                field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
+                  // #i0169, 150430, dwildt, +
+                stdWrap =
+                stdWrap {
+                  cObject = COA
+                  cObject {
+                    10 = TEXT
+                    10 {
+                      if =
+                      if {
+                        isTrue {
+                          field = {$plugin.tx_browser_pi1.templates.singleview.image.0.file}
+                        }
+                      }
+                      field = {$plugin.tx_browser_pi1.templates.singleview.image.0.imageorient}
+                    }
+                    20 = TEXT
+                    20 {
+                      if =
+                      if {
+                        isTrue {
+                          field = {$plugin.tx_browser_pi1.templates.singleview.image.0.file}
+                        }
+                        negate = 1
+                      }
+                      value = 0
+                    }
+                  }
+                }
               }
               // don't handle
               default = TEXT
