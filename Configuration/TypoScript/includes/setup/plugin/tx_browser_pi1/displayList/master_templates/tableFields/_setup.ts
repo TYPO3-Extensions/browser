@@ -25,4 +25,6 @@
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/image.6.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/text.0.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/text.1.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/text.2.ts">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/text.3.ts">
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/text.6.ts">
