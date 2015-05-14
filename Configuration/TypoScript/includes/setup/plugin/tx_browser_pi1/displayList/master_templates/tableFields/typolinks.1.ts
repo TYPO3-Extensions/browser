@@ -56,10 +56,11 @@ plugin.tx_browser_pi1 {
                     // title
                   40 = TEXT
                   40 {
-                    field = {$plugin.tx_browser_pi1.templates.listview.header.1.field} // {$plugin.tx_browser_pi1.templates.listview.header.1.single}
+                    field = {$plugin.tx_browser_pi1.templates.listview.header.1.title}
                     stdWrap {
-                      stripHtml = 1
-                      htmlSpecialChars = 1
+                      stripHtml         = 1
+                      htmlSpecialChars  = 1
+                      crop              = {$plugin.tx_browser_pi1.templates.listview.header.1.title.crop}
                     }
                     noTrimWrap  = | "|"|
                   }
