@@ -13,6 +13,8 @@ Manual
   15-05-14
   Feature
   * #i0171: New templates list view text 2 and 3
+  Bugfix
+  * #i0172: Bugfix arrDataQuery
 
 7.1.1
   15-04-30

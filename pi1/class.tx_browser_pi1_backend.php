@@ -29,7 +29,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 6.0.6
+ * @version 7.1.2
  * @since 3.0.0
  */
 
@@ -1973,7 +1973,7 @@ class tx_browser_pi1_backend
    *
    * @param	array		$arr_pluginConf: Current plugin/flexform configuration
    * @return	array		with the bookmarks
-   * @version 5.0.16
+   * @version 7.1.2
    * @since 3.6.1
    * @internal #i0079
    */
@@ -2005,10 +2005,11 @@ class tx_browser_pi1_backend
 
     foreach ( ( array ) $items as $key => $item )
     {
-      if ( $item == trim( $item, '.' ) )
-      {
-        continue;
-      }
+      // #i0172, 150514, dwildt, 4-
+//      if ( $item == trim( $item, '.' ) )
+//      {
+//        continue;
+//      }
       $key = strtolower( substr( $key, 0, -1 ) );
       if ( $item[ 'name' ] )
       {
