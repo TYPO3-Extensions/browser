@@ -43,7 +43,7 @@ plugin.tx_browser_pi1 {
                 }
                 stdWrap {
                   stripHtml         = 1
-                  htmlSpecialChars  = 1
+                  htmlSpecialChars  = 0
                   noTrimWrap        = ||&nbsp;&raquo;|
                 }
                 noTrimWrap = | ||
