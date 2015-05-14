@@ -84,7 +84,7 @@ plugin.tx_browser_pi1 {
                     if =
                     if {
                       isFalse {
-                        field = {$plugin.tx_browser_pi1.templates.singleview.image.0.image_1stforlistonly}
+                        field = {$plugin.tx_browser_pi1.templates.singleview.image.0.firstForListOnly}
                       }
                     }
                       // image, caption
