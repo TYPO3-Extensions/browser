@@ -61,6 +61,7 @@ plugin.tx_browser_pi1 {
                       stripHtml         = 1
                       htmlSpecialChars  = 1
                       crop              = {$plugin.tx_browser_pi1.templates.listview.header.4.title.crop}
+                    }
                     noTrimWrap  = | "|"|
                   }
                 }
