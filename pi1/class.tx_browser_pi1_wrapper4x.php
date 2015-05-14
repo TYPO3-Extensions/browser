@@ -1069,7 +1069,6 @@ class tx_browser_pi1_wrapper4x
             . 'row'
             . ' ' . $local_prefixId
             . ' ' . $local_prefixId . '-' . $this->pObj->view
-            . ' ' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->mode
             . '"'
     ;
 
