@@ -73,13 +73,20 @@ plugin.tx_browser_pi1 {
               split =
               split {
                 token = ,
-                cObjNum = 1
+                cObjNum = 1 || 2
                   // load register; image, caption
                 1 =
                 1 {
                     // image, caption
                   10 = COA
                   10 {
+                      //
+                    if =
+                    if {
+                      isFalse {
+                        field = {$plugin.tx_browser_pi1.templates.singleview.image.0.image_1stforlistonly}
+                      }
+                    }
                       // image, caption
                     20 = COA
                     20 {
@@ -245,6 +252,12 @@ plugin.tx_browser_pi1 {
                         }
                       }
                     }
+                  }
+                }
+                2 < .1
+                2 {
+                  10 {
+                    if >
                   }
                 }
               }

@@ -2,6 +2,8 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser - Templates - Single - Image 0*//102;         type=string;     label= File*:(Obligate!) Field with the file name. I.e: tx_org_service.image
   templates.singleview.image.0.file       =
+  # cat=Browser - Templates - Single - Image 0*//103;         type=string;     label= First image:Field with the flag for display the image in the list view only. I.e: tx_org_news.image_1stforlistonly
+  templates.singleview.image.0.file       =
   # cat=Browser - Templates - Single - Image 0*//110;         type=string;     label= Height field:Field with the image height. I.e: tx_org_service.imageheight
   templates.singleview.image.0.height     =
   # cat=Browser - Templates - Single - Image 0*//111;         type=string;     label= Height default:Default height of the image in pixel. I.e: width = 120c and height = 80c crops 120x80px from the center of the scaled image. Width = 100c-100 and height = 100c crops 100x100px from landscape-images at the left and portrait- images centered. Width = 100c+30 height = 100c-25 crops 100x100px from landscape-images a bit right of the center and portrait-images a bit higher than centered.

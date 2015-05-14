@@ -12,6 +12,7 @@ Manual
 7.1.2
   15-05-14
   Feature
+  * #i0173: First image for list view only
   * #i0171: New templates list view text 2 and 3
   Bugfix
   * #i0172: Bugfix arrDataQuery
