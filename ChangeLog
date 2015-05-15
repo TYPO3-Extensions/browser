@@ -12,6 +12,7 @@ Manual
 7.1.2
   15-05-14
   Feature
+  * #i0175: Foundation Template 5: content only
   * #i0174: New property constant editor [BROWSER TEMPLATES - LIST - HEADER] > title and title crop
   * #i0173: First image for list view only
   * #i0171: New templates list view text 2 and 3

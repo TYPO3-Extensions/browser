@@ -30,6 +30,12 @@ plugin.tx_browser_pi1 {
           image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_04.gif
           csvViews  = all
         }
+        foundationMain05 {
+          name      = Foundation 5: one column for the list
+          file      = EXT:browser/Resources/Private/Templates/HTML/Foundation/main_05.html
+          //image     = EXT:browser/Resources/Public/Images/BackendLayouts/Foundation/main_05.gif
+          csvViews  = all
+        }
       }
     }
   }
