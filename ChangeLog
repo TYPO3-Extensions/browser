@@ -9,6 +9,12 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.1.4
+  15-05-30
+  Improvement
+  * #i0177: Configuration/TypoScript/includes/setup/PAGE/meta.ts won't included any longer
+            * meta.viewport will included by a foundation template
+
 7.1.3
   15-05-28
   Feature
