@@ -74,7 +74,7 @@ if ( $version < 6002000 )
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 7.0.16
+ * @version 7.2.0
  * @since 0.0.1
  */
 
@@ -391,7 +391,7 @@ class tx_browser_pi1 extends tslib_pibase
    * @param	string		$content: The content of the PlugIn
    * @param	array		$conf: The PlugIn Configuration
    * @return	string		The content that should be displayed on the website
-   * @version 7.0.16
+   * @version 7.2.0
    * @since   0.0.1
    */
   public function main( $content, $conf )
@@ -830,10 +830,10 @@ class tx_browser_pi1 extends tslib_pibase
     //////////////////////////////////////////////////////////////////////
     //
       // XML/RSS: return the result (XML string) without wrapInBaseClass
-      // #i0149, 150408, dwildt, 2-
+    // #i0149, 150408, dwildt, 2-
 //    // #28855, 110809, dwildt
 //    if ( substr( $str_template_completed, 0, strlen( '<?xml' ) ) == '<?xml' )
-      // #i0149, 150408, dwildt, 1+
+    // #i0149, 150408, dwildt, 1+
     if ( strpos( $str_template_completed, '<?xml' ) !== false )
     {
       // Prompt the expired time to devlog
@@ -871,9 +871,16 @@ class tx_browser_pi1 extends tslib_pibase
             return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
         }
         break;
-      // typeNum name is csv
+      // #67208, 150530, dwildt, 7+
+      // typeNum name is vCard
+      case( 'vCard' ) :
+        $debugTrailLevel = 1;
+        $this->timeTracking_log( $debugTrailLevel, 'END (vCard file is returned)' );
+        $str_template_completed = strip_tags( $str_template_completed );
+        return trim( $str_template_completed );
+      // typeNum name is vCard
       default:
-      // typeNum name isn't csv: Follow the workflow
+      // typeNum name is neither csv nor vCard: Follow the workflow
     }
     // csv export: Set CSV field devider and field wrapper
     //////////////////////////////////////////////////////////////////////

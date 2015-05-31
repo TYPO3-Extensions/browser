@@ -136,6 +136,12 @@ class tx_browser_pi1_export
         $this->int_typeNum = $typeNum;
         $this->str_typeNum = 'csv';
         break;
+      // #67208, 150530, dwildt, 5+
+      case( $typeNum == $conf['export.']['vCard.']['page.']['typeNum'] ) :
+          // Given typeNum is the internal typeNum for vCard
+        $this->int_typeNum = $typeNum;
+        $this->str_typeNum = 'vCard';
+        break;
       default :
           // Given typeNum isn't the internal typeNum for CSV export
         $this->str_typeNum = 'undefined';

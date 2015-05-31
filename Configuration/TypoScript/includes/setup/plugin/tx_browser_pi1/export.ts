@@ -5,6 +5,8 @@ plugin.tx_browser_pi1 {
       page {
         typeNum = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
         config {
+            // Get rid of the parsetime comment
+          debug                 = 0
           disableAllHeaderCode  = 1
           disablePrefixComment  = 1
             // CSV has a one byte charset!
@@ -38,6 +40,8 @@ plugin.tx_browser_pi1 {
       page {
         typeNum = {$plugin.tx_browser_pi1.typeNum.mapPageObj}
         config {
+            // Get rid of the parsetime comment
+          debug                 = 0
           disableAllHeaderCode  = 1
           disablePrefixComment  = 1
             // CSV has a one byte charset!
@@ -45,6 +49,17 @@ plugin.tx_browser_pi1 {
           xhtml_cleaning        = 0
           admPanel              = 0
           additionalHeaders     = Content-Type: text/plain
+        }
+      }
+    }
+    vCard < .csv
+    vCard {
+      page {
+        typeNum = {$plugin.tx_browser_pi1.typeNum.vCardPageObj}
+        config {
+            // Get rid of the parsetime comment
+          metaCharset           = UTF-8
+          additionalHeaders     = Content-Type: text/vcard | Content-Disposition: attachment; filename="vcard.vcf"
         }
       }
     }

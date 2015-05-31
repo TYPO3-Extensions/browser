@@ -9,6 +9,30 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.0
+  15-05-30
+  Major Feature
+  * #i0178: Resources/Public/Css/foundation-icons-3/*
+            Deprecated, because foundation should added by another extension like start.
+  * #67208: vCard
+            * Definition http://de.wikipedia.org/wiki/VCard
+            * vCard version 4.0
+            * page.typeNum = 67208
+              See constant editor: [BROWSER - PAGE OBJECTS] > vCard page object
+              plugin.tx_browser_pi1.typeNum.vCardPageObj
+            * NEW
+              * Configuration/TypoScript/includes
+                * constants/templates/singleview/vCard.0.ts
+                  See constant editor: [BROWSER - TEMPLATES - SINGLE - VCARD.0]
+                * setup
+                  * PAGE/browser_vCard.ts
+                  * plugin/tx_browser_pi1/displaySingle/master_templates/tableFields/vCard.0.ts
+            * UPDATE
+              * Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/export.ts
+  Improvement
+  * #i0179: Update foundation from 5.4.5 to 5.5.1
+            foundation-5.4.5 is removed
+
 7.1.4
   15-05-30
   Improvement

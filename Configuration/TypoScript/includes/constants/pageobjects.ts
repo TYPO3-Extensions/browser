@@ -8,6 +8,8 @@ plugin.tx_browser_pi1 {
   typeNum.downloadPageObj = 31230
   # cat=Browser - Page Objects//103;       type=int+;    label= Page object for map category markers: Type number (typenum) of the map page object. Default: 32654
   typeNum.mapPageObj = 32654
+  # cat=Browser - Page Objects//104;       type=int+;    label= vCard page object: Type number (typenum) of the vCard page object. Default: 67208
+  typeNum.vCardPageObj = 67208
   # cat=Browser - Page Objects/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   typeNum.pageobjects.links = Click me!
 
