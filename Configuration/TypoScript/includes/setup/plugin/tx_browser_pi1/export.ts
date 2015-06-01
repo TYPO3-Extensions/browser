@@ -13,7 +13,7 @@ plugin.tx_browser_pi1 {
           metaCharset           = iso-8859-15
           xhtml_cleaning        = 0
           admPanel              = 0
-          additionalHeaders     = Content-Type: text/csv | Content-Disposition: attachment; filename="export.csv"
+          additionalHeaders     = {$plugin.tx_browser_pi1.typeNum.csvPageObj.additionalHeaders}
         }
         10 = CONTENT
         10 {
@@ -48,7 +48,7 @@ plugin.tx_browser_pi1 {
           metaCharset           = iso-8859-15
           xhtml_cleaning        = 0
           admPanel              = 0
-          additionalHeaders     = Content-Type: text/plain
+          additionalHeaders     = {$plugin.tx_browser_pi1.typeNum.mapPageObj.additionalHeaders}
         }
       }
     }
@@ -59,7 +59,7 @@ plugin.tx_browser_pi1 {
         config {
             // Get rid of the parsetime comment
           metaCharset           = UTF-8
-          additionalHeaders     = Content-Type: text/vcard | Content-Disposition: attachment; filename="vcard.vcf"
+          additionalHeaders     = {$plugin.tx_browser_pi1.typeNum.vCardPageObj.additionalHeaders}
         }
       }
     }

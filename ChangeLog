@@ -30,6 +30,7 @@ Manual
             * UPDATE
               * Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/export.ts
   Improvement
+  * #i0180: Additional headers for the page objects csv, map and vCard are configureable by the constant editor
   * #i0179: Update foundation from 5.4.5 to 5.5.1
             foundation-5.4.5 is removed
 
