@@ -62,7 +62,7 @@ plugin.tx_browser_pi1 {
                       data = page:uid
                     }
                     additionalParams {
-                      field = tx_org_staff.uid
+                      field = {$plugin.tx_browser_pi1.templates.listview.url.0.record}
                       wrap  = &tx_browser_pi1[{$plugin.tx_browser_pi1.navigation.showUid}]=|&type={$plugin.tx_browser_pi1.typeNum.vCardPageObj}
                     }
                     forceAbsoluteUrl  = 1
@@ -129,42 +129,52 @@ plugin.tx_browser_pi1 {
                 10 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.1}
                   wrap  = |;
+                  stdWrap {
+                    replacement {
+                        // Move , to \,
+                      10 = TEXT
+                      10 {
+                        search  = ,
+                        replace = \,
+                      }
+                        // Move ; to \;
+                      20 = TEXT
+                      20 {
+                        search  = ;
+                        replace = \;
+                      }
+                    }
+                  }
                 }
                   // extended address (e.g., apartment or suite number);
-                20 = TEXT
+                20 < .10
                 20 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.2}
-                  wrap  = |;
                 }
                   // street address
-                30 = TEXT
+                30 < .10
                 30 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.3}
-                  wrap  = |;
                 }
                   // locality (e.g., city);
-                40 = TEXT
+                40 < .10
                 40 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.4}
-                  wrap  = |;
                 }
                   // region (e.g., state or province);
-                50 = TEXT
+                50 < .10
                 50 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.5}
-                  wrap  = |;
                 }
                   // postal code
-                60 = TEXT
+                60 < .10
                 60 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.6}
-                  wrap  = |;
                 }
                   // country name
-                70 = TEXT
+                70 < .10
                 70 {
                   field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.adr.7}
-                  wrap  = |;
                 }
                   // linefeed
                 80 = TEXT
@@ -176,6 +186,11 @@ plugin.tx_browser_pi1 {
                 // Geographical Properties: GEO:
               40 = COA
               40 {
+                if {
+                  isTrue {
+                    field = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.geo.lat} // {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.geo.lon}
+                  }
+                }
                   // latitude
                 10 = TEXT
                 10 {
@@ -207,6 +222,41 @@ plugin.tx_browser_pi1 {
                   field     = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.field.org}
                   required  = 1
                   wrap      = ORG:|
+                  stdWrap {
+                    replacement {
+                        // Move , to \,
+                      10 = TEXT
+                      10 {
+                        search  = ,
+                        replace = \,
+                      }
+                        // Move ; to \;
+                      20 = TEXT
+                      20 {
+                        search  = ;
+                        replace = \;
+                      }
+                        // Move [linefeed] to \,
+                      30 = TEXT
+                      30 {
+                        search {
+                          char = 10
+                        }
+                        replace = \,
+                        replace {
+                          noTrimWrap = || |
+                        }
+                      }
+                        // Remove [carriage return]
+                      40 = TEXT
+                      40 {
+                        search {
+                          char = 13
+                        }
+                        replace =
+                      }
+                    }
+                  }
                 }
                   // TITLE:
                 20 = TEXT
