@@ -40,6 +40,10 @@ plugin.tx_browser_pi1 {
   templates.singleview.vCard.0.field.tel.work.voice  =
   # cat=Browser - Templates - Single - vCard.0//622;         type=string;     label= TEL work fax:Field for the TEL work fax property. Example: tx_org_staff.contact_fax. Details at http://tools.ietf.org/html/rfc6350#section-6.4.1
   templates.singleview.vCard.0.field.tel.work.fax  =
+  # cat=Browser - Templates - Single - vCard.0//801;         type=boolean;    label= SOURCE:Enable the SOURCE property. This is the URL of vCard.
+  templates.singleview.vCard.0.source  = 1
+  # cat=Browser - Templates - Single - vCard.0//802;         type=int+;       label= URL:Page id for the URL. Leave it empty, if you don't want a URL in your vCard.
+  templates.singleview.vCard.0.url.uid  =
   # cat=Browser - Templates - Single - vCard.0//others/999;  type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   templates.singleview.vCard.0.links      = Click me!
 

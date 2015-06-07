@@ -51,6 +51,9 @@ plugin.tx_browser_pi1 {
                   // SOURCE:
                 20 = TEXT
                 20 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.source}
+                  }
                   append = TEXT
                   append {
                     char = 10
@@ -321,6 +324,29 @@ plugin.tx_browser_pi1 {
                     required  = 1
                     wrap      = TEL;TYPE="fax,work":|
                   }
+                }
+              }
+                // Explanatory Properties: URL
+              70 = COA
+              70 {
+                  // URL:
+                10 = TEXT
+                10 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.url.uid}
+                  }
+                  append = TEXT
+                  append {
+                    char = 10
+                  }
+                  typolink {
+                      // page:uid
+                    parameter = {$plugin.tx_browser_pi1.templates.singleview.vCard.0.url.uid}
+                    forceAbsoluteUrl  = 1
+                    useCacheHash      = 0
+                    returnLast        = url
+                  }
+                  wrap = URL:|
                 }
               }
             }
