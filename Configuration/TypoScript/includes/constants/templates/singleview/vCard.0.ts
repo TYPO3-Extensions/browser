@@ -1,28 +1,32 @@
 plugin.tx_browser_pi1 {
 
-  # cat=Browser - Templates - Single - vCard.0//100;         type=string;     label= FN:Field for the FN (fullname) property. Example: tx_org_staff.title. Details at http://tools.ietf.org/html/rfc6350#section-6.2.1
+  # cat=Browser - Templates - Single - vCard.0//100;         type=options[2.1,4.0];     label= Version:
+  templates.singleview.vCard.0.version = 4.0
+  # cat=Browser - Templates - Single - vCard.0//101;         type=string;     label= Charset:Has an effect in version 2.1 only!
+  templates.singleview.vCard.0.charset = UTF-8
+  # cat=Browser - Templates - Single - vCard.0//200;         type=string;     label= FN:Field for the FN (fullname) property. Example: tx_org_staff.title. Details at http://tools.ietf.org/html/rfc6350#section-6.2.1
   templates.singleview.vCard.0.field.fn =
-  # cat=Browser - Templates - Single - vCard.0//101;         type=string;     label= N last name:Field for the N (name) last name property. Example: tx_org_staff.name_last. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
+  # cat=Browser - Templates - Single - vCard.0//201;         type=string;     label= N last name:Field for the N (name) last name property. Example: tx_org_staff.name_last. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
   templates.singleview.vCard.0.field.n.1  =
-  # cat=Browser - Templates - Single - vCard.0//102;         type=string;     label= N first name:Field for the N (name) first name property. Example: tx_org_staff.name_first. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
+  # cat=Browser - Templates - Single - vCard.0//202;         type=string;     label= N first name:Field for the N (name) first name property. Example: tx_org_staff.name_first. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
   templates.singleview.vCard.0.field.n.2  =
-  # cat=Browser - Templates - Single - vCard.0//103;         type=string;     label= N third property:Field for the N (name) third property. Example: tx_org_staff.xyz. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
+  # cat=Browser - Templates - Single - vCard.0//203;         type=string;     label= N third property:Field for the N (name) third property. Example: tx_org_staff.xyz. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
   templates.singleview.vCard.0.field.n.3  =
-  # cat=Browser - Templates - Single - vCard.0//104;         type=string;     label= N title:Field for the N (name) title. Example: tx_org_staff.xyz. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
+  # cat=Browser - Templates - Single - vCard.0//204;         type=string;     label= N title:Field for the N (name) title. Example: tx_org_staff.xyz. Details at http://tools.ietf.org/html/rfc6350#section-6.2.2
   templates.singleview.vCard.0.field.n.4  =
-  # cat=Browser - Templates - Single - vCard.0//201;         type=string;     label= ADR post box:Field for the ADR (address) post box property. Example: tx_org_headquarters.postbox_postbox. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//211;         type=string;     label= ADR post box:Field for the ADR (address) post box property. Example: tx_org_headquarters.postbox_postbox. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.1  =
-  # cat=Browser - Templates - Single - vCard.0//202;         type=string;     label= ADR extended address:Field for the ADR (address) extended address (e.g., apartment or suite number) porperty. Example: tx_org_headquarters.mail_address. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//212;         type=string;     label= ADR extended address:Field for the ADR (address) extended address (e.g., apartment or suite number) porperty. Example: tx_org_headquarters.mail_address. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.2  =
-  # cat=Browser - Templates - Single - vCard.0//203;         type=string;     label= ADR street address:Field for the ADR (address) street address property. Example: tx_org_headquarters.mail_street. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//213;         type=string;     label= ADR street address:Field for the ADR (address) street address property. Example: tx_org_headquarters.mail_street. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.3  =
-  # cat=Browser - Templates - Single - vCard.0//204;         type=string;     label= ADR locality:Field for the ADR (address) locality (e.g., city) property. Example: tx_org_headquarters.mail_city. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//214;         type=string;     label= ADR locality:Field for the ADR (address) locality (e.g., city) property. Example: tx_org_headquarters.mail_city. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.4  =
-  # cat=Browser - Templates - Single - vCard.0//205;         type=string;     label= ADR region:Field for the ADR (address) region (e.g., state or province) property. Example: tx_org_headquarters.mail_region. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//215;         type=string;     label= ADR region:Field for the ADR (address) region (e.g., state or province) property. Example: tx_org_headquarters.mail_region. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.5  =
-  # cat=Browser - Templates - Single - vCard.0//206;         type=string;     label= ADR postal code:Field for the ADR (address) postal code property. Example: tx_org_headquarters.mail_postcode. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//216;         type=string;     label= ADR postal code:Field for the ADR (address) postal code property. Example: tx_org_headquarters.mail_postcode. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.6  =
-  # cat=Browser - Templates - Single - vCard.0//207;         type=string;     label= ADR country:Field for the ADR (address) country name property. Example: tx_org_headquarters.mail_country. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
+  # cat=Browser - Templates - Single - vCard.0//217;         type=string;     label= ADR country:Field for the ADR (address) country name property. Example: tx_org_headquarters.mail_country. Details at http://tools.ietf.org/html/rfc6350#section-6.3.1
   templates.singleview.vCard.0.field.adr.7  =
   # cat=Browser - Templates - Single - vCard.0//301;         type=string;     label= GEO lat:Field for the GEO latitude property. Example: tx_org_headquarters.mail_lat. Details at http://tools.ietf.org/html/rfc6350#section-6.5.2
   templates.singleview.vCard.0.field.geo.lat  =
