@@ -53,7 +53,7 @@ class tx_browser_pi3_backend_wizicon
     $wizardItems['plugins_tx_browser_pi3'] =
 			array
 			(
-      	'icon'				=> t3lib_extMgm::extRelPath('browser').'pi3/browser_wizard.gif',
+      	'icon'				=> t3lib_extMgm::extRelPath('browser').'pi3/browser_wizard2.gif',
         'title'   		=> $LANG->getLLL('wizard.list_type_pi3', $LL),
         'description'	=> $LANG->getLLL('wizard.list_type_pi3.desc', $LL),
         'params'			=> '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=browser_pi3'

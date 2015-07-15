@@ -29,7 +29,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     7.0.14
+ * @version     7.2.4
  * @since       1.0.0
  */
 
@@ -200,7 +200,6 @@ class tx_browser_pi1_zz
     // _GET - Allocate piVars from _GET, if they aren't set
 
     $this->prepairePiVarsXSS();
-
 
     $conf = $this->pObj->conf;
     // #9599
@@ -683,12 +682,13 @@ class tx_browser_pi1_zz
    *
    * @return	void
    * @access  private
-   * @version   7.1.0
+   * @version   7.2.4
    * @since     7.1.0
    * @internal #i0164, #i0170
    */
   private function prepairePiVarsXSS()
   {
+//var_dump( __METHOD__, __LINE__, $this->pObj->piVars );
     $stripslashes = true;
     $strip_tags = true;
     $htmlspecialchars = false;
@@ -708,6 +708,8 @@ class tx_browser_pi1_zz
       {
         $value = $this->secure_piVar( $value, 'string', $stripslashes, $strip_tags, $htmlspecialchars, $quoteStr, $table );
         $this->pObj->piVars[ $key ][ key( $values ) ] = $value;
+        // #i0185, 150715, dwildt, 1+
+        next($values);
       }
     }
   }

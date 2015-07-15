@@ -488,7 +488,7 @@ class tx_browser_pi1_filter_4x
       // Get nice_piVar
       $arr_result = $this->zz_getNicePiVar( $tableField );
       $arr_piVar = $arr_result[ 'data' ][ 'arr_piVar' ];
-//$this->pObj->dev_var_dump( $arr_piVar );
+//var_dump( __METHOD__, __LINE__, $tableField, $arr_piVar );
       unset( $arr_result );
       // Get nice_piVar
       // CONTINUE : There isn't any piVar
@@ -519,7 +519,7 @@ class tx_browser_pi1_filter_4x
             case( $table != $this->pObj->localTable ):
             default:
               $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField );
-//$this->pObj->dev_var_dump( $str_andWhere );
+//var_dump( __METHOD__, __LINE__, $str_andWhere );
               break;
           }
           // SWITCH : local table versus foreign table
@@ -607,7 +607,7 @@ class tx_browser_pi1_filter_4x
         }
         // #48859, 130528, dwildt: make SQL query safe, 4+
         $str_uidList = implode( ', ', ( array ) $arr_piVar );
-//$this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
+//var_dump( __METHOD__, __LINE__, $arr_piVar, $str_uidList );
         $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
         // #30912, 120127, dwildt+
         $this->arr_filter_condition[ $table . '.uid' ][ 'uid_in_list' ] = $arr_piVar;
@@ -1994,6 +1994,7 @@ class tx_browser_pi1_filter_4x
     // LOOP rows
     $this->row_number = 0;
 
+//var_dump( __METHOD__, __LINE__, 'Sieht so aus, wie wenn $uid von $this->rows nicht multiple ist. Wo wird $uid gesetzt?' . PHP_EOL, $this->rows );
     foreach ( ( array ) $this->rows as $uid => $row )
     {
       $key = $this->sql_filterFields[ $this->curr_tableField ][ 'value' ];
@@ -2008,6 +2009,7 @@ class tx_browser_pi1_filter_4x
           break;
         default:
           $items = $this->get_filterItemForeigntable( $uid, $value, $items );
+//var_dump( __METHOD__, __LINE__, $uid, $value, $items );
           break;
       }
       $this->row_number++;
@@ -2196,6 +2198,14 @@ class tx_browser_pi1_filter_4x
         }
         break;
       case ( 'CHECKBOX' ) :
+//        // #i0185, 150715, dwildt
+//        $size = null;
+//        $multiple = null;
+//        if ( $conf_array[ 'multiple' ] == 1 )
+//        {
+//          $multiple = ' ' . $conf_array[ 'multiple.' ][ 'selected' ];
+//        }
+//        break;
       case ( 'CATEGORY_MENU' ) :
       case ( 'RADIOBUTTONS' ) :
         $size = null;
@@ -3453,7 +3463,7 @@ class tx_browser_pi1_filter_4x
 //                $orderBy,
 //                $limit
 //              );
-//$this->pObj->dev_var_dump( $query );
+//var_dump( __METHOD__, __LINE__, $query );
     // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
             (
@@ -3488,6 +3498,7 @@ class tx_browser_pi1_filter_4x
     // LOOP build the rows
     while ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) )
     {
+//var_dump( __METHOD__, __LINE__, $row, $uidField );
       $rows[ ( string ) $row[ $uidField ] ] = $row;
     }
     // LOOP build the rows
@@ -4048,7 +4059,6 @@ class tx_browser_pi1_filter_4x
             $this->sql_whereAnd_fromTS();
     // Localise the WHERE statement
     $where = $this->sql_whereWiHitsLL( $where );
-//$this->pObj->dev_var_dump( $where );
     // RETURN WHERE statement without a WHERE
     return $where;
   }
@@ -4131,6 +4141,7 @@ class tx_browser_pi1_filter_4x
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars[ 'sword' ] ) ):
+//var_dump( __METHOD__, __LINE__, $this->andWhereFilter );
         return $this->andWhereFilter;
       //break;
       default;
@@ -6867,7 +6878,7 @@ class tx_browser_pi1_filter_4x
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
         $arr_piVar = $this->pObj->piVars[ $strNicePiVar ];
-//$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
+//var_dump( __METHOD__, __LINE__, $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
     }
     // SWITCH : set piVar depending on multiple
@@ -6884,7 +6895,7 @@ class tx_browser_pi1_filter_4x
     $arr_return[ 'data' ][ 'key_piVar' ] = $key_piVar;
     $arr_return[ 'data' ][ 'arr_piVar' ] = $arr_piVar;
     $arr_return[ 'data' ][ 'nice_piVar' ] = $strNicePiVar; // Bugfix #7159, 100429
-//$this->pObj->dev_var_dump( $arr_return );
+//var_dump( __METHOD__, __LINE__, $arr_return, $this->pObj->piVars );
 
     return $arr_return;
   }

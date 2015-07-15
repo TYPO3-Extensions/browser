@@ -24,9 +24,7 @@ $EM_CONF[ $_EXTKEY ] = array(
   ,
   'category' => 'plugin',
   'shy' => 0,
-  'version' => '7.2.2',
-  'dependencies' => 'browser_manual_en',
-  'conflicts' => 'be_tablefilter',
+  'version' => '7.2.4',
   'priority' => '',
   'loadOrder' => '',
   'module' => '',
@@ -48,11 +46,10 @@ $EM_CONF[ $_EXTKEY ] = array(
     ),
     'conflicts' => array(
       'be_tablefilter' => '',
+      'dbal' => '',
     ),
     'suggests' => array(
       't3jquery' => '',
     ),
-  ),
-  'suggests' => array(
   ),
 );

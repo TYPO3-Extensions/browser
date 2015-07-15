@@ -7,7 +7,7 @@
  *  All rights reserved
  *
  *  This script is based on the TYPO3 extension browser
- *  (c) 2010 - Bert Wendler and Marcel Walczak
+ *  (c) 2010-2015 - Bert Wendler and Marcel Walczak
  *
  *  Thanks to Bert Wendler and Marcel Walczak for their wonderful
  *  work.

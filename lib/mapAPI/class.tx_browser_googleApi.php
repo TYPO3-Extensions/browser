@@ -58,8 +58,8 @@ class tx_browser_googleApi
  * main( )
  *
  * @param	string		$address    : address in the syntax like '1600 Amphitheatre Parkway, Mountain View, CA'
- * @param	object		$fieldArray : Array of modified fields * @param	string		$address    : Address
- * @return	array		$returnData     : geodata( lon, lat), status
+ * @param	object		$pObj       : parent object
+ * @return	array		$returnData : geodata( lon, lat), status
  * @access public
  * @version   4.5.13
  * @since     4.5.13
