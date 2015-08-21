@@ -304,7 +304,7 @@ class tx_browser_pi1_typoscript
    * fetch_localTable()  : Returns the values for the array with the local table. The local table is the main table.
    *
    * @return	array		$arr_localTable: Array with the syntax: array[uid] = table.field, array[pid] = table.field
-   * @version 4.5.14
+   * @version 7.2.5
    * @since 2.0.0
    */
   public function fetch_localTable()
@@ -360,7 +360,8 @@ class tx_browser_pi1_typoscript
     {
       if ( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog( '[INFO/SQL] localTable (global TypoScript value) isn\'t configured. Probably it is OK.', $this->pObj->extKey, 0 );
+        $prompt = 'localTable (global TypoScript value) isn\'t configured. Probably it is OK.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       // #i0115, 141220, dwildt -/+
       //reset( $this->arr_realTables_arrFields );
@@ -368,18 +369,27 @@ class tx_browser_pi1_typoscript
       {
         reset( $this->arr_realTables_arrFields );
       }
-      $str_localTable = key( $this->arr_realTables_arrFields );
+      // #i0186, 180721, dwildt, ~
+      $str_localTable = key( ( array ) $this->arr_realTables_arrFields );
       if ( $str_localTable )
       {
         if ( $this->pObj->b_drs_sql )
         {
-          t3lib_div::devlog( '[INFO/SQL] We take the first table from the SELECT statement.<br />
-            localTable (maintable) is: ' . $str_localTable, $this->pObj->extKey, 0 );
-          t3lib_div::devlog( '[HELP/SQL] If you like another table, please configure ' . $this->conf_path . 'localTable', $this->pObj->extKey, 1 );
+          $prompt = 'We take the first table from the SELECT statement. localTable (maintable) is: ' . $str_localTable;
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'If you like another table, please configure ' . $this->conf_path . 'localTable';
+          t3lib_div::devlog( '[HELP/SQL] ', $this->pObj->extKey, 1 );
         }
       }
     }
 
+    // #i0186, 180721, dwildt, +
+    if ( !$str_localTable )
+    {
+      $header = 'FATAL ERROR!';
+      $text = '$str_localTable isn\'t initiated!<br />Pleae check, if you have included a proper TyüoScript.';
+      $this->pObj->drs_die( $header, $text );
+    }
 
     /////////////////////////////////////////////////////
     //
@@ -1667,7 +1677,6 @@ class tx_browser_pi1_typoscript
     $markerArrayDest = array();
     $tableFields = $this->wrapRowFieldOrderGetTablefields();
     //var_dump( __METHOD__, __LINE__, $tableFields );
-
     // LOOP each table.field
     foreach ( $tableFields as $tableField )
     {

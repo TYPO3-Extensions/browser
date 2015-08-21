@@ -35,7 +35,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 6.0.0
+ * @version 7.3.0
  * @since 3.0.0
  */
 // #61520, 140911, dwildt, 1-
@@ -93,6 +93,16 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
 
   // 0.2.0, 110815, dwildt +
 
+  /**
+   * [Describe function...]
+   *
+   * @param [type]    $confarray: ...
+   * @param [type]    $item: ...
+   * @param [type]    $labelValue: ...
+   * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
+   */
   public function getDBlistQuery( $table, $pageId, &$additionalWhereClause, &$selectedFieldsList, &$parentObject )
   {
 
@@ -142,7 +152,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
       $parentObject->HTMLcode .= '<legend>Suchoptionen</legend>';
       foreach ( $itemList as $item )
       {
-        if ( $conf = $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $item ][ 'config_filter' ] )
+        $conf = $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $item ][ 'config_filter' ];
+        if ( $conf )
         {
           // 0.2.0, 110815, dwildt +
           $this->conf = $conf;
@@ -165,6 +176,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $table: ...
    * @param [type]    $conf: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeFormitem( $item, $table, $conf )
   {
@@ -232,9 +245,16 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $item: ...
    * @param [type]    $labelValue: ...
    * @return  [type]    ...
+   * @version 7.3.0
+   * @since 3.0.0
    */
   public function editFormitem( $confarray, $item, $labelValue )
   {
+    // #i0187, 150821, dwildt, 4+
+    if ( !isset( $confarray[ 'fieldChangeFunc' ] ) )
+    {
+      $confarray[ 'fieldChangeFunc' ] = array();
+    }
     $formElement = $this->tceforms->getSingleField_SW( '', '', array(), $confarray );
     $formElement = str_replace( $this->extension . '[' . $item . ']' . '_hr', $this->extension . '[' . $item . ']', $formElement );
     $formElement = preg_replace( '/<input\ type=\"hidden.*?>/s', '', $formElement );
@@ -252,6 +272,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $itemValue: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeWhereClause( $item, $conf, $itemValue, $table )
   {
@@ -322,10 +344,13 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $itemValue: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeQueryInputTrim( $item, $itemValue, $table )
   {
-    $query = ' AND ' . $GLOBALS[ 'TYPO3_DB' ]->searchQuery( $searchwords = array( searchword => $itemValue ), $fields = array( 'field' => $item ), $table );
+    $fields = array( 'field' => $item );
+    $query = ' AND ' . $GLOBALS[ 'TYPO3_DB' ]->searchQuery( $searchwords = array( searchword => $itemValue ), $fields, $table );
     return $query;
   }
 
@@ -336,6 +361,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $itemValue: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeQuerySelect( $item, $itemValue, $table )
   {
@@ -355,6 +382,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $itemValue: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeQueryCheckTime( $item, $itemValue, $table )
   {
@@ -379,6 +408,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $to: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeQueryInputDatetime( $item, $itemValue, $table )
   {
@@ -401,6 +432,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $to: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeQueryInputDatetimeFromto( $field, $value_from, $value_to, $table )
   {
@@ -429,6 +462,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $to: ...
    * @param [type]    $table: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function makeQueryInputFromto( $item, $from, $to, $table )
   {
@@ -468,6 +503,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    *
    * @param [type]    $timetime: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function getTimestampFrom( $timetime )
   {
@@ -481,6 +518,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    *
    * @param [type]    $timetime: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function getTimestampTo( $timetime )
   {
@@ -495,6 +534,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    *
    * @param [type]    $timetime: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function getTimestampFromDatetime( $datetime )
   {
@@ -512,6 +553,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    *
    * @param [type]    $datetime: ...
    * @return  [type]    ...
+   * @version 3.0.0
+   * @since 3.0.0
    */
   public function getTimestampToDatetime( $datetime )
   {
@@ -546,7 +589,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
     // Allocates the page TS config
     if ( !$this->pageTSconfig )
     {
-      $this->pageTSconfig = t3lib_BEfunc::getPagesTSconfig( $this->pageId, $rootLine = '', $returnPartArray = 0 );
+      $returnPartArray = 0;
+      $this->pageTSconfig = t3lib_BEfunc::getPagesTSconfig( $this->pageId, $rootLine = '', $returnPartArray );
     }
     // Allocates the page TS config
   }
@@ -558,4 +602,3 @@ if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext
 {
   include_once($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/lib/class.tx_browser_befilter_hooks.php' ]);
 }
-?>

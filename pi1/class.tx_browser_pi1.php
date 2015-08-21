@@ -775,7 +775,7 @@ class tx_browser_pi1 extends tslib_pibase
           default:
             $header = 'FATAL ERROR!';
             $text = 'Sorry, this error shouldn\'t occure: case is undefined.';
-            $this->pObj->drs_die( $header, $text );
+            $this->drs_die( $header, $text );
             break;
         }
         // DEVELOPMENT: Browser engine 4.x

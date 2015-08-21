@@ -9,6 +9,17 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.6
+  15-08-21
+  Improvement
+  * #i0188: Extend BE-filter for MM_match_fields
+  * #i0187: Update BE-filter for TYPO3 6.2
+
+7.2.5
+  15-08-21
+  Bugfix
+  * #i0186: PHP Warning: key() expects parameter 1 to be array, null given in pi1/class.tx_browser_pi1_typoscript.php line 371
+
 7.2.4
   15-07-15
   Bugfix

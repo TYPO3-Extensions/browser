@@ -55,4 +55,3 @@ $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'scheduler' ][ 'tasks' ][ 'tx_bro
   'additionalFields' => 'tx_browser_Geoupdate_AdditionalFieldProvider'
 );
 // SC_OPTIONS
-?>
