@@ -1,5 +1,6 @@
 <?php
-/***************************************************************
+
+/* * *************************************************************
  *  Copyright notice
  *
  *  (c) 2011-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
@@ -20,20 +21,20 @@
  *  GNU General Public License for more details.
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * ************************************************************* */
 
 
- /**
+/**
  * The class tx_browser_befilter_ts bundles methods the allocation of page TSconfig and TypoScript configuration
  *
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     6.0.0
+ * @version     7.2.6
  * @since       3.9.8
  */
 
- /**
+/**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  *
@@ -50,12 +51,12 @@ class tx_browser_befilter_ts
 {
 
   /**
- * init(): Initiate this class. Include required classes.
- *
- * @return  void
- * @version     3.9.8
- * @since       3.9.8
- */
+   * init(): Initiate this class. Include required classes.
+   *
+   * @return  void
+   * @version     3.9.8
+   * @since       3.9.8
+   */
   public function init()
   {
     // #61520, 140911, dwildt, 4-
@@ -63,14 +64,13 @@ class tx_browser_befilter_ts
 //    require_once(PATH_t3lib.'class.t3lib_page.php');
 //    require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
 //    require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
-
     // #61520, 140911, dwildt, 7+
     $this->init_typo3version();
     if ( $this->typo3Version < 6002000 )
     {
-      require_once(PATH_t3lib.'class.t3lib_page.php');
-      require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
-      require_once(PATH_t3lib.'class.t3lib_tsparser_ext.php');
+      require_once(PATH_t3lib . 'class.t3lib_page.php');
+      require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
+      require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
     }
   }
 
@@ -124,46 +124,52 @@ class tx_browser_befilter_ts
   }
 
   /**
- * regard_pageTSconfig_in_foreignTableWhere():  Replaces markers in the andWhere statement
- *                                              with corresponding values of the page TSconfig
- *                                              Marker are
- *                                              * ###PAGE_TSCONFIG_ID###
- *                                              * ###PAGE_TSCONFIG_IDLIST###
- *                                              * ###PAGE_TSCONFIG_STR###
- *                                              * See
- *                                                * document "TYPO3 core APIs"
- *                                                  section ['columns'][fieldname]['config'] / TYPE: "select"
- *
- * @param array   $pObj: parent object
- * @param string    $table: name of the current record
- * @param string    $field: field of the current record
- * @return  array   $conf: rendered TCA configuration of the given table and field
- * @version     3.9.8
- * @since       3.9.8
- */
-  public function regard_pageTSconfig_in_foreignTableWhere($pObj, $table, $field)
+   * regard_pageTSconfig_in_foreignTableWhere():  Replaces markers in the andWhere statement
+   *                                              with corresponding values of the page TSconfig
+   *                                              Marker are
+   *                                              * ###CURRENT_PID###
+   *                                              * ###PAGE_TSCONFIG_IDLIST###
+   *                                              * ###PAGE_TSCONFIG_STR###
+   *                                              * ###PAGE_TSCONFIG_STR###
+   *                                              * See
+   *                                                * document "TYPO3 core APIs"
+   *                                                  section ['columns'][fieldname]['config'] / TYPE: "select"
+   *
+   * @param array   $pObj: parent object
+   * @param string    $table: name of the current record
+   * @param string    $field: field of the current record
+   * @return  array   $conf: rendered TCA configuration of the given table and field
+   * @version     7.2.6
+   * @since       3.9.8
+   */
+  public function regard_pageTSconfig_in_foreignTableWhere( $pObj, $table, $field )
   {
     $conf = $pObj->conf;
 
-      // There is an andWhere
-    if(isset($conf['foreign_table_where'])) {
-        // LOOP each marker value in the page TSconfig
-      foreach((array) $pObj->pageTSconfig['TCEFORM.'][$table . '.'][$field . '.'] as $key => $value) {
-        //var_dump(__METHOD__, __LINE__, $pObj->conf, $pObj->pageTSconfig['TCEFORM.'][$table][$field]);
-        $marker = '###' . $key . '###';
-          // Replace each marker in the andWhere with the value from the page TSconfig
-        $conf['foreign_table_where'] = str_replace($marker, $value, $conf['foreign_table_where']);
-      }
-        // LOOP each marker value in the page TSconfig
-    }
-      // There is an andWhere
+    // RETURN: there isn't any andWhere
+    if ( !isset( $conf[ 'foreign_table_where' ] ) )
+    {
+      return $conf;
+    } // RETURN: there isn't any andWhere
+
+    foreach ( ( array ) $pObj->pageTSconfig[ 'TCEFORM.' ][ $table . '.' ][ $field . '.' ] as $key => $value ) // LOOP each marker value in the page TSconfig
+    {
+      $marker = '###' . $key . '###';
+      // Replace each marker in the andWhere with the value from the page TSconfig
+      $conf[ 'foreign_table_where' ] = str_replace( $marker, $value, $conf[ 'foreign_table_where' ] );
+    } // LOOP each marker value in the page TSconfig
+
+    $marker = '###CURRENT_PID###'; // #i0189, 150822, dwildt, 3+
+    $value = t3lib_div::_GP( 'id' );
+    $conf[ 'foreign_table_where' ] = str_replace( $marker, $value, $conf[ 'foreign_table_where' ] );
 
     return $conf;
   }
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_befilter_ts.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_befilter_ts.php']);
+if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/lib/class.tx_browser_befilter_ts.php' ] )
+{
+  include_once($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/lib/class.tx_browser_befilter_ts.php' ]);
 }
 ?>

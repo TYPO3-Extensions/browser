@@ -12,6 +12,7 @@ Manual
 7.2.6
   15-08-21
   Improvement
+  * #i0189: Extend BE-filter for ###CURRENT_PID###
   * #i0188: Extend BE-filter for MM_match_fields
   * #i0187: Update BE-filter for TYPO3 6.2
 
