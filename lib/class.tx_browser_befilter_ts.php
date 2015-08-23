@@ -160,7 +160,7 @@ class tx_browser_befilter_ts
     } // LOOP each marker value in the page TSconfig
 
     $marker = '###CURRENT_PID###'; // #i0189, 150822, dwildt, 3+
-    $value = t3lib_div::_GP( 'id' );
+    $value = ( int ) t3lib_div::_GP( 'id' );
     $conf[ 'foreign_table_where' ] = str_replace( $marker, $value, $conf[ 'foreign_table_where' ] );
 
     return $conf;

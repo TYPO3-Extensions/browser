@@ -387,7 +387,7 @@ class tx_browser_pi1_typoscript
     if ( !$str_localTable )
     {
       $header = 'FATAL ERROR!';
-      $text = '$str_localTable isn\'t initiated!<br />Pleae check, if you have included a proper TyüoScript.';
+      $text = '$str_localTable isn\'t initiated!<br />Pleae check, if you have included a proper TypoScript.';
       $this->pObj->drs_die( $header, $text );
     }
 
