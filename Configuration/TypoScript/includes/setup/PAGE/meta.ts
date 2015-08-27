@@ -1,5 +1,6 @@
 page {
   meta {
-    viewport = width=device-width, initial-scale=1.0
+      // #i0190, 150827, dwildt, 1-
+    //viewport = width=device-width, initial-scale=1.0
   }
 }
