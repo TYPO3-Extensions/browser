@@ -35,7 +35,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 7.3.0
+ * @version 7.2.8
  * @since 3.0.0
  */
 // #61520, 140911, dwildt, 1-
@@ -245,7 +245,7 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $item: ...
    * @param [type]    $labelValue: ...
    * @return  [type]    ...
-   * @version 7.3.0
+   * @version 7.2.8
    * @since 3.0.0
    */
   public function editFormitem( $confarray, $item, $labelValue )
@@ -260,7 +260,10 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
     $formElement = preg_replace( '/<input\ type=\"hidden.*?>/s', '', $formElement );
     $formElement = str_replace( $this->extension . '[' . $item . ']" value=""', $this->extension . '[' . $item . ']" value="' . $this->filterCriteria[ $item ] . '"', $formElement );
     $formElement = str_replace( '<option value="' . $this->filterCriteria[ $item ] . '">', '<option value="' . $this->filterCriteria[ $item ] . '" selected="selected">', $formElement );
-    $formElement = '<div style="float:left; margin: 5px;"><label>' . $labelValue . '</label><br />' . $formElement . '</div>';
+    // #i0191, 151016, Heinrich Pegelow, 1-/+
+    //$formElement = '<div style="float:left; margin: 5px;"><label>' . $labelValue . '</label><br />' . $formElement . '</div>';
+    $formElement = '<div class="sorting" style="float:left; margin: 5px;"><label style="display: block; max-width: 10em; height: 3.5em; overflow: hidden;">' .
+            $labelValue . '</label><br />' . $formElement . '</div>';
     return $formElement;
   }
 

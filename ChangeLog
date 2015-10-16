@@ -9,6 +9,16 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.8
+  15-08-27
+  Improvement
+  * #i0191: CSS class for backend-filter.
+            Thanks to Heinrich Pegelow
+            See: http://typo3-browser-forum.de/fa/list_post/forum/typo3-browser-wunschliste/thema/css-klasse-statt-inline-css/
+            If you like to overwrite the default TYPO3 backend CSS, please refer to the hooks:
+            * PreHeaderRender.php
+            * RenderPreProcess.php
+
 7.2.7
   15-08-27
   Improvement
