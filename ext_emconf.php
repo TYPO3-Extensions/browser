@@ -24,7 +24,7 @@ $EM_CONF[ $_EXTKEY ] = array(
   ,
   'category' => 'plugin',
   'shy' => 0,
-  'version' => '7.2.9',
+  'version' => '7.2.10',
   'priority' => '',
   'loadOrder' => '',
   'module' => '',

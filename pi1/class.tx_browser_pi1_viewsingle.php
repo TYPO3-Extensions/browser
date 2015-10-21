@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
- * @version 7.0.6
+ * @version 7.2.10
  * @since 1.0
  */
 
@@ -174,7 +174,7 @@ class tx_browser_pi1_viewsingle
    *
    * @param	array
    * @return	array   $rows
-   * @version 5.0.0
+   * @version 7.2.10
    * @since   5.0.0
    */
   private function getRows( $statements )
@@ -187,6 +187,7 @@ class tx_browser_pi1_viewsingle
 
     $res = $arr_result[ 'res' ];
     $rows = $this->getRowsAliases( $res );
+    $rows = $this->getRowsHandleEmptyValues( $rows );
     $GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
     $rows = $this->getRowsSynonyms( $rows );
     $rows = $this->getRowsLocalised( $rows );
@@ -332,6 +333,37 @@ class tx_browser_pi1_viewsingle
 
     // RETURN : DRS prompt
     t3lib_div::devlog( '[INFO/SQL] Manual SQL mode: Rows didn\'t get any general consolidation.', $this->pObj->extKey, 0 );
+    return $rows;
+  }
+
+  /**
+   * getRows() :
+   *
+   * @param	array     $rows
+   * @return	array   $rows
+   * @internal #i0193
+   * @version 7.2.10
+   * @since   7.2.10
+   */
+  private function getRowsHandleEmptyValues( $rows )
+  {
+    if ( !$this->pObj->objFlexform->bool_dontHandleEmptyValues )
+    {
+      return $rows;
+    }
+
+    foreach ( $rows as $rowsKey => $row )
+    {
+      foreach ( $row as $rowKey => $value )
+      {
+        if ( $value != '' )
+        {
+          continue;
+        }
+        unset( $rows[ $rowsKey ][ $rowKey ] );
+      }
+    }
+    //var_dump( __METHOD__, __LINE__, $rows );
     return $rows;
   }
 
