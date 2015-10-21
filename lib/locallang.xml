@@ -216,6 +216,8 @@
           Please install and enable Radial Search (radialsearch).
         </p>
       ]]></label>
+      <label index="search_options">Search Options</label>
+      <label index="start_search">Search</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="befilter_from">von</label>
@@ -428,6 +430,8 @@
           Bitte installiere und aktiviere Radial Search (radialsearch).
         </p>
       ]]></label>
+      <label index="search_options">Suchoptionen</label>
+      <label index="start_search">Suche starten</label>
     </languageKey>
   </data>
 </T3locallang>

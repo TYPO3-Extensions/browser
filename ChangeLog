@@ -9,6 +9,12 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.9
+  15-10-21
+  Improvement
+  * #i0192: locallang for BE filters
+            Thanks to Michael Schams for the improved code
+
 7.2.8
   15-08-27
   Improvement

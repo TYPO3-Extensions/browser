@@ -35,7 +35,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 7.2.8
+ * @version 7.2.9
  * @since 3.0.0
  */
 // #61520, 140911, dwildt, 1-
@@ -100,7 +100,7 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
    * @param [type]    $item: ...
    * @param [type]    $labelValue: ...
    * @return  [type]    ...
-   * @version 3.0.0
+   * @version 7.2.9
    * @since 3.0.0
    */
   public function getDBlistQuery( $table, $pageId, &$additionalWhereClause, &$selectedFieldsList, &$parentObject )
@@ -149,7 +149,9 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
       // 0.2.0, 110815, dwildt +
 
       $parentObject->HTMLcode .= '<fieldset>';
-      $parentObject->HTMLcode .= '<legend>Suchoptionen</legend>';
+      // #i0192, 151021, mschams, 1-/+
+      //$parentObject->HTMLcode .= '<legend>Suchoptionen</legend>';
+      $parentObject->HTMLcode .= '<legend> ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:search_options'). '</legend>';
       foreach ( $itemList as $item )
       {
         $conf = $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $item ][ 'config_filter' ];
@@ -164,7 +166,9 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook
           $additionalWhereClause .= $this->makeWhereClause( $item, $conf, $this->filterCriteria[ $item ], $table );
         }
       }
-      $parentObject->HTMLcode .= '<input type="submit" value="Suche starten" style="margin-top: 15px;" />';
+      // #i0192, 151021, mschams, 1-/+
+      //$parentObject->HTMLcode .= '<input type="submit" value="Suche starten" style="margin-top: 15px;" />';
+      $parentObject->HTMLcode .= '<input type="submit" value=" ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:start_search'). '" style="margin-top: 15px;" />';
       $parentObject->HTMLcode .= '</fieldset>';
     }
   }
