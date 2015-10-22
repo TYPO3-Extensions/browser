@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.8
+ * @version 7.2.11
  * @since 1.0.0
  */
 
@@ -423,7 +423,7 @@ class tx_browser_pi1_template
    * hook_row_list_consolidated() :
    *
    * @return	void
-   * @version 5.0.0
+   * @version 7.2.11
    * @since 3.0.0
    */
   private function hook_row_list_consolidated()
@@ -450,7 +450,8 @@ class tx_browser_pi1_template
       t3lib_div::callUserFunction( $_funcRef, $_params, $this );
     }
 
-    if ( $this->pObj->b_drs_hooks )
+    // #i0194, 151022, dwildt, ~
+    if ( !$this->pObj->b_drs_hooks )
     {
       return;
     }

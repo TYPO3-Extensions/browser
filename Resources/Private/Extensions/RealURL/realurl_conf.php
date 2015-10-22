@@ -4,7 +4,7 @@
 
 $TYPO3_CONF_VARS[ 'EXTCONF' ][ 'realurl' ][ '_DEFAULT' ][ 'postVarSets' ][ '_DEFAULT' ][ 'az' ] = array(
   array(
-    'GETvar' => 'tx_browser_pi1[indexBrowser]',
+    'GETvar' => 'tx_browser_pi1[indexBrowserTab]',
   )
 );
 $TYPO3_CONF_VARS[ 'EXTCONF' ][ 'realurl' ][ '_DEFAULT' ][ 'postVarSets' ][ '_DEFAULT' ][ 'ib' ] = array(
