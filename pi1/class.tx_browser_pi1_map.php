@@ -370,7 +370,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
             t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 1 );
           }
           // DRS
-//var_dump(__METHOD__, __LINE__, $fieldForLabel);
+          //var_dump(__METHOD__, __LINE__, $fieldForLabel);
           $this->arrCategories = array();
           return $this->arrCategories;
         // #47602, 130911, dwildt, 1+
@@ -382,9 +382,18 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
             t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
           }
           // DRS
-//var_dump(__METHOD__, __LINE__, $fieldForLabel, array_keys($row));
-          $this->arrCategories = array();
-          return $this->arrCategories;
+          //var_dump(__METHOD__, __LINE__, $fieldForLabel, array_keys($row), $this->categoriesGetWoLatLon( $row ) );
+          // #i0196, 151022, dwildt, 6+
+          if ( $this->categoriesGetWoLatLon( $row ) )
+          {
+            $this->arrCategories = array();
+            return $this->arrCategories;
+          }
+          $row[ $fieldForLabel ] = '';
+          break;
+          // #i0196, 151022, dwildt, 6+/2-
+          //$this->arrCategories = array();
+          //return $this->arrCategories;
         // #i0076, 140721, dwildt, +
         case($this->categoriesGetWoLatLon( $row ) ):
           continue 2;
@@ -928,7 +937,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
   private function pathDefaultIcon( $catKey )
   {
     $point = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'colours.' ][ 'points.' ][ $catKey . '.' ];
-//var_dump(__METHOD__, __LINE__, $point, $catKey);
+    //var_dump(__METHOD__, __LINE__, $point, $catKey);
     $name = $point[ 'pathToIcon' ];
     $conf = $point[ 'pathToIcon.' ];
     $value = $this->pObj->cObj->cObjGetSingle( $name, $conf );
@@ -937,7 +946,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     if ( !file_exists( $pathAbsolute ) )
     {
       $header = 'FATAL ERROR!';
-      $text = 'File doesn\'t exist: ' . $pathAbsolute;
+      $text = 'File doesn\'t exist: "' . $pathAbsolute . $catKey . '"';
       $this->pObj->drs_die( $header, $text );
     }
     // relative path
@@ -1303,64 +1312,64 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     // 130703, dwildt, 1+
     return;
 
-    // RETURN : TypoScript version is smaller than 4.5.8
-    switch ( true )
-    {
-      case( $this->pObj->typoscriptVersion <= 4005007 ):
-        return;
-        break;
-      case( $this->pObj->typoscriptVersion <= 4005008 ):
-      default:
-        // follow the workflow
-        break;
-    }
-    // RETURN : TypoScript version is smaller than 4.5.8
-    // RETURN : there is #1 browser plugins only
-    if ( $this->pObj->objFlexform->get_numberOfBrowserPlugins() <= 1 )
-    {
-      return;
-    }
-    // RETURN : there is #1 browser plugins only
-    // Set the global var $enabled
-    $enabledCsvViews = $this->confMap[ 'enabled.' ][ 'csvViews' ];
-    $arrViewUids = $this->pObj->objZz->getCSVasArray( $enabledCsvViews );
-
-    // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views
-    switch ( true )
-    {
-      case( empty( $enabledCsvViews ) ):
-      case(!in_array( $this->mode, $arrViewUids ) ):
-        $this->enabled = 'disabled';
-        break;
-      default:
-        // Do nothing
-        break;
-    }
-    // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views
-    // RETURN : no DRS
-    if ( !( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
-    {
-      return;
-    }
-    // RETURN : no DRS
-    // DRS
-    switch ( true )
-    {
-      case( $this->enabled == 'disabled' ):
-        $prompt = 'Map is disabled by workflow.';
-        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
-        $prompt = 'Current view ' . $this->mode . ' isn\'t any element in enabled.csvViews.';
-        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
-        break;
-      default:
-        $prompt = 'Current view ' . $this->mode . ' is an element in enabled.csvViews.';
-        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
-        break;
-    }
-    // DRS
-
-    unset( $enabledCsvViews );
-    unset( $arrViewUids );
+//    // RETURN : TypoScript version is smaller than 4.5.8
+//    switch ( true )
+//    {
+//      case( $this->pObj->typoscriptVersion <= 4005007 ):
+//        return;
+//        break;
+//      case( $this->pObj->typoscriptVersion <= 4005008 ):
+//      default:
+//        // follow the workflow
+//        break;
+//    }
+//    // RETURN : TypoScript version is smaller than 4.5.8
+//    // RETURN : there is #1 browser plugins only
+//    if ( $this->pObj->objFlexform->get_numberOfBrowserPlugins() <= 1 )
+//    {
+//      return;
+//    }
+//    // RETURN : there is #1 browser plugins only
+//    // Set the global var $enabled
+//    $enabledCsvViews = $this->confMap[ 'enabled.' ][ 'csvViews' ];
+//    $arrViewUids = $this->pObj->objZz->getCSVasArray( $enabledCsvViews );
+//
+//    // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views
+//    switch ( true )
+//    {
+//      case( empty( $enabledCsvViews ) ):
+//      case(!in_array( $this->mode, $arrViewUids ) ):
+//        $this->enabled = 'disabled';
+//        break;
+//      default:
+//        // Do nothing
+//        break;
+//    }
+//    // SWITCH : Set $this->enabled to disabled, if current view isn't part of enabled views
+//    // RETURN : no DRS
+//    if ( !( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
+//    {
+//      return;
+//    }
+//    // RETURN : no DRS
+//    // DRS
+//    switch ( true )
+//    {
+//      case( $this->enabled == 'disabled' ):
+//        $prompt = 'Map is disabled by workflow.';
+//        t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
+//        $prompt = 'Current view ' . $this->mode . ' isn\'t any element in enabled.csvViews.';
+//        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 2 );
+//        break;
+//      default:
+//        $prompt = 'Current view ' . $this->mode . ' is an element in enabled.csvViews.';
+//        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
+//        break;
+//    }
+//    // DRS
+//
+//    unset( $enabledCsvViews );
+//    unset( $arrViewUids );
   }
 
   /**
@@ -1703,7 +1712,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
    */
   private function renderMapAutoZoomLevel( $map_template, $coordinates )
   {
-      // #65184, 150223, dwildt, -
+    // #65184, 150223, dwildt, -
 //    // #i0057, 140712, dwildt, +
 //    if ( !$this->renderMapAutoZoomLevelRequirements() )
 //    {
@@ -1714,7 +1723,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     {
       // #65184, 150223, dwildt, +
       case($this->confMap[ 'configuration.' ][ 'zoomLevel.' ][ 'mode' ] == 'fixed' ):
-        $zoomLevel = $this->renderMapAutoZoomLevelFix( );
+        $zoomLevel = $this->renderMapAutoZoomLevelFix();
         break;
       case(0):
         // #i0061
@@ -2177,7 +2186,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     }
     // Add data
     $mapTemplate = $this->renderMapMarkerVariablesSystem( $mapTemplate );
-
+    //var_dump( __METHOD__, __LINE__, $mapTemplate);
     $arr_return = $this->mapLLjss( $template, $mapTemplate );
     return $arr_return;
   }
@@ -3139,7 +3148,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     $markerArray = array();
 
     $inCaseOfOneCategory = $this->confMap[ 'configuration.' ][ 'categories.' ][ 'display.' ][ 'inCaseOfOneCategory' ];
-//    var_dump( __METHOD__, __LINE__, $inCaseOfOneCategory, $this->categoriesMoreThanOne() );
+    //var_dump( __METHOD__, __LINE__, $inCaseOfOneCategory, $this->categoriesMoreThanOne() );
 
     switch ( true )
     {
@@ -4515,10 +4524,8 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     {
       case( 'lat' ):
         return $geodata[ 1 ];
-        break;
       case( 'lon' ):
         return $geodata[ 0 ];
-        break;
       default:
         $header = 'FATAL ERROR!';
         $text = 'key must be "lat" or "lon", but key is "' . $key . '".';

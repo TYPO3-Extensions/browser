@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 7.0.0
+ * @version 7.2.11
  * @since 7.0.0
  */
 
@@ -694,7 +694,8 @@ class tx_browser_pi1_mapleaflet
         return;
       case($this->confMap[ 'configuration.' ][ 'overlays' ]):
       default:
-        foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+        // #i0196, 151022, dwildt, + ( array )
+        foreach ( ( array ) $this->arrCategories[ 'labels' ] as $key => $value )
         {
           $arrOverlays[] = "'" . $value . "' : lg" . $key;
         }
@@ -718,7 +719,7 @@ class tx_browser_pi1_mapleaflet
    *
    * @return	void
    * @access private
-   * @version 7.0.0
+   * @version 7.2.11
    * @since   7.0.0
    */
   private function mapLLjssAddLayerOverlayGroupsAdd()
@@ -735,7 +736,8 @@ class tx_browser_pi1_mapleaflet
         return;
       case($this->confMap[ 'configuration.' ][ 'overlays' ]):
       default:
-        foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+        // #i0196, 151022, dwildt, + ( array )
+        foreach ( ( array ) $this->arrCategories[ 'labels' ] as $key => $value )
         {
           $this->mapLLjssLeafletFooterInline = ''
                   . $this->mapLLjssLeafletFooterInline
@@ -781,13 +783,14 @@ class tx_browser_pi1_mapleaflet
    *
    * @return	void
    * @access private
-   * @version 7.0.0
+   * @version 7.2.11
    * @since   7.0.0
    */
   private function mapLLjssAddLayerOverlayGroupsInitCluster()
   {
     //var_dump( __METHOD__, __LINE__, $this->arrCategories );
-    foreach ( $this->arrCategories[ 'labels' ] as $key => $value )
+    // #i0196, 151022, dwildt, + ( array )
+    foreach ( ( array ) $this->arrCategories[ 'labels' ] as $key => $value )
     {
       $this->mapLLjssLeafletFooterInline = ''
               . $this->mapLLjssLeafletFooterInline

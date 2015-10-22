@@ -12,6 +12,7 @@ Manual
 7.2.11
   15-10-22
   Bugfixes
+  * #i0196: If a geo-record hasn't no category, it won't displayed in the single view
   * #i0195: Page browser on the top wasn't centered at
             * Resources/Private/Templates/HTML
               * default_ul.tmpl
