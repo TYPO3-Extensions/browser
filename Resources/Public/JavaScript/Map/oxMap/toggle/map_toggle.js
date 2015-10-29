@@ -1,7 +1,7 @@
 /**
  * @description map_toggle.js: toggle the map
  * @author (c) 2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de/>
- * @version 7.0.10
+ * @version 7.2.12
  * @since 6.0.8
  */
 
@@ -22,16 +22,31 @@ $( document ).ready( function( )
 
   $( ".maptoggle button" ).html( labelSlideup );
 
-  $( ".maptoggle" ).toggle(
-          function( ) {
-            $( "#leafletmap" ).slideUp( 'slow' );
-            $( ".mapview" ).slideUp( 'slow' );
-            $( ".maptoggle button" ).html( labelSlidedown ).blur();
-          },
-          function( ) {
-            $( "#leafletmap" ).slideDown( 'slow' );
-            $( ".mapview" ).slideDown( 'slow' );
-            $( ".maptoggle button" ).html( labelSlideup ).blur();
-          }
-  );
+  $( ".maptoggle" ).click( function() {
+    if( $( ".mapview" ).length > 0 ) {
+      if( $( ".mapview" ).css( "display" ) === "none" )
+      {
+        $( ".mapview" ).slideDown( 'slow' );
+        $( ".maptoggle button" ).html( labelSlideup ).blur();
+      }
+      else
+      {
+        $( ".mapview" ).slideUp( 'slow' );
+        $( ".maptoggle button" ).html( labelSlidedown ).blur();
+      }
+    }
+    if( $( "#leafletmap" ).length > 0 ) {
+      if( $( "#leafletmap" ).css( "display" ) === "none" )
+      {
+        $( "#leafletmap" ).slideDown( 'slow' );
+        $( ".maptoggle button" ).html( labelSlideup ).blur();
+      }
+      else
+      {
+        $( "#leafletmap" ).slideUp( 'slow' );
+        $( ".maptoggle button" ).html( labelSlidedown ).blur();
+      }
+    }
+  } );
+
 } );

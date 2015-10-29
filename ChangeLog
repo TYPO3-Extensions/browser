@@ -9,6 +9,12 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.12
+  15-10-29
+  Bugfix
+  * #i0197: map_toggle.js used a deprecated toggle() method. See
+            * Resources/Public/JavaScript/Map/oxMap/toggle/map_toggle.js
+
 7.2.11
   15-10-22
   Bugfixes
