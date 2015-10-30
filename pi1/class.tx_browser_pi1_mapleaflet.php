@@ -943,7 +943,7 @@ class tx_browser_pi1_mapleaflet
     $sProperties = implode( ',', $aProperties );
 
     $sProperties = '{' . $sProperties . '}';
-    var_dump( __METHOD__, __LINE__, $sProperties );
+    //var_dump( __METHOD__, __LINE__, $sProperties );
     return $sProperties;
   }
 

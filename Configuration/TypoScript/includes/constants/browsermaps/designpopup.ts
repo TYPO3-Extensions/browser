@@ -30,12 +30,12 @@ plugin.tx_browser_pi1 {
         # cat=BrowserMaps - Design Popup - Properties//101;    type=options[,true,false];   label= closeButton: Controls the presense of a close button in the popup. Leaflet default: true
         closeButton   =
         # cat=BrowserMaps - Design Popup - Properties//102;    type=int+;                   label= maxHeight: If set, creates a scrollable container of the given height inside a popup if its content exceeds it. Leaflet default: null
-        maxHeight     = 
+        maxHeight     =
         # cat=BrowserMaps - Design Popup - Properties//103;    type=int+;                   label= maxWidth: Max width of the popup. Leaflet default: 300
         maxWidth      = 300
         # cat=BrowserMaps - Design Popup - Properties//104;    type=int+;                   label= minWidth: Min width of the popup. Leaflet default: 50
         minWidth      = 50
-        # cat=BrowserMaps - Design Popup - Properties//105;    type=string;                 label= offset: The offset of the popup position. Useful to control the anchor of the popup when opening it on some overlays. YOU MUST WRAP THE CLASS NAME IN BRACKETS! Example: (0, 6).  Leaflet default: ''
+        # cat=BrowserMaps - Design Popup - Properties//105;    type=string;                 label= offset: The offset of the popup position. Useful to control the anchor of the popup when opening it on some overlays. YOU MUST WRAP THE CLASS NAME IN BRACKETS! Example: (0, 6).  Leaflet default: (0, 6)
         offset        =
         # cat=BrowserMaps - Design Popup - Properties//106;    type=options[,true,false];   label= zoomAnimation: Whether to animate the popup on zoom. Disable it if you have problems with Flash content inside popups.  Leaflet default: true
         zoomAnimation	=
