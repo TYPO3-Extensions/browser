@@ -2,7 +2,7 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser - Templates - List - Header 4*//101;        type=string;    label= Header:Field with the header for the list view. I.e: tx_org_service.teaser_title // tx_org_service.title
   templates.listview.header.4.field  =
-  # cat=Browser - Templates - List - Header 4*//102;        type=options[div,h1,h2,h3,h4,h5,h6,p];  label= Tag:HTML tag. I.e: h2
+  # cat=Browser - Templates - List - Header 4*//102;        type=options[div,h1,h2,h3,h4,h5,h6,p,span];  label= Tag:HTML tag. I.e: h2
   templates.listview.header.4.tag   = h2
   # cat=Browser - Templates - List - Header 4*//103;        type=string;    label= Crop header:Crop the header after x chars. Leave it empty, if you don't want any cropping. I.e: 40|...|1
   templates.listview.header.4.crop  = 40|...|1
