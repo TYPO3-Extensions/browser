@@ -9,6 +9,23 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.13
+  15-10-30
+  Feature
+  * #i0199: Configurable leaflet popup
+            See Constant Editor: [BROWSERMAPS - DESIGN POPUP - PROPERTIES]
+            Properties:
+            * className
+            * closeButton
+            * maxHeight
+            * maxWidth
+            * minWidth
+            * offset
+            * zoomAnimation
+
+  Improvement
+  * #i0198: Update leaflet from 0.7.3 to 0.7.7
+
 7.2.12
   15-10-29
   Bugfix

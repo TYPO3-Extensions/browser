@@ -3,7 +3,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Default Icons//100;             type=boolean;   label= Enabled: Use the leaflet default icon (recommended). If you like to use your own icons, please configure the properties below and the categories [BROWSERMAPS - DATABASEMARKER] and [BROWSERMAPS - ICONS].
   map.defaultIcons.enabled = 1
   # cat=BrowserMaps - Default Icons//110;             type=string;    label= Shadow: Path to the shadow image
-  map.defaultIcons.shadow.path = EXT:browser/Resources/Public/JavaScript/Map/Leaflet/0.7.3/images/marker-shadow.png
+  map.defaultIcons.shadow.path = EXT:browser/Resources/Public/JavaScript/Map/Leaflet/0.7.7/images/marker-shadow.png
   # cat=BrowserMaps - Default Icons//111;             type=int;      label= Shadow x-offset: X-offset of the shadow anchor (recommended: half of the width of the icon)
   map.defaultIcons.shadow.offsetX = 14
   # cat=BrowserMaps - Default Icons//112;             type=int;      label= Shadow y-offset: Y-offset of the shadow anchor (recommended: height of the shadow)

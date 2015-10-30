@@ -375,6 +375,29 @@ plugin.tx_browser_pi1 {
           // offset
         popup =
         popup {
+          leafletProperties =
+          leafletProperties {
+            // Boolean	autoPan	=	true
+            // Point	autoPanPadding	=	(5, 5)
+            // Point	autoPanPaddingBottomRight	=	null
+            // Point	autoPanPaddingTopLeft	=	null
+            // String
+            className     =	{$plugin.tx_browser_pi1.map.popup.leafletProperties.className}
+            // Boolean
+            closeButton   = {$plugin.tx_browser_pi1.map.popup.leafletProperties.closeButton}
+            // Boolean	closeOnClick	=	null
+            // Boolean	keepInView	=	false
+            // Number
+            maxHeight     =	{$plugin.tx_browser_pi1.map.popup.leafletProperties.maxHeight}
+            // Number
+            maxWidth      =	{$plugin.tx_browser_pi1.map.popup.leafletProperties.maxWidth}
+            // Number
+            minWidth      =	{$plugin.tx_browser_pi1.map.popup.leafletProperties.minWidth}
+            // Point
+            offset        =	{$plugin.tx_browser_pi1.map.popup.leafletProperties.offset}
+            // Boolean
+            zoomAnimation	=	{$plugin.tx_browser_pi1.map.popup.leafletProperties.zoomAnimation}
+          }
             // x, y
           offset =
           offset {

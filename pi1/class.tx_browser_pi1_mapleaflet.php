@@ -841,16 +841,20 @@ class tx_browser_pi1_mapleaflet
       $lat = $marker[ 'lat' ];
       $lon = $marker[ 'lon' ];
       $icon = $this->mapLLjssAddLayerOverlayGroupsMarkerIcon( $marker[ 'iconKey' ] );
-      $popUp = $marker[ 'desc' ];
-      $popUp = preg_replace( '/\\r/', null, $popUp );
-      $popUp = preg_replace( '/\\n/', null, $popUp );
-      //$popUp = nl2br( $marker[ 'desc' ] ); <- Isn't proper!
+      // #i0199, 151030, dwildt, 4-/1+
+//      $popUp = $marker[ 'desc' ];
+//      $popUp = preg_replace( '/\\r/', null, $popUp );
+//      $popUp = preg_replace( '/\\n/', null, $popUp );
+//      //$popUp = nl2br( $marker[ 'desc' ] ); <- Isn't proper!
+      $popUp = $this->mapLLjssPopup( $marker );
       $layerGroup = "lg" . $marker[ 'iconKey' ];
       if ( !$this->confMap[ 'configuration.' ][ 'overlays' ] )
       {
         $layerGroup = "lgDefault";
       }
-      $arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]" . $icon . ").bindPopup('" . $popUp . "').addTo( " . $layerGroup . ")";
+      // #i0199, 151030, dwildt, 1-/1+
+      //$arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]" . $icon . ").bindPopup('" . $popUp . "').addTo( " . $layerGroup . ")";
+      $arrMarker[] = "L.marker([" . $lat . ", " . $lon . "]" . $icon . ").bindPopup(" . $popUp . ").addTo( " . $layerGroup . ")";
     }
 
     if ( empty( $arrMarker ) )
@@ -867,6 +871,80 @@ class tx_browser_pi1_mapleaflet
             . PHP_EOL
     ;
     return;
+  }
+
+  /**
+   * mapLLjssPopup( ):
+   *
+   * @param array $marker
+   * @return	string
+   * @access private
+   * @version 7.2.13
+   * @since   7.2.13
+   */
+  private function mapLLjssPopup( $marker )
+  {
+    $content = $marker[ 'desc' ];
+    $content = preg_replace( '/\\r/', null, $content );
+    $content = preg_replace( '/\\n/', null, $content );
+    //$content = nl2br( $marker[ 'desc' ] ); <- Isn't proper!
+
+    $lat = $marker[ 'lat' ];
+    $lon = $marker[ 'lon' ];
+    $latLon = "new L.LatLng(" . $lat . ", " . $lon . ")";
+
+    $openOn = "lg" . $marker[ 'iconKey' ];
+    if ( !$this->confMap[ 'configuration.' ][ 'overlays' ] )
+    {
+      $openOn = "lgDefault";
+    }
+
+    $properties = $this->mapLLjssPopupProperties();
+
+    $popUp = "L.popup(" . $properties . ").setLatLng(" . $latLon . ").setContent('" . $content . "').openOn(" . $openOn . ")";
+    return $popUp;
+  }
+
+  /**
+   * mapLLjssPopupProperties( ):
+   *
+   * @return	string
+   * @access private
+   * @version 7.2.13
+   * @since   7.2.13
+   */
+  private function mapLLjssPopupProperties()
+  {
+    $aProperties = array();
+    static $sProperties = null;
+    static $firstLoop = true;
+
+    if ( !$firstLoop )
+    {
+      return $sProperties;
+    }
+    $firstLoop = false;
+
+    foreach ( ( array ) $this->confMap[ 'configuration.' ][ 'popup.' ][ 'leafletProperties.' ] as $key => $value )
+    {
+      //var_dump( $key, $value );
+      if ( $value == '' )
+      {
+        continue;
+      }
+      $aProperties[] = $key . ':' . $value;
+    }
+
+    if ( empty( $aProperties ) )
+    {
+      return;
+    }
+
+    $sProperties = implode( ',', $aProperties );
+
+    $sProperties = '{' . $sProperties . '}';
+    var_dump( __METHOD__, __LINE__, $sProperties );
+    return $sProperties;
   }
 
   /**
