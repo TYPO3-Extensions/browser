@@ -404,6 +404,8 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
       // 4.1.7, dwildt, 1-
       //$categoryLabels =  array_merge( $categoryLabels, explode( $this->catDevider, $row[ $fieldForLabel ] ) );
       // 4.1.7, dwildt, 10+
+//var_dump( __METHOD__, __LINE__, $this->catDevider, $fieldForLabel, $row[ $fieldForLabel ]);
+//die();
       $catLabelsOfCurrRow = explode( $this->catDevider, $row[ $fieldForLabel ] );
       foreach ( $catLabelsOfCurrRow as $labelKey => $labelValue )
       {

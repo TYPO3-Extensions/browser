@@ -206,6 +206,9 @@ plugin.tx_browser_pi1 {
                 default {
                   wrap = <div class="mapPopupHeader mapPopupHeaderDefault">|</div>
                 }
+                notype {
+                  wrap = <div class="mapPopupHeader mapPopupHeaderDefault">|</div>
+                }
                 page {
                   wrap = <div class="mapPopupHeader mapPopupHeaderPage">|</div>
                 }
@@ -217,6 +220,20 @@ plugin.tx_browser_pi1 {
               40 < plugin.tx_browser_pi1.displayList.master_templates.tableFields.text.0
               40 {
                 default {
+                  10 {
+                    stdWrap {
+                      crop = {$plugin.tx_browser_pi1.map.popup.text.crop}
+                    }
+                  }
+                  20 {
+                    if {
+                      value   = '{$plugin.tx_browser_pi1.map.openlayers.popup.behaviour}'
+                      equals  = 'click'
+                    }
+                  }
+                  wrap = <div class="mapPopupText mapPopupTextDefault">|</div>
+                }
+                notype {
                   10 {
                     stdWrap {
                       crop = {$plugin.tx_browser_pi1.map.popup.text.crop}

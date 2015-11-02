@@ -10,7 +10,7 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 7.2.13
-  15-10-30
+  15-11-02
   Feature
   * #i0199: Configurable leaflet popup
             See Constant Editor: [BROWSERMAPS - DESIGN POPUP - PROPERTIES]
@@ -24,6 +24,7 @@ Manual
             * zoomAnimation
 
   Improvement
+  * #i0201: Optimise CSS classes for map pupup in case of notype
   * #i0200: tag lists in the constant editor are extended with span
   * #i0198: Update leaflet from 0.7.3 to 0.7.7
 

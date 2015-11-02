@@ -1506,7 +1506,6 @@ class tx_browser_pi1_typoscript
     $this->set_confSqlDeviderWorkflow();
 
     $str_devider = $this->str_sqlDeviderDisplay . $this->str_sqlDeviderWorkflow;
-
     return $str_devider;
   }
 
