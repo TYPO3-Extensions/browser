@@ -9,6 +9,14 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.2.14
+  15-11-03
+  Bugfix
+  * #i0202: replace cody with an return;
+            pi1/class.tx_browser_pi1_template.php
+            * hook_template_elements()
+            * hook_template_elements_transformed
+
 7.2.13
   15-11-02
   Feature
