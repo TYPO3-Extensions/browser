@@ -517,7 +517,6 @@ class tx_browser_pi1_flexform
           t3lib_div :: devlog( '[INFO/FLEXFORM] Current plugin wants to handle all piVars.', $this->pObj->extKey, 0 );
         }
         return;
-        break;
       case ('default') :
       case (false) :
         // 3.9.24, 120604, dwildt, 1+
@@ -944,10 +943,9 @@ class tx_browser_pi1_flexform
 
     $arr_piFlexform = $this->pObj->cObj->data[ 'pi_flexform' ];
 
-    $modeWiDot = ( int ) $this->mode . '.';
-    $viewWiDot = $this->pObj->view . '.';
-    $conf_view = $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ];
-
+//    $modeWiDot = ( int ) $this->mode . '.';
+//    $viewWiDot = $this->pObj->view . '.';
+//    $conf_view = $this->pObj->conf[ 'views.' ][ $viewWiDot ][ $modeWiDot ];
     // #i0111, 141226, dwildt, -
 //    //////////////////////////////////////////////////////////////////////
 //    //
@@ -2189,8 +2187,7 @@ class tx_browser_pi1_flexform
           t3lib_div :: devlog( '[INFO/FLEXFORM] socialmedia/bookmarks are disabled.', $this->pObj->extKey, 0 );
         }
         return;
-        // RETURN if bookmarks are disabled
-        break;
+      // RETURN if bookmarks are disabled
       case ('enabled_wi_browser_template') :
         $this->str_socialmedia_bookmarks_tableFieldSite_list = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'tablefieldSite_list', 'socialmedia', 'lDEF', 'vDEF' );
         $this->str_socialmedia_bookmarks_tableFieldSite_single = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'tablefieldSite_single', 'socialmedia', 'lDEF', 'vDEF' );
@@ -2603,7 +2600,7 @@ class tx_browser_pi1_flexform
    * The method removes "unavailable" views from the TypoScript.
    *
    * @return    void
-   * @version 4.5.7
+   * @version 7.2.15
    * @since   2.x
    */
   private function sheet_viewList()
@@ -2681,7 +2678,7 @@ class tx_browser_pi1_flexform
       // Field title
     // Get the title for the list view
     $str_title = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'title', $sheet, 'lDEF', 'vDEF' );
-
+//var_dump( __CLASS__, __LINE__, $str_title );
     // Remove the title in case of csv export
     // #29370, 110831, dwildt+
     switch ( $this->pObj->objExport->str_typeNum )
@@ -2809,6 +2806,7 @@ class tx_browser_pi1_flexform
       if ( !$conf_title )
       {
         $conf_title = $str_title;
+//var_dump( __CLASS__, __LINE__, $conf_title );
         // #i0051, 140630, dwildt, 2-
 //        if ( $str_lang == 'default' )
 //        {
@@ -2825,6 +2823,7 @@ class tx_browser_pi1_flexform
         }
       }
     }
+//var_dump( __CLASS__, __LINE__, $this->pObj->conf[ 'marker.' ][ 'my_title.' ] );
     // View hasn't a local marker array with my_title, we take the global one
     // Field title
     //////////////////////////////////////////////////////////////////////
@@ -2934,6 +2933,136 @@ class tx_browser_pi1_flexform
     // Field titleWrap
     //////////////////////////////////////////////////////////////////////
     //
+    // Field prompt
+    // Get the prompt for the list view
+    // #i0203, 151123, dwildt, +
+    $str_prompt = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'prompt', $sheet, 'lDEF', 'vDEF' );
+
+    // Remove the prompt in case of csv export
+    switch ( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog( '[INFO/EXPORT] prompt is ' . $str_prompt . ' but it will removed.', $this->pObj->extKey, 0 );
+        }
+        $str_prompt = null;
+        break;
+      default:
+      // Do nothing;
+    }
+    // Remove the prompt in case of csv export
+
+    if ( $str_prompt != null )
+    {
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/prompt: \'' . $str_prompt . '\'!', $this->pObj->extKey, 0 );
+      }
+    }
+    if ( $str_prompt == null )
+    {
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] viewList/prompt is empty.', $this->pObj->extKey, 0 );
+      }
+    }
+    // Get the prompt for the list view
+    // View has a local marker array with my_prompt
+    $conf_prompt = false;
+    $str_path = false;
+    if ( isset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ][ 'value' ] ) )
+    {
+      $conf_prompt = $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ][ 'value' ];
+      $str_path = 'views.list.' . $this->mode . '.marker.my_prompt.value';
+    }
+    if ( $str_lang != 'default' )
+    {
+      if ( isset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ][ 'lang.' ][ $str_lang ] ) )
+      {
+        $conf_prompt = $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ][ 'lang.' ][ $str_lang ];
+        $str_path = 'views.list.' . $this->mode . '.marker.my_prompt.lang.' . $str_lang;
+      }
+    }
+    if ( $str_path )
+    {
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $str_path . ': \'' . $conf_prompt . '\'', $this->pObj->extKey, 0 );
+      }
+      if ( $conf_prompt )
+      {
+        if ( $str_prompt )
+        {
+          $conf_prompt = $str_prompt;
+          if ( $this->pObj->b_drs_flexform )
+          {
+            t3lib_div :: devlog( '[INFO/FLEXFORM] The plugin value has priority for TypoScript value: \'' . $conf_prompt . '\'!', $this->pObj->extKey, 0 );
+          }
+        }
+        if ( !$str_prompt )
+        {
+          $str_prompt = $conf_prompt;
+          if ( $this->pObj->b_drs_flexform )
+          {
+            t3lib_div :: devlog( '[INFO/FLEXFORM] TypoScript value: \'' . $conf_prompt . '\'!', $this->pObj->extKey, 0 );
+          }
+        }
+      }
+      if ( !$conf_prompt )
+      {
+        $conf_prompt = $str_prompt;
+        $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ][ 'value' ] = $conf_prompt;
+        if ( $str_lang != 'default' )
+        {
+          $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ][ 'lang.' ][ $str_lang ] = $conf_prompt;
+        }
+        if ( $this->pObj->b_drs_flexform )
+        {
+          t3lib_div :: devlog( '[INFO/FLEXFORM] The TypoScript value was 0 or empty.', $this->pObj->extKey, 0 );
+        }
+      }
+    }
+    // View has a local marker array with my_prompt
+    // View hasn't a local marker array with my_prompt, we take the global one
+    if ( !$conf_prompt )
+    {
+      $conf_prompt = $this->pObj->conf[ 'marker.' ][ 'my_prompt.' ][ 'value' ];
+      $str_path = 'marker.my_prompt.value';
+      if ( $str_lang != 'default' )
+      {
+        $conf_prompt = $this->pObj->conf[ 'marker.' ][ 'my_prompt.' ][ 'lang.' ][ $str_lang ];
+        $str_path = 'marker.my_prompt.lang.' . $str_lang;
+      }
+      if ( $this->pObj->b_drs_flexform )
+      {
+        t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $str_path . ': \'' . $conf_prompt . '\'', $this->pObj->extKey, 0 );
+      }
+      if ( $conf_prompt )
+      {
+        if ( $this->pObj->b_drs_flexform )
+        {
+          t3lib_div :: devlog( '[INFO/FLEXFORM] The TypoScript value has priority: \'' . $conf_prompt . '\'!', $this->pObj->extKey, 0 );
+        }
+      }
+      if ( !$conf_prompt )
+      {
+        $conf_prompt = $str_prompt;
+        $this->pObj->conf[ 'marker.' ][ 'my_prompt.' ][ 'value' ] = $conf_prompt;
+        if ( $str_lang != 'default' )
+        {
+          $this->pObj->conf[ 'marker.' ][ 'my_prompt.' ][ 'lang.' ][ $str_lang ] = $conf_prompt;
+        }
+        if ( $this->pObj->b_drs_flexform )
+        {
+          t3lib_div :: devlog( '[INFO/FLEXFORM] The TypoScript value is overriden with: \'' . $conf_prompt . '\'!', $this->pObj->extKey, 0 );
+        }
+      }
+    }
+    // View hasn't a local marker array with my_prompt, we take the global one
+    // Field prompt
+    //////////////////////////////////////////////////////////////////////
+    //
       // csv export
     // #29370, 110831, dwildt+
     // Remove the title in case of csv export
@@ -2955,6 +3084,25 @@ class tx_browser_pi1_flexform
       // Do nothing;
     }
     // Remove the title in case of csv export
+    // Remove the prompt in case of csv export
+    switch ( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog( '[INFO/EXPORT] prompt won\'t be handled.', $this->pObj->extKey, 0 );
+          t3lib_div::devlog( '[INFO/EXPORT] views.list.' . $this->mode . '.marker.my_prompt is removed.', $this->pObj->extKey, 0 );
+          t3lib_div::devlog( '[INFO/EXPORT] marker.my_prompt is removed.', $this->pObj->extKey, 0 );
+        }
+        unset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt' ] );
+        unset( $this->pObj->conf[ 'views.' ][ 'list.' ][ $this->mode . '.' ][ 'marker.' ][ 'my_prompt.' ] );
+        unset( $this->pObj->conf[ 'marker.' ][ 'my_prompt' ] );
+        unset( $this->pObj->conf[ 'marker.' ][ 'my_prompt.' ] );
+        break;
+      default:
+      // Do nothing;
+    }
+    // Remove the prompt in case of csv export
     // csv export
     //////////////////////////////////////////////////////////////////////
     //

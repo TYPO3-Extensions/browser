@@ -39,6 +39,17 @@
           </config>
         </TCEforms>
       </grouptitleWrap>
+      <prompt>
+        <TCEforms>
+          <exclude>0</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.prompt</label>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+          </config>
+        </TCEforms>
+      </prompt>
       <limitOffset>
         <TCEforms>
           <exclude>0</exclude>

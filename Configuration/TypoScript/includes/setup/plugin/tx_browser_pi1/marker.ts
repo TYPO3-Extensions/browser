@@ -10,6 +10,15 @@ plugin.tx_browser_pi1 {
       }
       wrap = <h1>|</h1>
     }
+    my_prompt = TEXT
+    my_prompt {
+      value =
+      lang {
+        de =
+        en =
+      }
+      wrap = <p>|</p>
+    }
         // markers can use TEXT or COA
     my_url = TEXT
     my_url {
