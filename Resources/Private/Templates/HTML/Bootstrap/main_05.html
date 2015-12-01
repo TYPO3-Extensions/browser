@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <pre>
+<em>
+
+VERSION 7.1.2
+
+  |------------------|
+  | Content          |
+  |------------------|
+
+</em>
+
+      <!-- ###TEMPLATE_LIST### begin -->
+      <div class="col-md-12">
+        <div class="row listarea">
+          <div class="col-md-12">
+            <!-- ###LISTVIEW### begin -->
+            <div class="row">
+              <div class="col-md-12 listview listview-content listview-###MODE### listview-content-###MODE###">
+                <table###SUMMARY###>
+                  ###CAPTION###
+                  <!-- ###LISTHEAD### begin -->
+                  <thead>
+                    <tr><!-- ###LISTHEADITEM### begin -->
+                      <th###CLASS###>###ITEM###</th><!-- ###LISTHEADITEM### end -->
+                    </tr>
+                  </thead><!-- ###LISTHEAD### end -->
+                  <tbody><!-- ###LISTBODY### begin -->
+                    <tr###CLASS###><!-- ###LISTBODYITEM### begin -->
+                      <td###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</td><!-- ###LISTBODYITEM### end -->
+                    </tr><!-- ###LISTBODY### end -->
+                  </tbody>
+                </table>
+              </div><!-- /col-md-12 --><!-- /listview -->
+            </div><!-- /row -->
+            <!-- ###LISTVIEW### end -->
+          </div><!-- /col-md-12 -->
+        </div><!-- /row --><!-- /listarea -->
+      </div><!-- /col-md-12 -->
+      <!-- ###TEMPLATE_LIST### end -->
+
+
+
+
+
+<em>
+
+</em>
+
+<!-- ###TEMPLATE_SINGLE### begin -->
+      <div class="singleview singleview-###MODE###">
+        <!-- ###SINGLEVIEW### begin -->
+          SINGLEVIEW subpart will replaced by plugin.tx_browser_pi1.views.single.###MODE###.htmlSnippets.subparts.singleview while runtime ...
+        <!-- ###SINGLEVIEW### end -->
+      </div> <!-- /ui-widget -->
+<!-- ###TEMPLATE_SINGLE### end -->
+
+
+
+
+<em>
+
+TEMPLATE FOR SELECT BOX FOR ORDERING
+====================================
+This template is used in list views for ordering records by a select box.
+This template generates valid HTML code.
+If you want to disable the sortbox, please configure in your TypoScript template
+displayList.selectBox_orderBy.display = 0
+
+</em>
+
+<!-- ###TEMPLATE_SELECTBOX_VALID### begin -->
+            <div class="sortbox c###TT_CONTENT.UID###-listview-###MODE###-sortbox">
+              <form ###CLASS### action="###URL###" method="POST">
+                <fieldset>
+                  <legend>###LEGEND###</legend>
+                  <input type="hidden" name="no_cache" value="1" />
+                  ###HIDDEN###
+                  ###SELECTBOX###
+                  <input class="button" type="submit" value="###BUTTON###" />
+                </fieldset>
+              </form>
+            </div>
+<!-- ###TEMPLATE_SELECTBOX_VALID### end -->
+
+
+
+    </pre>
+  </body>
+</html>
