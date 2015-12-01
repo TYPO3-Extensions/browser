@@ -453,18 +453,6 @@ class tx_browser_pi1 extends tslib_pibase
       case( 'Engine 4.x (recommended)' ):
       case( 'Engine 5.x (recommended)' ):
       default:
-//        if( ! $this->bool_accessByIP )
-//        {
-//          $this->dev_browserEngine = 3;
-//          if ($this->b_drs_sql)
-//          {
-//            $prompt = 'Browser engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
-//            t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
-//            $prompt = 'Browser engine 3.x is used';
-//            t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
-//          }
-//          break;
-//        }
         $this->dev_browserEngine = 5;
         $str_browserEngineIndicator = '
           <div>
@@ -480,22 +468,6 @@ class tx_browser_pi1 extends tslib_pibase
         break;
     }
     // Init Browser engine
-//      //////////////////////////////////////////////////////////////////////
-//      //
-//      // Init checkedUpdate
-//
-//    $str_checkedUpdate = null;
-//    if( $this->arr_extConf['checked_3.']['9.']['14'] != 'I checked it' )
-//    {
-//      $str_checkedUpdate = '
-//        <div>
-//          <span style="background:#ad0000;color:white;font-size:.85em;">
-//            <a style="color:white;cursor:pointer;" title="TYPO3-Browser: Please confirm that you have checked the update. Go to the extension manager. See: Update Wizard.">&nbsp;Update isn\'t confirmed!&nbsp;</a>
-//          </span>
-//        </div>';
-//    }
-//      // Init Browser engine
-//$this->dev_var_dump( $this->arr_extConf );
     //////////////////////////////////////////////////////////////////////
     //
       // Init browserEngineIndicator
@@ -1087,7 +1059,7 @@ class tx_browser_pi1 extends tslib_pibase
         // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel, 'END' );
-        $html = $html_updateCheck . $str_checkedUpdate . $str_browserEngineIndicator . $str_template_completed;
+        $html = $html_updateCheck . $str_browserEngineIndicator . $str_template_completed;
         // #i0167, 150428, dwildt, 1+
         break;
       case( true ):
@@ -1095,7 +1067,7 @@ class tx_browser_pi1 extends tslib_pibase
         // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel, 'END' );
-        $html = $html_updateCheck . $this->objWrapper4x->wrapInBaseIdClass( $str_checkedUpdate . $str_browserEngineIndicator . $str_template_completed );
+        $html = $html_updateCheck . $this->objWrapper4x->wrapInBaseIdClass( $str_browserEngineIndicator . $str_template_completed );
         break;
     }
 
@@ -2595,4 +2567,3 @@ if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext
 {
   include_once($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1.php' ]);
 }
-?>

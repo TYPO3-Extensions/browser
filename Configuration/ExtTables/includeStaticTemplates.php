@@ -13,7 +13,7 @@ switch ( true )
   case($llStatic == 'de'):
     // German
     // Plugin 1
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/', 'Browser [0] + Foundation Framework' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/', 'Browser [0] Foundation Framework' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/css/normalize/', 'Browser [0] + Foundation Framework + CSS normalize' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/jQuery/', 'Browser [0] + Foundation Framework + JSS jQuery' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/modernizr/', 'Browser [0] + Foundation Framework + JSS modernizr' );
@@ -27,6 +27,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_content/', 'Browser [3] + Beispiel mit tt_content' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Beispiel mit tt_news' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news_rss/', 'Browser [3] + Beispiel mit tt_news (RSS-FEED)' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Bootstrap/Templating/', 'Browser [5] + Bootstrap Templates' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates' );
     // Plugin 4
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi4/', 'Browser [10] + kein Cache' );
@@ -39,7 +40,7 @@ switch ( true )
   default:
     // English
     // Plugin 1
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/', 'Browser [0] + Foundation Framework' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/', 'Browser [0] Foundation Framework' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/css/normalize/', 'Browser [0] + Foundation Framework + CSS normalize' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/jQuery/', 'Browser [0] + Foundation Framework + JSS jQuery' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Framework/page/jss/modernizr/', 'Browser [0] + Foundation Framework + JSS modernizr' );
@@ -53,6 +54,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_content/', 'Browser [3] + Sample with tt_content' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news/', 'Browser [3] + Sample with tt_news' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/samples/tt_news_rss/', 'Browser [3] + Sample with tt_news (RSS feed)' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Bootstrap/Templating/', 'Browser [5] + Bootstrap Templates' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Foundation/Templating/', 'Browser [5] + Foundation Templates' );
     // Plugin 4
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi4/', 'Browser [10] + no cache' );

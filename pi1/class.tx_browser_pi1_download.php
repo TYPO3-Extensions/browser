@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 6.0.0
+ * @version 7.2.16
  * @since 3.9.3
  */
 
@@ -173,7 +173,7 @@ class tx_browser_pi1_download
    *                    * table.field has to be configured in the TCA
    *
    * @return	string		Prompt, in case of a failure
-   * @version 3.9.3
+   * @version 7.2.16
    * @since 3.9.3
    */
   private function download_check()
@@ -181,9 +181,11 @@ class tx_browser_pi1_download
     // Does the view and the mode exist?
     if ( !isset( $this->pObj->conf[ 'views.' ][ $this->view . '.' ][ $this->mode . '.' ][ 'select' ] ) )
     {
+      // #i0204, 151130, dwildt, ~
       $prompt = '' .
               'Security check: TypoScript property ' .
-              'plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select doesn\t exist.<br />' .
+              'plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select doesn\'t exist.<br />' .
+              'Possible cause: Organiser pages has an unproper uid. See: Constant Editor [ORGANISER - PAGES]<br />' .
               __METHOD__ . ' (' . __LINE__ . ')';
       return $prompt;
     }
@@ -264,6 +266,8 @@ class tx_browser_pi1_download
       // Set all needed informations global
     // piVars['file']: i.e. single.301.tx_org_doc.9.documents.0
     $arr_file = explode( '.', $this->pObj->piVars[ 'file' ] );
+//var_dump( __METHOD__, __LINE__, $this->pObj->piVars );
+//exit;
     // view: list || single
     $this->view = $arr_file[ 0 ];
     // mode (index) of the current view
@@ -737,4 +741,3 @@ if ( defined( 'TYPO3_MODE' ) && $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext
 {
   include_once ($TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/browser/pi1/class.tx_browser_pi1_download.php' ]);
 }
-?>

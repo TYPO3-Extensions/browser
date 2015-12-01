@@ -710,17 +710,20 @@ class tx_browser_pi1_navi_indexBrowser
 
     if ( empty( $this->subpart ) )
     {
-      if ( $this->b_drs_error )
-      {
-        $prompt = 'Current template doesn\'t contain the subpart marker ###' . $marker . '###';
-        t3lib_div::devLog( '[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->pObj->extKey, 3 );
-      }
-      $str_header = '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '</h1>';
-      $str_prompt = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL( 'error_template_indexbrowser_no_subpart' ) . '</p>';
-      $arr_return[ 'error' ][ 'status' ] = true;
-      $arr_return[ 'error' ][ 'header' ] = $str_header;
-      $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
-      return $arr_return;
+      // #i0207, 151130, dwildt, 1+
+      return null;
+      // #i0207, 151130, dwildt, -
+//      if ( $this->b_drs_error )
+//      {
+//        $prompt = 'Current template doesn\'t contain the subpart marker ###' . $marker . '###';
+//        t3lib_div::devLog( '[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->pObj->extKey, 3 );
+//      }
+//      $str_header = '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '</h1>';
+//      $str_prompt = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL( 'error_template_indexbrowser_no_subpart' ) . '</p>';
+//      $arr_return[ 'error' ][ 'status' ] = true;
+//      $arr_return[ 'error' ][ 'header' ] = $str_header;
+//      $arr_return[ 'error' ][ 'prompt' ] = $str_prompt;
+//      return $arr_return;
     }
 
     // Set class var $tabDefaultLabel
@@ -810,15 +813,6 @@ class tx_browser_pi1_navi_indexBrowser
         continue;
       }
 
-      // #43558, 121203, dwildt, 6-
-      // Wrap the label
-//      $label  = $tab['label'];
-//      if( isset ( $tab['wrap'] ) )
-//      {
-//        $label = str_replace( '|', $label, $tab['wrap'] );
-//      }
-      // #43558, 121203, dwildt, 6-
-      // #43558, 121203, dwildt, 14+
       // Wrap the label
       if ( isset( $tab[ 'wrap' ] ) )
       {
@@ -831,13 +825,6 @@ class tx_browser_pi1_navi_indexBrowser
                 '|', $tab[ 'label' ], $this->pObj->conf[ 'navigation.' ][ 'indexBrowser.' ][ 'defaultTabWrap' ]
         );
       }
-      // #43558, 121203, dwildt, 14+
-//        // #43558, 121203, dwildt, 2+
-//        // Wrap the label
-//      $label  = $tab['label'];
-      // Init the marker array
-      // 141214, dwildt, 1-/+
-      //unset( $markerArray );
       $markerArray = array();
 
       // Get class
@@ -865,22 +852,6 @@ class tx_browser_pi1_navi_indexBrowser
           continue;
       }
       // SWITCH : sum of hits of tab, display without items
-//        // #43558, 121203, dwildt, 14+
-//        // Wrap the label
-//      if( isset ( $tab['wrap'] ) )
-//      {
-//        $markerArray['###TAB###'] = str_replace( '|', $markerArray['###TAB###'], $tab['wrap'] );
-//      }
-//      if( ! ( isset ( $tab['wrap'] ) ) )
-//      {
-//        $markerArray['###TAB###'] = str_replace
-//                                    (
-//                                      '|',
-//                                      $markerArray['###TAB###'],
-//                                      $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap']
-//                                    );
-//      }
-//        // #43558, 121203, dwildt, 14+
       // Set the content
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
     }

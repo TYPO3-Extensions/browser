@@ -9,6 +9,23 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.3.0
+  15-11-24
+  Feature
+  * #i0206: Bootstrap classes and TypoScript template.
+            New static template: Browser [5] + Bootstrap Templates
+            Effected files:
+            * Configuration/TypoScript/Bootstrap/Templating/*   (new)
+            * Resources
+              * Public/Images/BackendLayouts/Bootstrap/*        (new)
+              * Private/Templates/HTML/Bootstrap/*              (new)
+  Improvement
+  * #i0207: Indexbrowser isn't obligated any longer for a valid template
+  * #i0205: 127.0.0.1 and 127.0.0.2 is removed from plugin/flexform statistic. See:
+            * Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/flexform/sDEF.ts
+            * pi1/flexform_sheet_sDEF.xml
+  * #i0204: Content of error prompt in case of unproper page id for documents
+
 7.2.15
   15-11-23
   Improvement

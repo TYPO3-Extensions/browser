@@ -111,7 +111,7 @@ plugin.tx_browser_pi1 {
           dontAccountIPsOfCsvList = TEXT
           dontAccountIPsOfCsvList {
               // [String/csv] Comma seperated list of IPs, which won't counted
-            value = 127.0.0.1, 127.0.0.2
+            value = 
           }
             // Echo a debug report in the frontend in case of an unexpected result
           debugging = TEXT

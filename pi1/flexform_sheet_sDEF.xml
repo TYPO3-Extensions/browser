@@ -462,7 +462,7 @@
             <type>input</type>
             <size>40</size>
             <eval>trim,required</eval>
-            <default>127.0.0.1, 127.0.0.2</default>
+            <default></default>
           </config>
         </TCEforms>
       </statistics.adjustment.dontAccountIPsOfCsvList>
