@@ -2400,8 +2400,16 @@ class tx_browser_pi1_navi_indexBrowser
     if ( empty( $whereLL ) )
     {
       $header = 'FATAL ERROR!';
-      $text = 'whereLL is empty. ';
+      $text = 'whereLL is empty. <br />'
+              . 'Probably ' . $table . ' hasn\'t any localisation fields. <br />'
+              . 'If error occurs in context with the index browser, please disable the index browser in the Brower flexform/plugin.<br />'
+              . 'Maybe ' . $table . ' isn\'t the proper local table. '
+      ;
       $this->pObj->drs_die( $header, $text );
+    }
+    if ( !empty( $whereLL ) )
+    {
+      $whereLL = " AND " . $whereLL;
     }
     // Get where for localisation
     // Reset localisation mode to current language mode
@@ -2411,7 +2419,7 @@ class tx_browser_pi1_navi_indexBrowser
     // Configure the query
     $select = $table . ".uid, " . $table . "." . $parentUid;
     $from = $this->sqlStatement_from( $table );
-    $where = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL;
+    $where = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") " . $whereLL;
     $where = $this->sqlStatement_whereAndFindInSet( $where, $strFindInSet );
     $andEnableFields = $this->pObj->cObj->enableFields( $table );
     $where = $where . $andEnableFields;

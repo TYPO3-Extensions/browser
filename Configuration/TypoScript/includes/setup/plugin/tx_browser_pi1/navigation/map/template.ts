@@ -42,7 +42,7 @@ plugin.tx_browser_pi1 {
                 }
                 value (
                   <div class="maptoggle">
-                    <button class="tiny expand" role="button">
+                    <button class="###CSSBTN######CSSBTNTINY######CSSBTNBLOCK######CSSBTNPRIMARY###" role="button">
                       Please include the needed JavaScript code. See Constant Editor > Category [BROWSERMAPS - HTML] > JavaScript
                     </button>
                   </div><!-- /maptoggle -->

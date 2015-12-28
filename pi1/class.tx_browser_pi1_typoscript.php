@@ -29,7 +29,7 @@
  * @author       Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package      TYPO3
  * @subpackage   browser
- * @version      7.0.6
+ * @version      7.3.0
  * @since         2.0.0
  * @internal #59669
  */
@@ -1205,7 +1205,7 @@ class tx_browser_pi1_typoscript
    *                 All tables become an alias, functions too.
    *
    * @return	array		$conf_sql:
-   * @version  5.0.16
+   * @version  7.3.0
    * @since    3.0.0
    */
   private function set_confSql()
@@ -1299,10 +1299,16 @@ class tx_browser_pi1_typoscript
     }
     // Set default order by
     // Concatenate group by and order by
-    if ( empty( $conf_sql[ 'groupBy' ] ) )
+    // #i0214, 151219, dwildt, 1+
+    $conf_sql[ 'orderBy' ] = trim( $conf_sql[ 'orderBy' ] );
+    // #i0214, 151219, dwildt, 1-/+
+    //if ( empty( $conf_sql[ 'groupBy' ] ) )
+    if ( !empty( $conf_sql[ 'groupBy' ] ) )
     {
       $conf_sql[ 'orderBy' ] = $conf_sql[ 'groupBy' ] . ', ' . $conf_sql[ 'orderBy' ];
     }
+
+
     // Concatenate group by and order by
     // Set where
     if ( empty( $conf_sql[ 'where' ] ) )
@@ -1327,17 +1333,22 @@ class tx_browser_pi1_typoscript
       // Get andWhere from TypoScript
       $str_key = $this->pObj->objFlexform->int_templating_dataQuery . '.';
       $arr_items = $this->conf[ 'flexform.' ][ 'templating.' ][ 'arrDataQuery.' ][ 'items.' ];
-      $arr_item = $arr_items[ $str_key ][ 'arrQuery.' ][ 'andWhere' ];
+      $sItem = $arr_items[ $str_key ][ 'arrQuery.' ][ 'andWhere' ];
       // #i0079, 140724, dwildt, 1-
-      //$conf_sql[ 'andWhere' ] = $conf_sql[ 'andWhere' ] . $arr_item;
+      //$conf_sql[ 'andWhere' ] = $conf_sql[ 'andWhere' ] . $sItem;
+      // #i0214, 151219, dwildt, 4+
+      if ( !empty( $sItem ) )
+      {
+        $sItem = ' AND ' . $sItem;
+      }
       // #i0079, 140724, dwildt, 8+
       if ( empty( $conf_sql[ 'andWhere' ] ) )
       {
-        $conf_sql[ 'andWhere' ] = $arr_item;
+        $conf_sql[ 'andWhere' ] = $sItem;
       }
       else
       {
-        $conf_sql[ 'andWhere' ] = $conf_sql[ 'andWhere' ] . ' AND ' . $arr_item;
+        $conf_sql[ 'andWhere' ] = $conf_sql[ 'andWhere' ] . $sItem;
       }
     }
     // plugin [template] int_templating_dataQuery has a value

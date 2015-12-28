@@ -602,8 +602,8 @@ plugin.tx_browser_pi1 {
             value = ###TABLE.FIELD###
             wrap  = <div class="selectbox_title">|</div>
           }
-            // [String] Wrap the items
-          object = <select class="###ONCHANGE###" name="###TABLE.FIELD###" id="###ID###" size="###SIZE###"###MULTIPLE###>|</select>
+            // [String] Wrap the items | // #i0206, dwildt, +form-control
+          object = <select class="###ONCHANGE### form-control" name="###TABLE.FIELD###" id="###ID###" size="###SIZE###"###MULTIPLE###>|</select>
           object {
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 14

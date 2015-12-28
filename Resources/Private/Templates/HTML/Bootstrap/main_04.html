@@ -85,10 +85,10 @@ This template is the default template for all list views.
 </em>
 
       <!-- ###TEMPLATE_LIST### begin -->
-      <div class="col-md-12">
+      <div class="###CSSGRIDDEFAULT###12">
         <!-- ###LIST_TITLE### begin -->
         <div class="row">
-          <div class="col-md-12">
+          <div class="###CSSGRIDDEFAULT###12">
             <div class="tx_browser_pi1-title-main">
               ###MY_TITLE###
               ###MY_PROMPT###
@@ -97,11 +97,11 @@ This template is the default template for all list views.
         </div><!-- /row -->
         <!-- ###LIST_TITLE### end -->
         <div class="row">
-          <div class="col-md-6">
+          <div class="###CSSGRIDDEFAULT###6">
             ###MAP###
           </div><!-- /col-md-12 -->
           <!-- ###SEARCHFORM### begin -->
-          <div class="hidden-desktop col-sm-12 col-md-6">
+          <div class="hidden-desktop ###CSSGRIDMEDIUM###12 ###CSSGRIDDEFAULT###6">
             <div class="searchbox searchbox-list-###MODE###">
               <form action="###ACTION###" method="post" >
                 <fieldset>
@@ -111,21 +111,20 @@ This template is the default template for all list views.
                   ###HIDDEN###
                   <input type="hidden" name="no_cache" value="1" />
                   <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
-                  <input type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
-                  <button class="tiny expand hidesubmit" role="button">
-                    ###MY_SEARCH###
-                  </button>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
+                  </div>
                   <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                   ###FILTER###
-                  <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
+                  <button class="btn btn-default btn-block" role="button" type="reset" onclick="location = '###MY_URL###'">
                     ###MY_RESET###
                   </button>
                   <!-- ###BUTTON_CSV-EXPORT### begin -->
-                  <button class="tiny expand hidesubmit" role="button">
+                  <button class="btn btn-primary btn-block" role="button">
                     ###MY_CSV_EXPORT###
                   </button>
                   <!-- ###BUTTON_CSV-EXPORT### end -->
-                  <button class="tiny expand hidesubmit" role="button">
+                  <button class="btn btn-primary btn-block" role="button">
                     ###MY_SEARCH###
                   </button>
                 </fieldset>
@@ -135,7 +134,7 @@ This template is the default template for all list views.
         </div><!-- /row -->
         <div class="listarea">
           <div class="row">
-            <div class="col-md-12">
+            <div class="###CSSGRIDDEFAULT###12">
               <!-- ###INDEXBROWSER### begin -->
               <nav>
                 <ul class="pagination pagination-sm">
@@ -159,7 +158,7 @@ This template is the default template for all list views.
           </div><!-- /row -->
           <!-- ###LISTVIEW### begin -->
           <div class="row">
-            <div class="col-md-12 listview listview-content listview-###MODE### listview-content-###MODE###">
+            <div class="###CSSGRIDDEFAULT###12 listview listview-content listview-###MODE### listview-content-###MODE###">
               <table###SUMMARY###>
                 ###CAPTION###
                 <!-- ###LISTHEAD### begin -->
@@ -179,7 +178,7 @@ This template is the default template for all list views.
           <!-- ###LISTVIEW### end -->
             <!-- ###PAGEBROWSERBOTTOM### begin -->
           <div class="row">
-            <div class="col-md-12 pagination-centered pagebrowser pagebrowser-bottom">
+            <div class="###CSSGRIDDEFAULT###12 pagination-centered pagebrowser pagebrowser-bottom">
               ###RESULT_AND_ITEMS###
             </div><!-- /col-md-12 -->
           </div><!-- /row --><!-- ###PAGEBROWSERBOTTOM### end -->
@@ -251,7 +250,7 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
           <div class="###MODE### singleview-###MODE###">
             <!-- ###SINGLEVIEW### begin -->
             <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
-            <div class="main col-md-12">
+            <div class="main ###CSSGRIDDEFAULT###12">
               ###MAP###
               ###RECORD_BROWSER###
               <h1>

@@ -193,7 +193,7 @@ plugin.tx_browser_pi1 {
               url     = http://www.tagthat.de/bookmarken.php?action=neu&amp;url=###URL###&amp;title=###TITLE###
               image   = EXT:browser/Resources/Public/Images/Socialmedia/bookmarks/tagthat.png
             }
-            tailrank {socialmedia
+            tailrank {
               name    = TailRank
               url     = http://tailrank.com/share/?text=&amp;link_href=###URL###&amp;title=###TITLE###
               image   = EXT:browser/Resources/Public/Images/Socialmedia/bookmarks/tailrank.png

@@ -33,6 +33,7 @@ $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'typo3/class.db_list.inc' ][ 'mak
 //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:browser/lib/tx_browser_processdatamapclass.php:tx_browser_processdatamapclass';
 $GLOBALS [ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 't3lib/class.t3lib_tcemain.php' ][ 'processDatamapClass' ][] = 'EXT:browser/lib/class.tx_browser_tcemainprocdm.php:tx_browser_tcemainprocdm';
 
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_page.php']['getRecordOverlay']['tx_browser'] = 'Netzmacher\\Browser\\Hooks\\GetRecordOverlay\\IgnoreGetRecordOverlay';
 
 // #51478, 130829, dwildt, +
 // If sample tasks should be shown, register information for the test tasks

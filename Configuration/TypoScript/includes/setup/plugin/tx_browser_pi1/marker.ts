@@ -1,22 +1,17 @@
 plugin.tx_browser_pi1 {
+    // markers can use TEXT or COA
+  marker =
   marker {
-        // markers can use TEXT or COA
+      // value will allocated while runtime. Value will be the title content of the flexform/plugin
     my_title = TEXT
     my_title {
       value =
-      lang {
-        de =
-        en =
-      }
       wrap = <h1>|</h1>
     }
+      // value will allocated while runtime. Value will be the prompt content of the flexform/plugin
     my_prompt = TEXT
     my_prompt {
       value =
-      lang {
-        de =
-        en =
-      }
       wrap = <p>|</p>
     }
         // markers can use TEXT or COA

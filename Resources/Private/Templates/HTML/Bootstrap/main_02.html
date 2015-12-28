@@ -81,13 +81,13 @@ This template is the default template for all list views.
 </em>
 
       <!-- ###TEMPLATE_LIST### begin -->
-      <div class="hidden-desktop col-xs-###FDTMPLMAINLISTCOLLEFTSMALL### col-sm-###FDTMPLMAINLISTCOLLEFTMEDIUM### col-md-###FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
+      <div class="hidden-desktop ###CSSGRIDSMALL######FDTMPLMAINLISTCOLLEFTSMALL### ###CSSGRIDMEDIUM######FDTMPLMAINLISTCOLLEFTMEDIUM### ###CSSGRIDDEFAULT######FDTMPLMAINLISTCOLLEFTLARGE### searchbox searchbox-list-###MODE###">
         <!-- ###SEARCHFORM### begin -->
         <div class="row">
-          <div class="col-md-12">
+          <div class="###CSSGRIDDEFAULT###12">
             ###MAP###
           </div><!-- /col-md-12 -->
-          <div class="col-md-12 searchbox searchbox-list-###MODE###">
+          <div class="###CSSGRIDDEFAULT###12 searchbox searchbox-list-###MODE###">
             <form action="###ACTION###" method="post" >
               <fieldset>
                 <legend>
@@ -96,21 +96,20 @@ This template is the default template for all list views.
                 ###HIDDEN###
                 <input type="hidden" name="no_cache" value="1" />
                 <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
-                <input type="text" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
-                <button class="tiny expand hidesubmit" role="button">
-                  ###MY_SEARCH###
-                </button>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="tx_browser_pi1[sword]" placeholder="###SWORD_DEFAULT###" value="###SWORD###" />
+                </div>
                 <!-- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
                 ###FILTER###
-                <button class="tiny expand secondary reset" role="button" type="reset" onclick="location = '###MY_URL###'">
+                <button class="btn btn-default btn-block" role="button" type="reset" onclick="location = '###MY_URL###'">
                   ###MY_RESET###
                 </button>
                 <!-- ###BUTTON_CSV-EXPORT### begin -->
-                <button class="tiny expand hidesubmit" role="button">
+                <button class="btn btn-primary btn-block" role="button">
                   ###MY_CSV_EXPORT###
                 </button>
                 <!-- ###BUTTON_CSV-EXPORT### end -->
-                <button class="tiny expand hidesubmit" role="button">
+                <button class="btn btn-primary btn-block" role="button">
                   ###MY_SEARCH###
                 </button>
               </fieldset>
@@ -118,18 +117,18 @@ This template is the default template for all list views.
           </div><!-- /col-md-12 --><!-- ###SEARCHFORM### end -->
         </div><!-- /row -->
       </div><!-- /col-md-12 -->
-      <div class="ol-xs-###FDTMPLMAINLISTCOLRIGHTSMALL### col-sm-###FDTMPLMAINLISTCOLRIGHTMEDIUM### col-md-###FDTMPLMAINLISTCOLRIGHTLARGE###">
+      <div class="ol-xs-###FDTMPLMAINLISTCOLRIGHTSMALL### ###CSSGRIDMEDIUM######FDTMPLMAINLISTCOLRIGHTMEDIUM### ###CSSGRIDDEFAULT######FDTMPLMAINLISTCOLRIGHTLARGE###">
         <!-- ###LIST_TITLE### begin -->
         <div class="row tx_browser_pi1-title-main">
-          <div class="col-md-12">
+          <div class="###CSSGRIDDEFAULT###12">
             ###MY_TITLE###
             ###MY_PROMPT###
           </div><!-- /col-md-12 -->
         </div><!-- /row --><!-- ###LIST_TITLE### end -->
         <div class="row listarea">
-          <div class="col-md-12">
+          <div class="###CSSGRIDDEFAULT###12">
             <div class="row">
-              <div class="col-md-12 browser">
+              <div class="###CSSGRIDDEFAULT###12 browser">
                 <!-- ###INDEXBROWSER### begin -->
                 <nav>
                   <ul class="pagination pagination-sm">
@@ -138,7 +137,7 @@ This template is the default template for all list views.
                   </ul>
                 </nav><!-- ###INDEXBROWSER### end -->
                 <!-- ###PAGEBROWSERTOP### begin -->
-                <div class="col-md-12 pagination-centered pagebrowser pagebrowser-top">
+                <div class="###CSSGRIDDEFAULT###12 pagination-centered pagebrowser pagebrowser-top">
                   ###RESULT_AND_ITEMS###
                 </div><!-- ###PAGEBROWSERTOP### end -->
                 <!-- ###MODESELECTOR### begin -->
@@ -153,7 +152,7 @@ This template is the default template for all list views.
             </div><!-- /row -->
             <!-- ###LISTVIEW### begin -->
             <div class="row">
-              <div class="col-md-12 listview listview-content listview-###MODE### listview-content-###MODE###">
+              <div class="###CSSGRIDDEFAULT###12 listview listview-content listview-###MODE### listview-content-###MODE###">
                 <table###SUMMARY###>
                   ###CAPTION###
                   <!-- ###LISTHEAD### begin -->
@@ -173,7 +172,7 @@ This template is the default template for all list views.
             <!-- ###LISTVIEW### end -->
             <!-- ###PAGEBROWSERBOTTOM### begin -->
             <div class="row">
-              <div class="col-md-12 pagination-centered pagebrowser pagebrowser-bottom">
+              <div class="###CSSGRIDDEFAULT###12 pagination-centered pagebrowser pagebrowser-bottom">
                 ###RESULT_AND_ITEMS###
               </div>
             </div><!-- /row --><!-- ###PAGEBROWSERBOTTOM### end -->

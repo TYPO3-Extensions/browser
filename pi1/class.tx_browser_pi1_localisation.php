@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.5.7
+ * @version 7.3.0
  * @since 2.0.0
  */
 
@@ -170,6 +170,7 @@ class tx_browser_pi1_localisation
    */
   public function consolidate_rows( $rows, $table )
   {
+//var_dump( __METHOD__, __LINE__ );
     //$this->consolidate_rowsDebug( $rows );
     // For development only, IP must allowed in the extension manager!
     $promptForDev = false;
@@ -688,7 +689,7 @@ class tx_browser_pi1_localisation
    */
   public function consolidate_rows07languageOverlay( $rows, $table )
   {
-//    var_dump( __METHOD__, __LINE__, $rows );
+//var_dump( __METHOD__, __LINE__, $rows );
     // Do we have lang_ol fields?
     $arr_lang_ol = false;
     $conf_tca = $this->conf_localisation[ 'TCA.' ];
@@ -1208,7 +1209,6 @@ class tx_browser_pi1_localisation
           t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return $this->arr_localisedTables[ $table ];
-        break;
       // RETURN table isn't localised
       case(!isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigPointerField' ] ) ):
         // RETURN table isn't localised
@@ -1220,7 +1220,6 @@ class tx_browser_pi1_localisation
           t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return $this->arr_localisedTables[ $table ];
-        break;
       // RETURN table isn't localised
       case(!isset( $GLOBALS[ 'TCA' ][ $table ][ 'ctrl' ][ 'transOrigDiffSourceField' ] ) ):
         // Table will handled like a localised table
@@ -1456,7 +1455,6 @@ class tx_browser_pi1_localisation
         // DRS
         // RETURN : no language overlay
         return false;
-        break;
       case( $this->zz_tableIsLocalised( $table ) ): // Table is localised
         // DRS
         if ( $this->pObj->b_drs_localisation )
@@ -1467,7 +1465,6 @@ class tx_browser_pi1_localisation
         // DRS
         // RETURN : no language overlay
         return false;
-        break;
       default:
         // Follow the workflow
         // Get fields for translation / language overlay
@@ -2485,20 +2482,21 @@ class tx_browser_pi1_localisation
    *
    * @param	string		$table: Name of the table in the TYPO3 database / in TCA
    * @return	array		$arr_andSelect with elements woAlias, filter, wiAlias and addedFields
-   * @version 3.9.3
+   * @version 7.3.0
    * @since 2.0.0
    */
 //  private function zz_tableIsLocalised( $arr_localise, $table, $bool_dontLocalise )
   private function zz_tableIsLocalised( $table )
   {
-    // DIE  : $this->pObj->arr_realTables_localised is empty
-    if ( empty( $this->pObj->arr_realTables_localised ) )
-    {
-      $header = 'FATAL ERROR!';
-      $text = '$this->pObj->arr_realTables_localised are empty.';
-      $this->pObj->drs_die( $header, $text );
-    }
-    // DIE  : $this->pObj->arr_realTables_localised is empty
+// #i0213, 151218, dwildt, -
+//    // DIE  : $this->pObj->arr_realTables_localised is empty
+//    if ( empty( $this->pObj->arr_realTables_localised ) )
+//    {
+//      $header = 'FATAL ERROR!';
+//      $text = '$this->pObj->arr_realTables_localised are empty.';
+//      $this->pObj->drs_die( $header, $text );
+//    }
+//    // DIE  : $this->pObj->arr_realTables_localised is empty
 
     $bool_tableIsLocalised = false;
     switch ( true )

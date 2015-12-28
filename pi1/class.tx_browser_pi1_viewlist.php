@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     6.0.0
+ * @version     7.3.0
  * @since       1.0.0
  */
 
@@ -269,6 +269,7 @@ class tx_browser_pi1_viewlist
     }
     // DRS
     // Consolidate localisation
+
     $rows = $this->rows_consolidateLL( $rows );
     // #59669, dwildt, 1+
     $this->pObj->rowsLocalised = $rows;
@@ -417,7 +418,6 @@ class tx_browser_pi1_viewlist
     // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
-
 
     // RETURN content
     return $this->content;
@@ -706,7 +706,7 @@ class tx_browser_pi1_viewlist
    *                        *
    *
    * @return    array        $arr_return: Contains an error message in case of an error
-   * @version 4.1.26
+   * @version 7.3.0
    * @since   3.9.9
    */
   private function content_setDefault()
@@ -748,6 +748,13 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+
+    // #i0208, 151202, dwildt, 2+
+    $markerArray = $this->pObj->objWrapper4x->constant_markers();
+    // #i0212, 151217, dwildt, 1-/+
+    //$this->content = $this->pObj->cObj->substituteMarkerArray( $this->content, $markerArray );
+    $this->content = $this->pObj->cObj->substituteMarkerArray( $this->content, ( array ) $markerArray );
+
     // Set mode selector
 //$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );
     return;

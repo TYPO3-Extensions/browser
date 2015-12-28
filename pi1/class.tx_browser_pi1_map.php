@@ -1489,6 +1489,10 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     }
     // RETURN : HTML template is not proper
 
+    // #i0209, 151202, dwildt, 2+
+    $markerArray = $this->pObj->objWrapper4x->constant_markers();
+    $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
+
     $template = $this->renderMapMarker( $template, $mapTemplate );
 
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $mapTemplate, $template );

@@ -50,7 +50,7 @@ plugin.tx_browser_pi1 {
                     // class
                   30 = TEXT
                   30 {
-                    value       = linktosingle
+                    value       = {$plugin.tx_browser_pi1.templates.listview.url.css.record}
                     noTrimWrap  = | "|"|
                   }
                     // title
@@ -87,7 +87,7 @@ plugin.tx_browser_pi1 {
                   field = {$plugin.tx_browser_pi1.templates.listview.url.5.page}
                 }
                 30 {
-                  value = internal
+                  value = {$plugin.tx_browser_pi1.templates.listview.url.css.page}
                 }
               }
               additionalParams >
@@ -104,7 +104,7 @@ plugin.tx_browser_pi1 {
                   noTrimWrap  = | ||
                 }
                 30 {
-                  value = external
+                  value = {$plugin.tx_browser_pi1.templates.listview.url.css.url}
                 }
               }
             }

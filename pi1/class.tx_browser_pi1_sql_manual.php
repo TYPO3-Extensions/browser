@@ -539,7 +539,7 @@ class tx_browser_pi1_sql_manual
     $arr_where                  = array( );
     $arr_where['where']         = $str_where;
     $arr_where['enableFields']  = $str_enable_fields;
-//var_dump( __METHOD__, __LINE__, $arr_where );
+var_dump( __METHOD__, __LINE__, $arr_where );
     return $arr_where;
   }
 

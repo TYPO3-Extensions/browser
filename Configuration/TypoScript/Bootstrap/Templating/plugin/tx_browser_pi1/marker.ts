@@ -1,5 +1,151 @@
 plugin.tx_browser_pi1 {
   marker {
+      // button
+    cssBtn = TEXT
+    cssBtn {
+      value = btn
+      noTrimWrap  = || |
+    }
+      // button colours
+    cssBtnDanger = TEXT
+    cssBtnDanger {
+      value = btn-danger
+      noTrimWrap  = || |
+    }
+    cssBtnDefault = TEXT
+    cssBtnDefault {
+      value = btn-default
+      noTrimWrap  = || |
+    }
+    cssBtnInfo = TEXT
+    cssBtnInfo {
+      value = btn-info
+      noTrimWrap  = || |
+    }
+    cssBtnLink = TEXT
+    cssBtnLink {
+      value = btn-link
+      noTrimWrap  = || |
+    }
+    cssBtnPrimary = TEXT
+    cssBtnPrimary {
+      value = btn-primary
+      noTrimWrap  = || |
+    }
+    cssBtnSuccess = TEXT
+    cssBtnSuccess {
+      value = btn-success
+      noTrimWrap  = || |
+    }
+    cssBtnWarning = TEXT
+    cssBtnWarning {
+      value = btn-warning
+      noTrimWrap  = || |
+    }
+      // button size
+    cssBtnBlock = TEXT
+    cssBtnBlock {
+      value = btn-block
+      noTrimWrap  = || |
+    }
+    cssBtnLarge = TEXT
+    cssBtnLarge {
+      value = btn-lg
+      noTrimWrap  = || |
+    }
+    cssBtnSmall = TEXT
+    cssBtnSmall {
+      value = btn-sm
+      noTrimWrap  = || |
+    }
+    cssBtnTiny = TEXT
+    cssBtnTiny {
+      value = btn-xs
+      noTrimWrap  = || |
+    }
+      // grid
+    cssGrid = TEXT
+    cssGrid {
+      value = col-lg-12
+      noTrimWrap  = || |
+    }
+    cssGridSmall = TEXT
+    cssGridSmall {
+      value = col-xs-
+    }
+    cssGridMedium = TEXT
+    cssGridMedium {
+      value = col-sm-
+    }
+    cssGridDefault = TEXT
+    cssGridDefault {
+      value = col-md-
+    }
+    cssGridLarge = TEXT
+    cssGridLarge {
+      value = col-lg-
+    }
+      // visibilty
+    cssVisTinyOnly = TEXT
+    cssVisTinyOnly {
+      value = visible-xs-block
+      noTrimWrap  = || |
+    }
+    cssVisSmallOnly = TEXT
+    cssVisSmallOnly {
+      value = visible-sm-block
+      noTrimWrap  = || |
+    }
+    cssVisMediumOnly = TEXT
+    cssVisMediumOnly {
+      value = visible-md-block
+      noTrimWrap  = || |
+    }
+    cssVisLargeOnly = TEXT
+    cssVisLargeOnly {
+      value = visible-lg-block
+      noTrimWrap  = || |
+    }
+    cssVisTinyNot = TEXT
+    cssVisTinyNot {
+      value = hidden-xs
+      noTrimWrap  = || |
+    }
+    cssVisSmallNot = TEXT
+    cssVisSmallNot {
+      value = hidden-sm
+      noTrimWrap  = || |
+    }
+    cssVisMediumNot = TEXT
+    cssVisMediumNot {
+      value = hidden-md
+      noTrimWrap  = || |
+    }
+    cssVisLargeNot = TEXT
+    cssVisLargeNot {
+      value = hidden-lg
+      noTrimWrap  = || |
+    }
+    cssVisMediumTo = TEXT
+    cssVisMediumTo {
+      value = visible-md-block visible-lg-block
+      noTrimWrap  = || |
+    }
+    cssVisLargeTo = TEXT
+    cssVisLargeTo {
+      value = visible-lg-block
+      noTrimWrap  = || |
+    }
+    cssVisMediumUp = TEXT
+    cssVisMediumUp {
+      value = hidden-md hidden-lg
+      noTrimWrap  = || |
+    }
+    cssVisLargeUp = TEXT
+    cssVisLargeUp {
+      value = hidden-lg
+      noTrimWrap  = || |
+    }
         // Foundation main list: column left small
     fdTmplMainListColLeftSmall = TEXT
     fdTmplMainListColLeftSmall {

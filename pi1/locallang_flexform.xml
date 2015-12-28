@@ -568,7 +568,7 @@
       <label index="sheet_sDEF.session.type.0">Nimm den Wert aus TypoScript</label>
       <label index="sheet_sDEF.session.type.1">Aktiviere Session (empfohlen)</label>
       <label index="sheet_sDEF.session.type.2">Deaktiviere Session (geringere Performance)</label>
-      <label index="sheet_sDEF.downloads.enabled">Downloads: Dieses Plugin darf das Download Page Object bearbeiten.</label>
+      <label index="sheet_sDEF.downloads.enabled">Downloads: Dieses Plugin darf das Download Page Object verwenden.</label>
       <label index="sheet_sDEF.downloads.enabled.no">Deaktiviert (Standard)</label>
       <label index="sheet_sDEF.downloads.enabled.yes">Aktiviert</label>
       <label index="sheet_sDEF.downloads.enabled.ts">Nimm den Wert aus TypoScript</label>

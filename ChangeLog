@@ -10,21 +10,50 @@ Manual
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
 7.3.0
-  15-11-24
+  15-12-18
   Feature
+  * #i0211: Hook for disabling PageRepository::getRecordOverlay. See
+            * Classes/Hooks/GetRecordOverlay/IgnoreGetRecordOverlay.php
+            Workflow
+            * Has an effect in COA CONTENT only
+            * Set selectFields = *, TRUE AS 'IgnoreGetRecordOverlay'
+            * Record in default language and all translated records will dsiplayed
+            Example
+            * Take a look into the TypoScript of the Organiser > downloads > list (301).
+              Search for IgnoreGetRecordOverlay
+  * #i0210: Class classes for links are configurable by the Constant Editor. See [BROWSER - TEMPLATES - LIST - URL CSS].
+            * Former classes are moved:
+              * linktosingle  > linktorecord
+              * internal      > linktopage
+              * external      > linktourl
+  * #72032: CSS inline for Bootstrap
   * #i0206: Bootstrap classes and TypoScript template.
             New static template: Browser [5] + Bootstrap Templates
             Effected files:
-            * Configuration/TypoScript/Bootstrap/Templating/*   (new)
+            * Configuration
+              * TypoScript
+                * Bootstrap/Templating/*                                                        (new)
+                * includes/setup/plugin/tx_browser_pi1/displayList/master_templates/filter.ts
             * Resources
-              * Public/Images/BackendLayouts/Bootstrap/*        (new)
-              * Private/Templates/HTML/Bootstrap/*              (new)
+              * Public/Images/BackendLayouts/Bootstrap/*                                        (new)
+              * Private/Templates/HTML/Bootstrap/*                                              (new)
   Improvement
+  * #i0209: Replace static marker in map template
+  * #i0208: Replace static marker in the whole list view template
   * #i0207: Indexbrowser isn't obligated any longer for a valid template
   * #i0205: 127.0.0.1 and 127.0.0.2 is removed from plugin/flexform statistic. See:
             * Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/flexform/sDEF.ts
             * pi1/flexform_sheet_sDEF.xml
   * #i0204: Content of error prompt in case of unproper page id for documents
+  Bugfix
+  * #i0214: SQL bug in case of an andWhere category statement and localisation.
+            Workaround:
+            * The l10n_mode property in the TCA of the category fields of the main table
+              * must be 'l10n_mode' => 'mergeIfNotBlank'
+              * or can delete without any replacement
+  * #i0213: Error in case of table with language overlay.
+            * pi1/class.tx_browser_pi1_localisation.php
+  * #i0212: PHP Catchable Fatal Error: Argument 2 passed must be of the type array, null given, in pi1\class.tx_browser_pi1_viewlist.php on line 753
 
 7.2.15
   15-11-23

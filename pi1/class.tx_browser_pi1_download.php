@@ -182,11 +182,35 @@ class tx_browser_pi1_download
     if ( !isset( $this->pObj->conf[ 'views.' ][ $this->view . '.' ][ $this->mode . '.' ][ 'select' ] ) )
     {
       // #i0204, 151130, dwildt, ~
-      $prompt = '' .
-              'Security check: TypoScript property ' .
-              'plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select doesn\'t exist.<br />' .
-              'Possible cause: Organiser pages has an unproper uid. See: Constant Editor [ORGANISER - PAGES]<br />' .
-              __METHOD__ . ' (' . __LINE__ . ')';
+      $prompt = ''
+              . '<p>'
+              . '  Security check: TypoScript property '
+              . '  plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select doesn\'t exist.<br />'
+              . '</p>'
+              . '<h2>'
+              . '  Possible causes '
+              . '</h2>'
+              . '<ul>'
+              . '  <li>'
+              . '    Organiser pages has an unproper uid. See: Constant Editor [ORGANISER - PAGES]'
+              . '  </li>'
+              . '  <li>'
+              . '    You are using more than one Browser plugin on the current page. And the current plugin ignores piVars from other plugins.<br />'
+              . '    Please check the configuration of the current plugin > [General] > Views: piVars (parameters in the URL) from foreign plugins: [Handle it!] '
+              . '  </li>'
+              . '</ul>'
+              . '<h2>'
+              . '  Values '
+              . '</h2>'
+              . '<ul>'
+              . '  <li>'
+              . '    view: "' .$this->view. '" <- should be single'
+              . '  </li>'
+              . '  <li>'
+              . '    mode: "' .$this->view. '" <- must be the uid of the current single view, which is the base for the download'
+              . '  </li>'
+              . '</ul>'
+              .__METHOD__ . ' (' . __LINE__ . ')';
       return $prompt;
     }
 
