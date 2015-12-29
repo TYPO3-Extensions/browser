@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <description>Language labels for the flexforms belonging to extension 'browser' plugin 5</description>
+    <type>database</type>
+    <csh_table></csh_table>
+    <labelContext type="array">
+    </labelContext>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="sheet_checklist">Check List</label>
+      <label index="sheet_checklist.statictemplate.label">Mind the Include Static Template please!</label>
+      <label index="sheet_checklist.statictemplate.0">Yes, I have include the static template: Browser Manual (browser).</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="sheet_checklist">Checkliste</label>
+      <label index="sheet_checklist.statictemplate.label">Denk an das Static Template!</label>
+      <label index="sheet_checklist.statictemplate.0">Ja, ich habe das Static Template eingebunden: Browser Manual (browser).</label>
+    </languageKey>
+  </data>
+</T3locallang>

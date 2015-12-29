@@ -9,6 +9,15 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.4.0
+  15-12-28
+  Feature
+  * #i0215: Plugin for frontend-editing.
+            Needs a template for controlling.
+            Template must delivered by the extension with the database like Quick Shop or Organiser.
+  Improvement
+  * #i0216: Flexforms are moved from pi* to Configuration/FlexForms/pi*
+
 7.3.0
   15-12-18
   Feature

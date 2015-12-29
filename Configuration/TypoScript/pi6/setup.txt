@@ -1,0 +1,24 @@
+plugin.tx_browser_pi6 {
+    // empty statement for proper comments only
+  view {
+  }
+    // templateRootPath, partialRootPath, layoutRootPath
+  view =
+  view {
+    templateRootPath = {$plugin.tx_browser_pi6.view.templateRootPath}
+    partialRootPath = {$plugin.tx_browser_pi6.view.partialRootPath}
+    layoutRootPath = {$plugin.tx_browser_pi6.view.layoutRootPath}
+    settings {
+        // Attribute like data-alert or role=
+      cssAlertAttributes = TEXT
+      cssAlertAttributes {
+        value = data-alert
+      }
+        // Content of class=""
+      cssAlertClass = TEXT
+      cssAlertClass {
+        value = alert-box alert
+      }
+    }
+  }
+}

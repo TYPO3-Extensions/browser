@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>database</type>
+    <description>Language labels for database tables/fields belonging to the extension 'Browser'</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="pi6PromptError">Error</label>
+      <label index="pi6PromptSuccess">Success</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="pi6PromptError">Fehler</label>
+      <label index="pi6PromptSuccess">Erfolg</label>
+    </languageKey>
+  </data>
+</T3locallang>

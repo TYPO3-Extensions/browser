@@ -33,9 +33,11 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi4/', 'Browser [10] + kein Cache' );
     // Plugin 1
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Map/oxMap/', 'Browser [20] + Map Downgrade (oxMap)' );
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/reset/', 'Browser [99] Reset' );
+    // Plugin 6
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi6/', 'Browser [30] Frontend Editing' );
     // Plugin 3
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi3/', 'Browser Handbuecher [1]' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi3/', 'Browser [40] Handbuecher' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/reset/', 'Browser [99] Reset' );
         break;
   default:
     // English
@@ -60,8 +62,10 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi4/', 'Browser [10] + no cache' );
     // Plugin 1
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Map/oxMap/', 'Browser [20] + Map Downgrade (oxMap)' );
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/reset/', 'Browser [99] Reset' );
+    // Plugin 6
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi6/', 'Browser [30] Frontend Editing' );
     // Plugin 3
-    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi3/', 'Browser Manuals [1]' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi3/', 'Browser [40] Manuals' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/reset/', 'Browser [99] Reset' );
     break;
 }

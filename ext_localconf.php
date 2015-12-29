@@ -5,22 +5,40 @@ if ( !defined( 'TYPO3_MODE' ) )
   die( 'Access denied.' );
 }
 
-// INDEX
-//
-// Get the extensions's configuration
-// Extending TypoScript from static template uid=43 to set up userdefined tag
-// PageTSConfig
-// SC_OPTIONS
-//
-$dummy = 'this line is neede for the empty next line only.';
+/**
+ * INDEX
+
+ * Get the extensions's configuration
+ * Extending TypoScript from static template uid=43 to set up userdefined tag
+ * Include Frontend Plugins
+ * PageTSConfig
+ * SC_OPTIONS
+ */
+
 
 // Get the extensions's configuration
 $extConf = unserialize( $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'EXT' ][ 'extConf' ][ 'browser' ] );
+
 
 // Extending TypoScript from static template uid=43 to set up userdefined tag
 t3lib_extMgm::addPItoST43( $_EXTKEY, 'pi1/class.tx_browser_pi1.php', '_pi1', 'list_type', 1 );
 t3lib_extMgm::addPItoST43( $_EXTKEY, 'pi3/class.tx_browser_pi3.php', '_pi3', 'list_type', 1 );
 t3lib_extMgm::addPItoST43( $_EXTKEY, 'pi4/class.tx_browser_pi4.php', '_pi4', 'list_type', 1 );
+t3lib_extMgm::addPItoST43( $_EXTKEY, 'pi4/class.tx_browser_pi5.php', '_pi5', 'list_type', 1 );
+
+/**
+ * Include Frontend Plugins
+ */
+Tx_Extbase_Utility_Extension::configurePlugin(
+        'Netzmacher.' . $_EXTKEY
+        , 'Pi6'
+        , array(
+  'FrontendEditing' => 'data'
+        ), array(
+  'FrontendEditing' => 'data'
+        )
+);
+
 
 // PageTSConfig
 t3lib_extMgm::addPageTSConfig( '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/ExtLocalconf/addPageTSConfig/foundation.txt">' );
