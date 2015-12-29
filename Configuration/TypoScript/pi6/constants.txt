@@ -1,10 +1,10 @@
 plugin.tx_browser_pi6 {
   view {
     # cat=Browser - Frontend Editing - view//101;           type=string;     label= Templates:Path to the templates
-		templateRootPath  = EXT:browser/Resources/Private/View/Templates/
+		templateRootPath  = EXT:browser/Resources/Private/View/Default/Templates/
     # cat=Browser - Frontend Editing - view//102;           type=string;     label= Partials:Path to the partials
-		partialRootPath   = EXT:browser/Resources/Private/View/Partials/
+		partialRootPath   = EXT:browser/Resources/Private/View/Default/Partials/
     # cat=Browser - Frontend Editing - view//103;           type=string;     label= Layouts:Path to the layouts
-		layoutRootPath    = EXT:browser/Resources/Private/View/Layouts/
+		layoutRootPath    = EXT:browser/Resources/Private/View/Default/Layouts/
   }
 }
