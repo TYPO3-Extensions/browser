@@ -163,17 +163,17 @@ class tx_browser_pi1_backend
     $str_prompt_info_tutorialAndForum = '
       <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body">
-          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.drs' ) . '
+          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.drs' ) . '
         </div>
       </div>
       <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body">
-          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.updateAssistent' ) . '
+          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.updateAssistent' ) . '
         </div>
       </div>
       <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body">
-          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.tutorialAndForum' ) . '
+          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.tutorialAndForum' ) . '
         </div>
       </div>
       ';
@@ -182,7 +182,7 @@ class tx_browser_pi1_backend
     $str_prompt_inCaseOfAnError = '
         <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.fixThisBug' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.warn.fixThisBug' ) . '
           </div>
         </div>
         ';
@@ -199,12 +199,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.saved_never' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.saved_never' ) . '
           </div>
         </div>
         <div class="typo3-message message-information">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.saved_never' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.saved_never' ) . '
           </div>
         </div>
         ';
@@ -217,12 +217,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_ts_template' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_ts_template' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_ts_template' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_ts_template' ) . '
           </div>
         </div>
         ';
@@ -235,12 +235,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_view' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_view' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_view' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_view' ) . '
           </div>
         </div>
         ';
@@ -293,7 +293,7 @@ class tx_browser_pi1_backend
     $str_prompt = '
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body">
-          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.ok' ) . '
+          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.ok' ) . '
         </div>
       </div>
       ';
@@ -305,7 +305,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.drs.warn' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.drs.warn' ) . '
           </div>
         </div>
         ';
@@ -341,12 +341,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum' ) . '
           </div>
         </div>
         ';
@@ -363,12 +363,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_AJAXpageObject' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_AJAXpageObject' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_AJAXpageObject' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_AJAXpageObject' ) . '
           </div>
         </div>
         ';
@@ -433,12 +433,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_CSV_defaultTypeNum' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_CSV_defaultTypeNum' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_CSV_defaultTypeNum' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_CSV_defaultTypeNum' ) . '
           </div>
         </div>
         ';
@@ -454,12 +454,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_CSVpageObject' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_CSVpageObject' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_CSVpageObject' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_CSVpageObject' ) . '
           </div>
         </div>
         ';
@@ -639,12 +639,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_map_defaultTypeNum' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_map_defaultTypeNum' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_map_defaultTypeNum' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_map_defaultTypeNum' ) . '
           </div>
         </div>
         ';
@@ -660,12 +660,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_mapPageObject' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_mapPageObject' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_mapPageObject' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_mapPageObject' ) . '
           </div>
         </div>
         ';
@@ -679,12 +679,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxIConflict' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.mapAjaxIConflict' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxIConflict' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.mapAjaxIConflict' ) . '
           </div>
         </div>
         ';
@@ -698,12 +698,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxIIConflict' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.mapAjaxIIConflict' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxIIConflict' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.mapAjaxIIConflict' ) . '
           </div>
         </div>
         ';
@@ -753,12 +753,12 @@ class tx_browser_pi1_backend
         $str_prompt = '
           <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
             <div class="message-body">
-              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_record_storage_pid' ) . '
+              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.no_record_storage_pid' ) . '
             </div>
           </div>
           <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
             <div class="message-body">
-              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid' ) . '
+              ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.no_record_storage_pid' ) . '
             </div>
           </div>
           ';
@@ -814,12 +814,12 @@ class tx_browser_pi1_backend
         $str_prompt = '
             <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
               <div class="message-body">
-                ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.pageNotFoundOnCHashError' ) . '
+                ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.pageNotFoundOnCHashError' ) . '
               </div>
             </div>
             <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
               <div class="message-body">
-                ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.pageNotFoundOnCHashError' ) . '
+                ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.pageNotFoundOnCHashError' ) . '
               </div>
             </div>
             ';
@@ -846,12 +846,12 @@ class tx_browser_pi1_backend
         $str_prompt = '
               <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
                 <div class="message-body">
-                  ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.cHashExcludedParameters' ) . '
+                  ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.error.cHashExcludedParameters' ) . '
                 </div>
               </div>
               <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
                 <div class="message-body">
-                  ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.cHashExcludedParameters' ) . '
+                  ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_evaluate.plugin.info.cHashExcludedParameters' ) . '
                 </div>
               </div>
               ';
@@ -917,7 +917,7 @@ class tx_browser_pi1_backend
 
     // The default first item
     $value = 0;
-    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_ui.select.firstItem' );
+    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_ui.select.firstItem' );
     $arr_items[] = '<option value="' . $value . '%selected%">' . $label . '</option>';
     // The default first item
     // LOOP rows of the SQL result
@@ -934,7 +934,7 @@ class tx_browser_pi1_backend
       // Current row is selected
       // Render the item
       $value = $row[ 'uid' ];
-      $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_ui.select.prependItem' ) . ': ' . htmlspecialchars( $row[ 'header' ] ) . ' (' . $row[ 'uid' ] . ')';
+      $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_ui.select.prependItem' ) . ': ' . htmlspecialchars( $row[ 'header' ] ) . ' (' . $row[ 'uid' ] . ')';
       $arr_items[] = '<option value="' . $value . '"' . $selected . '>' . $label . '</option>';
       // Render the item
     }
@@ -962,7 +962,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_ui.info.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_ui.info.info' ) . '
           </div>
         </div>
         ';
@@ -996,7 +996,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_ui.select.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_ui.select.info' ) . '
           </div>
         </div>
         ';
@@ -1012,7 +1012,7 @@ class tx_browser_pi1_backend
 //      $str_prompt = $str_prompt.'
 //        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
 //          <div class="message-body" style="max-width:600px;">
-//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_ui.success.info') . '
+//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_ui.success.info') . '
 //          </div>
 //        </div>
 //        ';
@@ -1118,7 +1118,7 @@ class tx_browser_pi1_backend
     // The default first item
     $arr_items = null;
     $value = 0;
-    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.select.firstItem' );
+    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.select.firstItem' );
     $arr_items[] = '<option value="' . $value . '%selected%">' . $label . '</option>';
     // The default first item
     // LOOP views
@@ -1149,10 +1149,10 @@ class tx_browser_pi1_backend
       }
       if ( empty( $label ) )
       {
-        $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.select.no_name' );
+        $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.select.no_name' );
       }
       $label = $value . ' (' . $label . ')';
-      $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.select.prependItem' ) . ': ' . $label;
+      $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.select.prependItem' ) . ': ' . $label;
       $arr_items[] = '<option value="' . $value . '"' . $selected . '>' . $label . '</option>';
       // Render the item
     }
@@ -1178,12 +1178,12 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.error' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.error' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.info' ) . '
           </div>
         </div>
         ';
@@ -1217,7 +1217,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.select.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.select.info' ) . '
           </div>
         </div>
         ';
@@ -1233,7 +1233,7 @@ class tx_browser_pi1_backend
 //      $str_prompt = $str_prompt.'
 //        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
 //          <div class="message-body" style="max-width:600px;">
-//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_view.success.info') . '
+//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_view.success.info') . '
 //          </div>
 //        </div>
 //        ';
@@ -1344,7 +1344,7 @@ class tx_browser_pi1_backend
     // The default first item
     $arr_items = null;
     $value = 0;
-    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_start.select.firstItem' );
+    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_start.select.firstItem' );
     $arr_items[] = '<option value="' . $value . '%selected%">' . $label . '</option>';
     // The default first item
     // LOOP fields
@@ -1420,12 +1420,12 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_start.error' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_start.error' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_start.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_start.info' ) . '
           </div>
         </div>
         ';
@@ -1460,7 +1460,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_start.select.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_start.select.info' ) . '
           </div>
         </div>
         ';
@@ -1476,7 +1476,7 @@ class tx_browser_pi1_backend
 //      $str_prompt = $str_prompt.'
 //        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
 //          <div class="message-body" style="max-width:600px;">
-//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_start.success.info') . '
+//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_start.success.info') . '
 //          </div>
 //        </div>
 //        ';
@@ -1589,7 +1589,7 @@ class tx_browser_pi1_backend
     // The default first item
     $arr_items = null;
     $value = 0;
-    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_end.select.firstItem' );
+    $label = $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_end.select.firstItem' );
     $arr_items[] = '<option value="' . $value . '%selected%">' . $label . '</option>';
     // The default first item
     // LOOP fields
@@ -1665,12 +1665,12 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_end.error' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_end.error' ) . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_end.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_end.info' ) . '
           </div>
         </div>
         ';
@@ -1705,7 +1705,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt . '
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_end.select.info' ) . '
+            ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_end.select.info' ) . '
           </div>
         </div>
         ';
@@ -1720,7 +1720,7 @@ class tx_browser_pi1_backend
     $str_prompt = $str_prompt . '
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body" style="max-width:600px;">
-          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_extend.cal_field_end.success.ok' ) . '
+          ' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml:sheet_extend.cal_field_end.success.ok' ) . '
         </div>
       </div>
       ';
@@ -2241,9 +2241,9 @@ class tx_browser_pi1_backend
         $lang = 'default';
     }
     // 120515, dwildt, 1-
-//    $fileRef                = 'EXT:browser/pi1/locallang_flexform.xml';
+//    $fileRef                = 'EXT:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml';
     // 120515, dwildt, 1+
-    $fileRef = 'EXT:browser/pi1/locallang_flexform.xml';
+    $fileRef = 'EXT:EXT:browser/Resources/Private/Language/FlexForms/pi1/locallang.xml';
     $setGlobal = 0;
     $mergeLocalOntoDefault = 0;
     $LOCAL_LANG = $GLOBALS[ 'LANG' ]->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
