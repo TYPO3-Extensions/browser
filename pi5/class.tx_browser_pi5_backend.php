@@ -369,7 +369,7 @@ class tx_browser_pi5_backend
     $str_prompt_warning_version_420 = '
       <div class="typo3-message message-warning">
         <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.warn.version.420') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.warn.version.420') . '
         </div>
       </div>
       ';
@@ -378,7 +378,7 @@ class tx_browser_pi5_backend
     $str_prompt_info_drs = '
       <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.drs') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.info.drs') . '
         </div>
       </div>
       ';
@@ -387,7 +387,7 @@ class tx_browser_pi5_backend
     $str_prompt_info_includePi5 = '
       <div class="typo3-message message-information">
         <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.includePi5') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.info.includePi5') . '
         </div>
       </div>
       ';
@@ -396,7 +396,7 @@ class tx_browser_pi5_backend
     $str_prompt_info_tutorialAndForum = '
       <div class="typo3-message message-notice">
         <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.tutorialAndForum') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.info.tutorialAndForum') . '
         </div>
       </div>
       ';
@@ -413,12 +413,12 @@ class tx_browser_pi5_backend
       $str_prompt = '
         <div class="typo3-message message-error">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.error.saved_never') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.error.saved_never') . '
           </div>
         </div>
         <div class="typo3-message message-information">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.saved_never') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.info.saved_never') . '
           </div>
         </div>
         ';
@@ -437,12 +437,12 @@ class tx_browser_pi5_backend
       $str_prompt = '
         <div class="typo3-message message-error">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.error.no_ts_template') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.error.no_ts_template') . '
           </div>
         </div>
         <div class="typo3-message message-information">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.no_ts_template') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.info.no_ts_template') . '
           </div>
         </div>
         ';
@@ -461,7 +461,7 @@ class tx_browser_pi5_backend
     $str_prompt = '
       <div class="typo3-message message-ok">
         <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.ok') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:sheet_evaluate.plugin.ok') . '
         </div>
       </div>
       ';
@@ -496,12 +496,12 @@ class tx_browser_pi5_backend
   public function day_selectRelative($arr_pluginConf)
   {
       // Localise lables
-    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
-    $ll_dayNom        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.nom');
-    $ll_currDayDat    = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.current.dat');
-    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
-    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
-    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayDay');
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.default');
+    $ll_dayNom        = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.nom');
+    $ll_currDayDat    = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBeTodayDay');
 
       // Configure current day
     $int_currDay    = (int) date ( 'j' );                 // Integer value of current day.
@@ -519,45 +519,45 @@ class tx_browser_pi5_backend
     $arr_pluginConf['items'][] = array('-------------------------------------------',               null  );
 
       // Last days
-    $ll_last        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.last');
+    $ll_last        = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.last');
     $lastDay        = 'last Monday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.monday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.monday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $value          = $lastDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $lastDay        = 'last Tuesday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.tuesday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.tuesday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $value          = $lastDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $lastDay        = 'last Wednesday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.wednesday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.wednesday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $value          = $lastDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $lastDay        = 'last Thursday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.thursday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.thursday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $value          = $lastDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $lastDay        = 'last Friday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.friday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.friday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $value          = $lastDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $lastDay        = 'last Saturday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.saturday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.saturday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $value          = $lastDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $lastDay        = 'last Sunday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.sunday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.sunday');
     $label_lastDay  = $ll_last . ' ' . $ll_day;
     $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
     $arr_pluginConf['items'][] = array($label, $value);
@@ -566,45 +566,45 @@ class tx_browser_pi5_backend
 
 
       // Next days
-    $ll_next        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.next');
+    $ll_next        = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.next');
     $nextDay        = 'next Monday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.monday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.monday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $value          = $nextDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $nextDay        = 'next Tuesday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.tuesday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.tuesday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $value          = $nextDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $nextDay        = 'next Wednesday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.wednesday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.wednesday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $value          = $nextDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $nextDay        = 'next Thursday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.thursday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.thursday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $value          = $nextDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $nextDay        = 'next Friday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.friday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.friday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $value          = $nextDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $nextDay        = 'next Saturday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.saturday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.saturday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $value          = $nextDay;
     $arr_pluginConf['items'][] = array($label, $value);
     $nextDay        = 'next Sunday';
-    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.sunday');
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.day.sunday');
     $label_nextDay  = $ll_next . ' ' . $ll_day;
     $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
     $arr_pluginConf['items'][] = array($label, $value);
@@ -658,11 +658,11 @@ class tx_browser_pi5_backend
   public function month_selectRelative($arr_pluginConf)
   {
       // Localise lables
-    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
-    $ll_currMonthDat  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.month.current.dat');
-    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
-    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
-    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayMonth');
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.default');
+    $ll_currMonthDat  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.month.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBeTodayMonth');
 
       // Configure current month
     $str_currMonth   = $ll_wouldBeToday . ' ' . date ( 'M' );        // Month represented by three characters
@@ -724,12 +724,12 @@ class tx_browser_pi5_backend
   public function week_selectRelative($arr_pluginConf)
   {
       // Localise lables
-    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
-    $ll_weekNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.nom');
-    $ll_currWeekDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.current.dat');
-    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
-    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
-    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayWeek');
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.default');
+    $ll_weekNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.week.nom');
+    $ll_currWeekDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.week.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBeTodayWeek');
 
       // Configure current week
     $int_currWeek   = (int) date ( 'W' );                 // Integer value of current week. The week is beginning on monday.
@@ -791,11 +791,11 @@ class tx_browser_pi5_backend
   public function year_selectRelative($arr_pluginConf)
   {
       // Localise lables
-    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
-    $ll_currYearDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.year.current.dat');
-    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
-    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
-    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayYear');
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.default');
+    $ll_currYearDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.year.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.wouldBeTodayYear');
 
       // Configure current year
     $int_currYear = (int) date ( 'Y' );
@@ -1194,7 +1194,7 @@ class tx_browser_pi5_backend
   public function zz_hours( $arr_pluginConf )
   {
       // Localise lables
-    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/Resources/Private/Language/FlexForms/pi5/locallang.xml:labels.takeItFromTs');
 
       // Default items for select box
     $arr_pluginConf['items'][] = array($ll_takeItFromTs,                              'ts'  );
