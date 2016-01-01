@@ -21,14 +21,11 @@ if ( !defined( 'TYPO3_MODE' ) )
  * Add pagetree icon
  *
  */
-
 /**
  *
  * Configuration by the extension manager
  *
  */
-
-
 $confArr = unserialize( $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'EXT' ][ 'extConf' ][ 'browser' ] );
 
 // Language for labels of static templates and page tsConfig
@@ -47,7 +44,6 @@ switch ( $llStatic )
  * Methods for backend workflows
  *
  */
-
 require_once(t3lib_extMgm::extPath( $_EXTKEY ) . 'pi1/class.tx_browser_pi1_backend.php');
 require_once(t3lib_extMgm::extPath( $_EXTKEY ) . 'pi5/class.tx_browser_pi5_backend.php');
 
@@ -61,7 +57,6 @@ require_once( PATH_typo3conf . 'ext/browser/Configuration/ExtTables/includeStati
  * Plugin general configuration
  *
  */
-
 t3lib_div::loadTCA( 'tt_content' );
 // Plugin general configuration
 /**
@@ -69,7 +64,6 @@ t3lib_div::loadTCA( 'tt_content' );
  * Wizard Icons
  *
  */
-
 if ( TYPO3_MODE == 'BE' )
 {
   $TBE_MODULES_EXT[ 'xMOD_db_new_content_el' ][ 'addElClasses' ][ 'tx_browser_pi1_backend_wizicon' ] = t3lib_extMgm::extPath( $_EXTKEY ) . 'pi1/class.tx_browser_pi1_backend_wizicon.php';
@@ -112,7 +106,8 @@ $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_addlist' ][ $pluginSignatur
   'LLL:EXT:browser/locallang_db.xml:tt_content.list_type_pi1'
   , $_EXTKEY . '_pi1'
   , 'EXT:browser/ext_icon.gif'
-        ), 'list_type'
+        )
+        , 'list_type'
 );
 
 // pi6
@@ -128,30 +123,15 @@ $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_addlist' ][ $pluginSignatur
   'LLL:EXT:browser/locallang_db.xml:tt_content.list_type_pi6'
   , $_EXTKEY . '_pi6'
   , 'EXT:browser/ext_icon.gif'
-        ), 'list_type'
+        )
+        , 'list_type'
 );
-
-/**
- *
- * Plugin 1 configuration
- *
- */
-//$TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_excludelist' ][ $_EXTKEY . '_pi1' ] = 'layout,select_key';
-//// Remove the default tt_content fields layout, select_key, pages and recursive.
-//$TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_addlist' ][ $_EXTKEY . '_pi1' ] = 'pi_flexform';
-//// Display the field pi_flexform
-//t3lib_extMgm::addPiFlexFormValue( $_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/pi1/flexform.xml' );
-//// Register our file with the flexform structure
-//t3lib_extMgm::addPlugin( array( 'LLL:EXT:browser/locallang_db.xml:tt_content.list_type_pi1', $_EXTKEY . '_pi1', 'EXT:browser/ext_icon.gif' ), 'list_type' );
-// Add the Flexform to the Plugin List
-// Plugin 1 configuration
 
 /**
  *
  * Plugin 5 configuration
  *
  */
-
 $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_excludelist' ][ $_EXTKEY . '_pi5' ] = 'layout,select_key';
 // Remove the default tt_content fields layout, select_key, pages and recursive.
 $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_addlist' ][ $_EXTKEY . '_pi5' ] = 'pi_flexform';
@@ -167,7 +147,6 @@ t3lib_extMgm::addPlugin( array( 'LLL:EXT:browser/locallang_db.xml:tt_content.lis
  * Plugin 4 configuration
  *
  */
-
 $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_excludelist' ][ $_EXTKEY . '_pi4' ] = 'layout,select_key';
 // Remove the default tt_content fields layout, select_key, pages and recursive.
 $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_addlist' ][ $_EXTKEY . '_pi4' ] = 'pi_flexform';
@@ -183,7 +162,6 @@ t3lib_extMgm::addPlugin( array( 'LLL:EXT:browser/locallang_db.xml:tt_content.lis
  * Plugin 3 configuration
  *
  */
-
 $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_excludelist' ][ $_EXTKEY . '_pi3' ] = 'layout,select_key,pages,recursive';
 // Remove the default tt_content fields layout, select_key, pages and recursive.
 $TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_addlist' ][ $_EXTKEY . '_pi3' ] = 'pi_flexform';
@@ -199,8 +177,6 @@ t3lib_extMgm::addPlugin( array( 'LLL:EXT:browser/locallang_db.xml:tt_content.lis
  * Add pagetree icon
  *
  */
-
-
 $TCA[ 'pages' ][ 'columns' ][ 'module' ][ 'config' ][ 'items' ][] = array( 'Browser', 'browser', t3lib_extMgm::extRelPath( $_EXTKEY ) . 'ext_icon.gif' );
 t3lib_SpriteManager::addTcaTypeIcon( 'pages', 'contains-browser', '../typo3conf/ext/browser/ext_icon.gif' );
 // Add pagetree icon

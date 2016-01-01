@@ -35,6 +35,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Map/oxMap/', 'Browser [20] + Map Downgrade (oxMap)' );
     // Plugin 6
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi6/', 'Browser [30] Frontend Editing' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi6/Bootstrap/', 'Browser [30] +Bootstrap Templating' );
     // Plugin 3
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi3/', 'Browser [40] Handbuecher' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/reset/', 'Browser [99] Reset' );
@@ -64,6 +65,7 @@ switch ( true )
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/Map/oxMap/', 'Browser [20] + Map Downgrade (oxMap)' );
     // Plugin 6
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi6/', 'Browser [30] Frontend Editing' );
+    t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi6/Bootstrap/', 'Browser [30] +Bootstrap Templating' );
     // Plugin 3
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/pi3/', 'Browser [40] Manuals' );
     t3lib_extMgm::addStaticFile( $_EXTKEY, 'Configuration/TypoScript/reset/', 'Browser [99] Reset' );

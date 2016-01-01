@@ -1,28 +1,12 @@
+{namespace vh=Netzmacher\Org\ViewHelpers}
+
 <f:layout name="frontendEditing" />
 <f:section name="content">
-  <f:format.raw>
-    {result}
-    {action}
-    {phpclassmethod}
-  </f:format.raw>
-  <f:if condition="{condition}">
-    <f:then>
-      <div data-alert class="alert-box success">
-        <span class="prompt"><f:translate key="pi6PromptSuccess">Success prompt</f:translate></span>
-        <a href="#" class="close">&times;</a>
-      </div>
-    </f:then>
-    <f:else>
-      <f:comment>
-        <f:cObject typoscriptObjectPath="plugin.tx_browser_pi6.view.settings.cssAlertAttributes" />
-        <div class="alert alert-danger alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          ###ERROR_PROMPT###
-        </div>
-      </f:comment>
-      <f:render partial="Misc/FormError" />
-    </f:else>
+  <f:if condition="{condition} == 'success'">
+    <f:render partial="Misc/FormSuccess" arguments="{_all}"/>
   </f:if>
-
+  <f:if condition="{condition} == 'error'">
+    <f:render partial="Misc/FormError" arguments="{_all}" />
+  </f:if>
 
 </f:section>

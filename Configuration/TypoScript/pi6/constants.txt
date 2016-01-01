@@ -1,10 +1,20 @@
 plugin.tx_browser_pi6 {
+  settings {
+    fe_users {
+      # cat=Browser - Frontend Editing - fe_users*//100;           type=string; label= allowed:List of fields, which are allowed for editing
+      allowed   = address, city, company, country, email, fax, first_name, image, last_name, middle_name, name, password, telephone, title, www, zip
+      # cat=Browser - Frontend Editing - fe_users*//101;           type=string; label= default pid:RECOMMENDED! Id of the sysfolder for a new frontend user
+      pid       =
+      # cat=Browser - Frontend Editing - fe_users*//102;           type=string; label= default group*:*OBLIGATE! Uid of the default group of a new frontend user
+      usergroup =
+    }
+  }
   view {
-    # cat=Browser - Frontend Editing - view//101;           type=string;     label= Templates:Path to the templates
-		templateRootPath  = EXT:browser/Resources/Private/View/Default/Templates/
+    # cat=Browser - Frontend Editing - view//101;           type=string;     label= Layouts:Path to the layouts
+		layoutRootPath    = EXT:browser/Resources/Private/View/Default/Layouts/
     # cat=Browser - Frontend Editing - view//102;           type=string;     label= Partials:Path to the partials
 		partialRootPath   = EXT:browser/Resources/Private/View/Default/Partials/
-    # cat=Browser - Frontend Editing - view//103;           type=string;     label= Layouts:Path to the layouts
-		layoutRootPath    = EXT:browser/Resources/Private/View/Default/Layouts/
+    # cat=Browser - Frontend Editing - view//103;           type=string;     label= Templates:Path to the templates
+		templateRootPath  = EXT:browser/Resources/Private/View/Default/Templates/
   }
 }

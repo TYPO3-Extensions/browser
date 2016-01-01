@@ -15,6 +15,14 @@ Manual
   * #i0215: Plugin for frontend-editing.
             Needs a template for controlling.
             Template must delivered by the extension with the database like Quick Shop or Organiser.
+            Limitations
+            * Supported TCA config types
+              * check
+              * group
+              * input
+              * radio
+              * select
+              * text
   Improvement
   * #i0216: Flexforms are moved from pi* to Configuration/FlexForms/pi*
 

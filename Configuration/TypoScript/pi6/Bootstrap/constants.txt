@@ -1,0 +1,5 @@
+plugin.tx_browser_pi6 {
+  view {
+		partialRootPath = EXT:browser/Resources/Private/View/Bootstrap/Partials/
+  }
+}
