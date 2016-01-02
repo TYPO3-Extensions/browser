@@ -254,7 +254,8 @@ class FrontendEditingController extends ActionController
   private function _insert()
   {
     //$this->_feUser();
-    $this->_oTablesFeusers->init( $this->settings );
+    $this->_oTablesFeusers->init( $this->settings, 'fe_users' );
+    //$this->_oTablesFeusers->init( $this->settings, 'tx_org_job' );
     $this->_feUserRecordKeyValues = $this->_oTablesFeusers->getRecordKeyValues();
 
     if ( empty( $this->_feUserRecordKeyValues ) )

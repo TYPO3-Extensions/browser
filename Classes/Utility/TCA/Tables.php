@@ -85,7 +85,7 @@ class Tables
    */
   public function local( $table, $fields )
   {
-    foreach ( array_keys( $fields ) AS $field )
+    foreach ( array_keys( ( array ) $fields ) AS $field )
     {
       $this->_localFieldConfig( $table, $field );
     }
@@ -152,7 +152,6 @@ class Tables
         $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'foreign_table' ];
         $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
                 . 'foreign_table is set: "' . $config[ 'foreign_table' ] . '" '
-                . 'Field should post processed.'
         ;
         break;
       default:
@@ -195,7 +194,6 @@ class Tables
         $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'internal_type' ];
         $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
                 . 'internal_type is "' . $config[ 'internal_type' ] . '". '
-                . 'Field should post processed.'
         ;
         $handle = FALSE;
         //var_dump( __METHOD__, __LINE__, $field, 'HANDLE' );

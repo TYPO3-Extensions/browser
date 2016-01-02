@@ -109,6 +109,11 @@ class FeUsers
   private $_sFieldsForHandle;
 
   /**
+   * @var string Table
+   */
+  private $_sTable;
+
+  /**
    * getIsLoggedIn( ) :
    *
    * @return void
@@ -137,14 +142,17 @@ class FeUsers
   /**
    * init( ) :
    *
+   * @param array $settings
+   * @param string $table
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  public function init( $settings )
+  public function init( $settings, $table )
   {
     $this->_setSettings( $settings );
+    $this->_setTable( $table );
     $this->_classes();
     $this->_setFeUserIsLoggedIn();
     $this->_setPowermailGP();
@@ -200,7 +208,7 @@ class FeUsers
     foreach ( array_keys( $this->_aPowermailGP ) as $key )
     {
       list($table, $field) = explode( '__', $key );
-      if ( $table != 'fe_users' )
+      if ( $table != $this->_sTable )
       {
         continue;
       }
@@ -220,12 +228,11 @@ class FeUsers
   private function _recordFieldsForHandleFromTCA()
   {
     $aAllowedTCAFields = array();
-    $table = 'fe_users';
     // fields from TCA
-    $aTCAFields = array_keys( $GLOBALS[ 'TCA' ][ $table ][ 'columns' ] );
+    $aTCAFields = array_keys( $GLOBALS[ 'TCA' ][ $this->_sTable ][ 'columns' ] );
     foreach ( $aTCAFields as $field )
     {
-      $sConfigType = $GLOBALS[ 'TCA' ][ $table ][ 'columns' ][ $field ][ 'config' ][ 'type' ];
+      $sConfigType = $GLOBALS[ 'TCA' ][ $this->_sTable ][ 'columns' ][ $field ][ 'config' ][ 'type' ];
       if ( !in_array( $sConfigType, $this->_aSupportedTCAConfigTypes ) )
       {
         continue;
@@ -245,7 +252,7 @@ class FeUsers
    */
   private function _recordFieldsForHandleFromTypoScript()
   {
-    $sTSFields = $this->_aSettings[ 'mapping' ][ 'fe_users' ][ 'allowedFields' ];
+    $sTSFields = $this->_aSettings[ 'mapping' ][ $this->_sTable ][ 'allowedFields' ];
     $sTSFields = str_replace( ' ', NULL, $sTSFields );
     $aTSFields = explode( ',', $sTSFields );
     return $aTSFields;
@@ -316,7 +323,7 @@ class FeUsers
   private function _recordSetKeyValuesDefaultsForHandle( $keyValues )
   {
     $aHandledKeys = array_keys( $keyValues );
-    $aDefaultKeys = array_keys( $this->_aSettings[ 'mapping' ][ 'fe_users' ][ 'defaults' ] );
+    $aDefaultKeys = array_keys( $this->_aSettings[ 'mapping' ][ $this->_sTable ][ 'defaults' ] );
     $aFieldsForHandle = array_diff( $aDefaultKeys, $aHandledKeys, array( '_typoScriptNodeValue' ) );
 
     return $aFieldsForHandle;
@@ -339,7 +346,7 @@ class FeUsers
 
     foreach ( $aFieldsForHandle as $field )
     {
-      $typoscriptPlain = $this->_aSettings[ 'mapping' ][ 'fe_users' ][ 'defaults' ][ $field ];
+      $typoscriptPlain = $this->_aSettings[ 'mapping' ][ $this->_sTable ][ 'defaults' ][ $field ];
       $name = $typoscriptPlain[ '_typoScriptNodeValue' ];
       $conf = $this->_oTypoScriptService->convertPlainArrayToTypoScriptArray( $typoscriptPlain );
 
@@ -377,7 +384,7 @@ class FeUsers
       {
         continue;
       }
-      $pmKey = 'fe_users__' . $field;
+      $pmKey = $this->_sTable . '__' . $field;
       $keyValues[ $field ] = $this->_aPowermailGP[ $pmKey ];
     }
     return $keyValues;
@@ -454,7 +461,7 @@ class FeUsers
    */
   private function _recordSetLocalFields()
   {
-    $this->_oTCATables->local( 'fe_users', $this->_aRecordKeyValues );
+    $this->_oTCATables->local( $this->_sTable, $this->_aRecordKeyValues );
   }
 
   /**
@@ -516,8 +523,7 @@ class FeUsers
     $data = array(
       'dummy' => 'dummy',
     );
-    $table = 'fe_users';
-    $this->_cObj->start( $data, $table );
+    $this->_cObj->start( $data, $this->_sTable );
   }
 
   /**
@@ -616,6 +622,20 @@ class FeUsers
   private function _setSettings( $settings )
   {
     $this->_aSettings = $settings;
+  }
+
+  /**
+   * _setTable( ) :
+   *
+   * @param strinmg $table
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _setTable( $table )
+  {
+    $this->_sTable = $table;
   }
 
 }
