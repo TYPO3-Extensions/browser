@@ -1,6 +1,6 @@
 /**
  *
- * Copyright (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ * Copyright (c) 2011-2016 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * http://wildt.at.die-netzmacher.de/
  *
  * Version 0.0.6

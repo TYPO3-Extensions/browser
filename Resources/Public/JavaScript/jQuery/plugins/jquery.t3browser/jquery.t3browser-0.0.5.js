@@ -3,7 +3,7 @@
  *
  * http://docs.jquery.com/Plugins/t3browser
  *
- * Copyright (c) 2011-2015 Dirk Wildt
+ * Copyright (c) 2011-2016 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
  * Dual licensed under the MIT and GPL licenses:

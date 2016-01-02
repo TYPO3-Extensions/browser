@@ -1,6 +1,6 @@
 /**
  * @description map_toggle.js: toggle the map
- * @author (c) 2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de/>
+ * @author (c) 2015-2016 - Dirk Wildt <http://wildt.at.die-netzmacher.de/>
  * @version 7.2.12
  * @since 6.0.8
  */

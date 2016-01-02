@@ -3,11 +3,11 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2011-2016 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is based on the TYPO3 extension browser
- *  (c) 2010-2015 - Bert Wendler and Marcel Walczak
+ *  (c) 2010-2016 - Bert Wendler and Marcel Walczak
  *
  *  Thanks to Bert Wendler and Marcel Walczak for their wonderful
  *  work.

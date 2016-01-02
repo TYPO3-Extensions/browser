@@ -2,7 +2,7 @@
  *
  * Localisation file for jquery.t3browser
 
- * Copyright (c) 2011 Dirk Wildt
+ * Copyright (c) 2011-2016 - Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
  * Version 0.0.1

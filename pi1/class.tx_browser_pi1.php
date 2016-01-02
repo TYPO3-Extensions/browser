@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2016 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -1895,6 +1895,7 @@ class tx_browser_pi1 extends tslib_pibase
     $this->b_drs_export = false;
     $this->b_drs_filter = false;
     $this->b_drs_flexform = false;
+    $this->b_drs_frontendediting = false;
     $this->b_drs_hooks = false;
     $this->b_drs_javascript = false;
     $this->b_drs_localisation = false;
@@ -1937,6 +1938,7 @@ class tx_browser_pi1 extends tslib_pibase
       $this->b_drs_export = true;
       $this->b_drs_filter = true;
       $this->b_drs_flexform = true;
+      $this->b_drs_frontendediting = true;
       $this->b_drs_hooks = true;
       $this->b_drs_javascript = true;
       $this->b_drs_localisation = true;
@@ -2033,6 +2035,14 @@ class tx_browser_pi1 extends tslib_pibase
       $this->b_drs_warn = true;
       $this->b_drs_info = true;
       $this->b_drs_flexform = true;
+      t3lib_div::devlog( '[INFO/DRS] DRS - Development Reporting System:<br />' . $this->arr_extConf[ 'drs_mode' ], $this->extKey, 0 );
+    }
+    if ( $this->arr_extConf[ 'drs_mode' ] == 'Frontend Editing' )
+    {
+      $this->b_drs_error = true;
+      $this->b_drs_warn = true;
+      $this->b_drs_info = true;
+      $this->b_drs_frontendediting = true;
       t3lib_div::devlog( '[INFO/DRS] DRS - Development Reporting System:<br />' . $this->arr_extConf[ 'drs_mode' ], $this->extKey, 0 );
     }
     if ( $this->arr_extConf[ 'drs_mode' ] == 'Hooks' )

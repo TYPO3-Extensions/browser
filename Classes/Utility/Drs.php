@@ -1,9 +1,8 @@
 <?php
 
-namespace Netzmacher\Browser\Controller;
+namespace Netzmacher\Browser\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /* * *************************************************************
  *  Copyright notice

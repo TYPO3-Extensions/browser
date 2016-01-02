@@ -1,14 +1,13 @@
 <?php
 
-namespace Netzmacher\Browser\Utility\Tables;
+namespace Netzmacher\Browser\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2015 -  Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2015 - 2016 -  Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,8 +37,13 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  * @since 7.4.0
  * @internal #i0215
  */
-class FeUsers
+class Tables
 {
+
+  /**
+   * @var array
+   */
+  private $_aKeyValues;
 
   /**
    * @var array Powermail GET and POST params
@@ -89,14 +93,14 @@ class FeUsers
   private $_bIsLoggedIn = FALSE;
 
   /**
-   * @var ContentObjectRenderer
+   * @var TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
    */
-  private $_cObj;
+  private $_oCObj;
 
   /**
    * @var object
    */
-  private $_oTCATables;
+  private $_oTCA;
 
   /**
    * @var object
@@ -127,10 +131,23 @@ class FeUsers
   }
 
   /**
+   * getKeyValues( ) :
+   *
+   * @return array
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  public function getKeyValues()
+  {
+    return $this->_aKeyValues;
+  }
+
+  /**
    * getRecordKeyValues( ) :
    *
-   * @return void
-   * @access private
+   * @return array
+   * @access public
    * @version 7.4.0
    * @since 7.4.0
    */
@@ -140,23 +157,71 @@ class FeUsers
   }
 
   /**
-   * init( ) :
+   * getUid( $table ) :
    *
-   * @param array $settings
    * @param string $table
+   * @return array
+   * @access public
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  public function getUid()
+  {
+    return $this->_aRecordKeyValues;
+  }
+
+  /**
+   * main( ) :
+   *
+   * @param string $table
+   * @param array $settings
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  public function init( $settings, $table )
+  public function main( $table, $settings )
   {
+    //var_dump( __METHOD__, __LINE__, $strDebugTrail = \TYPO3\CMS\Core\Utility\DebugUtility::debugTrail(), $table );
+    $this->_init( $table, $settings );
+    $this->_record();
+    $this->_aKeyValues = $this->_oTCA->getTableKeyValues( $table );
+    //var_dump( __METHOD__, __LINE__, $this->_sTable, $this->_aRecordKeyValues, $this->_oTCA->getTableField(), $this->_oTCA->getKeyValues( $table ) );
+  }
+
+  /**
+   * setCObj( ) :
+   *
+   * @param TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj
+   * @return void
+   * @access public
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  public function setCObj( $cObj )
+  {
+    $this->_oCObj = $cObj;
+  }
+
+  /**
+   * init( ) :
+   *
+   * @param string $table
+   * @param array $settings
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _init( $table, $settings )
+  {
+    //var_dump( __METHOD__, __LINE__, $strDebugTrail = \TYPO3\CMS\Core\Utility\DebugUtility::debugTrail(), $table );
     $this->_setSettings( $settings );
     $this->_setTable( $table );
     $this->_classes();
     $this->_setFeUserIsLoggedIn();
     $this->_setPowermailGP();
-    $this->_record();
+//    $this->_setCObjStart();
   }
 
   /**
@@ -184,12 +249,14 @@ class FeUsers
   private function _recordFieldsForHandle()
   {
     $aTCAFields = $this->_recordFieldsForHandleFromTCA();
+    //var_dump( __METHOD__, __LINE__, $this->_sTable );
     $aTSFields = $this->_recordFieldsForHandleFromTypoScript();
     $aPMFields = $this->_recordFieldsForHandleFromPowermail();
 
 // intersect of all field groups
     $aIntersect = array_intersect( $aTCAFields, $aTSFields, $aPMFields );
     $sIntersect = implode( ',', $aIntersect );
+    //var_dump( __METHOD__, __LINE__, $this->_sTable );
 
     $this->_sFieldsForHandle = $sIntersect;
   }
@@ -229,6 +296,7 @@ class FeUsers
   {
     $aAllowedTCAFields = array();
     // fields from TCA
+    //var_dump( __METHOD__, __LINE__, $this->_sTable, $strDebugTrail = \TYPO3\CMS\Core\Utility\DebugUtility::debugTrail() );
     $aTCAFields = array_keys( $GLOBALS[ 'TCA' ][ $this->_sTable ][ 'columns' ] );
     foreach ( $aTCAFields as $field )
     {
@@ -289,7 +357,7 @@ class FeUsers
       return;
     }
     $keyValues = $this->_recordSetKeyValuesUid( $keyValues );
-    $keyValues = $this->_recordSetKeyValuesUsername( $keyValues );
+//    $keyValues = $this->_recordSetKeyValuesUsername( $keyValues );
     $keyValues = $this->_recordSetKeyValuesDefaults( $keyValues );
 
     $this->_aRecordKeyValues = $keyValues;
@@ -350,7 +418,7 @@ class FeUsers
       $name = $typoscriptPlain[ '_typoScriptNodeValue' ];
       $conf = $this->_oTypoScriptService->convertPlainArrayToTypoScriptArray( $typoscriptPlain );
 
-      $value = $this->_cObj->cObjGetSingle( $name, $conf );
+      $value = $this->_oCObj->cObjGetSingle( $name, $conf );
 
       switch ( TRUE )
       {
@@ -408,33 +476,34 @@ class FeUsers
     return $keyValues;
   }
 
-  /**
-   * _recordSetKeyValuesUsername( ) :
-   *
-   * @return array
-   * @access private
-   * @version 7.4.0
-   * @since 7.4.0
-   */
-  private function _recordSetKeyValuesUsername( $keyValues )
-  {
-    if ( !$this->_bIsLoggedIn )
-    {
-      return $keyValues;
-    }
-    if ( !empty( $keyValues[ 'email' ] ) )
-    {
-      $keyValues[ 'username' ] = $keyValues[ 'email' ];
-      return $keyValues;
-    }
-    if ( !empty( $keyValues[ 'name' ] ) )
-    {
-      list($first) = explode( ' ', $keyValues[ 'name' ] );
-      $keyValues[ 'username' ] = strtolower( $first );
-      return $keyValues;
-    }
-    return $keyValues;
-  }
+//
+//  /**
+//   * _recordSetKeyValuesUsername( ) :
+//   *
+//   * @return array
+//   * @access private
+//   * @version 7.4.0
+//   * @since 7.4.0
+//   */
+//  private function _recordSetKeyValuesUsername( $keyValues )
+//  {
+//    if ( !$this->_bIsLoggedIn )
+//    {
+//      return $keyValues;
+//    }
+//    if ( !empty( $keyValues[ 'email' ] ) )
+//    {
+//      $keyValues[ 'username' ] = $keyValues[ 'email' ];
+//      return $keyValues;
+//    }
+//    if ( !empty( $keyValues[ 'name' ] ) )
+//    {
+//      list($first) = explode( ' ', $keyValues[ 'name' ] );
+//      $keyValues[ 'username' ] = strtolower( $first );
+//      return $keyValues;
+//    }
+//    return $keyValues;
+//  }
 
   /**
    * _recordSetLocal( ) :
@@ -461,7 +530,7 @@ class FeUsers
    */
   private function _recordSetLocalFields()
   {
-    $this->_oTCATables->local( $this->_sTable, $this->_aRecordKeyValues );
+    $this->_oTCA->main( $this->_sTable, $this->_aRecordKeyValues );
   }
 
   /**
@@ -500,10 +569,10 @@ class FeUsers
    */
   private function _classes()
   {
-    $this->_classesObjectManager();
-    $this->_classesCObj();
+//    $this->_classesObjectManager();
+//    $this->_classesCObj();
     $this->_classesPowermailParams();
-    $this->_classesTCATables();
+    $this->_classesTCA();
     $this->_classesTypoScriptService();
   }
 
@@ -517,13 +586,9 @@ class FeUsers
    */
   private function _classesCObj()
   {
-    $this->_cObj = $this->_oObjectManager->get(
+    $this->_oCObj = $this->_oObjectManager->get(
             'TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer'
     );
-    $data = array(
-      'dummy' => 'dummy',
-    );
-    $this->_cObj->start( $data, $this->_sTable );
   }
 
   /**
@@ -553,16 +618,16 @@ class FeUsers
   }
 
   /**
-   * _classesTCATables( ) :
+   * _classesTCA( ) :
    *
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _classesTCATables()
+  private function _classesTCA()
   {
-    $this->_oTCATables = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\TCA\\Tables' );
+    $this->_oTCA = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\TCA' );
   }
 
   /**
@@ -577,6 +642,61 @@ class FeUsers
   {
     $this->_oTypoScriptService = GeneralUtility::makeInstance( 'TYPO3\\CMS\\Extbase\\Service\\TypoScriptService' );
   }
+//
+//  /**
+//   * _setCObjStart( ) :
+//   *
+//   * @return void
+//   * @access private
+//   * @version 7.4.0
+//   * @since 7.4.0
+//   */
+//  private function _setCObjStart()
+//  {
+//    $data = $this->_setCObjStartData();
+//    $this->_oCObj->start( $data, $this->_sTable );
+//  }
+//
+//  /**
+//   * _setCObjStartData( ) :
+//   *
+//   * @return array
+//   * @access private
+//   * @version 7.4.0
+//   * @since 7.4.0
+//   */
+//  private function _setCObjStartData()
+//  {
+//    $data = $this->_setCObjStartDataPowermail();
+//    return $data;
+//  }
+//
+//  /**
+//   * _setCObjStartDataPowermail( ) :
+//   *
+//   * @return array
+//   * @access private
+//   * @version 7.4.0
+//   * @since 7.4.0
+//   */
+//  private function _setCObjStartDataPowermail()
+//  {
+//    foreach ( $this->_aPowermailGP AS $key => $value )
+//    {
+//      if ( is_array( $value ) )
+//      {
+//        $value = implode( ',', $value );
+//      }
+//      $data[ $key ] = $value;
+//      list($table, $field) = explode( '__', $key );
+//      if ( $field )
+//      {
+//        $tableField = $table . '.' . $field;
+//        $data[ $tableField ] = $value;
+//      }
+//    }
+//    return $data;
+//  }
 
   /**
    * _setFeUserIsLoggedIn( ) :

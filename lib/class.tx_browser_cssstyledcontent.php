@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012-2015 - Dirk Wildt, Die Netzmacher <http://wildt.at.die-netzmacher.de>
+*  (c) 2012-2016 - Dirk Wildt, Die Netzmacher <http://wildt.at.die-netzmacher.de>
 *  (c) 1999-2011 - Kasper SkÃ¥rhÃžj (kasperYYYY@typo3.com)
 *  All rights reserved
 *

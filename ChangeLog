@@ -13,8 +13,10 @@ Manual
   15-12-28
   Feature
   * #i0215: Plugin for frontend-editing.
-            Needs a template for controlling.
-            Template must delivered by the extension with the database like Quick Shop or Organiser.
+            * Needs a template for controlling.
+            * Template must delivered by the extension with the database like Quick Shop or Organiser.
+            DRS
+            * New category: Frontend Editing
             Limitations
             * Supported TCA config types
               * check

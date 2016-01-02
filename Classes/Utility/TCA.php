@@ -1,13 +1,14 @@
 <?php
 
-namespace Netzmacher\Browser\Utility\TCA;
+namespace Netzmacher\Browser\Utility;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2015 -  Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2015 - 2016 -  Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,44 +37,56 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  * @version 7.4.0
  * @since 7.4.0
  */
-class Tables
+class TCA
 {
 
   /**
    * @var array
    */
-  private $_aSupportedTCAConfigTypes = array(
-    'check'
-    //, 'flex'
-    , 'group'
-    //, 'inline'
-    , 'input'
-    //, 'none'
-    //, 'passthrough'
-    , 'radio'
-    , 'select'
-    , 'text'
-          //, 'user'
-  );
+  private $_aTableField;
 
   /**
-   * foreign( ) :
+   * @var array
+   */
+  private $_aTableFieldProcess;
+
+  /**
+   * getTableField( ) :
    *
-   * @param string $table
-   * @param string $field
-   * @return string
+   * @return array
    * @access public
    * @version 7.4.0
    * @since 7.4.0
    *
    */
-  public function foreign( $table, $field )
+  public function getTableField()
   {
-    return;
+//    var_dump( __METHOD__, __LINE__, $table, $fields, $this->_aTableField );
+    //die();
+
+    return $this->_aTableField;
   }
 
   /**
-   * local( ) :
+   * getTableFieldProcess( ) :
+   *
+   * @param string $table
+   * @return array
+   * @access public
+   * @version 7.4.0
+   * @since 7.4.0
+   *
+   */
+  public function getTableKeyValues( $table )
+  {
+//    var_dump( __METHOD__, __LINE__, $table, $fields, $this->_aTableField );
+    //die();
+
+    return $this->_aTableFieldProcess[ $table ];
+  }
+
+  /**
+   * main( ) :
    *
    * @param string $table
    * @param array $fields
@@ -83,20 +96,50 @@ class Tables
    * @since 7.4.0
    *
    */
-  public function local( $table, $fields )
+  public function main( $table, $fields )
   {
+    //var_dump( __METHOD__, __LINE__, $table );
     foreach ( array_keys( ( array ) $fields ) AS $field )
     {
-      $this->_localFieldConfig( $table, $field );
+      $this->_fieldConfig( $table, $field );
     }
-    var_dump( __METHOD__, __LINE__, $table, $fields, $this->_localTableField );
-    die();
 
-    return;
+    $this->_setProcess( $table, $fields );
   }
 
   /**
-   * _localFieldConfig( ) :
+   * _setProcess( ) :
+   *
+   * @param string $table
+   * @param array $fields
+   * @return string
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   *
+   */
+  private function _setProcess( $table, $fields )
+  {
+//    var_dump( __METHOD__, __LINE__, $table, $fields, $this->_aTableField );
+    foreach ( $fields AS $field => $value )
+    {
+      if ( $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] )
+      {
+        continue;
+      }
+      $this->_aTableFieldProcess[ $table ][ $field ] = $value;
+    }
+//    var_dump( __METHOD__, __LINE__, $this->_aTableFieldProcess );
+//  array(1) {
+//  ["fe_users"]=>
+//  array(1) {
+//    ["image"]=>
+//    array(3) {
+//      ["doNotProcess"]=>
+  }
+
+  /**
+   * _fieldConfig( ) :
    *
    * @param string $table
    * @param array $field
@@ -106,24 +149,24 @@ class Tables
    * @since 7.4.0
    *
    */
-  private function _localFieldConfig( $table, $field )
+  private function _fieldConfig( $table, $field )
   {
-    if ( !$this->_localFieldConfigForeignTable( $table, $field ) )
+    if ( !$this->_fieldConfigForeignTable( $table, $field ) )
     {
       return;
     }
-    if ( !$this->_localFieldConfigInternalType( $table, $field ) )
+    if ( !$this->_fieldConfigInternalType( $table, $field ) )
     {
       return;
     }
-    if ( !$this->_localFieldConfigType( $table, $field ) )
+    if ( !$this->_fieldConfigType( $table, $field ) )
     {
       return;
     }
   }
 
   /**
-   * _localFieldConfig( ) :
+   * _fieldConfig( ) :
    *
    * @param string $table
    * @param array $field
@@ -133,7 +176,7 @@ class Tables
    * @since 7.4.0
    *
    */
-  private function _localFieldConfigForeignTable( $table, $field )
+  private function _fieldConfigForeignTable( $table, $field )
   {
     $config = BackendUtility::getTcaFieldConfiguration( $table, $field );
     //var_dump( __METHOD__, __LINE__, $field, $config );
@@ -141,20 +184,21 @@ class Tables
     switch ( TRUE )
     {
       case(isset( $config[ 'foreign_table' ] )):
-        //var_dump( __METHOD__, __LINE__, $field, 'FOREIGN TABLE' );
+//        var_dump( __METHOD__, __LINE__, $field );
         $handle = FALSE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
                 . 'foreign_table is set: "' . $config[ 'foreign_table' ] . '". '
                 . 'Field should post processed.'
         ;
-        $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'key' ] = 'foreign_table';
-        $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'foreign_table' ];
-        $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
+        $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'key' ] = 'foreign_table';
+        $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'foreign_table' ];
+        $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
                 . 'foreign_table is set: "' . $config[ 'foreign_table' ] . '" '
         ;
         break;
       default:
+//        var_dump( __METHOD__, __LINE__, $field );
         $handle = TRUE;
         break;
     }
@@ -162,7 +206,7 @@ class Tables
   }
 
   /**
-   * _localFieldConfigInternalType( ) :
+   * _fieldConfigInternalType( ) :
    *
    * @param string $table
    * @param array $field
@@ -172,38 +216,44 @@ class Tables
    * @since 7.4.0
    *
    */
-  private function _localFieldConfigInternalType( $table, $field )
+  private function _fieldConfigInternalType( $table, $field )
   {
     $config = BackendUtility::getTcaFieldConfiguration( $table, $field );
     //var_dump( __METHOD__, __LINE__, $field, $config );
 
     if ( !isset( $config[ 'internal_type' ] ) )
     {
+//      var_dump( __METHOD__, __LINE__, $field );
       return TRUE;
     }
 
     switch ( $config[ 'internal_type' ] )
     {
+      case('db'):
       case('file'):
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
+//        var_dump( __METHOD__, __LINE__, $field );
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
                 . 'internal_type is "' . $config[ 'internal_type' ] . '". '
                 . 'Field should post processed.'
         ;
-        $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'key' ] = 'internal_type';
-        $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'internal_type' ];
-        $this->_localTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
+        //if ($this->writeDevLog) {
+          GeneralUtility::devLog('XXXXXXXXXXXXXXX', __CLASS__, 0);
+        //}
+        $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'key' ] = 'internal_type';
+        $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'internal_type' ];
+        $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
                 . 'internal_type is "' . $config[ 'internal_type' ] . '". '
         ;
         $handle = FALSE;
         //var_dump( __METHOD__, __LINE__, $field, 'HANDLE' );
         break;
-      case('db'):
       case('file_reference'):
       case('folder'):
+//        var_dump( __METHOD__, __LINE__, $field );
         $handle = FALSE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
                 . 'internal_type is "' . $config[ 'internal_type' ] . '". '
                 . 'and can\'t handled. '
                 . 'See ' . __METHOD__ . ' #' . __LINE__
@@ -213,12 +263,13 @@ class Tables
       default:
         break;
     }
+//    var_dump( __METHOD__, __LINE__, $table, $this->_aTableField );
 
     return $handle;
   }
 
   /**
-   * _localFieldConfigType( ) :
+   * _fieldConfigType( ) :
    *
    * @param string $table
    * @param array $field
@@ -228,7 +279,7 @@ class Tables
    * @since 7.4.0
    *
    */
-  private function _localFieldConfigType( $table, $field )
+  private function _fieldConfigType( $table, $field )
   {
     $config = BackendUtility::getTcaFieldConfiguration( $table, $field );
     //var_dump( __METHOD__, __LINE__, $field, $config );
@@ -242,6 +293,7 @@ class Tables
       case('select'):
       case('text'):
         //var_dump( __METHOD__, __LINE__, $field, 'HANDLE' );
+//        var_dump( __METHOD__, __LINE__, $field );
         $handle = TRUE;
         break;
       case('flex'):
@@ -249,9 +301,10 @@ class Tables
       case('none'):
       case('passthrough'):
       case('user'):
+//        var_dump( __METHOD__, __LINE__, $field );
         $handle = FALSE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_localTableField[ $table ][ $field ][ 'doNotProcessCause' ] = 'type can not handled:' . $config[ 'type' ];
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = 'type can not handled:' . $config[ 'type' ];
         //var_dump( __METHOD__, __LINE__, $field, 'DON\'T HANDLE' );
         break;
       default:

@@ -3,7 +3,7 @@
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2015-2016 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -996,7 +996,7 @@ class tx_browser_pi1_mapleaflet
    */
   private function mapLLjssComment()
   {
-    $author = '@author      (c) 2015 - Dirk Wildt <http://wildt.at.die-netzmacher.de/>';
+    $author = '@author      (c) 2015-2016 - Dirk Wildt <http://wildt.at.die-netzmacher.de/>';
     $poweredBy = '@description Powered by the Leaflet modul of the TYPO3 Browser - TYPO3 without PHP. See http://typo3-browser.de/';
     $readyToUse = '             Ready to use by the TYPO3 Organsier - TYPO3 for Lobbies and Organisers. See http://typo3-organiser.de/';
     $since = '@since       7.0.0';
