@@ -2,8 +2,8 @@
 
 namespace Netzmacher\Browser\Utility;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /* * *************************************************************
  *  Copyright notice
@@ -49,6 +49,11 @@ class TCA
    * @var array
    */
   private $_aTableFieldProcess;
+
+  /**
+   * @var Netzmacher\Browser\Utility\DRS
+   */
+  private $_oDRS;
 
   /**
    * getTableField( ) :
@@ -108,6 +113,21 @@ class TCA
   }
 
   /**
+   * setDRS( )
+   *
+   * @param Netzmacher\Browser\Utility\DRS $oDRS
+   * @return array
+   * @access public
+   * @version 7.4.0
+   * @since 7.4.0
+   *
+   */
+  public function setDRS( \Netzmacher\Browser\Utility\DRS $oDRS )
+  {
+    $this->_oDRS = $oDRS;
+  }
+
+  /**
    * _setProcess( ) :
    *
    * @param string $table
@@ -129,13 +149,27 @@ class TCA
       }
       $this->_aTableFieldProcess[ $table ][ $field ] = $value;
     }
-//    var_dump( __METHOD__, __LINE__, $this->_aTableFieldProcess );
-//  array(1) {
-//  ["fe_users"]=>
-//  array(1) {
-//    ["image"]=>
-//    array(3) {
-//      ["doNotProcess"]=>
+  }
+
+  /**
+   * _DRSprompt( ) :
+   *
+   * @param string $prompt
+   * @param int $line
+   * @param int $type
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   *
+   */
+  private function _DRSprompt( $prompt, $line = __LINE__, $type = 0 )
+  {
+    if ( !$this->_oDRS->getDrsFrontendEditing() )
+    {
+      return;
+    }
+    GeneralUtility::devlog( '[INFO/FE] ' . $prompt, __CLASS__ . '#' . $line, $type );
   }
 
   /**
@@ -187,10 +221,13 @@ class TCA
 //        var_dump( __METHOD__, __LINE__, $field );
         $handle = FALSE;
         $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
+        $prompt = ''
                 . 'foreign_table is set: "' . $config[ 'foreign_table' ] . '". '
                 . 'Field should post processed.'
         ;
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = $prompt;
+        $prompt = $table . '.' . $field . ': ' . $prompt;
+        $this->_DRSprompt( $prompt, __LINE__ );
         $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'key' ] = 'foreign_table';
         $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'foreign_table' ];
         $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
@@ -233,13 +270,13 @@ class TCA
       case('file'):
 //        var_dump( __METHOD__, __LINE__, $field );
         $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
+        $prompt = ''
                 . 'internal_type is "' . $config[ 'internal_type' ] . '". '
                 . 'Field should post processed.'
         ;
-        //if ($this->writeDevLog) {
-          GeneralUtility::devLog('XXXXXXXXXXXXXXX', __CLASS__, 0);
-        //}
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = $prompt;
+        $prompt = $table . '.' . $field . ': ' . $prompt;
+        $this->_DRSprompt( $prompt, __LINE__ );
         $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'key' ] = 'internal_type';
         $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'value' ] = $config[ 'internal_type' ];
         $this->_aTableField[ $table ][ $field ][ 'postProcess' ][ 'prompt' ] = ''
@@ -253,12 +290,14 @@ class TCA
 //        var_dump( __METHOD__, __LINE__, $field );
         $handle = FALSE;
         $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = ''
+        $prompt = ''
                 . 'internal_type is "' . $config[ 'internal_type' ] . '". '
                 . 'and can\'t handled. '
                 . 'See ' . __METHOD__ . ' #' . __LINE__
         ;
-        //var_dump( __METHOD__, __LINE__, $field, 'DON\'T HANDLE' );
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = $prompt;
+        $prompt = $table . '.' . $field . ': ' . $prompt;
+        $this->_DRSprompt( $prompt, __LINE__, 3 );
         break;
       default:
         break;
@@ -292,8 +331,12 @@ class TCA
       case('radio'):
       case('select'):
       case('text'):
-        //var_dump( __METHOD__, __LINE__, $field, 'HANDLE' );
-//        var_dump( __METHOD__, __LINE__, $field );
+        $prompt = ''
+                . 'type is "' . $config[ 'type' ] . '". '
+                . 'Field will processed.'
+        ;
+        $prompt = $table . '.' . $field . ': ' . $prompt;
+        $this->_DRSprompt( $prompt, __LINE__ );
         $handle = TRUE;
         break;
       case('flex'):
@@ -304,8 +347,12 @@ class TCA
 //        var_dump( __METHOD__, __LINE__, $field );
         $handle = FALSE;
         $this->_aTableField[ $table ][ $field ][ 'doNotProcess' ] = TRUE;
-        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = 'type can not handled:' . $config[ 'type' ];
-        //var_dump( __METHOD__, __LINE__, $field, 'DON\'T HANDLE' );
+        $prompt = ''
+                . 'type can not handled:' . $config[ 'type' ]
+                ;
+        $this->_aTableField[ $table ][ $field ][ 'doNotProcessCause' ] = $prompt;
+        $prompt = $table . '.' . $field . ': ' . $prompt;
+        $this->_DRSprompt( $prompt, __LINE__, 3 );
         break;
       default:
         break;

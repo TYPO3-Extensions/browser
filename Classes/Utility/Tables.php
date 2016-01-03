@@ -53,22 +53,12 @@ class Tables
   /**
    * @var array record for an INSERT or an UPDATE
    */
-  private $_aRecordKeyValues = array();
+  private $_aTableRecordKeyValues = array();
 
   /**
    * @var array TypoScript settings array of the parent object
    */
   private $_aSettings;
-
-  /**
-   * @var array
-   */
-  private $_aSupportedTCAConfigInternalTypes = array(
-    'file'
-          //, 'file_reference'
-          //, 'folder'
-          //, 'db'
-  );
 
   /**
    * @var array
@@ -98,7 +88,12 @@ class Tables
   private $_oCObj;
 
   /**
-   * @var object
+   * @var Netzmacher\Browser\Utility\DRS
+   */
+  private $_oDRS;
+
+  /**
+   * @var Netzmacher\Browser\Utility\TCA
    */
   private $_oTCA;
 
@@ -144,20 +139,7 @@ class Tables
   }
 
   /**
-   * getRecordKeyValues( ) :
-   *
-   * @return array
-   * @access public
-   * @version 7.4.0
-   * @since 7.4.0
-   */
-  public function getRecordKeyValues()
-  {
-    return $this->_aRecordKeyValues;
-  }
-
-  /**
-   * getUid( $table ) :
+   * getTableRecordKeyValues( ) :
    *
    * @param string $table
    * @return array
@@ -165,10 +147,24 @@ class Tables
    * @version 7.4.0
    * @since 7.4.0
    */
-  public function getUid()
+  public function getTableRecordKeyValues( $table )
   {
-    return $this->_aRecordKeyValues;
+    return $this->_aTableRecordKeyValues[ $table ];
   }
+
+//  /**
+//   * getUid( $table ) :
+//   *
+//   * @param string $table
+//   * @return array
+//   * @access public
+//   * @version 7.4.0
+//   * @since 7.4.0
+//   */
+//  public function getUid()
+//  {
+//    return $this->_aTableRecordKeyValues;
+//  }
 
   /**
    * main( ) :
@@ -182,11 +178,9 @@ class Tables
    */
   public function main( $table, $settings )
   {
-    //var_dump( __METHOD__, __LINE__, $strDebugTrail = \TYPO3\CMS\Core\Utility\DebugUtility::debugTrail(), $table );
     $this->_init( $table, $settings );
     $this->_record();
     $this->_aKeyValues = $this->_oTCA->getTableKeyValues( $table );
-    //var_dump( __METHOD__, __LINE__, $this->_sTable, $this->_aRecordKeyValues, $this->_oTCA->getTableField(), $this->_oTCA->getKeyValues( $table ) );
   }
 
   /**
@@ -198,9 +192,38 @@ class Tables
    * @version 7.4.0
    * @since 7.4.0
    */
-  public function setCObj( $cObj )
+  public function setCObj( \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $cObj )
   {
     $this->_oCObj = $cObj;
+  }
+
+  /**
+   * setDRS( )
+   *
+   * @param Netzmacher\Browser\Utility\DRS $oDRS
+   * @return array
+   * @access public
+   * @version 7.4.0
+   * @since 7.4.0
+   *
+   */
+  public function setDRS( \Netzmacher\Browser\Utility\DRS $oDRS )
+  {
+    $this->_oDRS = $oDRS;
+  }
+
+  /**
+   * setTCA( ) :
+   *
+   * @param Netzmacher\Browser\Utility\TCA $oTCA
+   * @return void
+   * @access public
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  public function setTCA( \Netzmacher\Browser\Utility\TCA $oTCA )
+  {
+    $this->_oTCA = $oTCA;
   }
 
   /**
@@ -215,13 +238,11 @@ class Tables
    */
   private function _init( $table, $settings )
   {
-    //var_dump( __METHOD__, __LINE__, $strDebugTrail = \TYPO3\CMS\Core\Utility\DebugUtility::debugTrail(), $table );
     $this->_setSettings( $settings );
     $this->_setTable( $table );
     $this->_classes();
     $this->_setFeUserIsLoggedIn();
     $this->_setPowermailGP();
-//    $this->_setCObjStart();
   }
 
   /**
@@ -253,10 +274,13 @@ class Tables
     $aTSFields = $this->_recordFieldsForHandleFromTypoScript();
     $aPMFields = $this->_recordFieldsForHandleFromPowermail();
 
-// intersect of all field groups
+    // intersect of all field groups
     $aIntersect = array_intersect( $aTCAFields, $aTSFields, $aPMFields );
     $sIntersect = implode( ',', $aIntersect );
-    //var_dump( __METHOD__, __LINE__, $this->_sTable );
+
+    $prompt = implode( ', ', ( array ) $aIntersect );
+    $prompt = 'Intersect of all fields: ' . $prompt;
+    $this->_DRSprompt( $prompt, __LINE__ );
 
     $this->_sFieldsForHandle = $sIntersect;
   }
@@ -272,6 +296,9 @@ class Tables
   private function _recordFieldsForHandleFromPowermail()
   {
     $aPMFields = array();
+    $prompt = implode( ', ', array_keys( $this->_aPowermailGP ) );
+    $prompt = 'Values delivered by Powermail: ' . $prompt;
+    $this->_DRSprompt( $prompt, __LINE__ );
     foreach ( array_keys( $this->_aPowermailGP ) as $key )
     {
       list($table, $field) = explode( '__', $key );
@@ -307,6 +334,11 @@ class Tables
       }
       $aAllowedTCAFields[] = $field;
     }
+
+    $prompt = implode( ', ', ( array ) $aAllowedTCAFields );
+    $prompt = 'TCA fields with a matching configuration: ' . $prompt;
+    $this->_DRSprompt( $prompt, __LINE__ );
+
     return $aAllowedTCAFields;
   }
 
@@ -323,6 +355,11 @@ class Tables
     $sTSFields = $this->_aSettings[ 'mapping' ][ $this->_sTable ][ 'allowedFields' ];
     $sTSFields = str_replace( ' ', NULL, $sTSFields );
     $aTSFields = explode( ',', $sTSFields );
+
+    $prompt = implode( ', ', ( array ) $aTSFields );
+    $prompt = 'Fields which are allowed by TypoScript: ' . $prompt;
+    $this->_DRSprompt( $prompt, __LINE__ );
+
     return $aTSFields;
   }
 
@@ -337,7 +374,7 @@ class Tables
   private function _recordSet()
   {
     $this->_recordSetKeyValues();
-    $this->_recordSetLocal();
+    $this->_recordSetTCA();
   }
 
   /**
@@ -353,14 +390,14 @@ class Tables
     $keyValues = $this->_recordSetKeyValuesPowermail();
     if ( empty( $keyValues ) )
     {
-      $this->_aRecordKeyValues = $keyValues;
+      $this->_aTableRecordKeyValues[ $this->_sTable ] = $keyValues;
       return;
     }
     $keyValues = $this->_recordSetKeyValuesUid( $keyValues );
 //    $keyValues = $this->_recordSetKeyValuesUsername( $keyValues );
     $keyValues = $this->_recordSetKeyValuesDefaults( $keyValues );
 
-    $this->_aRecordKeyValues = $keyValues;
+    $this->_aTableRecordKeyValues[ $this->_sTable ] = $keyValues;
     return;
   }
 
@@ -409,6 +446,9 @@ class Tables
   {
     if ( empty( $aFieldsForHandle ) )
     {
+      $prompt = 'Nothing to do: There isn\'t any default value.';
+      $this->_DRSprompt( $prompt, __LINE__ );
+
       return $keyValues;
     }
 
@@ -426,8 +466,12 @@ class Tables
         case($value === 0 ):
         case($value === "0" ):
           $keyValues[ $field ] = $value;
+          $prompt = 'Default is added. ' . $field . ': "' . $value . '"';
+          $this->_DRSprompt( $prompt, __LINE__ );
           continue;
         default:
+          $prompt = 'Default isn\'t added, becuase content is NULL. Field: ' . $field;
+          $this->_DRSprompt( $prompt, __LINE__ );
           continue;
       }
     }
@@ -476,87 +520,38 @@ class Tables
     return $keyValues;
   }
 
-//
-//  /**
-//   * _recordSetKeyValuesUsername( ) :
-//   *
-//   * @return array
-//   * @access private
-//   * @version 7.4.0
-//   * @since 7.4.0
-//   */
-//  private function _recordSetKeyValuesUsername( $keyValues )
-//  {
-//    if ( !$this->_bIsLoggedIn )
-//    {
-//      return $keyValues;
-//    }
-//    if ( !empty( $keyValues[ 'email' ] ) )
-//    {
-//      $keyValues[ 'username' ] = $keyValues[ 'email' ];
-//      return $keyValues;
-//    }
-//    if ( !empty( $keyValues[ 'name' ] ) )
-//    {
-//      list($first) = explode( ' ', $keyValues[ 'name' ] );
-//      $keyValues[ 'username' ] = strtolower( $first );
-//      return $keyValues;
-//    }
-//    return $keyValues;
-//  }
-
   /**
-   * _recordSetLocal( ) :
+   * _recordSetTCA( ) :
    *
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _recordSetLocal()
+  private function _recordSetTCA()
   {
-    $this->_recordSetLocalUid();
-    $this->_recordSetLocalFields();
-    $this->_recordSetLocalPostProcess();
+    $this->_oTCA->main( $this->_sTable, $this->_aTableRecordKeyValues[ $this->_sTable ] );
   }
 
   /**
-   * _recordSetLocalFields( ) :
+   * _DRSprompt( ) :
    *
+   * @param string $prompt
+   * @param int $line
+   * @param int $type
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
-   */
-  private function _recordSetLocalFields()
-  {
-    $this->_oTCA->main( $this->_sTable, $this->_aRecordKeyValues );
-  }
-
-  /**
-   * _recordSetLocalPostProcess( ) :
    *
-   * @return void
-   * @access private
-   * @version 7.4.0
-   * @since 7.4.0
    */
-  private function _recordSetLocalPostProcess()
+  private function _DRSprompt( $prompt, $line = __LINE__, $type = 0 )
   {
-
-  }
-
-  /**
-   * _recordSetLocalUid( ) :
-   *
-   * @return void
-   * @access private
-   * @version 7.4.0
-   * @since 7.4.0
-   */
-  private function _recordSetLocalUid()
-  {
-
+    if ( !$this->_oDRS->getDrsFrontendEditing() )
+    {
+      return;
+    }
+    GeneralUtility::devlog( '[INFO/FE] ' . $prompt, __CLASS__ . '#' . $line, $type );
   }
 
   /**
@@ -569,39 +564,8 @@ class Tables
    */
   private function _classes()
   {
-//    $this->_classesObjectManager();
-//    $this->_classesCObj();
     $this->_classesPowermailParams();
-    $this->_classesTCA();
     $this->_classesTypoScriptService();
-  }
-
-  /**
-   * _classesCObj( ) :
-   *
-   * @return void
-   * @access private
-   * @version 7.4.0
-   * @since 7.4.0
-   */
-  private function _classesCObj()
-  {
-    $this->_oCObj = $this->_oObjectManager->get(
-            'TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer'
-    );
-  }
-
-  /**
-   * _classesObjectManager( ) :
-   *
-   * @return void
-   * @access private
-   * @version 7.4.0
-   * @since 7.4.0
-   */
-  private function _classesObjectManager()
-  {
-    $this->_oObjectManager = GeneralUtility::makeInstance( 'TYPO3\\CMS\\Extbase\\Object\\ObjectManager' );
   }
 
   /**
@@ -618,19 +582,6 @@ class Tables
   }
 
   /**
-   * _classesTCA( ) :
-   *
-   * @return void
-   * @access private
-   * @version 7.4.0
-   * @since 7.4.0
-   */
-  private function _classesTCA()
-  {
-    $this->_oTCA = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\TCA' );
-  }
-
-  /**
    * _classesTypoScriptService( ) :
    *
    * @return void
@@ -642,61 +593,6 @@ class Tables
   {
     $this->_oTypoScriptService = GeneralUtility::makeInstance( 'TYPO3\\CMS\\Extbase\\Service\\TypoScriptService' );
   }
-//
-//  /**
-//   * _setCObjStart( ) :
-//   *
-//   * @return void
-//   * @access private
-//   * @version 7.4.0
-//   * @since 7.4.0
-//   */
-//  private function _setCObjStart()
-//  {
-//    $data = $this->_setCObjStartData();
-//    $this->_oCObj->start( $data, $this->_sTable );
-//  }
-//
-//  /**
-//   * _setCObjStartData( ) :
-//   *
-//   * @return array
-//   * @access private
-//   * @version 7.4.0
-//   * @since 7.4.0
-//   */
-//  private function _setCObjStartData()
-//  {
-//    $data = $this->_setCObjStartDataPowermail();
-//    return $data;
-//  }
-//
-//  /**
-//   * _setCObjStartDataPowermail( ) :
-//   *
-//   * @return array
-//   * @access private
-//   * @version 7.4.0
-//   * @since 7.4.0
-//   */
-//  private function _setCObjStartDataPowermail()
-//  {
-//    foreach ( $this->_aPowermailGP AS $key => $value )
-//    {
-//      if ( is_array( $value ) )
-//      {
-//        $value = implode( ',', $value );
-//      }
-//      $data[ $key ] = $value;
-//      list($table, $field) = explode( '__', $key );
-//      if ( $field )
-//      {
-//        $tableField = $table . '.' . $field;
-//        $data[ $tableField ] = $value;
-//      }
-//    }
-//    return $data;
-//  }
 
   /**
    * _setFeUserIsLoggedIn( ) :
