@@ -9,14 +9,38 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="sheet_checklist">Check List</label>
-      <label index="sheet_checklist.statictemplate.label">Mind the Include Static Template please!</label>
-      <label index="sheet_checklist.statictemplate.0">Yes, I have include the static template: Browser Manual (browser).</label>
+      <label index="sheet_sDEF">Help!</label>
+      <label index="sheet_sDEF.help.label">Any question?</label>
+      <label index="sheet_sDEF.help.prompt"><![CDATA[
+        <ul>
+          <li>
+            Manual: <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_frontendediting_en/doc/manual.pdf">Browser Tutorial Frontend Editing (PDF)</a>
+          </li>
+          <li>
+            Forum: <a href="http://typo3-browser-forum.de" target="_blank">TYPO3 Browser Forum</a>
+          </li>
+          <li>
+            Support: <a href="http://die-netzmacher.de" target="_blank">Die Netzmacher</a>
+          </li>
+        </ul>
+      ]]></label>
     </languageKey>
     <languageKey index="de" type="array">
-      <label index="sheet_checklist">Checkliste</label>
-      <label index="sheet_checklist.statictemplate.label">Denk an das Static Template!</label>
-      <label index="sheet_checklist.statictemplate.0">Ja, ich habe das Static Template eingebunden: Browser Manual (browser).</label>
+      <label index="sheet_sDEF">Hilfe!</label>
+      <label index="sheet_sDEF.help.label">Fragen?</label>
+      <label index="sheet_sDEF.help.prompt"><![CDATA[
+        <ul>
+          <li>
+            Manual: <a href="http://typo3-browser.de/typo3conf/ext/browser_tut_frontendediting_en/doc/manual.pdf">Browser Tutorial Frontend Editing (PDF)</a>
+          </li>
+          <li>
+            Forum: <a href="http://typo3-browser-forum.de" target="_blank">TYPO3 Browser Forum</a>
+          </li>
+          <li>
+            Support: <a href="http://die-netzmacher.de" target="_blank">Die Netzmacher</a>
+          </li>
+        </ul>
+      ]]></label>
     </languageKey>
   </data>
 </T3locallang>

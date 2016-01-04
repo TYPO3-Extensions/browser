@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzmacher\Browser\Utility;
+namespace Netzmacher\Browser\Utility\FrontendEditing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -48,11 +48,11 @@ class DRS
   /**
    * @var boolean Flag for the DRS - Development Reporting System
    */
-  private $_bAll = FALSE;
   private $_bError = FALSE;
-  private $_bWarn = FALSE;
-  private $_bInfo = FALSE;
   private $_bFrontendEditing = FALSE;
+  private $_bInfo = FALSE;
+  private $_bSQL = FALSE;
+  private $_bWarn = FALSE;
 
   /**
    * __construct( ) :
@@ -76,11 +76,19 @@ class DRS
     {
       case('All'):
       case('Frontend Editing'):
-        $this->_bAll = TRUE;
         $this->_bError = TRUE;
         $this->_bWarn = TRUE;
         $this->_bInfo = TRUE;
         $this->_bFrontendEditing = TRUE;
+        $this->_bSQL = TRUE;
+        $prompt = 'DRS - Development Reporting System: ' . $drsMode;
+        GeneralUtility::devlog( '[INFO/DRS] ' . $prompt, __CLASS__ . '#' . __LINE__, 0 );
+        break;
+      case('SQL development'):
+        $this->_bError = TRUE;
+        $this->_bWarn = TRUE;
+        $this->_bInfo = TRUE;
+        $this->_bSQL = TRUE;
         $prompt = 'DRS - Development Reporting System: ' . $drsMode;
         GeneralUtility::devlog( '[INFO/DRS] ' . $prompt, __CLASS__ . '#' . __LINE__, 0 );
         break;
@@ -111,17 +119,17 @@ class DRS
   }
 
   /**
-   * getDrsAll( ) :
+   * getDrsSQL( ) :
    *
    * @return boolean
    * @access public
    * @version 7.4.0
    * @since 7.4.0
    */
-  public function getDrsAll()
+  public function getDrsSQL()
   {
     //$this->_init();
-    return $this->_bAll;
+    return $this->_bSQL;
   }
 
   /**

@@ -4,6 +4,6 @@
     <langDisable>1</langDisable>
   </meta>
   <sheets>
-    <sDEF>EXT:browser/Configuration/FlexForms/pi6/flexform_sheet_checklist.xml</sDEF>
+    <sDEF>EXT:browser/Configuration/FlexForms/pi6/flexform_sheet_sDEF.xml</sDEF>
   </sheets>
 </T3DataStructure>

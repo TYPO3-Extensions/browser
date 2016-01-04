@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/Resources/Private/Language/FlexForms/pi6/locallang.xml:sheet_sDEF</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <settings.flexform.pi6.help>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/Resources/Private/Language/FlexForms/pi6/locallang.xml:sheet_sDEF.help.label</label>
+          <config>
+            <type>user</type>
+            <userFunc>Netzmacher\Browser\Utility\UserFunc\TCAPrompt->sheetSDEFHelpPrompt</userFunc>
+          </config>
+        </TCEforms>
+      </settings.flexform.pi6.help>
+    </el>
+  </ROOT>
+</T3DataStructure>

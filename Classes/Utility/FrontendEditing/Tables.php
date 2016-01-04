@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzmacher\Browser\Utility;
+namespace Netzmacher\Browser\Utility\FrontendEditing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -88,12 +88,12 @@ class Tables
   private $_oCObj;
 
   /**
-   * @var Netzmacher\Browser\Utility\DRS
+   * @var Netzmacher\Browser\Utility\FrontendEditing\DRS
    */
   private $_oDRS;
 
   /**
-   * @var Netzmacher\Browser\Utility\TCA
+   * @var Netzmacher\Browser\Utility\FrontendEditing\TCA
    */
   private $_oTCA;
 
@@ -200,14 +200,14 @@ class Tables
   /**
    * setDRS( )
    *
-   * @param Netzmacher\Browser\Utility\DRS $oDRS
+   * @param Netzmacher\Browser\Utility\FrontendEditing\DRS $oDRS
    * @return array
    * @access public
    * @version 7.4.0
    * @since 7.4.0
    *
    */
-  public function setDRS( \Netzmacher\Browser\Utility\DRS $oDRS )
+  public function setDRS( \Netzmacher\Browser\Utility\FrontendEditing\DRS $oDRS )
   {
     $this->_oDRS = $oDRS;
   }
@@ -215,13 +215,13 @@ class Tables
   /**
    * setTCA( ) :
    *
-   * @param Netzmacher\Browser\Utility\TCA $oTCA
+   * @param Netzmacher\Browser\Utility\FrontendEditing\TCA $oTCA
    * @return void
    * @access public
    * @version 7.4.0
    * @since 7.4.0
    */
-  public function setTCA( \Netzmacher\Browser\Utility\TCA $oTCA )
+  public function setTCA( \Netzmacher\Browser\Utility\FrontendEditing\TCA $oTCA )
   {
     $this->_oTCA = $oTCA;
   }
@@ -512,12 +512,15 @@ class Tables
    */
   private function _recordSetKeyValuesUid( $keyValues )
   {
-    if ( !$this->_bIsLoggedIn )
+    switch ( TRUE )
     {
-      return $keyValues;
+      case ( $this->_sTable != 'fe_users' ):
+      case (!$this->_bIsLoggedIn ):
+        return $keyValues;
+      default:
+        $keyValues[ 'uid' ] = $GLOBALS[ 'TSFE' ]->fe_user->user[ 'uid' ];
+        return $keyValues;
     }
-    $keyValues[ 'uid' ] = $GLOBALS[ 'TSFE' ]->fe_user->user[ 'uid' ];
-    return $keyValues;
   }
 
   /**
@@ -578,7 +581,7 @@ class Tables
    */
   private function _classesPowermailParams()
   {
-    $this->_oParamsPowermail = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\Params\\Powermail' );
+    $this->_oParamsPowermail = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\FrontendEditing\\Params\\Powermail' );
   }
 
   /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzmacher\Browser\Utility\Params;
+namespace Netzmacher\Browser\Utility\FrontendEditing\Params;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

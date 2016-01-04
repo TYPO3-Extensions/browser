@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzmacher\Browser\Utility;
+namespace Netzmacher\Browser\Utility\FrontendEditing;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -51,7 +51,7 @@ class TCA
   private $_aTableFieldProcess;
 
   /**
-   * @var Netzmacher\Browser\Utility\DRS
+   * @var Netzmacher\Browser\Utility\FrontendEditing\DRS
    */
   private $_oDRS;
 
@@ -115,14 +115,14 @@ class TCA
   /**
    * setDRS( )
    *
-   * @param Netzmacher\Browser\Utility\DRS $oDRS
+   * @param Netzmacher\Browser\Utility\FrontendEditing\DRS $oDRS
    * @return array
    * @access public
    * @version 7.4.0
    * @since 7.4.0
    *
    */
-  public function setDRS( \Netzmacher\Browser\Utility\DRS $oDRS )
+  public function setDRS( \Netzmacher\Browser\Utility\FrontendEditing\DRS $oDRS )
   {
     $this->_oDRS = $oDRS;
   }

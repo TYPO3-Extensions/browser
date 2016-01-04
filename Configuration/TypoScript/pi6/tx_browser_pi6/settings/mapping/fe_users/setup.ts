@@ -16,21 +16,9 @@ plugin.tx_browser_pi6 {
           // empty statement for proper comments only
         defaults {
         }
-          // pid, usergroup
+          // password, pid, usergroup
         defaults =
         defaults {
-            // value: {$plugin.tx_browser_pi6.settings.fe_users.pid}
-          pid = TEXT
-          pid {
-              // Return a value only, if an user isn't logged in and if we have a new record
-            if =
-            if {
-              isFalse {
-                data = TSFE:fe_user|user|uid
-              }
-            }
-            value = {$plugin.tx_browser_pi6.settings.fe_users.pid}
-          }
           password = COA
           password {
               // Return a value only, if an user isn't logged in and if we have a new record
@@ -53,6 +41,18 @@ plugin.tx_browser_pi6 {
                 field = password
               }
             }
+          }
+            // value: {$plugin.tx_browser_pi6.settings.fe_users.pid}
+          pid = TEXT
+          pid {
+              // Return a value only, if an user isn't logged in and if we have a new record
+            if =
+            if {
+              isFalse {
+                data = TSFE:fe_user|user|uid
+              }
+            }
+            value = {$plugin.tx_browser_pi6.settings.fe_users.pid}
           }
           username = TEXT
           username {

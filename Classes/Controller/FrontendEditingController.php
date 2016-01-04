@@ -63,22 +63,27 @@ class FrontendEditingController extends ActionController
   private $_oParamsPowermail;
 
   /**
+   * @var int Last inserted id
+   */
+  private $_aTableSQLLastID;
+
+  /**
    * @var TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
    */
   private $_oCObj;
 
   /**
-   * @var Netzmacher\Browser\Utility\DRS
+   * @var Netzmacher\Browser\Utility\FrontendEditing\DRS
    */
   private $_oDRS;
 
   /**
-   * @var Netzmacher\Browser\Utility\TCA
+   * @var Netzmacher\Browser\Utility\FrontendEditing\TCA
    */
   private $_oTCA;
 
   /**
-   * @var Netzmacher\Browser\Utility\Tables
+   * @var Netzmacher\Browser\Utility\FrontendEditing\Tables
    */
   private $_oTables;
 
@@ -96,6 +101,11 @@ class FrontendEditingController extends ActionController
    * @var int The uid of the current table record
    */
   private $_sCurrentTableRecordUid;
+
+  /**
+   * @var string Path to powermail uploads. Without any ending slash
+   */
+  private $_sPowermailPath = 'uploads/tx_powermail';
 
 //  /**
 //   * @var boolean Flag for the DRS - Development Reporting System
@@ -128,8 +138,8 @@ class FrontendEditingController extends ActionController
       return;
     }
     $this->_tables();
-    var_dump( __METHOD__, __LINE__ );
-    die();
+//    var_dump( __METHOD__, __LINE__ );
+//    die();
   }
 
   /**
@@ -185,12 +195,13 @@ class FrontendEditingController extends ActionController
    * _SQLError( ) :
    *
    * @param string $query
+   * @param int $line
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _SQLError( $query )
+  private function _SQLError( $query, $line = __LINE__ )
   {
     $sqlError = $GLOBALS[ 'TYPO3_DB' ]->sql_error();
     if ( empty( $sqlError ) )
@@ -207,7 +218,7 @@ class FrontendEditingController extends ActionController
             . '  Query: ' . $query . '<br />'
             . '</p>'
     ;
-    $this->_zzDieWiPrompt( $header, $text, __METHOD__, __LINE__ );
+    $this->_zzDieWiPrompt( $header, $text, __METHOD__, $line );
   }
 
   /**
@@ -215,13 +226,14 @@ class FrontendEditingController extends ActionController
    *
    * @param string $table
    * @param integer $data
+   * @param int $line
    * @param boolean $bPromptQueryOnly
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _SQLInsert( $table, $data, $bPromptQueryOnly = 0 )
+  private function _SQLInsert( $table, $data, $line = __LINE__, $bPromptQueryOnly = 0 )
   {
     $query = $GLOBALS[ 'TYPO3_DB' ]->INSERTquery(
             $table
@@ -231,15 +243,18 @@ class FrontendEditingController extends ActionController
     switch ( $bPromptQueryOnly )
     {
       case(TRUE):
+        $this->_DRSprompt( 'Query: ' . $query, $line );
         var_dump( __METHOD__, __LINE__, $query );
         break;
       case(FALSE):
       default:
+        $this->_DRSprompt( 'Query: ' . $query, $line );
         $GLOBALS[ 'TYPO3_DB' ]->exec_INSERTquery(
                 $table
                 , $data
         );
-        $this->_SQLError( $query );
+        $this->_aTableSQLLastID[ $table ] = $GLOBALS[ 'TYPO3_DB' ]->sql_insert_id();
+        $this->_SQLError( $query, $line );
         break;
     }
   }
@@ -250,13 +265,14 @@ class FrontendEditingController extends ActionController
    * @param string $table
    * @param integer $uid
    * @param integer $data
+   * @param int $line
    * @param boolean $bPromptQueryOnly
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _SQLUpdate( $table, $uid, $data, $bPromptQueryOnly = 0 )
+  private function _SQLUpdate( $table, $uid, $data, $line = __LINE__, $bPromptQueryOnly = 0 )
   {
     $query = $GLOBALS[ 'TYPO3_DB' ]->UPDATEquery(
             $table
@@ -267,16 +283,19 @@ class FrontendEditingController extends ActionController
     switch ( $bPromptQueryOnly )
     {
       case(TRUE):
+        $this->_DRSprompt( 'Query: ' . $query, $line );
         var_dump( __METHOD__, __LINE__, $query );
         break;
       case(FALSE):
       default:
+        $this->_DRSprompt( 'Query: ' . $query, $line );
         $GLOBALS[ 'TYPO3_DB' ]->exec_UPDATEquery(
                 $table
                 , 'uid = ' . $uid
                 , $data
         );
-        $this->_SQLError( $query );
+        $this->_aTableSQLLastID[ $table ] = $uid;
+        $this->_SQLError( $query, $line );
         break;
     }
   }
@@ -398,7 +417,7 @@ class FrontendEditingController extends ActionController
    */
   private function _initClassesDRS()
   {
-    $this->_oDRS = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\DRS' );
+    $this->_oDRS = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\FrontendEditing\\DRS' );
   }
 
   /**
@@ -424,7 +443,7 @@ class FrontendEditingController extends ActionController
    */
   private function _initClassesPowermailParams()
   {
-    $this->_oParamsPowermail = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\Params\\Powermail' );
+    $this->_oParamsPowermail = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\FrontendEditing\\Params\\Powermail' );
   }
 
   /**
@@ -437,7 +456,7 @@ class FrontendEditingController extends ActionController
    */
   private function _initClassesTCA()
   {
-    $this->_oTCA = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\TCA' );
+    $this->_oTCA = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\FrontendEditing\\TCA' );
   }
 
   /**
@@ -450,7 +469,7 @@ class FrontendEditingController extends ActionController
    */
   private function _initClassesTables()
   {
-    $this->_oTables = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\Tables' );
+    $this->_oTables = GeneralUtility::makeInstance( 'Netzmacher\\Browser\\Utility\\FrontendEditing\\Tables' );
   }
 
 //
@@ -638,7 +657,7 @@ class FrontendEditingController extends ActionController
     $value = $record[ $field ];
     if ( is_array( $value ) )
     {
-      $value = implode( ',', $value );
+      $value = implode( ', ', $value );
     }
     $updateData = array(
       $field => $value
@@ -647,8 +666,7 @@ class FrontendEditingController extends ActionController
     // Get the uid
     $tableField = $table . '.uid';
     $uid = $this->_oCObj->data[ $tableField ];
-
-    $this->_SQLUpdate( $table, $uid, $updateData );
+    $this->_SQLUpdate( $table, $uid, $updateData, __LINE__ );
   }
 
   /**
@@ -673,6 +691,11 @@ class FrontendEditingController extends ActionController
 
     switch ( TRUE )
     {
+      case(isset( $config[ 'MM_oppositeUsage' ] )):
+        $header = 'ERROR: non supported TCA configuration';
+        $text = $table . '.' . $field . ' is configured with "MM_oppositeUsage".';
+        $this->_zzDieWiPrompt( $header, $text, __METHOD__, __LINE__ );
+        break;
       case(isset( $config[ 'MM_opposite_field' ] )):
         $labelUidLocal = 'uid_foreign';
         $labelUidForeign = 'uid_local';
@@ -703,7 +726,7 @@ class FrontendEditingController extends ActionController
       $insertData = $staticInsertData;
       $insertData[ $labelUidLocal ] = $uidLocal;
       $insertData[ $labelUidForeign ] = $uidForeign;
-      $this->_SQLInsert( $mmTable, $insertData );
+      $this->_SQLInsert( $mmTable, $insertData, __LINE__ );
     }
   }
 
@@ -722,8 +745,11 @@ class FrontendEditingController extends ActionController
     $config = BackendUtility::getTcaFieldConfiguration( $table, $field );
     switch ( $config[ 'internal_type' ] )
     {
-      case('dbX'):
+      case('db'):
         $this->_processInternalTypeDB( $table, $field );
+        break;
+      case('file'):
+        $this->_processInternalTypeFile( $table, $field );
         break;
       default:
         $tableField = $table . '.' . $field;
@@ -731,7 +757,7 @@ class FrontendEditingController extends ActionController
         $key = $config[ 'internal_type' ];
         $text = $tableField . ': Key for internal_type isn\'t defined! Key is "' . $key . '"';
         $this->_zzDieWiPrompt( $header, $text, __METHOD__, __LINE__ );
-        die();
+        break;
     }
   }
 
@@ -747,8 +773,139 @@ class FrontendEditingController extends ActionController
    */
   private function _processInternalTypeDB( $table, $field )
   {
+    $this->_processForeignTable( $table, $field );
+  }
+
+  /**
+   * _processInternalTypeFile( ) :
+   *
+   * @param string $table
+   * @param string $field
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _processInternalTypeFile( $table, $field )
+  {
+    if ( !$this->_processInternalTypeFileCopy( $table, $field ) )
+    {
+      return;
+    }
+
+    $this->_processInternalTypeFileUpdate( $table, $field );
+  }
+
+  /**
+   * _processInternalTypeFileUpdate( ) :
+   *
+   * @param string $table
+   * @param string $field
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _processInternalTypeFileUpdate( $table, $field )
+  {
+    $tableField = $table . '.' . $field;
+    $updateData = array(
+      $field => $this->_oCObj->data[ $tableField ]
+    );
+    $uid = $this->_sCurrentTableRecordUid[ $table ];
+    $this->_SQLUpdate( $table, $uid, $updateData, __LINE__ );
+
+//    var_dump( __METHOD__, __LINE__, $table, $field, $file, $this->_sCurrentTableRecordUid );
+//    $header = 'ERROR: undefined key';
+//    $key = $config[ 'internal_type' ];
+//    $text = $tableField . ': Key for internal_type isn\'t defined! Key is "' . $key . '"';
+//    $this->_zzDieWiPrompt( $header, $text, __METHOD__, __LINE__ );
+  }
+
+  /**
+   * _processInternalTypeFileCopy( ) :
+   *
+   * @param string $table
+   * @param string $field
+   * @return boolean
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _processInternalTypeFileCopy( $table, $field )
+  {
+    $srce = $this->_processInternalTypeFileCopySrce( $table, $field );
+    $dest = $this->_processInternalTypeFileCopyDest( $table, $field );
+    $bSuccess = copy( $srce, $dest );
+    $this->_processInternalTypeFileCopyDRS( $srce, $dest, $bSuccess );
+
+    return $bSuccess;
+  }
+
+  /**
+   * _processInternalTypeFileCopyDRS( ) :
+   *
+   * @param string $srce
+   * @param string $dest
+   * @param boolean $bSuccess
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _processInternalTypeFileCopyDRS( $srce, $dest, $bSuccess )
+  {
+    switch ( $bSuccess )
+    {
+      case( TRUE ):
+        $prompt = 'File is moved from ' . $srce . ' to ' . $dest;
+        $this->_DRSprompt( $prompt, __LINE__, -1 );
+        break;
+      case( FALSE ):
+      default:
+        $prompt = 'ERROR! File couldn\'t moved from ' . $srce . ' to ' . $dest;
+        $this->_DRSprompt( $prompt, __LINE__, 3 );
+        break;
+    }
+  }
+
+  /**
+   * _processInternalTypeFileCopyDest( ) : Rteurns the absolute path for the file destination
+   *
+   * @param string $table
+   * @param string $field
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _processInternalTypeFileCopyDest( $table, $field )
+  {
     $config = BackendUtility::getTcaFieldConfiguration( $table, $field );
-    var_dump( __METHOD__, __LINE__, $table, $field, $config );
+    $tableField = $table . '.' . $field;
+    $file = $this->_oCObj->data[ $tableField ];
+    $path = $config[ 'uploadfolder' ] . '/' . $file;
+    $absPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName( $path );
+    return $absPath;
+  }
+
+  /**
+   * _processInternalTypeFileCopySrce( ) : Returns the absolute path to the file uploaded by powermail
+   *
+   * @param string $table
+   * @param string $field
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _processInternalTypeFileCopySrce( $table, $field )
+  {
+    $tableField = $table . '.' . $field;
+    $file = $this->_oCObj->data[ $tableField ];
+    $path = $this->_sPowermailPath . '/' . $file;
+    $absPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName( $path );
+    return $absPath;
   }
 
   /**
@@ -795,7 +952,7 @@ class FrontendEditingController extends ActionController
     {
       if ( is_array( $value ) )
       {
-        $value = implode( ',', $value );
+        $value = implode( ', ', $value );
       }
       $data[ $key ] = $value;
       list($table, $field) = explode( '__', $key );
@@ -818,8 +975,8 @@ class FrontendEditingController extends ActionController
    */
   private function _setCurrentTableRecordUid()
   {
-    $uid = $GLOBALS[ 'TYPO3_DB' ]->sql_insert_id();
     $table = $this->_sCurrentTable;
+    $uid = $this->_aTableSQLLastID[ $table ];
     $tableField = $table . '.uid';
 
     $this->_sCurrentTableRecordUid[ $table ] = $uid;
@@ -923,7 +1080,7 @@ class FrontendEditingController extends ActionController
           $key = $properties[ 'postProcess' ][ 'key' ];
           $text = $tableField . ': Key for postProcess isn\'t defined! Key is "' . $key . '"';
           $this->_zzDieWiPrompt( $header, $text, __METHOD__, __LINE__ );
-          die();
+          break;
       }
     }
   }
@@ -938,58 +1095,105 @@ class FrontendEditingController extends ActionController
    */
   private function _tablesProcess()
   {
-    switch ( $this->_oTables->getIsLoggedIn() )
+    switch ( TRUE )
     {
-      case(TRUE):
-        $this->_tablesProcessUpdate();
+      case($this->_sCurrentTable == 'fe_users'):
+        $this->_tablesProcessFeUsers();
         break;
-      case(FALSE):
+      case($this->_sCurrentTable != 'fe_users'):
       default:
-        $this->_tablesProcessInsert();
+        $this->_tablesProcessMain();
         break;
     }
   }
 
   /**
-   * _tablesProcessInsert( ) :
+   * _tablesProcessFeUsers( ) :
    *
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _tablesProcessInsert()
+  private function _tablesProcessFeUsers()
+  {
+    switch ( $this->_oTables->getIsLoggedIn() )
+    {
+      case(TRUE):
+        $this->_tablesSQLUpdate();
+        break;
+      case(FALSE):
+      default:
+        $this->_tablesSQLInsert();
+        break;
+    }
+  }
+
+  /**
+   * _tablesProcessMain( ) :
+   *
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _tablesProcessMain()
+  {
+    $this->_tablesSQLInsert();
+  }
+
+  /**
+   * _tablesSQLInsert( ) :
+   *
+   * @return void
+   * @access private
+   * @version 7.4.0
+   * @since 7.4.0
+   */
+  private function _tablesSQLInsert()
   {
     $insertData = $this->_oTables->getKeyValues();
+    $table = $this->_sCurrentTable;
 
-    $this->_SQLInsert( $this->_sCurrentTable, $insertData );
+    $this->_SQLInsert( $table, $insertData );
 
     $this->_setCurrentTableRecordUid();
 
     //$this->_dataActionError( 'Update isn\'t possible.' );
-    $this->_dataActionSuccess( 'fe_users data is inserted successfully with uid #' . $uid );
+    $uid = $this->_sCurrentTableRecordUid[ $table ];
+    //$this->_dataActionSuccess( $table . ' data is inserted successfully with uid #' . $uid );
   }
 
   /**
-   * _tablesProcessUpdate( ) :
+   * _tablesSQLUpdate( ) :
    *
    * @return void
    * @access private
    * @version 7.4.0
    * @since 7.4.0
    */
-  private function _tablesProcessUpdate()
+  private function _tablesSQLUpdate()
   {
     //$updateData = $this->_feUserRecordKeyValues;
     $updateData = $this->_oTables->getKeyValues();
 
-    if ( isset( $this->_feUserRecordKeyValues[ 'uid' ] ) )
+    switch ( TRUE )
     {
-      unset( $updateData[ 'uid' ] );
-      $uid = $this->_feUserRecordKeyValues[ 'uid' ];
+      case( isset( $updateData[ 'uid' ] ) ):
+        $uid = $updateData[ 'uid' ];
+        unset( $updateData[ 'uid' ] );
+        break;
+      default:
+        $table = 'Table: ' . $this->_sCurrentTable;
+        $sUpdateData = 'Data: ' . implode( ',', $updateData );
+        $sUpdateData = 'Data: ' . json_encode( $updateData );
+        $header = 'SQL-ERROR: uid is missing';
+        $text = 'Current data doesn\'t contain the uid! ' . $table . '. ' . $sUpdateData;
+        $this->_zzDieWiPrompt( $header, $text, __METHOD__, __LINE__ );
+        break;
     }
 
-    $this->_SQLUpdate( $this->_sCurrentTable, $uid, $updateData );
+    $this->_SQLUpdate( $this->_sCurrentTable, $uid, $updateData, __LINE__ );
 
     $this->_setCurrentTableRecordUid();
     //$this->_dataActionError( 'Update isn\'t possible.' );
@@ -1012,7 +1216,7 @@ class FrontendEditingController extends ActionController
       </h1>
       ' . $text . '
       <p>
-        Sorry for the trouble. Browser - Develop responsive TYPO3 eight times faster!<br />
+        Sorry for the trouble. Browser - TYPO3 without PHP<br />
         Error occures here: ' . $method . ' at #' . $line . '
       </p>
       <p>
