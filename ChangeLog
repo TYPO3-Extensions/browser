@@ -12,6 +12,7 @@ Manual
 7.4.1
   16-01-05
   Improvement
+  * #i0218: Map: improved DRS
   * #i0217: Calendar: DRS error prompt in case of different value_stdWrap and url_stdWrap is improved
   Bugfix
   * #i0216: Error: Geocoding by Browser - TYPO3 without PHP. Prompt: Unknown column 'filterPrompt' in 'field list'

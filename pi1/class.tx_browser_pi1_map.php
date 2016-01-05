@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 7.0.0
+ * @version 7.4.1
  * @since 3.9.6
  */
 /**
@@ -3406,7 +3406,7 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
    * @param	string		$map_template: ...
    * @return	string
    * @internal    #i0014
-   * @version 4.5.8
+   * @version 7.4.1
    * @since   4.5.8
    */
   private function renderMapMarkerVariablesSystemItemUrl( $item, $value )
@@ -3414,23 +3414,48 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
     // RETURN : current item isn't the url
     if ( $item != 'url' )
     {
-      return;
+      return 0;
     }
     // RETURN : current item isn't the url
     // RETURN : there is #1 browser plugins only
     $numberOfBrowserPlugins = $this->pObj->objFlexform->get_numberOfBrowserPlugins();
     if ( $numberOfBrowserPlugins <= 1 )
     {
-      return;
+      return 0;
     }
     // RETURN : there is #1 browser plugins only
-    // RETURN : DRS is disabled
-    if ( !( $this->pObj->b_drs_map || $this->pObj->b_drs_warn ) )
-    {
-      return $numberOfBrowserPlugins;
+
+    // #i0218, 160105, dwildt ~
+    $this->renderMapMarkerVariablesSystemItemUrlDRS( $value, $numberOfBrowserPlugins );
+
+    return;
+  }
+
+  /**
+   * renderMapMarkerVariablesSystemItemUrlDRS( ):
+   *
+   * @param	string		$value
+   * @return	void
+   * @internal    #i0014
+   * @version 7.4.1
+   * @since   4.5.8
+   * @internal #i0218
+   */
+  private function renderMapMarkerVariablesSystemItemUrlDRS( $value, $numberOfBrowserPlugins )
+  {
+    static $firstLoop = TRUE;
+
+    switch( TRUE ) {
+      case( !$firstLoop ):
+        return;
+      case( $this->pObj->b_drs_map ):
+      case( $this->pObj->b_drs_warn ):
+        // follow the workflow
+        break;
+      default:
+        break;
     }
-    // RETURN : DRS is disabled
-    // DRS
+
     $urldecode = urldecode( $value );
     $pos = strpos( $urldecode, 'tx_browser_pi1[plugin]' );
 
@@ -3452,9 +3477,8 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
         t3lib_div :: devlog( '[OK/FLEXFORM] ' . $prompt, $this->pObj->extKey, -1 );
         break;
     }
-    // DRS
 
-    unset( $pos );
+    $firstLoop = FALSE;
     return;
   }
 
