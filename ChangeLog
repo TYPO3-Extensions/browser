@@ -9,6 +9,13 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.4.1
+  16-01-05
+  Improvement
+  * #i0217: Calendar: DRS error prompt in case of different value_stdWrap and url_stdWrap is improved
+  Bugfix
+  * #i0216: Error: Geocoding by Browser - TYPO3 without PHP. Prompt: Unknown column 'filterPrompt' in 'field list'
+
 7.4.0
   15-12-28
   Feature

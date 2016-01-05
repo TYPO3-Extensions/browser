@@ -2856,7 +2856,7 @@ class tx_browser_pi1_cal
         $fromUrl    = $this->pObj->local_cObj->stdWrap( $value, $conf );
         if( $fromValue != $fromUrl )
         {
-          $prompt = 'value_stdWrap and url_stdWrap hasn\'t the same configuration. Filter won\'t run proper!';
+          $prompt = $tableField . ': value_stdWrap (' . $fromValue . ') and url_stdWrap (' . $fromUrl . ') hasn\'t the same configuration. Filter won\'t run proper!';
           t3lib_div :: devLog('[INFO/ERROR] ' . $prompt, $this->pObj->extKey, 3 );
           $prompt = 'Take care of proper properties in the area configuration of your filter!';
           t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );
