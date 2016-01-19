@@ -342,7 +342,7 @@ class tx_browser_pi1_viewsingle
    * @param	array     $rows
    * @return	array   $rows
    * @internal #i0193
-   * @version 7.2.10
+   * @version 7.4.2
    * @since   7.2.10
    */
   private function getRowsHandleEmptyValues( $rows )
@@ -352,7 +352,7 @@ class tx_browser_pi1_viewsingle
       return $rows;
     }
 
-    foreach ( $rows as $rowsKey => $row )
+    foreach ( ( array ) $rows as $rowsKey => $row )
     {
       foreach ( $row as $rowKey => $value )
       {

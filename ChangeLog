@@ -9,6 +9,15 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.4.2
+  16-01-19
+  Improvement
+  * #i0222: 201 datetime got the time property: Configuration/TypoScript/calendar/201/plugin/tx_browser_pi1/single/tableFields/tx_org_cal.ts
+  * #i0221: %m/%d/%y is moved to %m/%d/%y %H:%M in Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/typolinks.6.ts
+  Bugfix
+  * #i0220: .0. is moved to .6. in Configuration/TypoScript/includes/setup/plugin/tx_browser_pi1/displayList/master_templates/tableFields/typolinks.6.ts
+  * #i0219: PHP Warning: Invalid argument supplied for foreach() in pi1/class.tx_browser_pi1_viewsingle.php line 355
+
 7.4.1
   16-01-05
   Improvement
