@@ -391,9 +391,9 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
           }
           $row[ $fieldForLabel ] = '';
           break;
-          // #i0196, 151022, dwildt, 6+/2-
-          //$this->arrCategories = array();
-          //return $this->arrCategories;
+        // #i0196, 151022, dwildt, 6+/2-
+        //$this->arrCategories = array();
+        //return $this->arrCategories;
         // #i0076, 140721, dwildt, +
         case($this->categoriesGetWoLatLon( $row ) ):
           continue 2;
@@ -1488,7 +1488,6 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
       return $mapTemplate;
     }
     // RETURN : HTML template is not proper
-
     // #i0209, 151202, dwildt, 2+
     $markerArray = $this->pObj->objWrapper4x->constant_markers();
     $mapTemplate = $this->pObj->cObj->substituteMarkerArray( $mapTemplate, $markerArray );
@@ -1555,6 +1554,26 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
         t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt, $this->pObj->extKey, 0 );
       }
       // DRS
+      // #i0223, 160120, cferneding, +begin
+      $lat = $this->confMap[ 'configuration.' ][ 'centerCoordinates.' ][ 'lat' ];
+      $lon = $this->confMap[ 'configuration.' ][ 'centerCoordinates.' ][ 'lon' ];
+      //$lat = 50.895811067718505;
+      //$lon = 10.954773967187518;
+      $centerCoor = '[ ' . $lat . ', ' . $lon . ' ]';
+      // RETURN the handled template
+      $arr_return = array
+        (
+        'map_template' => $map_template,
+        'coordinates' => $coordinates
+      );
+      //var_dump( __METHOD__, __LINE__, $coordinates, $centerCoor);
+      // #65184, 150221, dwildt, +
+
+      $this->coordinates = array(
+        'center' => $centerCoor,
+        'all' => $coordinates
+      );
+      // #i0223, 160120, cferneding, +end
       return $arr_return;
     }
     // RETURN: center coordinates should not calculated
@@ -3424,7 +3443,6 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
       return 0;
     }
     // RETURN : there is #1 browser plugins only
-
     // #i0218, 160105, dwildt ~
     $this->renderMapMarkerVariablesSystemItemUrlDRS( $value, $numberOfBrowserPlugins );
 
@@ -3445,8 +3463,9 @@ class tx_browser_pi1_map extends tx_browser_pi1_mapleaflet
   {
     static $firstLoop = TRUE;
 
-    switch( TRUE ) {
-      case( !$firstLoop ):
+    switch ( TRUE )
+    {
+      case(!$firstLoop ):
         return;
       case( $this->pObj->b_drs_map ):
       case( $this->pObj->b_drs_warn ):
