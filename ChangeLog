@@ -9,6 +9,24 @@ Manual
   * #i0048: (from 5.0.0) rows are multisorted in case of a localised field too. Unwanted effects aren't checked.
   * #i0047: rows_consolidateChildren( ) extends rows with the column distance: field is part of the table head in the default template.
 
+7.4.6
+  16-01-27
+  Improvement
+  * #i0226: Cron jobs are upgraded for TYPO3 6.x/7.x
+
+7.4.5
+  16-01-22
+  Improvement
+  * #i0225: lib/scheduler is moved to Classes/Scheduler
+            * class.tx_browser_geoupdate.php is moved to Geoupdate/Task.php
+            * class.tx_browser_geoupdate_additionalfieldprovider is moved to Geoupdate/UserInterface.php
+            * other classes are handled similar
+
+7.4.4
+  16-01-20
+  Improvement
+  * #i0224: PHP Warning: array_keys() expects parameter 1 to be array, null given in pi1/class.tx_browser_pi1_flexform.php line 770
+
 7.4.3
   16-01-20
   Improvement

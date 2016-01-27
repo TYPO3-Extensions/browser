@@ -1,4 +1,12 @@
 <?php
+
+namespace Netzmacher\Browser\Scheduler\Test;
+
+use \TYPO3\CMS\Core\Messaging\FlashMessage;
+use \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
+use \TYPO3\CMS\Scheduler\Task\AbstractTask;
+
+
 /***************************************************************
 *  Copyright notice
 *
@@ -29,7 +37,8 @@
  * @package        TYPO3
  * @subpackage    tx_browser
  */
-class tx_browser_TestTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
+class UserInterface implements \TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface
+{
 
     var $extLabel = 'Browser';
 
@@ -46,10 +55,10 @@ class tx_browser_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
  *
  * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
  * @param	object		$task When editing, reference to the current task object. Null when adding.
- * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @param	\TYPO3\CMS\Scheduler\Controller\SchedulerModuleController		$parentObject Reference to the calling object (Scheduler's BE module)
  * @return	array		Array containing all the information pertaining to the additional fields
  */
-    public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $parentObject) {
+    public function getAdditionalFields(array &$taskInfo, $task, SchedulerModuleController $parentObject) {
 
             // Initialize extra field value
         if (empty($taskInfo['browser_browserAdminEmail'])) {
@@ -73,7 +82,7 @@ class tx_browser_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
         $additionalFields = array();
         $additionalFields[$fieldID] = array(
             'code'     => $fieldCode,
-            'label'    => 'LLL:EXT:browser/lib/scheduler/locallang.xml:label.browserAdminEmail',
+            'label'    => 'LLL:EXT:browser/Resources/Private/Language/Scheduler/locallang.xml:label.browserAdminEmail',
             'cshKey'   => '_MOD_tools_txschedulerM1',
             'cshLabel' => $fieldID
         );
@@ -86,15 +95,15 @@ class tx_browser_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
  * If the task class is not relevant, the method is expected to return TRUE
  *
  * @param	array		$submittedData Reference to the array containing the data submitted by the user
- * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @param	\TYPO3\CMS\Scheduler\Controller\SchedulerModuleController		$parentObject Reference to the calling object (Scheduler's BE module)
  * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
  */
-    public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $parentObject) {
+    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $parentObject) {
         $submittedData['browser_browserAdminEmail'] = trim($submittedData['browser_browserAdminEmail']);
 
         if (empty($submittedData['browser_browserAdminEmail'])) {
-            $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/lib/scheduler/locallang.xml:msg.enterEmail' );
-            $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+            $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:browser/Resources/Private/Language/Scheduler/locallang.xml:msg.enterEmail' );
+            $parentObject->addMessage( $prompt, FlashMessage::ERROR );
             $result = FALSE;
         } else {
             $result = TRUE;
@@ -108,16 +117,10 @@ class tx_browser_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
  * if the task class matches
  *
  * @param	array		$submittedData Array containing the data submitted by the user
- * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @param	AbstractTask		$task Reference to the current task object
  * @return	void
  */
-    public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
+    public function saveAdditionalFields(array $submittedData, AbstractTask $task) {
         $task->browser_browserAdminEmail = $submittedData['browser_browserAdminEmail'];
     }
 }
-
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/browser/lib/scheduler/class.tx_browser_testtask_additionalfieldprovider.php'])) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/browser/lib/scheduler/class.tx_browser_testtask_additionalfieldprovider.php']);
-}
-
-?>

@@ -63,7 +63,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 4.5.7
+ * @version 7.4.4
  * @since   2.0.0
  */
 class tx_browser_pi1_flexform
@@ -673,7 +673,7 @@ class tx_browser_pi1_flexform
    *
    * @return    void
    *
-   * @version   4.1.25
+   * @version   7.4.4
    * @since     2.x
    */
   private function sheet_sDEF_views()
@@ -764,10 +764,16 @@ class tx_browser_pi1_flexform
       // Remove every view, which isn't element of the id list
       // #i0029, dwildt, 1-
 //      $arr_keyslistViews = array_keys($this->pObj->conf['views.']['list.']);
-      // #i0029, dwildt, 5+
+        // #i0224, dwildt, 5-
+//      // #i0029, dwildt, 4+
+//      $arr_keyslistViews = array_merge(
+//              array_keys( $this->pObj->conf[ 'views.' ][ 'list.' ] )
+//              , array_keys( $this->pObj->conf[ 'views.' ][ 'single.' ] )
+//      );
+        // #i0224, dwildt, 4+
       $arr_keyslistViews = array_merge(
-              array_keys( $this->pObj->conf[ 'views.' ][ 'list.' ] )
-              , array_keys( $this->pObj->conf[ 'views.' ][ 'single.' ] )
+              array_keys( (array)$this->pObj->conf[ 'views.' ][ 'list.' ] )
+              , array_keys( (array)$this->pObj->conf[ 'views.' ][ 'single.' ] )
       );
       $arr_keyslistViews = array_unique( $arr_keyslistViews );
       // #i0029, dwildt, 5+

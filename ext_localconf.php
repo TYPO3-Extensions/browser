@@ -14,8 +14,6 @@ if ( !defined( 'TYPO3_MODE' ) )
  * PageTSConfig
  * SC_OPTIONS
  */
-
-
 // Get the extensions's configuration
 $extConf = unserialize( $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'EXT' ][ 'extConf' ][ 'browser' ] );
 
@@ -40,10 +38,14 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 );
 
 
-// PageTSConfig
+/**
+ * PageTSConfig
+ */
 t3lib_extMgm::addPageTSConfig( '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:browser/Configuration/ExtLocalconf/addPageTSConfig/foundation.txt">' );
 
-// SC_OPTIONS
+/**
+ * SC_OPTIONS
+ */
 // #33673, 120203, dwildt
 $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'typo3/class.db_list_extra.inc' ][ 'getTable' ][] = 'EXT:browser/lib/class.tx_browser_befilter_hooks.php:tx_browser_befilter_hooks';
 $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'typo3/class.db_list.inc' ][ 'makeQueryArray' ][] = 'EXT:browser/lib/class.tx_browser_befilter_sql.php:tx_browser_befilter_sql';
@@ -51,26 +53,26 @@ $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'typo3/class.db_list.inc' ][ 'mak
 //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:browser/lib/tx_browser_processdatamapclass.php:tx_browser_processdatamapclass';
 $GLOBALS [ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 't3lib/class.t3lib_tcemain.php' ][ 'processDatamapClass' ][] = 'EXT:browser/lib/class.tx_browser_tcemainprocdm.php:tx_browser_tcemainprocdm';
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_page.php']['getRecordOverlay']['tx_browser'] = 'Netzmacher\\Browser\\Hooks\\GetRecordOverlay\\IgnoreGetRecordOverlay';
+$GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 't3lib/class.t3lib_page.php' ][ 'getRecordOverlay' ][ 'tx_browser' ] = 'Netzmacher\\Browser\\Hooks\\GetRecordOverlay\\IgnoreGetRecordOverlay';
 
 // #51478, 130829, dwildt, +
 // If sample tasks should be shown, register information for the test tasks
 if ( !empty( $extConf[ 'showSampleTasks' ] ) )
 {
-  $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'scheduler' ][ 'tasks' ][ 'tx_browser_TestTask' ] = array
+  $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'scheduler' ][ 'tasks' ][ \Netzmacher\Browser\Scheduler\Test\Task::class ] = array
     (
     'extension' => $_EXTKEY,
-    'title' => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.testTask.name',
-    'description' => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.testTask.description',
-    'additionalFields' => 'tx_browser_TestTask_AdditionalFieldProvider'
+    'title' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Scheduler/locallang.xml:label.testTask.name',
+    'description' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Scheduler/locallang.xml:label.testTask.description',
+    'additionalFields' => \Netzmacher\Browser\Scheduler\Test\UserInterface::class
   );
 }
 
-$GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'scheduler' ][ 'tasks' ][ 'tx_browser_Geoupdate' ] = array
+$GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 'scheduler' ][ 'tasks' ][ \Netzmacher\Browser\Scheduler\Geoupdate\Task::class ] = array
   (
   'extension' => $_EXTKEY,
-  'title' => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.geoupdate.name',
-  'description' => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.geoupdate.description',
-  'additionalFields' => 'tx_browser_Geoupdate_AdditionalFieldProvider'
+  'title' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Scheduler/locallang.xml:label.geoupdate.name',
+  'description' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/Scheduler/locallang.xml:label.geoupdate.description',
+  'additionalFields' => \Netzmacher\Browser\Scheduler\Geoupdate\UserInterface::class
 );
 // SC_OPTIONS

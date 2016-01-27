@@ -24,7 +24,7 @@ $EM_CONF[ $_EXTKEY ] = array(
   ,
   'category' => 'plugin',
   'shy' => 0,
-  'version' => '7.4.3',
+  'version' => '7.4.6',
   'priority' => '',
   'loadOrder' => '',
   'module' => '',
@@ -42,7 +42,7 @@ $EM_CONF[ $_EXTKEY ] = array(
   'constraints' => array(
     'depends' => array(
       'browser_manual_en' => '',
-      'typo3' => '4.5.0-6.2.99',
+      'typo3' => '6.2.0-6.2.99',
     ),
     'conflicts' => array(
       'be_tablefilter' => '',
