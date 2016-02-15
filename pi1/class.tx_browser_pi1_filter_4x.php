@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      7.0.14
+ * @version      7.4.8
  * @since        3.9.9
  */
 
@@ -582,7 +582,7 @@ class tx_browser_pi1_filter_4x
    * @param	string		$tableField   Current table.field
    * @return	array		arr_andWhereFilter: NULL if there isn' any filter
    * @internal              #30912: Filter: count items with no relation to category:
-   * @version 4.5.7
+   * @version 7.4.8
    * @since   3.6.0
    */
   private function init_andWhereFilter_foreignTable( $arr_piVar, $tableField )
@@ -606,8 +606,13 @@ class tx_browser_pi1_filter_4x
           $arr_piVar[ $key ] = ( int ) $value;
         }
         // #48859, 130528, dwildt: make SQL query safe, 4+
+        // #t0607, dwildt, 4+
+        if ( !is_array( $arr_piVar ) )
+        {
+          $arr_piVar = ( int ) $value;
+        }
         $str_uidList = implode( ', ', ( array ) $arr_piVar );
-//var_dump( __METHOD__, __LINE__, $arr_piVar, $str_uidList );
+        //var_dump( __METHOD__, __LINE__, $arr_piVar, $str_uidList );
         $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
         // #30912, 120127, dwildt+
         $this->arr_filter_condition[ $table . '.uid' ][ 'uid_in_list' ] = $arr_piVar;
@@ -1196,7 +1201,7 @@ class tx_browser_pi1_filter_4x
    * @param	[type]		$tableField: ...
    * @param	[type]		$conf_view: ...
    * @return	array		arr_andWhereFilter: NULL if there isn' any filter
-   * @version 4.5.7
+   * @version 7.4.8
    * @since   4.1.21
    */
   private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
@@ -1209,6 +1214,11 @@ class tx_browser_pi1_filter_4x
       $arr_piVar[ $key ] = ( int ) $value;
     }
     // #48859, 130528, dwildt: make SQL query safe, 4+
+        // #t0607, dwildt, 4+
+        if ( !is_array( $arr_piVar ) )
+        {
+          $arr_piVar = ( int ) $value;
+        }
     // List of record uids
     $csvUids = implode( ', ', $arr_piVar );
 
@@ -4875,7 +4885,7 @@ class tx_browser_pi1_filter_4x
     unset( $this->rows );
     foreach ( $rows as $row )
     {
-      $this->rows[ $row[ $table. '.uid' ] ] = $row;
+      $this->rows[ $row[ $table . '.uid' ] ] = $row;
     }
   }
 

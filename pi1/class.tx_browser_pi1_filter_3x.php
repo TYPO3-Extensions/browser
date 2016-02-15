@@ -30,7 +30,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 7.0.14
+ * @version 7.4.8
  * @since 3.0.1
  */
 
@@ -756,7 +756,7 @@ class tx_browser_pi1_filter_3x
    *                  Init area.
    *
    * @return	array		arr_andWhereFilter: NULL if there isn' any filter
-   * @version 4.5.7
+   * @version 7.4.8
    * @since   2.0.0
    */
   function andWhere_filter()
@@ -818,6 +818,11 @@ class tx_browser_pi1_filter_3x
         $arr_piVar[ $key ] = ( int ) $value;
       }
       // #48859, 130528, dwildt: make SQL query safe, 4+
+      // #t0607, dwildt, 4+
+      if ( !is_array( $arr_piVar ) )
+      {
+        $arr_piVar = ( int ) $value;
+      }
       // Current piVar isn't set
       $bool_handleCurrPiVar = true;
       if ( count( $arr_piVar ) < 1 )
@@ -875,6 +880,11 @@ class tx_browser_pi1_filter_3x
             $arr_piVar[ $key ] = ( int ) $value;
           }
           // #48859, 130528, dwildt: make SQL query safe, 4+
+          // #t0607, dwildt, 4+
+          if ( !is_array( $arr_piVar ) )
+          {
+            $arr_piVar = ( int ) $value;
+          }
           $str_andWhere = $lTable . ".uid IN (" . $str_uidList . ")\n";
         }
         // SQL manual mode
@@ -958,8 +968,8 @@ class tx_browser_pi1_filter_3x
           // #i0164, 150421, dwildt, 2-/2+
           //$arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
           //$this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
-          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->quoteStr( $from, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->quoteStr( $from, $table );
+          $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table );
         }
 
         $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
@@ -976,8 +986,8 @@ class tx_browser_pi1_filter_3x
           // #i0164, 150421, dwildt, 2-/2+
           //$arr_item[] = $tableField . " <= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
           //$this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
-          $arr_item[] = $tableField . " <= '" . $GLOBALS['TYPO3_DB']->quoteStr( $to, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS['TYPO3_DB']->quoteStr( $to, $table );
+          $arr_item[] = $tableField . " <= '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'to' ] = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table );
         }
 
         if ( is_array( $arr_item ) )
@@ -1007,8 +1017,8 @@ class tx_browser_pi1_filter_3x
         // #i0164, 150421, dwildt, 2-/2+
         //$arr_orValues[] = $tableField . " LIKE '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) . "'";
         //$strtolower_value = "'" . mb_strtolower( $GLOBALS['TYPO3_DB']->escapeStrForLike( $str_value, $table ) ) . "'";
-        $arr_orValues[] = $tableField . " LIKE '" . $GLOBALS['TYPO3_DB']->quoteStr( $str_value, $table ) . "'";
-        $strtolower_value = "'" . mb_strtolower( $GLOBALS['TYPO3_DB']->quoteStr( $str_value, $table ) ) . "'";
+        $arr_orValues[] = $tableField . " LIKE '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $str_value, $table ) . "'";
+        $strtolower_value = "'" . mb_strtolower( $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $str_value, $table ) ) . "'";
         $this->arr_filter_condition[ $tableField ][ 'like' ][] = $strtolower_value;
       }
       $str_andWhere = implode( ' OR ', $arr_orValues );
@@ -1034,7 +1044,7 @@ class tx_browser_pi1_filter_3x
    * @param	string		$tableField   Current table.field
    * @return	array		arr_andWhereFilter: NULL if there isn' any filter
    * @internal              #30912: Filter: count items with no relation to category:
-   * @version 4.5.7
+   * @version 7.4.8
    * @since   3.6.0
    */
   function andWhere_foreignTable( $obj_ts, $arr_ts, $arr_piVar, $tableField )
@@ -1048,6 +1058,11 @@ class tx_browser_pi1_filter_3x
       $arr_piVar[ $key ] = ( int ) $value;
     }
     // #48859, 130528, dwildt: make SQL query safe, 4+
+    // #t0607, dwildt, 4+
+    if ( !is_array( $arr_piVar ) )
+    {
+      $arr_piVar = ( int ) $value;
+    }
     /////////////////////////////////////////////////////////////////
     //
       // Handle area filter
@@ -1078,8 +1093,8 @@ class tx_browser_pi1_filter_3x
           // #i0164, 150421, dwildt, 2-/2+
           //$arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table ) . "'";
           //$this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $from, $table );
-          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->quoteStr( $from, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->quoteStr( $from, $table );
+          $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $from, $table );
         }
 
         $to = $arr_currField[ 'valueTo_stdWrap.' ][ 'value' ];
@@ -1096,8 +1111,8 @@ class tx_browser_pi1_filter_3x
           // #i0164, 150421, dwildt, 2-/2+
           //$arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table ) . "'";
           //$this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->escapeStrForLike( $to, $table );
-          $arr_item[] = $tableField . " >= '" . $GLOBALS['TYPO3_DB']->quoteStr( $to, $table ) . "'";
-          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS['TYPO3_DB']->quoteStr( $to, $table );
+          $arr_item[] = $tableField . " >= '" . $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table ) . "'";
+          $this->arr_filter_condition[ $tableField ][ 'from' ] = $GLOBALS[ 'TYPO3_DB' ]->quoteStr( $to, $table );
         }
 
         if ( is_array( $arr_item ) )
